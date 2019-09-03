@@ -10,11 +10,24 @@ using System.Windows.Forms;
 
 namespace Charaterizator
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
+        public MainForm()
         {
             InitializeComponent();
+            textBox1.Font = DrawingFont;
+            textBox2.Font = DrawingFont;
+            textBox3.Font = DrawingFont;
+            textBox4.Font = DrawingFont;
+            textBox5.Font = DrawingFont;
+            numericUpDown1.Font = DrawingFont;
+            numericUpDown2.Font = DrawingFont;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
