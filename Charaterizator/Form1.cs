@@ -23,6 +23,8 @@ namespace Charaterizator
             textBox5.Font = DrawingFont;
             numericUpDown1.Font = DrawingFont;
             numericUpDown2.Font = DrawingFont;
+
+            Properties.Settings.Default.Save();  // Сохраняем переменные.
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
