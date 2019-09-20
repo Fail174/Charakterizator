@@ -54,6 +54,7 @@
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -61,6 +62,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -73,6 +75,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -84,9 +87,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.ToolStripMenuItem_MultimetrSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -124,7 +125,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(844, 937);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // ChannalNum
             // 
@@ -223,6 +223,8 @@
             // 
             // мультиметрToolStripMenuItem
             // 
+            this.мультиметрToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_MultimetrSetings});
             this.мультиметрToolStripMenuItem.Name = "мультиметрToolStripMenuItem";
             this.мультиметрToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.мультиметрToolStripMenuItem.Text = "Мультиметр";
@@ -307,6 +309,16 @@
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Холодильная камера";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.Location = new System.Drawing.Point(155, 105);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(60, 42);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "°С";
             // 
             // label7
             // 
@@ -417,6 +429,16 @@
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Задатчик давления";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.Location = new System.Drawing.Point(155, 174);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(85, 42);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "кПа";
             // 
             // textBox4
             // 
@@ -538,6 +560,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Мультиметр";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label8.Location = new System.Drawing.Point(159, 78);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 42);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "мВ";
+            // 
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -656,35 +688,12 @@
             this.tabPage2.Text = "БД  моделей ПД";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label8
+            // ToolStripMenuItem_MultimetrSetings
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(159, 78);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 42);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "мВ";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(155, 174);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 42);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "кПа";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(155, 105);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(60, 42);
-            this.label10.TabIndex = 11;
-            this.label10.Text = "°С";
+            this.ToolStripMenuItem_MultimetrSetings.Name = "ToolStripMenuItem_MultimetrSetings";
+            this.ToolStripMenuItem_MultimetrSetings.Size = new System.Drawing.Size(213, 22);
+            this.ToolStripMenuItem_MultimetrSetings.Text = "Настройки подключения";
+            this.ToolStripMenuItem_MultimetrSetings.Click += new System.EventHandler(this.ToolStripMenuItem_MultimetrSetings_Click);
             // 
             // MainForm
             // 
@@ -782,6 +791,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_MultimetrSetings;
     }
 }
 

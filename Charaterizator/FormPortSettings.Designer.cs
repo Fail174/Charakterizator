@@ -91,9 +91,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(32, 100);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Бит четности:";
+            this.label3.Text = " Четность:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // cbParity
@@ -151,6 +151,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.Location = new System.Drawing.Point(125, 225);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
@@ -174,7 +175,7 @@
             this.Controls.Add(this.cbSpeed);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbPortName);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FormPortSettings";
             this.Text = "Настройка параметров порта";
             this.ResumeLayout(false);

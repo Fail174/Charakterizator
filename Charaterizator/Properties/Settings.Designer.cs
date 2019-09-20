@@ -26,48 +26,48 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
-        public string COMPortComutator {
+        public string COMComutator {
             get {
-                return ((string)(this["COMPortComutator"]));
+                return ((string)(this["COMComutator"]));
             }
             set {
-                this["COMPortComutator"] = value;
+                this["COMComutator"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM2")]
-        public string COMPortMensor {
+        public string COMMensor {
             get {
-                return ((string)(this["COMPortMensor"]));
+                return ((string)(this["COMMensor"]));
             }
             set {
-                this["COMPortMensor"] = value;
+                this["COMMensor"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM3")]
-        public string COMPortMultimetr {
+        public string COMMultimetr {
             get {
-                return ((string)(this["COMPortMultimetr"]));
+                return ((string)(this["COMMultimetr"]));
             }
             set {
-                this["COMPortMultimetr"] = value;
+                this["COMMultimetr"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
-        public string COMPortSensor {
+        public string COMSensor {
             get {
-                return ((string)(this["COMPortSensor"]));
+                return ((string)(this["COMSensor"]));
             }
             set {
-                this["COMPortSensor"] = value;
+                this["COMSensor"] = value;
             }
         }
         
@@ -92,6 +92,210 @@ namespace Charaterizator.Properties {
             }
             set {
                 this["Data"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19200")]
+        public int COMComutator_Speed {
+            get {
+                return ((int)(this["COMComutator_Speed"]));
+            }
+            set {
+                this["COMComutator_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMComutator_Parity {
+            get {
+                return ((int)(this["COMComutator_Parity"]));
+            }
+            set {
+                this["COMComutator_Parity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int COMComutator_StopBits {
+            get {
+                return ((int)(this["COMComutator_StopBits"]));
+            }
+            set {
+                this["COMComutator_StopBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMComutator_DataBits {
+            get {
+                return ((int)(this["COMComutator_DataBits"]));
+            }
+            set {
+                this["COMComutator_DataBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9600")]
+        public int COMMensor_Speed {
+            get {
+                return ((int)(this["COMMensor_Speed"]));
+            }
+            set {
+                this["COMMensor_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMMensor_Parity {
+            get {
+                return ((int)(this["COMMensor_Parity"]));
+            }
+            set {
+                this["COMMensor_Parity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMMensor_StopBits {
+            get {
+                return ((int)(this["COMMensor_StopBits"]));
+            }
+            set {
+                this["COMMensor_StopBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int COMMensor_DataBits {
+            get {
+                return ((int)(this["COMMensor_DataBits"]));
+            }
+            set {
+                this["COMMensor_DataBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2400")]
+        public int COMMultimetr_Speed {
+            get {
+                return ((int)(this["COMMultimetr_Speed"]));
+            }
+            set {
+                this["COMMultimetr_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMMultimetr_Parity {
+            get {
+                return ((int)(this["COMMultimetr_Parity"]));
+            }
+            set {
+                this["COMMultimetr_Parity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMMultimetr_StopBits {
+            get {
+                return ((int)(this["COMMultimetr_StopBits"]));
+            }
+            set {
+                this["COMMultimetr_StopBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMMultimetr_DatabBits {
+            get {
+                return ((int)(this["COMMultimetr_DatabBits"]));
+            }
+            set {
+                this["COMMultimetr_DatabBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
+        public int COMSensor_Speed {
+            get {
+                return ((int)(this["COMSensor_Speed"]));
+            }
+            set {
+                this["COMSensor_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMSensor_Parity {
+            get {
+                return ((int)(this["COMSensor_Parity"]));
+            }
+            set {
+                this["COMSensor_Parity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMSensor_StopBits {
+            get {
+                return ((int)(this["COMSensor_StopBits"]));
+            }
+            set {
+                this["COMSensor_StopBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMSensorDataBits {
+            get {
+                return ((int)(this["COMSensorDataBits"]));
+            }
+            set {
+                this["COMSensorDataBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Параметр {
+            get {
+                return ((int)(this["Параметр"]));
+            }
+            set {
+                this["Параметр"] = value;
             }
         }
     }

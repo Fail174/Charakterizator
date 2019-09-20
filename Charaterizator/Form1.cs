@@ -25,6 +25,8 @@ namespace Charaterizator
             numericUpDown2.Font = DrawingFont;
 
             Properties.Settings.Default.Save();  // Сохраняем переменные.
+            
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -32,9 +34,16 @@ namespace Charaterizator
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void ToolStripMenuItem_MultimetrSetings_Click(object sender, EventArgs e)
         {
-
+            FormPortSettings newForm = new FormPortSettings();
+            //newForm.SerialPort1
+            newForm.InitPortsettings(Properties.Settings.Default.COMMultimetr,
+                Properties.Settings.Default.COMMultimetr_Speed,
+                Properties.Settings.Default.COMMultimetr_DatabBits,
+                Properties.Settings.Default.COMMultimetr_StopBits,
+                Properties.Settings.Default.COMMultimetr_Parity);
+            newForm.ShowDialog();
         }
     }
 }

@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Charaterizator.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="COMPortComutator" Type="System.String" Scope="User">
+    <Setting Name="COMComutator" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM1</Value>
     </Setting>
-    <Setting Name="COMPortMensor" Type="System.String" Scope="User">
+    <Setting Name="COMMensor" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM2</Value>
     </Setting>
-    <Setting Name="COMPortMultimetr" Type="System.String" Scope="User">
+    <Setting Name="COMMultimetr" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM3</Value>
     </Setting>
-    <Setting Name="COMPortSensor" Type="System.String" Scope="User">
+    <Setting Name="COMSensor" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM4</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="User">
@@ -19,6 +19,57 @@
     </Setting>
     <Setting Name="Data" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">09/18/2019 17:23:00</Value>
+    </Setting>
+    <Setting Name="COMComutator_Speed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">19200</Value>
+    </Setting>
+    <Setting Name="COMComutator_Parity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="COMComutator_StopBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="COMComutator_DataBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="COMMensor_Speed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">9600</Value>
+    </Setting>
+    <Setting Name="COMMensor_Parity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="COMMensor_StopBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="COMMensor_DataBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="COMMultimetr_Speed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2400</Value>
+    </Setting>
+    <Setting Name="COMMultimetr_Parity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="COMMultimetr_StopBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="COMMultimetr_DatabBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="COMSensor_Speed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1200</Value>
+    </Setting>
+    <Setting Name="COMSensor_Parity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="COMSensor_StopBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="COMSensorDataBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="Параметр" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>
