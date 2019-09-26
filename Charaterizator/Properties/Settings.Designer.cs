@@ -278,12 +278,12 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int COMSensorDataBits {
+        public int COMSensor_DataBits {
             get {
-                return ((int)(this["COMSensorDataBits"]));
+                return ((int)(this["COMSensor_DataBits"]));
             }
             set {
-                this["COMSensorDataBits"] = value;
+                this["COMSensor_DataBits"] = value;
             }
         }
         
@@ -296,6 +296,78 @@ namespace Charaterizator.Properties {
             }
             set {
                 this["Параметр"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
+        public string COMColdCamera {
+            get {
+                return ((string)(this["COMColdCamera"]));
+            }
+            set {
+                this["COMColdCamera"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9600")]
+        public int COMColdCamera_Speed {
+            get {
+                return ((int)(this["COMColdCamera_Speed"]));
+            }
+            set {
+                this["COMColdCamera_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMColdCamera_Parity {
+            get {
+                return ((int)(this["COMColdCamera_Parity"]));
+            }
+            set {
+                this["COMColdCamera_Parity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMColdCamera_StopBits {
+            get {
+                return ((int)(this["COMColdCamera_StopBits"]));
+            }
+            set {
+                this["COMColdCamera_StopBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMColdCamera_DataBits {
+            get {
+                return ((int)(this["COMColdCamera_DataBits"]));
+            }
+            set {
+                this["COMColdCamera_DataBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Параметр1 {
+            get {
+                return ((int)(this["Параметр1"]));
+            }
+            set {
+                this["Параметр1"] = value;
             }
         }
     }

@@ -44,6 +44,7 @@
             this.открытьБДДатчиковToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.мультиметрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_MultimetrSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.задатчикДавленияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.коммутаторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.холодильнаяКамераToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +88,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.ToolStripMenuItem_MultimetrSetings = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_MensorSetings = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_CommutatorSetings = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_ColdCameraSetings = new System.Windows.Forms.ToolStripMenuItem();
+            this.датчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_SensorSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -215,6 +220,7 @@
             this.задатчикДавленияToolStripMenuItem,
             this.коммутаторToolStripMenuItem,
             this.холодильнаяКамераToolStripMenuItem,
+            this.датчикиToolStripMenuItem,
             this.toolStripMenuItem2,
             this.основныеПараметрыToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
@@ -224,25 +230,38 @@
             // мультиметрToolStripMenuItem
             // 
             this.мультиметрToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_MultimetrSetings});
+            this.MI_MultimetrSetings});
             this.мультиметрToolStripMenuItem.Name = "мультиметрToolStripMenuItem";
             this.мультиметрToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.мультиметрToolStripMenuItem.Text = "Мультиметр";
             // 
+            // MI_MultimetrSetings
+            // 
+            this.MI_MultimetrSetings.Name = "MI_MultimetrSetings";
+            this.MI_MultimetrSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_MultimetrSetings.Text = "Настройки подключения";
+            this.MI_MultimetrSetings.Click += new System.EventHandler(this.ToolStripMenuItem_MultimetrSetings_Click);
+            // 
             // задатчикДавленияToolStripMenuItem
             // 
+            this.задатчикДавленияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MI_MensorSetings});
             this.задатчикДавленияToolStripMenuItem.Name = "задатчикДавленияToolStripMenuItem";
             this.задатчикДавленияToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.задатчикДавленияToolStripMenuItem.Text = "Задатчик давления";
             // 
             // коммутаторToolStripMenuItem
             // 
+            this.коммутаторToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MI_CommutatorSetings});
             this.коммутаторToolStripMenuItem.Name = "коммутаторToolStripMenuItem";
             this.коммутаторToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.коммутаторToolStripMenuItem.Text = "Коммутатор";
             // 
             // холодильнаяКамераToolStripMenuItem
             // 
+            this.холодильнаяКамераToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MI_ColdCameraSetings});
             this.холодильнаяКамераToolStripMenuItem.Name = "холодильнаяКамераToolStripMenuItem";
             this.холодильнаяКамераToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.холодильнаяКамераToolStripMenuItem.Text = "Холодильная камера";
@@ -688,12 +707,41 @@
             this.tabPage2.Text = "БД  моделей ПД";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // ToolStripMenuItem_MultimetrSetings
+            // MI_MensorSetings
             // 
-            this.ToolStripMenuItem_MultimetrSetings.Name = "ToolStripMenuItem_MultimetrSetings";
-            this.ToolStripMenuItem_MultimetrSetings.Size = new System.Drawing.Size(213, 22);
-            this.ToolStripMenuItem_MultimetrSetings.Text = "Настройки подключения";
-            this.ToolStripMenuItem_MultimetrSetings.Click += new System.EventHandler(this.ToolStripMenuItem_MultimetrSetings_Click);
+            this.MI_MensorSetings.Name = "MI_MensorSetings";
+            this.MI_MensorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_MensorSetings.Text = "Настройки подключения";
+            this.MI_MensorSetings.Click += new System.EventHandler(this.MI_MensorSetings_Click);
+            // 
+            // MI_CommutatorSetings
+            // 
+            this.MI_CommutatorSetings.Name = "MI_CommutatorSetings";
+            this.MI_CommutatorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_CommutatorSetings.Text = "Настройки подключения";
+            this.MI_CommutatorSetings.Click += new System.EventHandler(this.MI_CommutatorSetings_Click);
+            // 
+            // MI_ColdCameraSetings
+            // 
+            this.MI_ColdCameraSetings.Name = "MI_ColdCameraSetings";
+            this.MI_ColdCameraSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_ColdCameraSetings.Text = "Настройки подключения";
+            this.MI_ColdCameraSetings.Click += new System.EventHandler(this.MI_ColdCameraSetings_Click);
+            // 
+            // датчикиToolStripMenuItem
+            // 
+            this.датчикиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MI_SensorSetings});
+            this.датчикиToolStripMenuItem.Name = "датчикиToolStripMenuItem";
+            this.датчикиToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.датчикиToolStripMenuItem.Text = "Датчики";
+            // 
+            // MI_SensorSetings
+            // 
+            this.MI_SensorSetings.Name = "MI_SensorSetings";
+            this.MI_SensorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_SensorSetings.Text = "Настройки подключения";
+            this.MI_SensorSetings.Click += new System.EventHandler(this.MI_SensorSetings_Click);
             // 
             // MainForm
             // 
@@ -791,7 +839,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_MultimetrSetings;
+        private System.Windows.Forms.ToolStripMenuItem MI_MultimetrSetings;
+        private System.Windows.Forms.ToolStripMenuItem MI_MensorSetings;
+        private System.Windows.Forms.ToolStripMenuItem MI_CommutatorSetings;
+        private System.Windows.Forms.ToolStripMenuItem MI_ColdCameraSetings;
+        private System.Windows.Forms.ToolStripMenuItem датчикиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MI_SensorSetings;
     }
 }
 
