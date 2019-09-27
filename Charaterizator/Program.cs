@@ -19,4 +19,5 @@ namespace Charaterizator
             Application.Run(new MainForm());
         }
     }
+    // Тест - добавлен комментарий в Program.cs
 }
