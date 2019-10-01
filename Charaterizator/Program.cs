@@ -20,6 +20,6 @@ namespace Charaterizator
         }
     }
     // Тест - добавлен комментарий в Program.cs
-    //
+    // Тест 2
 
 }
