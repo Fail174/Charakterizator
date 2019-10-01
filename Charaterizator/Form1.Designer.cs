@@ -46,8 +46,13 @@
             this.мультиметрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MI_MultimetrSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.задатчикДавленияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_MensorSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.коммутаторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_CommutatorSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.холодильнаяКамераToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_ColdCameraSetings = new System.Windows.Forms.ToolStripMenuItem();
+            this.датчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_SensorSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.основныеПараметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.инфоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +83,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btmMultimetr = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -88,11 +93,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.MI_MensorSetings = new System.Windows.Forms.ToolStripMenuItem();
-            this.MI_CommutatorSetings = new System.Windows.Forms.ToolStripMenuItem();
-            this.MI_ColdCameraSetings = new System.Windows.Forms.ToolStripMenuItem();
-            this.датчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MI_SensorSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -250,6 +250,13 @@
             this.задатчикДавленияToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.задатчикДавленияToolStripMenuItem.Text = "Задатчик давления";
             // 
+            // MI_MensorSetings
+            // 
+            this.MI_MensorSetings.Name = "MI_MensorSetings";
+            this.MI_MensorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_MensorSetings.Text = "Настройки подключения";
+            this.MI_MensorSetings.Click += new System.EventHandler(this.MI_MensorSetings_Click);
+            // 
             // коммутаторToolStripMenuItem
             // 
             this.коммутаторToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -258,6 +265,13 @@
             this.коммутаторToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.коммутаторToolStripMenuItem.Text = "Коммутатор";
             // 
+            // MI_CommutatorSetings
+            // 
+            this.MI_CommutatorSetings.Name = "MI_CommutatorSetings";
+            this.MI_CommutatorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_CommutatorSetings.Text = "Настройки подключения";
+            this.MI_CommutatorSetings.Click += new System.EventHandler(this.MI_CommutatorSetings_Click);
+            // 
             // холодильнаяКамераToolStripMenuItem
             // 
             this.холодильнаяКамераToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -265,6 +279,28 @@
             this.холодильнаяКамераToolStripMenuItem.Name = "холодильнаяКамераToolStripMenuItem";
             this.холодильнаяКамераToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.холодильнаяКамераToolStripMenuItem.Text = "Холодильная камера";
+            // 
+            // MI_ColdCameraSetings
+            // 
+            this.MI_ColdCameraSetings.Name = "MI_ColdCameraSetings";
+            this.MI_ColdCameraSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_ColdCameraSetings.Text = "Настройки подключения";
+            this.MI_ColdCameraSetings.Click += new System.EventHandler(this.MI_ColdCameraSetings_Click);
+            // 
+            // датчикиToolStripMenuItem
+            // 
+            this.датчикиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MI_SensorSetings});
+            this.датчикиToolStripMenuItem.Name = "датчикиToolStripMenuItem";
+            this.датчикиToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.датчикиToolStripMenuItem.Text = "Датчики";
+            // 
+            // MI_SensorSetings
+            // 
+            this.MI_SensorSetings.Name = "MI_SensorSetings";
+            this.MI_SensorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_SensorSetings.Text = "Настройки подключения";
+            this.MI_SensorSetings.Click += new System.EventHandler(this.MI_SensorSetings_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -570,7 +606,7 @@
             this.groupBox2.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.btmMultimetr);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(11, 152);
             this.groupBox2.Name = "groupBox2";
@@ -598,16 +634,17 @@
             this.textBox3.TabIndex = 2;
             this.textBox3.Text = "1,00689";
             // 
-            // button3
+            // btmMultimetr
             // 
-            this.button3.BackColor = System.Drawing.Color.Green;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(6, 25);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(107, 44);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Подключен";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btmMultimetr.BackColor = System.Drawing.Color.Green;
+            this.btmMultimetr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btmMultimetr.Location = new System.Drawing.Point(6, 25);
+            this.btmMultimetr.Name = "btmMultimetr";
+            this.btmMultimetr.Size = new System.Drawing.Size(107, 44);
+            this.btmMultimetr.TabIndex = 1;
+            this.btmMultimetr.Text = "Подключен";
+            this.btmMultimetr.UseVisualStyleBackColor = false;
+            this.btmMultimetr.Click += new System.EventHandler(this.btmMultimetr_Click);
             // 
             // groupBox1
             // 
@@ -707,42 +744,6 @@
             this.tabPage2.Text = "БД  моделей ПД";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // MI_MensorSetings
-            // 
-            this.MI_MensorSetings.Name = "MI_MensorSetings";
-            this.MI_MensorSetings.Size = new System.Drawing.Size(213, 22);
-            this.MI_MensorSetings.Text = "Настройки подключения";
-            this.MI_MensorSetings.Click += new System.EventHandler(this.MI_MensorSetings_Click);
-            // 
-            // MI_CommutatorSetings
-            // 
-            this.MI_CommutatorSetings.Name = "MI_CommutatorSetings";
-            this.MI_CommutatorSetings.Size = new System.Drawing.Size(213, 22);
-            this.MI_CommutatorSetings.Text = "Настройки подключения";
-            this.MI_CommutatorSetings.Click += new System.EventHandler(this.MI_CommutatorSetings_Click);
-            // 
-            // MI_ColdCameraSetings
-            // 
-            this.MI_ColdCameraSetings.Name = "MI_ColdCameraSetings";
-            this.MI_ColdCameraSetings.Size = new System.Drawing.Size(213, 22);
-            this.MI_ColdCameraSetings.Text = "Настройки подключения";
-            this.MI_ColdCameraSetings.Click += new System.EventHandler(this.MI_ColdCameraSetings_Click);
-            // 
-            // датчикиToolStripMenuItem
-            // 
-            this.датчикиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MI_SensorSetings});
-            this.датчикиToolStripMenuItem.Name = "датчикиToolStripMenuItem";
-            this.датчикиToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.датчикиToolStripMenuItem.Text = "Датчики";
-            // 
-            // MI_SensorSetings
-            // 
-            this.MI_SensorSetings.Name = "MI_SensorSetings";
-            this.MI_SensorSetings.Size = new System.Drawing.Size(213, 22);
-            this.MI_SensorSetings.Text = "Настройки подключения";
-            this.MI_SensorSetings.Click += new System.EventHandler(this.MI_SensorSetings_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -811,7 +812,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btmMultimetr;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;

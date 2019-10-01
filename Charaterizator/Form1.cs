@@ -13,9 +13,14 @@ namespace Charaterizator
     public partial class MainForm : Form
     {
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
+        private CMultimetr Multimetr;
+
         public MainForm()
         {
             InitializeComponent();
+            Multimetr = new CMultimetr();
+            btmMultimetr.PerformClick();
+
             textBox1.Font = DrawingFont;
             textBox2.Font = DrawingFont;
             textBox3.Font = DrawingFont;
@@ -126,6 +131,24 @@ namespace Charaterizator
                 Properties.Settings.Default.COMSensor_StopBits = newForm.GetPortStopBits();
                 Properties.Settings.Default.COMSensor_Parity = newForm.GetPortParity();
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
+        }
+
+        private void btmMultimetr_Click(object sender, EventArgs e)
+        {
+            if (Multimetr.Connect(Properties.Settings.Default.COMMultimetr,
+                Properties.Settings.Default.COMMultimetr_Speed,
+                Properties.Settings.Default.COMMultimetr_DatabBits,
+                Properties.Settings.Default.COMMultimetr_StopBits,
+                Properties.Settings.Default.COMMultimetr_Parity) >= 0)
+            {
+                btmMultimetr.BackColor = Color.Green;
+                btmMultimetr.Text = "Подключен";
+            }
+            else
+            {
+                btmMultimetr.BackColor = Color.Red;
+                btmMultimetr.Text = "Не подключен";
             }
         }
     }
