@@ -151,5 +151,12 @@ namespace Charaterizator
                 btmMultimetr.Text = "Не подключен";
             }
         }
+
+        private void btnCommutator_Click(object sender, EventArgs e)
+        {
+            /*FormSwitch fSwitch= new FormSwitch();
+            fSwitch.ShowDialog();*/
+
+        }
     }
 }

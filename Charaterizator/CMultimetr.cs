@@ -42,17 +42,10 @@ namespace Charaterizator
                 Port.DataBits = DataBits;
                 Port.StopBits = (StopBits)StopBits;
                 Port.Parity = (Parity)Parity;
-
-    /*            _serialPort.BaudRate = 9600;
-                _serialPort.DataBits = 7;
-                _serialPort.Parity = Parity.Even;
-                _serialPort.StopBits = StopBits.Two;*/
                 Port.ReadTimeout = 1000;
                 Port.WriteTimeout = 1000;
-//                Port.Encoding = Encoding.ASCII;
                 Port.DtrEnable = true;
                 Port.RtsEnable = true;
-
                 Port.Open();
                 Connected = true;
                 return 0;

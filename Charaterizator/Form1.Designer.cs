@@ -88,7 +88,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCommutator = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -652,7 +652,7 @@
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnCommutator);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(11, 12);
             this.groupBox1.Name = "groupBox1";
@@ -690,16 +690,17 @@
             this.button2.Text = "Управление";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnCommutator
             // 
-            this.button1.BackColor = System.Drawing.Color.Green;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(6, 29);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 46);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Подключен";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnCommutator.BackColor = System.Drawing.Color.Green;
+            this.btnCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCommutator.Location = new System.Drawing.Point(6, 29);
+            this.btnCommutator.Name = "btnCommutator";
+            this.btnCommutator.Size = new System.Drawing.Size(107, 46);
+            this.btnCommutator.TabIndex = 0;
+            this.btnCommutator.Text = "Подключен";
+            this.btnCommutator.UseVisualStyleBackColor = false;
+            this.btnCommutator.Click += new System.EventHandler(this.btnCommutator_Click);
             // 
             // panel2
             // 
@@ -817,7 +818,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCommutator;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
