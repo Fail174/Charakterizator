@@ -137,7 +137,7 @@
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(55, 149);
+            this.pictureBox1.Location = new System.Drawing.Point(2, 99);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(718, 151);
             this.pictureBox1.TabIndex = 0;
@@ -153,7 +153,7 @@
             this.bInput0.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput0.ImageIndex = 0;
             this.bInput0.ImageList = this.imageList_Inputs;
-            this.bInput0.Location = new System.Drawing.Point(55, 91);
+            this.bInput0.Location = new System.Drawing.Point(2, 41);
             this.bInput0.Name = "bInput0";
             this.bInput0.Size = new System.Drawing.Size(38, 56);
             this.bInput0.TabIndex = 1;
@@ -174,7 +174,7 @@
             // 
             this.bPower0.ImageIndex = 0;
             this.bPower0.ImageList = this.imageList_power;
-            this.bPower0.Location = new System.Drawing.Point(55, 51);
+            this.bPower0.Location = new System.Drawing.Point(2, 1);
             this.bPower0.Name = "bPower0";
             this.bPower0.Size = new System.Drawing.Size(38, 38);
             this.bPower0.TabIndex = 62;
@@ -194,7 +194,7 @@
             // 
             this.bPower29.ImageIndex = 0;
             this.bPower29.ImageList = this.imageList_power;
-            this.bPower29.Location = new System.Drawing.Point(737, 362);
+            this.bPower29.Location = new System.Drawing.Point(684, 312);
             this.bPower29.Name = "bPower29";
             this.bPower29.Size = new System.Drawing.Size(38, 38);
             this.bPower29.TabIndex = 91;
@@ -206,7 +206,7 @@
             // 
             this.bPower28.ImageIndex = 0;
             this.bPower28.ImageList = this.imageList_power;
-            this.bPower28.Location = new System.Drawing.Point(694, 362);
+            this.bPower28.Location = new System.Drawing.Point(641, 312);
             this.bPower28.Name = "bPower28";
             this.bPower28.Size = new System.Drawing.Size(38, 38);
             this.bPower28.TabIndex = 90;
@@ -218,7 +218,7 @@
             // 
             this.bPower27.ImageIndex = 0;
             this.bPower27.ImageList = this.imageList_power;
-            this.bPower27.Location = new System.Drawing.Point(650, 362);
+            this.bPower27.Location = new System.Drawing.Point(597, 312);
             this.bPower27.Name = "bPower27";
             this.bPower27.Size = new System.Drawing.Size(38, 38);
             this.bPower27.TabIndex = 89;
@@ -230,7 +230,7 @@
             // 
             this.bPower26.ImageIndex = 0;
             this.bPower26.ImageList = this.imageList_power;
-            this.bPower26.Location = new System.Drawing.Point(606, 362);
+            this.bPower26.Location = new System.Drawing.Point(553, 312);
             this.bPower26.Name = "bPower26";
             this.bPower26.Size = new System.Drawing.Size(38, 38);
             this.bPower26.TabIndex = 88;
@@ -242,7 +242,7 @@
             // 
             this.bPower25.ImageIndex = 0;
             this.bPower25.ImageList = this.imageList_power;
-            this.bPower25.Location = new System.Drawing.Point(562, 362);
+            this.bPower25.Location = new System.Drawing.Point(509, 312);
             this.bPower25.Name = "bPower25";
             this.bPower25.Size = new System.Drawing.Size(38, 38);
             this.bPower25.TabIndex = 87;
@@ -254,7 +254,7 @@
             // 
             this.bPower24.ImageIndex = 0;
             this.bPower24.ImageList = this.imageList_power;
-            this.bPower24.Location = new System.Drawing.Point(485, 362);
+            this.bPower24.Location = new System.Drawing.Point(432, 312);
             this.bPower24.Name = "bPower24";
             this.bPower24.Size = new System.Drawing.Size(38, 38);
             this.bPower24.TabIndex = 86;
@@ -266,7 +266,7 @@
             // 
             this.bPower23.ImageIndex = 0;
             this.bPower23.ImageList = this.imageList_power;
-            this.bPower23.Location = new System.Drawing.Point(442, 362);
+            this.bPower23.Location = new System.Drawing.Point(389, 312);
             this.bPower23.Name = "bPower23";
             this.bPower23.Size = new System.Drawing.Size(38, 38);
             this.bPower23.TabIndex = 85;
@@ -278,7 +278,7 @@
             // 
             this.bPower22.ImageIndex = 0;
             this.bPower22.ImageList = this.imageList_power;
-            this.bPower22.Location = new System.Drawing.Point(396, 362);
+            this.bPower22.Location = new System.Drawing.Point(343, 312);
             this.bPower22.Name = "bPower22";
             this.bPower22.Size = new System.Drawing.Size(38, 38);
             this.bPower22.TabIndex = 84;
@@ -290,7 +290,7 @@
             // 
             this.bPower21.ImageIndex = 0;
             this.bPower21.ImageList = this.imageList_power;
-            this.bPower21.Location = new System.Drawing.Point(353, 362);
+            this.bPower21.Location = new System.Drawing.Point(300, 312);
             this.bPower21.Name = "bPower21";
             this.bPower21.Size = new System.Drawing.Size(38, 38);
             this.bPower21.TabIndex = 83;
@@ -302,7 +302,7 @@
             // 
             this.bPower20.ImageIndex = 0;
             this.bPower20.ImageList = this.imageList_power;
-            this.bPower20.Location = new System.Drawing.Point(309, 362);
+            this.bPower20.Location = new System.Drawing.Point(256, 312);
             this.bPower20.Name = "bPower20";
             this.bPower20.Size = new System.Drawing.Size(38, 38);
             this.bPower20.TabIndex = 82;
@@ -314,7 +314,7 @@
             // 
             this.bPower19.ImageIndex = 0;
             this.bPower19.ImageList = this.imageList_power;
-            this.bPower19.Location = new System.Drawing.Point(231, 361);
+            this.bPower19.Location = new System.Drawing.Point(178, 311);
             this.bPower19.Name = "bPower19";
             this.bPower19.Size = new System.Drawing.Size(38, 38);
             this.bPower19.TabIndex = 81;
@@ -326,7 +326,7 @@
             // 
             this.bPower18.ImageIndex = 0;
             this.bPower18.ImageList = this.imageList_power;
-            this.bPower18.Location = new System.Drawing.Point(187, 361);
+            this.bPower18.Location = new System.Drawing.Point(134, 311);
             this.bPower18.Name = "bPower18";
             this.bPower18.Size = new System.Drawing.Size(38, 38);
             this.bPower18.TabIndex = 80;
@@ -338,7 +338,7 @@
             // 
             this.bPower17.ImageIndex = 0;
             this.bPower17.ImageList = this.imageList_power;
-            this.bPower17.Location = new System.Drawing.Point(143, 361);
+            this.bPower17.Location = new System.Drawing.Point(90, 311);
             this.bPower17.Name = "bPower17";
             this.bPower17.Size = new System.Drawing.Size(38, 38);
             this.bPower17.TabIndex = 79;
@@ -350,7 +350,7 @@
             // 
             this.bPower16.ImageIndex = 0;
             this.bPower16.ImageList = this.imageList_power;
-            this.bPower16.Location = new System.Drawing.Point(99, 361);
+            this.bPower16.Location = new System.Drawing.Point(46, 311);
             this.bPower16.Name = "bPower16";
             this.bPower16.Size = new System.Drawing.Size(38, 38);
             this.bPower16.TabIndex = 78;
@@ -362,7 +362,7 @@
             // 
             this.bPower15.ImageIndex = 0;
             this.bPower15.ImageList = this.imageList_power;
-            this.bPower15.Location = new System.Drawing.Point(55, 361);
+            this.bPower15.Location = new System.Drawing.Point(2, 311);
             this.bPower15.Name = "bPower15";
             this.bPower15.Size = new System.Drawing.Size(38, 38);
             this.bPower15.TabIndex = 77;
@@ -374,7 +374,7 @@
             // 
             this.bCH1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH1.Location = new System.Drawing.Point(99, 149);
+            this.bCH1.Location = new System.Drawing.Point(46, 99);
             this.bCH1.Name = "bCH1";
             this.bCH1.Size = new System.Drawing.Size(38, 38);
             this.bCH1.TabIndex = 98;
@@ -385,7 +385,7 @@
             // 
             this.bPower1.ImageIndex = 0;
             this.bPower1.ImageList = this.imageList_power;
-            this.bPower1.Location = new System.Drawing.Point(99, 51);
+            this.bPower1.Location = new System.Drawing.Point(46, 1);
             this.bPower1.Name = "bPower1";
             this.bPower1.Size = new System.Drawing.Size(38, 38);
             this.bPower1.TabIndex = 97;
@@ -404,7 +404,7 @@
             this.bInput1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput1.ImageIndex = 0;
             this.bInput1.ImageList = this.imageList_Inputs;
-            this.bInput1.Location = new System.Drawing.Point(99, 91);
+            this.bInput1.Location = new System.Drawing.Point(46, 41);
             this.bInput1.Name = "bInput1";
             this.bInput1.Size = new System.Drawing.Size(38, 56);
             this.bInput1.TabIndex = 96;
@@ -418,7 +418,7 @@
             // 
             this.bCH2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH2.Location = new System.Drawing.Point(143, 149);
+            this.bCH2.Location = new System.Drawing.Point(90, 99);
             this.bCH2.Name = "bCH2";
             this.bCH2.Size = new System.Drawing.Size(38, 38);
             this.bCH2.TabIndex = 101;
@@ -429,7 +429,7 @@
             // 
             this.bPower2.ImageIndex = 0;
             this.bPower2.ImageList = this.imageList_power;
-            this.bPower2.Location = new System.Drawing.Point(143, 51);
+            this.bPower2.Location = new System.Drawing.Point(90, 1);
             this.bPower2.Name = "bPower2";
             this.bPower2.Size = new System.Drawing.Size(38, 38);
             this.bPower2.TabIndex = 100;
@@ -448,7 +448,7 @@
             this.bInput2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput2.ImageIndex = 0;
             this.bInput2.ImageList = this.imageList_Inputs;
-            this.bInput2.Location = new System.Drawing.Point(143, 91);
+            this.bInput2.Location = new System.Drawing.Point(90, 41);
             this.bInput2.Name = "bInput2";
             this.bInput2.Size = new System.Drawing.Size(38, 56);
             this.bInput2.TabIndex = 99;
@@ -462,7 +462,7 @@
             // 
             this.bCH5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH5.Location = new System.Drawing.Point(309, 149);
+            this.bCH5.Location = new System.Drawing.Point(256, 99);
             this.bCH5.Name = "bCH5";
             this.bCH5.Size = new System.Drawing.Size(38, 38);
             this.bCH5.TabIndex = 110;
@@ -473,7 +473,7 @@
             // 
             this.bPower5.ImageIndex = 0;
             this.bPower5.ImageList = this.imageList_power;
-            this.bPower5.Location = new System.Drawing.Point(309, 52);
+            this.bPower5.Location = new System.Drawing.Point(256, 2);
             this.bPower5.Name = "bPower5";
             this.bPower5.Size = new System.Drawing.Size(38, 38);
             this.bPower5.TabIndex = 109;
@@ -492,7 +492,7 @@
             this.bInput5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput5.ImageIndex = 0;
             this.bInput5.ImageList = this.imageList_Inputs;
-            this.bInput5.Location = new System.Drawing.Point(309, 91);
+            this.bInput5.Location = new System.Drawing.Point(256, 41);
             this.bInput5.Name = "bInput5";
             this.bInput5.Size = new System.Drawing.Size(38, 56);
             this.bInput5.TabIndex = 1;
@@ -506,7 +506,7 @@
             // 
             this.bCH4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH4.Location = new System.Drawing.Point(231, 149);
+            this.bCH4.Location = new System.Drawing.Point(178, 99);
             this.bCH4.Name = "bCH4";
             this.bCH4.Size = new System.Drawing.Size(38, 38);
             this.bCH4.TabIndex = 107;
@@ -517,7 +517,7 @@
             // 
             this.bPower4.ImageIndex = 0;
             this.bPower4.ImageList = this.imageList_power;
-            this.bPower4.Location = new System.Drawing.Point(231, 51);
+            this.bPower4.Location = new System.Drawing.Point(178, 1);
             this.bPower4.Name = "bPower4";
             this.bPower4.Size = new System.Drawing.Size(38, 38);
             this.bPower4.TabIndex = 106;
@@ -536,7 +536,7 @@
             this.bInput4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput4.ImageIndex = 0;
             this.bInput4.ImageList = this.imageList_Inputs;
-            this.bInput4.Location = new System.Drawing.Point(231, 91);
+            this.bInput4.Location = new System.Drawing.Point(178, 41);
             this.bInput4.Name = "bInput4";
             this.bInput4.Size = new System.Drawing.Size(38, 56);
             this.bInput4.TabIndex = 105;
@@ -550,7 +550,7 @@
             // 
             this.bCH3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH3.Location = new System.Drawing.Point(187, 149);
+            this.bCH3.Location = new System.Drawing.Point(134, 99);
             this.bCH3.Name = "bCH3";
             this.bCH3.Size = new System.Drawing.Size(38, 38);
             this.bCH3.TabIndex = 104;
@@ -561,7 +561,7 @@
             // 
             this.bPower3.ImageIndex = 0;
             this.bPower3.ImageList = this.imageList_power;
-            this.bPower3.Location = new System.Drawing.Point(187, 51);
+            this.bPower3.Location = new System.Drawing.Point(134, 1);
             this.bPower3.Name = "bPower3";
             this.bPower3.Size = new System.Drawing.Size(38, 38);
             this.bPower3.TabIndex = 103;
@@ -580,7 +580,7 @@
             this.bInput3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput3.ImageIndex = 0;
             this.bInput3.ImageList = this.imageList_Inputs;
-            this.bInput3.Location = new System.Drawing.Point(187, 91);
+            this.bInput3.Location = new System.Drawing.Point(134, 41);
             this.bInput3.Name = "bInput3";
             this.bInput3.Size = new System.Drawing.Size(38, 56);
             this.bInput3.TabIndex = 102;
@@ -594,7 +594,7 @@
             // 
             this.bCH8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH8.Location = new System.Drawing.Point(441, 149);
+            this.bCH8.Location = new System.Drawing.Point(388, 99);
             this.bCH8.Name = "bCH8";
             this.bCH8.Size = new System.Drawing.Size(38, 38);
             this.bCH8.TabIndex = 119;
@@ -605,7 +605,7 @@
             // 
             this.bPower8.ImageIndex = 0;
             this.bPower8.ImageList = this.imageList_power;
-            this.bPower8.Location = new System.Drawing.Point(441, 52);
+            this.bPower8.Location = new System.Drawing.Point(388, 2);
             this.bPower8.Name = "bPower8";
             this.bPower8.Size = new System.Drawing.Size(38, 38);
             this.bPower8.TabIndex = 118;
@@ -624,7 +624,7 @@
             this.bInput8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput8.ImageIndex = 0;
             this.bInput8.ImageList = this.imageList_Inputs;
-            this.bInput8.Location = new System.Drawing.Point(441, 91);
+            this.bInput8.Location = new System.Drawing.Point(388, 41);
             this.bInput8.Name = "bInput8";
             this.bInput8.Size = new System.Drawing.Size(38, 56);
             this.bInput8.TabIndex = 117;
@@ -638,7 +638,7 @@
             // 
             this.bCH7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH7.Location = new System.Drawing.Point(397, 149);
+            this.bCH7.Location = new System.Drawing.Point(344, 99);
             this.bCH7.Name = "bCH7";
             this.bCH7.Size = new System.Drawing.Size(38, 38);
             this.bCH7.TabIndex = 116;
@@ -649,7 +649,7 @@
             // 
             this.bPower7.ImageIndex = 0;
             this.bPower7.ImageList = this.imageList_power;
-            this.bPower7.Location = new System.Drawing.Point(396, 52);
+            this.bPower7.Location = new System.Drawing.Point(343, 2);
             this.bPower7.Name = "bPower7";
             this.bPower7.Size = new System.Drawing.Size(38, 38);
             this.bPower7.TabIndex = 115;
@@ -668,7 +668,7 @@
             this.bInput7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput7.ImageIndex = 0;
             this.bInput7.ImageList = this.imageList_Inputs;
-            this.bInput7.Location = new System.Drawing.Point(396, 91);
+            this.bInput7.Location = new System.Drawing.Point(343, 41);
             this.bInput7.Name = "bInput7";
             this.bInput7.Size = new System.Drawing.Size(38, 56);
             this.bInput7.TabIndex = 114;
@@ -682,7 +682,7 @@
             // 
             this.bCH6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH6.Location = new System.Drawing.Point(353, 149);
+            this.bCH6.Location = new System.Drawing.Point(300, 99);
             this.bCH6.Name = "bCH6";
             this.bCH6.Size = new System.Drawing.Size(38, 38);
             this.bCH6.TabIndex = 113;
@@ -693,7 +693,7 @@
             // 
             this.bPower6.ImageIndex = 0;
             this.bPower6.ImageList = this.imageList_power;
-            this.bPower6.Location = new System.Drawing.Point(353, 52);
+            this.bPower6.Location = new System.Drawing.Point(300, 2);
             this.bPower6.Name = "bPower6";
             this.bPower6.Size = new System.Drawing.Size(38, 38);
             this.bPower6.TabIndex = 112;
@@ -712,7 +712,7 @@
             this.bInput6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput6.ImageIndex = 0;
             this.bInput6.ImageList = this.imageList_Inputs;
-            this.bInput6.Location = new System.Drawing.Point(353, 91);
+            this.bInput6.Location = new System.Drawing.Point(300, 41);
             this.bInput6.Name = "bInput6";
             this.bInput6.Size = new System.Drawing.Size(38, 56);
             this.bInput6.TabIndex = 111;
@@ -726,7 +726,7 @@
             // 
             this.bCH11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH11.Location = new System.Drawing.Point(606, 149);
+            this.bCH11.Location = new System.Drawing.Point(553, 99);
             this.bCH11.Name = "bCH11";
             this.bCH11.Size = new System.Drawing.Size(38, 38);
             this.bCH11.TabIndex = 128;
@@ -737,7 +737,7 @@
             // 
             this.bPower11.ImageIndex = 0;
             this.bPower11.ImageList = this.imageList_power;
-            this.bPower11.Location = new System.Drawing.Point(606, 52);
+            this.bPower11.Location = new System.Drawing.Point(553, 2);
             this.bPower11.Name = "bPower11";
             this.bPower11.Size = new System.Drawing.Size(38, 38);
             this.bPower11.TabIndex = 127;
@@ -756,7 +756,7 @@
             this.bInput11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput11.ImageIndex = 0;
             this.bInput11.ImageList = this.imageList_Inputs;
-            this.bInput11.Location = new System.Drawing.Point(606, 91);
+            this.bInput11.Location = new System.Drawing.Point(553, 41);
             this.bInput11.Name = "bInput11";
             this.bInput11.Size = new System.Drawing.Size(38, 56);
             this.bInput11.TabIndex = 126;
@@ -770,7 +770,7 @@
             // 
             this.bCH10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH10.Location = new System.Drawing.Point(562, 149);
+            this.bCH10.Location = new System.Drawing.Point(509, 99);
             this.bCH10.Name = "bCH10";
             this.bCH10.Size = new System.Drawing.Size(38, 38);
             this.bCH10.TabIndex = 125;
@@ -781,7 +781,7 @@
             // 
             this.bPower10.ImageIndex = 0;
             this.bPower10.ImageList = this.imageList_power;
-            this.bPower10.Location = new System.Drawing.Point(562, 52);
+            this.bPower10.Location = new System.Drawing.Point(509, 2);
             this.bPower10.Name = "bPower10";
             this.bPower10.Size = new System.Drawing.Size(38, 38);
             this.bPower10.TabIndex = 124;
@@ -800,7 +800,7 @@
             this.bInput10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput10.ImageIndex = 0;
             this.bInput10.ImageList = this.imageList_Inputs;
-            this.bInput10.Location = new System.Drawing.Point(562, 91);
+            this.bInput10.Location = new System.Drawing.Point(509, 41);
             this.bInput10.Name = "bInput10";
             this.bInput10.Size = new System.Drawing.Size(38, 56);
             this.bInput10.TabIndex = 123;
@@ -814,7 +814,7 @@
             // 
             this.bCH9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH9.Location = new System.Drawing.Point(485, 149);
+            this.bCH9.Location = new System.Drawing.Point(432, 99);
             this.bCH9.Name = "bCH9";
             this.bCH9.Size = new System.Drawing.Size(38, 38);
             this.bCH9.TabIndex = 122;
@@ -825,7 +825,7 @@
             // 
             this.bPower9.ImageIndex = 0;
             this.bPower9.ImageList = this.imageList_power;
-            this.bPower9.Location = new System.Drawing.Point(485, 52);
+            this.bPower9.Location = new System.Drawing.Point(432, 2);
             this.bPower9.Name = "bPower9";
             this.bPower9.Size = new System.Drawing.Size(38, 38);
             this.bPower9.TabIndex = 121;
@@ -844,7 +844,7 @@
             this.bInput9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput9.ImageIndex = 0;
             this.bInput9.ImageList = this.imageList_Inputs;
-            this.bInput9.Location = new System.Drawing.Point(485, 91);
+            this.bInput9.Location = new System.Drawing.Point(432, 41);
             this.bInput9.Name = "bInput9";
             this.bInput9.Size = new System.Drawing.Size(38, 56);
             this.bInput9.TabIndex = 120;
@@ -858,7 +858,7 @@
             // 
             this.bCH14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH14.Location = new System.Drawing.Point(737, 149);
+            this.bCH14.Location = new System.Drawing.Point(684, 99);
             this.bCH14.Name = "bCH14";
             this.bCH14.Size = new System.Drawing.Size(38, 38);
             this.bCH14.TabIndex = 137;
@@ -869,7 +869,7 @@
             // 
             this.bPower14.ImageIndex = 0;
             this.bPower14.ImageList = this.imageList_power;
-            this.bPower14.Location = new System.Drawing.Point(737, 52);
+            this.bPower14.Location = new System.Drawing.Point(684, 2);
             this.bPower14.Name = "bPower14";
             this.bPower14.Size = new System.Drawing.Size(38, 38);
             this.bPower14.TabIndex = 136;
@@ -888,7 +888,7 @@
             this.bInput14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput14.ImageIndex = 0;
             this.bInput14.ImageList = this.imageList_Inputs;
-            this.bInput14.Location = new System.Drawing.Point(737, 91);
+            this.bInput14.Location = new System.Drawing.Point(684, 41);
             this.bInput14.Name = "bInput14";
             this.bInput14.Size = new System.Drawing.Size(38, 56);
             this.bInput14.TabIndex = 135;
@@ -902,7 +902,7 @@
             // 
             this.bCH13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH13.Location = new System.Drawing.Point(694, 149);
+            this.bCH13.Location = new System.Drawing.Point(641, 99);
             this.bCH13.Name = "bCH13";
             this.bCH13.Size = new System.Drawing.Size(38, 38);
             this.bCH13.TabIndex = 134;
@@ -913,7 +913,7 @@
             // 
             this.bPower13.ImageIndex = 0;
             this.bPower13.ImageList = this.imageList_power;
-            this.bPower13.Location = new System.Drawing.Point(694, 52);
+            this.bPower13.Location = new System.Drawing.Point(641, 2);
             this.bPower13.Name = "bPower13";
             this.bPower13.Size = new System.Drawing.Size(38, 38);
             this.bPower13.TabIndex = 133;
@@ -932,7 +932,7 @@
             this.bInput13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput13.ImageIndex = 0;
             this.bInput13.ImageList = this.imageList_Inputs;
-            this.bInput13.Location = new System.Drawing.Point(694, 91);
+            this.bInput13.Location = new System.Drawing.Point(641, 41);
             this.bInput13.Name = "bInput13";
             this.bInput13.Size = new System.Drawing.Size(38, 56);
             this.bInput13.TabIndex = 132;
@@ -946,7 +946,7 @@
             // 
             this.bCH12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH12.Location = new System.Drawing.Point(650, 149);
+            this.bCH12.Location = new System.Drawing.Point(597, 99);
             this.bCH12.Name = "bCH12";
             this.bCH12.Size = new System.Drawing.Size(38, 38);
             this.bCH12.TabIndex = 131;
@@ -957,7 +957,7 @@
             // 
             this.bPower12.ImageIndex = 0;
             this.bPower12.ImageList = this.imageList_power;
-            this.bPower12.Location = new System.Drawing.Point(650, 52);
+            this.bPower12.Location = new System.Drawing.Point(597, 2);
             this.bPower12.Name = "bPower12";
             this.bPower12.Size = new System.Drawing.Size(38, 38);
             this.bPower12.TabIndex = 130;
@@ -976,7 +976,7 @@
             this.bInput12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput12.ImageIndex = 0;
             this.bInput12.ImageList = this.imageList_Inputs;
-            this.bInput12.Location = new System.Drawing.Point(650, 91);
+            this.bInput12.Location = new System.Drawing.Point(597, 41);
             this.bInput12.Name = "bInput12";
             this.bInput12.Size = new System.Drawing.Size(38, 56);
             this.bInput12.TabIndex = 129;
@@ -990,7 +990,7 @@
             // 
             this.bCH0.BackColor = System.Drawing.SystemColors.Control;
             this.bCH0.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH0.Location = new System.Drawing.Point(55, 149);
+            this.bCH0.Location = new System.Drawing.Point(2, 99);
             this.bCH0.Name = "bCH0";
             this.bCH0.Size = new System.Drawing.Size(38, 38);
             this.bCH0.TabIndex = 138;
@@ -1001,7 +1001,7 @@
             // 
             this.bCH15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH15.Location = new System.Drawing.Point(55, 262);
+            this.bCH15.Location = new System.Drawing.Point(2, 212);
             this.bCH15.Name = "bCH15";
             this.bCH15.Size = new System.Drawing.Size(38, 38);
             this.bCH15.TabIndex = 153;
@@ -1012,7 +1012,7 @@
             // 
             this.bCH29.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH29.Location = new System.Drawing.Point(737, 262);
+            this.bCH29.Location = new System.Drawing.Point(684, 212);
             this.bCH29.Name = "bCH29";
             this.bCH29.Size = new System.Drawing.Size(38, 38);
             this.bCH29.TabIndex = 152;
@@ -1023,7 +1023,7 @@
             // 
             this.bCH28.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH28.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH28.Location = new System.Drawing.Point(694, 262);
+            this.bCH28.Location = new System.Drawing.Point(641, 212);
             this.bCH28.Name = "bCH28";
             this.bCH28.Size = new System.Drawing.Size(38, 38);
             this.bCH28.TabIndex = 151;
@@ -1034,7 +1034,7 @@
             // 
             this.bCH27.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH27.Location = new System.Drawing.Point(650, 262);
+            this.bCH27.Location = new System.Drawing.Point(597, 212);
             this.bCH27.Name = "bCH27";
             this.bCH27.Size = new System.Drawing.Size(38, 38);
             this.bCH27.TabIndex = 150;
@@ -1045,7 +1045,7 @@
             // 
             this.bCH26.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH26.Location = new System.Drawing.Point(606, 262);
+            this.bCH26.Location = new System.Drawing.Point(553, 212);
             this.bCH26.Name = "bCH26";
             this.bCH26.Size = new System.Drawing.Size(38, 38);
             this.bCH26.TabIndex = 149;
@@ -1056,7 +1056,7 @@
             // 
             this.bCH25.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH25.Location = new System.Drawing.Point(562, 262);
+            this.bCH25.Location = new System.Drawing.Point(509, 212);
             this.bCH25.Name = "bCH25";
             this.bCH25.Size = new System.Drawing.Size(38, 38);
             this.bCH25.TabIndex = 148;
@@ -1067,7 +1067,7 @@
             // 
             this.bCH24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH24.Location = new System.Drawing.Point(485, 262);
+            this.bCH24.Location = new System.Drawing.Point(432, 212);
             this.bCH24.Name = "bCH24";
             this.bCH24.Size = new System.Drawing.Size(38, 38);
             this.bCH24.TabIndex = 147;
@@ -1078,7 +1078,7 @@
             // 
             this.bCH23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH23.Location = new System.Drawing.Point(441, 262);
+            this.bCH23.Location = new System.Drawing.Point(388, 212);
             this.bCH23.Name = "bCH23";
             this.bCH23.Size = new System.Drawing.Size(38, 38);
             this.bCH23.TabIndex = 146;
@@ -1089,7 +1089,7 @@
             // 
             this.bCH22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH22.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH22.Location = new System.Drawing.Point(397, 262);
+            this.bCH22.Location = new System.Drawing.Point(344, 212);
             this.bCH22.Name = "bCH22";
             this.bCH22.Size = new System.Drawing.Size(38, 38);
             this.bCH22.TabIndex = 145;
@@ -1100,7 +1100,7 @@
             // 
             this.bCH21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH21.Location = new System.Drawing.Point(353, 262);
+            this.bCH21.Location = new System.Drawing.Point(300, 212);
             this.bCH21.Name = "bCH21";
             this.bCH21.Size = new System.Drawing.Size(38, 38);
             this.bCH21.TabIndex = 144;
@@ -1111,7 +1111,7 @@
             // 
             this.bCH20.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH20.Location = new System.Drawing.Point(309, 262);
+            this.bCH20.Location = new System.Drawing.Point(256, 212);
             this.bCH20.Name = "bCH20";
             this.bCH20.Size = new System.Drawing.Size(38, 38);
             this.bCH20.TabIndex = 143;
@@ -1122,7 +1122,7 @@
             // 
             this.bCH19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH19.Location = new System.Drawing.Point(231, 262);
+            this.bCH19.Location = new System.Drawing.Point(178, 212);
             this.bCH19.Name = "bCH19";
             this.bCH19.Size = new System.Drawing.Size(38, 38);
             this.bCH19.TabIndex = 142;
@@ -1133,7 +1133,7 @@
             // 
             this.bCH18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH18.Location = new System.Drawing.Point(187, 262);
+            this.bCH18.Location = new System.Drawing.Point(134, 212);
             this.bCH18.Name = "bCH18";
             this.bCH18.Size = new System.Drawing.Size(38, 38);
             this.bCH18.TabIndex = 141;
@@ -1144,7 +1144,7 @@
             // 
             this.bCH17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH17.Location = new System.Drawing.Point(143, 262);
+            this.bCH17.Location = new System.Drawing.Point(90, 212);
             this.bCH17.Name = "bCH17";
             this.bCH17.Size = new System.Drawing.Size(38, 38);
             this.bCH17.TabIndex = 140;
@@ -1155,7 +1155,7 @@
             // 
             this.bCH16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bCH16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCH16.Location = new System.Drawing.Point(99, 262);
+            this.bCH16.Location = new System.Drawing.Point(46, 212);
             this.bCH16.Name = "bCH16";
             this.bCH16.Size = new System.Drawing.Size(38, 38);
             this.bCH16.TabIndex = 139;
@@ -1172,7 +1172,7 @@
             this.bInput29.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput29.ImageIndex = 0;
             this.bInput29.ImageList = this.imageList_Inputs;
-            this.bInput29.Location = new System.Drawing.Point(737, 303);
+            this.bInput29.Location = new System.Drawing.Point(684, 253);
             this.bInput29.Name = "bInput29";
             this.bInput29.Size = new System.Drawing.Size(38, 56);
             this.bInput29.TabIndex = 168;
@@ -1192,7 +1192,7 @@
             this.bInput28.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput28.ImageIndex = 0;
             this.bInput28.ImageList = this.imageList_Inputs;
-            this.bInput28.Location = new System.Drawing.Point(694, 303);
+            this.bInput28.Location = new System.Drawing.Point(641, 253);
             this.bInput28.Name = "bInput28";
             this.bInput28.Size = new System.Drawing.Size(38, 56);
             this.bInput28.TabIndex = 167;
@@ -1212,7 +1212,7 @@
             this.bInput27.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput27.ImageIndex = 0;
             this.bInput27.ImageList = this.imageList_Inputs;
-            this.bInput27.Location = new System.Drawing.Point(650, 303);
+            this.bInput27.Location = new System.Drawing.Point(597, 253);
             this.bInput27.Name = "bInput27";
             this.bInput27.Size = new System.Drawing.Size(38, 56);
             this.bInput27.TabIndex = 166;
@@ -1232,7 +1232,7 @@
             this.bInput26.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput26.ImageIndex = 0;
             this.bInput26.ImageList = this.imageList_Inputs;
-            this.bInput26.Location = new System.Drawing.Point(606, 303);
+            this.bInput26.Location = new System.Drawing.Point(553, 253);
             this.bInput26.Name = "bInput26";
             this.bInput26.Size = new System.Drawing.Size(38, 56);
             this.bInput26.TabIndex = 165;
@@ -1252,7 +1252,7 @@
             this.bInput25.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput25.ImageIndex = 0;
             this.bInput25.ImageList = this.imageList_Inputs;
-            this.bInput25.Location = new System.Drawing.Point(562, 303);
+            this.bInput25.Location = new System.Drawing.Point(509, 253);
             this.bInput25.Name = "bInput25";
             this.bInput25.Size = new System.Drawing.Size(38, 56);
             this.bInput25.TabIndex = 164;
@@ -1272,7 +1272,7 @@
             this.bInput24.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput24.ImageIndex = 0;
             this.bInput24.ImageList = this.imageList_Inputs;
-            this.bInput24.Location = new System.Drawing.Point(485, 303);
+            this.bInput24.Location = new System.Drawing.Point(432, 253);
             this.bInput24.Name = "bInput24";
             this.bInput24.Size = new System.Drawing.Size(38, 56);
             this.bInput24.TabIndex = 163;
@@ -1292,7 +1292,7 @@
             this.bInput23.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput23.ImageIndex = 0;
             this.bInput23.ImageList = this.imageList_Inputs;
-            this.bInput23.Location = new System.Drawing.Point(441, 303);
+            this.bInput23.Location = new System.Drawing.Point(388, 253);
             this.bInput23.Name = "bInput23";
             this.bInput23.Size = new System.Drawing.Size(38, 56);
             this.bInput23.TabIndex = 162;
@@ -1312,7 +1312,7 @@
             this.bInput22.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput22.ImageIndex = 0;
             this.bInput22.ImageList = this.imageList_Inputs;
-            this.bInput22.Location = new System.Drawing.Point(396, 303);
+            this.bInput22.Location = new System.Drawing.Point(343, 253);
             this.bInput22.Name = "bInput22";
             this.bInput22.Size = new System.Drawing.Size(38, 56);
             this.bInput22.TabIndex = 161;
@@ -1332,7 +1332,7 @@
             this.bInput21.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput21.ImageIndex = 0;
             this.bInput21.ImageList = this.imageList_Inputs;
-            this.bInput21.Location = new System.Drawing.Point(353, 303);
+            this.bInput21.Location = new System.Drawing.Point(300, 253);
             this.bInput21.Name = "bInput21";
             this.bInput21.Size = new System.Drawing.Size(38, 56);
             this.bInput21.TabIndex = 160;
@@ -1352,7 +1352,7 @@
             this.bInput20.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput20.ImageIndex = 0;
             this.bInput20.ImageList = this.imageList_Inputs;
-            this.bInput20.Location = new System.Drawing.Point(309, 303);
+            this.bInput20.Location = new System.Drawing.Point(256, 253);
             this.bInput20.Name = "bInput20";
             this.bInput20.Size = new System.Drawing.Size(38, 56);
             this.bInput20.TabIndex = 154;
@@ -1372,7 +1372,7 @@
             this.bInput19.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput19.ImageIndex = 0;
             this.bInput19.ImageList = this.imageList_Inputs;
-            this.bInput19.Location = new System.Drawing.Point(231, 303);
+            this.bInput19.Location = new System.Drawing.Point(178, 253);
             this.bInput19.Name = "bInput19";
             this.bInput19.Size = new System.Drawing.Size(38, 56);
             this.bInput19.TabIndex = 159;
@@ -1392,7 +1392,7 @@
             this.bInput18.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput18.ImageIndex = 0;
             this.bInput18.ImageList = this.imageList_Inputs;
-            this.bInput18.Location = new System.Drawing.Point(187, 303);
+            this.bInput18.Location = new System.Drawing.Point(134, 253);
             this.bInput18.Name = "bInput18";
             this.bInput18.Size = new System.Drawing.Size(38, 56);
             this.bInput18.TabIndex = 158;
@@ -1412,7 +1412,7 @@
             this.bInput17.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput17.ImageIndex = 0;
             this.bInput17.ImageList = this.imageList_Inputs;
-            this.bInput17.Location = new System.Drawing.Point(143, 303);
+            this.bInput17.Location = new System.Drawing.Point(90, 253);
             this.bInput17.Name = "bInput17";
             this.bInput17.Size = new System.Drawing.Size(38, 56);
             this.bInput17.TabIndex = 157;
@@ -1432,7 +1432,7 @@
             this.bInput16.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput16.ImageIndex = 0;
             this.bInput16.ImageList = this.imageList_Inputs;
-            this.bInput16.Location = new System.Drawing.Point(99, 303);
+            this.bInput16.Location = new System.Drawing.Point(46, 253);
             this.bInput16.Name = "bInput16";
             this.bInput16.Size = new System.Drawing.Size(38, 56);
             this.bInput16.TabIndex = 156;
@@ -1452,7 +1452,7 @@
             this.bInput15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput15.ImageIndex = 0;
             this.bInput15.ImageList = this.imageList_Inputs;
-            this.bInput15.Location = new System.Drawing.Point(55, 303);
+            this.bInput15.Location = new System.Drawing.Point(2, 253);
             this.bInput15.Name = "bInput15";
             this.bInput15.Size = new System.Drawing.Size(38, 56);
             this.bInput15.TabIndex = 155;
@@ -1464,12 +1464,14 @@
             // 
             // bAllPower
             // 
-            this.bAllPower.ImageIndex = 0;
+            this.bAllPower.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bAllPower.BackgroundImage")));
+            this.bAllPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bAllPower.ImageList = this.imageList_AllPower;
-            this.bAllPower.Location = new System.Drawing.Point(617, 204);
+            this.bAllPower.Location = new System.Drawing.Point(551, 148);
             this.bAllPower.Name = "bAllPower";
-            this.bAllPower.Size = new System.Drawing.Size(106, 42);
+            this.bAllPower.Size = new System.Drawing.Size(126, 55);
             this.bAllPower.TabIndex = 169;
+            this.bAllPower.Text = "Включить питание всех датчиков";
             this.bAllPower.UseVisualStyleBackColor = true;
             this.bAllPower.Click += new System.EventHandler(this.bAllPower_Click);
             // 
@@ -1482,11 +1484,13 @@
             // 
             // bComPort
             // 
-            this.bComPort.Location = new System.Drawing.Point(99, 204);
+            this.bComPort.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bComPort.BackgroundImage")));
+            this.bComPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bComPort.Location = new System.Drawing.Point(46, 148);
             this.bComPort.Name = "bComPort";
-            this.bComPort.Size = new System.Drawing.Size(126, 42);
+            this.bComPort.Size = new System.Drawing.Size(126, 55);
             this.bComPort.TabIndex = 170;
-            this.bComPort.Text = "Подключить";
+            this.bComPort.Text = "Подключить коммутатор";
             this.bComPort.UseVisualStyleBackColor = true;
             this.bComPort.Click += new System.EventHandler(this.bComPort_Click);
             // 
@@ -1503,11 +1507,13 @@
             // lNumConnectors
             // 
             this.lNumConnectors.AutoSize = true;
-            this.lNumConnectors.Location = new System.Drawing.Point(246, 204);
+            this.lNumConnectors.BackColor = System.Drawing.Color.Transparent;
+            this.lNumConnectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lNumConnectors.Location = new System.Drawing.Point(239, 169);
             this.lNumConnectors.Name = "lNumConnectors";
-            this.lNumConnectors.Size = new System.Drawing.Size(198, 13);
+            this.lNumConnectors.Size = new System.Drawing.Size(237, 15);
             this.lNumConnectors.TabIndex = 171;
-            this.lNumConnectors.Text = "Количество подключенных датчиков: ";
+            this.lNumConnectors.Text = "Количество подключенных датчиков:  0";
             // 
             // FormSwitch
             // 
@@ -1515,7 +1521,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(845, 471);
+            this.ClientSize = new System.Drawing.Size(723, 351);
             this.Controls.Add(this.lNumConnectors);
             this.Controls.Add(this.bComPort);
             this.Controls.Add(this.bAllPower);

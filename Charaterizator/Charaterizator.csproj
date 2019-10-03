@@ -53,6 +53,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCommutator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCommutator.designer.cs">
+      <DependentUpon>FormCommutator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMensor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMensor.designer.cs">
+      <DependentUpon>FormMensor.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPortSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +75,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCommutator.resx">
+      <DependentUpon>FormCommutator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMensor.resx">
+      <DependentUpon>FormMensor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPortSettings.resx">
       <DependentUpon>FormPortSettings.cs</DependentUpon>

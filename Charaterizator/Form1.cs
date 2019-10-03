@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
+
 namespace Charaterizator
 {
     public partial class MainForm : Form
@@ -157,6 +160,19 @@ namespace Charaterizator
             /*FormSwitch fSwitch= new FormSwitch();
             fSwitch.ShowDialog();*/
 
+        }
+
+        private void btnFormCommutator_Click(object sender, EventArgs e)
+        {
+            FormSwitch CommutatorWindow = new FormSwitch();
+            CommutatorWindow.ShowDialog();
+
+        }
+
+        private void btnFormMensor_Click(object sender, EventArgs e)
+        {
+            FormMensor MensorWindow = new FormMensor();
+            MensorWindow.ShowDialog();
         }
     }
 }

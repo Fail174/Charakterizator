@@ -77,7 +77,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnFormMensor = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -87,7 +87,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -474,7 +474,7 @@
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.comboBox1);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.button5);
+            this.groupBox3.Controls.Add(this.btnFormMensor);
             this.groupBox3.Controls.Add(this.textBox1);
             this.groupBox3.Controls.Add(this.button4);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -571,15 +571,16 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Текущее давление:";
             // 
-            // button5
+            // btnFormMensor
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(114, 25);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(143, 46);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Управление";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnFormMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnFormMensor.Location = new System.Drawing.Point(114, 25);
+            this.btnFormMensor.Name = "btnFormMensor";
+            this.btnFormMensor.Size = new System.Drawing.Size(143, 46);
+            this.btnFormMensor.TabIndex = 4;
+            this.btnFormMensor.Text = "Управление";
+            this.btnFormMensor.UseVisualStyleBackColor = true;
+            this.btnFormMensor.Click += new System.EventHandler(this.btnFormMensor_Click);
             // 
             // textBox1
             // 
@@ -651,7 +652,7 @@
             this.groupBox1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnFormCommutator);
             this.groupBox1.Controls.Add(this.btnCommutator);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(11, 12);
@@ -680,15 +681,16 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Число открытых каналов:";
             // 
-            // button2
+            // btnFormCommutator
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(119, 29);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(143, 46);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Управление";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnFormCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnFormCommutator.Location = new System.Drawing.Point(119, 29);
+            this.btnFormCommutator.Name = "btnFormCommutator";
+            this.btnFormCommutator.Size = new System.Drawing.Size(143, 46);
+            this.btnFormCommutator.TabIndex = 1;
+            this.btnFormCommutator.Text = "Управление";
+            this.btnFormCommutator.UseVisualStyleBackColor = true;
+            this.btnFormCommutator.Click += new System.EventHandler(this.btnFormCommutator_Click);
             // 
             // btnCommutator
             // 
@@ -817,13 +819,13 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnFormCommutator;
         private System.Windows.Forms.Button btnCommutator;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnFormMensor;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button7;

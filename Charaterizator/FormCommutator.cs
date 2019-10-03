@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace SwitchModBus
+
+
+
+namespace Charaterizator
 {
     public partial class FormSwitch : Form
     {
@@ -306,40 +309,42 @@ namespace SwitchModBus
         private void bAllPower_Click(object sender, EventArgs e)
         {
             byte[] indata = new byte[10];
-            if (bAllPower.ImageIndex == 0) // Если питание отключено - то включаем его
+            //if (bAllPower.ImageIndex == 0) // Если питание отключено - то включаем его
+                if (bAllPower.Text == "Включить питание всех датчиков")
             {
-                bAllPower.ImageIndex = 1;
+                //bAllPower.ImageIndex = 1;
+                bAllPower.Text = "Отключить питание всех датчиков";
 
-/*                bPower0.ImageIndex = 1; bInput0.Enabled = true;
-                bPower1.ImageIndex = 1; bInput1.Enabled = true;
-                bPower2.ImageIndex = 1; bInput2.Enabled = true;
-                bPower3.ImageIndex = 1; bInput3.Enabled = true;
-                bPower4.ImageIndex = 1; bInput4.Enabled = true;
-                bPower5.ImageIndex = 1; bInput5.Enabled = true;
-                bPower6.ImageIndex = 1; bInput6.Enabled = true;
-                bPower7.ImageIndex = 1; bInput7.Enabled = true;
-                bPower8.ImageIndex = 1; bInput8.Enabled = true;
-                bPower9.ImageIndex = 1; bInput9.Enabled = true;
-                bPower10.ImageIndex = 1; bInput10.Enabled = true;
-                bPower11.ImageIndex = 1; bInput11.Enabled = true;
-                bPower12.ImageIndex = 1; bInput12.Enabled = true;
-                bPower13.ImageIndex = 1; bInput13.Enabled = true;
-                bPower14.ImageIndex = 1; bInput14.Enabled = true;
-                bPower15.ImageIndex = 1; bInput15.Enabled = true;
-                bPower16.ImageIndex = 1; bInput16.Enabled = true;
-                bPower17.ImageIndex = 1; bInput17.Enabled = true;
-                bPower18.ImageIndex = 1; bInput18.Enabled = true;
-                bPower19.ImageIndex = 1; bInput19.Enabled = true;
-                bPower20.ImageIndex = 1; bInput20.Enabled = true;
-                bPower21.ImageIndex = 1; bInput21.Enabled = true;
-                bPower22.ImageIndex = 1; bInput22.Enabled = true;
-                bPower23.ImageIndex = 1; bInput23.Enabled = true;
-                bPower24.ImageIndex = 1; bInput24.Enabled = true;
-                bPower25.ImageIndex = 1; bInput25.Enabled = true;
-                bPower26.ImageIndex = 1; bInput26.Enabled = true;
-                bPower27.ImageIndex = 1; bInput27.Enabled = true;
-                bPower28.ImageIndex = 1; bInput28.Enabled = true;
-                bPower29.ImageIndex = 1; bInput29.Enabled = true;*/
+                /*              bPower0.ImageIndex = 1; bInput0.Enabled = true;
+                                bPower1.ImageIndex = 1; bInput1.Enabled = true;
+                                bPower2.ImageIndex = 1; bInput2.Enabled = true;
+                                bPower3.ImageIndex = 1; bInput3.Enabled = true;
+                                bPower4.ImageIndex = 1; bInput4.Enabled = true;
+                                bPower5.ImageIndex = 1; bInput5.Enabled = true;
+                                bPower6.ImageIndex = 1; bInput6.Enabled = true;
+                                bPower7.ImageIndex = 1; bInput7.Enabled = true;
+                                bPower8.ImageIndex = 1; bInput8.Enabled = true;
+                                bPower9.ImageIndex = 1; bInput9.Enabled = true;
+                                bPower10.ImageIndex = 1; bInput10.Enabled = true;
+                                bPower11.ImageIndex = 1; bInput11.Enabled = true;
+                                bPower12.ImageIndex = 1; bInput12.Enabled = true;
+                                bPower13.ImageIndex = 1; bInput13.Enabled = true;
+                                bPower14.ImageIndex = 1; bInput14.Enabled = true;
+                                bPower15.ImageIndex = 1; bInput15.Enabled = true;
+                                bPower16.ImageIndex = 1; bInput16.Enabled = true;
+                                bPower17.ImageIndex = 1; bInput17.Enabled = true;
+                                bPower18.ImageIndex = 1; bInput18.Enabled = true;
+                                bPower19.ImageIndex = 1; bInput19.Enabled = true;
+                                bPower20.ImageIndex = 1; bInput20.Enabled = true;
+                                bPower21.ImageIndex = 1; bInput21.Enabled = true;
+                                bPower22.ImageIndex = 1; bInput22.Enabled = true;
+                                bPower23.ImageIndex = 1; bInput23.Enabled = true;
+                                bPower24.ImageIndex = 1; bInput24.Enabled = true;
+                                bPower25.ImageIndex = 1; bInput25.Enabled = true;
+                                bPower26.ImageIndex = 1; bInput26.Enabled = true;
+                                bPower27.ImageIndex = 1; bInput27.Enabled = true;
+                                bPower28.ImageIndex = 1; bInput28.Enabled = true;
+                                bPower29.ImageIndex = 1; bInput29.Enabled = true;*/
                 serialPort1.Write(WriteHoldingRegister(0, 0x3FFFFFFF), 0, 9);
                 Thread.Sleep(TimeSleep);
                 serialPort1.Read(indata, 0, 10);
@@ -351,37 +356,38 @@ namespace SwitchModBus
             }
             else
             {
-                bAllPower.ImageIndex = 0;
- /*               bPower0.ImageIndex = 0; bInput0.ImageIndex = 0; bInput0.Enabled = false;
-                bPower1.ImageIndex = 0; bInput1.ImageIndex = 0; bInput1.Enabled = false;
-                bPower2.ImageIndex = 0; bInput2.ImageIndex = 0; bInput2.Enabled = false;
-                bPower3.ImageIndex = 0; bInput3.ImageIndex = 0; bInput3.Enabled = false;
-                bPower4.ImageIndex = 0; bInput4.ImageIndex = 0; bInput4.Enabled = false;
-                bPower5.ImageIndex = 0; bInput5.ImageIndex = 0; bInput5.Enabled = false;
-                bPower6.ImageIndex = 0; bInput6.ImageIndex = 0; bInput6.Enabled = false;
-                bPower7.ImageIndex = 0; bInput7.ImageIndex = 0; bInput7.Enabled = false;
-                bPower8.ImageIndex = 0; bInput8.ImageIndex = 0; bInput8.Enabled = false;
-                bPower9.ImageIndex = 0; bInput9.ImageIndex = 0; bInput9.Enabled = false;
-                bPower10.ImageIndex = 0; bInput10.ImageIndex = 0; bInput10.Enabled = false;
-                bPower11.ImageIndex = 0; bInput11.ImageIndex = 0; bInput11.Enabled = false;
-                bPower12.ImageIndex = 0; bInput12.ImageIndex = 0; bInput12.Enabled = false;
-                bPower13.ImageIndex = 0; bInput13.ImageIndex = 0; bInput13.Enabled = false;
-                bPower14.ImageIndex = 0; bInput14.ImageIndex = 0; bInput14.Enabled = false;
-                bPower15.ImageIndex = 0; bInput15.ImageIndex = 0; bInput15.Enabled = false;
-                bPower16.ImageIndex = 0; bInput16.ImageIndex = 0; bInput16.Enabled = false;
-                bPower17.ImageIndex = 0; bInput17.ImageIndex = 0; bInput17.Enabled = false;
-                bPower18.ImageIndex = 0; bInput18.ImageIndex = 0; bInput18.Enabled = false;
-                bPower19.ImageIndex = 0; bInput19.ImageIndex = 0; bInput19.Enabled = false;
-                bPower20.ImageIndex = 0; bInput20.ImageIndex = 0; bInput20.Enabled = false;
-                bPower21.ImageIndex = 0; bInput21.ImageIndex = 0; bInput21.Enabled = false;
-                bPower22.ImageIndex = 0; bInput22.ImageIndex = 0; bInput22.Enabled = false;
-                bPower23.ImageIndex = 0; bInput23.ImageIndex = 0; bInput23.Enabled = false;
-                bPower24.ImageIndex = 0; bInput24.ImageIndex = 0; bInput24.Enabled = false;
-                bPower25.ImageIndex = 0; bInput25.ImageIndex = 0; bInput25.Enabled = false;
-                bPower26.ImageIndex = 0; bInput26.ImageIndex = 0; bInput26.Enabled = false;
-                bPower27.ImageIndex = 0; bInput27.ImageIndex = 0; bInput27.Enabled = false;
-                bPower28.ImageIndex = 0; bInput28.ImageIndex = 0; bInput28.Enabled = false;
-                bPower29.ImageIndex = 0; bInput29.ImageIndex = 0; bInput29.Enabled = false;*/
+                bAllPower.Text = "Включить питание всех датчиков";
+
+                /*               bPower0.ImageIndex = 0; bInput0.ImageIndex = 0; bInput0.Enabled = false;
+                               bPower1.ImageIndex = 0; bInput1.ImageIndex = 0; bInput1.Enabled = false;
+                               bPower2.ImageIndex = 0; bInput2.ImageIndex = 0; bInput2.Enabled = false;
+                               bPower3.ImageIndex = 0; bInput3.ImageIndex = 0; bInput3.Enabled = false;
+                               bPower4.ImageIndex = 0; bInput4.ImageIndex = 0; bInput4.Enabled = false;
+                               bPower5.ImageIndex = 0; bInput5.ImageIndex = 0; bInput5.Enabled = false;
+                               bPower6.ImageIndex = 0; bInput6.ImageIndex = 0; bInput6.Enabled = false;
+                               bPower7.ImageIndex = 0; bInput7.ImageIndex = 0; bInput7.Enabled = false;
+                               bPower8.ImageIndex = 0; bInput8.ImageIndex = 0; bInput8.Enabled = false;
+                               bPower9.ImageIndex = 0; bInput9.ImageIndex = 0; bInput9.Enabled = false;
+                               bPower10.ImageIndex = 0; bInput10.ImageIndex = 0; bInput10.Enabled = false;
+                               bPower11.ImageIndex = 0; bInput11.ImageIndex = 0; bInput11.Enabled = false;
+                               bPower12.ImageIndex = 0; bInput12.ImageIndex = 0; bInput12.Enabled = false;
+                               bPower13.ImageIndex = 0; bInput13.ImageIndex = 0; bInput13.Enabled = false;
+                               bPower14.ImageIndex = 0; bInput14.ImageIndex = 0; bInput14.Enabled = false;
+                               bPower15.ImageIndex = 0; bInput15.ImageIndex = 0; bInput15.Enabled = false;
+                               bPower16.ImageIndex = 0; bInput16.ImageIndex = 0; bInput16.Enabled = false;
+                               bPower17.ImageIndex = 0; bInput17.ImageIndex = 0; bInput17.Enabled = false;
+                               bPower18.ImageIndex = 0; bInput18.ImageIndex = 0; bInput18.Enabled = false;
+                               bPower19.ImageIndex = 0; bInput19.ImageIndex = 0; bInput19.Enabled = false;
+                               bPower20.ImageIndex = 0; bInput20.ImageIndex = 0; bInput20.Enabled = false;
+                               bPower21.ImageIndex = 0; bInput21.ImageIndex = 0; bInput21.Enabled = false;
+                               bPower22.ImageIndex = 0; bInput22.ImageIndex = 0; bInput22.Enabled = false;
+                               bPower23.ImageIndex = 0; bInput23.ImageIndex = 0; bInput23.Enabled = false;
+                               bPower24.ImageIndex = 0; bInput24.ImageIndex = 0; bInput24.Enabled = false;
+                               bPower25.ImageIndex = 0; bInput25.ImageIndex = 0; bInput25.Enabled = false;
+                               bPower26.ImageIndex = 0; bInput26.ImageIndex = 0; bInput26.Enabled = false;
+                               bPower27.ImageIndex = 0; bInput27.ImageIndex = 0; bInput27.Enabled = false;
+                               bPower28.ImageIndex = 0; bInput28.ImageIndex = 0; bInput28.Enabled = false;
+                               bPower29.ImageIndex = 0; bInput29.ImageIndex = 0; bInput29.Enabled = false;*/
                 serialPort1.Write(WriteHoldingRegister(0, 0x0), 0, 9);
                 Thread.Sleep(TimeSleep);
                 serialPort1.Read(indata, 0, 10);
@@ -516,20 +522,27 @@ namespace SwitchModBus
             if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
-                bComPort.Text = "Подключить";
+                bComPort.Text = "Подключить коммутатор";
                 timer1.Stop();
                 timer1.Enabled = false;
             }
             else
             {
-                Form2 newForm = new Form2();
+
+
+
+      /*          Form2 newForm = new Form2();
                 newForm.ShowDialog();
                 serialPort1.PortName = newForm.ComPortName;
                 serialPort1.Open();
-                bComPort.Text = "Отключить";
+                bComPort.Text = "Отключить коммутатор";
                 newForm.Close();
                 timer1.Enabled = true;
                 timer1.Start();
+*/
+
+
+
             }
         }
 
