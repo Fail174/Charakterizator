@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassEni100.cs" />
     <Compile Include="CMultimetr.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

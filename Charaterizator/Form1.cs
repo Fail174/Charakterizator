@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using ENI100;
 
 
 
@@ -16,12 +16,12 @@ namespace Charaterizator
     public partial class MainForm : Form
     {
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
-        private CMultimetr Multimetr;
+        private CMultimetr Multimetr = new CMultimetr();
+        private ClassEni100 sensors = new ClassEni100();
 
         public MainForm()
         {
             InitializeComponent();
-            Multimetr = new CMultimetr();
             btmMultimetr.PerformClick();
 
             textBox1.Font = DrawingFont;
@@ -173,6 +173,11 @@ namespace Charaterizator
         {
             FormMensor MensorWindow = new FormMensor();
             MensorWindow.ShowDialog();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
