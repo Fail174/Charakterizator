@@ -157,10 +157,12 @@ namespace Charaterizator
 
         private void btnCommutator_Click(object sender, EventArgs e)
         {
-            /*FormSwitch fSwitch= new FormSwitch();
-            fSwitch.ShowDialog();*/
+            
 
         }
+
+
+
 
         private void btnFormCommutator_Click(object sender, EventArgs e)
         {
