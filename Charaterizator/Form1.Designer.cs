@@ -30,10 +30,6 @@
         {
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +89,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -130,27 +130,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(844, 937);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // ChannalNum
-            // 
-            this.ChannalNum.HeaderText = "Номер канал";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.Name = "Sensor";
-            // 
-            // Adress
-            // 
-            this.Adress.HeaderText = "Адрес";
-            this.Adress.Name = "Adress";
-            // 
-            // State
-            // 
-            this.State.HeaderText = "Состояние";
-            this.State.Name = "State";
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // statusStrip1
             // 
@@ -747,6 +727,29 @@
             this.tabPage2.Text = "БД  моделей ПД";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ChannalNum
+            // 
+            this.ChannalNum.HeaderText = "Номер канал";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 600;
+            // 
+            // Adress
+            // 
+            this.Adress.HeaderText = "Адрес";
+            this.Adress.Name = "Adress";
+            // 
+            // State
+            // 
+            this.State.HeaderText = "Состояние";
+            this.State.Name = "State";
+            this.State.Width = 200;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -806,10 +809,6 @@
         private System.Windows.Forms.ToolStripMenuItem инфоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn State;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -849,6 +848,10 @@
         private System.Windows.Forms.ToolStripMenuItem MI_ColdCameraSetings;
         private System.Windows.Forms.ToolStripMenuItem датчикиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MI_SensorSetings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn State;
     }
 }
 
