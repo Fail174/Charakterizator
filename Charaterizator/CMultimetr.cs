@@ -12,10 +12,12 @@ namespace Charaterizator
     {
         public bool Connected;
         private SerialPort Port;
+
         public CMultimetr()
         {
             Port = new SerialPort();
         }
+
         public int DisConnect()
         {
             if (Connected)

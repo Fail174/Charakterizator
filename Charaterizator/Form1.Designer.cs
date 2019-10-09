@@ -28,8 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +80,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnFormMensor = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnMensor = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -89,10 +94,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.cbTest = new System.Windows.Forms.CheckBox();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -131,6 +134,29 @@
             this.dataGridView1.Size = new System.Drawing.Size(844, 937);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // ChannalNum
+            // 
+            this.ChannalNum.HeaderText = "Номер канал";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 600;
+            // 
+            // Adress
+            // 
+            this.Adress.HeaderText = "Адрес";
+            this.Adress.Name = "Adress";
+            // 
+            // State
+            // 
+            this.State.HeaderText = "Состояние";
+            this.State.Name = "State";
+            this.State.Width = 200;
             // 
             // statusStrip1
             // 
@@ -456,7 +482,7 @@
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnFormMensor);
             this.groupBox3.Controls.Add(this.textBox1);
-            this.groupBox3.Controls.Add(this.button4);
+            this.groupBox3.Controls.Add(this.btnMensor);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(15, 300);
             this.groupBox3.Name = "groupBox3";
@@ -571,16 +597,17 @@
             this.textBox1.TabIndex = 3;
             this.textBox1.Text = "200,000";
             // 
-            // button4
+            // btnMensor
             // 
-            this.button4.BackColor = System.Drawing.Color.Green;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(2, 25);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(107, 46);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Подключен";
-            this.button4.UseVisualStyleBackColor = false;
+            this.btnMensor.BackColor = System.Drawing.Color.Green;
+            this.btnMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnMensor.Location = new System.Drawing.Point(2, 25);
+            this.btnMensor.Name = "btnMensor";
+            this.btnMensor.Size = new System.Drawing.Size(107, 46);
+            this.btnMensor.TabIndex = 1;
+            this.btnMensor.Text = "Подключен";
+            this.btnMensor.UseVisualStyleBackColor = false;
+            this.btnMensor.Click += new System.EventHandler(this.btnMensor_Click);
             // 
             // groupBox2
             // 
@@ -630,6 +657,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.groupBox1.Controls.Add(this.cbTest);
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnFormCommutator);
@@ -727,28 +755,16 @@
             this.tabPage2.Text = "БД  моделей ПД";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // ChannalNum
+            // cbTest
             // 
-            this.ChannalNum.HeaderText = "Номер канал";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.Name = "Sensor";
-            this.Sensor.Width = 600;
-            // 
-            // Adress
-            // 
-            this.Adress.HeaderText = "Адрес";
-            this.Adress.Name = "Adress";
-            // 
-            // State
-            // 
-            this.State.HeaderText = "Состояние";
-            this.State.Name = "State";
-            this.State.Width = 200;
+            this.cbTest.AutoSize = true;
+            this.cbTest.Location = new System.Drawing.Point(10, 79);
+            this.cbTest.Name = "cbTest";
+            this.cbTest.Size = new System.Drawing.Size(106, 24);
+            this.cbTest.TabIndex = 4;
+            this.cbTest.Text = "checkBox1";
+            this.cbTest.UseVisualStyleBackColor = true;
+            this.cbTest.CheckedChanged += new System.EventHandler(this.cbTest_CheckedChanged);
             // 
             // MainForm
             // 
@@ -816,7 +832,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button btmMultimetr;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnFormCommutator;
         private System.Windows.Forms.Button btnCommutator;
@@ -826,7 +841,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnFormMensor;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnMensor;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox4;
@@ -852,6 +867,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
         private System.Windows.Forms.DataGridViewTextBoxColumn State;
+        private System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox cbTest;
     }
 }
 

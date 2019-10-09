@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="COMComutator" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM1</Value>
+      <Value Profile="(Default)">COM5</Value>
     </Setting>
     <Setting Name="COMMensor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM2</Value>
+      <Value Profile="(Default)">COM6</Value>
     </Setting>
     <Setting Name="COMMultimetr" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM3</Value>

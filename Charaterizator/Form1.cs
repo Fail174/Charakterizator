@@ -18,11 +18,21 @@ namespace Charaterizator
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
         private ClassEni100 sensors = new ClassEni100();
+        private FormSwitch Commutator = new FormSwitch();
+        private FormMensor Mensor = new FormMensor();
 
         public MainForm()
         {
             InitializeComponent();
-            btmMultimetr.PerformClick();
+
+           
+            btmMultimetr_Click(null, null);           
+            btnCommutator_Click(null, null);
+            btnMensor_Click(null, null);
+
+
+
+
 
             textBox1.Font = DrawingFont;
             textBox2.Font = DrawingFont;
@@ -155,19 +165,44 @@ namespace Charaterizator
             }
         }
 
+        // Подключение коммутатора
         private void btnCommutator_Click(object sender, EventArgs e)
         {
-            
+            if (Commutator.Connect(Properties.Settings.Default.COMComutator,
+               Properties.Settings.Default.COMComutator_Speed,
+               Properties.Settings.Default.COMComutator_DataBits,
+               Properties.Settings.Default.COMComutator_StopBits,
+               Properties.Settings.Default.COMComutator_Parity) >= 0)
+            {
+                btnCommutator.BackColor = Color.Green;
+                btnCommutator.Text = "Подключен";
+            }
+            else
+            {
+                btnCommutator.BackColor = Color.Red;
+                btnCommutator.Text = "Не подключен";
+            }
+
 
         }
 
 
 
-
         private void btnFormCommutator_Click(object sender, EventArgs e)
         {
-            FormSwitch CommutatorWindow = new FormSwitch();
-            CommutatorWindow.ShowDialog();
+            //FormSwitch CommutatorWindow = new FormSwitch();
+            if (Commutator != null)
+            {
+                Commutator.ShowDialog();
+                timer1.Enabled = true;
+                timer1.Start();
+            }
+            else
+            {
+                Commutator = new FormSwitch();
+                btnCommutator.PerformClick();
+
+            }
 
         }
 
@@ -180,6 +215,52 @@ namespace Charaterizator
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+
+        private void cbTest_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (cbTest.Checked)
+            {
+                
+
+                //FormSwitch.SetPower(10, 0);
+
+                int qi = FormSwitch.CalcNumOfConnectInputs(FormSwitch._StateCHPower);
+                textBox2.Text = Convert.ToString(qi);
+
+               
+            }
+            else
+            {
+               
+                //FormSwitch.SetPower(10, 1);
+
+                int qi = FormSwitch.CalcNumOfConnectInputs(FormSwitch._StateCHPower);
+                textBox2.Text = Convert.ToString(qi);
+
+            }
+
+           
+        }
+
+        private void btnMensor_Click(object sender, EventArgs e)
+        {
+            if (Mensor.Connect(Properties.Settings.Default.COMMensor,
+              Properties.Settings.Default.COMMensor_Speed,
+              Properties.Settings.Default.COMMensor_DataBits,
+              Properties.Settings.Default.COMMensor_StopBits,
+              Properties.Settings.Default.COMMensor_Parity) >= 0)
+            {
+                btnMensor.BackColor = Color.Green;
+                btnMensor.Text = "Подключен";
+            }
+            else
+            {
+                btnMensor.BackColor = Color.Red;
+                btnMensor.Text = "Не подключен";
+            }
         }
     }
 }

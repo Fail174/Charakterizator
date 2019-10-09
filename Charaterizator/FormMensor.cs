@@ -16,33 +16,100 @@ namespace Charaterizator
     public partial class FormMensor : Form
     {
         public SerialPort _serialPort_M;           // переменная для работы с COM портом
-        private String[] PortNames_M;       // список обнаруженных COM портов
+       //private String[] PortNames_M;       // список обнаруженных COM портов
         int pause_ms;                       // задержка между приемом и передачей команд по COM порту, мс 
         public int activCH = -1;            // номер активного канала (0 - канал А, 1 - канал В)
         public bool checkTimer = false;     // флаг запущен таймер или нет
         public const double PsiToPa = 0.14503773773;  // для перевода psi в кПА
+
         
+        public bool Connected = false;      // true  - соединение установлено, 
+
+
         public FormMensor()
         {
             InitializeComponent();
+            _serialPort_M = new SerialPort();
+            
 
-            PortNames_M = SerialPort.GetPortNames();   // Обнаружение доступных COM-портов на ПЭВМ           
-            if (PortNames_M.Length > 0)                // если порты обнаружены
+
+            /* PortNames_M = SerialPort.GetPortNames();   // Обнаружение доступных COM-портов на ПЭВМ           
+             if (PortNames_M.Length > 0)                // если порты обнаружены
+             {
+                 cbSetComPort.Items.Clear();
+                 cbSetComPort.Items.Add("Выберите COM порт");
+                 cbSetComPort.Items.AddRange(PortNames_M);
+                 cbSetComPort.SelectedIndex = 0;
+             }
+             else                                      // если порты не обнаружены
+             {
+                 cbSetComPort.Items.Clear();
+                 cbSetComPort.Items.Add("Нет доступных портов");
+                 cbSetComPort.SelectedIndex = 0;
+             }*/
+        }
+
+        public int DisConnect()
+        {
+            if (Connected)
             {
-                cbSetComPort.Items.Clear();
-                cbSetComPort.Items.Add("Выберите COM порт");
-                cbSetComPort.Items.AddRange(PortNames_M);
-                cbSetComPort.SelectedIndex = 0;
+                _serialPort_M.Close();
+                Connected = false;
+                return 0;
             }
-            else                                      // если порты не обнаружены
+            else
             {
-                cbSetComPort.Items.Clear();
-                cbSetComPort.Items.Add("Нет доступных портов");
-                cbSetComPort.SelectedIndex = 0;
+                return 1;
             }
         }
 
 
+        // Функция подключения коммутатора по COM порту
+        public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity)
+        {
+            if (Connected)
+            {
+                return 1;
+            }
+            try
+            {
+                _serialPort_M.PortName = PortName;
+                _serialPort_M.BaudRate = BaudRate;
+                _serialPort_M.DataBits = DataBits;
+                _serialPort_M.StopBits = (StopBits)StopBits;
+                _serialPort_M.Parity = (Parity)Parity;
+                _serialPort_M.ReadTimeout = 1000;
+                _serialPort_M.WriteTimeout = 1000;
+                _serialPort_M.DtrEnable = true;
+                _serialPort_M.RtsEnable = true;
+                _serialPort_M.Open();
+                Connected = true;                             
+
+                return 0;
+
+
+            }
+            catch
+            {
+                Connected = false;
+                return -1;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         // *** Обработчик ВЫБОРА COM порта       
         private void cbSetComPort_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -120,7 +187,7 @@ namespace Charaterizator
             }
         }
 
-
+   
 
 
 
@@ -130,8 +197,8 @@ namespace Charaterizator
         //   Обработчики нажатия кнопок
         //
         //********************************************************************************
-                
-            
+
+
 
         //................................................................................       
         // CHA - Обработчик нажатия кнопки "СДЕЛАТЬ АКТИВНЫМ КАНАЛ А"

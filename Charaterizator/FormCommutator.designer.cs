@@ -126,7 +126,6 @@
             this.bAllPower = new System.Windows.Forms.Button();
             this.imageList_AllPower = new System.Windows.Forms.ImageList(this.components);
             this.bComPort = new System.Windows.Forms.Button();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lNumConnectors = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -1494,11 +1493,6 @@
             this.bComPort.UseVisualStyleBackColor = true;
             this.bComPort.Click += new System.EventHandler(this.bComPort_Click);
             // 
-            // serialPort1
-            // 
-            this.serialPort1.BaudRate = 19200;
-            this.serialPort1.StopBits = System.IO.Ports.StopBits.Two;
-            // 
             // timer1
             // 
             this.timer1.Interval = 2000;
@@ -1723,7 +1717,6 @@
         private System.Windows.Forms.Button bAllPower;
         private System.Windows.Forms.ImageList imageList_AllPower;
         private System.Windows.Forms.Button bComPort;
-        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lNumConnectors;
     }

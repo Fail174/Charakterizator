@@ -25,7 +25,7 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM5")]
         public string COMComutator {
             get {
                 return ((string)(this["COMComutator"]));
@@ -37,7 +37,7 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM6")]
         public string COMMensor {
             get {
                 return ((string)(this["COMMensor"]));
