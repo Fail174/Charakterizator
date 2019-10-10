@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.components = new System.ComponentModel.Container();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -91,13 +93,23 @@
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnSensorSeach = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.cbTest = new System.Windows.Forms.CheckBox();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -106,57 +118,12 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.dataGridView1);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 24);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(846, 939);
-            this.panel3.TabIndex = 2;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ChannalNum,
-            this.Sensor,
-            this.Adress,
-            this.State});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(844, 937);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // ChannalNum
-            // 
-            this.ChannalNum.HeaderText = "Номер канал";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.Name = "Sensor";
-            this.Sensor.Width = 600;
-            // 
-            // Adress
-            // 
-            this.Adress.HeaderText = "Адрес";
-            this.Adress.Name = "Adress";
-            // 
-            // State
-            // 
-            this.State.HeaderText = "Состояние";
-            this.State.Name = "State";
-            this.State.Width = 200;
             // 
             // statusStrip1
             // 
@@ -715,44 +682,142 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 727);
+            this.panel2.Location = new System.Drawing.Point(0, 702);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(554, 214);
+            this.panel2.Size = new System.Drawing.Size(554, 239);
             this.panel2.TabIndex = 7;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.dataGridView1);
+            this.panel3.Controls.Add(this.panel4);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 24);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(554, 678);
+            this.panel3.TabIndex = 8;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ChannalNum,
+            this.Sensor,
+            this.Adress,
+            this.State,
+            this.Work});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(265, 0);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(289, 678);
+            this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.TabStop = false;
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            // 
+            // ChannalNum
+            // 
+            this.ChannalNum.Frozen = true;
+            this.ChannalNum.HeaderText = "Номер канал";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.MinimumWidth = 300;
+            this.Sensor.Name = "Sensor";
+            // 
+            // Adress
+            // 
+            this.Adress.HeaderText = "Адрес";
+            this.Adress.Name = "Adress";
+            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // State
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            this.State.FalseValue = "false";
+            this.State.HeaderText = "Состояние";
+            this.State.IndeterminateValue = "null";
+            this.State.Name = "State";
+            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.State.TrueValue = "true";
+            // 
+            // Work
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Work.FalseValue = "false";
+            this.Work.HeaderText = "Исправность";
+            this.Work.IndeterminateValue = "null";
+            this.Work.Name = "Work";
+            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Work.TrueValue = "true";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.tabControl1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(265, 678);
+            this.panel4.TabIndex = 0;
             // 
             // tabControl1
             // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(552, 212);
+            this.tabControl1.Size = new System.Drawing.Size(265, 678);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Controls.Add(this.btnSensorSeach);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(544, 183);
+            this.tabPage1.Size = new System.Drawing.Size(257, 652);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "БД датчиков";
+            this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.UseWaitCursor = true;
+            // 
+            // btnSensorSeach
+            // 
+            this.btnSensorSeach.Location = new System.Drawing.Point(8, 28);
+            this.btnSensorSeach.Name = "btnSensorSeach";
+            this.btnSensorSeach.Size = new System.Drawing.Size(243, 30);
+            this.btnSensorSeach.TabIndex = 1;
+            this.btnSensorSeach.Text = "Поиск датчиков";
+            this.btnSensorSeach.UseVisualStyleBackColor = true;
+            this.btnSensorSeach.Click += new System.EventHandler(this.btnSensorSeach_Click_1);
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(544, 183);
+            this.tabPage2.Size = new System.Drawing.Size(257, 722);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "БД  моделей ПД";
+            this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // cbTest
@@ -771,17 +836,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 963);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.panel3);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Программа характеризации датчиков давления";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -795,20 +858,20 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel4.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem новыйПроектToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
@@ -825,9 +888,6 @@
         private System.Windows.Forms.ToolStripMenuItem инфоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button btmMultimetr;
@@ -863,9 +923,20 @@
         private System.Windows.Forms.ToolStripMenuItem MI_ColdCameraSetings;
         private System.Windows.Forms.ToolStripMenuItem датчикиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MI_SensorSetings;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button btnSensorSeach;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn State;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
         private System.Windows.Forms.DataGridViewTextBoxColumn State;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.TextBox textBox2;

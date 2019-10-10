@@ -20,6 +20,7 @@ namespace Charaterizator
         private ClassEni100 sensors = new ClassEni100();
         private FormSwitch Commutator = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
+        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
         public MainForm()
         {
@@ -43,7 +44,7 @@ namespace Charaterizator
             numericUpDown2.Font = DrawingFont;
 
             Properties.Settings.Default.Save();  // Сохраняем переменные.
-            
+
 
         }
 
@@ -212,9 +213,36 @@ namespace Charaterizator
             MensorWindow.ShowDialog();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == 3)//Состояние датчика - подключение
+            {
+                if (Convert.ToBoolean(dataGridView1[3, e.RowIndex].Value))
+                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Green;
+                else
+                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Red;
+            }
+        }
 
+        //Поиск подключенных датчиков
+        //Формирует списко датчиков в датагриде
+        //Выход: число подключенных датчиков
+        private int SeachConnectedSensor()
+        {
+            for(int i=0;i<MaxChannalCount-1;i++)
+            {
+                //ConnectChannal(i);//переключение коммутатора
+                if (sensors.SeachSensor())//поиск датчиков
+                {
+                    dataGridView1.Rows.Add(i, sensors.sensor.GetDesc(), sensors.sensor.Addr.ToString(), false, true);
+                }
+            }
+            return 0;
+        }
+
+        private void btnSensorSeach_Click_1(object sender, EventArgs e)
+        {
+                SeachConnectedSensor();
         }
 
 
