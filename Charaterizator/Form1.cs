@@ -229,12 +229,27 @@ namespace Charaterizator
         //Выход: число подключенных датчиков
         private int SeachConnectedSensor()
         {
-            for(int i=0;i<MaxChannalCount-1;i++)
+            dataGridView1.Rows.Clear();
+            if (sensors.Connect(Properties.Settings.Default.COMSensor,
+                Properties.Settings.Default.COMSensor_Speed,
+                Properties.Settings.Default.COMSensor_DataBits,
+                Properties.Settings.Default.COMSensor_StopBits,
+                Properties.Settings.Default.COMSensor_Parity) >= 0)
             {
-                //ConnectChannal(i);//переключение коммутатора
-                if (sensors.SeachSensor())//поиск датчиков
+                for (int i = 0; i < MaxChannalCount; i++)
                 {
-                    dataGridView1.Rows.Add(i, sensors.sensor.GetDesc(), sensors.sensor.Addr.ToString(), false, true);
+                    //ConnectChannal(i);//переключение коммутатора
+                    dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
+                    if (sensors.SeachSensor())//поиск датчиков
+                    {
+                        if (sensors.SelectSensor(0))
+                        {
+                            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();
+                            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.Addr.ToString();
+                            dataGridView1.Rows[i].Cells[3].Value = true;
+                            dataGridView1.Rows[i].Cells[3].Value = true;
+                        }
+                    }
                 }
             }
             return 0;
@@ -251,21 +266,21 @@ namespace Charaterizator
 
             if (cbTest.Checked)
             {
-                
 
-                //FormSwitch.SetPower(10, 0);
 
-                int qi = FormSwitch.CalcNumOfConnectInputs(FormSwitch._StateCHPower);
+                Commutator.SetPower(10, 0);
+
+                int qi = Commutator.CalcNumOfConnectInputs(Commutator._StateCHPower);
                 textBox2.Text = Convert.ToString(qi);
 
                
             }
             else
             {
-               
-                //FormSwitch.SetPower(10, 1);
 
-                int qi = FormSwitch.CalcNumOfConnectInputs(FormSwitch._StateCHPower);
+                Commutator.SetPower(10, 1);
+
+                int qi = Commutator.CalcNumOfConnectInputs(Commutator._StateCHPower);
                 textBox2.Text = Convert.ToString(qi);
 
             }

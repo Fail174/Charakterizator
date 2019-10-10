@@ -18,9 +18,9 @@ namespace Charaterizator
     {
 
         // Состяние выходов коммутатора
-        static Int32 StateCHPower = 0;     // Питание
+        Int32 StateCHPower = 0;     // Питание
 
-        public static Int32 _StateCHPower
+        public Int32 _StateCHPower
         {
             get { return StateCHPower; }
 
@@ -110,6 +110,37 @@ namespace Charaterizator
             }
         }
 
+        // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
+        public int SetPower(int CH, int mode)
+        {
+            byte[] indata = new byte[10];
+
+            if (mode == 0)
+            {
+                Int32 _CH = (1 << CH) | StateCHPower;
+                serialPort1.Write(WriteHoldingRegister(0, _CH), 0, 9);
+                Thread.Sleep(TimeSleep);
+
+                serialPort1.Read(indata, 0, 10);
+                StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                SetState(StateCHPower, StateCH);
+
+            }
+            else
+            {
+
+                CH = (1 << CH);
+                CH = ~CH;
+                Int32 _CH = StateCHPower & CH;
+                serialPort1.Write(WriteHoldingRegister(0, _CH), 0, 9);
+                Thread.Sleep(TimeSleep);
+                serialPort1.Read(indata, 0, 10);
+                StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                SetState(StateCHPower, StateCH);
+            }
+            return 0;
+        }
+        //-----------------------------------------------------------------------------
 
 
         //-----------------------------------------------------------------------------
@@ -133,42 +164,6 @@ namespace Charaterizator
 
 
         }
-
-
-
-        // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
-        public void SetPower(Int32 CH, int mode)
-        {
-            byte[] indata = new byte[10];
-
-            if (mode == 0)
-            {               
-                Int32 _CH = (1 << CH) | StateCHPower;                
-                serialPort1.Write(WriteHoldingRegister(0, _CH), 0, 9);
-                Thread.Sleep(TimeSleep);
-
-                serialPort1.Read(indata, 0, 10);
-                StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                SetState(StateCHPower, StateCH);
-
-            }
-            else
-            {
-               
-                CH = (1 << CH);
-                CH = ~CH;
-                Int32 _CH = StateCHPower & CH;
-                serialPort1.Write(WriteHoldingRegister(0, _CH), 0, 9);
-                Thread.Sleep(TimeSleep);
-                serialPort1.Read(indata, 0, 10);
-                StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                SetState(StateCHPower, StateCH);
-            }
-        }
-        //-----------------------------------------------------------------------------
-
-
-
 
         //-----------------------------------------------------------------------------
         // Функция обработки нажания на кнопки ПОДКЛ / ОТКЛ датчиков к измерительной петле
@@ -731,7 +726,7 @@ namespace Charaterizator
         }
 
 
-        public static int CalcNumOfConnectInputs(Int32 StateInputs)
+        public int CalcNumOfConnectInputs(Int32 StateInputs)
         {
             int Num = 0;
             int Cur = 0;

@@ -28,15 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.components = new System.ComponentModel.Container();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +82,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.btmMultimetr = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbTest = new System.Windows.Forms.CheckBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
@@ -105,11 +100,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnSensorSeach = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.cbTest = new System.Windows.Forms.CheckBox();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -637,6 +629,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Коммутатор";
             // 
+            // cbTest
+            // 
+            this.cbTest.AutoSize = true;
+            this.cbTest.Location = new System.Drawing.Point(10, 79);
+            this.cbTest.Name = "cbTest";
+            this.cbTest.Size = new System.Drawing.Size(106, 24);
+            this.cbTest.TabIndex = 4;
+            this.cbTest.Text = "checkBox1";
+            this.cbTest.UseVisualStyleBackColor = true;
+            this.cbTest.CheckedChanged += new System.EventHandler(this.cbTest_CheckedChanged);
+            // 
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -683,9 +686,9 @@
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 702);
+            this.panel2.Location = new System.Drawing.Point(0, 741);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(554, 239);
+            this.panel2.Size = new System.Drawing.Size(554, 200);
             this.panel2.TabIndex = 7;
             // 
             // panel3
@@ -695,7 +698,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(554, 678);
+            this.panel3.Size = new System.Drawing.Size(554, 717);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView1
@@ -714,7 +717,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(265, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(289, 678);
+            this.dataGridView1.Size = new System.Drawing.Size(289, 717);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
@@ -774,7 +777,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(265, 678);
+            this.panel4.Size = new System.Drawing.Size(265, 717);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -786,7 +789,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(265, 678);
+            this.tabControl1.Size = new System.Drawing.Size(265, 717);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -795,7 +798,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(257, 652);
+            this.tabPage1.Size = new System.Drawing.Size(257, 691);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -815,21 +818,17 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(257, 722);
+            this.tabPage2.Size = new System.Drawing.Size(257, 652);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // cbTest
+            // tabPage3
             // 
-            this.cbTest.AutoSize = true;
-            this.cbTest.Location = new System.Drawing.Point(10, 79);
-            this.cbTest.Name = "cbTest";
-            this.cbTest.Size = new System.Drawing.Size(106, 24);
-            this.cbTest.TabIndex = 4;
-            this.cbTest.Text = "checkBox1";
-            this.cbTest.UseVisualStyleBackColor = true;
-            this.cbTest.CheckedChanged += new System.EventHandler(this.cbTest_CheckedChanged);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(257, 652);
+            this.tabPage3.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -937,7 +936,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
         private System.Windows.Forms.DataGridViewCheckBoxColumn State;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
-        private System.Windows.Forms.DataGridViewTextBoxColumn State;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.CheckBox cbTest;

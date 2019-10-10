@@ -723,7 +723,58 @@ namespace ENI100
             }
 
         }
-        
+
+        //Соединение с датчиком
+        public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity)
+        {
+            if (SensorConnect)
+            {
+                return 1;
+            }
+            try
+            {
+                port.PortName = PortName;
+                port.BaudRate = BaudRate;
+                port.DataBits = DataBits;
+                port.StopBits = (StopBits)StopBits;
+                port.Parity = (Parity)Parity;
+                port.ReadTimeout = 1000;
+                port.WriteTimeout = 1000;
+                port.DtrEnable = true;
+                port.RtsEnable = true;
+                port.Open();
+
+                readbuf.Clear();
+                SensorConnect = true;
+                ReadThread = new Thread(SerialReadThread);
+                ReadThread.Priority = ThreadPriority.AboveNormal;
+                ReadThread.Start();
+
+                return 0;
+            }
+            catch
+            {
+                SensorConnect = false;
+                return -1;
+            }
+        }
+
+        public int DisConnect()
+        {
+            if (SensorConnect)
+            {
+                SensorConnect = false;
+                ReadThread.Abort();
+                ReadThread = null;
+                port.Close();
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         //Ответ на комманду Запрос уникального идентификатора (команда 0)
         private void ReadCommand0(int addr, byte[] indata)
         {
