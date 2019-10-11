@@ -77,6 +77,8 @@ namespace Charaterizator
         // Функция подключения коммутатора по COM порту
         public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity)
         {
+            Connected =false;
+
             if (Connected)
             {
                 return 1;
@@ -93,15 +95,23 @@ namespace Charaterizator
                 serialPort1.DtrEnable = true;
                 serialPort1.RtsEnable = true;
                 serialPort1.Open();                           
-                Connected = true;
+                
 
-                // Запускаем таймер
-                timer1.Enabled = true;
-                timer1.Start();
+                if (ReadCommutatorID())
+                {
+                    // Запускаем таймер
+                    timer1.Enabled = true;
+                    timer1.Start();
+                    Connected = true;
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
 
-                return 0;
 
-               
+
             }
             catch
             {
@@ -110,8 +120,34 @@ namespace Charaterizator
             }
         }
 
+     
+
+
+        //-----------------------------------------------------------------------------
+        // Функция обработки нажатия на кнопки: ВКЛ / ВЫКЛ питания выходов коммутатора
+        private void bPower_Click(object sender, EventArgs e)
+        {            
+            Button b = (Button)sender;
+            busycount = 0;
+            while ((CommutatorBusy) && (busycount < MAXBUSY))
+            {
+                Thread.Sleep(1);
+                busycount++;
+            }
+
+            CommutatorBusy = true;
+
+            // вызов функции отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
+            SetPower(Convert.ToInt32(b.Tag), b.ImageIndex);
+
+            CommutatorBusy = false;
+
+
+        }
+
+
         // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
-        public int SetPower(int CH, int mode)
+        public int SetPower(Int32 CH, int mode)
         {
             byte[] indata = new byte[10];
 
@@ -143,27 +179,7 @@ namespace Charaterizator
         //-----------------------------------------------------------------------------
 
 
-        //-----------------------------------------------------------------------------
-        // Функция обработки нажатия на кнопки: ВКЛ / ВЫКЛ питания выходов коммутатора
-        private void bPower_Click(object sender, EventArgs e)
-        {            
-            Button b = (Button)sender;
-            busycount = 0;
-            while ((CommutatorBusy) && (busycount < MAXBUSY))
-            {
-                Thread.Sleep(1);
-                busycount++;
-            }
 
-            CommutatorBusy = true;
-
-            // вызов функции отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
-            SetPower(Convert.ToInt32(b.Tag), b.ImageIndex);
-
-            CommutatorBusy = false;
-
-
-        }
 
         //-----------------------------------------------------------------------------
         // Функция обработки нажания на кнопки ПОДКЛ / ОТКЛ датчиков к измерительной петле
@@ -335,36 +351,7 @@ namespace Charaterizator
 
 
 
-        //--------------------------------------------------------------------------------
-        // ФУНКЦИЯ подключить/отключить датчик к измерительной цепи
-        // Принимает:
-        //    - номер выхода (от 0 до 29)
-        //    - режим: 1 - включить, 0 - выключить
-        // Возвращает (после установки и прочтения):
-        //    1 - датчик подключен,
-        //    0 - датчик отключен. 
-
-     /*   public int SensorConnect(int CH, int mode)
-        {
-            int result = 0;
-
-
-            // заглушка
-            if (mode == 1)
-            {
-                result = 1;
-            }
-            else
-            {
-                result = 0;
-            }
-
-
-
-            return result;
-        }
-
-            */
+      
 
 
         // Подключить отключить питание всех выходов
@@ -584,8 +571,8 @@ namespace Charaterizator
             return btn;
         }
 
-        private void bComPort_Click(object sender, EventArgs e)
-        {
+  //      private void bComPort_Click(object sender, EventArgs e)
+  //      {
 
     //        if (serialPort1.IsOpen)
     //        {
@@ -608,7 +595,7 @@ namespace Charaterizator
                 timer1.Enabled = true;
                 timer1.Start();*/
 
-
+/*
                 serialPort1.PortName = "COM5";
                 serialPort1.BaudRate = 19200;
                 serialPort1.DataBits = 8;
@@ -628,6 +615,8 @@ namespace Charaterizator
             //   }
         }
 
+
+    */
         public static void myCRC(byte[] message, int length, out byte CRCHigh, out byte CRCLow)
         {
             ushort CRCFull = 0xFFFF;
@@ -709,6 +698,46 @@ namespace Charaterizator
 
             }
         }
+
+
+        private bool ReadCommutatorID()
+        {
+            byte[] indata = new byte[13];
+            Int32 data32;
+            bool CommID = false;
+
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.Write(ReadHoldingRegister(), 0, 4);
+                Thread.Sleep(TimeSleep);
+                serialPort1.Read(indata, 0, 13);
+                Thread.Sleep(TimeSleep);
+
+                // проверка заголовка ответного слова коммутатора
+                if((indata[0] == 01)&&(indata[1]==69)&&(indata[2]==08))
+                    {
+                    CommID = true;
+                    }
+                               
+                // Сохраняем состояния элементов питания каналов
+                data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
+                StateCHPower = data32;
+
+                // Сохраняем состояния подключенных датчиков
+                data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
+                StateCH = data32;
+
+                SetState(StateCHPower, StateCH);
+
+            }
+
+            return CommID;
+        }
+
+
+
+
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {

@@ -195,8 +195,7 @@ namespace Charaterizator
             if (Commutator != null)
             {
                 Commutator.ShowDialog();
-                timer1.Enabled = true;
-                timer1.Start();
+                
             }
             else
             {

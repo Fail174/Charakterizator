@@ -125,7 +125,6 @@
             this.bInput15 = new System.Windows.Forms.Button();
             this.bAllPower = new System.Windows.Forms.Button();
             this.imageList_AllPower = new System.Windows.Forms.ImageList(this.components);
-            this.bComPort = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lNumConnectors = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -1464,13 +1463,14 @@
             // bAllPower
             // 
             this.bAllPower.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bAllPower.BackgroundImage")));
+            this.bAllPower.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.bAllPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bAllPower.ImageList = this.imageList_AllPower;
-            this.bAllPower.Location = new System.Drawing.Point(551, 148);
+            this.bAllPower.Location = new System.Drawing.Point(256, 152);
             this.bAllPower.Name = "bAllPower";
-            this.bAllPower.Size = new System.Drawing.Size(126, 55);
+            this.bAllPower.Size = new System.Drawing.Size(214, 44);
             this.bAllPower.TabIndex = 169;
-            this.bAllPower.Text = "Включить питание всех датчиков";
+            this.bAllPower.Text = "Отключить питание всех датчиков";
             this.bAllPower.UseVisualStyleBackColor = true;
             this.bAllPower.Click += new System.EventHandler(this.bAllPower_Click);
             // 
@@ -1480,18 +1480,6 @@
             this.imageList_AllPower.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList_AllPower.Images.SetKeyName(0, "Off_1.jpg");
             this.imageList_AllPower.Images.SetKeyName(1, "On_1.jpg");
-            // 
-            // bComPort
-            // 
-            this.bComPort.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bComPort.BackgroundImage")));
-            this.bComPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bComPort.Location = new System.Drawing.Point(46, 148);
-            this.bComPort.Name = "bComPort";
-            this.bComPort.Size = new System.Drawing.Size(126, 55);
-            this.bComPort.TabIndex = 170;
-            this.bComPort.Text = "Подключить коммутатор";
-            this.bComPort.UseVisualStyleBackColor = true;
-            this.bComPort.Click += new System.EventHandler(this.bComPort_Click);
             // 
             // timer1
             // 
@@ -1503,11 +1491,12 @@
             this.lNumConnectors.AutoSize = true;
             this.lNumConnectors.BackColor = System.Drawing.Color.Transparent;
             this.lNumConnectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lNumConnectors.Location = new System.Drawing.Point(239, 169);
+            this.lNumConnectors.Location = new System.Drawing.Point(243, 196);
             this.lNumConnectors.Name = "lNumConnectors";
             this.lNumConnectors.Size = new System.Drawing.Size(237, 15);
             this.lNumConnectors.TabIndex = 171;
             this.lNumConnectors.Text = "Количество подключенных датчиков:  0";
+            this.lNumConnectors.Visible = false;
             // 
             // FormSwitch
             // 
@@ -1517,7 +1506,6 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(723, 351);
             this.Controls.Add(this.lNumConnectors);
-            this.Controls.Add(this.bComPort);
             this.Controls.Add(this.bAllPower);
             this.Controls.Add(this.bInput29);
             this.Controls.Add(this.bInput28);
@@ -1612,7 +1600,7 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormSwitch";
-            this.Text = "Программа управления коммутатором";
+            this.Text = "Окно управления коммутатором";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1716,7 +1704,6 @@
         private System.Windows.Forms.Button bInput15;
         private System.Windows.Forms.Button bAllPower;
         private System.Windows.Forms.ImageList imageList_AllPower;
-        private System.Windows.Forms.Button bComPort;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lNumConnectors;
     }
