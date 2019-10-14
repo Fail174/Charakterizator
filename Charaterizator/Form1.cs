@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using ENI100;
 
 
@@ -22,11 +23,14 @@ namespace Charaterizator
         private FormMensor Mensor = new FormMensor();
         private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
+        private StreamWriter writer;//для лога
+
         public MainForm()
         {
             InitializeComponent();
+            writer = File.CreateText("Charakterizator.log");
 
-           
+
             btmMultimetr_Click(null, null);           
             btnCommutator_Click(null, null);
             btnMensor_Click(null, null);
@@ -50,7 +54,14 @@ namespace Charaterizator
             MainTimer.Enabled = true;
             MainTimer.Start();
 
+        }
 
+
+        //запись в лог и в окно выводы
+        void WriteLineLog(string str)
+        {
+            writer.WriteLine(str);
+            tbConsole.AppendText(str + Environment.NewLine);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -163,11 +174,13 @@ namespace Charaterizator
             {
                 btmMultimetr.BackColor = Color.Green;
                 btmMultimetr.Text = "Подключен";
+                WriteLineLog("Мультиметр подключен");
             }
             else
             {
                 btmMultimetr.BackColor = Color.Red;
                 btmMultimetr.Text = "Не подключен";
+                WriteLineLog("Мультиметр не подключен");
             }
         }
 
@@ -182,11 +195,13 @@ namespace Charaterizator
             {
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Подключен";
+                WriteLineLog("Коммутатор подключен");
             }
             else
             {
                 btnCommutator.BackColor = Color.Red;
                 btnCommutator.Text = "Не подключен";
+                WriteLineLog("Коммутатор не подключен");
             }
 
 
@@ -252,6 +267,7 @@ namespace Charaterizator
             {
                 for (int i = 0; i < MaxChannalCount; i++)
                 {
+                    WriteLineLog(string.Format("Поиск датчиков на линии {0}", i));
                     //ConnectChannal(i);//переключение коммутатора
                     dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
 
@@ -273,12 +289,16 @@ namespace Charaterizator
 
                 }
             }
+            else {
+                WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.");
+            }
             return 0;
         }
 
         private void btnSensorSeach_Click_1(object sender, EventArgs e)
         {
-                SeachConnectedSensor();
+            WriteLineLog("Старт поиска датчиков...");
+            SeachConnectedSensor();
         }
 
 
@@ -319,11 +339,13 @@ namespace Charaterizator
             {
                 btnMensor.BackColor = Color.Green;
                 btnMensor.Text = "Подключен";
+                WriteLineLog("Менсор подключен");
             }
             else
             {
                 btnMensor.BackColor = Color.Red;
                 btnMensor.Text = "Не подключен";
+                WriteLineLog("Менсор не подключен");
             }
         }
 
@@ -336,7 +358,7 @@ namespace Charaterizator
 
             MainTimer.Stop();
             MainTimer.Enabled = false;
-           
+            writer.Close();
         }
 
 
@@ -347,6 +369,9 @@ namespace Charaterizator
             textBox2.Text = Convert.ToString(qi);
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }
