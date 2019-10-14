@@ -46,6 +46,11 @@ namespace Charaterizator
             Properties.Settings.Default.Save();  // Сохраняем переменные.
 
 
+
+            MainTimer.Enabled = true;
+            MainTimer.Start();
+
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -217,9 +222,19 @@ namespace Charaterizator
             if (e.ColumnIndex == 3)//Состояние датчика - подключение
             {
                 if (Convert.ToBoolean(dataGridView1[3, e.RowIndex].Value))
+                {
+                    Commutator.SetConnectors(e.RowIndex, 2); // команда подключить датчик с индексом e.RowIndex
                     dataGridView1[3, e.RowIndex].Style.BackColor = Color.Green;
+                }
+
                 else
+                {
+                    Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
                     dataGridView1[3, e.RowIndex].Style.BackColor = Color.Red;
+
+                }
+                    
+
             }
         }
 
@@ -239,16 +254,23 @@ namespace Charaterizator
                 {
                     //ConnectChannal(i);//переключение коммутатора
                     dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
+
+                    // коммутируем
+                    Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
+
                     if (sensors.SeachSensor())//поиск датчиков
                     {
                         if (sensors.SelectSensor(0))
                         {
                             dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();
                             dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.Addr.ToString();
-                            dataGridView1.Rows[i].Cells[3].Value = true;
-                            dataGridView1.Rows[i].Cells[3].Value = true;
+
+                            dataGridView1.Rows[i].Cells[3].Value = false;
+                            dataGridView1.Rows[i].Cells[4].Value = true;
                         }
                     }
+                    Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i
+
                 }
             }
             return 0;
@@ -304,5 +326,27 @@ namespace Charaterizator
                 btnMensor.Text = "Не подключен";
             }
         }
+
+
+
+
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            MainTimer.Stop();
+            MainTimer.Enabled = false;
+           
+        }
+
+
+
+        private void MainTimer_Tick(object sender, EventArgs e)
+        {
+            int qi = Commutator.CalcNumOfConnectInputs(Commutator._StateCH);
+            textBox2.Text = Convert.ToString(qi);
+        }
+
+
     }
 }

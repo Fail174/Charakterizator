@@ -19,7 +19,7 @@ namespace Charaterizator
 
         // Состяние выходов коммутатора
         Int32 StateCHPower = 0;     // Питание
-
+                     
         public Int32 _StateCHPower
         {
             get { return StateCHPower; }
@@ -32,12 +32,28 @@ namespace Charaterizator
 
         }
         
-
-
-
+                          
        // public Int32 StateCH { get; set;}
 
         Int32 StateCH = 0;          // Измерительная цепь
+        public Int32 _StateCH
+        {
+            get
+            {
+                return  StateCH;
+            }
+
+
+            set
+            {
+
+            }
+
+        }
+
+
+
+
 
         int TimeSleep = 100;        // Время опроса и обновление информации, мс
         int NumOfConnectInputs = 0; // Количество одновременно подключенных каналов
@@ -77,7 +93,7 @@ namespace Charaterizator
         // Функция подключения коммутатора по COM порту
         public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity)
         {
-            Connected =false;
+          
 
             if (Connected)
             {
@@ -769,6 +785,8 @@ namespace Charaterizator
 
             return Num;
         }
+
+
 
         public void SetState(Int32 StateCHPower, Int32 StateCH)
         {
