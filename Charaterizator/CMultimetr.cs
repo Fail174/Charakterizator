@@ -86,7 +86,7 @@ namespace Charaterizator
                 catch
                 {
                     //запись в лог
-                    Connected = false;
+//                    Connected = false;
                     return 0;
                 }
             }

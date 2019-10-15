@@ -16,6 +16,8 @@ namespace Charaterizator
 {
     public partial class MainForm : Form
     {
+        const int MAX_ERROR_COUNT = 5;
+
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
         private ClassEni100 sensors = new ClassEni100();
@@ -25,43 +27,57 @@ namespace Charaterizator
 
         private StreamWriter writer;//для лога
 
+        private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
+
+        //Инициализация переменных основной программы
         public MainForm()
         {
             InitializeComponent();
-            writer = File.CreateText("Charakterizator.log");
+            writer = File.CreateText("Charakterizator.log");//создаем лог файл сессии
 
+//            btmMultimetr_Click(null, null);           
+//            btnCommutator_Click(null, null);
+//            btnMensor_Click(null, null);
 
-            btmMultimetr_Click(null, null);           
-            btnCommutator_Click(null, null);
-            btnMensor_Click(null, null);
-
-
-
-
-
+            //********************  Цифровой шрифт *********************
             textBox1.Font = DrawingFont;
             textBox2.Font = DrawingFont;
-            textBox3.Font = DrawingFont;
+            tbMultimetrData.Font = DrawingFont;
             textBox4.Font = DrawingFont;
             textBox5.Font = DrawingFont;
             numericUpDown1.Font = DrawingFont;
             numericUpDown2.Font = DrawingFont;
+            //**********************************************************
 
-            Properties.Settings.Default.Save();  // Сохраняем переменные.
+//            Properties.Settings.Default.Save();  // Сохраняем настройки программы
+        }
 
-
+        //Выполняем при загрузке главной формы
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            btmMultimetr.PerformClick();
+            btnCommutator.PerformClick();
+            btnMensor.PerformClick();
 
             MainTimer.Enabled = true;
             MainTimer.Start();
-
         }
 
-
         //запись в лог и в окно выводы
-        void WriteLineLog(string str)
+        void WriteLineLog(string str, int status=0)
         {
             writer.WriteLine(str);
-            tbConsole.AppendText(str + Environment.NewLine);
+            if (status == 0)
+            {
+//                rtbConsole.ForeColor = Color.Black;
+                rtbConsole.SelectionColor = Color.Black;
+            }
+            else
+            {
+//                rtbConsole.ForeColor = Color.Red;
+                rtbConsole.SelectionColor = Color.Red;
+            }
+            rtbConsole.AppendText(str + Environment.NewLine);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -164,6 +180,7 @@ namespace Charaterizator
             }
         }
 
+        //подключение мультиметра
         private void btmMultimetr_Click(object sender, EventArgs e)
         {
             if (Multimetr.Connect(Properties.Settings.Default.COMMultimetr,
@@ -174,13 +191,13 @@ namespace Charaterizator
             {
                 btmMultimetr.BackColor = Color.Green;
                 btmMultimetr.Text = "Подключен";
-                WriteLineLog("Мультиметр подключен");
+                WriteLineLog("Мультиметр подключен", 0);
             }
             else
             {
                 btmMultimetr.BackColor = Color.Red;
                 btmMultimetr.Text = "Не подключен";
-                WriteLineLog("Мультиметр не подключен");
+                WriteLineLog("Мультиметр не подключен",1);
             }
         }
 
@@ -195,16 +212,14 @@ namespace Charaterizator
             {
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Подключен";
-                WriteLineLog("Коммутатор подключен");
+                WriteLineLog("Коммутатор подключен", 0);
             }
             else
             {
                 btnCommutator.BackColor = Color.Red;
                 btnCommutator.Text = "Не подключен";
-                WriteLineLog("Коммутатор не подключен");
+                WriteLineLog("Коммутатор не подключен",1);
             }
-
-
         }
 
 
@@ -241,15 +256,11 @@ namespace Charaterizator
                     Commutator.SetConnectors(e.RowIndex, 2); // команда подключить датчик с индексом e.RowIndex
                     dataGridView1[3, e.RowIndex].Style.BackColor = Color.Green;
                 }
-
                 else
                 {
                     Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
                     dataGridView1[3, e.RowIndex].Style.BackColor = Color.Red;
-
                 }
-                    
-
             }
         }
 
@@ -258,6 +269,8 @@ namespace Charaterizator
         //Выход: число подключенных датчиков
         private int SeachConnectedSensor()
         {
+            WriteLineLog("Старт поиска датчиков...", 0);
+
             dataGridView1.Rows.Clear();
             if (sensors.Connect(Properties.Settings.Default.COMSensor,
                 Properties.Settings.Default.COMSensor_Speed,
@@ -267,8 +280,7 @@ namespace Charaterizator
             {
                 for (int i = 0; i < MaxChannalCount; i++)
                 {
-                    WriteLineLog(string.Format("Поиск датчиков на линии {0}", i));
-                    //ConnectChannal(i);//переключение коммутатора
+                    WriteLineLog(string.Format("Поиск датчиков на линии {0}", i),0);
                     dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
 
                     // коммутируем
@@ -277,27 +289,25 @@ namespace Charaterizator
                     if (sensors.SeachSensor())//поиск датчиков
                     {
                         if (sensors.SelectSensor(0))
-                        {
-                            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();
-                            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.Addr.ToString();
-
-                            dataGridView1.Rows[i].Cells[3].Value = false;
-                            dataGridView1.Rows[i].Cells[4].Value = true;
+                        {//датчик найден, обновляем таблицу
+                            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
+                            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART
+                            dataGridView1.Rows[i].Cells[3].Value = false;                           //датчик подключен к измерительной линии
+                            dataGridView1.Rows[i].Cells[4].Value = true;                            //исправность датчика
+                            WriteLineLog("Датчик обнаружен", 0);
                         }
                     }
                     Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i
-
                 }
             }
             else {
-                WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.");
+                WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1);
             }
             return 0;
         }
 
         private void btnSensorSeach_Click_1(object sender, EventArgs e)
         {
-            WriteLineLog("Старт поиска датчиков...");
             SeachConnectedSensor();
         }
 
@@ -339,13 +349,13 @@ namespace Charaterizator
             {
                 btnMensor.BackColor = Color.Green;
                 btnMensor.Text = "Подключен";
-                WriteLineLog("Менсор подключен");
+                WriteLineLog("Задатчик давления подключен", 0);
             }
             else
             {
                 btnMensor.BackColor = Color.Red;
                 btnMensor.Text = "Не подключен";
-                WriteLineLog("Менсор не подключен");
+                WriteLineLog("Задатчик давления не подключен", 1);
             }
         }
 
@@ -358,7 +368,7 @@ namespace Charaterizator
 
             MainTimer.Stop();
             MainTimer.Enabled = false;
-            writer.Close();
+            writer.Close();//закрываем лог
         }
 
 
@@ -367,11 +377,35 @@ namespace Charaterizator
         {
             int qi = Commutator.CalcNumOfConnectInputs(Commutator._StateCH);
             textBox2.Text = Convert.ToString(qi);
+
+            if (Multimetr.Connected)
+            {
+                ReadMultimetr();//обновляем данные с мультиметра
+            }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
 
+        //чтение данных с мультиметра
+        private void ReadMultimetr()
+        {
+            float mData = Multimetr.ReadData();
+            if (mData != 0)
+            {
+                tbMultimetrData.Text = mData.ToString();
+                MultimetrReadError = 0;
+            }
+            else
+            {
+                tbMultimetrData.Text = "";
+                MultimetrReadError++;
+            }
+            if (MultimetrReadError >= MAX_ERROR_COUNT)
+            {
+                Multimetr.DisConnect();
+                btmMultimetr.BackColor = Color.Red;
+                btmMultimetr.Text = "Не подключен";
+                WriteLineLog("Нет данных с мультиметра. Устройство отключено.", 1);
+            }
         }
     }
 }
