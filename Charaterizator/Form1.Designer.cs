@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +57,7 @@
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -82,18 +83,17 @@
             this.tbMultimetrData = new System.Windows.Forms.TextBox();
             this.btmMultimetr = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbTest = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -103,8 +103,8 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.rtbConsole = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tbNumCH = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -334,6 +334,16 @@
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Холодильная камера";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(94, 214);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 38);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Задача";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -624,8 +634,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.groupBox1.Controls.Add(this.cbTest);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.tbNumCH);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnFormCommutator);
             this.groupBox1.Controls.Add(this.btnCommutator);
@@ -636,37 +645,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Коммутатор";
-            // 
-            // cbTest
-            // 
-            this.cbTest.AutoSize = true;
-            this.cbTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbTest.Location = new System.Drawing.Point(10, 79);
-            this.cbTest.Name = "cbTest";
-            this.cbTest.Size = new System.Drawing.Size(106, 24);
-            this.cbTest.TabIndex = 4;
-            this.cbTest.Text = "checkBox1";
-            this.cbTest.UseVisualStyleBackColor = true;
-            this.cbTest.CheckedChanged += new System.EventHandler(this.cbTest_CheckedChanged);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(207, 81);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(55, 49);
-            this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "15";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(2, 103);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(205, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Число открытых каналов:";
             // 
             // btnFormCommutator
             // 
@@ -701,6 +679,17 @@
             this.panel2.Size = new System.Drawing.Size(979, 182);
             this.panel2.TabIndex = 7;
             // 
+            // rtbConsole
+            // 
+            this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbConsole.Location = new System.Drawing.Point(3, 5);
+            this.rtbConsole.Name = "rtbConsole";
+            this.rtbConsole.ReadOnly = true;
+            this.rtbConsole.Size = new System.Drawing.Size(969, 170);
+            this.rtbConsole.TabIndex = 2;
+            this.rtbConsole.Text = "";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.dataGridView1);
@@ -722,6 +711,7 @@
             this.Sensor,
             this.Adress,
             this.State,
+            this.Power,
             this.Work});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(265, 0);
@@ -742,38 +732,49 @@
             // 
             // Sensor
             // 
-            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Sensor.Frozen = true;
             this.Sensor.HeaderText = "Датчик";
             this.Sensor.MinimumWidth = 300;
             this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 321;
             // 
             // Adress
             // 
+            this.Adress.Frozen = true;
             this.Adress.HeaderText = "Адрес";
             this.Adress.Name = "Adress";
             this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // State
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle5.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle3;
             this.State.FalseValue = "false";
-            this.State.HeaderText = "Состояние";
+            this.State.Frozen = true;
+            this.State.HeaderText = "Подключение";
             this.State.IndeterminateValue = "null";
             this.State.Name = "State";
             this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.State.TrueValue = "true";
             // 
+            // Power
+            // 
+            this.Power.Frozen = true;
+            this.Power.HeaderText = "Питание";
+            this.Power.Name = "Power";
+            // 
             // Work
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle4;
             this.Work.FalseValue = "false";
+            this.Work.Frozen = true;
             this.Work.HeaderText = "Исправность";
             this.Work.IndeterminateValue = "null";
             this.Work.Name = "Work";
@@ -828,7 +829,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(257, 709);
+            this.tabPage2.Size = new System.Drawing.Size(257, 749);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -837,33 +838,31 @@
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(257, 709);
+            this.tabPage3.Size = new System.Drawing.Size(257, 749);
             this.tabPage3.TabIndex = 2;
             // 
             // MainTimer
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // rtbConsole
+            // tbNumCH
             // 
-            this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbConsole.Location = new System.Drawing.Point(3, 5);
-            this.rtbConsole.Name = "rtbConsole";
-            this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(969, 170);
-            this.rtbConsole.TabIndex = 2;
-            this.rtbConsole.Text = "";
+            this.tbNumCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbNumCH.Location = new System.Drawing.Point(207, 81);
+            this.tbNumCH.Name = "tbNumCH";
+            this.tbNumCH.Size = new System.Drawing.Size(55, 49);
+            this.tbNumCH.TabIndex = 3;
+            this.tbNumCH.Text = "15";
             // 
-            // button1
+            // label1
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(94, 214);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 38);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Задача";
-            this.button1.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(2, 103);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(205, 20);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Число открытых каналов:";
             // 
             // MainForm
             // 
@@ -929,7 +928,6 @@
         private System.Windows.Forms.TextBox tbMultimetrData;
         private System.Windows.Forms.Button btmMultimetr;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnFormCommutator;
         private System.Windows.Forms.Button btnCommutator;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -969,17 +967,18 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnSensorSeach;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer MainTimer;
+        private System.Windows.Forms.RichTextBox rtbConsole;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
         private System.Windows.Forms.DataGridViewCheckBoxColumn State;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Power;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
-        private System.Windows.Forms.Timer timer1;
-        public System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox cbTest;
-        private System.Windows.Forms.Timer MainTimer;
-        private System.Windows.Forms.RichTextBox rtbConsole;
-        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox tbNumCH;
+        private System.Windows.Forms.Label label1;
     }
 }
 
