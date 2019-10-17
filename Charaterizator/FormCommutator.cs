@@ -22,17 +22,18 @@ namespace Charaterizator
                      
         public Int32 _StateCHPower
         {
-            get { return StateCHPower; }
-
-
+            get
+            {
+                return StateCHPower;
+            }
+            
             set
             {
 
             }
 
         }
-        
-                          
+                                  
        // public Int32 StateCH { get; set;}
 
         Int32 StateCH = 0;          // Измерительная цепь
@@ -42,7 +43,22 @@ namespace Charaterizator
             {
                 return  StateCH;
             }
+            
+            set
+            {
 
+            }
+
+        }
+
+
+        int NumOfConnectInputs = 0; // Количество одновременно подключенных каналов
+        public int _NumOfConnectInputs
+        {
+            get
+            {
+                return  NumOfConnectInputs;
+            }
 
             set
             {
@@ -53,10 +69,8 @@ namespace Charaterizator
 
 
 
-
-
         int TimeSleep = 100;        // Время опроса и обновление информации, мс
-        int NumOfConnectInputs = 0; // Количество одновременно подключенных каналов
+     
 
         bool CommutatorBusy = false;//
         int busycount = 0;          //
@@ -165,6 +179,8 @@ namespace Charaterizator
         // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
         public int SetPower(Int32 CH, int mode)
         {
+            if (!serialPort1.IsOpen) return -1;
+
             byte[] indata = new byte[10];
 
             if (mode == 0)
@@ -232,7 +248,7 @@ namespace Charaterizator
             // правая кнопка мыши - режим подключения нескольких датчиков датчиков
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                if ((b.ImageIndex == 0) & (NumOfConnectInputs <= 14))  // если датчик не подключен, подключаем его
+                if (b.ImageIndex == 0)  // если датчик не подключен, подключаем его
                 {
                     mode = 2;                   
                 }
@@ -254,6 +270,8 @@ namespace Charaterizator
 
         public void SetConnectors(Int32 CH, int mode)
         {
+            if (!serialPort1.IsOpen) return;
+
             byte[] indata = new byte[10];
             Int32 _CH;
 
@@ -287,12 +305,16 @@ namespace Charaterizator
 
                 //режим подключения нескольких датчиков датчиков, подключаем заданный к измерительной петле
                 case 2:
-                    _CH = (1 << CH) | StateCH;
-                    serialPort1.Write(WriteHoldingRegister(1, _CH), 0, 9);
-                    Thread.Sleep(TimeSleep);
-                    serialPort1.Read(indata, 0, 10);
-                    StateCH = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                    SetState(StateCHPower, StateCH);
+                    if (NumOfConnectInputs <= 14)
+                    {
+                        _CH = (1 << CH) | StateCH;
+                        serialPort1.Write(WriteHoldingRegister(1, _CH), 0, 9);
+                        Thread.Sleep(TimeSleep);
+                        serialPort1.Read(indata, 0, 10);
+                        StateCH = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState(StateCHPower, StateCH);
+                    }
+                  
                     break;
 
                 //режим подключения нескольких датчиков датчиков, отключаем заданный от змерительной петли
