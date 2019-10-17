@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +75,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnFormMensor = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbMensorData = new System.Windows.Forms.TextBox();
             this.btnMensor = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -90,11 +90,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -105,6 +100,11 @@
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -446,7 +446,7 @@
             this.groupBox3.Controls.Add(this.comboBox1);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnFormMensor);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.tbMensorData);
             this.groupBox3.Controls.Add(this.btnMensor);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(15, 300);
@@ -555,14 +555,14 @@
             this.btnFormMensor.UseVisualStyleBackColor = true;
             this.btnFormMensor.Click += new System.EventHandler(this.btnFormMensor_Click);
             // 
-            // textBox1
+            // tbMensorData
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(6, 171);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(143, 49);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "200,000";
+            this.tbMensorData.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbMensorData.Location = new System.Drawing.Point(6, 171);
+            this.tbMensorData.Name = "tbMensorData";
+            this.tbMensorData.Size = new System.Drawing.Size(143, 49);
+            this.tbMensorData.TabIndex = 3;
+            this.tbMensorData.Text = "200,000";
             // 
             // btnMensor
             // 
@@ -732,55 +732,6 @@
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
-            // ChannalNum
-            // 
-            this.ChannalNum.Frozen = true;
-            this.ChannalNum.HeaderText = "Номер канал";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.MinimumWidth = 300;
-            this.Sensor.Name = "Sensor";
-            // 
-            // Adress
-            // 
-            this.Adress.HeaderText = "Адрес";
-            this.Adress.Name = "Adress";
-            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // State
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle5.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle5;
-            this.State.FalseValue = "false";
-            this.State.HeaderText = "Состояние";
-            this.State.IndeterminateValue = "null";
-            this.State.Name = "State";
-            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.State.TrueValue = "true";
-            // 
-            // Work
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Work.FalseValue = "false";
-            this.Work.HeaderText = "Исправность";
-            this.Work.IndeterminateValue = "null";
-            this.Work.Name = "Work";
-            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Work.TrueValue = "true";
-            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.tabControl1);
@@ -865,6 +816,58 @@
             this.button1.Text = "Задача";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // ChannalNum
+            // 
+            this.ChannalNum.Frozen = true;
+            this.ChannalNum.HeaderText = "Номер канала";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.ReadOnly = true;
+            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.MinimumWidth = 300;
+            this.Sensor.Name = "Sensor";
+            this.Sensor.ReadOnly = true;
+            // 
+            // Adress
+            // 
+            this.Adress.HeaderText = "Адрес";
+            this.Adress.Name = "Adress";
+            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // State
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            this.State.FalseValue = "false";
+            this.State.HeaderText = "Состояние";
+            this.State.IndeterminateValue = "null";
+            this.State.Name = "State";
+            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.State.TrueValue = "true";
+            // 
+            // Work
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Work.FalseValue = "false";
+            this.Work.HeaderText = "Исправность";
+            this.Work.IndeterminateValue = "null";
+            this.Work.Name = "Work";
+            this.Work.ReadOnly = true;
+            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Work.TrueValue = "true";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -937,7 +940,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnFormMensor;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbMensorData;
         private System.Windows.Forms.Button btnMensor;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
@@ -969,17 +972,17 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnSensorSeach;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn State;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.CheckBox cbTest;
         private System.Windows.Forms.Timer MainTimer;
         private System.Windows.Forms.RichTextBox rtbConsole;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn State;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
     }
 }
 

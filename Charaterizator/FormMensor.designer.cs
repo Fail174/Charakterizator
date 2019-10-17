@@ -969,7 +969,7 @@
             this.checkBox2.TabIndex = 21;
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // FormMensor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -995,7 +995,9 @@
             this.Controls.Add(this.cbSetComPort);
             this.Controls.Add(this.pCHB);
             this.Controls.Add(this.pCHA);
-            this.Name = "Form1";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "FormMensor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Mensor";
             this.pCHA.ResumeLayout(false);
             this.pCHA.PerformLayout();

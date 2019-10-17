@@ -28,6 +28,8 @@ namespace Charaterizator
         private StreamWriter writer;//для лога
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
+        private int MensorReadError = 0;//число ошибко чтения данных с задатчика давления
+        
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -40,7 +42,7 @@ namespace Charaterizator
 //            btnMensor_Click(null, null);
 
             //********************  Цифровой шрифт *********************
-            textBox1.Font = DrawingFont;
+            tbMensorData.Font = DrawingFont;
             textBox2.Font = DrawingFont;
             tbMultimetrData.Font = DrawingFont;
             textBox4.Font = DrawingFont;
@@ -66,6 +68,7 @@ namespace Charaterizator
         //запись в лог и в окно выводы
         void WriteLineLog(string str, int status=0)
         {
+            str = DateTime.Now + ":" + str;
             writer.WriteLine(str);
             if (status == 0)
             {
@@ -375,15 +378,43 @@ namespace Charaterizator
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            int qi = Commutator.CalcNumOfConnectInputs(Commutator._StateCH);
-            textBox2.Text = Convert.ToString(qi);
-
+            if (Commutator.Connected)
+            {
+                int qi = Commutator.CalcNumOfConnectInputs(Commutator._StateCH);
+                textBox2.Text = Convert.ToString(qi);
+            }
             if (Multimetr.Connected)
             {
                 ReadMultimetr();//обновляем данные с мультиметра
             }
+            if (Mensor.Connected)
+            {
+                ReadMensor();//обновляем данные с задатчика давления
+            }
         }
-
+        
+        //чтение данных с менсора
+        private void ReadMensor()
+        {
+            float mData = Multimetr.ReadData();//чтение давления с Менсора
+            if (mData != 0)
+            {
+                tbMensorData.Text = mData.ToString();
+                MensorReadError = 0;
+            }
+            else
+            {
+                tbMensorData.Text = "";
+                MensorReadError++;
+            }
+            if (MensorReadError >= MAX_ERROR_COUNT)
+            {
+                Mensor.DisConnect();
+                btnMensor.BackColor = Color.Red;
+                btnMensor.Text = "Не подключен";
+                WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
+            }
+        }
 
         //чтение данных с мультиметра
         private void ReadMultimetr()
