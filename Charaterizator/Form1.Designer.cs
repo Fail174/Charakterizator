@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,18 +83,14 @@
             this.tbMultimetrData = new System.Windows.Forms.TextBox();
             this.btmMultimetr = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tbNumCH = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -103,8 +99,12 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.tbNumCH = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -646,6 +646,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Коммутатор";
             // 
+            // tbNumCH
+            // 
+            this.tbNumCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbNumCH.Location = new System.Drawing.Point(207, 81);
+            this.tbNumCH.Name = "tbNumCH";
+            this.tbNumCH.Size = new System.Drawing.Size(55, 49);
+            this.tbNumCH.TabIndex = 3;
+            this.tbNumCH.Text = "15";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(2, 103);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(205, 20);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Число открытых каналов:";
+            // 
             // btnFormCommutator
             // 
             this.btnFormCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -720,67 +739,8 @@
             this.dataGridView1.Size = new System.Drawing.Size(714, 775);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
-            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
-            // 
-            // ChannalNum
-            // 
-            this.ChannalNum.Frozen = true;
-            this.ChannalNum.HeaderText = "Номер канал";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Sensor.Frozen = true;
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.MinimumWidth = 300;
-            this.Sensor.Name = "Sensor";
-            this.Sensor.Width = 321;
-            // 
-            // Adress
-            // 
-            this.Adress.Frozen = true;
-            this.Adress.HeaderText = "Адрес";
-            this.Adress.Name = "Adress";
-            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // State
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle3.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle3;
-            this.State.FalseValue = "false";
-            this.State.Frozen = true;
-            this.State.HeaderText = "Подключение";
-            this.State.IndeterminateValue = "null";
-            this.State.Name = "State";
-            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.State.TrueValue = "true";
-            // 
-            // Power
-            // 
-            this.Power.Frozen = true;
-            this.Power.HeaderText = "Питание";
-            this.Power.Name = "Power";
-            // 
-            // Work
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle4.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Work.FalseValue = "false";
-            this.Work.Frozen = true;
-            this.Work.HeaderText = "Исправность";
-            this.Work.IndeterminateValue = "null";
-            this.Work.Name = "Work";
-            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Work.TrueValue = "true";
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // panel4
             // 
@@ -845,24 +805,68 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // tbNumCH
+            // ChannalNum
             // 
-            this.tbNumCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbNumCH.Location = new System.Drawing.Point(207, 81);
-            this.tbNumCH.Name = "tbNumCH";
-            this.tbNumCH.Size = new System.Drawing.Size(55, 49);
-            this.tbNumCH.TabIndex = 3;
-            this.tbNumCH.Text = "15";
+            this.ChannalNum.Frozen = true;
+            this.ChannalNum.HeaderText = "Номер канал";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ChannalNum.Width = 50;
             // 
-            // label1
+            // Sensor
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(2, 103);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(205, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Число открытых каналов:";
+            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Sensor.Frozen = true;
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.MinimumWidth = 300;
+            this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 321;
+            // 
+            // Adress
+            // 
+            this.Adress.Frozen = true;
+            this.Adress.HeaderText = "Адрес";
+            this.Adress.Name = "Adress";
+            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // State
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            this.State.FalseValue = "false";
+            this.State.Frozen = true;
+            this.State.HeaderText = "Подключение";
+            this.State.IndeterminateValue = "null";
+            this.State.Name = "State";
+            this.State.ReadOnly = true;
+            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.State.TrueValue = "true";
+            // 
+            // Power
+            // 
+            this.Power.Frozen = true;
+            this.Power.HeaderText = "Питание";
+            this.Power.Name = "Power";
+            this.Power.ReadOnly = true;
+            // 
+            // Work
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Work.FalseValue = "false";
+            this.Work.Frozen = true;
+            this.Work.HeaderText = "Исправность";
+            this.Work.IndeterminateValue = "null";
+            this.Work.Name = "Work";
+            this.Work.ReadOnly = true;
+            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Work.TrueValue = "true";
             // 
             // MainForm
             // 
@@ -971,14 +975,14 @@
         private System.Windows.Forms.Timer MainTimer;
         private System.Windows.Forms.RichTextBox rtbConsole;
         private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox tbNumCH;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Adress;
         private System.Windows.Forms.DataGridViewCheckBoxColumn State;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Power;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
-        public System.Windows.Forms.TextBox tbNumCH;
-        private System.Windows.Forms.Label label1;
     }
 }
 

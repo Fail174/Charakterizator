@@ -263,42 +263,7 @@ namespace Charaterizator
             MensorWindow.ShowDialog();
         }
 
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 3)//Состояние датчика - подключение
-            {
-                if (Convert.ToBoolean(dataGridView1[3, e.RowIndex].Value))
-                {
-                    Commutator.SetConnectors(e.RowIndex, 2); // команда подключить датчик с индексом e.RowIndex
-                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Green;
-
-                }
-                else
-                {
-                    Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
-                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Red;
-
-                }
-
-            }
-            else if (e.ColumnIndex == 4)// Питание датчика - подключение
-            {
-                if (Convert.ToBoolean(dataGridView1[4, e.RowIndex].Value))
-                {
-                    Commutator.SetPower(e.RowIndex, 0);     // команда подключить питание датчика
-                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Green;  
-
-                }
-                else
-                {
-                    Commutator.SetPower(e.RowIndex, 1);   // команда отключить питание датчика
-                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Red;
-
-                }
-            }
-
-
-        }
+      
 
         //Поиск подключенных датчиков
         //Формирует списко датчиков в датагриде
@@ -429,69 +394,90 @@ namespace Charaterizator
         // Обновление состояния каналов коммутатора (checkbox)
         private void StateComutators(Int32 data32)
         {
-            dataGridView1.Rows[0].Cells[3].Value = (data32 & 0x1); dataGridView1.Rows[15].Cells[3].Value = (data32 & 0x8000) >> 15;
-            dataGridView1.Rows[1].Cells[3].Value = (data32 & 0x2) >> 1; dataGridView1.Rows[16].Cells[3].Value = (data32 & 0x10000) >> 16;
-            dataGridView1.Rows[2].Cells[3].Value = (data32 & 0x4) >> 2; dataGridView1.Rows[17].Cells[3].Value = (data32 & 0x20000) >> 17;
-            dataGridView1.Rows[3].Cells[3].Value = (data32 & 0x8) >> 3; dataGridView1.Rows[18].Cells[3].Value = (data32 & 0x40000) >> 18;
-            dataGridView1.Rows[4].Cells[3].Value = (data32 & 0x10) >> 4; dataGridView1.Rows[19].Cells[3].Value = (data32 & 0x80000) >> 19;
-            dataGridView1.Rows[5].Cells[3].Value = (data32 & 0x20) >> 5; dataGridView1.Rows[20].Cells[3].Value = (data32 & 0x100000) >> 20;
-            dataGridView1.Rows[6].Cells[3].Value = (data32 & 0x40) >> 6; dataGridView1.Rows[21].Cells[3].Value = (data32 & 0x200000) >> 21;
-            dataGridView1.Rows[7].Cells[3].Value = (data32 & 0x80) >> 7; dataGridView1.Rows[22].Cells[3].Value = (data32 & 0x400000) >> 22;
-            dataGridView1.Rows[8].Cells[3].Value = (data32 & 0x100) >> 8; dataGridView1.Rows[23].Cells[3].Value = (data32 & 0x800000) >> 23;
-            dataGridView1.Rows[9].Cells[3].Value = (data32 & 0x200) >> 9; dataGridView1.Rows[24].Cells[3].Value = (data32 & 0x1000000) >> 24;
-            dataGridView1.Rows[10].Cells[3].Value = (data32 & 0x400) >> 10; dataGridView1.Rows[25].Cells[3].Value = (data32 & 0x2000000) >> 25;
-            dataGridView1.Rows[11].Cells[3].Value = (data32 & 0x800) >> 11; dataGridView1.Rows[26].Cells[3].Value = (data32 & 0x4000000) >> 26;
-            dataGridView1.Rows[12].Cells[3].Value = (data32 & 0x1000) >> 12; dataGridView1.Rows[27].Cells[3].Value = (data32 & 0x8000000) >> 27;
-            dataGridView1.Rows[13].Cells[3].Value = (data32 & 0x2000) >> 13; dataGridView1.Rows[28].Cells[3].Value = (data32 & 0x10000000) >> 28;
-            dataGridView1.Rows[14].Cells[3].Value = (data32 & 0x4000) >> 14; dataGridView1.Rows[29].Cells[3].Value = (data32 & 0x20000000) >> 29;
-            
+
+            for (int i = 0; i < MaxChannalCount; i++)
+            {
+                if (((data32 >> i) & 01) == 1)
+                {
+                    dataGridView1.Rows[i].Cells[3].Value = 1;
+                    dataGridView1[3, i].Style.BackColor = Color.Green;
+                }
+                else
+                {
+                    dataGridView1.Rows[i].Cells[3].Value = 0;
+                    dataGridView1[3, i].Style.BackColor = Color.Red;
+                }
+            }
+                                   
             tbNumCH.Text = Convert.ToString(Commutator._NumOfConnectInputs);
         }
 
 
-        // Обновление состояния каналов коммутатора (checkbox)
+        // Обновление состояния питания коммутатора (checkbox)
         private void PowerComutators(Int32 data32)
         {
-            if((data32 & 0x1)==1)
-            {   dataGridView1.Rows[0].Cells[4].Value = 1;
-                dataGridView1[4, 0].Style.BackColor = Color.Green;  }
-            else
-            {   dataGridView1.Rows[0].Cells[4].Value = 0;
-                dataGridView1[4, 0].Style.BackColor = Color.Red;    }
-
-            if ((data32 & 0x2) ==2)
+            for (int i = 0; i < MaxChannalCount; i++)
             {
-                dataGridView1.Rows[1].Cells[4].Value = 1;
-                dataGridView1[4, 1].Style.BackColor = Color.Green;
-            }
-            else
-            {
-                dataGridView1.Rows[1].Cells[4].Value = 0;
-                dataGridView1[4, 1].Style.BackColor = Color.Red;
+                if (((data32 >> i) & 01) == 1)
+                {
+                    dataGridView1.Rows[i].Cells[4].Value = true;
+                    dataGridView1[4, i].Style.BackColor = Color.Green;
+                }
+                else
+                {
+                    dataGridView1.Rows[i].Cells[4].Value = false;
+                    dataGridView1[4, i].Style.BackColor = Color.Red;
+                }
+            }      
+        }
+
+      
+
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.ColumnIndex == 3)//Состояние датчика - подключение
+            {                
+                dataGridView1.Rows[e.RowIndex].Cells[3].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[3].Value);               
+             
+                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[3].Value))
+                {
+                    Commutator.SetConnectors(e.RowIndex, 2); // команда подключить датчик с индексом e.RowIndex
+                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Green;                   
+
+                }
+                else
+                {
+                    Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
+                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Red;                  
+
+                }
+               
             }
 
-            /*dataGridView1.Rows[0].Cells[4].Value = (data32 & 0x1); */ dataGridView1.Rows[15].Cells[4].Value = (data32 & 0x8000) >> 15;
-            /*dataGridView1.Rows[1].Cells[4].Value = (data32 & 0x2) >> 1;*/ dataGridView1.Rows[16].Cells[4].Value = (data32 & 0x10000) >> 16;
-            dataGridView1.Rows[2].Cells[4].Value = (data32 & 0x4) >> 2; dataGridView1.Rows[17].Cells[4].Value = (data32 & 0x20000) >> 17;
-            dataGridView1.Rows[3].Cells[4].Value = (data32 & 0x8) >> 3; dataGridView1.Rows[18].Cells[4].Value = (data32 & 0x40000) >> 18;
-            dataGridView1.Rows[4].Cells[4].Value = (data32 & 0x10) >> 4; dataGridView1.Rows[19].Cells[4].Value = (data32 & 0x80000) >> 19;
-            dataGridView1.Rows[5].Cells[4].Value = (data32 & 0x20) >> 5; dataGridView1.Rows[20].Cells[4].Value = (data32 & 0x100000) >> 20;
-            dataGridView1.Rows[6].Cells[4].Value = (data32 & 0x40) >> 6; dataGridView1.Rows[21].Cells[4].Value = (data32 & 0x200000) >> 21;
-            dataGridView1.Rows[7].Cells[4].Value = (data32 & 0x80) >> 7; dataGridView1.Rows[22].Cells[4].Value = (data32 & 0x400000) >> 22;
-            dataGridView1.Rows[8].Cells[4].Value = (data32 & 0x100) >> 8; dataGridView1.Rows[23].Cells[4].Value = (data32 & 0x800000) >> 23;
-            dataGridView1.Rows[9].Cells[4].Value = (data32 & 0x200) >> 9; dataGridView1.Rows[24].Cells[4].Value = (data32 & 0x1000000) >> 24;
-            dataGridView1.Rows[10].Cells[4].Value = (data32 & 0x400) >> 10; dataGridView1.Rows[25].Cells[4].Value = (data32 & 0x2000000) >> 25;
-            dataGridView1.Rows[11].Cells[4].Value = (data32 & 0x800) >> 11; dataGridView1.Rows[26].Cells[4].Value = (data32 & 0x4000000) >> 26;
-            dataGridView1.Rows[12].Cells[4].Value = (data32 & 0x1000) >> 12; dataGridView1.Rows[27].Cells[4].Value = (data32 & 0x8000000) >> 27;
-            dataGridView1.Rows[13].Cells[4].Value = (data32 & 0x2000) >> 13; dataGridView1.Rows[28].Cells[4].Value = (data32 & 0x10000000) >> 28;
-            dataGridView1.Rows[14].Cells[4].Value = (data32 & 0x4000) >> 14; dataGridView1.Rows[29].Cells[4].Value = (data32 & 0x20000000) >> 29;
+            else if (e.ColumnIndex == 4)// Питание датчика - подключение
+            {
+                dataGridView1.Rows[e.RowIndex].Cells[4].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value);
+
+
+                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value))
+                {
+                    Commutator.SetPower(e.RowIndex, 0);     // команда подключить питание датчика
+                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Green;
+                }
+                else
+                {
+                    Commutator.SetPower(e.RowIndex, 1);   // команда отключить питание датчика
+                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Red;
+                }
+            }
 
         }
 
-
-
-
-
-
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
+        }
     }
 }
