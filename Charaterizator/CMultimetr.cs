@@ -49,8 +49,17 @@ namespace Charaterizator
                 Port.DtrEnable = true;
                 Port.RtsEnable = true;
                 Port.Open();
-                Connected = true;
-                return 0;
+                if (ReadData() >= 0)
+                {
+                    Connected = true;
+                    return 0;
+                }
+                else
+                {
+                    Port.Close();
+                    Connected = false;
+                    return -1;
+                }
             }
             catch
             {
@@ -78,7 +87,7 @@ namespace Charaterizator
                 try
                 {
                     Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
-                    Thread.Sleep(500);
+                    Thread.Sleep(300);
                     string str = Port.ReadLine();
                     Data = Convert.ToSingle(str);
                     return Data;
@@ -87,12 +96,12 @@ namespace Charaterizator
                 {
                     //запись в лог
 //                    Connected = false;
-                    return 0;
+                    return -2;
                 }
             }
             else
             {
-                return 0;
+                return -1;
             }
         }
     }

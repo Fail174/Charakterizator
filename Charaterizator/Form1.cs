@@ -28,6 +28,7 @@ namespace Charaterizator
         private StreamWriter writer;//для лога
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
+        private int MensorReadError = 0;//число ошибко чтения данных с менсора
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -40,7 +41,7 @@ namespace Charaterizator
 //            btnMensor_Click(null, null);
 
             //********************  Цифровой шрифт *********************
-            textBox1.Font = DrawingFont;
+            tbMensorData.Font = DrawingFont;
             tbNumCH.Font = DrawingFont;
             tbMultimetrData.Font = DrawingFont;
             textBox4.Font = DrawingFont;
@@ -62,10 +63,10 @@ namespace Charaterizator
             // btnSensorSeach.PerformClick();
             for (int i = 0; i < MaxChannalCount; i++)
             {
-                dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
-                dataGridView1[3, i].Style.BackColor = Color.Red;
+                dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", "", false, false);
                 dataGridView1[4, i].Style.BackColor = Color.Red;
                 dataGridView1[5, i].Style.BackColor = Color.Red;
+                dataGridView1[6, i].Style.BackColor = Color.Red;
             }
 
             MainTimer.Enabled = true;
@@ -284,14 +285,17 @@ namespace Charaterizator
 
                     if (sensors.SeachSensor())//поиск датчиков
                     {
-                        if (sensors.SelectSensor(0))
+                        if (sensors.SelectSensor(0))//выбор первого обнаруженного датчика
                         {//датчик найден, обновляем таблицу
+                            WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
+                            sensors.SensorRead();                                                   //чтение данных с датчика
                             dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
-                            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART
-                            //dataGridView1.Rows[i].Cells[3].Value = false;                           //датчик подключен к измерительной линии
+                            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
+                            dataGridView1.Rows[i].Cells[3].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART
                             //dataGridView1.Rows[i].Cells[4].Value = false;                           //датчик подключен к измерительной линии
-                            dataGridView1.Rows[i].Cells[5].Value = true;                            //исправность датчика
-                            WriteLineLog("Датчик обнаружен", 0);
+                            //dataGridView1.Rows[i].Cells[5].Value = false;                           //датчик подключен к измерительной линии
+                            dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика
+//                            WriteLineLog("Датчик обнаружен", 0);
                         }
                     }
                     Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i
@@ -353,14 +357,40 @@ namespace Charaterizator
                 PowerComutators(Commutator._StateCHPower); //обновляем данные с коммутатора
             }
 
-           
-
             if (Multimetr.Connected)
             {
                 ReadMultimetr(); //обновляем данные с мультиметра
             }
+
+
+            if (Mensor.Connected)
+            {
+                ReadMensor(); //обновляем данные с Менсора
+            }
         }
 
+        //чтение данных с менсора
+        private void ReadMensor()
+        {
+            float mData=0; //= Mensor.ReadData();//чтение давления с Менсора
+            if (mData != 0)
+            {
+                tbMensorData.Text = mData.ToString();
+                MensorReadError = 0;
+            }
+            else
+            {
+                tbMensorData.Text = "";
+                MensorReadError++;
+            }
+            if (MensorReadError >= MAX_ERROR_COUNT)
+            {
+                Mensor.DisConnect();
+                btnMensor.BackColor = Color.Red;
+                btnMensor.Text = "Не подключен";
+                WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
+            }
+        }
 
         //чтение данных с мультиметра
         private void ReadMultimetr()
@@ -394,13 +424,13 @@ namespace Charaterizator
             {
                 if (((data32 >> i) & 01) == 1)
                 {
-                    dataGridView1.Rows[i].Cells[3].Value = 1;
-                    dataGridView1[3, i].Style.BackColor = Color.Green;
+                    dataGridView1.Rows[i].Cells[4].Value = 1;
+                    dataGridView1[4, i].Style.BackColor = Color.Green;
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[3].Value = 0;
-                    dataGridView1[3, i].Style.BackColor = Color.Red;
+                    dataGridView1.Rows[i].Cells[4].Value = 0;
+                    dataGridView1[4, i].Style.BackColor = Color.Red;
                 }
             }
                                    
@@ -415,13 +445,13 @@ namespace Charaterizator
             {
                 if (((data32 >> i) & 01) == 1)
                 {
-                    dataGridView1.Rows[i].Cells[4].Value = true;
-                    dataGridView1[4, i].Style.BackColor = Color.Green;
+                    dataGridView1.Rows[i].Cells[5].Value = true;
+                    dataGridView1[5, i].Style.BackColor = Color.Green;
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[4].Value = false;
-                    dataGridView1[4, i].Style.BackColor = Color.Red;
+                    dataGridView1.Rows[i].Cells[5].Value = false;
+                    dataGridView1[5, i].Style.BackColor = Color.Red;
                 }
             }      
         }
@@ -433,39 +463,39 @@ namespace Charaterizator
         {
             if (!Commutator.Connected) return;
 
-                if (e.ColumnIndex == 3)//Состояние датчика - подключение
+                if (e.ColumnIndex == 4)//Состояние датчика - подключение
             {                
-                dataGridView1.Rows[e.RowIndex].Cells[3].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[3].Value);               
+                dataGridView1.Rows[e.RowIndex].Cells[4].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value);               
              
-                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[3].Value))
+                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value))
                 {
                     Commutator.SetConnectors(e.RowIndex, 2); // команда подключить датчик с индексом e.RowIndex
-                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Green;                   
+                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Green;                   
 
                 }
                 else
                 {
-                    Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
-                    dataGridView1[3, e.RowIndex].Style.BackColor = Color.Red;                  
+                    Commutator.SetConnectors(e.RowIndex, 4); // команда отключить датчик с индексом e.RowIndex
+                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Red;                  
 
                 }
                
             }
 
-            else if (e.ColumnIndex == 4)// Питание датчика - подключение
+            else if (e.ColumnIndex == 5)// Питание датчика - подключение
             {
-                dataGridView1.Rows[e.RowIndex].Cells[4].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value);
+                dataGridView1.Rows[e.RowIndex].Cells[5].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[5].Value);
 
 
-                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value))
+                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[5].Value))
                 {
                     Commutator.SetPower(e.RowIndex, 0);     // команда подключить питание датчика
-                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Green;
+                    dataGridView1[5, e.RowIndex].Style.BackColor = Color.Green;
                 }
                 else
                 {
                     Commutator.SetPower(e.RowIndex, 1);   // команда отключить питание датчика
-                    dataGridView1[4, e.RowIndex].Style.BackColor = Color.Red;
+                    dataGridView1[5, e.RowIndex].Style.BackColor = Color.Red;
                 }
             }
 
