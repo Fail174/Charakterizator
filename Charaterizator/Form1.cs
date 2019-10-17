@@ -16,7 +16,7 @@ namespace Charaterizator
 {
     public partial class MainForm : Form
     {
-        const int MAX_ERROR_COUNT = 5;
+        const int MAX_ERROR_COUNT = 3;
 
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
@@ -68,13 +68,7 @@ namespace Charaterizator
                 dataGridView1[5, i].Style.BackColor = Color.Red;
             }
 
-
-
-
-
-
-
-                MainTimer.Enabled = true;
+            MainTimer.Enabled = true;
             MainTimer.Start();
 
         }
@@ -82,6 +76,7 @@ namespace Charaterizator
         //запись в лог и в окно выводы
         void WriteLineLog(string str, int status=0)
         {
+            str = DateTime.Now + ":" + str;
             writer.WriteLine(str);
             if (status == 0)
             {
@@ -436,8 +431,9 @@ namespace Charaterizator
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (!Commutator.Connected) return;
 
-            if (e.ColumnIndex == 3)//Состояние датчика - подключение
+                if (e.ColumnIndex == 3)//Состояние датчика - подключение
             {                
                 dataGridView1.Rows[e.RowIndex].Cells[3].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[3].Value);               
              
@@ -478,6 +474,17 @@ namespace Charaterizator
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             dataGridView1.ClearSelection();
+        }
+
+        private void tabControl1_TabIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Visible = (tabControl1.SelectedIndex == 0);
+            dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
+            dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
         }
     }
 }

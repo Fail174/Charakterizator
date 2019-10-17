@@ -179,6 +179,8 @@ namespace Charaterizator
         // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
         public int SetPower(Int32 CH, int mode)
         {
+            if (!serialPort1.IsOpen) return -1;
+
             byte[] indata = new byte[10];
 
             if (mode == 0)
@@ -268,6 +270,8 @@ namespace Charaterizator
 
         public void SetConnectors(Int32 CH, int mode)
         {
+            if (!serialPort1.IsOpen) return;
+
             byte[] indata = new byte[10];
             Int32 _CH;
 
