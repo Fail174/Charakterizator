@@ -93,6 +93,10 @@ namespace Charaterizator
         {
             if (Connected)
             {
+                // останавливаем таймер                
+                timer1.Stop();
+                timer1.Enabled = false;
+
                 serialPort1.Close();
                 Connected = false;
                 return 0;
@@ -124,9 +128,10 @@ namespace Charaterizator
                 serialPort1.WriteTimeout = 1000;
                 serialPort1.DtrEnable = true;
                 serialPort1.RtsEnable = true;
-                serialPort1.Open();                           
-                
+                serialPort1.Open();
 
+
+                
                 if (ReadCommutatorID())
                 {
                     // Запускаем таймер

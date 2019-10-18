@@ -64,16 +64,16 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numMensorPoint = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tbMensorRate = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.bMensorControl = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbMensorTypeR = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnFormMensor = new System.Windows.Forms.Button();
             this.tbMensorData = new System.Windows.Forms.TextBox();
@@ -105,6 +105,13 @@
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUtk2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -131,18 +138,11 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -352,7 +352,7 @@
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.groupBox4);
-            this.panel1.Controls.Add(this.numericUpDown1);
+            this.panel1.Controls.Add(this.numMensorPoint);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
@@ -464,25 +464,25 @@
             this.button8.Text = "Подключен";
             this.button8.UseVisualStyleBackColor = false;
             // 
-            // numericUpDown1
+            // numMensorPoint
             // 
-            this.numericUpDown1.DecimalPlaces = 1;
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Increment = new decimal(new int[] {
+            this.numMensorPoint.DecimalPlaces = 1;
+            this.numMensorPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numMensorPoint.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.numericUpDown1.Location = new System.Drawing.Point(109, 526);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numMensorPoint.Location = new System.Drawing.Point(109, 526);
+            this.numMensorPoint.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(164, 49);
-            this.numericUpDown1.TabIndex = 5;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numMensorPoint.Name = "numMensorPoint";
+            this.numMensorPoint.Size = new System.Drawing.Size(164, 49);
+            this.numMensorPoint.TabIndex = 5;
+            this.numMensorPoint.Value = new decimal(new int[] {
             100,
             0,
             0,
@@ -492,13 +492,13 @@
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.textBox4);
+            this.groupBox3.Controls.Add(this.tbMensorRate);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.button6);
+            this.groupBox3.Controls.Add(this.bMensorControl);
             this.groupBox3.Controls.Add(this.button7);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Controls.Add(this.cbMensorTypeR);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnFormMensor);
             this.groupBox3.Controls.Add(this.tbMensorData);
@@ -521,14 +521,14 @@
             this.label9.TabIndex = 10;
             this.label9.Text = "кПа";
             // 
-            // textBox4
+            // tbMensorRate
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox4.Location = new System.Drawing.Point(94, 281);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(164, 49);
-            this.textBox4.TabIndex = 9;
-            this.textBox4.Text = "10,000";
+            this.tbMensorRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbMensorRate.Location = new System.Drawing.Point(94, 281);
+            this.tbMensorRate.Name = "tbMensorRate";
+            this.tbMensorRate.Size = new System.Drawing.Size(164, 49);
+            this.tbMensorRate.TabIndex = 9;
+            this.tbMensorRate.Text = "10,000";
             // 
             // label5
             // 
@@ -550,15 +550,16 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Уставка:";
             // 
-            // button6
+            // bMensorControl
             // 
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(7, 336);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(116, 38);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Задача";
-            this.button6.UseVisualStyleBackColor = true;
+            this.bMensorControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bMensorControl.Location = new System.Drawing.Point(7, 336);
+            this.bMensorControl.Name = "bMensorControl";
+            this.bMensorControl.Size = new System.Drawing.Size(116, 38);
+            this.bMensorControl.TabIndex = 6;
+            this.bMensorControl.Text = "Задача";
+            this.bMensorControl.UseVisualStyleBackColor = true;
+            this.bMensorControl.Click += new System.EventHandler(this.bMensorControl_Click);
             // 
             // button7
             // 
@@ -569,6 +570,7 @@
             this.button7.TabIndex = 7;
             this.button7.Text = "сброс";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // label3
             // 
@@ -580,14 +582,21 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Выбор преобразователя:";
             // 
-            // comboBox1
+            // cbMensorTypeR
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 109);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(251, 33);
-            this.comboBox1.TabIndex = 6;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cbMensorTypeR.FormattingEnabled = true;
+            this.cbMensorTypeR.Items.AddRange(new object[] {
+            "-A- Дат. 1 (ДП-1)",
+            "-А- Дат. 2 (ДП-1)",
+            "-А- AutoRange",
+            "-В- Дат. 2 (ДП-1)",
+            "-B- Дат. 2 (ДП-1)",
+            "-В- AutoRange"});
+            this.cbMensorTypeR.Location = new System.Drawing.Point(6, 109);
+            this.cbMensorTypeR.Name = "cbMensorTypeR";
+            this.cbMensorTypeR.Size = new System.Drawing.Size(251, 33);
+            this.cbMensorTypeR.TabIndex = 6;
+            this.cbMensorTypeR.SelectedIndexChanged += new System.EventHandler(this.cbMensorTypeR_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -906,6 +915,78 @@
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
+            // ChannalNum
+            // 
+            this.ChannalNum.Frozen = true;
+            this.ChannalNum.HeaderText = "Номер канала";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Sensor.Frozen = true;
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.MinimumWidth = 300;
+            this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 300;
+            // 
+            // сFactoryNumber
+            // 
+            this.сFactoryNumber.Frozen = true;
+            this.сFactoryNumber.HeaderText = "Заводской номер";
+            this.сFactoryNumber.MinimumWidth = 200;
+            this.сFactoryNumber.Name = "сFactoryNumber";
+            this.сFactoryNumber.ReadOnly = true;
+            this.сFactoryNumber.Width = 300;
+            // 
+            // Adress
+            // 
+            this.Adress.Frozen = true;
+            this.Adress.HeaderText = "Адрес";
+            this.Adress.Name = "Adress";
+            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // State
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            this.State.FalseValue = "false";
+            this.State.Frozen = true;
+            this.State.HeaderText = "Подключение";
+            this.State.IndeterminateValue = "null";
+            this.State.Name = "State";
+            this.State.ReadOnly = true;
+            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.State.TrueValue = "true";
+            // 
+            // Power
+            // 
+            this.Power.Frozen = true;
+            this.Power.HeaderText = "Питание";
+            this.Power.Name = "Power";
+            this.Power.ReadOnly = true;
+            // 
+            // Work
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Work.FalseValue = "false";
+            this.Work.Frozen = true;
+            this.Work.HeaderText = "Исправность";
+            this.Work.IndeterminateValue = "null";
+            this.Work.Name = "Work";
+            this.Work.ReadOnly = true;
+            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Work.TrueValue = "true";
+            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.tabControl1);
@@ -1141,78 +1222,6 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // ChannalNum
-            // 
-            this.ChannalNum.Frozen = true;
-            this.ChannalNum.HeaderText = "Номер канала";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Sensor.Frozen = true;
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.MinimumWidth = 300;
-            this.Sensor.Name = "Sensor";
-            this.Sensor.Width = 300;
-            // 
-            // сFactoryNumber
-            // 
-            this.сFactoryNumber.Frozen = true;
-            this.сFactoryNumber.HeaderText = "Заводской номер";
-            this.сFactoryNumber.MinimumWidth = 200;
-            this.сFactoryNumber.Name = "сFactoryNumber";
-            this.сFactoryNumber.ReadOnly = true;
-            this.сFactoryNumber.Width = 300;
-            // 
-            // Adress
-            // 
-            this.Adress.Frozen = true;
-            this.Adress.HeaderText = "Адрес";
-            this.Adress.Name = "Adress";
-            this.Adress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // State
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle1;
-            this.State.FalseValue = "false";
-            this.State.Frozen = true;
-            this.State.HeaderText = "Подключение";
-            this.State.IndeterminateValue = "null";
-            this.State.Name = "State";
-            this.State.ReadOnly = true;
-            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.State.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.State.TrueValue = "true";
-            // 
-            // Power
-            // 
-            this.Power.Frozen = true;
-            this.Power.HeaderText = "Питание";
-            this.Power.Name = "Power";
-            this.Power.ReadOnly = true;
-            // 
-            // Work
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Work.FalseValue = "false";
-            this.Work.Frozen = true;
-            this.Work.HeaderText = "Исправность";
-            this.Work.IndeterminateValue = "null";
-            this.Work.Name = "Work";
-            this.Work.ReadOnly = true;
-            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Work.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Work.TrueValue = "true";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1235,7 +1244,7 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1295,14 +1304,14 @@
         private System.Windows.Forms.Button btnCommutator;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbMensorTypeR;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnFormMensor;
         private System.Windows.Forms.TextBox tbMensorData;
         private System.Windows.Forms.Button btnMensor;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button bMensorControl;
+        private System.Windows.Forms.TextBox tbMensorRate;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label7;
@@ -1310,7 +1319,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numMensorPoint;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;

@@ -14,16 +14,80 @@ using System.Globalization;
 namespace Charaterizator
 {
     public partial class FormMensor : Form
+        
     {
-        public SerialPort _serialPort_M;           // переменная для работы с COM портом
-       //private String[] PortNames_M;       // список обнаруженных COM портов
+        public SerialPort _serialPort_M;           // переменная для работы с COM портом      
         int pause_ms;                       // задержка между приемом и передачей команд по COM порту, мс 
-        public int activCH = -1;            // номер активного канала (0 - канал А, 1 - канал В)
+       
         public bool checkTimer = false;     // флаг запущен таймер или нет
         public const double PsiToPa = 0.14503773773;  // для перевода psi в кПА
 
+
         
+
         public bool Connected = false;      // true  - соединение установлено, 
+               
+        public int activCH = -1;            // номер активного канала (0 - канал А, 1 - канал В)
+        public int _activCH
+        {
+            get {return activCH;}
+            set { }
+        }
+
+        int typeR;                          // Тип ДатПреобр - 1..2 Д1-Д2, 2- AutoRange
+        public int _typeR
+        {
+            get { return typeR; }
+            set { }
+        }
+
+
+        int umeas;                          // Ед.изм.
+        public int _umeas
+        {
+            get { return umeas; }
+            set { }
+        }
+
+
+        int tpress;                         // Тип давления
+        public int _tpress
+        {
+            get { return tpress; }
+            set { }
+        }
+
+
+
+        double press;                       // Тек. давление
+        public double _press
+        {
+            get { return press; }
+            set { }
+        }
+
+
+        double point;                       // Уставка
+        public double _point
+        {
+            get { return point; }
+            set { }
+        }
+
+
+        int mode;                           // Режим 0-ИЗМ.  1-ЗАДАЧА  2-СБРОС
+        public int _mode
+        {
+            get { return mode; }
+            set { }
+        }
+
+        double rate;                           // Режим 0-ИЗМ.  1-ЗАДАЧА  2-СБРОС
+        public double _rate
+        {
+            get { return rate; }
+            set { }
+        }
 
 
         public FormMensor()
@@ -53,6 +117,10 @@ namespace Charaterizator
         {
             if (Connected)
             {
+                // останавливаем таймер                
+                timer1.Stop();
+                timer1.Enabled = false;
+
                 _serialPort_M.Close();
                 Connected = false;
                 return 0;
@@ -83,10 +151,26 @@ namespace Charaterizator
                 _serialPort_M.DtrEnable = true;
                 _serialPort_M.RtsEnable = true;
                 _serialPort_M.Open();
-                Connected = true;                             
 
-                return 0;
+                bool ReadMensorID = true;  // заглушка, д.б. функция считывающая что менсор ресльно подключен а не просто открыт порт для него
 
+                if (ReadMensorID)
+                {
+                  
+                    // устанавливаем заданные паузу и таймер (время считывания информации с mensor)
+                    pause_ms = Convert.ToInt32(tbPauseMC.Text);
+                    timer1.Interval = Convert.ToInt32(tbTimer.Text);
+                    // запускаем таймер
+                    timer1.Enabled = true;
+                    timer1.Start();
+                    Connected = true;
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
+                             
 
             }
             catch
@@ -96,24 +180,12 @@ namespace Charaterizator
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         
         // *** Обработчик ВЫБОРА COM порта       
         private void cbSetComPort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // COM порт выбран? (если да - кнопака "Подключить" - становится активной, нет - неактивной)
+           /* // COM порт выбран? (если да - кнопака "Подключить" - становится активной, нет - неактивной)
             if (cbSetComPort.SelectedIndex > 0)
             {
                 bComPortConnect.Enabled = true;
@@ -121,14 +193,14 @@ namespace Charaterizator
             else
             {
                 bComPortConnect.Enabled = false;
-            }
+            }*/
         }
 
 
         // *** Обработчик нажатия кнопки "ПОДКЛЮЧИТЬ/ОТКЛЮЧИТЬ COM - порт"
         private void bComPortConnect_Click(object sender, EventArgs e)
         {
-            // Подключаем COM-порт
+           /* // Подключаем COM-порт
             if (bComPortConnect.Text == "Подключить")
             {
                 try
@@ -185,6 +257,8 @@ namespace Charaterizator
                 pCHA.Enabled = false;
                 pCHB.Enabled = false;
             }
+
+    */
         }
 
    
@@ -439,12 +513,7 @@ namespace Charaterizator
         void ReadInitialSet(int CH)
         {
             double[] val = new double[] {0, 0}; // Мин. макс. значения диапазона        
-            int typeR;                          // Тип ДатПреобр - 1..2 Д1-Д2, 2- AutoRange
-            int umeas;                          // Ед.изм.
-            int tpress;                         // Давление
-            double press;
-            double point;
-            int num;
+            
 
             //CHA
             if (CH==0)
@@ -507,23 +576,24 @@ namespace Charaterizator
                 lBarometerCHA.Text = String.Format("{0,-8:#0.000#}", ReadBAR()/PsiToPa);
 
             //lSpeedCHA.Text = Convert.ToString(ReadRATE());
-            lSpeedCHA.Text = String.Format("{0,-8:#0.000#}", ReadRATE());
+            rate = ReadRATE();
+            lSpeedCHA.Text = String.Format("{0,-8:#0.000#}", rate);
 
             // считываем установленный режим            
-            num = ReadMode();                                 
-            if (num == 0)
+            mode = ReadMode();                                 
+            if (mode == 0)
             {
                 bMeasureCHA.FlatAppearance.BorderSize = 4;
                 bControlCHA.FlatAppearance.BorderSize = 1;
                 bResetCHA.FlatAppearance.BorderSize = 1;
             }       
-            else if (num == 1)
+            else if (mode == 1)
             {
                 bMeasureCHA.FlatAppearance.BorderSize = 1;
                 bControlCHA.FlatAppearance.BorderSize = 4;
                 bResetCHA.FlatAppearance.BorderSize = 1;
             }       
-            else if (num == 2)
+            else if (mode == 2)
             {
                 bMeasureCHA.FlatAppearance.BorderSize = 1;
                 bControlCHA.FlatAppearance.BorderSize = 1;
@@ -593,20 +663,20 @@ namespace Charaterizator
             lSpeedCHB.Text = String.Format("{0,-8:#0.000#}", ReadRATE());
 
             // считываем установленный режим           
-            num = ReadMode();
-            if (num == 0)
+            mode = ReadMode();
+            if (mode == 0)
             {
                 bMeasureCHB.FlatAppearance.BorderSize = 4;
                 bControlCHB.FlatAppearance.BorderSize = 1;
                 bResetCHB.FlatAppearance.BorderSize = 1;
             }
-            else if (num == 1)
+            else if (mode == 1)
             {
                 bMeasureCHB.FlatAppearance.BorderSize = 1;
                 bControlCHB.FlatAppearance.BorderSize = 4;
                 bResetCHB.FlatAppearance.BorderSize = 1;
             }
-            else if (num == 2)
+            else if (mode == 2)
             {
                 bMeasureCHB.FlatAppearance.BorderSize = 1;
                 bControlCHB.FlatAppearance.BorderSize = 1;
@@ -702,7 +772,7 @@ namespace Charaterizator
         // принимаемые значения:  A - сделать активным канал А
         //                        B - сделать активным канал B
         // возвращаемые значения: нет
-        void ChannelSet(string CH)
+        public void ChannelSet(string CH)
         {
             _serialPort_M.WriteLine("OUTP:CHAN " + CH);      
             // вывод запроса в статусну строку
@@ -755,7 +825,7 @@ namespace Charaterizator
         //                        1 - сделать активным Д2П1                               
         //                        2 - сделать активным AutoRange
         // возвращаемые значения: нет 
-        void SetTypeRange(int Num)
+        public void SetTypeRange(int Num)
         {
             switch (Num)
             {
@@ -1068,7 +1138,7 @@ namespace Charaterizator
         //                          1 - ЗАДАЧА
         //                          2 - СБРОС
         // возвращаемые значения:   нет          
-        void SetMode(int num)
+        public void SetMode(int num)
         {
             switch (num)
             {

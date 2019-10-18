@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -44,9 +45,9 @@ namespace Charaterizator
             tbMensorData.Font = DrawingFont;
             tbNumCH.Font = DrawingFont;
             tbMultimetrData.Font = DrawingFont;
-            textBox4.Font = DrawingFont;
+            tbMensorRate.Font = DrawingFont;
             textBox5.Font = DrawingFont;
-            numericUpDown1.Font = DrawingFont;
+            numMensorPoint.Font = DrawingFont;
             numericUpDown2.Font = DrawingFont;
             //**********************************************************
 
@@ -92,10 +93,7 @@ namespace Charaterizator
             rtbConsole.AppendText(str + Environment.NewLine);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void ToolStripMenuItem_MultimetrSetings_Click(object sender, EventArgs e)
         {
@@ -213,7 +211,9 @@ namespace Charaterizator
             }
         }
 
-        // Подключение коммутатора
+
+
+        // Подключение КОММУТАТОРА
         private void btnCommutator_Click(object sender, EventArgs e)
         {
             if (Commutator.Connect(Properties.Settings.Default.COMComutator,
@@ -236,13 +236,36 @@ namespace Charaterizator
 
 
 
-        private void btnFormCommutator_Click(object sender, EventArgs e)
+        // Подключение МЕНСОРА
+        private void btnMensor_Click(object sender, EventArgs e)
         {
-            //FormSwitch CommutatorWindow = new FormSwitch();
+            if (Mensor.Connect(Properties.Settings.Default.COMMensor,
+              Properties.Settings.Default.COMMensor_Speed,
+              Properties.Settings.Default.COMMensor_DataBits,
+              Properties.Settings.Default.COMMensor_StopBits,
+              Properties.Settings.Default.COMMensor_Parity) >= 0)
+            {
+                btnMensor.BackColor = Color.Green;
+                btnMensor.Text = "Подключен";
+                WriteLineLog("Задатчик давления подключен", 0);
+            }
+            else
+            {
+                btnMensor.BackColor = Color.Red;
+                btnMensor.Text = "Не подключен";
+                WriteLineLog("Задатчик давления не подключен", 1);
+            }
+        }
+
+
+
+        // Обработка нажатия кнопки управления КОММУТАТОРОМ
+        // Открываем окно с интерфейсом коммутатора
+        private void btnFormCommutator_Click(object sender, EventArgs e)
+        {           
             if (Commutator != null)
             {
-                Commutator.ShowDialog();
-                
+                Commutator.ShowDialog();                
             }
             else
             {
@@ -250,13 +273,23 @@ namespace Charaterizator
                 btnCommutator.PerformClick();
 
             }
-
         }
 
+
+
+        // Обработка нажатия кнопки управления МЕНСОРОМ
+        // Открываем окно с интерфейсом МЕНСОРА
         private void btnFormMensor_Click(object sender, EventArgs e)
         {
-            FormMensor MensorWindow = new FormMensor();
-            MensorWindow.ShowDialog();
+            if (Mensor != null)
+            {
+                Mensor.ShowDialog();
+            }
+            else
+            {
+                Mensor = new FormMensor();
+                btnMensor.PerformClick();            
+            }           
         }
 
       
@@ -291,11 +324,10 @@ namespace Charaterizator
                             sensors.SensorRead();                                                   //чтение данных с датчика
                             dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
                             dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
-                            dataGridView1.Rows[i].Cells[3].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART
-                            //dataGridView1.Rows[i].Cells[4].Value = false;                           //датчик подключен к измерительной линии
-                            //dataGridView1.Rows[i].Cells[5].Value = false;                           //датчик подключен к измерительной линии
-                            dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика
-//                            WriteLineLog("Датчик обнаружен", 0);
+                            dataGridView1.Rows[i].Cells[3].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART                                                                                                   
+                            dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
+                            dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
+                            WriteLineLog("Датчик обнаружен", 0);
                         }
                     }
                     Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i
@@ -311,29 +343,6 @@ namespace Charaterizator
         {
             SeachConnectedSensor();
         }
-
-
-     
-        private void btnMensor_Click(object sender, EventArgs e)
-        {
-            if (Mensor.Connect(Properties.Settings.Default.COMMensor,
-              Properties.Settings.Default.COMMensor_Speed,
-              Properties.Settings.Default.COMMensor_DataBits,
-              Properties.Settings.Default.COMMensor_StopBits,
-              Properties.Settings.Default.COMMensor_Parity) >= 0)
-            {
-                btnMensor.BackColor = Color.Green;
-                btnMensor.Text = "Подключен";
-                WriteLineLog("Задатчик давления подключен", 0);
-            }
-            else
-            {
-                btnMensor.BackColor = Color.Red;
-                btnMensor.Text = "Не подключен";
-                WriteLineLog("Задатчик давления не подключен", 1);
-            }
-        }
-
 
 
 
@@ -369,20 +378,44 @@ namespace Charaterizator
             }
         }
 
-        //чтение данных с менсора
+
+        //чтение данных с МЕНСОРА
         private void ReadMensor()
-        {
-            float mData=0; //= Mensor.ReadData();//чтение давления с Менсора
-            if (mData != 0)
+        {            
+            int CH_mensor = Mensor._activCH;    // Получаем номер активного канала (0 значит А,   1 значит B,   -1 = не прочитали )                    
+            
+            if (CH_mensor != -1)
             {
-                tbMensorData.Text = mData.ToString();
+                // Получаем текущее значение давления и обновляем гл. форму 
+                tbMensorData.Text = Mensor._press.ToString();
+                // Получаем тек. значение уставки  и обновляем гл. форму
+                numMensorPoint.Text = Mensor._point.ToString();
+                // Получаем тек. значение скорости  и обновляем гл. форму
+                tbMensorRate.Text = Mensor._rate.ToString();
+
+                // Получаем тип преобразователя (удерживаемый диапазон)
+                int typeR = Mensor._typeR;  // 0-Д1П1,  1-Д2П1,  2-AutoRange 
+                // Обновляем тип преобзарователя
+                if (CH_mensor == 0)
+                {
+                    cbMensorTypeR.SelectedIndex = typeR; // от 0 до 2-х по списку
+                }
+                else if (CH_mensor == 1)
+                {
+                    cbMensorTypeR.SelectedIndex = typeR + 3; // от 3 до 5-ти по списку
+                }
+                               
                 MensorReadError = 0;
             }
             else
             {
-                tbMensorData.Text = "";
-                MensorReadError++;
+               tbMensorData.Text = "";
+               tbMensorRate.Text = "";
+               numMensorPoint.Text = "";
+                cbMensorTypeR.SelectedIndex = -1;
+               MensorReadError++;
             }
+
             if (MensorReadError >= MAX_ERROR_COUNT)
             {
                 Mensor.DisConnect();
@@ -391,6 +424,8 @@ namespace Charaterizator
                 WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
             }
         }
+
+
 
         //чтение данных с мультиметра
         private void ReadMultimetr()
@@ -416,7 +451,8 @@ namespace Charaterizator
         }
 
 
-        // Обновление состояния каналов коммутатора (checkbox)
+
+        // Обновление на главной форме состояния каналов коммутатора (checkbox)
         private void StateComutators(Int32 data32)
         {
 
@@ -438,7 +474,7 @@ namespace Charaterizator
         }
 
 
-        // Обновление состояния питания коммутатора (checkbox)
+        // Обновление на главной форме состояния питания коммутатора (checkbox)
         private void PowerComutators(Int32 data32)
         {
             for (int i = 0; i < MaxChannalCount; i++)
@@ -475,7 +511,7 @@ namespace Charaterizator
                 }
                 else
                 {
-                    Commutator.SetConnectors(e.RowIndex, 4); // команда отключить датчик с индексом e.RowIndex
+                    Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
                     dataGridView1[4, e.RowIndex].Style.BackColor = Color.Red;                  
 
                 }
@@ -506,6 +542,7 @@ namespace Charaterizator
             dataGridView1.ClearSelection();
         }
 
+
         private void tabControl1_TabIndexChanged(object sender, EventArgs e)
         {
         }
@@ -516,5 +553,75 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
         }
+
+
+
+
+
+
+
+
+        // Отработка нажатия на гл. форме МЕНСОР - ЗАДАЧА
+        private void bMensorControl_Click(object sender, EventArgs e)
+        {
+            if (Mensor._serialPort_M.IsOpen)
+            {
+                Mensor.SetMode(1);
+            }
+            else
+            {
+                WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+            }
+        }
+
+
+        // Отработка нажатия на гл. форме МЕНСОР - СБРОС
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (Mensor._serialPort_M.IsOpen)
+            {
+                Mensor.SetMode(2);
+            }
+            else
+            {
+                WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+            }
+            
+        }
+
+
+        // Отработка выбора на гл.форме ТИПА ПРЕОБРАЗОВАТЕЛЯ МЕНСОРА из списка
+        private void cbMensorTypeR_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (!Mensor._serialPort_M.IsOpen)
+            {
+                if (cbMensorTypeR.SelectedIndex != -1)
+                {
+                    WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                    cbMensorTypeR.SelectedIndex = -1;
+                }               
+                return;
+            }
+                                    
+                // Получаем индекс выбранного преобразователя
+                int ind = cbMensorTypeR.SelectedIndex;
+
+                // Определяем тип канала соответствующего выбранному преобразователю
+                if ((ind >= 0) && (ind <= 2))  // активный канал А
+                {
+
+                    Mensor.ChannelSet("A");   // устанвливаем активным канал A
+                    Thread.Sleep(100);
+                    Mensor.SetTypeRange(ind);     // Устанавливаем тип выбранного преобразователя
+                }
+                else if ((ind >= 0) && (ind <= 2)) // активный канал B
+                {
+                    Mensor.ChannelSet("B");   // устанвливаем активным канал B
+                    Thread.Sleep(100);
+                    Mensor.SetTypeRange(ind - 3);     // Устанавливаем тип выбранного преобразователя
+                }          
+        }
+
     }
 }
