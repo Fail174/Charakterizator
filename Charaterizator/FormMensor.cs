@@ -349,7 +349,7 @@ namespace Charaterizator
         //CHA
         private void bPointSetOKCHA_Click(object sender, EventArgs e)
         {            
-            int Point = (int)numPointSetCHA.Value;  // получаем заданное значение уставки
+            double Point = (double)numPointSetCHA.Value;  // получаем заданное значение уставки
             SetPoint(Point);                        // отправляем значение уставки по COM порту    
             pPoinSetCHA.Visible = false;            // делаем панель с вводом уставки невидимой           
         }
@@ -364,7 +364,7 @@ namespace Charaterizator
         // *** Обработчик ввода значение уставки "ПРИНЯТЬ"       
         private void bPointSetOKCHB_Click(object sender, EventArgs e)
         {
-           int Point = (int)numPointSetCHB.Value;  // получаем заданное значение уставки
+            double Point = (double)numPointSetCHB.Value;  // получаем заданное значение уставки
             SetPoint(Point);                       // отправляем значение уставки по COM порту   
             pPoinSetCHB.Visible = false;           // делаем панель с вводом уставки невидимой           
         }                 
@@ -956,7 +956,7 @@ namespace Charaterizator
         // ФУНКЦИЯ - Задает уставку Point (запись)
         // принимаемые значения:    Val - значение уставки        
         // возвращаемые значения:   нет           
-        void SetPoint(int Val)
+        public void SetPoint(double Val)
         {
            _serialPort_M.WriteLine("SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val));            
             //toolStripStatusLabel1.Text = ("SEND: " + "SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val));

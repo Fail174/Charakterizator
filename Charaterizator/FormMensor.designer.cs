@@ -124,7 +124,7 @@
             this.pCHA.Controls.Add(this.bSetCHA);
             this.pCHA.Enabled = false;
             this.pCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.pCHA.Location = new System.Drawing.Point(1, 36);
+            this.pCHA.Location = new System.Drawing.Point(1, 22);
             this.pCHA.Name = "pCHA";
             this.pCHA.Size = new System.Drawing.Size(320, 500);
             this.pCHA.TabIndex = 0;
@@ -653,7 +653,7 @@
             this.pCHB.Controls.Add(this.bSetCHB);
             this.pCHB.Enabled = false;
             this.pCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.pCHB.Location = new System.Drawing.Point(322, 35);
+            this.pCHB.Location = new System.Drawing.Point(322, 22);
             this.pCHB.Name = "pCHB";
             this.pCHB.Size = new System.Drawing.Size(320, 500);
             this.pCHB.TabIndex = 1;
@@ -804,6 +804,7 @@
             this.cbSetComPort.Name = "cbSetComPort";
             this.cbSetComPort.Size = new System.Drawing.Size(151, 21);
             this.cbSetComPort.TabIndex = 2;
+            this.cbSetComPort.Visible = false;
             this.cbSetComPort.SelectedIndexChanged += new System.EventHandler(this.cbSetComPort_SelectedIndexChanged);
             // 
             // bComPortConnect
@@ -816,6 +817,7 @@
             this.bComPortConnect.TabIndex = 3;
             this.bComPortConnect.Text = "Подключить";
             this.bComPortConnect.UseVisualStyleBackColor = true;
+            this.bComPortConnect.Visible = false;
             this.bComPortConnect.Click += new System.EventHandler(this.bComPortConnect_Click);
             // 
             // lComPortState
@@ -828,6 +830,7 @@
             this.lComPortState.Size = new System.Drawing.Size(166, 15);
             this.lComPortState.TabIndex = 4;
             this.lComPortState.Text = "Устройство отключено!";
+            this.lComPortState.Visible = false;
             // 
             // timer1
             // 
@@ -990,11 +993,11 @@
             this.Controls.Add(this.tbComamd);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.lComPortState);
-            this.Controls.Add(this.bComPortConnect);
-            this.Controls.Add(this.cbSetComPort);
             this.Controls.Add(this.pCHB);
             this.Controls.Add(this.pCHA);
+            this.Controls.Add(this.cbSetComPort);
+            this.Controls.Add(this.bComPortConnect);
+            this.Controls.Add(this.lComPortState);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormMensor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

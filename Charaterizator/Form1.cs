@@ -333,12 +333,18 @@ namespace Charaterizator
                             dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
                             Program.txtlog.WriteLineLog("Датчик обнаружен", 0);
                         }
+
                     }
-                    Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Датчики на линии не обнаружены!", 1);
+                    }
+                    Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
                 }
             }
             else {
                 Program.txtlog.WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1);
+
             }
             return 0;
         }
@@ -596,10 +602,10 @@ namespace Charaterizator
 
         // Отработка выбора на гл.форме ТИПА ПРЕОБРАЗОВАТЕЛЯ МЕНСОРА из списка
         private void cbMensorTypeR_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {           
 
             if (!Mensor._serialPort_M.IsOpen)
-            {
+            {                
                 if (cbMensorTypeR.SelectedIndex != -1)
                 {
                     Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
@@ -607,7 +613,12 @@ namespace Charaterizator
                 }               
                 return;
             }
-                                    
+
+            try
+            {
+                MainTimer.Stop();
+                MainTimer.Enabled = false;
+
                 // Получаем индекс выбранного преобразователя
                 int ind = cbMensorTypeR.SelectedIndex;
 
@@ -624,8 +635,30 @@ namespace Charaterizator
                     Mensor.ChannelSet("B");   // устанвливаем активным канал B
                     Thread.Sleep(100);
                     Mensor.SetTypeRange(ind - 3);     // Устанавливаем тип выбранного преобразователя
-                }          
+                }
+
+            }
+
+            finally
+            {
+                MainTimer.Enabled = true;
+                MainTimer.Start();
+            }
+
+
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (!Mensor._serialPort_M.IsOpen)
+            {
+                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                return;                
+            }
+
+           double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+           Mensor.SetPoint(Point);
+        }
     }
 }
+
