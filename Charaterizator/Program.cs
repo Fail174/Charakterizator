@@ -20,6 +20,7 @@ namespace Charaterizator
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+        public static CTxtlog txtlog;
     }
     // Тест - добавлен комментарий в Program.cs
     //

@@ -15,6 +15,7 @@ using ENI100;
 
 namespace Charaterizator
 {
+
     public partial class MainForm : Form
     {
         const int MAX_ERROR_COUNT = 3;
@@ -26,7 +27,8 @@ namespace Charaterizator
         private FormMensor Mensor = new FormMensor();
         private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
-        private StreamWriter writer;//для лога
+        //        private StreamWriter writer;//для лога
+        //static CTxtlog txtlog;
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
@@ -35,11 +37,13 @@ namespace Charaterizator
         public MainForm()
         {
             InitializeComponent();
-            writer = File.CreateText("Charakterizator.log");//создаем лог файл сессии
+            Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл
 
-//            btmMultimetr_Click(null, null);           
-//            btnCommutator_Click(null, null);
-//            btnMensor_Click(null, null);
+            //            writer = File.CreateText("Charakterizator.log");//создаем лог файл сессии
+
+            //            btmMultimetr_Click(null, null);           
+            //            btnCommutator_Click(null, null);
+            //            btnMensor_Click(null, null);
 
             //********************  Цифровой шрифт *********************
             tbMensorData.Font = DrawingFont;
@@ -76,7 +80,7 @@ namespace Charaterizator
         }
 
         //запись в лог и в окно выводы
-        void WriteLineLog(string str, int status=0)
+/*        void WriteLineLog(string str, int status=0)
         {
             str = DateTime.Now + ":" + str;
             writer.WriteLine(str);
@@ -92,7 +96,7 @@ namespace Charaterizator
             }
             rtbConsole.AppendText(str + Environment.NewLine);
         }
-
+        */
       
 
         private void ToolStripMenuItem_MultimetrSetings_Click(object sender, EventArgs e)
@@ -201,13 +205,13 @@ namespace Charaterizator
             {
                 btmMultimetr.BackColor = Color.Green;
                 btmMultimetr.Text = "Подключен";
-                WriteLineLog("Мультиметр подключен", 0);
+                Program.txtlog.WriteLineLog("Мультиметр подключен", 0);
             }
             else
             {
                 btmMultimetr.BackColor = Color.Red;
                 btmMultimetr.Text = "Не подключен";
-                WriteLineLog("Мультиметр не подключен",1);
+                Program.txtlog.WriteLineLog("Мультиметр не подключен",1);
             }
         }
 
@@ -224,13 +228,13 @@ namespace Charaterizator
             {
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Подключен";
-                WriteLineLog("Коммутатор подключен", 0);
+                Program.txtlog.WriteLineLog("Коммутатор подключен", 0);
             }
             else
             {
                 btnCommutator.BackColor = Color.Red;
                 btnCommutator.Text = "Не подключен";
-                WriteLineLog("Коммутатор не подключен",1);
+                Program.txtlog.WriteLineLog("Коммутатор не подключен",1);
             }
         }
 
@@ -247,13 +251,13 @@ namespace Charaterizator
             {
                 btnMensor.BackColor = Color.Green;
                 btnMensor.Text = "Подключен";
-                WriteLineLog("Задатчик давления подключен", 0);
+                Program.txtlog.WriteLineLog("Задатчик давления подключен", 0);
             }
             else
             {
                 btnMensor.BackColor = Color.Red;
                 btnMensor.Text = "Не подключен";
-                WriteLineLog("Задатчик давления не подключен", 1);
+                Program.txtlog.WriteLineLog("Задатчик давления не подключен", 1);
             }
         }
 
@@ -299,7 +303,7 @@ namespace Charaterizator
         //Выход: число подключенных датчиков
         private int SeachConnectedSensor()
         {
-            WriteLineLog("Старт поиска датчиков...", 0);
+            Program.txtlog.WriteLineLog("Старт поиска датчиков...", 0);
 
             //dataGridView1.Rows.Clear();
             if (sensors.Connect(Properties.Settings.Default.COMSensor,
@@ -310,7 +314,7 @@ namespace Charaterizator
             {
                 for (int i = 0; i < MaxChannalCount; i++)
                 {
-                    WriteLineLog(string.Format("Поиск датчиков на линии {0}", i),0);
+                    Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0}", i),0);
                     //dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
 
                     // коммутируем
@@ -320,21 +324,21 @@ namespace Charaterizator
                     {
                         if (sensors.SelectSensor(0))//выбор первого обнаруженного датчика
                         {//датчик найден, обновляем таблицу
-                            WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
+                            Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                             sensors.SensorRead();                                                   //чтение данных с датчика
                             dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
                             dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
                             dataGridView1.Rows[i].Cells[3].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART                                                                                                   
                             dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
                             dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
-                            WriteLineLog("Датчик обнаружен", 0);
+                            Program.txtlog.WriteLineLog("Датчик обнаружен", 0);
                         }
                     }
                     Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i
                 }
             }
             else {
-                WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1);
+                Program.txtlog.WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1);
             }
             return 0;
         }
@@ -352,7 +356,7 @@ namespace Charaterizator
 
             MainTimer.Stop();
             MainTimer.Enabled = false;
-            writer.Close();//закрываем лог
+//            writer.Close();//закрываем лог
         }
 
 
@@ -421,7 +425,7 @@ namespace Charaterizator
                 Mensor.DisConnect();
                 btnMensor.BackColor = Color.Red;
                 btnMensor.Text = "Не подключен";
-                WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
+                Program.txtlog.WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
             }
         }
 
@@ -446,7 +450,7 @@ namespace Charaterizator
                 Multimetr.DisConnect();
                 btmMultimetr.BackColor = Color.Red;
                 btmMultimetr.Text = "Не подключен";
-                WriteLineLog("Нет данных с мультиметра. Устройство отключено.", 1);
+                Program.txtlog.WriteLineLog("Нет данных с мультиметра. Устройство отключено.", 1);
             }
         }
 
@@ -570,7 +574,7 @@ namespace Charaterizator
             }
             else
             {
-                WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
             }
         }
 
@@ -584,7 +588,7 @@ namespace Charaterizator
             }
             else
             {
-                WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
             }
             
         }
@@ -598,7 +602,7 @@ namespace Charaterizator
             {
                 if (cbMensorTypeR.SelectedIndex != -1)
                 {
-                    WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
                     cbMensorTypeR.SelectedIndex = -1;
                 }               
                 return;

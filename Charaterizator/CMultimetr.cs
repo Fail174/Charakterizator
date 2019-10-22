@@ -95,7 +95,8 @@ namespace Charaterizator
                 catch
                 {
                     //запись в лог
-//                    Connected = false;
+                    //                    Connected = false;
+                    Program.txtlog.WriteLineLog("Agilent: Устройство не отвечает. ", 1);
                     return -2;
                 }
             }

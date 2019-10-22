@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,19 +91,7 @@
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPressureLimit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPressureZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUtk2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -138,6 +126,18 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
+            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUtk2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPressureLimit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPressureZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -792,46 +792,6 @@
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
-            // cDataTime
-            // 
-            this.cDataTime.HeaderText = "Дата и Время";
-            this.cDataTime.MinimumWidth = 200;
-            this.cDataTime.Name = "cDataTime";
-            this.cDataTime.Width = 200;
-            // 
-            // cTempreture
-            // 
-            this.cTempreture.HeaderText = "Темппература, °С";
-            this.cTempreture.MinimumWidth = 100;
-            this.cTempreture.Name = "cTempreture";
-            this.cTempreture.ReadOnly = true;
-            // 
-            // cPressureLimit
-            // 
-            this.cPressureLimit.HeaderText = "ВПИ ... НПИ (кПа)";
-            this.cPressureLimit.MinimumWidth = 200;
-            this.cPressureLimit.Name = "cPressureLimit";
-            this.cPressureLimit.ReadOnly = true;
-            this.cPressureLimit.Width = 200;
-            // 
-            // cPressureZ
-            // 
-            this.cPressureZ.HeaderText = "Pз (кПа)";
-            this.cPressureZ.Name = "cPressureZ";
-            this.cPressureZ.ReadOnly = true;
-            // 
-            // cPressureF
-            // 
-            this.cPressureF.HeaderText = "Pф (кПа)";
-            this.cPressureF.Name = "cPressureF";
-            this.cPressureF.ReadOnly = true;
-            // 
-            // сCurrentF
-            // 
-            this.сCurrentF.HeaderText = "Iф (мА)";
-            this.сCurrentF.Name = "сCurrentF";
-            this.сCurrentF.ReadOnly = true;
-            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -848,48 +808,6 @@
             this.dataGridView2.Size = new System.Drawing.Size(702, 775);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
-            // 
-            // cDataTime2
-            // 
-            this.cDataTime2.HeaderText = "Дата и Время";
-            this.cDataTime2.MinimumWidth = 200;
-            this.cDataTime2.Name = "cDataTime2";
-            this.cDataTime2.ReadOnly = true;
-            this.cDataTime2.Width = 200;
-            // 
-            // cTempreture2
-            // 
-            this.cTempreture2.HeaderText = "Температура (°C)";
-            this.cTempreture2.MinimumWidth = 100;
-            this.cTempreture2.Name = "cTempreture2";
-            this.cTempreture2.ReadOnly = true;
-            // 
-            // сPressure2
-            // 
-            this.сPressure2.HeaderText = "Давление (кПа)";
-            this.сPressure2.Name = "сPressure2";
-            this.сPressure2.ReadOnly = true;
-            // 
-            // cUTemp2
-            // 
-            this.cUTemp2.HeaderText = "Ut";
-            this.cUTemp2.MinimumWidth = 50;
-            this.cUTemp2.Name = "cUTemp2";
-            this.cUTemp2.ReadOnly = true;
-            // 
-            // cUPress2
-            // 
-            this.cUPress2.HeaderText = "Up";
-            this.cUPress2.MinimumWidth = 50;
-            this.cUPress2.Name = "cUPress2";
-            this.cUPress2.ReadOnly = true;
-            // 
-            // cUtk2
-            // 
-            this.cUtk2.HeaderText = "Utk";
-            this.cUtk2.MinimumWidth = 50;
-            this.cUtk2.Name = "cUtk2";
-            this.cUtk2.ReadOnly = true;
             // 
             // dataGridView1
             // 
@@ -950,10 +868,10 @@
             // 
             // State
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle5.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle5;
             this.State.FalseValue = "false";
             this.State.Frozen = true;
             this.State.HeaderText = "Подключение";
@@ -973,10 +891,10 @@
             // 
             // Work
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle6.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle6;
             this.Work.FalseValue = "false";
             this.Work.Frozen = true;
             this.Work.HeaderText = "Исправность";
@@ -1222,6 +1140,92 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
+            // cDataTime2
+            // 
+            this.cDataTime2.HeaderText = "Дата и Время";
+            this.cDataTime2.MinimumWidth = 200;
+            this.cDataTime2.Name = "cDataTime2";
+            this.cDataTime2.ReadOnly = true;
+            this.cDataTime2.Width = 200;
+            // 
+            // cTempreture2
+            // 
+            this.cTempreture2.HeaderText = "Температура (°C)";
+            this.cTempreture2.MinimumWidth = 150;
+            this.cTempreture2.Name = "cTempreture2";
+            this.cTempreture2.ReadOnly = true;
+            this.cTempreture2.Width = 150;
+            // 
+            // сPressure2
+            // 
+            this.сPressure2.HeaderText = "Давление (кПа)";
+            this.сPressure2.MinimumWidth = 150;
+            this.сPressure2.Name = "сPressure2";
+            this.сPressure2.ReadOnly = true;
+            this.сPressure2.Width = 150;
+            // 
+            // cUTemp2
+            // 
+            this.cUTemp2.HeaderText = "Ut";
+            this.cUTemp2.MinimumWidth = 50;
+            this.cUTemp2.Name = "cUTemp2";
+            this.cUTemp2.ReadOnly = true;
+            // 
+            // cUPress2
+            // 
+            this.cUPress2.HeaderText = "Up";
+            this.cUPress2.MinimumWidth = 50;
+            this.cUPress2.Name = "cUPress2";
+            this.cUPress2.ReadOnly = true;
+            // 
+            // cUtk2
+            // 
+            this.cUtk2.HeaderText = "Utk";
+            this.cUtk2.MinimumWidth = 50;
+            this.cUtk2.Name = "cUtk2";
+            this.cUtk2.ReadOnly = true;
+            // 
+            // cDataTime
+            // 
+            this.cDataTime.HeaderText = "Дата и Время";
+            this.cDataTime.MinimumWidth = 200;
+            this.cDataTime.Name = "cDataTime";
+            this.cDataTime.Width = 200;
+            // 
+            // cTempreture
+            // 
+            this.cTempreture.HeaderText = "Температура (°С)";
+            this.cTempreture.MinimumWidth = 150;
+            this.cTempreture.Name = "cTempreture";
+            this.cTempreture.ReadOnly = true;
+            this.cTempreture.Width = 150;
+            // 
+            // cPressureLimit
+            // 
+            this.cPressureLimit.HeaderText = "ВПИ ... НПИ (кПа)";
+            this.cPressureLimit.MinimumWidth = 200;
+            this.cPressureLimit.Name = "cPressureLimit";
+            this.cPressureLimit.ReadOnly = true;
+            this.cPressureLimit.Width = 200;
+            // 
+            // cPressureZ
+            // 
+            this.cPressureZ.HeaderText = "Pз (кПа)";
+            this.cPressureZ.Name = "cPressureZ";
+            this.cPressureZ.ReadOnly = true;
+            // 
+            // cPressureF
+            // 
+            this.cPressureF.HeaderText = "Pф (кПа)";
+            this.cPressureF.Name = "cPressureF";
+            this.cPressureF.ReadOnly = true;
+            // 
+            // сCurrentF
+            // 
+            this.сCurrentF.HeaderText = "Iф (мА)";
+            this.сCurrentF.Name = "сCurrentF";
+            this.сCurrentF.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1347,18 +1351,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cPressureLimit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cPressureZ;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cPressureF;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сCurrentF;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUtk2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.ComboBox comboBox3;
@@ -1384,6 +1376,18 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn State;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Power;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUtk2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cPressureLimit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cPressureZ;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cPressureF;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сCurrentF;
     }
 }
 
