@@ -41,6 +41,7 @@ namespace Charaterizator
                 rtbConsole.SelectionColor = Color.Red;
             }
             rtbConsole.AppendText(str + Environment.NewLine);
+            rtbConsole.ScrollToCaret();
         }
 
     }

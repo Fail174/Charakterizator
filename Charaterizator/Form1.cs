@@ -27,9 +27,6 @@ namespace Charaterizator
         private FormMensor Mensor = new FormMensor();
         private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
-        //        private StreamWriter writer;//для лога
-        //static CTxtlog txtlog;
-
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
 
@@ -79,25 +76,7 @@ namespace Charaterizator
 
         }
 
-        //запись в лог и в окно выводы
-/*        void WriteLineLog(string str, int status=0)
-        {
-            str = DateTime.Now + ":" + str;
-            writer.WriteLine(str);
-            if (status == 0)
-            {
-//                rtbConsole.ForeColor = Color.Black;
-                rtbConsole.SelectionColor = Color.Black;
-            }
-            else
-            {
-//                rtbConsole.ForeColor = Color.Red;
-                rtbConsole.SelectionColor = Color.Red;
-            }
-            rtbConsole.AppendText(str + Environment.NewLine);
-        }
-        */
-      
+    
 
         private void ToolStripMenuItem_MultimetrSetings_Click(object sender, EventArgs e)
         {
@@ -296,7 +275,24 @@ namespace Charaterizator
             }           
         }
 
-      
+
+        //чтение всех измеренных параметров с текущего датчика давления
+        private void ReadSensorParametrs()
+        {
+            if (sensors.SelectSensor(0))//выбор первого обнаруженного датчика
+            {
+                if (sensors.SensorValueReadC03())
+                {
+                    dataGridView2.Rows.Add(DateTime.Now.ToString(), sensors.sensor.Temperature.ToString(),
+                        sensors.sensor.UpLevel.ToString() + "..." + sensors.sensor.DownLevel.ToString(),
+                        "C менсора", sensors.sensor.Pressure.ToString(), sensors.sensor.OutCurrent.ToString());
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("Параметры датчика не прочитаны!", 1);
+                }
+            }
+        }
 
         //Поиск подключенных датчиков
         //Формирует списко датчиков в датагриде
@@ -333,11 +329,15 @@ namespace Charaterizator
                             dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
                             Program.txtlog.WriteLineLog("Датчик обнаружен", 0);
                         }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Датчики на линии не обнаружены!", 1);
+                        }
 
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("Датчики на линии не обнаружены!", 1);
+                        Program.txtlog.WriteLineLog("Нет подключения! Поиск датчиков на линии не выполнен!", 1);
                     }
                     Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
                 }
@@ -658,6 +658,11 @@ namespace Charaterizator
 
            double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
            Mensor.SetPoint(Point);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            ReadSensorParametrs();
         }
     }
 }
