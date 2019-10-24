@@ -12,7 +12,7 @@ namespace Charaterizator
     {
         private System.Windows.Forms.RichTextBox rtbConsole;
         private StreamWriter writer;//для лога
-        string LogFileName;
+        public string LogFileName;
 
         public CTxtlog(System.Windows.Forms.RichTextBox rtb, string lfn)
         {
@@ -22,7 +22,7 @@ namespace Charaterizator
         }
         ~CTxtlog()
         {
-           // writer.Close();
+//           writer.Close();
         }
 
         public void WriteLineLog(string str, int status = 0)

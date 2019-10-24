@@ -194,6 +194,13 @@ namespace ENI100
             port = new SerialPort();
             readbuf.Clear();
         }
+        ~ClassEni100()
+        {
+            DisConnect();
+            sensorList.Clear();
+            readbuf.Clear();
+        }
+
         public bool IsConnect()
         {
             return SensorConnect;
@@ -247,7 +254,7 @@ namespace ENI100
                 Thread.Sleep(200);
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x00, 0x00, 0x82 };
-                sensorList.Clear();
+                //sensorList.Clear();
                 for (int i = 0; i < 15; i++)
                 {
                     data[6] = (byte)(0x80 | i);
@@ -696,12 +703,14 @@ namespace ENI100
             SensorConnect = false;
             if (port != null)
             {
+                if (ReadThread != null)
+                    ReadThread.Abort(0);
                 port.Close();
                 readbuf.Clear();
             }
 
         }
-        public void OpenPort(string PortName)
+/*        public void OpenPort(string PortName)
         {
             if (port != null)
             {
@@ -722,7 +731,7 @@ namespace ENI100
                     ReadThread.Start();
             }
 
-        }
+        }*/
 
         //Соединение с датчиком
         public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity)

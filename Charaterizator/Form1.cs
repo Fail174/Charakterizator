@@ -69,6 +69,8 @@ namespace Charaterizator
                 dataGridView1[4, i].Style.BackColor = Color.Red;
                 dataGridView1[5, i].Style.BackColor = Color.Red;
                 dataGridView1[6, i].Style.BackColor = Color.Red;
+                dataGridView2.Rows.Add("","","","","","");
+                dataGridView3.Rows.Add("", "", "", "", "");
             }
 
             MainTimer.Enabled = true;
@@ -275,21 +277,37 @@ namespace Charaterizator
             }           
         }
 
+        private void UpdateDataGrids(int i)
+        {
+            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
+            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
+            dataGridView1.Rows[i].Cells[3].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART                                                                                                   
+            dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
+            dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
+        }
 
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
-            if (sensors.SelectSensor(0))//выбор первого обнаруженного датчика
+            for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
             {
-                if (sensors.SensorValueReadC03())
+                Commutator.SetConnectors(i, 2);
+
+                if (sensors.SelectSensor(i))//выбор датчика
                 {
-                    dataGridView2.Rows.Add(DateTime.Now.ToString(), sensors.sensor.Temperature.ToString(),
-                        sensors.sensor.UpLevel.ToString() + "..." + sensors.sensor.DownLevel.ToString(),
-                        "C менсора", sensors.sensor.Pressure.ToString(), sensors.sensor.OutCurrent.ToString());
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Параметры датчика не прочитаны!", 1);
+                    if (sensors.SensorValueReadC03())
+                    {
+                        dataGridView2.Rows[i].Cells[0].Value = DateTime.Now.ToString();     //
+                        dataGridView2.Rows[i].Cells[1].Value = sensors.sensor.Temperature.ToString();   //
+                        dataGridView2.Rows[i].Cells[2].Value = sensors.sensor.Pressure.ToString("f");  //
+                        dataGridView2.Rows[i].Cells[3].Value = sensors.sensor.OutVoltage.ToString("f");
+                        dataGridView2.Rows[i].Cells[4].Value = sensors.sensor.Resistance.ToString("f");
+                        dataGridView2.Rows[i].Cells[5].Value = sensors.sensor.OutCurrent.ToString("f");
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Параметры датчика не прочитаны!", 1);
+                    }
                 }
             }
         }
@@ -301,7 +319,7 @@ namespace Charaterizator
         {
             Program.txtlog.WriteLineLog("Старт поиска датчиков...", 0);
 
-            //dataGridView1.Rows.Clear();
+            sensors.sensorList.Clear();
             if (sensors.Connect(Properties.Settings.Default.COMSensor,
                 Properties.Settings.Default.COMSensor_Speed,
                 Properties.Settings.Default.COMSensor_DataBits,
@@ -311,23 +329,18 @@ namespace Charaterizator
                 for (int i = 0; i < MaxChannalCount; i++)
                 {
                     Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0}", i),0);
-                    //dataGridView1.Rows.Add(i + 1, "Отсутсвует", "", false, false);
 
                     // коммутируем
                     Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
 
                     if (sensors.SeachSensor())//поиск датчиков
                     {
-                        if (sensors.SelectSensor(0))//выбор первого обнаруженного датчика
+                        if (sensors.SelectSensor(sensors.sensorList.Count-1))//выбор последнего обнаруженного датчика
                         {//датчик найден, обновляем таблицу
                             Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
-                            sensors.SensorRead();                                                   //чтение данных с датчика
-                            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
-                            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
-                            dataGridView1.Rows[i].Cells[3].Value = sensors.sensor.Addr.ToString();  //адрес датчика по протоколу HART                                                                                                   
-                            dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
-                            dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
-                            Program.txtlog.WriteLineLog("Датчик обнаружен", 0);
+                            sensors.TegRead();          //читаем инфомацию о датчике
+                            sensors.SensorRead();       //чтение данных с датчика
+                            UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                         }
                         else
                         {
@@ -348,21 +361,20 @@ namespace Charaterizator
             }
             return 0;
         }
-
         private void btnSensorSeach_Click_1(object sender, EventArgs e)
         {
             SeachConnectedSensor();
         }
-
-
-
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
 
             MainTimer.Stop();
             MainTimer.Enabled = false;
-//            writer.Close();//закрываем лог
+            sensors.DisConnect();
+            Mensor.DisConnect();
+            Multimetr.DisConnect(); 
+            Commutator.DisConnect();
         }
 
 
@@ -563,12 +575,6 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
         }
-
-
-
-
-
-
 
 
         // Отработка нажатия на гл. форме МЕНСОР - ЗАДАЧА
