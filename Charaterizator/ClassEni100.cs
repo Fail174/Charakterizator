@@ -13,6 +13,8 @@ namespace ENI100
 
     struct SensorID
     {
+        public int Channal;   //Номер канала коммутатора
+
         public byte Addr;      //адрес устройства
 
         public ushort state;   //bb bb – 2 байта статуса(сообщение об ошибках, 00 00 - ок)
@@ -56,6 +58,7 @@ namespace ENI100
             teg = new byte[6];
             Coefficient = new float[24];
             Addr = a;
+            Channal = 0;
 
             state = 0;   //bb bb – 2 байта статуса(сообщение об ошибках, 00 00 - ок)
             devCode = 0;   //21 – код изготовителя(число, char)
@@ -179,7 +182,8 @@ namespace ENI100
         static bool SensorConnect = false;
         public List<SensorID> sensorList = new List<SensorID>();//список обнаруженных датчиков
         public SensorID sensor;//текущий обслуживаемый датчик
-//        public SensorTeg steg = new SensorTeg(6, 12);
+        public int SelSensorChannal = 0;
+        //        public SensorTeg steg = new SensorTeg(6, 12);
         private Thread ReadThread;
         private bool PreambulFinded=false;
 
@@ -190,6 +194,7 @@ namespace ENI100
 
         public ClassEni100()
         {
+            SelSensorChannal = 0;
             sensorList.Clear();
             port = new SerialPort();
             readbuf.Clear();
@@ -234,20 +239,33 @@ namespace ENI100
             return c >= timeout;
         }
 
+        //поиск датчика в списке по номеру канала
         public bool SelectSensor(int index)
         {
-            if (sensorList.Count > index)
+            for (int i = 0; i < sensorList.Count; i++)
             {
+                if (sensorList[i].Channal == index)
+                {//датчик в канале найден
+                    sensor = sensorList[i];
+                    SelSensorChannal = index;
+                    return true;
+                }
+            }
+            return false;
+
+/*            if (sensorList.Count > index)
+            {
+
                 sensor = sensorList[index];
                 return true;
             }
             else
             {
                 return false;
-            }
+            }*/
         }
         //чтение списка подключенных датчиков
-        public bool SeachSensor()
+        public bool SeachSensor(int ch)
         {
             if((port != null)&&(SensorConnect))
             {
@@ -267,6 +285,7 @@ namespace ENI100
                                     }
                                 }*/
                 //поиск производим только по 0му адресу 30.10.2019
+                SelSensorChannal = ch;
                 data[data.Length - 1] = GetCRC(data, 5);
                 port.Write(data, 0, data.Length);
                 WaitSensorAnswer(20, 300);
@@ -798,9 +817,10 @@ namespace ENI100
         private void ReadCommand0(byte addr, byte[] indata)
         {
             SensorID id = new SensorID(addr);
-//            byte crc = GetCRC(indata, 0);
-//            if (crc != indata[indata.Length-1])
-//                return;
+            //            byte crc = GetCRC(indata, 0);
+            //            if (crc != indata[indata.Length-1])
+            //                return;
+            id.Channal = SelSensorChannal;
             id.state = (ushort)((indata[0] << 8) | indata[1]);
             id.devCode = indata[3];
             id.devType = indata[4];

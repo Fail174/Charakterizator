@@ -287,6 +287,36 @@ namespace Charaterizator
             dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
         }
+        private void UpdateSensorInfoPanel(int index)
+        {
+            if (sensors.SelectSensor(index-1))
+            {
+                tbSelChannalNumber.Text = "Канал " + index.ToString();
+                tbInfoDesc.Text = sensors.sensor.GetDesc();
+                tbInfoTeg.Text = sensors.sensor.GetTeg();
+                tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f");
+                tbInfoDown.Text = sensors.sensor.DownLevel.ToString("f");
+                tbInfoSerialNumber.Text = sensors.sensor.SerialNumber.ToString();
+                tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f");
+                tbInfoMesUnit.Text = sensors.sensor.GetUnit();
+//                DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
+//                dtpInfoDate.Value = dt;
+
+                cbInfoDevAddr.Text = sensors.sensor.Addr.ToString("D2");
+                tbInfoFactoryNumber.Text = sensors.sensor.uni.ToString();
+                tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
+                cbInfoPreambul.Text = sensors.sensor.pre.ToString();
+                tbInfoSensorType.Text = sensors.sensor.GetdevType();
+                /*            string SelectedSensor = sensors.sensor.Addr.ToString("D2") + " | " + sensors.sensor.GetdevType() + " | " + sensors.sensor.uni;
+                            tbCharact.Text = SelectedSensor;
+                            tbCoef.Text = SelectedSensor;*/
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Датчик на выбранной линии не обнаружен!", 1);
+            }
+        }
+
 
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
@@ -299,9 +329,9 @@ namespace Charaterizator
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        dataGridView2.Rows[i].Cells[0].Value = DateTime.Now.ToString();     //
+                        dataGridView2.Rows[i].Cells[0].Value = DateTime.Now.ToString();                 //
                         dataGridView2.Rows[i].Cells[1].Value = sensors.sensor.Temperature.ToString();   //
-                        dataGridView2.Rows[i].Cells[2].Value = sensors.sensor.Pressure.ToString("f");  //
+                        dataGridView2.Rows[i].Cells[2].Value = sensors.sensor.Pressure.ToString("f");   //
                         dataGridView2.Rows[i].Cells[3].Value = sensors.sensor.OutVoltage.ToString("f");
                         dataGridView2.Rows[i].Cells[4].Value = sensors.sensor.Resistance.ToString("f");
                         dataGridView2.Rows[i].Cells[5].Value = sensors.sensor.OutCurrent.ToString("f");
@@ -333,14 +363,14 @@ namespace Charaterizator
                 {
                     for (int i = 0; i < MaxChannalCount; i++)
                     {
-                        Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0}", i), 0);
+                        Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0} ...", i), 0);
 
                         // коммутируем
                         Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
 
-                        if (sensors.SeachSensor())//поиск датчиков
+                        if (sensors.SeachSensor(i))//поиск датчиков
                         {
-                            if (sensors.SelectSensor(sensors.sensorList.Count - 1))//выбор последнего обнаруженного датчика
+                            if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                                 sensors.TegRead();          //читаем инфомацию о датчике
@@ -547,6 +577,11 @@ namespace Charaterizator
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!Commutator.Connected) return;
+
+            if (e.ColumnIndex <= 2)//выбор датчика
+            {
+                UpdateSensorInfoPanel(e.RowIndex+1);
+            }
 
             if (e.ColumnIndex == 4)//Состояние датчика - подключение
             {
