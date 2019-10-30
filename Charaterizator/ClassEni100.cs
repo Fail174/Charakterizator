@@ -186,7 +186,7 @@ namespace ENI100
         private int ReadAvtState = 1;       //состояние автомата
         private int CommandCod = -1;          //код ответной команды
         private int CountByteToRead = 0;    //количество байт в команде
-        private int Adress = 0;               //адрес устройства
+        private byte Adress = 0;               //адрес устройства
 
         public ClassEni100()
         {
@@ -255,18 +255,29 @@ namespace ENI100
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x00, 0x00, 0x82 };
                 //sensorList.Clear();
-                for (int i = 0; i < 15; i++)
+                /*                for (int i = 0; i < 15; i++)
+                                {
+                                    data[6] = (byte)(0x80 | i);
+                                    data[data.Length - 1] = GetCRC(data, 5);
+                                    port.Write(data, 0, data.Length);
+                                    WaitSensorAnswer(20, 300);
+                                    if (ParseReadBuffer(300)>=0)//выходим при обнаружении первого попавшегося датчика
+                                    {
+                                        break;
+                                    }
+                                }*/
+                //поиск производим только по 0му адресу 30.10.2019
+                data[data.Length - 1] = GetCRC(data, 5);
+                port.Write(data, 0, data.Length);
+                WaitSensorAnswer(20, 300);
+                if (ParseReadBuffer(300) >= 0)
                 {
-                    data[6] = (byte)(0x80 | i);
-                    data[data.Length - 1] = GetCRC(data, 5);
-                    port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(20, 300);
-                    if (ParseReadBuffer(300)>=0)//выходим при обнаружении первого попавшегося датчика
-                    {
-                        break;
-                    }
+                    return true;
                 }
-                return true;
+                else
+                {
+                    return false;
+                }
             }
             return false;
         }
@@ -490,7 +501,7 @@ namespace ENI100
                         if ((indata[0] & 0x80) == 0x80)//адрес
                         {
                             ReadAvtState = 3;
-                            Adress = indata[0] & 0x7F;
+                            Adress = (byte)(indata[0] & 0x7F);
                         }
                         else//не верный адрес, ждем следующую команду
                         {
@@ -763,7 +774,6 @@ namespace ENI100
             }
             catch
             {
-                SensorConnect = false;
                 return -1;
             }
         }
@@ -772,9 +782,9 @@ namespace ENI100
         {
             if (SensorConnect)
             {
-                SensorConnect = false;
                 ReadThread.Abort();
                 ReadThread = null;
+                SensorConnect = false;
                 port.Close();
                 return 0;
             }
@@ -785,10 +795,12 @@ namespace ENI100
         }
 
         //Ответ на комманду Запрос уникального идентификатора (команда 0)
-        private void ReadCommand0(int addr, byte[] indata)
+        private void ReadCommand0(byte addr, byte[] indata)
         {
-            SensorID id = new SensorID((byte)addr);
-//            id.Addr = (byte)addr;
+            SensorID id = new SensorID(addr);
+//            byte crc = GetCRC(indata, 0);
+//            if (crc != indata[indata.Length-1])
+//                return;
             id.state = (ushort)((indata[0] << 8) | indata[1]);
             id.devCode = indata[3];
             id.devType = indata[4];

@@ -168,6 +168,8 @@ namespace Charaterizator
                 }
                 else
                 {
+                    Connected = false;
+                    _serialPort_M.Close();
                     return -1;
                 }
                              

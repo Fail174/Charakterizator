@@ -142,6 +142,8 @@ namespace Charaterizator
                 }
                 else
                 {
+                    Connected = false;
+                    serialPort1.Close();
                     return -1;
                 }
 
