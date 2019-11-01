@@ -18,7 +18,7 @@ namespace Charaterizator
 
     public partial class MainForm : Form
     {
-        const int MAX_ERROR_COUNT = 3;
+        const int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
         const int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
@@ -73,8 +73,8 @@ namespace Charaterizator
                 dataGridView1[4, i].Style.BackColor = Color.Red;
                 dataGridView1[5, i].Style.BackColor = Color.Red;
                 dataGridView1[6, i].Style.BackColor = Color.Red;
-                dataGridView2.Rows.Add("", "", "", "", "", "");
-                dataGridView3.Rows.Add("", "", "", "", "");
+//                dataGridView2.Rows.Add("", "", "", "", "", "");
+//                dataGridView3.Rows.Add("", "", "", "", "");
 
                 cbChannalCharakterizator.Items.Add("Канал " + (i+1).ToString());
             }
@@ -326,36 +326,49 @@ namespace Charaterizator
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
+            Program.txtlog.WriteLineLog("Старт операции характеризации для выбранных датчиков ... ", 0);
+
             for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
             {
                 Commutator.SetConnectors(i, 2);
 
-                if (sensors.SelectSensor(i))//выбор датчика
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        ResultCH.AddPoint(i,sensors.sensor.Temperature, sensors.sensor.Pressure, sensors.sensor.OutVoltage, sensors.sensor.Resistance, sensors.sensor.OutCurrent);
+                        ResultCH.AddPoint(i, sensors.sensor.Temperature, sensors.sensor.Pressure, sensors.sensor.OutVoltage, sensors.sensor.Resistance, sensors.sensor.OutCurrent);
                         cbChannalCharakterizator.SelectedIndex = i;
-                        UpDateCharakterizatorGrid(i);
+                        //UpDateCharakterizatorGrid(i);
+                        Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
                     {
                         Program.txtlog.WriteLineLog("Параметры датчика не прочитаны!", 1);
                     }
                 }
+                else
+                {
+                    Program.txtlog.WriteLineLog("Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
             }
         }
+
+        //обновляем грид для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
-            for (int j=0;j<ResultCH.Channal[i].PointsCount;j++)
+            while (dataGridView2.RowCount > 0)//удаляем записи предыдущего датчика
             {
+                dataGridView2.Rows.RemoveAt(0);
+            }
+            for (int j=0;j<ResultCH.Channal[i].PointsCount;j++)//заполняем грид данными текущего датчика
+            {
+                dataGridView2.Rows.Add("", "", "", "", "", "");
                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
                 dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
                 dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutCurrent.ToString("f");
-
             }
         }
 
@@ -750,7 +763,10 @@ namespace Charaterizator
 
         private void button10_Click(object sender, EventArgs e)
         {
+            btnCHStart.BackColor = Color.IndianRed;
+            btnCHStart.Text = "Стоп"; 
             ReadSensorParametrs();
+            btnCHStart.Text = "Старт";
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -764,6 +780,49 @@ namespace Charaterizator
 //                    dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.White;
                 }
             }
+        }
+
+        private void cbChannalCharakterizator_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+        }
+
+        private void gbCHLevel1_Enter(object sender, EventArgs e)
+        {
+            gbCHLevel1.BackColor = Color.LightGreen;
+            gbCHLevel2.BackColor = Color.Transparent;
+        }
+
+        private void gbCHLevel2_Enter(object sender, EventArgs e)
+        {
+            gbCHLevel2.BackColor = Color.LightGreen;
+            gbCHLevel1.BackColor = Color.Transparent;
+        }
+
+        private void btnNextStep1_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 1;
+        }
+
+        private void btnNextStep2_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 2;
+        }
+
+        private void btnCHPressureSet1_Click(object sender, EventArgs e)
+        {
+            btnCHStart.BackColor = Color.LightGreen;
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            btnCHStart.BackColor = Color.LightGreen;
+        }
+
+        private void MenuItemMainSettings_Click(object sender, EventArgs e)
+        {
+            FormSettings Settings = new FormSettings();
+            Settings.ShowDialog();
         }
     }
 }

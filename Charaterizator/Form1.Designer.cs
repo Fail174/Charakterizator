@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,7 @@
             this.датчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MI_SensorSetings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.основныеПараметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.инфоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,9 +107,17 @@
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUtk2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pbSensorSeach = new System.Windows.Forms.ProgressBar();
             this.tbSelChannalNumber = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -152,9 +161,23 @@
             this.label30 = new System.Windows.Forms.Label();
             this.btnSensorSeach = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button10 = new System.Windows.Forms.Button();
+            this.gbCHLevel2 = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.btnCHPressureSet2 = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
+            this.btnCHStart = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.gbCHLevel1 = new System.Windows.Forms.GroupBox();
+            this.btnCHPressureSet1 = new System.Windows.Forms.Button();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.btnCHTemperatureSet1 = new System.Windows.Forms.Button();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -171,28 +194,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.pbSensorSeach = new System.Windows.Forms.ProgressBar();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.button11 = new System.Windows.Forms.Button();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.button13 = new System.Windows.Forms.Button();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btnNextStep1 = new System.Windows.Forms.Button();
+            this.btnNextStep2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -211,7 +215,9 @@
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.gbCHLevel2.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.gbCHLevel1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -219,8 +225,6 @@
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            this.groupBox10.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -293,7 +297,7 @@
             this.холодильнаяКамераToolStripMenuItem,
             this.датчикиToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.основныеПараметрыToolStripMenuItem});
+            this.MenuItemMainSettings});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
@@ -349,7 +353,7 @@
             this.MI_ColdCameraSetings});
             this.холодильнаяКамераToolStripMenuItem.Name = "холодильнаяКамераToolStripMenuItem";
             this.холодильнаяКамераToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.холодильнаяКамераToolStripMenuItem.Text = "Холодильная камера";
+            this.холодильнаяКамераToolStripMenuItem.Text = "Термокамера";
             // 
             // MI_ColdCameraSetings
             // 
@@ -378,11 +382,12 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(193, 6);
             // 
-            // основныеПараметрыToolStripMenuItem
+            // MenuItemMainSettings
             // 
-            this.основныеПараметрыToolStripMenuItem.Name = "основныеПараметрыToolStripMenuItem";
-            this.основныеПараметрыToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.основныеПараметрыToolStripMenuItem.Text = "Основные параметры";
+            this.MenuItemMainSettings.Name = "MenuItemMainSettings";
+            this.MenuItemMainSettings.Size = new System.Drawing.Size(196, 22);
+            this.MenuItemMainSettings.Text = "Основные параметры";
+            this.MenuItemMainSettings.Click += new System.EventHandler(this.MenuItemMainSettings_Click);
             // 
             // инфоToolStripMenuItem
             // 
@@ -435,7 +440,7 @@
             this.groupBox4.Size = new System.Drawing.Size(264, 257);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Холодильная камера";
+            this.groupBox4.Text = "Термокамера";
             // 
             // button1
             // 
@@ -814,6 +819,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 799);
@@ -823,12 +829,13 @@
             // 
             // rtbConsole
             // 
-            this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(969, 170);
+            this.rtbConsole.Size = new System.Drawing.Size(526, 169);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -990,6 +997,88 @@
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
+            // ChannalNum
+            // 
+            this.ChannalNum.DividerWidth = 1;
+            this.ChannalNum.Frozen = true;
+            this.ChannalNum.HeaderText = "Номер канала";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.DividerWidth = 1;
+            this.Sensor.Frozen = true;
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.MinimumWidth = 200;
+            this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 400;
+            // 
+            // сFactoryNumber
+            // 
+            this.сFactoryNumber.DividerWidth = 1;
+            this.сFactoryNumber.Frozen = true;
+            this.сFactoryNumber.HeaderText = "Заводской номер";
+            this.сFactoryNumber.MinimumWidth = 100;
+            this.сFactoryNumber.Name = "сFactoryNumber";
+            this.сFactoryNumber.ReadOnly = true;
+            this.сFactoryNumber.Width = 200;
+            // 
+            // Select
+            // 
+            this.Select.DividerWidth = 1;
+            this.Select.Frozen = true;
+            this.Select.HeaderText = "Выбор";
+            this.Select.MinimumWidth = 100;
+            this.Select.Name = "Select";
+            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // State
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle3;
+            this.State.DividerWidth = 1;
+            this.State.FalseValue = "false";
+            this.State.Frozen = true;
+            this.State.HeaderText = "Подключение";
+            this.State.IndeterminateValue = "null";
+            this.State.MinimumWidth = 100;
+            this.State.Name = "State";
+            this.State.ReadOnly = true;
+            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.State.TrueValue = "true";
+            // 
+            // Power
+            // 
+            this.Power.DividerWidth = 1;
+            this.Power.Frozen = true;
+            this.Power.HeaderText = "Питание";
+            this.Power.MinimumWidth = 100;
+            this.Power.Name = "Power";
+            this.Power.ReadOnly = true;
+            this.Power.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Work
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Work.DividerWidth = 1;
+            this.Work.FalseValue = "false";
+            this.Work.Frozen = true;
+            this.Work.HeaderText = "Исправность";
+            this.Work.IndeterminateValue = "null";
+            this.Work.MinimumWidth = 100;
+            this.Work.Name = "Work";
+            this.Work.ReadOnly = true;
+            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Work.TrueValue = "true";
+            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.tabControl1);
@@ -1015,6 +1104,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnNextStep1);
             this.tabPage1.Controls.Add(this.pbSensorSeach);
             this.tabPage1.Controls.Add(this.tbSelChannalNumber);
             this.tabPage1.Controls.Add(this.label31);
@@ -1028,9 +1118,16 @@
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // pbSensorSeach
+            // 
+            this.pbSensorSeach.Location = new System.Drawing.Point(8, 64);
+            this.pbSensorSeach.Name = "pbSensorSeach";
+            this.pbSensorSeach.Size = new System.Drawing.Size(255, 23);
+            this.pbSensorSeach.TabIndex = 6;
+            // 
             // tbSelChannalNumber
             // 
-            this.tbSelChannalNumber.Location = new System.Drawing.Point(118, 153);
+            this.tbSelChannalNumber.Location = new System.Drawing.Point(118, 106);
             this.tbSelChannalNumber.Name = "tbSelChannalNumber";
             this.tbSelChannalNumber.ReadOnly = true;
             this.tbSelChannalNumber.Size = new System.Drawing.Size(123, 20);
@@ -1041,7 +1138,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.CausesValidation = false;
-            this.label31.Location = new System.Drawing.Point(12, 156);
+            this.label31.Location = new System.Drawing.Point(12, 109);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(88, 13);
             this.label31.TabIndex = 4;
@@ -1087,7 +1184,7 @@
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Controls.Add(this.tbInfoSensorType);
             this.groupBox9.Controls.Add(this.label30);
-            this.groupBox9.Location = new System.Drawing.Point(6, 180);
+            this.groupBox9.Location = new System.Drawing.Point(6, 133);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(257, 562);
             this.groupBox9.TabIndex = 3;
@@ -1462,11 +1559,12 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.groupBox6);
+            this.tabPage2.Controls.Add(this.btnNextStep2);
+            this.tabPage2.Controls.Add(this.gbCHLevel2);
             this.tabPage2.Controls.Add(this.groupBox10);
-            this.tabPage2.Controls.Add(this.button10);
+            this.tabPage2.Controls.Add(this.btnCHStart);
             this.tabPage2.Controls.Add(this.progressBar1);
-            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.gbCHLevel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -1475,15 +1573,110 @@
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button10
+            // gbCHLevel2
             // 
-            this.button10.Location = new System.Drawing.Point(68, 256);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(129, 33);
-            this.button10.TabIndex = 4;
-            this.button10.Text = "Старт";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.gbCHLevel2.Controls.Add(this.button11);
+            this.gbCHLevel2.Controls.Add(this.comboBox5);
+            this.gbCHLevel2.Controls.Add(this.btnCHPressureSet2);
+            this.gbCHLevel2.Controls.Add(this.label34);
+            this.gbCHLevel2.Controls.Add(this.label35);
+            this.gbCHLevel2.Controls.Add(this.comboBox6);
+            this.gbCHLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gbCHLevel2.Location = new System.Drawing.Point(8, 131);
+            this.gbCHLevel2.Name = "gbCHLevel2";
+            this.gbCHLevel2.Size = new System.Drawing.Size(255, 105);
+            this.gbCHLevel2.TabIndex = 6;
+            this.gbCHLevel2.TabStop = false;
+            this.gbCHLevel2.Text = "Уровень 2";
+            this.gbCHLevel2.Enter += new System.EventHandler(this.gbCHLevel2_Enter);
+            // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button11.Location = new System.Drawing.Point(151, 59);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(98, 28);
+            this.button11.TabIndex = 7;
+            this.button11.Text = "Установить";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Location = new System.Drawing.Point(83, 59);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(66, 28);
+            this.comboBox5.TabIndex = 6;
+            // 
+            // btnCHPressureSet2
+            // 
+            this.btnCHPressureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCHPressureSet2.Location = new System.Drawing.Point(151, 18);
+            this.btnCHPressureSet2.Name = "btnCHPressureSet2";
+            this.btnCHPressureSet2.Size = new System.Drawing.Size(98, 28);
+            this.btnCHPressureSet2.TabIndex = 5;
+            this.btnCHPressureSet2.Text = "Установить";
+            this.btnCHPressureSet2.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(6, 67);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(61, 13);
+            this.label34.TabIndex = 3;
+            this.label34.Text = "Давление:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(6, 27);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(77, 13);
+            this.label35.TabIndex = 2;
+            this.label35.Text = "Температура:";
+            // 
+            // comboBox6
+            // 
+            this.comboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox6.FormattingEnabled = true;
+            this.comboBox6.Location = new System.Drawing.Point(83, 18);
+            this.comboBox6.Name = "comboBox6";
+            this.comboBox6.Size = new System.Drawing.Size(66, 28);
+            this.comboBox6.TabIndex = 0;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.cbChannalCharakterizator);
+            this.groupBox10.Location = new System.Drawing.Point(6, 344);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(255, 65);
+            this.groupBox10.TabIndex = 5;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Текущий канал";
+            // 
+            // cbChannalCharakterizator
+            // 
+            this.cbChannalCharakterizator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChannalCharakterizator.FormattingEnabled = true;
+            this.cbChannalCharakterizator.Location = new System.Drawing.Point(6, 25);
+            this.cbChannalCharakterizator.Name = "cbChannalCharakterizator";
+            this.cbChannalCharakterizator.Size = new System.Drawing.Size(243, 21);
+            this.cbChannalCharakterizator.TabIndex = 0;
+            this.cbChannalCharakterizator.SelectedIndexChanged += new System.EventHandler(this.cbChannalCharakterizator_SelectedIndexChanged);
+            // 
+            // btnCHStart
+            // 
+            this.btnCHStart.BackColor = System.Drawing.Color.IndianRed;
+            this.btnCHStart.Location = new System.Drawing.Point(68, 256);
+            this.btnCHStart.Name = "btnCHStart";
+            this.btnCHStart.Size = new System.Drawing.Size(129, 33);
+            this.btnCHStart.TabIndex = 4;
+            this.btnCHStart.Text = "Старт";
+            this.btnCHStart.UseVisualStyleBackColor = false;
+            this.btnCHStart.Click += new System.EventHandler(this.button10_Click);
             // 
             // progressBar1
             // 
@@ -1492,20 +1685,72 @@
             this.progressBar1.Size = new System.Drawing.Size(253, 23);
             this.progressBar1.TabIndex = 3;
             // 
-            // groupBox5
+            // gbCHLevel1
             // 
-            this.groupBox5.Controls.Add(this.button2);
-            this.groupBox5.Controls.Add(this.comboBox3);
-            this.groupBox5.Controls.Add(this.button12);
-            this.groupBox5.Controls.Add(this.label33);
-            this.groupBox5.Controls.Add(this.label32);
-            this.groupBox5.Controls.Add(this.comboBox2);
-            this.groupBox5.Location = new System.Drawing.Point(8, 20);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(255, 105);
-            this.groupBox5.TabIndex = 0;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Уровень 1";
+            this.gbCHLevel1.BackColor = System.Drawing.Color.LightGreen;
+            this.gbCHLevel1.Controls.Add(this.btnCHPressureSet1);
+            this.gbCHLevel1.Controls.Add(this.comboBox3);
+            this.gbCHLevel1.Controls.Add(this.btnCHTemperatureSet1);
+            this.gbCHLevel1.Controls.Add(this.label33);
+            this.gbCHLevel1.Controls.Add(this.label32);
+            this.gbCHLevel1.Controls.Add(this.comboBox2);
+            this.gbCHLevel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gbCHLevel1.Location = new System.Drawing.Point(8, 20);
+            this.gbCHLevel1.Name = "gbCHLevel1";
+            this.gbCHLevel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.gbCHLevel1.Size = new System.Drawing.Size(255, 105);
+            this.gbCHLevel1.TabIndex = 0;
+            this.gbCHLevel1.TabStop = false;
+            this.gbCHLevel1.Text = "Уровень 1";
+            this.gbCHLevel1.Enter += new System.EventHandler(this.gbCHLevel1_Enter);
+            // 
+            // btnCHPressureSet1
+            // 
+            this.btnCHPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCHPressureSet1.Location = new System.Drawing.Point(151, 59);
+            this.btnCHPressureSet1.Name = "btnCHPressureSet1";
+            this.btnCHPressureSet1.Size = new System.Drawing.Size(98, 28);
+            this.btnCHPressureSet1.TabIndex = 7;
+            this.btnCHPressureSet1.Text = "Установить";
+            this.btnCHPressureSet1.UseVisualStyleBackColor = true;
+            this.btnCHPressureSet1.Click += new System.EventHandler(this.btnCHPressureSet1_Click);
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(83, 59);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(66, 28);
+            this.comboBox3.TabIndex = 6;
+            // 
+            // btnCHTemperatureSet1
+            // 
+            this.btnCHTemperatureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCHTemperatureSet1.Location = new System.Drawing.Point(151, 18);
+            this.btnCHTemperatureSet1.Name = "btnCHTemperatureSet1";
+            this.btnCHTemperatureSet1.Size = new System.Drawing.Size(98, 28);
+            this.btnCHTemperatureSet1.TabIndex = 5;
+            this.btnCHTemperatureSet1.Text = "Установить";
+            this.btnCHTemperatureSet1.UseVisualStyleBackColor = true;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(6, 67);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(61, 13);
+            this.label33.TabIndex = 3;
+            this.label33.Text = "Давление:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 27);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(77, 13);
+            this.label32.TabIndex = 2;
+            this.label32.Text = "Температура:";
             // 
             // comboBox2
             // 
@@ -1641,230 +1886,42 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // pbSensorSeach
+            // richTextBox1
             // 
-            this.pbSensorSeach.Location = new System.Drawing.Point(8, 64);
-            this.pbSensorSeach.Name = "pbSensorSeach";
-            this.pbSensorSeach.Size = new System.Drawing.Size(255, 23);
-            this.pbSensorSeach.TabIndex = 6;
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.richTextBox1.Location = new System.Drawing.Point(535, 5);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(437, 170);
+            this.richTextBox1.TabIndex = 3;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
-            // ChannalNum
+            // btnNextStep1
             // 
-            this.ChannalNum.DividerWidth = 1;
-            this.ChannalNum.Frozen = true;
-            this.ChannalNum.HeaderText = "Номер канала";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ChannalNum.Width = 50;
+            this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextStep1.Location = new System.Drawing.Point(8, 712);
+            this.btnNextStep1.Name = "btnNextStep1";
+            this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
+            this.btnNextStep1.TabIndex = 7;
+            this.btnNextStep1.Text = "Переход к характеризации";
+            this.btnNextStep1.UseVisualStyleBackColor = true;
+            this.btnNextStep1.Click += new System.EventHandler(this.btnNextStep1_Click);
             // 
-            // Sensor
+            // btnNextStep2
             // 
-            this.Sensor.DividerWidth = 1;
-            this.Sensor.Frozen = true;
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.MinimumWidth = 200;
-            this.Sensor.Name = "Sensor";
-            this.Sensor.Width = 400;
-            // 
-            // сFactoryNumber
-            // 
-            this.сFactoryNumber.DividerWidth = 1;
-            this.сFactoryNumber.Frozen = true;
-            this.сFactoryNumber.HeaderText = "Заводской номер";
-            this.сFactoryNumber.MinimumWidth = 100;
-            this.сFactoryNumber.Name = "сFactoryNumber";
-            this.сFactoryNumber.ReadOnly = true;
-            this.сFactoryNumber.Width = 200;
-            // 
-            // Select
-            // 
-            this.Select.DividerWidth = 1;
-            this.Select.Frozen = true;
-            this.Select.HeaderText = "Выбор";
-            this.Select.MinimumWidth = 100;
-            this.Select.Name = "Select";
-            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            // 
-            // State
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle1;
-            this.State.DividerWidth = 1;
-            this.State.FalseValue = "false";
-            this.State.Frozen = true;
-            this.State.HeaderText = "Подключение";
-            this.State.IndeterminateValue = "null";
-            this.State.MinimumWidth = 100;
-            this.State.Name = "State";
-            this.State.ReadOnly = true;
-            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.State.TrueValue = "true";
-            // 
-            // Power
-            // 
-            this.Power.DividerWidth = 1;
-            this.Power.Frozen = true;
-            this.Power.HeaderText = "Питание";
-            this.Power.MinimumWidth = 100;
-            this.Power.Name = "Power";
-            this.Power.ReadOnly = true;
-            this.Power.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Work
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Work.DividerWidth = 1;
-            this.Work.FalseValue = "false";
-            this.Work.Frozen = true;
-            this.Work.HeaderText = "Исправность";
-            this.Work.IndeterminateValue = "null";
-            this.Work.MinimumWidth = 100;
-            this.Work.Name = "Work";
-            this.Work.ReadOnly = true;
-            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Work.TrueValue = "true";
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.cbChannalCharakterizator);
-            this.groupBox10.Location = new System.Drawing.Point(6, 344);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(255, 65);
-            this.groupBox10.TabIndex = 5;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Текущий канал";
-            // 
-            // cbChannalCharakterizator
-            // 
-            this.cbChannalCharakterizator.FormattingEnabled = true;
-            this.cbChannalCharakterizator.Location = new System.Drawing.Point(6, 25);
-            this.cbChannalCharakterizator.Name = "cbChannalCharakterizator";
-            this.cbChannalCharakterizator.Size = new System.Drawing.Size(243, 21);
-            this.cbChannalCharakterizator.TabIndex = 0;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(6, 27);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(77, 13);
-            this.label32.TabIndex = 2;
-            this.label32.Text = "Температура:";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(6, 67);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(61, 13);
-            this.label33.TabIndex = 3;
-            this.label33.Text = "Давление:";
-            // 
-            // button12
-            // 
-            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button12.Location = new System.Drawing.Point(151, 18);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(98, 28);
-            this.button12.TabIndex = 5;
-            this.button12.Text = "Установить";
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(151, 59);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 28);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Установить";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(83, 59);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(66, 28);
-            this.comboBox3.TabIndex = 6;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.button11);
-            this.groupBox6.Controls.Add(this.comboBox5);
-            this.groupBox6.Controls.Add(this.button13);
-            this.groupBox6.Controls.Add(this.label34);
-            this.groupBox6.Controls.Add(this.label35);
-            this.groupBox6.Controls.Add(this.comboBox6);
-            this.groupBox6.Location = new System.Drawing.Point(8, 131);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(255, 105);
-            this.groupBox6.TabIndex = 6;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Уровень 2";
-            // 
-            // button11
-            // 
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button11.Location = new System.Drawing.Point(151, 59);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(98, 28);
-            this.button11.TabIndex = 7;
-            this.button11.Text = "Установить";
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(83, 59);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(66, 28);
-            this.comboBox5.TabIndex = 6;
-            // 
-            // button13
-            // 
-            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button13.Location = new System.Drawing.Point(151, 18);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(98, 28);
-            this.button13.TabIndex = 5;
-            this.button13.Text = "Установить";
-            this.button13.UseVisualStyleBackColor = true;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(6, 67);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(61, 13);
-            this.label34.TabIndex = 3;
-            this.label34.Text = "Давление:";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(6, 27);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(77, 13);
-            this.label35.TabIndex = 2;
-            this.label35.Text = "Температура:";
-            // 
-            // comboBox6
-            // 
-            this.comboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(83, 18);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(66, 28);
-            this.comboBox6.TabIndex = 0;
+            this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextStep2.Location = new System.Drawing.Point(6, 713);
+            this.btnNextStep2.Name = "btnNextStep2";
+            this.btnNextStep2.Size = new System.Drawing.Size(255, 30);
+            this.btnNextStep2.TabIndex = 8;
+            this.btnNextStep2.Text = "Переход к верификации";
+            this.btnNextStep2.UseVisualStyleBackColor = true;
+            this.btnNextStep2.Click += new System.EventHandler(this.btnNextStep2_Click);
             // 
             // MainForm
             // 
@@ -1907,8 +1964,11 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.gbCHLevel2.ResumeLayout(false);
+            this.gbCHLevel2.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.gbCHLevel1.ResumeLayout(false);
+            this.gbCHLevel1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
@@ -1918,9 +1978,6 @@
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1942,7 +1999,7 @@
         private System.Windows.Forms.ToolStripMenuItem коммутаторToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem холодильнаяКамераToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem основныеПараметрыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemMainSettings;
         private System.Windows.Forms.ToolStripMenuItem инфоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
@@ -1997,7 +2054,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox gbCHLevel1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.GroupBox groupBox8;
@@ -2019,7 +2076,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cPressureF;
         private System.Windows.Forms.DataGridViewTextBoxColumn сCurrentF;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button btnCHStart;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
         private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
@@ -2079,16 +2136,19 @@
         private System.Windows.Forms.ComboBox cbChannalCharakterizator;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox gbCHLevel2;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button btnCHPressureSet2;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnCHPressureSet1;
         private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button btnCHTemperatureSet1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button btnNextStep1;
+        private System.Windows.Forms.Button btnNextStep2;
     }
 }
 

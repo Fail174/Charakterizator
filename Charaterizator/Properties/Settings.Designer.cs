@@ -12,7 +12,7 @@ namespace Charaterizator.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -361,13 +361,25 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Параметр1 {
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int MaxChannalCount {
             get {
-                return ((int)(this["Параметр1"]));
+                return ((int)(this["MaxChannalCount"]));
             }
             set {
-                this["Параметр1"] = value;
+                this["MaxChannalCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int CommutatorSwitchDelay {
+            get {
+                return ((int)(this["CommutatorSwitchDelay"]));
+            }
+            set {
+                this["CommutatorSwitchDelay"] = value;
             }
         }
     }

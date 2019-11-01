@@ -13,7 +13,8 @@ namespace ENI100
 
     struct SensorID
     {
-        public int Channal;   //Номер канала коммутатора
+        public int Channal;    //Номер канала коммутатора
+        public int Group;      //Номер группы (1 или 2)
 
         public byte Addr;      //адрес устройства
 
@@ -59,6 +60,7 @@ namespace ENI100
             Coefficient = new float[24];
             Addr = a;
             Channal = 0;
+            Group = 1;
 
             state = 0;   //bb bb – 2 байта статуса(сообщение об ошибках, 00 00 - ок)
             devCode = 0;   //21 – код изготовителя(число, char)
