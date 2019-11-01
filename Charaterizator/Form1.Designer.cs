@@ -106,16 +106,11 @@
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUtk2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbSelChannalNumber = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -159,9 +154,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button10 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.button2 = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -179,8 +171,28 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.label31 = new System.Windows.Forms.Label();
-            this.tbSelChannalNumber = new System.Windows.Forms.TextBox();
+            this.pbSensorSeach = new System.Windows.Forms.ProgressBar();
+            this.ChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Power = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Work = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.button13 = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -199,7 +211,6 @@
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -208,6 +219,8 @@
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            this.groupBox10.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -977,90 +990,6 @@
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
-            // ChannalNum
-            // 
-            this.ChannalNum.DividerWidth = 1;
-            this.ChannalNum.Frozen = true;
-            this.ChannalNum.HeaderText = "Номер канала";
-            this.ChannalNum.Name = "ChannalNum";
-            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ChannalNum.Width = 50;
-            // 
-            // Sensor
-            // 
-            this.Sensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Sensor.DividerWidth = 1;
-            this.Sensor.Frozen = true;
-            this.Sensor.HeaderText = "Датчик";
-            this.Sensor.MinimumWidth = 200;
-            this.Sensor.Name = "Sensor";
-            this.Sensor.Width = 200;
-            // 
-            // сFactoryNumber
-            // 
-            this.сFactoryNumber.DividerWidth = 1;
-            this.сFactoryNumber.Frozen = true;
-            this.сFactoryNumber.HeaderText = "Заводской номер";
-            this.сFactoryNumber.MinimumWidth = 100;
-            this.сFactoryNumber.Name = "сFactoryNumber";
-            this.сFactoryNumber.ReadOnly = true;
-            this.сFactoryNumber.Width = 200;
-            // 
-            // Select
-            // 
-            this.Select.DividerWidth = 1;
-            this.Select.Frozen = true;
-            this.Select.HeaderText = "Выбор";
-            this.Select.MinimumWidth = 100;
-            this.Select.Name = "Select";
-            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            // 
-            // State
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle1;
-            this.State.DividerWidth = 1;
-            this.State.FalseValue = "false";
-            this.State.Frozen = true;
-            this.State.HeaderText = "Подключение";
-            this.State.IndeterminateValue = "null";
-            this.State.MinimumWidth = 100;
-            this.State.Name = "State";
-            this.State.ReadOnly = true;
-            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.State.TrueValue = "true";
-            // 
-            // Power
-            // 
-            this.Power.DividerWidth = 1;
-            this.Power.Frozen = true;
-            this.Power.HeaderText = "Питание";
-            this.Power.MinimumWidth = 100;
-            this.Power.Name = "Power";
-            this.Power.ReadOnly = true;
-            this.Power.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Power.Width = 1090;
-            // 
-            // Work
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Work.DividerWidth = 1;
-            this.Work.FalseValue = "false";
-            this.Work.Frozen = true;
-            this.Work.HeaderText = "Исправность";
-            this.Work.IndeterminateValue = "null";
-            this.Work.MinimumWidth = 100;
-            this.Work.Name = "Work";
-            this.Work.ReadOnly = true;
-            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Work.TrueValue = "true";
-            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.tabControl1);
@@ -1086,6 +1015,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.pbSensorSeach);
             this.tabPage1.Controls.Add(this.tbSelChannalNumber);
             this.tabPage1.Controls.Add(this.label31);
             this.tabPage1.Controls.Add(this.groupBox9);
@@ -1097,6 +1027,25 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tbSelChannalNumber
+            // 
+            this.tbSelChannalNumber.Location = new System.Drawing.Point(118, 153);
+            this.tbSelChannalNumber.Name = "tbSelChannalNumber";
+            this.tbSelChannalNumber.ReadOnly = true;
+            this.tbSelChannalNumber.Size = new System.Drawing.Size(123, 20);
+            this.tbSelChannalNumber.TabIndex = 5;
+            this.tbSelChannalNumber.Text = "Канал 1";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.CausesValidation = false;
+            this.label31.Location = new System.Drawing.Point(12, 156);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(88, 13);
+            this.label31.TabIndex = 4;
+            this.label31.Text = "Текущий канал:";
             // 
             // groupBox9
             // 
@@ -1513,10 +1462,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox6);
+            this.tabPage2.Controls.Add(this.groupBox10);
             this.tabPage2.Controls.Add(this.button10);
             this.tabPage2.Controls.Add(this.progressBar1);
-            this.tabPage2.Controls.Add(this.button2);
-            this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -1528,64 +1477,43 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(74, 256);
+            this.button10.Location = new System.Drawing.Point(68, 256);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(129, 33);
             this.button10.TabIndex = 4;
-            this.button10.Text = "Считать параметры";
+            this.button10.Text = "Старт";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 209);
+            this.progressBar1.Location = new System.Drawing.Point(8, 304);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(243, 23);
+            this.progressBar1.Size = new System.Drawing.Size(253, 23);
             this.progressBar1.TabIndex = 3;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(74, 167);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(129, 33);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Старт";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.comboBox3);
-            this.groupBox6.Location = new System.Drawing.Point(8, 94);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(255, 65);
-            this.groupBox6.TabIndex = 1;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Конечная температура";
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(6, 25);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(243, 21);
-            this.comboBox3.TabIndex = 0;
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.button2);
+            this.groupBox5.Controls.Add(this.comboBox3);
+            this.groupBox5.Controls.Add(this.button12);
+            this.groupBox5.Controls.Add(this.label33);
+            this.groupBox5.Controls.Add(this.label32);
             this.groupBox5.Controls.Add(this.comboBox2);
             this.groupBox5.Location = new System.Drawing.Point(8, 20);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(255, 65);
+            this.groupBox5.Size = new System.Drawing.Size(255, 105);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Начальная температура";
+            this.groupBox5.Text = "Уровень 1";
             // 
             // comboBox2
             // 
+            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(6, 25);
+            this.comboBox2.Location = new System.Drawing.Point(83, 18);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(243, 21);
+            this.comboBox2.Size = new System.Drawing.Size(66, 28);
             this.comboBox2.TabIndex = 0;
             // 
             // tabPage3
@@ -1713,24 +1641,230 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // label31
+            // pbSensorSeach
             // 
-            this.label31.AutoSize = true;
-            this.label31.CausesValidation = false;
-            this.label31.Location = new System.Drawing.Point(12, 156);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(88, 13);
-            this.label31.TabIndex = 4;
-            this.label31.Text = "Текущий канал:";
+            this.pbSensorSeach.Location = new System.Drawing.Point(8, 64);
+            this.pbSensorSeach.Name = "pbSensorSeach";
+            this.pbSensorSeach.Size = new System.Drawing.Size(255, 23);
+            this.pbSensorSeach.TabIndex = 6;
             // 
-            // tbSelChannalNumber
+            // ChannalNum
             // 
-            this.tbSelChannalNumber.Location = new System.Drawing.Point(118, 153);
-            this.tbSelChannalNumber.Name = "tbSelChannalNumber";
-            this.tbSelChannalNumber.ReadOnly = true;
-            this.tbSelChannalNumber.Size = new System.Drawing.Size(123, 20);
-            this.tbSelChannalNumber.TabIndex = 5;
-            this.tbSelChannalNumber.Text = "Канал 1";
+            this.ChannalNum.DividerWidth = 1;
+            this.ChannalNum.Frozen = true;
+            this.ChannalNum.HeaderText = "Номер канала";
+            this.ChannalNum.Name = "ChannalNum";
+            this.ChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ChannalNum.Width = 50;
+            // 
+            // Sensor
+            // 
+            this.Sensor.DividerWidth = 1;
+            this.Sensor.Frozen = true;
+            this.Sensor.HeaderText = "Датчик";
+            this.Sensor.MinimumWidth = 200;
+            this.Sensor.Name = "Sensor";
+            this.Sensor.Width = 400;
+            // 
+            // сFactoryNumber
+            // 
+            this.сFactoryNumber.DividerWidth = 1;
+            this.сFactoryNumber.Frozen = true;
+            this.сFactoryNumber.HeaderText = "Заводской номер";
+            this.сFactoryNumber.MinimumWidth = 100;
+            this.сFactoryNumber.Name = "сFactoryNumber";
+            this.сFactoryNumber.ReadOnly = true;
+            this.сFactoryNumber.Width = 200;
+            // 
+            // Select
+            // 
+            this.Select.DividerWidth = 1;
+            this.Select.Frozen = true;
+            this.Select.HeaderText = "Выбор";
+            this.Select.MinimumWidth = 100;
+            this.Select.Name = "Select";
+            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // State
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            this.State.DividerWidth = 1;
+            this.State.FalseValue = "false";
+            this.State.Frozen = true;
+            this.State.HeaderText = "Подключение";
+            this.State.IndeterminateValue = "null";
+            this.State.MinimumWidth = 100;
+            this.State.Name = "State";
+            this.State.ReadOnly = true;
+            this.State.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.State.TrueValue = "true";
+            // 
+            // Power
+            // 
+            this.Power.DividerWidth = 1;
+            this.Power.Frozen = true;
+            this.Power.HeaderText = "Питание";
+            this.Power.MinimumWidth = 100;
+            this.Power.Name = "Power";
+            this.Power.ReadOnly = true;
+            this.Power.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Work
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Work.DividerWidth = 1;
+            this.Work.FalseValue = "false";
+            this.Work.Frozen = true;
+            this.Work.HeaderText = "Исправность";
+            this.Work.IndeterminateValue = "null";
+            this.Work.MinimumWidth = 100;
+            this.Work.Name = "Work";
+            this.Work.ReadOnly = true;
+            this.Work.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Work.TrueValue = "true";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.cbChannalCharakterizator);
+            this.groupBox10.Location = new System.Drawing.Point(6, 344);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(255, 65);
+            this.groupBox10.TabIndex = 5;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Текущий канал";
+            // 
+            // cbChannalCharakterizator
+            // 
+            this.cbChannalCharakterizator.FormattingEnabled = true;
+            this.cbChannalCharakterizator.Location = new System.Drawing.Point(6, 25);
+            this.cbChannalCharakterizator.Name = "cbChannalCharakterizator";
+            this.cbChannalCharakterizator.Size = new System.Drawing.Size(243, 21);
+            this.cbChannalCharakterizator.TabIndex = 0;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 27);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(77, 13);
+            this.label32.TabIndex = 2;
+            this.label32.Text = "Температура:";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(6, 67);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(61, 13);
+            this.label33.TabIndex = 3;
+            this.label33.Text = "Давление:";
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button12.Location = new System.Drawing.Point(151, 18);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(98, 28);
+            this.button12.TabIndex = 5;
+            this.button12.Text = "Установить";
+            this.button12.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(151, 59);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(98, 28);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Установить";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(83, 59);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(66, 28);
+            this.comboBox3.TabIndex = 6;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.button11);
+            this.groupBox6.Controls.Add(this.comboBox5);
+            this.groupBox6.Controls.Add(this.button13);
+            this.groupBox6.Controls.Add(this.label34);
+            this.groupBox6.Controls.Add(this.label35);
+            this.groupBox6.Controls.Add(this.comboBox6);
+            this.groupBox6.Location = new System.Drawing.Point(8, 131);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(255, 105);
+            this.groupBox6.TabIndex = 6;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Уровень 2";
+            // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button11.Location = new System.Drawing.Point(151, 59);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(98, 28);
+            this.button11.TabIndex = 7;
+            this.button11.Text = "Установить";
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Location = new System.Drawing.Point(83, 59);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(66, 28);
+            this.comboBox5.TabIndex = 6;
+            // 
+            // button13
+            // 
+            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button13.Location = new System.Drawing.Point(151, 18);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(98, 28);
+            this.button13.TabIndex = 5;
+            this.button13.Text = "Установить";
+            this.button13.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(6, 67);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(61, 13);
+            this.label34.TabIndex = 3;
+            this.label34.Text = "Давление:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(6, 27);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(77, 13);
+            this.label35.TabIndex = 2;
+            this.label35.Text = "Температура:";
+            // 
+            // comboBox6
+            // 
+            this.comboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox6.FormattingEnabled = true;
+            this.comboBox6.Location = new System.Drawing.Point(83, 18);
+            this.comboBox6.Name = "comboBox6";
+            this.comboBox6.Size = new System.Drawing.Size(66, 28);
+            this.comboBox6.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -1773,8 +1907,8 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
@@ -1784,6 +1918,9 @@
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1860,9 +1997,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ProgressBar progressBar1;
@@ -1892,13 +2026,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cUtk2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сFactoryNumber;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn State;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Power;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
@@ -1940,6 +2067,28 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox tbSelChannalNumber;
         private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ProgressBar pbSensorSeach;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChannalNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сFactoryNumber;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn State;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Power;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Work;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.ComboBox cbChannalCharakterizator;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Button button12;
     }
 }
 

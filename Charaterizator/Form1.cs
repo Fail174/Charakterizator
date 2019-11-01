@@ -19,13 +19,16 @@ namespace Charaterizator
     public partial class MainForm : Form
     {
         const int MAX_ERROR_COUNT = 3;
+        const int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
         private ClassEni100 sensors = new ClassEni100();
         private FormSwitch Commutator = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
-        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
+//        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
+
+        private CResultCH ResultCH = new CResultCH(MaxChannalCount);//результаты характеризации датчиков
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
@@ -72,6 +75,8 @@ namespace Charaterizator
                 dataGridView1[6, i].Style.BackColor = Color.Red;
                 dataGridView2.Rows.Add("", "", "", "", "", "");
                 dataGridView3.Rows.Add("", "", "", "", "");
+
+                cbChannalCharakterizator.Items.Add("Канал " + (i+1).ToString());
             }
 
             MainTimer.Enabled = true;
@@ -329,18 +334,28 @@ namespace Charaterizator
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        dataGridView2.Rows[i].Cells[0].Value = DateTime.Now.ToString();                 //
-                        dataGridView2.Rows[i].Cells[1].Value = sensors.sensor.Temperature.ToString();   //
-                        dataGridView2.Rows[i].Cells[2].Value = sensors.sensor.Pressure.ToString("f");   //
-                        dataGridView2.Rows[i].Cells[3].Value = sensors.sensor.OutVoltage.ToString("f");
-                        dataGridView2.Rows[i].Cells[4].Value = sensors.sensor.Resistance.ToString("f");
-                        dataGridView2.Rows[i].Cells[5].Value = sensors.sensor.OutCurrent.ToString("f");
+                        ResultCH.AddPoint(i,sensors.sensor.Temperature, sensors.sensor.Pressure, sensors.sensor.OutVoltage, sensors.sensor.Resistance, sensors.sensor.OutCurrent);
+                        cbChannalCharakterizator.SelectedIndex = i;
+                        UpDateCharakterizatorGrid(i);
                     }
                     else
                     {
                         Program.txtlog.WriteLineLog("Параметры датчика не прочитаны!", 1);
                     }
                 }
+            }
+        }
+        private void UpDateCharakterizatorGrid(int i)
+        {
+            for (int j=0;j<ResultCH.Channal[i].PointsCount;j++)
+            {
+                dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
+                dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
+                dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
+                dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
+                dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutCurrent.ToString("f");
+
             }
         }
 
@@ -353,6 +368,9 @@ namespace Charaterizator
             try
             {
                 Program.txtlog.WriteLineLog("Старт поиска датчиков...", 0);
+                pbSensorSeach.Maximum = MaxChannalCount;
+                pbSensorSeach.Minimum = 0;
+                pbSensorSeach.Value = 0;
 
                 sensors.sensorList.Clear();
                 if (sensors.Connect(Properties.Settings.Default.COMSensor,
@@ -388,6 +406,7 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog("Нет подключения! Поиск датчиков на линии не выполнен!", 1);
                         }
                         Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                        pbSensorSeach.Value = i;
                     }
                 }
                 else
@@ -399,6 +418,7 @@ namespace Charaterizator
             finally
             {
                 SensorBusy = false;
+                pbSensorSeach.Value = 0;
             }
 
             return 0;

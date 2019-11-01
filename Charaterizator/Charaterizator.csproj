@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ClassEni100.cs" />
     <Compile Include="CMultimetr.cs" />
+    <Compile Include="CResultCH.cs" />
     <Compile Include="CTxtlog.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
