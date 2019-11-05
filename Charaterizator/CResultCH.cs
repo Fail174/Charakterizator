@@ -44,7 +44,7 @@ namespace Charaterizator
                 SChanal ch = new SChanal(i);
                 Channal.Add(ch);
             }
-            StreamWriter FileStream = File.CreateText("CH_Result.txt");//создаем файл сессии
+            FileStream = File.CreateText("CH_Result.txt");//создаем файл сессии
             FileStream.WriteLine("№ Канала" + " |" +
                             "Дата          |" +
                             "Температура   |" +
@@ -56,7 +56,7 @@ namespace Charaterizator
 
         ~CResultCH()
         {
-//            FileStream.Close();
+            //FileStream.Close();
         }
 
         public void AddPoint(int ch, float Temp, float Press, float U, float R, float I)

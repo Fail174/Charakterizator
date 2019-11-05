@@ -292,11 +292,11 @@ namespace Charaterizator
             dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
         }
-        private void UpdateSensorInfoPanel(int index)
+        private void UpdateSensorInfoPanel(int i)
         {
-            if (sensors.SelectSensor(index-1))
+            if (sensors.SelectSensor(i))
             {
-                tbSelChannalNumber.Text = "Канал " + index.ToString();
+                tbSelChannalNumber.Text = string.Format("Канал {0}" , i+1);
                 tbInfoDesc.Text = sensors.sensor.GetDesc();
                 tbInfoTeg.Text = sensors.sensor.GetTeg();
                 tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f");
@@ -318,7 +318,42 @@ namespace Charaterizator
             }
             else
             {
-                Program.txtlog.WriteLineLog("Датчик на выбранной линии не обнаружен!", 1);
+//                Program.txtlog.WriteLineLog("Датчик на выбранной линии не обнаружен!", 1);
+                DialogResult result = MessageBox.Show(
+                        "Выполнить поиск датчика?",
+                        "Датчик на выбранной линии не обнаружен!",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information,
+                        MessageBoxDefaultButton.Button1,
+                        MessageBoxOptions.DefaultDesktopOnly);
+                if (result == DialogResult.Yes)
+                {
+                    // коммутируем
+                    Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
+
+                    if (sensors.SeachSensor(i))//поиск датчиков
+                    {
+                        Thread.Sleep(100);
+                        if (sensors.SelectSensor(i))//выбор обнаруженного датчика
+                        {//датчик найден, обновляем таблицу
+                            Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
+                            sensors.TegRead();          //читаем инфомацию о датчике
+                            sensors.SensorRead();       //чтение данных с датчика
+                            UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog(string.Format("Датчик на линии {0} обнаружен. Ошибка подключения к датчику!", i + 1), 1);
+                        }
+                    }
+                    else
+                    {
+                        //                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
+                        Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
+                    }
+
+                    Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                }
             }
         }
 
@@ -356,10 +391,11 @@ namespace Charaterizator
         //обновляем грид для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
-            while (dataGridView2.RowCount > 0)//удаляем записи предыдущего датчика
+            dataGridView2.Rows.Clear();
+/*            while (dataGridView2.RowCount > 0)//удаляем записи предыдущего датчика
             {
                 dataGridView2.Rows.RemoveAt(0);
-            }
+            }*/
             for (int j=0;j<ResultCH.Channal[i].PointsCount;j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add("", "", "", "", "", "");
@@ -394,13 +430,14 @@ namespace Charaterizator
                 {
                     for (int i = 0; i < MaxChannalCount; i++)
                     {
-                        Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0} ...", i), 0);
+                        Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0} ...", i+1), 0);
 
                         // коммутируем
                         Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
 
                         if (sensors.SeachSensor(i))//поиск датчиков
                         {
+                            Thread.Sleep(100);
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
@@ -410,13 +447,13 @@ namespace Charaterizator
                             }
                             else
                             {
-                                Program.txtlog.WriteLineLog("Датчики на линии не обнаружены!", 1);
+                                Program.txtlog.WriteLineLog(string.Format("Датчик на линии {0} обнаружен. Ошибка подключения к датчику!", i+1), 1);
                             }
-
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog("Нет подключения! Поиск датчиков на линии не выполнен!", 1);
+//                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
+                            Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
                         }
                         Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
@@ -609,11 +646,15 @@ namespace Charaterizator
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (!Commutator.Connected) return;
+            if (!Commutator.Connected)
+            {
+                MessageBox.Show("Нет подключения к коммутатору!", "Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
 
             if (e.ColumnIndex <= 2)//выбор датчика
             {
-                UpdateSensorInfoPanel(e.RowIndex+1);
+                UpdateSensorInfoPanel(e.RowIndex);
             }
 
             if (e.ColumnIndex == 4)//Состояние датчика - подключение

@@ -291,14 +291,17 @@ namespace ENI100
                 data[data.Length - 1] = GetCRC(data, 5);
                 port.Write(data, 0, data.Length);
                 WaitSensorAnswer(20, 300);
-                if (ParseReadBuffer(300) >= 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+//                for (int i = 0; i < 3; i++)
+ //               {
+                    if (ParseReadBuffer(300) >= 0)
+                    {
+                        return true;
+                    }
+/*                    else
+                    {
+                        return false;
+                    }*/
+//                }
             }
             return false;
         }
@@ -721,7 +724,7 @@ namespace ENI100
                                                 readbuf.Push(indata);
                                             }
                                         }*/
-                }
+            }
                 catch (TimeoutException)
                 {
                     Console.WriteLine("Превышен таймаут на чтение данных с датчиков!\n");
