@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -204,6 +204,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
+            this.tbDateTime = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -237,7 +238,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 981);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1015);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1271, 22);
             this.statusStrip1.TabIndex = 3;
@@ -422,6 +423,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.tbDateTime);
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.numMensorPoint);
             this.panel1.Controls.Add(this.groupBox3);
@@ -430,7 +432,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(979, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(292, 957);
+            this.panel1.Size = new System.Drawing.Size(292, 991);
             this.panel1.TabIndex = 6;
             // 
             // groupBox4
@@ -446,7 +448,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox4.Location = new System.Drawing.Point(15, 692);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(264, 257);
+            this.groupBox4.Size = new System.Drawing.Size(264, 240);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Термокамера";
@@ -454,7 +456,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(94, 214);
+            this.button1.Location = new System.Drawing.Point(87, 192);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 38);
             this.button1.TabIndex = 12;
@@ -465,7 +467,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(155, 105);
+            this.label10.Location = new System.Drawing.Point(203, 86);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(60, 42);
             this.label10.TabIndex = 11;
@@ -473,11 +475,10 @@
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(6, 79);
+            this.label7.Location = new System.Drawing.Point(6, 86);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(180, 20);
+            this.label7.Size = new System.Drawing.Size(118, 48);
             this.label7.TabIndex = 8;
             this.label7.Text = "Текущая температура:";
             // 
@@ -490,7 +491,7 @@
             0,
             0,
             65536});
-            this.numericUpDown2.Location = new System.Drawing.Point(94, 157);
+            this.numericUpDown2.Location = new System.Drawing.Point(94, 137);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -509,7 +510,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(13, 178);
+            this.label6.Location = new System.Drawing.Point(13, 158);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 20);
             this.label6.TabIndex = 6;
@@ -518,9 +519,9 @@
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox5.Location = new System.Drawing.Point(10, 102);
+            this.textBox5.Location = new System.Drawing.Point(122, 82);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(139, 49);
+            this.textBox5.Size = new System.Drawing.Size(81, 49);
             this.textBox5.TabIndex = 3;
             this.textBox5.Text = "80";
             // 
@@ -831,7 +832,7 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 799);
+            this.panel2.Location = new System.Drawing.Point(0, 833);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(979, 182);
             this.panel2.TabIndex = 7;
@@ -871,7 +872,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(979, 775);
+            this.panel3.Size = new System.Drawing.Size(979, 809);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView4
@@ -884,7 +885,7 @@
             this.cICurrent20mA,
             this.cIVolt});
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView4.Location = new System.Drawing.Point(277, 527);
+            this.dataGridView4.Location = new System.Drawing.Point(277, 561);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.Size = new System.Drawing.Size(702, 248);
             this.dataGridView4.TabIndex = 7;
@@ -943,7 +944,7 @@
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView3.Location = new System.Drawing.Point(277, 0);
             this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(702, 775);
+            this.dataGridView3.Size = new System.Drawing.Size(702, 809);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1001,7 +1002,7 @@
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(702, 775);
+            this.dataGridView2.Size = new System.Drawing.Size(702, 809);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             // 
@@ -1069,7 +1070,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(277, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(702, 775);
+            this.dataGridView1.Size = new System.Drawing.Size(702, 809);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1116,10 +1117,10 @@
             // 
             // State
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle3;
             this.State.DividerWidth = 1;
             this.State.FalseValue = "false";
             this.State.Frozen = true;
@@ -1143,10 +1144,10 @@
             // 
             // Work
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle4;
             this.Work.DividerWidth = 1;
             this.Work.FalseValue = "false";
             this.Work.Frozen = true;
@@ -1164,7 +1165,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 775);
+            this.panel4.Size = new System.Drawing.Size(277, 809);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1176,7 +1177,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 775);
+            this.tabControl1.Size = new System.Drawing.Size(277, 809);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1191,7 +1192,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 749);
+            this.tabPage1.Size = new System.Drawing.Size(269, 783);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1200,7 +1201,7 @@
             // 
             this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep1.Location = new System.Drawing.Point(8, 712);
+            this.btnNextStep1.Location = new System.Drawing.Point(8, 746);
             this.btnNextStep1.Name = "btnNextStep1";
             this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
             this.btnNextStep1.TabIndex = 7;
@@ -1998,11 +1999,21 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
+            // tbDateTime
+            // 
+            this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbDateTime.Location = new System.Drawing.Point(17, 935);
+            this.tbDateTime.Name = "tbDateTime";
+            this.tbDateTime.ReadOnly = true;
+            this.tbDateTime.Size = new System.Drawing.Size(261, 44);
+            this.tbDateTime.TabIndex = 10;
+            this.tbDateTime.Text = "00:00:00";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1271, 1003);
+            this.ClientSize = new System.Drawing.Size(1271, 1037);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -2017,6 +2028,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
@@ -2232,6 +2244,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
         private System.Windows.Forms.DataGridViewTextBoxColumn cIVolt;
         private System.Windows.Forms.Button btnCurrentCalibr;
+        private System.Windows.Forms.TextBox tbDateTime;
     }
 }
 

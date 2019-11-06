@@ -50,6 +50,7 @@ namespace Charaterizator
             //            btnMensor_Click(null, null);
 
             //********************  Цифровой шрифт *********************
+            tbDateTime.Font = DrawingFont;
             tbMensorData.Font = DrawingFont;
             tbNumCH.Font = DrawingFont;
             tbMultimetrData.Font = DrawingFont;
@@ -540,6 +541,7 @@ namespace Charaterizator
             {
                 ReadMensor(); //обновляем данные с Менсора
             }
+            tbDateTime.Text = DateTime.Now.ToString();
         }
 
 
