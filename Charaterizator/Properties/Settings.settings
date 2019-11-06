@@ -92,5 +92,8 @@
     <Setting Name="CommutatorSwitchDelay" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
+    <Setting Name="FileNameDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\\WORK\\BBMW\\Repozitoriy\\Fail174\\Charakterizator\\Charaterizator\\SensorsDB\\Sensors.mdb</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

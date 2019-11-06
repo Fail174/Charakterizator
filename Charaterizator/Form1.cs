@@ -26,6 +26,9 @@ namespace Charaterizator
         private ClassEni100 sensors = new ClassEni100();
         private FormSwitch Commutator = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
+        private FormSensorsDB SensorsDB = new FormSensorsDB();
+
+
 //        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
         private CResultCH ResultCH = new CResultCH(MaxChannalCount);//результаты характеризации датчиков
@@ -62,6 +65,18 @@ namespace Charaterizator
         //Выполняем при загрузке главной формы
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // устанавливаем связь с БД
+            string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
+            SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
+
+            // Проверка
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                comboBox2.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
+                String s = "Иванов Иван Иванович";               
+            }
+
+
             btmMultimetr.PerformClick();
             btnCommutator.PerformClick();
             btnMensor.PerformClick();
@@ -861,6 +876,15 @@ namespace Charaterizator
         {
             FormSettings Settings = new FormSettings();
             Settings.ShowDialog();
+        }
+
+
+        // Обработчик нажатия меню: ФАЙЛ - ОТКРЫТЬ БД
+        private void открытьБДДатчиковToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SensorsDB.GetData();        // получаем список моделей из БД и записываем его в listbox 
+            SensorsDB.ShowDialog();
+                       
         }
     }
 }
