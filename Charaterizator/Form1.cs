@@ -701,14 +701,11 @@ namespace Charaterizator
         }
 
 
-        private void tabControl1_TabIndexChanged(object sender, EventArgs e)
-        {
-        }
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridView1.Visible = (tabControl1.SelectedIndex == 0);
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
+            dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
         }
 

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,6 +90,7 @@
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
@@ -117,6 +118,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnNextStep1 = new System.Windows.Forms.Button();
             this.pbSensorSeach = new System.Windows.Forms.ProgressBar();
             this.tbSelChannalNumber = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -161,6 +163,7 @@
             this.label30 = new System.Windows.Forms.Label();
             this.btnSensorSeach = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnNextStep2 = new System.Windows.Forms.Button();
             this.gbCHLevel2 = new System.Windows.Forms.GroupBox();
             this.button11 = new System.Windows.Forms.Button();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
@@ -194,9 +197,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.btnNextStep1 = new System.Windows.Forms.Button();
-            this.btnNextStep2 = new System.Windows.Forms.Button();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cIVolt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCurrentCalibr = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -225,6 +232,7 @@
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -827,6 +835,19 @@
             this.panel2.Size = new System.Drawing.Size(979, 182);
             this.panel2.TabIndex = 7;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.richTextBox1.Location = new System.Drawing.Point(535, 5);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(437, 170);
+            this.richTextBox1.TabIndex = 3;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
             // rtbConsole
             // 
             this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -841,6 +862,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.dataGridView4);
             this.panel3.Controls.Add(this.dataGridView3);
             this.panel3.Controls.Add(this.dataGridView2);
             this.panel3.Controls.Add(this.dataGridView1);
@@ -1037,10 +1059,10 @@
             // 
             // State
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle3.NullValue = false;
-            this.State.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle7.NullValue = false;
+            this.State.DefaultCellStyle = dataGridViewCellStyle7;
             this.State.DividerWidth = 1;
             this.State.FalseValue = "false";
             this.State.Frozen = true;
@@ -1064,10 +1086,10 @@
             // 
             // Work
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle4.NullValue = false;
-            this.Work.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle8.NullValue = false;
+            this.Work.DefaultCellStyle = dataGridViewCellStyle8;
             this.Work.DividerWidth = 1;
             this.Work.FalseValue = "false";
             this.Work.Frozen = true;
@@ -1100,7 +1122,6 @@
             this.tabControl1.Size = new System.Drawing.Size(277, 775);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            this.tabControl1.TabIndexChanged += new System.EventHandler(this.tabControl1_TabIndexChanged);
             // 
             // tabPage1
             // 
@@ -1117,6 +1138,18 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnNextStep1
+            // 
+            this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextStep1.Location = new System.Drawing.Point(8, 712);
+            this.btnNextStep1.Name = "btnNextStep1";
+            this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
+            this.btnNextStep1.TabIndex = 7;
+            this.btnNextStep1.Text = "Переход к характеризации";
+            this.btnNextStep1.UseVisualStyleBackColor = true;
+            this.btnNextStep1.Click += new System.EventHandler(this.btnNextStep1_Click);
             // 
             // pbSensorSeach
             // 
@@ -1559,6 +1592,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnCurrentCalibr);
             this.tabPage2.Controls.Add(this.btnNextStep2);
             this.tabPage2.Controls.Add(this.gbCHLevel2);
             this.tabPage2.Controls.Add(this.groupBox10);
@@ -1572,6 +1606,18 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnNextStep2
+            // 
+            this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextStep2.Location = new System.Drawing.Point(6, 713);
+            this.btnNextStep2.Name = "btnNextStep2";
+            this.btnNextStep2.Size = new System.Drawing.Size(255, 30);
+            this.btnNextStep2.TabIndex = 8;
+            this.btnNextStep2.Text = "Переход к верификации";
+            this.btnNextStep2.UseVisualStyleBackColor = true;
+            this.btnNextStep2.Click += new System.EventHandler(this.btnNextStep2_Click);
             // 
             // gbCHLevel2
             // 
@@ -1650,7 +1696,7 @@
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.cbChannalCharakterizator);
-            this.groupBox10.Location = new System.Drawing.Point(6, 344);
+            this.groupBox10.Location = new System.Drawing.Point(8, 417);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(255, 65);
             this.groupBox10.TabIndex = 5;
@@ -1670,19 +1716,19 @@
             // btnCHStart
             // 
             this.btnCHStart.BackColor = System.Drawing.Color.IndianRed;
-            this.btnCHStart.Location = new System.Drawing.Point(68, 256);
+            this.btnCHStart.Location = new System.Drawing.Point(12, 251);
             this.btnCHStart.Name = "btnCHStart";
-            this.btnCHStart.Size = new System.Drawing.Size(129, 33);
+            this.btnCHStart.Size = new System.Drawing.Size(245, 47);
             this.btnCHStart.TabIndex = 4;
-            this.btnCHStart.Text = "Старт";
+            this.btnCHStart.Text = "Старт характеризации";
             this.btnCHStart.UseVisualStyleBackColor = false;
             this.btnCHStart.Click += new System.EventHandler(this.button10_Click);
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(8, 304);
+            this.progressBar1.Location = new System.Drawing.Point(12, 376);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(253, 23);
+            this.progressBar1.Size = new System.Drawing.Size(243, 23);
             this.progressBar1.TabIndex = 3;
             // 
             // gbCHLevel1
@@ -1886,42 +1932,70 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // richTextBox1
+            // dataGridView4
             // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(535, 5);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(437, 170);
-            this.richTextBox1.TabIndex = 3;
-            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.сIDataTime,
+            this.сITemperature,
+            this.cICurrent4mA,
+            this.cICurrent20mA,
+            this.cIVolt});
+            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView4.Location = new System.Drawing.Point(277, 527);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.Size = new System.Drawing.Size(702, 248);
+            this.dataGridView4.TabIndex = 7;
+            this.dataGridView4.Visible = false;
             // 
-            // btnNextStep1
+            // сIDataTime
             // 
-            this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep1.Location = new System.Drawing.Point(8, 712);
-            this.btnNextStep1.Name = "btnNextStep1";
-            this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
-            this.btnNextStep1.TabIndex = 7;
-            this.btnNextStep1.Text = "Переход к характеризации";
-            this.btnNextStep1.UseVisualStyleBackColor = true;
-            this.btnNextStep1.Click += new System.EventHandler(this.btnNextStep1_Click);
+            this.сIDataTime.HeaderText = "Дата и время";
+            this.сIDataTime.MinimumWidth = 200;
+            this.сIDataTime.Name = "сIDataTime";
+            this.сIDataTime.ReadOnly = true;
+            this.сIDataTime.Width = 200;
             // 
-            // btnNextStep2
+            // сITemperature
             // 
-            this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(6, 713);
-            this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(255, 30);
-            this.btnNextStep2.TabIndex = 8;
-            this.btnNextStep2.Text = "Переход к верификации";
-            this.btnNextStep2.UseVisualStyleBackColor = true;
-            this.btnNextStep2.Click += new System.EventHandler(this.btnNextStep2_Click);
+            this.сITemperature.HeaderText = "Температура";
+            this.сITemperature.MinimumWidth = 200;
+            this.сITemperature.Name = "сITemperature";
+            this.сITemperature.ReadOnly = true;
+            this.сITemperature.Width = 200;
+            // 
+            // cICurrent4mA
+            // 
+            this.cICurrent4mA.HeaderText = "Ток 4мА";
+            this.cICurrent4mA.MinimumWidth = 200;
+            this.cICurrent4mA.Name = "cICurrent4mA";
+            this.cICurrent4mA.ReadOnly = true;
+            this.cICurrent4mA.Width = 200;
+            // 
+            // cICurrent20mA
+            // 
+            this.cICurrent20mA.HeaderText = "Ток 20мА";
+            this.cICurrent20mA.MinimumWidth = 200;
+            this.cICurrent20mA.Name = "cICurrent20mA";
+            this.cICurrent20mA.ReadOnly = true;
+            this.cICurrent20mA.Width = 200;
+            // 
+            // cIVolt
+            // 
+            this.cIVolt.HeaderText = "Напряжение, мВ";
+            this.cIVolt.MinimumWidth = 200;
+            this.cIVolt.Name = "cIVolt";
+            this.cIVolt.ReadOnly = true;
+            this.cIVolt.Width = 200;
+            // 
+            // btnCurrentCalibr
+            // 
+            this.btnCurrentCalibr.Location = new System.Drawing.Point(12, 313);
+            this.btnCurrentCalibr.Name = "btnCurrentCalibr";
+            this.btnCurrentCalibr.Size = new System.Drawing.Size(243, 48);
+            this.btnCurrentCalibr.TabIndex = 9;
+            this.btnCurrentCalibr.Text = "Калибровка тока датчика (4 и 20мА)";
+            this.btnCurrentCalibr.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -1978,6 +2052,7 @@
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2149,6 +2224,13 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btnNextStep1;
         private System.Windows.Forms.Button btnNextStep2;
+        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сIDataTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сITemperature;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent4mA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cIVolt;
+        private System.Windows.Forms.Button btnCurrentCalibr;
     }
 }
 
