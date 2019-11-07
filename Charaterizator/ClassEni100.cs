@@ -51,6 +51,8 @@ namespace ENI100
         public byte ResistanceUnit;
         public byte TemperatureUnit;
 
+        public byte CurrentExit;//токовый выход (0 - 4мА, 1 - 20мА)
+
         public float[] Coefficient;
         public SensorID(byte a)
         {
@@ -90,6 +92,8 @@ namespace ENI100
             VoltageUnit = 0;
             ResistanceUnit = 0;
             TemperatureUnit = 0;
+
+            CurrentExit = 0;
     }
     public string GetdevType()
         {
@@ -479,6 +483,27 @@ namespace ENI100
             return false;
         }
 
+        //запись параметра токового выхода
+        public bool C129WriteCurrenExit()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                Thread.Sleep(200);
+                int i;
+                byte[] data = new byte[13];
+                for (i = 0; i < 5; i++) data[i] = 0xFF;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x81;
+                data[i + 3] = 0x01;
+                data[i + 4] = (byte)((sensor.CurrentExit) & 0xFF);
+                data[10] = GetCRC(data, sensor.pre);//CRC
+                port.Write(data, 0, 11);
+                WaitSensorAnswer(10, 300);
+                return ParseReadBuffer(300) >= 0;
+            }
+            return false;
+        }
 
         //Обработка данных прочитанных с устройства
         //реализован автомат, типа case технологии
@@ -614,8 +639,10 @@ namespace ENI100
                                 case 0x3B://Записать кол-во преамбул (команда 59)
                                     break;
                                 case 0x80:// Считать параметры токового выхода(команда 128).
+                                    ReadCommand128(Adress, indata);
                                     break;
                                 case 0x81://Записать параметры токового выхода (команда 129)
+                                    ReadCommand129(Adress, indata);
                                     break;
                                 case 0x82://Считать параметры защиты работы магнитной кнопки (команда 130)
                                     break;
@@ -677,6 +704,7 @@ namespace ENI100
                                 case 0xFD://Переключение набора калибровочных коэффициентов для записи в EEPROM ( команда 253)
                                     break;
                                 default:
+                                    ReadAvtState = 1;
                                     return -3;//неизвестная комманда
                             }
                             ReadAvtState = 1;
@@ -921,6 +949,19 @@ namespace ENI100
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
             sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
+        }
+
+        //Ответ на команду чтение токового выхода (команда 128)
+        private void ReadCommand128(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            sensor.CurrentExit = indata[2];
+        }
+        //Ответ на команду запись токового выхода (команда 129)
+        private void ReadCommand129(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            sensor.CurrentExit = indata[2];
         }
 
         //ответ на запись верхнего и нижнего пределов ПД, минимального диапазона (команда 249)
