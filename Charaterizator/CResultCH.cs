@@ -22,13 +22,13 @@ namespace Charaterizator
     struct SChanal
     {
         public List<SPoint> Points;
-        public int PointsCount;   //количество точек измерения в канале
+//        public int PointsCount;   //количество точек измерения в канале
         public int ChannalNummber;//номер канала
         public SChanal(int ChNum)
         {
             ChannalNummber = ChNum;
             Points = new List<SPoint>();
-            PointsCount = 0;
+            //PointsCount = 0;
         }
     }
 

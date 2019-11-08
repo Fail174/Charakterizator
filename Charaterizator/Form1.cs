@@ -66,32 +66,16 @@ namespace Charaterizator
         //Выполняем при загрузке главной формы
         private void MainForm_Load(object sender, EventArgs e)
         {
-
-
-
             // устанавливаем связь с БД
             string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
             SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
 
-
-
-
-
-            // Занесение данных из ДБ в combobox
+            // Проверка
             if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
-            {                
-                string SensParam = SensorsDB.GetDataSensors("2450", "HarTempPoint1");
-
-                if (SensParam != null)
-                {
-                    string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    comboBox2.Items.AddRange(SPcmbox);
-                    comboBox2.SelectedIndex = 0;
-                }            
+            {
+                comboBox2.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
+//                String s = "Иванов Иван Иванович";               
             }
-
-
-
 
 
             btmMultimetr.PerformClick();
@@ -362,26 +346,33 @@ namespace Charaterizator
                 {
                     // коммутируем
                     Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
-
-                    if (sensors.SeachSensor(i))//поиск датчиков
+                    if (sensors.IsConnect())
                     {
-                        Thread.Sleep(100);
-                        if (sensors.SelectSensor(i))//выбор обнаруженного датчика
-                        {//датчик найден, обновляем таблицу
-                            Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
-                            sensors.TegRead();          //читаем инфомацию о датчике
-                            sensors.SensorRead();       //чтение данных с датчика
-                            UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
+                        if (sensors.SeachSensor(i))//поиск датчиков
+                        {
+                            Thread.Sleep(100);
+                            if (sensors.SelectSensor(i))//выбор обнаруженного датчика
+                            {//датчик найден, обновляем таблицу
+                                Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
+                                sensors.TegRead();          //читаем инфомацию о датчике
+                                sensors.SensorRead();       //чтение данных с датчика
+                                UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
+                                UpdateSensorInfoPanel(i);
+                            }
+                            else
+                            {
+                                Program.txtlog.WriteLineLog(string.Format("Датчик на линии {0} обнаружен. Ошибка подключения к датчику!", i + 1), 1);
+                            }
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog(string.Format("Датчик на линии {0} обнаружен. Ошибка подключения к датчику!", i + 1), 1);
+                            //                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
+                            Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
                         }
                     }
                     else
                     {
-                        //                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
-                        Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
+                        Program.txtlog.WriteLineLog("Нет подключение к датчикам!", 1);
                     }
 
                     Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
@@ -390,13 +381,64 @@ namespace Charaterizator
         }
 
 
+        private void ReadSensorCurrent()
+        {
+            Program.txtlog.WriteLineLog("Старт операции калибровки по току ... ", 0);
+
+            pbCHProcess.Maximum = MaxChannalCount;
+            pbCHProcess.Minimum = 0;
+            pbCHProcess.Value = 0;
+            for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
+            {
+                pbCHProcess.Value = i + 1;
+
+                Commutator.SetConnectors(i, 2);
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    sensors.sensor.CurrentExit = 0;//ток 4мА
+                    if (sensors.C129WriteCurrenExit())
+                    {
+                        cbChannalCharakterizator.SelectedIndex = i;
+                        //CIResult = Multimetr.ReadData();
+                        Program.txtlog.WriteLineLog("Выполнено чтение тока датчика с мультиметра в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Ток 4мА не установлен!", 1);
+                    }
+                    sensors.sensor.CurrentExit = 1;//ток 20мА
+                    if (sensors.C129WriteCurrenExit())
+                    {
+                        cbChannalCharakterizator.SelectedIndex = i;
+                        //CIResult = Multimetr.ReadData();
+                        Program.txtlog.WriteLineLog("Выполнено чтение тока датчика с мультиметра в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Ток 20мА не установлен!", 1);
+                    }
+                    //UpdateCurrentGrid(i);
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+            }
+        }
+
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
             Program.txtlog.WriteLineLog("Старт операции характеризации для выбранных датчиков ... ", 0);
 
+            pbCHProcess.Maximum = MaxChannalCount;
+            pbCHProcess.Minimum = 0;
+            pbCHProcess.Value = 0;
             for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
             {
+                pbCHProcess.Value = i+1;
+
                 Commutator.SetConnectors(i, 2);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
@@ -405,7 +447,7 @@ namespace Charaterizator
                     {
                         ResultCH.AddPoint(i, sensors.sensor.Temperature, sensors.sensor.Pressure, sensors.sensor.OutVoltage, sensors.sensor.Resistance, sensors.sensor.OutCurrent);
                         cbChannalCharakterizator.SelectedIndex = i;
-                        //UpDateCharakterizatorGrid(i);
+                        UpDateCharakterizatorGrid(i);
                         Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
@@ -428,7 +470,7 @@ namespace Charaterizator
             {
                 dataGridView2.Rows.RemoveAt(0);
             }*/
-            for (int j=0;j<ResultCH.Channal[i].PointsCount;j++)//заполняем грид данными текущего датчика
+            for (int j=0;j<ResultCH.Channal[i].Points.Count;j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add("", "", "", "", "", "");
                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
@@ -487,6 +529,7 @@ namespace Charaterizator
 //                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
                             Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
                         }
+
                         Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
                     }
@@ -740,8 +783,6 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
-
-
         }
 
 
@@ -837,9 +878,9 @@ namespace Charaterizator
         private void button10_Click(object sender, EventArgs e)
         {
             btnCHStart.BackColor = Color.IndianRed;
-            btnCHStart.Text = "Стоп"; 
+            btnCHStart.Text = "Остановить"; 
             ReadSensorParametrs();
-            btnCHStart.Text = "Старт";
+            btnCHStart.Text = "Старт характеризации";
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -905,6 +946,16 @@ namespace Charaterizator
             SensorsDB.GetData();        // получаем список моделей из БД и записываем его в listbox 
             SensorsDB.ShowDialog();
                        
+        }
+
+        private void groupBox9_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCurrentCalibr_Click(object sender, EventArgs e)
+        {
+            ReadSensorCurrent();
         }
     }
 }
