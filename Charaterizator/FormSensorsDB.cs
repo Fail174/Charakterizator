@@ -401,8 +401,7 @@ namespace Charaterizator
                     reader = command.ExecuteReader();
                     reader.Read();
                     strValue = reader[0].ToString();
-                    // закрываем OleDbDataReader
-                    reader.Close();
+                   
                 }
 
                 catch
@@ -410,7 +409,11 @@ namespace Charaterizator
                     //MessageBox.Show(ex.Message);
                     //MessageBox.Show("Не удалось считать данные из БД", MessageBoxButtons.OK);
                 }
-        
+                finally
+                {
+                    // закрываем OleDbDataReader
+                    reader.Close();
+                }        
             }
             return strValue;
         }

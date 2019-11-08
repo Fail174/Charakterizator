@@ -66,16 +66,32 @@ namespace Charaterizator
         //Выполняем при загрузке главной формы
         private void MainForm_Load(object sender, EventArgs e)
         {
+
+
+
             // устанавливаем связь с БД
             string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
             SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
 
-            // Проверка
+
+
+
+
+            // Занесение данных из ДБ в combobox
             if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
-            {
-                comboBox2.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
-                String s = "Иванов Иван Иванович";               
+            {                
+                string SensParam = SensorsDB.GetDataSensors("2450", "HarTempPoint1");
+
+                if (SensParam != null)
+                {
+                    string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    comboBox2.Items.AddRange(SPcmbox);
+                    comboBox2.SelectedIndex = 0;
+                }            
             }
+
+
+
 
 
             btmMultimetr.PerformClick();
@@ -724,6 +740,8 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
+
+
         }
 
 
