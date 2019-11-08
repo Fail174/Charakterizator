@@ -381,6 +381,52 @@ namespace Charaterizator
         }
 
 
+        private void ReadSensorCurrent()
+        {
+            Program.txtlog.WriteLineLog("Старт операции калибровки по току ... ", 0);
+
+            pbCHProcess.Maximum = MaxChannalCount;
+            pbCHProcess.Minimum = 0;
+            pbCHProcess.Value = 0;
+            for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
+            {
+                pbCHProcess.Value = i + 1;
+
+                Commutator.SetConnectors(i, 2);
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    sensors.sensor.CurrentExit = 0;//ток 4мА
+                    if (sensors.C129WriteCurrenExit())
+                    {
+                        cbChannalCharakterizator.SelectedIndex = i;
+                        //CIResult = Multimetr.ReadData();
+                        Program.txtlog.WriteLineLog("Выполнено чтение тока датчика с мультиметра в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Ток 4мА не установлен!", 1);
+                    }
+                    sensors.sensor.CurrentExit = 1;//ток 20мА
+                    if (sensors.C129WriteCurrenExit())
+                    {
+                        cbChannalCharakterizator.SelectedIndex = i;
+                        //CIResult = Multimetr.ReadData();
+                        Program.txtlog.WriteLineLog("Выполнено чтение тока датчика с мультиметра в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Ток 20мА не установлен!", 1);
+                    }
+                    //UpdateCurrentGrid(i);
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+            }
+        }
+
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
@@ -905,6 +951,11 @@ namespace Charaterizator
         private void groupBox9_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCurrentCalibr_Click(object sender, EventArgs e)
+        {
+            ReadSensorCurrent();
         }
     }
 }
