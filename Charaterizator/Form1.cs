@@ -27,15 +27,23 @@ namespace Charaterizator
         private FormSwitch Commutator = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
         private FormSensorsDB SensorsDB = new FormSensorsDB();
+        private CThermalCamera ThermalCamera = new CThermalCamera();
 
+        //        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
-//        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
-
-        private CResultCH ResultCH = new CResultCH(MaxChannalCount);//результаты характеризации датчиков
+        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
+        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
+        
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
         private bool SensorBusy = false;//Признак обмена данными с датчиками
+
+        private bool TemperatureReady=false;//готовность термокамеры , температура датчиков стабилизирована
+        private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
+
+        private double SKOPressure = 1;//допуск по давлению
+        private int WaitPressureTime = 10;//ожидание стабилизации давления в датчике, сек
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -57,7 +65,7 @@ namespace Charaterizator
             tbMensorRate.Font = DrawingFont;
             textBox5.Font = DrawingFont;
             numMensorPoint.Font = DrawingFont;
-            numericUpDown2.Font = DrawingFont;
+            numTermoCameraPoint.Font = DrawingFont;
             //**********************************************************
 
             //            Properties.Settings.Default.Save();  // Сохраняем настройки программы
@@ -73,7 +81,7 @@ namespace Charaterizator
             // Проверка
             if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
             {
-                comboBox2.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
+                cbCHTermoCamera1.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
 //                String s = "Иванов Иван Иванович";               
             }
 
@@ -81,6 +89,7 @@ namespace Charaterizator
             btmMultimetr.PerformClick();
             btnCommutator.PerformClick();
             btnMensor.PerformClick();
+            btnThermalCamera.PerformClick();
 
             // btnSensorSeach.PerformClick();
             for (int i = 0; i < MaxChannalCount; i++)
@@ -195,6 +204,28 @@ namespace Charaterizator
                 Properties.Settings.Default.COMSensor_Parity = newForm.GetPortParity();
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
             }
+        }
+        
+        //подключение термокамеры
+        private void btnThermalCamera_Click(object sender, EventArgs e)
+        {
+            if (ThermalCamera.Connect(Properties.Settings.Default.COMColdCamera,
+                Properties.Settings.Default.COMColdCamera_Speed,
+                Properties.Settings.Default.COMColdCamera_DataBits,
+                Properties.Settings.Default.COMColdCamera_StopBits,
+                Properties.Settings.Default.COMColdCamera_Parity) >= 0)
+            {
+                btnThermalCamera.BackColor = Color.Green;
+                btnThermalCamera.Text = "Подключен";
+                Program.txtlog.WriteLineLog("Термокамера подключена", 0);
+            }
+            else
+            {
+                btnThermalCamera.BackColor = Color.Red;
+                btnThermalCamera.Text = "Не подключен";
+                Program.txtlog.WriteLineLog("Термокамера не подключена", 1);
+            }
+
         }
 
         //подключение мультиметра
@@ -380,7 +411,7 @@ namespace Charaterizator
             }
         }
 
-
+        //калибровка по току
         private void ReadSensorCurrent()
         {
             Program.txtlog.WriteLineLog("Старт операции калибровки по току ... ", 0);
@@ -396,11 +427,13 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
+
+                    float I4=0, I20=0;
                     sensors.sensor.CurrentExit = 0;//ток 4мА
                     if (sensors.C129WriteCurrenExit())
                     {
-                        cbChannalCharakterizator.SelectedIndex = i;
-                        //CIResult = Multimetr.ReadData();
+                        //                        ResultCI.AddPoint(i, sensors.sensor.Temperature, sensors.sensor.Pressure, sensors.sensor., sensors.sensor.Resistance, sensors.sensor.OutCurrent);
+                        I4 = Multimetr.Value;
                         Program.txtlog.WriteLineLog("Выполнено чтение тока датчика с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
                     else
@@ -410,15 +443,16 @@ namespace Charaterizator
                     sensors.sensor.CurrentExit = 1;//ток 20мА
                     if (sensors.C129WriteCurrenExit())
                     {
-                        cbChannalCharakterizator.SelectedIndex = i;
-                        //CIResult = Multimetr.ReadData();
+                        I20 = Multimetr.Value;
                         Program.txtlog.WriteLineLog("Выполнено чтение тока датчика с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
                     else
                     {
                         Program.txtlog.WriteLineLog("Ток 20мА не установлен!", 1);
                     }
-                    //UpdateCurrentGrid(i);
+                    cbChannalCharakterizator.SelectedIndex = i;
+                    ResultCI.AddPoint(i, sensors.sensor.Temperature, sensors.sensor.Pressure, I4, I20);
+                    UpdateCurrentGrid(i);
                 }
                 else
                 {
@@ -462,14 +496,10 @@ namespace Charaterizator
             }
         }
 
-        //обновляем грид для датчика в канале i
+        //обновляем грид результатов характеризации для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
             dataGridView2.Rows.Clear();
-/*            while (dataGridView2.RowCount > 0)//удаляем записи предыдущего датчика
-            {
-                dataGridView2.Rows.RemoveAt(0);
-            }*/
             for (int j=0;j<ResultCH.Channal[i].Points.Count;j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add("", "", "", "", "", "");
@@ -479,6 +509,20 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutCurrent.ToString("f");
+            }
+        }
+        //обновляем грид калибровки тока для датчика в канале i
+        private void UpdateCurrentGrid(int i)
+        {
+            dataGridView4.Rows.Clear();
+            for (int j = 0; j < ResultCI.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
+            {
+                dataGridView4.Rows.Add("", "", "", "", "");
+                dataGridView4.Rows[j].Cells[0].Value = ResultCI.Channal[i].Points[j].Datetime.ToString();                 //
+                dataGridView4.Rows[j].Cells[1].Value = ResultCI.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].Pressure.ToString("f");   //
+                dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I4.ToString("f");
+                dataGridView4.Rows[j].Cells[4].Value = ResultCI.Channal[i].Points[j].I20.ToString("f");
             }
         }
 
@@ -783,6 +827,15 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
+
+            if (dataGridView2.Visible)//характеризация
+            {
+                // Проверка
+                if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+                {
+                    SensorsDB.GetDataSensors("", "");
+                }
+            }
         }
 
 
@@ -877,10 +930,17 @@ namespace Charaterizator
 
         private void button10_Click(object sender, EventArgs e)
         {
-            btnCHStart.BackColor = Color.IndianRed;
-            btnCHStart.Text = "Остановить"; 
-            ReadSensorParametrs();
-            btnCHStart.Text = "Старт характеризации";
+            if (TemperatureReady && PressureReady)
+            {
+                btnCHStart.BackColor = Color.IndianRed;
+                btnCHStart.Text = "Остановить";
+                ReadSensorParametrs();
+                btnCHStart.Text = "Старт характеризации";
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Не заданны параметры характеризации.", 1);
+            }
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -899,6 +959,7 @@ namespace Charaterizator
         private void cbChannalCharakterizator_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+            UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
         }
 
         private void gbCHLevel1_Enter(object sender, EventArgs e)
@@ -923,15 +984,6 @@ namespace Charaterizator
             tabControl1.SelectedIndex = 2;
         }
 
-        private void btnCHPressureSet1_Click(object sender, EventArgs e)
-        {
-            btnCHStart.BackColor = Color.LightGreen;
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            btnCHStart.BackColor = Color.LightGreen;
-        }
 
         private void MenuItemMainSettings_Click(object sender, EventArgs e)
         {
@@ -948,14 +1000,170 @@ namespace Charaterizator
                        
         }
 
-        private void groupBox9_Enter(object sender, EventArgs e)
+        private void btnCurrentCalibr_Click(object sender, EventArgs e)
         {
+            if (TemperatureReady && PressureReady)
+            {
+                btnCurrentCalibr.BackColor = Color.IndianRed;
+                btnCurrentCalibr.Text = "Остановить";
+                ReadSensorCurrent();
+                btnCurrentCalibr.Text = "Старт калибровки";
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Не заданны параметры для калибровки.", 1);
+            }
+        }
+        
+        //Установка температуры для характеризации группы 1
+        private void btnCHTemperatureSet1_Click(object sender, EventArgs e)
+        {
+
+            if (ThermalCamera.Connected)
+            {
+                Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
+
+                btnCHPressureSet1.Enabled = false;
+                double Point = Convert.ToDouble(cbCHPressureSet1.Text);  // получаем заданное значение уставки
+                double shift;
+                numMensorPoint.Text = cbCHPressureSet1.Text;
+                bMensorSet.PerformClick();      //выставляем давление
+                bMensorControl.PerformClick();  //запускаем задачу
+
+                TemperatureReady = true;
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Нет cвязи c термокамерой.", 1);
+                if (MessageBox.Show("Хотите установить температуру в ручную?", "Нет соединения с Термокамерой", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    numTermoCameraPoint.Text = cbCHTermoCamera1.Text;
+                    TemperatureReady = true;
+                }
+            }
+        }
+        
+        //Установка температуры для характеризации группы 2
+        private void btnCHTemperatureSet2_Click(object sender, EventArgs e)
+        {
+                        if (ThermalCamera.Connected)
+                        {
+                            double Point = Convert.ToDouble(cbCHPressureSet2.Text);  // получаем заданное значение уставки
+
+                            Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет cвязи c термокамерой.", 1);
+                        }
+            TemperatureReady = true;
+        }
+
+        //Установка давления для характеризации группы 1
+        private void btnCHPressureSet1_Click(object sender, EventArgs e)
+        {
+            if (Mensor.Connected)
+            {
+                try
+                {
+                    btnCHPressureSet1.Enabled = false;
+                    double Point = Convert.ToDouble(cbCHPressureSet1.Text);  // получаем заданное значение уставки
+                    double shift;
+                    numMensorPoint.Text = cbCHPressureSet1.Text;
+                    bMensorSet.PerformClick();      //выставляем давление
+                    bMensorControl.PerformClick();  //запускаем задачу
+                                                    /*                Mensor.SetPoint(Point);
+                                                                    Mensor.SetMode(1);*/
+
+                    int i = 0;
+                    do//ожидаем установления давления
+                    {
+                        i++;
+                        Thread.Sleep(1000);
+                        double realpoint = Convert.ToDouble(tbMensorData.Text);
+                        shift = Math.Abs(realpoint - Point);
+                    } while ((shift < SKOPressure) && (i < 100));
+                    if (i >= 100)
+                    {//давление не установлено
+                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
+                    }
+                    else
+                    {//давление установлено
+                        Thread.Sleep(WaitPressureTime * 1000);//ожидаем стабилизации
+                        PressureReady = true;
+                        btnCHStart.BackColor = Color.LightGreen;
+                        btnCurrentCalibr.BackColor = Color.LightGreen;
+                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
+                    }
+                }
+                finally
+                {
+                    btnCHPressureSet1.Enabled = true;
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с Менсором", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    numMensorPoint.Text = cbCHPressureSet1.Text;
+                    PressureReady = true;
+                    btnCHStart.BackColor = Color.LightGreen;
+                    btnCurrentCalibr.BackColor = Color.LightGreen;
+                }
+            }
 
         }
 
-        private void btnCurrentCalibr_Click(object sender, EventArgs e)
+        //Установка давления для характеризации группы 2
+        private void btnCHPressureSet2_Click(object sender, EventArgs e)
         {
-            ReadSensorCurrent();
+            if (Mensor.Connected)
+            {
+                try
+                {
+                    btnCHPressureSet2.Enabled = false;
+                    double Point = Convert.ToDouble(cbCHPressureSet2.Text);  // получаем заданное значение уставки
+                    double shift;
+                    numMensorPoint.Text = cbCHPressureSet2.Text;
+                    bMensorSet.PerformClick();      //выставляем давление
+                    bMensorControl.PerformClick();  //запускаем задачу
+                                                    /*                Mensor.SetPoint(Point);
+                                                                    Mensor.SetMode(1);*/
+
+                    int i = 0;
+                    do//ожидаем установления давления
+                    {
+                        i++;
+                        Thread.Sleep(1000);
+                        double realpoint = Convert.ToDouble(tbMensorData.Text);
+                        shift = Math.Abs(realpoint - Point);
+                    } while ((shift < SKOPressure) && (i < 100));
+                    if (i >= 100)
+                    {//давление не установлено
+                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
+                    }
+                    else
+                    {//давление установлено
+                        Thread.Sleep(WaitPressureTime * 1000);//ожидаем стабилизации
+                        PressureReady = true;
+                        btnCHStart.BackColor = Color.LightGreen;
+                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
+                    }
+                }
+                finally
+                {
+                    btnCHPressureSet2.Enabled = true;
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с Менсором", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    numMensorPoint.Text = cbCHPressureSet2.Text;
+                    PressureReady = true;
+                    btnCHStart.BackColor = Color.LightGreen;
+                }
+            }
         }
     }
 }
