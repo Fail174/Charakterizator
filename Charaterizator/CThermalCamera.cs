@@ -4,20 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
-using System.Threading;
 
 namespace Charaterizator
 {
-    class CMultimetr
+    class CThermalCamera
     {
         public bool Connected;
-        public float Value;
         private SerialPort Port;
 
-        public CMultimetr()
+        public CThermalCamera()
         {
             Port = new SerialPort();
-            Value = 0;
         }
 
         public int DisConnect()
@@ -69,44 +66,29 @@ namespace Charaterizator
                 return -1;
             }
         }
-        public int InitDevice()
-        {
-            if (Connected)
-            {
-                Port.WriteLine("SYST:REM");
-                return 0;
-            }
-            else
-            {
-                return -1;
-            }
-        }
         public float ReadData()
         {
+            float Data;
             if (Connected)
             {
                 try
                 {
                     Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
-                    Thread.Sleep(300);
                     string str = Port.ReadLine();
-                    Value = Convert.ToSingle(str);
-                    return Value;
+                    Data = Convert.ToSingle(str);
+                    return Data;
                 }
                 catch
                 {
-                    //запись в лог
-                    //                    Connected = false;
-                    Program.txtlog.WriteLineLog("Agilent: Устройство не отвечает. ", 1);
-                    Value = 0;
+                    Program.txtlog.WriteLineLog("Термокамера: Устройство не отвечает. ", 1);
                     return -2;
                 }
             }
             else
             {
-                Value = 0;
                 return -1;
             }
         }
+
     }
 }
