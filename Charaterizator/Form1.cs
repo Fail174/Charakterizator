@@ -68,15 +68,7 @@ namespace Charaterizator
         {
             // устанавливаем связь с БД
             string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
-            SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
-
-            // Проверка
-            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
-            {
-                comboBox2.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
-//                String s = "Иванов Иван Иванович";               
-            }
-
+            SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД         
 
             btmMultimetr.PerformClick();
             btnCommutator.PerformClick();
@@ -783,6 +775,82 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
+
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    {
+                        return;
+                    }
+
+                case 1:
+                    {
+
+                        // Занесение данных из ДБ в combobox 
+                        
+                         
+                        // Проверка
+                        if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+                        {
+                            // Занесение данных из ДБ в combobox
+                            string SensParam = SensorsDB.GetDataSensors("2450", "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cmbTemp1.Items.AddRange(SPcmbox);
+                                cmbTemp1.SelectedIndex = 0;
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors("2450", "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cmbPress1.Items.AddRange(SPcmbox);
+                                cmbPress1.SelectedIndex = 0;
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors("2450", "HarTempPoint2");      // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cmbTemp2.Items.AddRange(SPcmbox);
+                                cmbTemp2.SelectedIndex = 0;
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors("2450", "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cmbPress2.Items.AddRange(SPcmbox);
+                                cmbPress2.SelectedIndex = 0;
+                            }
+                        }
+                        return;
+                    }
+
+                case 2:
+                    {
+                        return;
+                    }
+                  
+
+            }
+
+           
+
+
+
+
+
+
+
+
+
+
+
         }
 
 

@@ -175,22 +175,22 @@
             this.btnNextStep2 = new System.Windows.Forms.Button();
             this.gbCHLevel2 = new System.Windows.Forms.GroupBox();
             this.button11 = new System.Windows.Forms.Button();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cmbPress2 = new System.Windows.Forms.ComboBox();
             this.btnCHPressureSet2 = new System.Windows.Forms.Button();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.cmbTemp2 = new System.Windows.Forms.ComboBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
             this.btnCHStart = new System.Windows.Forms.Button();
             this.pbCHProcess = new System.Windows.Forms.ProgressBar();
             this.gbCHLevel1 = new System.Windows.Forms.GroupBox();
             this.btnCHPressureSet1 = new System.Windows.Forms.Button();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbPress1 = new System.Windows.Forms.ComboBox();
             this.btnCHTemperatureSet1 = new System.Windows.Forms.Button();
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbTemp1 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
@@ -1718,11 +1718,11 @@
             // gbCHLevel2
             // 
             this.gbCHLevel2.Controls.Add(this.button11);
-            this.gbCHLevel2.Controls.Add(this.comboBox5);
+            this.gbCHLevel2.Controls.Add(this.cmbPress2);
             this.gbCHLevel2.Controls.Add(this.btnCHPressureSet2);
             this.gbCHLevel2.Controls.Add(this.label34);
             this.gbCHLevel2.Controls.Add(this.label35);
-            this.gbCHLevel2.Controls.Add(this.comboBox6);
+            this.gbCHLevel2.Controls.Add(this.cmbTemp2);
             this.gbCHLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbCHLevel2.Location = new System.Drawing.Point(8, 131);
             this.gbCHLevel2.Name = "gbCHLevel2";
@@ -1743,14 +1743,14 @@
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
-            // comboBox5
+            // cmbPress2
             // 
-            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(83, 59);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(66, 28);
-            this.comboBox5.TabIndex = 6;
+            this.cmbPress2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbPress2.FormattingEnabled = true;
+            this.cmbPress2.Location = new System.Drawing.Point(83, 59);
+            this.cmbPress2.Name = "cmbPress2";
+            this.cmbPress2.Size = new System.Drawing.Size(66, 28);
+            this.cmbPress2.TabIndex = 6;
             // 
             // btnCHPressureSet2
             // 
@@ -1780,14 +1780,14 @@
             this.label35.TabIndex = 2;
             this.label35.Text = "Температура:";
             // 
-            // comboBox6
+            // cmbTemp2
             // 
-            this.comboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(83, 18);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(66, 28);
-            this.comboBox6.TabIndex = 0;
+            this.cmbTemp2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbTemp2.FormattingEnabled = true;
+            this.cmbTemp2.Location = new System.Drawing.Point(83, 18);
+            this.cmbTemp2.Name = "cmbTemp2";
+            this.cmbTemp2.Size = new System.Drawing.Size(66, 28);
+            this.cmbTemp2.TabIndex = 0;
             // 
             // groupBox10
             // 
@@ -1831,11 +1831,11 @@
             // 
             this.gbCHLevel1.BackColor = System.Drawing.Color.LightGreen;
             this.gbCHLevel1.Controls.Add(this.btnCHPressureSet1);
-            this.gbCHLevel1.Controls.Add(this.comboBox3);
+            this.gbCHLevel1.Controls.Add(this.cmbPress1);
             this.gbCHLevel1.Controls.Add(this.btnCHTemperatureSet1);
             this.gbCHLevel1.Controls.Add(this.label33);
             this.gbCHLevel1.Controls.Add(this.label32);
-            this.gbCHLevel1.Controls.Add(this.comboBox2);
+            this.gbCHLevel1.Controls.Add(this.cmbTemp1);
             this.gbCHLevel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbCHLevel1.Location = new System.Drawing.Point(8, 20);
             this.gbCHLevel1.Name = "gbCHLevel1";
@@ -1857,14 +1857,14 @@
             this.btnCHPressureSet1.UseVisualStyleBackColor = true;
             this.btnCHPressureSet1.Click += new System.EventHandler(this.btnCHPressureSet1_Click);
             // 
-            // comboBox3
+            // cmbPress1
             // 
-            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(83, 59);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(66, 28);
-            this.comboBox3.TabIndex = 6;
+            this.cmbPress1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbPress1.FormattingEnabled = true;
+            this.cmbPress1.Location = new System.Drawing.Point(83, 59);
+            this.cmbPress1.Name = "cmbPress1";
+            this.cmbPress1.Size = new System.Drawing.Size(66, 28);
+            this.cmbPress1.TabIndex = 6;
             // 
             // btnCHTemperatureSet1
             // 
@@ -1894,14 +1894,14 @@
             this.label32.TabIndex = 2;
             this.label32.Text = "Температура:";
             // 
-            // comboBox2
+            // cmbTemp1
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(83, 18);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(66, 28);
-            this.comboBox2.TabIndex = 0;
+            this.cmbTemp1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbTemp1.FormattingEnabled = true;
+            this.cmbTemp1.Location = new System.Drawing.Point(83, 18);
+            this.cmbTemp1.Name = "cmbTemp1";
+            this.cmbTemp1.Size = new System.Drawing.Size(66, 28);
+            this.cmbTemp1.TabIndex = 0;
             // 
             // tabPage3
             // 
@@ -2162,7 +2162,7 @@
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.GroupBox gbCHLevel1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbTemp1;
         private System.Windows.Forms.ProgressBar pbCHProcess;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button button5;
@@ -2226,13 +2226,13 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.GroupBox gbCHLevel2;
         private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cmbPress2;
         private System.Windows.Forms.Button btnCHPressureSet2;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox cmbTemp2;
         private System.Windows.Forms.Button btnCHPressureSet1;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbPress1;
         private System.Windows.Forms.Button btnCHTemperatureSet1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btnNextStep1;
