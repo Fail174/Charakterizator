@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,6 +100,11 @@
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cIPressure = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -194,22 +199,17 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.VerRange2_Pmin = new System.Windows.Forms.NumericUpDown();
+            this.VerRange2_Pmax = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.VerRange1_Pmin = new System.Windows.Forms.NumericUpDown();
+            this.VerRange1_Pmax = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cIPressure = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -234,11 +234,11 @@
             this.gbCHLevel1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmax)).BeginInit();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmax)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -945,6 +945,46 @@
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
+            // сIDataTime
+            // 
+            this.сIDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.сIDataTime.HeaderText = "Дата и время";
+            this.сIDataTime.MinimumWidth = 200;
+            this.сIDataTime.Name = "сIDataTime";
+            this.сIDataTime.ReadOnly = true;
+            // 
+            // сITemperature
+            // 
+            this.сITemperature.HeaderText = "Температура, С";
+            this.сITemperature.MinimumWidth = 200;
+            this.сITemperature.Name = "сITemperature";
+            this.сITemperature.ReadOnly = true;
+            this.сITemperature.Width = 200;
+            // 
+            // cIPressure
+            // 
+            this.cIPressure.HeaderText = "Давление, кПа";
+            this.cIPressure.MinimumWidth = 200;
+            this.cIPressure.Name = "cIPressure";
+            this.cIPressure.ReadOnly = true;
+            this.cIPressure.Width = 200;
+            // 
+            // cICurrent4mA
+            // 
+            this.cICurrent4mA.HeaderText = "Ток 4мА";
+            this.cICurrent4mA.MinimumWidth = 200;
+            this.cICurrent4mA.Name = "cICurrent4mA";
+            this.cICurrent4mA.ReadOnly = true;
+            this.cICurrent4mA.Width = 200;
+            // 
+            // cICurrent20mA
+            // 
+            this.cICurrent20mA.HeaderText = "Ток 20мА";
+            this.cICurrent20mA.MinimumWidth = 200;
+            this.cICurrent20mA.Name = "cICurrent20mA";
+            this.cICurrent20mA.ReadOnly = true;
+            this.cICurrent20mA.Width = 200;
+            // 
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1142,10 +1182,10 @@
             // 
             // сState
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle3.NullValue = false;
-            this.сState.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.сState.DefaultCellStyle = dataGridViewCellStyle1;
             this.сState.DividerWidth = 1;
             this.сState.FalseValue = "false";
             this.сState.HeaderText = "Подключение";
@@ -1167,10 +1207,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle4.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -1915,8 +1955,8 @@
             // 
             this.groupBox8.Controls.Add(this.button5);
             this.groupBox8.Controls.Add(this.button9);
-            this.groupBox8.Controls.Add(this.numericUpDown5);
-            this.groupBox8.Controls.Add(this.numericUpDown6);
+            this.groupBox8.Controls.Add(this.VerRange2_Pmin);
+            this.groupBox8.Controls.Add(this.VerRange2_Pmax);
             this.groupBox8.Controls.Add(this.label12);
             this.groupBox8.Location = new System.Drawing.Point(3, 149);
             this.groupBox8.Name = "groupBox8";
@@ -1943,19 +1983,19 @@
             this.button9.Text = "Задать";
             this.button9.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown5
+            // VerRange2_Pmin
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(5, 65);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(126, 20);
-            this.numericUpDown5.TabIndex = 2;
+            this.VerRange2_Pmin.Location = new System.Drawing.Point(5, 65);
+            this.VerRange2_Pmin.Name = "VerRange2_Pmin";
+            this.VerRange2_Pmin.Size = new System.Drawing.Size(126, 20);
+            this.VerRange2_Pmin.TabIndex = 2;
             // 
-            // numericUpDown6
+            // VerRange2_Pmax
             // 
-            this.numericUpDown6.Location = new System.Drawing.Point(5, 39);
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(126, 20);
-            this.numericUpDown6.TabIndex = 1;
+            this.VerRange2_Pmax.Location = new System.Drawing.Point(5, 39);
+            this.VerRange2_Pmax.Name = "VerRange2_Pmax";
+            this.VerRange2_Pmax.Size = new System.Drawing.Size(126, 20);
+            this.VerRange2_Pmax.TabIndex = 1;
             // 
             // label12
             // 
@@ -1970,8 +2010,8 @@
             // 
             this.groupBox7.Controls.Add(this.button4);
             this.groupBox7.Controls.Add(this.button3);
-            this.groupBox7.Controls.Add(this.numericUpDown4);
-            this.groupBox7.Controls.Add(this.numericUpDown3);
+            this.groupBox7.Controls.Add(this.VerRange1_Pmin);
+            this.groupBox7.Controls.Add(this.VerRange1_Pmax);
             this.groupBox7.Controls.Add(this.label11);
             this.groupBox7.Location = new System.Drawing.Point(3, 14);
             this.groupBox7.Name = "groupBox7";
@@ -1998,19 +2038,19 @@
             this.button3.Text = "Задать";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown4
+            // VerRange1_Pmin
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(5, 65);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(126, 20);
-            this.numericUpDown4.TabIndex = 2;
+            this.VerRange1_Pmin.Location = new System.Drawing.Point(5, 65);
+            this.VerRange1_Pmin.Name = "VerRange1_Pmin";
+            this.VerRange1_Pmin.Size = new System.Drawing.Size(126, 20);
+            this.VerRange1_Pmin.TabIndex = 2;
             // 
-            // numericUpDown3
+            // VerRange1_Pmax
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(5, 39);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(126, 20);
-            this.numericUpDown3.TabIndex = 1;
+            this.VerRange1_Pmax.Location = new System.Drawing.Point(5, 39);
+            this.VerRange1_Pmax.Name = "VerRange1_Pmax";
+            this.VerRange1_Pmax.Size = new System.Drawing.Size(126, 20);
+            this.VerRange1_Pmax.TabIndex = 1;
             // 
             // label11
             // 
@@ -2024,45 +2064,6 @@
             // MainTimer
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
-            // 
-            // сIDataTime
-            // 
-            this.сIDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.сIDataTime.HeaderText = "Дата и время";
-            this.сIDataTime.MinimumWidth = 200;
-            this.сIDataTime.Name = "сIDataTime";
-            this.сIDataTime.ReadOnly = true;
-            // 
-            // сITemperature
-            // 
-            this.сITemperature.HeaderText = "Температура, С";
-            this.сITemperature.MinimumWidth = 200;
-            this.сITemperature.Name = "сITemperature";
-            this.сITemperature.ReadOnly = true;
-            this.сITemperature.Width = 200;
-            // 
-            // cIPressure
-            // 
-            this.cIPressure.HeaderText = "Давление, кПа";
-            this.cIPressure.MinimumWidth = 200;
-            this.cIPressure.Name = "cIPressure";
-            this.cIPressure.Width = 200;
-            // 
-            // cICurrent4mA
-            // 
-            this.cICurrent4mA.HeaderText = "Ток 4мА";
-            this.cICurrent4mA.MinimumWidth = 200;
-            this.cICurrent4mA.Name = "cICurrent4mA";
-            this.cICurrent4mA.ReadOnly = true;
-            this.cICurrent4mA.Width = 200;
-            // 
-            // cICurrent20mA
-            // 
-            this.cICurrent20mA.HeaderText = "Ток 20мА";
-            this.cICurrent20mA.MinimumWidth = 200;
-            this.cICurrent20mA.Name = "cICurrent20mA";
-            this.cICurrent20mA.ReadOnly = true;
-            this.cICurrent20mA.Width = 200;
             // 
             // MainForm
             // 
@@ -2115,12 +2116,12 @@
             this.tabPage3.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmax)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2203,14 +2204,14 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
+        private System.Windows.Forms.NumericUpDown VerRange2_Pmin;
+        private System.Windows.Forms.NumericUpDown VerRange2_Pmax;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown VerRange1_Pmin;
+        private System.Windows.Forms.NumericUpDown VerRange1_Pmax;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button bMensorSet;
         private System.Windows.Forms.Button btnCHStart;

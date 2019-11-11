@@ -78,14 +78,6 @@ namespace Charaterizator
             string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
             SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
 
-            // Проверка
-            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
-            {
-                cbCHTermoCamera1.Items.Add(SensorsDB.GetDataSensors("2450", "HarTempPoint1"));
-//                String s = "Иванов Иван Иванович";               
-            }
-
-
             btmMultimetr.PerformClick();
             btnCommutator.PerformClick();
             btnMensor.PerformClick();
@@ -828,15 +820,107 @@ namespace Charaterizator
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
 
-            if (dataGridView2.Visible)//характеризация
+            // При переключении  tabControl1 необходимо получить модель выбранного датчика
+            // для обновления cmbox и др элементов
+            string SelectModel = "2450";   /// модель выбранного датчика
+
+
+            switch (tabControl1.SelectedIndex)
             {
-                // Проверка
-                if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
-                {
-                    SensorsDB.GetDataSensors("", "");
-                }
-            }
+                case 0:
+                    {
+                        return;
+                    }
+
+                // ОКНО - ХАРАКТЕРИЗАЦИЯ    
+                case 1:  
+                    {
+                        // Занесение данных из ДБ в combobox                         
+                        // Проверка
+                        if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+                        {
+                            // Занесение данных из ДБ в combobox
+                            string SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cbCHTermoCamera1.Items.AddRange(SPcmbox);
+                                cbCHTermoCamera1.SelectedIndex = 0;
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cbCHPressureSet1.Items.AddRange(SPcmbox);
+                                cbCHPressureSet1.SelectedIndex = 0;
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint2");      // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cbCHTermoCamera2.Items.AddRange(SPcmbox);
+                                cbCHTermoCamera2.SelectedIndex = 0;
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                cbCHPressureSet2.Items.AddRange(SPcmbox);
+                                cbCHPressureSet2.SelectedIndex = 0;
+                            }
+                        }
+                        return;
+                    }
+
+                // ОКНО - ВЕРИФИКАЦИЯ
+                case 2:
+                    {
+                        // Занесение данных из ДБ в combobox                         
+                        // Проверка
+                        if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+                        {
+                            // Занесение данных из ДБ в combobox
+                            string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {                             
+                                VerRange1_Pmax.Value = Convert.ToDecimal(SensParam);                              
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                VerRange1_Pmin.Value = Convert.ToDecimal(SensParam);
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors(SelectModel, "Range2_Pmax");      // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                VerRange2_Pmax.Value = Convert.ToDecimal(SensParam);
+                            }
+
+
+                            SensParam = SensorsDB.GetDataSensors(SelectModel, "Range2_Pmin"); // функция запроса данных из БД по номеру модели и параметру
+                            if (SensParam != null)
+                            {
+                                VerRange2_Pmin.Value = Convert.ToDecimal(SensParam);
+                            }
+                        }
+
+                        return;
+                    }
+
+
+            }       
         }
+
 
 
         // Отработка нажатия на гл. форме МЕНСОР - ЗАДАЧА
