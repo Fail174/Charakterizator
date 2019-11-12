@@ -324,7 +324,7 @@ namespace Charaterizator
 
         private void UpdateDataGrids(int i)
         {
-            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType();     //тип датчика
+            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType() + " : " + new String(sensors.sensor.PressureModel);     //тип датчика
             dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
             dataGridView1.Rows[i].Cells[3].Value = true;   //Добавлен в список
 //            dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.Green;
@@ -338,15 +338,16 @@ namespace Charaterizator
                 tbSelChannalNumber.Text = string.Format("Канал {0}" , i+1);
                 tbInfoDesc.Text = sensors.sensor.GetDesc();
                 tbInfoTeg.Text = sensors.sensor.GetTeg();
-                tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f");
-                tbInfoDown.Text = sensors.sensor.DownLevel.ToString("f");
+                tbInfoPressureModel.Text = new String(sensors.sensor.PressureModel);
+                tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f6");
+                tbInfoDown.Text = sensors.sensor.DownLevel.ToString("f6");
                 tbInfoSerialNumber.Text = sensors.sensor.SerialNumber.ToString();
-                tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f");
+                tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f6");
                 tbInfoMesUnit.Text = sensors.sensor.GetUnit();
-//                DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
-//                dtpInfoDate.Value = dt;
+                //                DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
+                //                dtpInfoDate.Value = dt;
 
-                cbInfoDevAddr.Text = sensors.sensor.Addr.ToString("D2");
+                tbInfoDeviceAdress.Text = sensors.sensor.Addr.ToString("D2");
                 tbInfoFactoryNumber.Text = sensors.sensor.uni.ToString();
                 tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
                 cbInfoPreambul.Text = sensors.sensor.pre.ToString();
@@ -379,6 +380,7 @@ namespace Charaterizator
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                                 sensors.TegRead();          //читаем инфомацию о датчике
                                 sensors.SensorRead();       //чтение данных с датчика
+                                sensors.C140ReadPressureModel();//читаем модель ПД
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                                 UpdateSensorInfoPanel(i);
                             }
@@ -553,6 +555,7 @@ namespace Charaterizator
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                                 sensors.TegRead();          //читаем инфомацию о датчике
                                 sensors.SensorRead();       //чтение данных с датчика
+                                sensors.C140ReadPressureModel();//читаем модель датчика давления
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                             }
                             else
@@ -1079,6 +1082,9 @@ namespace Charaterizator
         // Обработчик нажатия меню: ФАЙЛ - ОТКРЫТЬ БД
         private void открытьБДДатчиковToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // устанавливаем связь с БД
+//            string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
+//            SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
             SensorsDB.GetData();        // получаем список моделей из БД и записываем его в listbox 
             SensorsDB.ShowDialog();
                        
@@ -1109,7 +1115,7 @@ namespace Charaterizator
 
                 btnCHPressureSet1.Enabled = false;
                 double Point = Convert.ToDouble(cbCHPressureSet1.Text);  // получаем заданное значение уставки
-                double shift;
+                //double shift;
                 numMensorPoint.Text = cbCHPressureSet1.Text;
                 bMensorSet.PerformClick();      //выставляем давление
                 bMensorControl.PerformClick();  //запускаем задачу

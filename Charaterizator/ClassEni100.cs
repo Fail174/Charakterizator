@@ -53,6 +53,9 @@ namespace ENI100
 
         public byte CurrentExit;//токовый выход (0 - 4мА, 1 - 20мА)
 
+        public byte PressureType;
+        public char[] PressureModel;
+
         public float[] Coefficient;
         public SensorID(byte a)
         {
@@ -60,6 +63,8 @@ namespace ENI100
             desc = new byte[12];
             teg = new byte[6];
             Coefficient = new float[24];
+            PressureModel = new char[5];
+
             Addr = a;
             Channal = 0;
             Group = 1;
@@ -94,6 +99,8 @@ namespace ENI100
             TemperatureUnit = 0;
 
             CurrentExit = 0;
+
+            PressureType = 0;
     }
     public string GetdevType()
         {
@@ -446,7 +453,7 @@ namespace ENI100
                 Thread.Sleep(200);
                 int i;
                 byte[] data = new byte[13];
-                for (i = 0; i < 5; i++) data[i] = 0xFF;
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0x31;
@@ -456,6 +463,54 @@ namespace ENI100
                 data[i + 6] = (byte)(sensor.SerialNumber & 0xFF);
                 data[12] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 13);
+                WaitSensorAnswer(10, 300);
+                return ParseReadBuffer(300) >= 0;
+            }
+            return false;
+        }
+
+        //Запись модели приемника давления (команда 241).
+        public bool C241WritePressureModel()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                Thread.Sleep(200);
+                int i;
+                byte[] data = new byte[15];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0xF1;
+                data[i + 3] = 0x06;
+                data[i + 4] = sensor.PressureType;
+                for (int j=0;j<5;j++)
+                {
+                    data[i + 4 + j] = (byte)sensor.PressureModel[4-j];
+                }
+
+                data[14] = GetCRC(data, sensor.pre);//CRC
+                port.Write(data, 0, 15);
+                WaitSensorAnswer(10, 300);
+                return ParseReadBuffer(300) >= 0;
+            }
+            return false;
+        }
+
+        //Чтение модели приемника давления (команда 140).
+        public bool C140ReadPressureModel()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                Thread.Sleep(200);
+                int i;
+                byte[] data = new byte[10];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x8C;
+                data[i + 3] = 0x00;
+                data[9] = GetCRC(data, sensor.pre);//CRC
+                port.Write(data, 0, 10);
                 WaitSensorAnswer(10, 300);
                 return ParseReadBuffer(300) >= 0;
             }
@@ -659,6 +714,7 @@ namespace ENI100
                                 case 0x8A://Записать параметры критической ошибки (уровни аварийной сигнализации) (команда 138)
                                     break;
                                 case 0x8C://Считать данные о модели приемника давления и типа давления (команда 140)
+                                    ReadCommand140(Adress, indata);
                                     break;
                                 case 0x8D://Запись данных о языке вывода названий меню – только для исполнения ЖК-2 (команда 141)
                                     break;
@@ -677,6 +733,7 @@ namespace ENI100
                                 case 0x94://Сохранение текущей конфигурации прибора(команда 148)
                                     break;
                                 case 0xF1://Запись данных о модели приемника давления, тип давления (команда 241)
+                                    ReadCommand241(Adress, indata);
                                     break;
                                 case 0xF5://Перевод датчика в сервисный режим ( команда 245)
                                     sensor.state = (ushort)((indata[0] << 8) | indata[1]);//состояние по команде перехода в сервесный режим
@@ -962,6 +1019,28 @@ namespace ENI100
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
             sensor.CurrentExit = indata[2];
+        }
+
+        //Ответ на команду чтение модели приемника давления (команда 140)
+        private void ReadCommand140(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            sensor.PressureType = indata[2];
+            for (int i = 0; i < 5; i++)//5 символов
+            {
+                sensor.PressureModel[4-i] = (char)indata[i+3];
+            }
+        }
+
+        //Ответ на команду запись модели приемника давления (команда 241)
+        private void ReadCommand241(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            sensor.PressureType = indata[2];
+            for (int i = 0; i < 5; i++)//5 символов
+            {
+                sensor.PressureModel[4 - i] = (char)indata[i + 3];
+            }
         }
 
         //ответ на запись верхнего и нижнего пределов ПД, минимального диапазона (команда 249)

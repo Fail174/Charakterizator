@@ -139,7 +139,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.dtpInfoDate = new System.Windows.Forms.DateTimePicker();
             this.cbInfoPreambul = new System.Windows.Forms.ComboBox();
-            this.cbInfoDevAddr = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.tbInfoSerialNumber = new System.Windows.Forms.TextBox();
@@ -158,7 +157,6 @@
             this.label22 = new System.Windows.Forms.Label();
             this.tbInfoUp = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tbInfoDown = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.tbInfoSoftVersion = new System.Windows.Forms.TextBox();
@@ -210,6 +208,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
+            this.tbInfoPressureModel = new System.Windows.Forms.TextBox();
+            this.tbInfoDeviceAdress = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -245,7 +245,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 983);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1463, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -257,7 +257,7 @@
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1463, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -470,7 +470,7 @@
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1171, 24);
+            this.panel1.Location = new System.Drawing.Point(992, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(292, 959);
             this.panel1.TabIndex = 6;
@@ -887,7 +887,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 801);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1171, 182);
+            this.panel2.Size = new System.Drawing.Size(992, 182);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -899,7 +899,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(576, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(588, 170);
+            this.richTextBox1.Size = new System.Drawing.Size(409, 170);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
@@ -911,7 +911,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(759, 169);
+            this.rtbConsole.Size = new System.Drawing.Size(580, 169);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -925,7 +925,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1171, 777);
+            this.panel3.Size = new System.Drawing.Size(992, 777);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView4
@@ -941,7 +941,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 529);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(894, 248);
+            this.dataGridView4.Size = new System.Drawing.Size(715, 248);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -999,7 +999,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 0);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(894, 777);
+            this.dataGridView3.Size = new System.Drawing.Size(715, 777);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1065,7 +1065,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(894, 777);
+            this.dataGridView2.Size = new System.Drawing.Size(715, 777);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             // 
@@ -1136,7 +1136,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(277, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(894, 777);
+            this.dataGridView1.Size = new System.Drawing.Size(715, 777);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1299,11 +1299,12 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.tbInfoDeviceAdress);
+            this.groupBox9.Controls.Add(this.tbInfoPressureModel);
             this.groupBox9.Controls.Add(this.label19);
             this.groupBox9.Controls.Add(this.label18);
             this.groupBox9.Controls.Add(this.dtpInfoDate);
             this.groupBox9.Controls.Add(this.cbInfoPreambul);
-            this.groupBox9.Controls.Add(this.cbInfoDevAddr);
             this.groupBox9.Controls.Add(this.label17);
             this.groupBox9.Controls.Add(this.label16);
             this.groupBox9.Controls.Add(this.tbInfoSerialNumber);
@@ -1322,7 +1323,6 @@
             this.groupBox9.Controls.Add(this.label22);
             this.groupBox9.Controls.Add(this.tbInfoUp);
             this.groupBox9.Controls.Add(this.label23);
-            this.groupBox9.Controls.Add(this.comboBox1);
             this.groupBox9.Controls.Add(this.tbInfoDown);
             this.groupBox9.Controls.Add(this.label24);
             this.groupBox9.Controls.Add(this.tbInfoSoftVersion);
@@ -1365,7 +1365,7 @@
             // dtpInfoDate
             // 
             this.dtpInfoDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpInfoDate.Location = new System.Drawing.Point(113, 367);
+            this.dtpInfoDate.Location = new System.Drawing.Point(112, 367);
             this.dtpInfoDate.Name = "dtpInfoDate";
             this.dtpInfoDate.Size = new System.Drawing.Size(123, 20);
             this.dtpInfoDate.TabIndex = 56;
@@ -1393,36 +1393,10 @@
             "18",
             "19",
             "20"});
-            this.cbInfoPreambul.Location = new System.Drawing.Point(113, 471);
+            this.cbInfoPreambul.Location = new System.Drawing.Point(112, 471);
             this.cbInfoPreambul.Name = "cbInfoPreambul";
             this.cbInfoPreambul.Size = new System.Drawing.Size(123, 21);
             this.cbInfoPreambul.TabIndex = 55;
-            // 
-            // cbInfoDevAddr
-            // 
-            this.cbInfoDevAddr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbInfoDevAddr.FormattingEnabled = true;
-            this.cbInfoDevAddr.Items.AddRange(new object[] {
-            "00",
-            "01",
-            "02",
-            "03",
-            "04",
-            "05",
-            "06",
-            "07",
-            "08",
-            "09",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15"});
-            this.cbInfoDevAddr.Location = new System.Drawing.Point(113, 341);
-            this.cbInfoDevAddr.Name = "cbInfoDevAddr";
-            this.cbInfoDevAddr.Size = new System.Drawing.Size(123, 21);
-            this.cbInfoDevAddr.TabIndex = 54;
             // 
             // label17
             // 
@@ -1444,7 +1418,7 @@
             // 
             // tbInfoSerialNumber
             // 
-            this.tbInfoSerialNumber.Location = new System.Drawing.Point(112, 524);
+            this.tbInfoSerialNumber.Location = new System.Drawing.Point(112, 523);
             this.tbInfoSerialNumber.Name = "tbInfoSerialNumber";
             this.tbInfoSerialNumber.Size = new System.Drawing.Size(124, 20);
             this.tbInfoSerialNumber.TabIndex = 51;
@@ -1460,7 +1434,7 @@
             // 
             // tbInfoFactoryNumber
             // 
-            this.tbInfoFactoryNumber.Location = new System.Drawing.Point(112, 498);
+            this.tbInfoFactoryNumber.Location = new System.Drawing.Point(112, 497);
             this.tbInfoFactoryNumber.Name = "tbInfoFactoryNumber";
             this.tbInfoFactoryNumber.Size = new System.Drawing.Size(123, 20);
             this.tbInfoFactoryNumber.TabIndex = 49;
@@ -1476,7 +1450,7 @@
             // 
             // textBox12
             // 
-            this.textBox12.Location = new System.Drawing.Point(113, 445);
+            this.textBox12.Location = new System.Drawing.Point(112, 445);
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(123, 20);
             this.textBox12.TabIndex = 47;
@@ -1492,7 +1466,7 @@
             // 
             // tbInfoDesc
             // 
-            this.tbInfoDesc.Location = new System.Drawing.Point(113, 419);
+            this.tbInfoDesc.Location = new System.Drawing.Point(112, 418);
             this.tbInfoDesc.Name = "tbInfoDesc";
             this.tbInfoDesc.Size = new System.Drawing.Size(123, 20);
             this.tbInfoDesc.TabIndex = 45;
@@ -1508,7 +1482,7 @@
             // 
             // tbInfoTeg
             // 
-            this.tbInfoTeg.Location = new System.Drawing.Point(113, 393);
+            this.tbInfoTeg.Location = new System.Drawing.Point(112, 392);
             this.tbInfoTeg.Name = "tbInfoTeg";
             this.tbInfoTeg.Size = new System.Drawing.Size(123, 20);
             this.tbInfoTeg.TabIndex = 43;
@@ -1541,7 +1515,7 @@
             // 
             // tbInfoMin
             // 
-            this.tbInfoMin.Location = new System.Drawing.Point(113, 270);
+            this.tbInfoMin.Location = new System.Drawing.Point(112, 270);
             this.tbInfoMin.Name = "tbInfoMin";
             this.tbInfoMin.ReadOnly = true;
             this.tbInfoMin.Size = new System.Drawing.Size(123, 20);
@@ -1558,7 +1532,7 @@
             // 
             // tbInfoUp
             // 
-            this.tbInfoUp.Location = new System.Drawing.Point(113, 244);
+            this.tbInfoUp.Location = new System.Drawing.Point(112, 244);
             this.tbInfoUp.Name = "tbInfoUp";
             this.tbInfoUp.ReadOnly = true;
             this.tbInfoUp.Size = new System.Drawing.Size(123, 20);
@@ -1572,14 +1546,6 @@
             this.label23.Size = new System.Drawing.Size(54, 13);
             this.label23.TabIndex = 15;
             this.label23.Text = "НПИ ПД:";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(113, 191);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(123, 21);
-            this.comboBox1.TabIndex = 14;
             // 
             // tbInfoDown
             // 
@@ -1617,7 +1583,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(113, 124);
+            this.textBox1.Location = new System.Drawing.Point(112, 124);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(123, 20);
@@ -2065,11 +2031,27 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
+            // tbInfoPressureModel
+            // 
+            this.tbInfoPressureModel.Location = new System.Drawing.Point(112, 191);
+            this.tbInfoPressureModel.Name = "tbInfoPressureModel";
+            this.tbInfoPressureModel.ReadOnly = true;
+            this.tbInfoPressureModel.Size = new System.Drawing.Size(123, 20);
+            this.tbInfoPressureModel.TabIndex = 59;
+            // 
+            // tbInfoDeviceAdress
+            // 
+            this.tbInfoDeviceAdress.Location = new System.Drawing.Point(112, 341);
+            this.tbInfoDeviceAdress.Name = "tbInfoDeviceAdress";
+            this.tbInfoDeviceAdress.ReadOnly = true;
+            this.tbInfoDeviceAdress.Size = new System.Drawing.Size(123, 20);
+            this.tbInfoDeviceAdress.TabIndex = 60;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1463, 1005);
+            this.ClientSize = new System.Drawing.Size(1284, 1005);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -2220,7 +2202,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.DateTimePicker dtpInfoDate;
         private System.Windows.Forms.ComboBox cbInfoPreambul;
-        private System.Windows.Forms.ComboBox cbInfoDevAddr;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox tbInfoSerialNumber;
@@ -2239,7 +2220,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox tbInfoUp;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox tbInfoDown;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox tbInfoSoftVersion;
@@ -2306,6 +2286,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cIPressure;
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent4mA;
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
+        private System.Windows.Forms.TextBox tbInfoPressureModel;
+        private System.Windows.Forms.TextBox tbInfoDeviceAdress;
     }
 }
 

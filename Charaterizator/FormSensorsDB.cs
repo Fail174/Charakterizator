@@ -375,10 +375,10 @@ namespace Charaterizator
         // При закрытии формы закрываем соединение с БД
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (_сonnection != null)
+/*            if (_сonnection != null)
             {
                 _сonnection.Close();
-            }
+            }*/
         }
 
 
