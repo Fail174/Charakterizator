@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using ENI100;
+//using ENI100;
 
 
 
@@ -1086,6 +1086,7 @@ namespace Charaterizator
 //            string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
 //            SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
             SensorsDB.GetData();        // получаем список моделей из БД и записываем его в listbox 
+            SensorsDB.eni100 = sensors;
             SensorsDB.ShowDialog();
                        
         }

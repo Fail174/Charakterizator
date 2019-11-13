@@ -8,10 +8,11 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 
-namespace ENI100
+//namespace ENI100
+namespace Charaterizator
 {
 
-    struct SensorID
+    public struct SensorID
     {
         public int Channal;    //Номер канала коммутатора
         public int Group;      //Номер группы (1 или 2)
@@ -188,7 +189,7 @@ namespace ENI100
 
     }
  
-    class ClassEni100
+    public class ClassEni100
     {
         static SerialPort port = null;
         static FastFifo readbuf = new FastFifo();

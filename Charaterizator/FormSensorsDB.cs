@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+//using ENI100;
 
 
 
@@ -20,17 +21,12 @@ namespace Charaterizator
         public OleDbConnection _сonnection;       
         public static string newTypeSens;
         public static string newModelSens;
-
-
+        public ClassEni100 eni100=null;
 
         public FormSensorsDB()
         {
             InitializeComponent();               
         }
-
-
-
-
 
         // Функция устанавливает соединение с БД
         public void SetConnectionDB(string strFileNameDB)
@@ -469,7 +465,24 @@ namespace Charaterizator
         // Обработчик - Записать параметры в датчик
         private void bFlashSensor_Click(object sender, EventArgs e)
         {
+            if ((eni100 != null)&&(eni100.IsConnect()))
+            {
+                eni100.sensor.SerialNumber = Convert.ToUInt32(Serial.Text);
+                eni100.WriteSerialNumberC49();//серийный номер
 
+                eni100.sensor.DownLevel = Convert.ToSingle(Pmin.Text);
+                eni100.sensor.UpLevel = Convert.ToSingle(Pmax.Text);
+                eni100.sensor.MinLevel = Convert.ToSingle(DeltaRangeMin.Text);
+                eni100.UpDownWriteC249();//дипазон 
+
+                string str = lvwModels.SelectedItems[0].SubItems[1].Text;
+                eni100.sensor.PressureModel = str.ToCharArray();
+                eni100.C241WritePressureModel();//модель ПД
+            }
+            else
+            {
+                MessageBox.Show("Нет подключения к датчику","Операция прервана",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
         }
     }
 
