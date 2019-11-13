@@ -30,7 +30,7 @@
         {
             this.bOpenFile = new System.Windows.Forms.Button();
             this.bAddLines = new System.Windows.Forms.Button();
-            this.bEditLines = new System.Windows.Forms.Button();
+            this.bFlashSensor = new System.Windows.Forms.Button();
             this.bDeleteLines = new System.Windows.Forms.Button();
             this.bSaveLines = new System.Windows.Forms.Button();
             this.listModels = new System.Windows.Forms.ListBox();
@@ -79,6 +79,9 @@
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lvwModels = new System.Windows.Forms.ListView();
+            this.lvwType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -98,7 +101,7 @@
             // 
             // bAddLines
             // 
-            this.bAddLines.Location = new System.Drawing.Point(12, 325);
+            this.bAddLines.Location = new System.Drawing.Point(12, 336);
             this.bAddLines.Name = "bAddLines";
             this.bAddLines.Size = new System.Drawing.Size(180, 25);
             this.bAddLines.TabIndex = 1;
@@ -106,18 +109,20 @@
             this.bAddLines.UseVisualStyleBackColor = true;
             this.bAddLines.Click += new System.EventHandler(this.bAddLines_Click);
             // 
-            // bEditLines
+            // bFlashSensor
             // 
-            this.bEditLines.Location = new System.Drawing.Point(12, 405);
-            this.bEditLines.Name = "bEditLines";
-            this.bEditLines.Size = new System.Drawing.Size(180, 25);
-            this.bEditLines.TabIndex = 2;
-            this.bEditLines.Text = "Редактировать записи";
-            this.bEditLines.UseVisualStyleBackColor = true;
+            this.bFlashSensor.BackColor = System.Drawing.Color.RosyBrown;
+            this.bFlashSensor.Location = new System.Drawing.Point(12, 441);
+            this.bFlashSensor.Name = "bFlashSensor";
+            this.bFlashSensor.Size = new System.Drawing.Size(180, 25);
+            this.bFlashSensor.TabIndex = 2;
+            this.bFlashSensor.Text = "Записать данные в датчик";
+            this.bFlashSensor.UseVisualStyleBackColor = false;
+            this.bFlashSensor.Click += new System.EventHandler(this.bFlashSensor_Click);
             // 
             // bDeleteLines
             // 
-            this.bDeleteLines.Location = new System.Drawing.Point(12, 365);
+            this.bDeleteLines.Location = new System.Drawing.Point(12, 371);
             this.bDeleteLines.Name = "bDeleteLines";
             this.bDeleteLines.Size = new System.Drawing.Size(180, 25);
             this.bDeleteLines.TabIndex = 3;
@@ -127,7 +132,7 @@
             // 
             // bSaveLines
             // 
-            this.bSaveLines.Location = new System.Drawing.Point(12, 446);
+            this.bSaveLines.Location = new System.Drawing.Point(12, 406);
             this.bSaveLines.Name = "bSaveLines";
             this.bSaveLines.Size = new System.Drawing.Size(180, 25);
             this.bSaveLines.TabIndex = 4;
@@ -139,10 +144,11 @@
             // 
             this.listModels.BackColor = System.Drawing.SystemColors.Window;
             this.listModels.FormattingEnabled = true;
-            this.listModels.Location = new System.Drawing.Point(12, 53);
+            this.listModels.Location = new System.Drawing.Point(12, 37);
             this.listModels.Name = "listModels";
-            this.listModels.Size = new System.Drawing.Size(180, 251);
+            this.listModels.Size = new System.Drawing.Size(180, 17);
             this.listModels.TabIndex = 5;
+            this.listModels.Visible = false;
             this.listModels.SelectedIndexChanged += new System.EventHandler(this.listModels_SelectedIndexChanged);
             // 
             // groupBox1
@@ -564,7 +570,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 490);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 483);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(823, 22);
             this.statusStrip1.TabIndex = 9;
@@ -575,11 +581,40 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
+            // lvwModels
+            // 
+            this.lvwModels.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvwType,
+            this.lvwModel});
+            this.lvwModels.FullRowSelect = true;
+            this.lvwModels.GridLines = true;
+            this.lvwModels.HideSelection = false;
+            this.lvwModels.Location = new System.Drawing.Point(12, 54);
+            this.lvwModels.MultiSelect = false;
+            this.lvwModels.Name = "lvwModels";
+            this.lvwModels.Scrollable = false;
+            this.lvwModels.Size = new System.Drawing.Size(180, 271);
+            this.lvwModels.TabIndex = 25;
+            this.lvwModels.UseCompatibleStateImageBehavior = false;
+            this.lvwModels.View = System.Windows.Forms.View.Details;
+            this.lvwModels.SelectedIndexChanged += new System.EventHandler(this.lvwModels_SelectedIndexChanged);
+            // 
+            // lvwType
+            // 
+            this.lvwType.Text = "Название";
+            this.lvwType.Width = 100;
+            // 
+            // lvwModel
+            // 
+            this.lvwModel.Text = "Модель";
+            this.lvwModel.Width = 80;
+            // 
             // FormSensorsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(823, 512);
+            this.ClientSize = new System.Drawing.Size(823, 505);
+            this.Controls.Add(this.lvwModels);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -587,7 +622,7 @@
             this.Controls.Add(this.listModels);
             this.Controls.Add(this.bSaveLines);
             this.Controls.Add(this.bDeleteLines);
-            this.Controls.Add(this.bEditLines);
+            this.Controls.Add(this.bFlashSensor);
             this.Controls.Add(this.bAddLines);
             this.Controls.Add(this.bOpenFile);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -614,7 +649,7 @@
 
         private System.Windows.Forms.Button bOpenFile;
         private System.Windows.Forms.Button bAddLines;
-        private System.Windows.Forms.Button bEditLines;
+        private System.Windows.Forms.Button bFlashSensor;
         private System.Windows.Forms.Button bDeleteLines;
         private System.Windows.Forms.Button bSaveLines;
         private System.Windows.Forms.ListBox listModels;
@@ -663,6 +698,9 @@
         private System.Windows.Forms.TextBox textBox21;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ListView lvwModels;
+        private System.Windows.Forms.ColumnHeader lvwType;
+        private System.Windows.Forms.ColumnHeader lvwModel;
     }
 }
 

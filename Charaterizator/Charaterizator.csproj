@@ -115,6 +115,9 @@
     <EmbeddedResource Include="FormPortSettings.resx">
       <DependentUpon>FormPortSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSensorsDB.resx">
+      <DependentUpon>FormSensorsDB.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettigs.resx">
       <DependentUpon>FormSettigs.cs</DependentUpon>
     </EmbeddedResource>

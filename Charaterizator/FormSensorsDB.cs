@@ -68,31 +68,69 @@ namespace Charaterizator
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
                 // текст запроса
-                string query = "SELECT Model FROM TSensors  ORDER BY Type";
-                //Тип + Модель string query = "SELECT Type, Model FROM TSensors  ORDER BY Type";
+                //string query = "SELECT Model FROM TSensors  ORDER BY Type";
+                //Тип + Модель 
+                string query = "SELECT Type, Model FROM TSensors  ORDER BY Type";
 
                 // создаем объект OleDbCommand для выполнения запроса к БД MS Access
-                command = new OleDbCommand(query, _сonnection);
+                OleDbCommand command = new OleDbCommand(query, _сonnection);
 
                 // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
                 reader = command.ExecuteReader();
 
                 // очищаем listBox1
-                listModels.Items.Clear();
+                //listModels.Items.Clear();
+
+                // очищаем listView
+                lvwModels.Items.Clear();
+
+                //**
+                int i = 0;
 
                 // в цикле построчно читаем ответ от БД
                 while (reader.Read())
                 {
                     // выводим данные столбцов текущей строки в listBox1
-                    listModels.Items.Add(reader[0].ToString());                           
+                    //listModels.Items.AddRange(reader[0].ToString(), reader[1].ToString());
+                    //lvwModels.Items.Add(reader[0].ToString());
+                    //ListViewItem itm = new ListViewItem(reader[0].ToString(), reader[1].ToString());
+                    //lvwModels.Items.Add(itm);
+                    //lvwModels.Items[i].SubItems.Add(str);
+
+                    lvwModels.Items.Add(reader[0].ToString());
+                    //lvwModels.Items.Add(reader[1].ToString());
+                    lvwModels.Items[i].SubItems.Add(reader[1].ToString());
+                    i++;
                 }
                 // закрываем OleDbDataReader
                 reader.Close();
 
+
                 // если список моделей из БД не пуст, позиционируемся на первой записи
-                if (listModels.Items.Count > 0)
+                if (lvwModels.Items.Count > 0)
                 {
-                    listModels.SelectedIndex = 0;
+                    //lvwModels.SelectedItems = 0;
+                    lvwModels.Focus();
+                    lvwModels.Select();
+                    lvwModels.Items[0].Focused = true;
+                    lvwModels.Items[0].Selected = true;
+                }
+                else
+                {
+
+                    foreach (var gb in this.Controls.OfType<GroupBox>())
+                    {
+                        foreach (var tb in gb.Controls.OfType<TextBox>())
+                        {
+                            if ((tb is TextBox) && (tb.Tag != null))
+                            {
+                                tb.Text = "";
+                            }
+                        }
+                    }
+                    MessageBox.Show("База данных пуста!", "Чтение файлов из БД...          ", MessageBoxButtons.OK);
+                    return;
+
                 }
 
             }
@@ -104,8 +142,8 @@ namespace Charaterizator
         // Обработчик выбора модели датчика
         private void listModels_SelectedIndexChanged(object sender, EventArgs e)
         {            
-            string str = listModels.SelectedItem.ToString();
-            SetSensorsData(str);
+           // string str = listModels.SelectedItem.ToString();
+           // SetSensorsData(str);
         }
 
 
@@ -196,71 +234,30 @@ namespace Charaterizator
             // Добавлем заданную модель в список моделей ListBox
             if (newModelSens != "")
             {
-                listModels.Items.Add(newModelSens);
+
+                //listModels.Items.Add(newModelSens);
+                lvwModels.Items.Add(newTypeSens);
+                lvwModels.Items[lvwModels.Items.Count - 1].SubItems.Add(newModelSens);
+
+              
 
                 // текст запроса
                 string query = "INSERT INTO Tsensors (Type, Model, NumOfRange) VALUES ('" + newTypeSens + "', '" + newModelSens + "', 2)";
 
                 // создаем объект OleDbCommand для выполнения запроса к БД MS Access
-                command = new OleDbCommand(query, _сonnection);
+                OleDbCommand command = new OleDbCommand(query, _сonnection);
 
                 // выполняем запрос к MS Access
                 command.ExecuteNonQuery();
 
-                listModels.SelectedIndex = listModels.Items.Count - 1;
 
-                foreach (var gb in this.Controls.OfType<GroupBox>())
-                {
-                    foreach (var tb in gb.Controls.OfType<TextBox>())
-                    {
-                        if ((tb is TextBox) && (tb.Tag != null))
-                        {
-                            tb.Text = "";
-                        }
-                    }
-                }             
-            }
-        }
+                //listModels.SelectedIndex = listModels.Items.Count - 1;
+                lvwModels.Focus();
+                lvwModels.Select();
+                lvwModels.Items[lvwModels.Items.Count - 1].Focused = true;
+                lvwModels.Items[lvwModels.Items.Count - 1].Selected = true;
 
 
-
-        private void bDeleteLines_Click(object sender, EventArgs e)
-        {
-            if ((listModels.Items.Count - 1) > 0)
-            {
-                string str = listModels.SelectedItem.ToString();
-
-                // текст запроса
-                string query = "DELETE FROM TSensors WHERE Model = '" + str + "'";
-
-                // создаем объект OleDbCommand для выполнения запроса к БД MS Access
-                command = new OleDbCommand(query, _сonnection);
-
-                // выполняем запрос к MS Access
-                command.ExecuteNonQuery();
-
-                // обновляем данные listbox
-                GetData();                                
-
-                listModels.SelectedIndex = 0;
-            }
-            
-
-            else if ((listModels.Items.Count - 1) == 0)
-            {
-                string str = listModels.SelectedItem.ToString();
-
-                // текст запроса
-                string query = "DELETE FROM TSensors WHERE Model = '" + str + "'";
-
-                // создаем объект OleDbCommand для выполнения запроса к БД MS Access
-                command = new OleDbCommand(query, _сonnection);
-
-                // выполняем запрос к MS Access
-                command.ExecuteNonQuery();
-
-                GetData();
-                listModels.SelectedIndex = -1;
 
                 foreach (var gb in this.Controls.OfType<GroupBox>())
                 {
@@ -272,26 +269,41 @@ namespace Charaterizator
                         }
                     }
                 }
-                MessageBox.Show("База данных пуста!", "Чтение файлов из БД...          ", MessageBoxButtons.OK);
             }
+        }
 
-            else
-            {
-                return;
-            }                                 
+
+        // Обработчик удаления записи
+        private void bDeleteLines_Click(object sender, EventArgs e)
+        {
+            if (lvwModels.SelectedItems.Count <= 0)
+            return;
+
+
+            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
+
+            // текст запроса
+            string query = "DELETE FROM TSensors WHERE Model = '" + str + "'";
+
+            // создаем объект OleDbCommand для выполнения запроса к БД MS Access
+            OleDbCommand command = new OleDbCommand(query, _сonnection);
+
+            // выполняем запрос к MS Access
+            command.ExecuteNonQuery();
+
+            // обновляем данные listbox
+            GetData();
         }
 
 
 
-
+        // Сохранение параметров модели
         private void bSaveLines_Click(object sender, EventArgs e)
         {
-            //listModels.Items.Add(newModelSens);
-            //string strFields = "Type, Model, Serial, Pmin, Pmax, NumOfRange, Gain1, Gain2, Range1_Pmin, Range1_Pmax, Range2_Pmin, Range2_Pmax, DeltaRangeMin," +
-            //                    "HarTempPoint1, HarPressPoint1, HarTempPoint2, HarPressPoint2, VerTempPoint1, VerPressPoint1, VerTempPoint2, VerPressPoint2";
-            //string strFValues;
+            if (lvwModels.SelectedItems.Count <= 0)
+                return;
+            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
 
-            string str = listModels.SelectedItem.ToString();
 
 
             string partQuery = "";
@@ -323,7 +335,7 @@ namespace Charaterizator
 
 
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
-            command = new OleDbCommand(query, _сonnection);
+            OleDbCommand command = new OleDbCommand(query, _сonnection);
 
             // выполняем запрос к MS Access
             command.ExecuteNonQuery();
@@ -446,13 +458,19 @@ namespace Charaterizator
             return strValue;
         }
 
+        private void lvwModels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvwModels.SelectedItems.Count <= 0) return;
+            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
+            SetSensorsData(str);
+        }
 
 
+        // Обработчик - Записать параметры в датчик
+        private void bFlashSensor_Click(object sender, EventArgs e)
+        {
 
-
-
-
-
+        }
     }
 
 }
