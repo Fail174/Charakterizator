@@ -8,12 +8,14 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 
+
 //namespace ENI100
 namespace Charaterizator
 {
-
     public struct SensorID
     {
+//        const int COEFF_COUNT = 24;//число коэффициентов
+
         public int Channal;    //Номер канала коммутатора
         public int Group;      //Номер группы (1 или 2)
 

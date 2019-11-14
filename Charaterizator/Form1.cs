@@ -838,6 +838,10 @@ namespace Charaterizator
                 // ОКНО - ХАРАКТЕРИЗАЦИЯ    
                 case 1:  
                     {
+                        cbCHTermoCamera1.Items.Clear();
+                        cbCHTermoCamera2.Items.Clear();
+                        cbCHPressureSet1.Items.Clear();
+                        cbCHPressureSet2.Items.Clear();
                         // Занесение данных из ДБ в combobox                         
                         // Проверка
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
@@ -1109,17 +1113,17 @@ namespace Charaterizator
         //Установка температуры для характеризации группы 1
         private void btnCHTemperatureSet1_Click(object sender, EventArgs e)
         {
-
+            TemperatureReady = false;
             if (ThermalCamera.Connected)
             {
                 Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
 
-                btnCHPressureSet1.Enabled = false;
+/*                btnCHPressureSet1.Enabled = false;
                 double Point = Convert.ToDouble(cbCHPressureSet1.Text);  // получаем заданное значение уставки
                 //double shift;
                 numMensorPoint.Text = cbCHPressureSet1.Text;
                 bMensorSet.PerformClick();      //выставляем давление
-                bMensorControl.PerformClick();  //запускаем задачу
+                bMensorControl.PerformClick();  //запускаем задачу*/
 
                 TemperatureReady = true;
             }
@@ -1137,17 +1141,29 @@ namespace Charaterizator
         //Установка температуры для характеризации группы 2
         private void btnCHTemperatureSet2_Click(object sender, EventArgs e)
         {
-                        if (ThermalCamera.Connected)
-                        {
-                            double Point = Convert.ToDouble(cbCHPressureSet2.Text);  // получаем заданное значение уставки
+            TemperatureReady = false;
+            if (ThermalCamera.Connected)
+            {
+                Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
 
-                            Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
-                        }
-                        else
-                        {
-                            Program.txtlog.WriteLineLog("Нет cвязи c термокамерой.", 1);
-                        }
-            TemperatureReady = true;
+/*                btnCHPressureSet1.Enabled = false;
+                double Point = Convert.ToDouble(cbCHPressureSet1.Text);  // получаем заданное значение уставки
+                //double shift;
+                numMensorPoint.Text = cbCHPressureSet1.Text;
+                bMensorSet.PerformClick();      //выставляем давление
+                bMensorControl.PerformClick();  //запускаем задачу*/
+
+                TemperatureReady = true;
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Нет cвязи c термокамерой.", 1);
+                if (MessageBox.Show("Хотите установить температуру в ручную?", "Нет соединения с Термокамерой", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    numTermoCameraPoint.Text = cbCHTermoCamera2.Text;
+                    TemperatureReady = true;
+                }
+            }
         }
 
         //Установка давления для характеризации группы 1

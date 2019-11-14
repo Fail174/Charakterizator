@@ -135,6 +135,8 @@
             this.tbSelChannalNumber = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.tbInfoDeviceAdress = new System.Windows.Forms.TextBox();
+            this.tbInfoPressureModel = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.dtpInfoDate = new System.Windows.Forms.DateTimePicker();
@@ -208,8 +210,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.tbInfoPressureModel = new System.Windows.Forms.TextBox();
-            this.tbInfoDeviceAdress = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -465,14 +466,13 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.tbDateTime);
             this.panel1.Controls.Add(this.groupBox4);
-            this.panel1.Controls.Add(this.numMensorPoint);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(992, 24);
+            this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(292, 959);
+            this.panel1.Size = new System.Drawing.Size(309, 959);
             this.panel1.TabIndex = 6;
             // 
             // tbDateTime
@@ -480,10 +480,10 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(11, 902);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 911);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
-            this.tbDateTime.Size = new System.Drawing.Size(276, 40);
+            this.tbDateTime.Size = new System.Drawing.Size(299, 40);
             this.tbDateTime.TabIndex = 10;
             this.tbDateTime.Text = "00:00:00";
             // 
@@ -498,9 +498,9 @@
             this.groupBox4.Controls.Add(this.textBox5);
             this.groupBox4.Controls.Add(this.btnThermalCamera);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox4.Location = new System.Drawing.Point(15, 692);
+            this.groupBox4.Location = new System.Drawing.Point(5, 677);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(264, 204);
+            this.groupBox4.Size = new System.Drawing.Size(299, 204);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Термокамера";
@@ -508,7 +508,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(177, 137);
+            this.button1.Location = new System.Drawing.Point(212, 137);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 49);
             this.button1.TabIndex = 12;
@@ -519,7 +519,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(203, 86);
+            this.label10.Location = new System.Drawing.Point(231, 84);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(60, 42);
             this.label10.TabIndex = 11;
@@ -530,7 +530,7 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label7.Location = new System.Drawing.Point(2, 86);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(118, 42);
+            this.label7.Size = new System.Drawing.Size(116, 42);
             this.label7.TabIndex = 8;
             this.label7.Text = "Текущая температура:";
             // 
@@ -543,14 +543,19 @@
             0,
             0,
             65536});
-            this.numTermoCameraPoint.Location = new System.Drawing.Point(75, 137);
+            this.numTermoCameraPoint.Location = new System.Drawing.Point(99, 137);
             this.numTermoCameraPoint.Maximum = new decimal(new int[] {
-            100000,
+            1000,
             0,
             0,
             0});
+            this.numTermoCameraPoint.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numTermoCameraPoint.Name = "numTermoCameraPoint";
-            this.numTermoCameraPoint.Size = new System.Drawing.Size(96, 49);
+            this.numTermoCameraPoint.Size = new System.Drawing.Size(104, 49);
             this.numTermoCameraPoint.TabIndex = 7;
             this.numTermoCameraPoint.Value = new decimal(new int[] {
             90,
@@ -562,7 +567,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(2, 150);
+            this.label6.Location = new System.Drawing.Point(3, 150);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 20);
             this.label6.TabIndex = 6;
@@ -571,9 +576,9 @@
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox5.Location = new System.Drawing.Point(122, 82);
+            this.textBox5.Location = new System.Drawing.Point(119, 81);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(81, 49);
+            this.textBox5.Size = new System.Drawing.Size(103, 49);
             this.textBox5.TabIndex = 3;
             this.textBox5.Text = "80,0";
             // 
@@ -598,14 +603,19 @@
             0,
             0,
             65536});
-            this.numMensorPoint.Location = new System.Drawing.Point(22, 526);
+            this.numMensorPoint.Location = new System.Drawing.Point(78, 212);
             this.numMensorPoint.Maximum = new decimal(new int[] {
-            100000,
+            10000,
             0,
             0,
             0});
+            this.numMensorPoint.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.numMensorPoint.Name = "numMensorPoint";
-            this.numMensorPoint.Size = new System.Drawing.Size(164, 49);
+            this.numMensorPoint.Size = new System.Drawing.Size(128, 49);
             this.numMensorPoint.TabIndex = 5;
             this.numMensorPoint.Value = new decimal(new int[] {
             100,
@@ -616,8 +626,10 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.groupBox3.Controls.Add(this.label36);
             this.groupBox3.Controls.Add(this.bMensorSet);
             this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.numMensorPoint);
             this.groupBox3.Controls.Add(this.tbMensorRate);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
@@ -630,9 +642,9 @@
             this.groupBox3.Controls.Add(this.tbMensorData);
             this.groupBox3.Controls.Add(this.btnMensor);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(15, 300);
+            this.groupBox3.Location = new System.Drawing.Point(5, 300);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(263, 386);
+            this.groupBox3.Size = new System.Drawing.Size(299, 371);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Задатчик давления";
@@ -640,7 +652,7 @@
             // bMensorSet
             // 
             this.bMensorSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bMensorSet.Location = new System.Drawing.Point(177, 226);
+            this.bMensorSet.Location = new System.Drawing.Point(212, 209);
             this.bMensorSet.Name = "bMensorSet";
             this.bMensorSet.Size = new System.Drawing.Size(81, 49);
             this.bMensorSet.TabIndex = 11;
@@ -652,7 +664,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(155, 158);
+            this.label9.Location = new System.Drawing.Point(159, 157);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(85, 42);
             this.label9.TabIndex = 10;
@@ -661,17 +673,17 @@
             // tbMensorRate
             // 
             this.tbMensorRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbMensorRate.Location = new System.Drawing.Point(94, 284);
+            this.tbMensorRate.Location = new System.Drawing.Point(94, 267);
             this.tbMensorRate.Name = "tbMensorRate";
-            this.tbMensorRate.Size = new System.Drawing.Size(164, 49);
+            this.tbMensorRate.Size = new System.Drawing.Size(113, 49);
             this.tbMensorRate.TabIndex = 9;
-            this.tbMensorRate.Text = "10,000";
+            this.tbMensorRate.Text = "10,00";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(6, 300);
+            this.label5.Location = new System.Drawing.Point(3, 289);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 20);
             this.label5.TabIndex = 8;
@@ -681,7 +693,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(6, 208);
+            this.label4.Location = new System.Drawing.Point(3, 233);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 20);
             this.label4.TabIndex = 4;
@@ -690,7 +702,7 @@
             // bMensorControl
             // 
             this.bMensorControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bMensorControl.Location = new System.Drawing.Point(7, 341);
+            this.bMensorControl.Location = new System.Drawing.Point(11, 325);
             this.bMensorControl.Name = "bMensorControl";
             this.bMensorControl.Size = new System.Drawing.Size(116, 38);
             this.bMensorControl.TabIndex = 6;
@@ -701,7 +713,7 @@
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(142, 341);
+            this.button7.Location = new System.Drawing.Point(141, 325);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(116, 38);
             this.button7.TabIndex = 7;
@@ -759,7 +771,7 @@
             // tbMensorData
             // 
             this.tbMensorData.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbMensorData.Location = new System.Drawing.Point(6, 154);
+            this.tbMensorData.Location = new System.Drawing.Point(6, 157);
             this.tbMensorData.Name = "tbMensorData";
             this.tbMensorData.Size = new System.Drawing.Size(143, 49);
             this.tbMensorData.TabIndex = 3;
@@ -784,9 +796,9 @@
             this.groupBox2.Controls.Add(this.tbMultimetrData);
             this.groupBox2.Controls.Add(this.btmMultimetr);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(11, 152);
+            this.groupBox2.Location = new System.Drawing.Point(5, 152);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(268, 136);
+            this.groupBox2.Size = new System.Drawing.Size(299, 136);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Мультиметр";
@@ -830,9 +842,9 @@
             this.groupBox1.Controls.Add(this.btnFormCommutator);
             this.groupBox1.Controls.Add(this.btnCommutator);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(11, 12);
+            this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(268, 134);
+            this.groupBox1.Size = new System.Drawing.Size(299, 134);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Коммутатор";
@@ -887,7 +899,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 801);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(992, 182);
+            this.panel2.Size = new System.Drawing.Size(975, 182);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -899,7 +911,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(576, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(409, 170);
+            this.richTextBox1.Size = new System.Drawing.Size(392, 170);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
@@ -911,7 +923,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(580, 169);
+            this.rtbConsole.Size = new System.Drawing.Size(563, 169);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -925,7 +937,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(992, 777);
+            this.panel3.Size = new System.Drawing.Size(975, 777);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView4
@@ -941,7 +953,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 529);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(715, 248);
+            this.dataGridView4.Size = new System.Drawing.Size(698, 248);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -999,7 +1011,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 0);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(715, 777);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 777);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1065,7 +1077,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(715, 777);
+            this.dataGridView2.Size = new System.Drawing.Size(698, 777);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             // 
@@ -1136,7 +1148,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(277, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(715, 777);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 777);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1343,6 +1355,22 @@
             this.groupBox9.TabIndex = 3;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Параметры выбранного датчика";
+            // 
+            // tbInfoDeviceAdress
+            // 
+            this.tbInfoDeviceAdress.Location = new System.Drawing.Point(112, 341);
+            this.tbInfoDeviceAdress.Name = "tbInfoDeviceAdress";
+            this.tbInfoDeviceAdress.ReadOnly = true;
+            this.tbInfoDeviceAdress.Size = new System.Drawing.Size(123, 20);
+            this.tbInfoDeviceAdress.TabIndex = 60;
+            // 
+            // tbInfoPressureModel
+            // 
+            this.tbInfoPressureModel.Location = new System.Drawing.Point(112, 191);
+            this.tbInfoPressureModel.Name = "tbInfoPressureModel";
+            this.tbInfoPressureModel.ReadOnly = true;
+            this.tbInfoPressureModel.Size = new System.Drawing.Size(123, 20);
+            this.tbInfoPressureModel.TabIndex = 59;
             // 
             // label19
             // 
@@ -2031,21 +2059,15 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // tbInfoPressureModel
+            // label36
             // 
-            this.tbInfoPressureModel.Location = new System.Drawing.Point(112, 191);
-            this.tbInfoPressureModel.Name = "tbInfoPressureModel";
-            this.tbInfoPressureModel.ReadOnly = true;
-            this.tbInfoPressureModel.Size = new System.Drawing.Size(123, 20);
-            this.tbInfoPressureModel.TabIndex = 59;
-            // 
-            // tbInfoDeviceAdress
-            // 
-            this.tbInfoDeviceAdress.Location = new System.Drawing.Point(112, 341);
-            this.tbInfoDeviceAdress.Name = "tbInfoDeviceAdress";
-            this.tbInfoDeviceAdress.ReadOnly = true;
-            this.tbInfoDeviceAdress.Size = new System.Drawing.Size(123, 20);
-            this.tbInfoDeviceAdress.TabIndex = 60;
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label36.Location = new System.Drawing.Point(208, 278);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(85, 31);
+            this.label36.TabIndex = 12;
+            this.label36.Text = "кПа/c";
             // 
             // MainForm
             // 
@@ -2288,6 +2310,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
         private System.Windows.Forms.TextBox tbInfoPressureModel;
         private System.Windows.Forms.TextBox tbInfoDeviceAdress;
+        private System.Windows.Forms.Label label36;
     }
 }
 
