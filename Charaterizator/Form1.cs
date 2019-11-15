@@ -1080,6 +1080,7 @@ namespace Charaterizator
         {
             FormSettings Settings = new FormSettings();
             Settings.ShowDialog();
+
         }
 
 
