@@ -33,55 +33,68 @@
             this.tbTypeSens = new System.Windows.Forms.TextBox();
             this.tbModelSens = new System.Windows.Forms.TextBox();
             this.bOK = new System.Windows.Forms.Button();
+            this.bCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(92, 15);
+            this.label1.Location = new System.Drawing.Point(23, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(144, 13);
+            this.label1.Size = new System.Drawing.Size(168, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Тип или название датчика:";
+            this.label1.Text = "Введите тип/название датчика:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(118, 74);
+            this.label2.Location = new System.Drawing.Point(23, 83);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(92, 13);
+            this.label2.Size = new System.Drawing.Size(136, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Модель датчика:";
+            this.label2.Text = "Введите модель датчика:";
             // 
             // tbTypeSens
             // 
-            this.tbTypeSens.Location = new System.Drawing.Point(62, 34);
+            this.tbTypeSens.Location = new System.Drawing.Point(24, 42);
             this.tbTypeSens.Name = "tbTypeSens";
-            this.tbTypeSens.Size = new System.Drawing.Size(201, 20);
+            this.tbTypeSens.Size = new System.Drawing.Size(274, 20);
             this.tbTypeSens.TabIndex = 2;
             // 
             // tbModelSens
             // 
-            this.tbModelSens.Location = new System.Drawing.Point(60, 93);
+            this.tbModelSens.Location = new System.Drawing.Point(25, 102);
             this.tbModelSens.Name = "tbModelSens";
-            this.tbModelSens.Size = new System.Drawing.Size(201, 20);
+            this.tbModelSens.Size = new System.Drawing.Size(273, 20);
             this.tbModelSens.TabIndex = 3;
             // 
             // bOK
             // 
-            this.bOK.Location = new System.Drawing.Point(124, 133);
+            this.bOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bOK.Location = new System.Drawing.Point(26, 147);
             this.bOK.Name = "bOK";
-            this.bOK.Size = new System.Drawing.Size(82, 25);
+            this.bOK.Size = new System.Drawing.Size(165, 30);
             this.bOK.TabIndex = 4;
             this.bOK.Text = "Принять";
             this.bOK.UseVisualStyleBackColor = true;
             this.bOK.Click += new System.EventHandler(this.bOK_Click);
             // 
+            // bCancel
+            // 
+            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancel.Location = new System.Drawing.Point(216, 147);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(82, 30);
+            this.bCancel.TabIndex = 5;
+            this.bCancel.Text = "Отмена";
+            this.bCancel.UseVisualStyleBackColor = true;
+            // 
             // FormAddNewSensorsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 172);
+            this.ClientSize = new System.Drawing.Size(329, 197);
+            this.Controls.Add(this.bCancel);
             this.Controls.Add(this.bOK);
             this.Controls.Add(this.tbModelSens);
             this.Controls.Add(this.tbTypeSens);
@@ -103,5 +116,6 @@
         private System.Windows.Forms.TextBox tbTypeSens;
         private System.Windows.Forms.TextBox tbModelSens;
         private System.Windows.Forms.Button bOK;
+        private System.Windows.Forms.Button bCancel;
     }
 }

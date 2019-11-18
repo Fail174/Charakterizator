@@ -346,6 +346,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки программы";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

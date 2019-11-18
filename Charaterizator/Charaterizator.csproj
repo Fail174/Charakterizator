@@ -106,6 +106,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormAddNewSensorsDB.resx">
+      <DependentUpon>FormAddNewSensorsDB.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCommutator.resx">
       <DependentUpon>FormCommutator.cs</DependentUpon>
     </EmbeddedResource>

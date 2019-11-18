@@ -18,11 +18,24 @@ namespace Charaterizator
             InitializeComponent();
         }
 
-        private void bOK_Click(object sender, EventArgs e)
-        {
-            FormSensorsDB.newTypeSens = tbTypeSens.Text;
-            FormSensorsDB.newModelSens = tbModelSens.Text;
-            this.Close();
-        }
+
+     public void bOK_Click(object sender, EventArgs e)
+     {
+        this.DialogResult = DialogResult.OK;  
+     }
+
+
+     public string newTypeSens
+     {
+         get { return tbTypeSens.Text; }
+     }
+     public string newModelSens
+     {
+         get { return tbModelSens.Text; }
+     }
+        
+        
     }
+
+
 }

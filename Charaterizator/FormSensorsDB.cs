@@ -28,6 +28,9 @@ namespace Charaterizator
             InitializeComponent();               
         }
 
+        
+        //-----------------------------------------------------------------------------------------------
+
         // Функция устанавливает соединение с БД
         public void SetConnectionDB(string strFileNameDB)
         {
@@ -45,7 +48,7 @@ namespace Charaterizator
             catch (OleDbException ex)
             {
                 //MessageBox.Show(ex.Message);
-                MessageBox.Show(ex.Message, "Открытие файла базы данных...", MessageBoxButtons.OK);
+                MessageBox.Show(ex.Message, "Открытие файла базы данных. Операция прервана.", MessageBoxButtons.OK, MessageBoxIcon.Warning);               
                 toolStripStatusLabel1.Text = "Соединение с БД не установлено... ";
                 Program.txtlog.WriteLineLog("Соединение с БД не установлено.", 1);
                 Program.txtlog.WriteLineLog("Подключите файл с БД вручную, с помощью меню: Файл - Открыть БД датчиков.", 1);
@@ -55,65 +58,62 @@ namespace Charaterizator
             {
                 //_сonnection.Close();
             }
-        }
+        }                
+        
 
+        //-----------------------------------------------------------------------------------------------
 
-
+        // Функция получает список моделей из БД и выводит его в ListView
         public void GetData()
         {
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
-                // текст запроса
-                //string query = "SELECT Model FROM TSensors  ORDER BY Type";
-                //Тип + Модель 
+                // текст запроса               
                 string query = "SELECT Type, Model FROM TSensors  ORDER BY Type";
-
                 // создаем объект OleDbCommand для выполнения запроса к БД MS Access
                 OleDbCommand command = new OleDbCommand(query, _сonnection);
 
-                // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
-                reader = command.ExecuteReader();
+                try
+                { // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
+                    reader = command.ExecuteReader();
+                    // очищаем listView
+                    lvwModels.Items.Clear();
 
-                // очищаем listBox1
-                //listModels.Items.Clear();
-
-                // очищаем listView
-                lvwModels.Items.Clear();
-
-                //**
-                int i = 0;
-
-                // в цикле построчно читаем ответ от БД
-                while (reader.Read())
-                {
-                    // выводим данные столбцов текущей строки в listBox1
-                    //listModels.Items.AddRange(reader[0].ToString(), reader[1].ToString());
-                    //lvwModels.Items.Add(reader[0].ToString());
-                    //ListViewItem itm = new ListViewItem(reader[0].ToString(), reader[1].ToString());
-                    //lvwModels.Items.Add(itm);
-                    //lvwModels.Items[i].SubItems.Add(str);
-
-                    lvwModels.Items.Add(reader[0].ToString());
-                    //lvwModels.Items.Add(reader[1].ToString());
-                    lvwModels.Items[i].SubItems.Add(reader[1].ToString());
-                    i++;
+                    //**
+                    int i = 0;
+                    // в цикле построчно читаем ответ от БД
+                    while (reader.Read())
+                    {
+                        // выводим данные столбцов текущей строки в listView                   
+                        lvwModels.Items.Add(reader[0].ToString());
+                        //lvwModels.Items.Add(reader[1].ToString());
+                        lvwModels.Items[i].SubItems.Add(reader[1].ToString());
+                        i++;
+                    }
                 }
-                // закрываем OleDbDataReader
-                reader.Close();
 
+                catch
+                {
+                    MessageBox.Show("Не удалось прочитать названия и модели датчиков из БД. Возможно файл с БД пуст или не соответствует требуемой структуре", "Чтение данных из БД. Операция прервана.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
+                finally
+                {
+                    // закрываем OleDbDataReader
+                    reader.Close();
+                }
+                              
+                
                 // если список моделей из БД не пуст, позиционируемся на первой записи
                 if (lvwModels.Items.Count > 0)
-                {
-                    //lvwModels.SelectedItems = 0;
+                {                  
                     lvwModels.Focus();
                     lvwModels.Select();
                     lvwModels.Items[0].Focused = true;
                     lvwModels.Items[0].Selected = true;
                 }
-                else
+                else  //в случае удалении последней записи, список ListView будет пуст - очищаем textbox-ы
                 {
-
                     foreach (var gb in this.Controls.OfType<GroupBox>())
                     {
                         foreach (var tb in gb.Controls.OfType<TextBox>())
@@ -126,23 +126,12 @@ namespace Charaterizator
                     }
                     MessageBox.Show("База данных пуста!", "Чтение файлов из БД...          ", MessageBoxButtons.OK);
                     return;
-
                 }
-
             }
         }
 
-
-
-
-        // Обработчик выбора модели датчика
-        private void listModels_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-           // string str = listModels.SelectedItem.ToString();
-           // SetSensorsData(str);
-        }
-
-
+        
+        //-----------------------------------------------------------------------------------------------
 
         // Функция обновления параметров датчика по названию модели
         // вх. данные - имя модели
@@ -155,105 +144,15 @@ namespace Charaterizator
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
            command = new OleDbCommand(query, _сonnection);
 
-            // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
-            reader = command.ExecuteReader();
-            reader.Read();
 
-            int cnt = this.Controls.Count;
-            //foreach (TextBox tb in this.Controls.OfType<TextBox>())
-
-            foreach (var gb in this.Controls.OfType<GroupBox>())
+            try
             {
-                foreach (var tb in gb.Controls.OfType<TextBox>())
-                {
-                    if ((tb is TextBox) && (tb.Tag != null))
-                    {
-                        tb.Text = reader[Convert.ToInt32(tb.Tag)].ToString();
-                    }
-                }
-            }
+                // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
+                reader = command.ExecuteReader();
+                reader.Read();
 
-
-
-            int numofrange = Convert.ToInt32(reader[5].ToString());
-            if (numofrange == 1)
-            {
-                rbRange1.Checked = true;
-                rbRange2.Checked = false;
-            }
-            else
-            {
-                rbRange1.Checked = false;
-                rbRange2.Checked = true;
-            }
-
-            // закрываем OleDbDataReader
-            reader.Close();
-
-        }
-
-
-
-        private void rbRange1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbRange1.Checked)
-            {                
-                Gain2.Enabled = false;
-                Range2_Pmin.Enabled = false;
-                Range2_Pmax.Enabled = false;
-                HarTempPoint2.Enabled = false;
-                HarPressPoint2.Enabled = false;
-                VerTempPoint2.Enabled = false;
-                VerPressPoint2.Enabled = false;
-            }
-            else
-            {               
-                Gain2.Enabled = true;
-                Range2_Pmin.Enabled = true;
-                Range2_Pmax.Enabled = true;
-                HarTempPoint2.Enabled = true;
-                HarPressPoint2.Enabled = true;
-                VerTempPoint2.Enabled = true;
-                VerPressPoint2.Enabled = true;
-            }
-        }
-
-
-
-        // Обработчик добавить запись
-        private void bAddLines_Click(object sender, EventArgs e)
-        {
-
-            FormAddNewSensorsDB newForm = new FormAddNewSensorsDB();
-            newForm.ShowDialog();
-
-            // Добавлем заданную модель в список моделей ListBox
-            if (newModelSens != "")
-            {
-
-                //listModels.Items.Add(newModelSens);
-                lvwModels.Items.Add(newTypeSens);
-                lvwModels.Items[lvwModels.Items.Count - 1].SubItems.Add(newModelSens);
-
-              
-
-                // текст запроса
-                string query = "INSERT INTO Tsensors (Type, Model, NumOfRange) VALUES ('" + newTypeSens + "', '" + newModelSens + "', 2)";
-
-                // создаем объект OleDbCommand для выполнения запроса к БД MS Access
-                OleDbCommand command = new OleDbCommand(query, _сonnection);
-
-                // выполняем запрос к MS Access
-                command.ExecuteNonQuery();
-
-
-                //listModels.SelectedIndex = listModels.Items.Count - 1;
-                lvwModels.Focus();
-                lvwModels.Select();
-                lvwModels.Items[lvwModels.Items.Count - 1].Focused = true;
-                lvwModels.Items[lvwModels.Items.Count - 1].Selected = true;
-
-
+                int cnt = this.Controls.Count;
+                //foreach (TextBox tb in this.Controls.OfType<TextBox>())
 
                 foreach (var gb in this.Controls.OfType<GroupBox>())
                 {
@@ -261,13 +160,126 @@ namespace Charaterizator
                     {
                         if ((tb is TextBox) && (tb.Tag != null))
                         {
-                            tb.Text = "";
+                            tb.Text = reader[Convert.ToInt32(tb.Tag)].ToString();
                         }
                     }
                 }
+
+                int numofrange = Convert.ToInt32(reader[5].ToString());
+                if (numofrange == 1)
+                {
+                    rbRange1.Checked = true;
+                    rbRange2.Checked = false;
+                }
+                else
+                {
+                    rbRange1.Checked = false;
+                    rbRange2.Checked = true;
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Не удалось прочитать параметры датчиков из БД. Возможно файл с БД пуст или не соответствует требуемой структуре", "Чтение данных из БД. Операция прервана.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            finally
+            {
+                // закрываем OleDbDataReader
+                reader.Close();
+            }
+
+           
+
+           
+        }
+
+
+        //-----------------------------------------------------------------------------------------------
+        
+        private void rbRange1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbRange1.Checked)
+            {                
+                Gain2.Enabled = false;
+                Range2_Pmin.Enabled = false;
+                Range2_Pmax.Enabled = false;               
+                HarPressPoint2.Enabled = false;              
+                VerPressPoint2.Enabled = false;
+            }
+            else
+            {               
+                Gain2.Enabled = true;
+                Range2_Pmin.Enabled = true;
+                Range2_Pmax.Enabled = true;               
+                HarPressPoint2.Enabled = true;
+                VerPressPoint2.Enabled = true;
             }
         }
 
+
+        //-----------------------------------------------------------------------------------------------
+
+        // Обработчик добавить запись в БД
+        private void bAddLines_Click(object sender, EventArgs e)
+        {
+            FormAddNewSensorsDB newForm = new FormAddNewSensorsDB();
+            //newForm.ShowDialog();
+
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                // Добавлем заданную модель в список моделей ListBox
+                if (newForm.newModelSens != "")
+                {
+                    // текст запроса
+                    string query = "INSERT INTO Tsensors (Type, Model, NumOfRange) VALUES ('" + newForm.newTypeSens + "', '" + newForm.newModelSens + "', 2)";
+                    // создаем объект OleDbCommand для выполнения запроса к БД MS Access
+                    OleDbCommand command = new OleDbCommand(query, _сonnection);
+
+                    try
+                    {
+                        // выполняем запрос к MS Access
+                        command.ExecuteNonQuery();
+                        lvwModels.Items.Add(newForm.newTypeSens);
+                        lvwModels.Items[lvwModels.Items.Count - 1].SubItems.Add(newForm.newModelSens);
+                       
+                        lvwModels.Focus();
+                        lvwModels.Select();
+                        lvwModels.Items[lvwModels.Items.Count - 1].Focused = true;
+                        lvwModels.Items[lvwModels.Items.Count - 1].Selected = true;
+                        
+                        foreach (var gb in this.Controls.OfType<GroupBox>())
+                        {
+                            foreach (var tb in gb.Controls.OfType<TextBox>())
+                            {
+                                if ((tb is TextBox) && (tb.Tag != null))
+                                {
+                                    tb.Text = "";
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Не удалось добавить заданную модель датчика БД. Возможно, такая модель уже есть в БД", "Добавление записи. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    finally
+                    {
+                        //_сonnection.Close();
+                    }
+
+
+                }
+            else
+            {                
+            }
+
+               
+            }
+        }
+
+        
+        //-----------------------------------------------------------------------------------------------
 
         // Обработчик удаления записи
         private void bDeleteLines_Click(object sender, EventArgs e)
@@ -284,14 +296,21 @@ namespace Charaterizator
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
             OleDbCommand command = new OleDbCommand(query, _сonnection);
 
-            // выполняем запрос к MS Access
-            command.ExecuteNonQuery();
-
-            // обновляем данные listbox
-            GetData();
+            try
+            {
+                // выполняем запрос к MS Access
+                command.ExecuteNonQuery();
+                // обновляем данные listbox
+                GetData();
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось удалить выбранную запись из БД", "Удаление записи. Операция прервана.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }     
         }
 
 
+        //-----------------------------------------------------------------------------------------------
 
         // Сохранение параметров модели
         private void bSaveLines_Click(object sender, EventArgs e)
@@ -316,7 +335,6 @@ namespace Charaterizator
             }
 
             partQuery = partQuery.TrimEnd(new char[] { ',' });
-
             // текст запроса
             /*    string query = "UPDATE Tsensors SET " +
                                 "Serial = " + Serial.Text + 
@@ -333,12 +351,19 @@ namespace Charaterizator
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
             OleDbCommand command = new OleDbCommand(query, _сonnection);
 
-            // выполняем запрос к MS Access
-            command.ExecuteNonQuery();
+            try
+            {
+                // выполняем запрос к MS Access
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось сохранить данные в файл с БД", "Сохранение данных. Операция прервана.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
 
-
+        //-----------------------------------------------------------------------------------------------
 
         // Диалог открытия файла с БД по нажатию кнопки "Открыть БД"
         private void bOpenFile_Click(object sender, EventArgs e)
@@ -359,13 +384,10 @@ namespace Charaterizator
                     if (_сonnection.State == System.Data.ConnectionState.Open)
                     {
                         _сonnection.Close();
-                    }
-                    // очищаем listBox1
-                    listModels.Items.Clear();
+                    }                   
 
                     // Устанавливаем соединение с БД
                     SetConnectionDB(filename);
-
                     // Загружает данные в ListBox)
                     GetData();
                 }
@@ -373,29 +395,33 @@ namespace Charaterizator
                 catch
                 {
                     //MessageBox.Show(ex.Message);
-                    MessageBox.Show("Не удалось открыть файл с БД", "Открытие файла базы данных...", MessageBoxButtons.OK);
+                    MessageBox.Show("Не удалось открыть файл с базой данных!", "Открытие файла БД. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
             }
         }
 
 
+        //-----------------------------------------------------------------------------------------------
+
         // При закрытии формы закрываем соединение с БД
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-/*            if (_сonnection != null)
-            {
-                _сonnection.Close();
-            }*/
+           
         }
 
 
+        //-----------------------------------------------------------------------------------------------
+
+        private void lvwModels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvwModels.SelectedItems.Count <= 0) return;
+            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
+            SetSensorsData(str);
+        }
 
 
-
-
-
-        //*************************************************************************
+        //-----------------------------------------------------------------------------------------------      
         // Функция получить данные из поля заданного поля БД по номеру ID (Model)
 
         // Описание полей:
@@ -420,7 +446,7 @@ namespace Charaterizator
         //    VerPressPoint1    - Массив точек по давл. 1-го диапазона - для верификации
         //    VerTempPoint2     - Массив точек по темп. 2-го диапазона - для верификации
         //    VerPressPoint2    - Массив точек по давл. 2-го диапазона - для верификации
-                    
+
 
         public string GetDataSensors(string strModel, string strField)
         {
@@ -453,14 +479,9 @@ namespace Charaterizator
             }
             return strValue;
         }
+                
 
-        private void lvwModels_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lvwModels.SelectedItems.Count <= 0) return;
-            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
-            SetSensorsData(str);
-        }
-
+        //-----------------------------------------------------------------------------------------------
 
         // Обработчик - Записать параметры в датчик
         private void bFlashSensor_Click(object sender, EventArgs e)
@@ -481,7 +502,7 @@ namespace Charaterizator
             }
             else
             {
-                MessageBox.Show("Нет подключения к датчику","Операция прервана",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("Нет подключения к датчику!","Подключение к датчику. Операция прервана",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
     }

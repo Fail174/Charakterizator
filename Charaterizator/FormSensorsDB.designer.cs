@@ -33,7 +33,6 @@
             this.bFlashSensor = new System.Windows.Forms.Button();
             this.bDeleteLines = new System.Windows.Forms.Button();
             this.bSaveLines = new System.Windows.Forms.Button();
-            this.listModels = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Range2_Pmax = new System.Windows.Forms.TextBox();
             this.Range2_Pmin = new System.Windows.Forms.TextBox();
@@ -62,8 +61,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.HarPressPoint2 = new System.Windows.Forms.TextBox();
             this.textBox17 = new System.Windows.Forms.TextBox();
-            this.HarTempPoint2 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
             this.HarPressPoint1 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.HarTempPoint1 = new System.Windows.Forms.TextBox();
@@ -71,8 +68,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.VerPressPoint2 = new System.Windows.Forms.TextBox();
             this.textBox18 = new System.Windows.Forms.TextBox();
-            this.VerTempPoint2 = new System.Windows.Forms.TextBox();
-            this.textBox21 = new System.Windows.Forms.TextBox();
             this.VerPressPoint1 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.VerTempPoint1 = new System.Windows.Forms.TextBox();
@@ -140,17 +135,6 @@
             this.bSaveLines.UseVisualStyleBackColor = true;
             this.bSaveLines.Click += new System.EventHandler(this.bSaveLines_Click);
             // 
-            // listModels
-            // 
-            this.listModels.BackColor = System.Drawing.SystemColors.Window;
-            this.listModels.FormattingEnabled = true;
-            this.listModels.Location = new System.Drawing.Point(12, 37);
-            this.listModels.Name = "listModels";
-            this.listModels.Size = new System.Drawing.Size(180, 17);
-            this.listModels.TabIndex = 5;
-            this.listModels.Visible = false;
-            this.listModels.SelectedIndexChanged += new System.EventHandler(this.listModels_SelectedIndexChanged);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Range2_Pmax);
@@ -178,14 +162,14 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(210, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(600, 236);
+            this.groupBox1.Size = new System.Drawing.Size(600, 249);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Индивидуальные параметры";
             // 
             // Range2_Pmax
             // 
-            this.Range2_Pmax.Location = new System.Drawing.Point(365, 208);
+            this.Range2_Pmax.Location = new System.Drawing.Point(365, 212);
             this.Range2_Pmax.Name = "Range2_Pmax";
             this.Range2_Pmax.Size = new System.Drawing.Size(217, 20);
             this.Range2_Pmax.TabIndex = 24;
@@ -193,7 +177,7 @@
             // 
             // Range2_Pmin
             // 
-            this.Range2_Pmin.Location = new System.Drawing.Point(365, 189);
+            this.Range2_Pmin.Location = new System.Drawing.Point(365, 193);
             this.Range2_Pmin.Name = "Range2_Pmin";
             this.Range2_Pmin.Size = new System.Drawing.Size(217, 20);
             this.Range2_Pmin.TabIndex = 23;
@@ -201,7 +185,7 @@
             // 
             // Range1_Pmax
             // 
-            this.Range1_Pmax.Location = new System.Drawing.Point(365, 151);
+            this.Range1_Pmax.Location = new System.Drawing.Point(365, 155);
             this.Range1_Pmax.Name = "Range1_Pmax";
             this.Range1_Pmax.Size = new System.Drawing.Size(217, 20);
             this.Range1_Pmax.TabIndex = 22;
@@ -209,7 +193,7 @@
             // 
             // Gain2
             // 
-            this.Gain2.Location = new System.Drawing.Point(365, 170);
+            this.Gain2.Location = new System.Drawing.Point(365, 174);
             this.Gain2.Name = "Gain2";
             this.Gain2.Size = new System.Drawing.Size(217, 20);
             this.Gain2.TabIndex = 21;
@@ -217,7 +201,7 @@
             // 
             // DeltaRangeMin
             // 
-            this.DeltaRangeMin.Location = new System.Drawing.Point(365, 75);
+            this.DeltaRangeMin.Location = new System.Drawing.Point(365, 79);
             this.DeltaRangeMin.Name = "DeltaRangeMin";
             this.DeltaRangeMin.Size = new System.Drawing.Size(217, 20);
             this.DeltaRangeMin.TabIndex = 20;
@@ -225,7 +209,7 @@
             // 
             // textBox16
             // 
-            this.textBox16.Location = new System.Drawing.Point(19, 75);
+            this.textBox16.Location = new System.Drawing.Point(19, 79);
             this.textBox16.Name = "textBox16";
             this.textBox16.ReadOnly = true;
             this.textBox16.Size = new System.Drawing.Size(347, 20);
@@ -234,7 +218,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(19, 208);
+            this.textBox2.Location = new System.Drawing.Point(19, 212);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(347, 20);
@@ -243,7 +227,7 @@
             // 
             // textBox12
             // 
-            this.textBox12.Location = new System.Drawing.Point(19, 189);
+            this.textBox12.Location = new System.Drawing.Point(19, 193);
             this.textBox12.Name = "textBox12";
             this.textBox12.ReadOnly = true;
             this.textBox12.Size = new System.Drawing.Size(347, 20);
@@ -252,7 +236,7 @@
             // 
             // textBox14
             // 
-            this.textBox14.Location = new System.Drawing.Point(19, 170);
+            this.textBox14.Location = new System.Drawing.Point(19, 174);
             this.textBox14.Name = "textBox14";
             this.textBox14.ReadOnly = true;
             this.textBox14.Size = new System.Drawing.Size(347, 20);
@@ -261,7 +245,7 @@
             // 
             // Range1_Pmin
             // 
-            this.Range1_Pmin.Location = new System.Drawing.Point(365, 132);
+            this.Range1_Pmin.Location = new System.Drawing.Point(365, 136);
             this.Range1_Pmin.Name = "Range1_Pmin";
             this.Range1_Pmin.Size = new System.Drawing.Size(217, 20);
             this.Range1_Pmin.TabIndex = 13;
@@ -269,7 +253,7 @@
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(19, 151);
+            this.textBox8.Location = new System.Drawing.Point(19, 155);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(347, 20);
@@ -278,7 +262,7 @@
             // 
             // Gain1
             // 
-            this.Gain1.Location = new System.Drawing.Point(365, 113);
+            this.Gain1.Location = new System.Drawing.Point(365, 117);
             this.Gain1.Name = "Gain1";
             this.Gain1.Size = new System.Drawing.Size(217, 20);
             this.Gain1.TabIndex = 11;
@@ -286,7 +270,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(19, 132);
+            this.textBox7.Location = new System.Drawing.Point(19, 136);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(347, 20);
@@ -295,7 +279,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(19, 113);
+            this.textBox6.Location = new System.Drawing.Point(19, 117);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(347, 20);
@@ -304,7 +288,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(19, 94);
+            this.textBox5.Location = new System.Drawing.Point(19, 98);
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(347, 20);
@@ -313,7 +297,7 @@
             // 
             // Pmax
             // 
-            this.Pmax.Location = new System.Drawing.Point(365, 56);
+            this.Pmax.Location = new System.Drawing.Point(365, 60);
             this.Pmax.Name = "Pmax";
             this.Pmax.Size = new System.Drawing.Size(217, 20);
             this.Pmax.TabIndex = 5;
@@ -321,7 +305,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(19, 56);
+            this.textBox4.Location = new System.Drawing.Point(19, 60);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(347, 20);
@@ -330,7 +314,7 @@
             // 
             // Pmin
             // 
-            this.Pmin.Location = new System.Drawing.Point(365, 37);
+            this.Pmin.Location = new System.Drawing.Point(365, 41);
             this.Pmin.Name = "Pmin";
             this.Pmin.Size = new System.Drawing.Size(217, 20);
             this.Pmin.TabIndex = 3;
@@ -339,7 +323,7 @@
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox3.Location = new System.Drawing.Point(19, 37);
+            this.textBox3.Location = new System.Drawing.Point(19, 41);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(347, 20);
@@ -348,7 +332,7 @@
             // 
             // Serial
             // 
-            this.Serial.Location = new System.Drawing.Point(365, 18);
+            this.Serial.Location = new System.Drawing.Point(365, 22);
             this.Serial.Name = "Serial";
             this.Serial.Size = new System.Drawing.Size(217, 20);
             this.Serial.TabIndex = 2;
@@ -357,7 +341,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(19, 18);
+            this.textBox1.Location = new System.Drawing.Point(19, 22);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(347, 20);
@@ -369,7 +353,7 @@
             this.groupBox4.BackColor = System.Drawing.SystemColors.Window;
             this.groupBox4.Controls.Add(this.rbRange2);
             this.groupBox4.Controls.Add(this.rbRange1);
-            this.groupBox4.Location = new System.Drawing.Point(365, 86);
+            this.groupBox4.Location = new System.Drawing.Point(365, 90);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(217, 30);
             this.groupBox4.TabIndex = 15;
@@ -400,56 +384,37 @@
             // 
             this.groupBox2.Controls.Add(this.HarPressPoint2);
             this.groupBox2.Controls.Add(this.textBox17);
-            this.groupBox2.Controls.Add(this.HarTempPoint2);
-            this.groupBox2.Controls.Add(this.textBox19);
             this.groupBox2.Controls.Add(this.HarPressPoint1);
             this.groupBox2.Controls.Add(this.textBox9);
             this.groupBox2.Controls.Add(this.HarTempPoint1);
             this.groupBox2.Controls.Add(this.textBox11);
-            this.groupBox2.Location = new System.Drawing.Point(210, 248);
+            this.groupBox2.Location = new System.Drawing.Point(210, 262);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(600, 107);
+            this.groupBox2.Size = new System.Drawing.Size(600, 102);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры характеризации";
             // 
             // HarPressPoint2
             // 
-            this.HarPressPoint2.Location = new System.Drawing.Point(364, 80);
+            this.HarPressPoint2.Location = new System.Drawing.Point(364, 65);
             this.HarPressPoint2.Name = "HarPressPoint2";
             this.HarPressPoint2.Size = new System.Drawing.Size(217, 20);
             this.HarPressPoint2.TabIndex = 21;
-            this.HarPressPoint2.Tag = "16";
+            this.HarPressPoint2.Tag = "15";
             // 
             // textBox17
             // 
-            this.textBox17.Location = new System.Drawing.Point(20, 80);
+            this.textBox17.Location = new System.Drawing.Point(20, 65);
             this.textBox17.Name = "textBox17";
             this.textBox17.ReadOnly = true;
             this.textBox17.Size = new System.Drawing.Size(347, 20);
             this.textBox17.TabIndex = 20;
             this.textBox17.Text = "Значения точек по давлению 2- го диапазона";
             // 
-            // HarTempPoint2
-            // 
-            this.HarTempPoint2.Location = new System.Drawing.Point(364, 61);
-            this.HarTempPoint2.Name = "HarTempPoint2";
-            this.HarTempPoint2.Size = new System.Drawing.Size(217, 20);
-            this.HarTempPoint2.TabIndex = 19;
-            this.HarTempPoint2.Tag = "15";
-            // 
-            // textBox19
-            // 
-            this.textBox19.Location = new System.Drawing.Point(20, 61);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.ReadOnly = true;
-            this.textBox19.Size = new System.Drawing.Size(347, 20);
-            this.textBox19.TabIndex = 18;
-            this.textBox19.Text = "Значения точек по температуре 2- го диапазона";
-            // 
             // HarPressPoint1
             // 
-            this.HarPressPoint1.Location = new System.Drawing.Point(364, 42);
+            this.HarPressPoint1.Location = new System.Drawing.Point(364, 46);
             this.HarPressPoint1.Name = "HarPressPoint1";
             this.HarPressPoint1.Size = new System.Drawing.Size(217, 20);
             this.HarPressPoint1.TabIndex = 17;
@@ -457,7 +422,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(20, 42);
+            this.textBox9.Location = new System.Drawing.Point(20, 46);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(347, 20);
@@ -466,7 +431,7 @@
             // 
             // HarTempPoint1
             // 
-            this.HarTempPoint1.Location = new System.Drawing.Point(364, 23);
+            this.HarTempPoint1.Location = new System.Drawing.Point(364, 27);
             this.HarTempPoint1.Name = "HarTempPoint1";
             this.HarTempPoint1.Size = new System.Drawing.Size(217, 20);
             this.HarTempPoint1.TabIndex = 15;
@@ -474,75 +439,56 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(20, 23);
+            this.textBox11.Location = new System.Drawing.Point(20, 27);
             this.textBox11.Name = "textBox11";
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(347, 20);
             this.textBox11.TabIndex = 14;
-            this.textBox11.Text = "Значения точек по температуре 1- го диапазона";
+            this.textBox11.Text = "Значения точек по температуре";
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.VerPressPoint2);
             this.groupBox3.Controls.Add(this.textBox18);
-            this.groupBox3.Controls.Add(this.VerTempPoint2);
-            this.groupBox3.Controls.Add(this.textBox21);
             this.groupBox3.Controls.Add(this.VerPressPoint1);
             this.groupBox3.Controls.Add(this.textBox10);
             this.groupBox3.Controls.Add(this.VerTempPoint1);
             this.groupBox3.Controls.Add(this.textBox13);
-            this.groupBox3.Location = new System.Drawing.Point(210, 360);
+            this.groupBox3.Location = new System.Drawing.Point(210, 371);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(600, 111);
+            this.groupBox3.Size = new System.Drawing.Size(600, 95);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Параметры верификации";
             // 
             // VerPressPoint2
             // 
-            this.VerPressPoint2.Location = new System.Drawing.Point(364, 79);
+            this.VerPressPoint2.Location = new System.Drawing.Point(364, 66);
             this.VerPressPoint2.Name = "VerPressPoint2";
             this.VerPressPoint2.Size = new System.Drawing.Size(217, 20);
             this.VerPressPoint2.TabIndex = 21;
-            this.VerPressPoint2.Tag = "20";
+            this.VerPressPoint2.Tag = "18";
             // 
             // textBox18
             // 
-            this.textBox18.Location = new System.Drawing.Point(20, 79);
+            this.textBox18.Location = new System.Drawing.Point(20, 66);
             this.textBox18.Name = "textBox18";
             this.textBox18.ReadOnly = true;
             this.textBox18.Size = new System.Drawing.Size(347, 20);
             this.textBox18.TabIndex = 20;
             this.textBox18.Text = "Значения точек по давлению 2- го диапазона";
             // 
-            // VerTempPoint2
-            // 
-            this.VerTempPoint2.Location = new System.Drawing.Point(364, 60);
-            this.VerTempPoint2.Name = "VerTempPoint2";
-            this.VerTempPoint2.Size = new System.Drawing.Size(217, 20);
-            this.VerTempPoint2.TabIndex = 19;
-            this.VerTempPoint2.Tag = "19";
-            // 
-            // textBox21
-            // 
-            this.textBox21.Location = new System.Drawing.Point(20, 60);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.ReadOnly = true;
-            this.textBox21.Size = new System.Drawing.Size(347, 20);
-            this.textBox21.TabIndex = 18;
-            this.textBox21.Text = "Значения точек по температуре 2- го диапазона";
-            // 
             // VerPressPoint1
             // 
-            this.VerPressPoint1.Location = new System.Drawing.Point(364, 42);
+            this.VerPressPoint1.Location = new System.Drawing.Point(364, 47);
             this.VerPressPoint1.Name = "VerPressPoint1";
             this.VerPressPoint1.Size = new System.Drawing.Size(217, 20);
             this.VerPressPoint1.TabIndex = 17;
-            this.VerPressPoint1.Tag = "18";
+            this.VerPressPoint1.Tag = "17";
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(20, 42);
+            this.textBox10.Location = new System.Drawing.Point(20, 47);
             this.textBox10.Name = "textBox10";
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(347, 20);
@@ -551,20 +497,20 @@
             // 
             // VerTempPoint1
             // 
-            this.VerTempPoint1.Location = new System.Drawing.Point(364, 23);
+            this.VerTempPoint1.Location = new System.Drawing.Point(364, 28);
             this.VerTempPoint1.Name = "VerTempPoint1";
             this.VerTempPoint1.Size = new System.Drawing.Size(217, 20);
             this.VerTempPoint1.TabIndex = 15;
-            this.VerTempPoint1.Tag = "17";
+            this.VerTempPoint1.Tag = "16";
             // 
             // textBox13
             // 
-            this.textBox13.Location = new System.Drawing.Point(20, 23);
+            this.textBox13.Location = new System.Drawing.Point(20, 28);
             this.textBox13.Name = "textBox13";
             this.textBox13.ReadOnly = true;
             this.textBox13.Size = new System.Drawing.Size(347, 20);
             this.textBox13.TabIndex = 14;
-            this.textBox13.Text = "Значения точек по температуре 1- го диапазона";
+            this.textBox13.Text = "Значения точек по температуре";
             // 
             // statusStrip1
             // 
@@ -592,8 +538,7 @@
             this.lvwModels.Location = new System.Drawing.Point(12, 54);
             this.lvwModels.MultiSelect = false;
             this.lvwModels.Name = "lvwModels";
-            this.lvwModels.Scrollable = false;
-            this.lvwModels.Size = new System.Drawing.Size(180, 271);
+            this.lvwModels.Size = new System.Drawing.Size(184, 271);
             this.lvwModels.TabIndex = 25;
             this.lvwModels.UseCompatibleStateImageBehavior = false;
             this.lvwModels.View = System.Windows.Forms.View.Details;
@@ -619,7 +564,6 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.listModels);
             this.Controls.Add(this.bSaveLines);
             this.Controls.Add(this.bDeleteLines);
             this.Controls.Add(this.bFlashSensor);
@@ -652,7 +596,6 @@
         private System.Windows.Forms.Button bFlashSensor;
         private System.Windows.Forms.Button bDeleteLines;
         private System.Windows.Forms.Button bSaveLines;
-        private System.Windows.Forms.ListBox listModels;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.TextBox textBox5;
@@ -690,12 +633,8 @@
         private System.Windows.Forms.TextBox Range1_Pmax;
         private System.Windows.Forms.TextBox HarPressPoint2;
         private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox HarTempPoint2;
-        private System.Windows.Forms.TextBox textBox19;
         private System.Windows.Forms.TextBox VerPressPoint2;
         private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox VerTempPoint2;
-        private System.Windows.Forms.TextBox textBox21;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ListView lvwModels;
