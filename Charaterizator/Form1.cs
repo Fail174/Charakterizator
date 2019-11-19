@@ -19,7 +19,9 @@ namespace Charaterizator
     public partial class MainForm : Form
     {
         const int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
-        const int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
+        const int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
+        const int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
+
 
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
@@ -31,9 +33,11 @@ namespace Charaterizator
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
-        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
-        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
-        
+//        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
+//        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
+        private СResultCH ResultCH = null;//результаты характеризации датчиков
+        private CResultCI ResultCI = null;//результаты калибровки тока датчиков
+
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
@@ -44,6 +48,8 @@ namespace Charaterizator
 
         private double SKOPressure = 1;//допуск по давлению
         private int WaitPressureTime = 10;//ожидание стабилизации давления в датчике, сек
+
+        private int SelectedLevel = 1;//выбранный номер уровеня характеризации
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -408,14 +414,39 @@ namespace Charaterizator
         //калибровка по току
         private void ReadSensorCurrent()
         {
-            Program.txtlog.WriteLineLog("Старт операции калибровки по току ... ", 0);
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = 0;   //конечный канал
 
-            pbCHProcess.Maximum = MaxChannalCount;
+            Program.txtlog.WriteLineLog("Старт операции калибровки по току ... ", 0);
+            //******** расчитываем номера каналов текущего выбранного уровня ********************************
+            int step = MaxChannalCount / MaxLevelCount;
+            switch (SelectedLevel)
+            {
+                case 1:
+                    StartNumber = 0;
+                    FinishNumber = step - 1;
+                    break;
+                case 2:
+                    StartNumber = step;
+                    FinishNumber = step * 2 - 1;
+                    break;
+                case 3:
+                    StartNumber = step * 2;
+                    FinishNumber = step * 3 - 1;
+                    break;
+                case 4:
+                    StartNumber = step * 3;
+                    FinishNumber = step * 4 - 1;
+                    break;
+            }
+            //************************************************************************************************
+
+            pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
-            for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                pbCHProcess.Value = i + 1;
+                pbCHProcess.Value = i - StartNumber;
 
                 Commutator.SetConnectors(i, 2);
 
@@ -455,17 +486,45 @@ namespace Charaterizator
             }
         }
 
+        //характеризация датчиков
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
+            int StartNumber=0;    //начальный канал
+            int FinishNumber=0;   //конечный канал
+
             Program.txtlog.WriteLineLog("Старт операции характеризации для выбранных датчиков ... ", 0);
 
-            pbCHProcess.Maximum = MaxChannalCount;
+            //******** расчитываем номера каналов текущего выбранного уровня ********************************
+            int step = MaxChannalCount / MaxLevelCount;
+            switch (SelectedLevel)
+            {
+                case 1:
+                    StartNumber = 0;
+                    FinishNumber = step - 1;
+                    break;
+                case 2:
+                    StartNumber = step;
+                    FinishNumber = step * 2 - 1;
+                    break;
+                case 3:
+                    StartNumber = step * 2;
+                    FinishNumber = step * 3 - 1;
+                    break;
+                case 4:
+                    StartNumber = step * 3;
+                    FinishNumber = step * 4 - 1;
+                    break;
+            }
+            //************************************************************************************************
+
+            pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
-            for (int i = 0; i < MaxChannalCount; i++)//перебор каналов
+
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                pbCHProcess.Value = i+1;
+                pbCHProcess.Value = i - StartNumber;
 
                 Commutator.SetConnectors(i, 2);
 
@@ -473,7 +532,7 @@ namespace Charaterizator
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        ResultCH.AddPoint(i, sensors.sensor.Temperature, sensors.sensor.Pressure, sensors.sensor.OutVoltage, sensors.sensor.Resistance, sensors.sensor.OutCurrent);
+                        ResultCH.AddPoint(i, ThermalCamera.point, Mensor._point, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
                         cbChannalCharakterizator.SelectedIndex = i;
                         UpDateCharakterizatorGrid(i);
                         Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
@@ -502,7 +561,6 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
-                dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutCurrent.ToString("f");
             }
         }
         //обновляем грид калибровки тока для датчика в канале i
@@ -546,6 +604,21 @@ namespace Charaterizator
 
                         // коммутируем
                         Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
+
+                        if (Multimetr.Connected)
+                        {
+                            double Current = Multimetr.ReadData();
+                            if (Current == 0)//чтение тока мультиметра 
+                            {
+                                //нет тока мультиметра, => датчик отсутсвует
+                                Program.txtlog.WriteLineLog("Датчик не обнаружен! Ток потребления: " + Current.ToString(), 1);
+                                continue;
+                            }
+                            else
+                            {
+                                Program.txtlog.WriteLineLog("Датчик обнаружен! Ток потребления: " + Current.ToString(), 0);
+                            }
+                        }
 
                         if (sensors.SeachSensor(i))//поиск датчиков
                         {
@@ -818,6 +891,7 @@ namespace Charaterizator
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             dataGridView1.Visible = (tabControl1.SelectedIndex == 0);
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
@@ -838,6 +912,31 @@ namespace Charaterizator
                 // ОКНО - ХАРАКТЕРИЗАЦИЯ    
                 case 1:  
                     {
+                        //закрываем предыдущие результаты сессии если были открыты
+                        if(ResultCH != null)
+                            ResultCH.CloseAll();
+                        if (ResultCI != null)
+                            ResultCI.CloseAll();
+
+                            //***************** создаем файлы результатов характеризации ***********************************
+                            int[] FN = new int[MaxChannalCount];
+                            for (int i = 0; i < MaxChannalCount; i++)
+                            {
+                                sensors.SelectSensor(i);
+                                FN[i] = (int)sensors.sensor.uni;
+                            }
+                            ResultCH = new СResultCH(MaxChannalCount, FN);//результаты характеризации датчиков
+                            //**********************************************************************************************
+
+                            //***************** создаем файлы результатов калибровки ***************************************
+                            for (int i = 0; i < MaxChannalCount; i++)
+                            {
+                                sensors.SelectSensor(i);
+                                FN[i] = (int)sensors.sensor.uni;
+                            }
+                            ResultCI = new CResultCI(MaxChannalCount, FN);//результаты характеризации датчиков
+                            //**********************************************************************************************
+
                         cbCHTermoCamera1.Items.Clear();
                         cbCHTermoCamera2.Items.Clear();
                         cbCHPressureSet1.Items.Clear();
@@ -1055,14 +1154,20 @@ namespace Charaterizator
 
         private void gbCHLevel1_Enter(object sender, EventArgs e)
         {
+            SelectedLevel = 1;
             gbCHLevel1.BackColor = Color.LightGreen;
             gbCHLevel2.BackColor = Color.Transparent;
+            gbCHLevel3.BackColor = Color.Transparent;
+            gbCHLevel4.BackColor = Color.Transparent;
         }
 
         private void gbCHLevel2_Enter(object sender, EventArgs e)
         {
+            SelectedLevel = 2;
             gbCHLevel2.BackColor = Color.LightGreen;
             gbCHLevel1.BackColor = Color.Transparent;
+            gbCHLevel3.BackColor = Color.Transparent;
+            gbCHLevel4.BackColor = Color.Transparent;
         }
 
         private void btnNextStep1_Click(object sender, EventArgs e)
@@ -1272,6 +1377,24 @@ namespace Charaterizator
                     btnCHStart.BackColor = Color.LightGreen;
                 }
             }
+        }
+
+        private void gbCHLevel3_Enter(object sender, EventArgs e)
+        {
+            SelectedLevel = 3;
+            gbCHLevel2.BackColor = Color.Transparent;
+            gbCHLevel1.BackColor = Color.Transparent;
+            gbCHLevel3.BackColor = Color.LightGreen;
+            gbCHLevel4.BackColor = Color.Transparent;
+        }
+
+        private void gbCHLevel4_Enter(object sender, EventArgs e)
+        {
+            SelectedLevel = 4;
+            gbCHLevel2.BackColor = Color.Transparent;
+            gbCHLevel1.BackColor = Color.Transparent;
+            gbCHLevel3.BackColor = Color.Transparent;
+            gbCHLevel4.BackColor = Color.LightGreen;
         }
     }
 }

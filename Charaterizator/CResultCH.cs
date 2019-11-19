@@ -11,89 +11,110 @@ namespace Charaterizator
     struct SPoint
     {
         public DateTime Datetime;
-        public float Temperature;
-        public float Pressure;
-        public float OutVoltage;
-        public float Resistance;
-        public float OutCurrent;
+        public double Temperature;
+        public double Pressure;
+        public double OutVoltage;
+        public double Resistance;
     }
 
     //структура канала с датчиком, включает множество точек измерения
     struct SChanal
     {
-        public List<SPoint> Points;
-//        public int PointsCount;   //количество точек измерения в канале
         public int ChannalNummber;//номер канала
-        public SChanal(int ChNum)
+        public int FactoryNumber;//заводской номер датчика
+        public List<SPoint> Points;
+        public SChanal(int ChNum, int FN)
         {
             ChannalNummber = ChNum;
+            FactoryNumber = FN;
             Points = new List<SPoint>();
-            //PointsCount = 0;
         }
     }
 
     //Класс результатов измерения параметров датчика при характеризации
     class СResultCH
     {
-        StreamWriter FileStream = null;//поток записи
+        //StreamWriter[] FileStream;//поток записи
+        public List<StreamWriter> FileStream = new List<StreamWriter>();
         public List<SChanal> Channal = new List<SChanal>();//список обнаруженных датчиков
-        public СResultCH(int ChannalCount)
+                                                           
+        //конструктор класса
+        //вход: число каналов и заводской номер датчика в каждом канале
+        public СResultCH(int ChannalCount, int[] FN)
         {
+            StreamWriter fs;
             for (int i = 0; i < ChannalCount; i++)
             {
-                SChanal ch = new SChanal(i);
+                SChanal ch = new SChanal(i+1, FN[i]);
                 Channal.Add(ch);
+                string filename = string.Format("CH/CH_Result{0}.txt",ch.ChannalNummber);
+                fs = File.CreateText(filename);//создаем файл канала
+                fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
+                fs.WriteLine(   "Дата          |" +
+                                "Температура   |" +
+                                "Давление      |" +
+                                "Напряжение    |" +
+                                "Сопротивление |");
+                fs.Flush();
+                FileStream.Add(fs);
             }
-            FileStream = File.CreateText("CH_Result.txt");//создаем файл сессии
-            FileStream.WriteLine("№ Канала" + " |" +
-                            "Дата          |" +
-                            "Температура   |" +
-                            "Давление      |" +
-                            "Напряжение    |" +
-                            "Сопротивление |" +
-                            "Ток           |");
+        }
+
+        public void CloseAll()
+        {
+            for (int i = 0; i < FileStream.Count; i++)
+            {
+                FileStream[i].Close();
+            }
+            FileStream.Clear();
         }
 
         ~СResultCH()
         {
-            //FileStream.Close();
+            
         }
 
-        public void AddPoint(int ch, float Temp, float Press, float U, float R, float I)
+        public void AddPoint(int ch, double Temp, double Press, double U, double R)
         {
-            SPoint point = new SPoint();
-            point.Datetime = DateTime.Now;
-            point.Temperature = Temp;
-            point.Pressure = Press;
-            point.OutVoltage = U;
-            point.Resistance = R;
-            point.OutCurrent = I;
-
-            Channal[ch].Points.Add(point);
-            FileStream.WriteLine(GetStringFromPoint(ch+1, point));
-            FileStream.Flush();
+            try
+            {
+                SPoint point = new SPoint
+                {
+                    Datetime = DateTime.Now,
+                    Temperature = Temp,
+                    Pressure = Press,
+                    OutVoltage = U,
+                    Resistance = R,
+                };
+                Channal[ch].Points.Add(point);
+//                FileStream[ch].
+                FileStream[ch].WriteLine(GetStringFromPoint(point));
+                FileStream[ch].Flush();
+            }
+            catch
+            {
+                Program.txtlog.WriteLineLog(string.Format("Ошибка записи в файл результатов характеризации (канал {0})", ch),1);
+            }
         }
 
-        private string GetStringFromPoint(int i, SPoint point)
+        //возвращает строку результатов характеризации в точке
+        private string GetStringFromPoint(SPoint point)
         {
-            return  "Канал " + i.ToString() + "|" +
-                point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("f") + "|" +
-                point.Pressure.ToString("f") + "|" +
-                point.OutVoltage.ToString("f") + "|" +
-                point.Resistance.ToString("f") + "|" +
-                point.OutCurrent.ToString("f") + "|";
+            return  point.Datetime.ToString() + "|" +
+                point.Temperature.ToString("f14") + "|" +
+                point.Pressure.ToString("f14") + "|" +
+                point.OutVoltage.ToString("f14") + "|" +
+                point.Resistance.ToString("f14") + "|";
         }
         //Сохранение в текстовый файл
         public void SaveToFile(string FileName)
         {
-            StreamWriter writer = File.CreateText(FileName);//создаем файл сессии
+          /*  StreamWriter writer = File.CreateText(FileName);//создаем файл сессии
             if (writer != null)
             {
                 try
                 {
-                    writer.WriteLine("№ Канала" + " |" +
-                                    "Дата          |" +
+                    writer.WriteLine("Дата          |" +
                                     "Температура   |" +
                                     "Давление      |" +
                                     "Напряжение    |" +
@@ -101,7 +122,7 @@ namespace Charaterizator
                                     "Ток           |");
                     for (int i = 0; i < Channal.Count; i++)//перебор каналов
                     {
-                        SChanal ch = new SChanal(i);
+                        SChanal ch = Channal[i];
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             writer.WriteLine(GetStringFromPoint(i+1, ch.Points[j]));
@@ -113,7 +134,7 @@ namespace Charaterizator
                     writer.Close();
                     writer = null;
                 }
-            }
+            }*/
         }
     }
 }

@@ -14,10 +14,9 @@ namespace Charaterizator
 {
     public struct SensorID
     {
-//        const int COEFF_COUNT = 24;//число коэффициентов
-
+        //        const int COEFF_COUNT = 24;//число коэффициентов
         public int Channal;    //Номер канала коммутатора
-        public int Group;      //Номер группы (1 или 2)
+        public int Group;      //Номер группы (1, 2, 3, 4)
 
         public byte Addr;      //адрес устройства
 
@@ -193,6 +192,8 @@ namespace Charaterizator
  
     public class ClassEni100
     {
+        const int WAIT_TIMEOUT = 300;//таймаут ожидания ответа от датчика
+
         static SerialPort port = null;
         static FastFifo readbuf = new FastFifo();
         static bool SensorConnect = false;
@@ -294,8 +295,8 @@ namespace Charaterizator
                                     data[6] = (byte)(0x80 | i);
                                     data[data.Length - 1] = GetCRC(data, 5);
                                     port.Write(data, 0, data.Length);
-                                    WaitSensorAnswer(20, 300);
-                                    if (ParseReadBuffer(300)>=0)//выходим при обнаружении первого попавшегося датчика
+                                    WaitSensorAnswer(20, WAIT_TIMEOUT);
+                                    if (ParseReadBuffer(WAIT_TIMEOUT)>=0)//выходим при обнаружении первого попавшегося датчика
                                     {
                                         break;
                                     }
@@ -304,10 +305,10 @@ namespace Charaterizator
                 SelSensorChannal = ch;
                 data[data.Length - 1] = GetCRC(data, 5);
                 port.Write(data, 0, data.Length);
-                WaitSensorAnswer(20, 300);
+                WaitSensorAnswer(20, WAIT_TIMEOUT);
 //                for (int i = 0; i < 3; i++)
  //               {
-                    if (ParseReadBuffer(300) >= 0)
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                     {
                         return true;
                     }
@@ -331,8 +332,8 @@ namespace Charaterizator
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 10);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -350,8 +351,8 @@ namespace Charaterizator
 //                data[9] = (byte)(data[9] + sensor.Addr);
 
                 port.Write(data, 0, 10);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -367,8 +368,8 @@ namespace Charaterizator
                 data[sensor.pre+1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 10);
-                WaitSensorAnswer(20, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(20, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -384,8 +385,8 @@ namespace Charaterizator
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, data.Length);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -400,8 +401,8 @@ namespace Charaterizator
                 data[data.Length-1] = GetCRC(data, sensor.pre);//CRC
 
                 port.Write(data, 0, 16);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -442,8 +443,8 @@ namespace Charaterizator
 
                 port.Write(data, 0, data.Length);
 
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -466,8 +467,8 @@ namespace Charaterizator
                 data[i + 6] = (byte)(sensor.SerialNumber & 0xFF);
                 data[12] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 13);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -493,8 +494,8 @@ namespace Charaterizator
 
                 data[14] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 15);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -514,8 +515,8 @@ namespace Charaterizator
                 data[i + 3] = 0x00;
                 data[9] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 10);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }
@@ -533,8 +534,8 @@ namespace Charaterizator
                     data[data.Length - 2] = (byte)i;
                     data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(20, 300);
-                    ParseReadBuffer(300);
+                    WaitSensorAnswer(20, WAIT_TIMEOUT);
+                    ParseReadBuffer(WAIT_TIMEOUT);
                 }
                 return true;
             }
@@ -557,8 +558,8 @@ namespace Charaterizator
                 data[i + 4] = (byte)((sensor.CurrentExit) & 0xFF);
                 data[10] = GetCRC(data, sensor.pre);//CRC
                 port.Write(data, 0, 11);
-                WaitSensorAnswer(10, 300);
-                return ParseReadBuffer(300) >= 0;
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                return ParseReadBuffer(WAIT_TIMEOUT) >= 0;
             }
             return false;
         }

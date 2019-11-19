@@ -10,6 +10,7 @@ namespace Charaterizator
     class CThermalCamera
     {
         public bool Connected;
+        public float point = 0;
         private SerialPort Port;
 
         public CThermalCamera()
@@ -88,6 +89,12 @@ namespace Charaterizator
             {
                 return -1;
             }
+        }
+
+
+        public void WriteData(float val)
+        {
+            point = val;//уставка
         }
 
     }
