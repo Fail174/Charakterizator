@@ -16,10 +16,20 @@ namespace Charaterizator
         public FormAddNewSensorsDB()
         {
             InitializeComponent();
+            string[] split = FormSensorsDB.SensNameList.Split('$');
+            for (int j = 0; j < split.Length - 1; j++)
+            {
+                cbSetSensName.Items.Add(split[j]);
+            }
+            if (cbSetSensName.Items.Count > 0)
+            {
+                cbSetSensName.SelectedIndex = 0;
+            }
+
         }
 
 
-     public void bOK_Click(object sender, EventArgs e)
+        public void bOK_Click(object sender, EventArgs e)
      {
         this.DialogResult = DialogResult.OK;  
      }
@@ -27,7 +37,7 @@ namespace Charaterizator
 
      public string newTypeSens
      {
-         get { return tbTypeSens.Text; }
+         get { return cbSetSensName.Text; }
      }
      public string newModelSens
      {

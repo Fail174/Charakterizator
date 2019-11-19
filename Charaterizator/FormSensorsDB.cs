@@ -21,6 +21,7 @@ namespace Charaterizator
         public OleDbConnection _сonnection;       
         public static string newTypeSens;
         public static string newModelSens;
+        public static string SensNameList;
         public ClassEni100 eni100=null;
 
         public FormSensorsDB()
@@ -219,10 +220,42 @@ namespace Charaterizator
 
 
         //-----------------------------------------------------------------------------------------------
+        private string FormSensNameList(object sender, EventArgs e)
+        {
+            string str = null; 
+            // получаем названия датчиков из БД и сохраняем их в SensNameList           
+            string query = "SELECT DISTINCT Type FROM TSensors ORDER BY Type";
+            // создаем объект OleDbCommand для выполнения запроса к БД MS Access
+            OleDbCommand command = new OleDbCommand(query, _сonnection);
+            try
+            { // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    str = str + reader[0].ToString() + "$";
+                }
+            }
+            catch
+            {
 
-        // Обработчик добавить запись в БД
+            }
+
+            finally
+            {
+                reader.Close();               
+            }
+            return str;
+
+        }
+
+            //-----------------------------------------------------------------------------------------------
+
+            // Обработчик добавить запись в БД
         private void bAddLines_Click(object sender, EventArgs e)
         {
+            // получаем названия датчиков из БД
+            SensNameList = FormSensNameList(null, null);
+
             FormAddNewSensorsDB newForm = new FormAddNewSensorsDB();
             //newForm.ShowDialog();
 
