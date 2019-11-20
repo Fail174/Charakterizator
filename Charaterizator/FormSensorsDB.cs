@@ -522,6 +522,7 @@ namespace Charaterizator
         {
             if ((eni100 != null)&&(eni100.IsConnect()))
             {
+                Program.txtlog.WriteLineLog("Старт записи индивидуальных параметров в датчик...", 0);
                 eni100.sensor.SerialNumber = Convert.ToUInt32(Serial.Text);
                 eni100.sensor.DownLevel = Convert.ToSingle(Pmin.Text);
                 eni100.sensor.UpLevel = Convert.ToSingle(Pmax.Text);
@@ -545,11 +546,12 @@ namespace Charaterizator
                 eni100.C241WritePressureModel();//модель ПД
 
                 MessageBox.Show("Запись индивидуальных параметров в датчик успешно закончена. ", "Завершение операции", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                Program.txtlog.WriteLineLog("Запись индивидуальных параметров в датчик успешно закончена.", 0);
             }
             else
             {
                 MessageBox.Show("Нет подключения к датчику!","Подключение к датчику. Операция прервана",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                Program.txtlog.WriteLineLog("Нет подключения к датчику!", 1);
             }
         }
     }

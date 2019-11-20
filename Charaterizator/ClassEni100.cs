@@ -192,7 +192,7 @@ namespace Charaterizator
  
     public class ClassEni100
     {
-        const int WAIT_TIMEOUT = 500;//таймаут ожидания ответа от датчика
+        const int WAIT_TIMEOUT = 200;//таймаут ожидания ответа от датчика
         const int WRITE_COUNT = 1;//число попыток записи команд в датчик
 
         static SerialPort port = null;
@@ -468,6 +468,68 @@ namespace Charaterizator
             return false;
         }
 
+        //Коррекция нуля ЦАП (команда 45).
+        public bool С45WriteCurrent4mA(float Current)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                Thread.Sleep(WAIT_TIMEOUT);
+                int i;
+                byte[] data = new byte[sensor.pre + 9];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x2D;
+                data[i + 3] = 0x04;
+                UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(Current), 0);
+                data[i + 4] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 5] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 7] = (byte)(tmp & 0xFF);
+                data[i + 8] = GetCRC(data, sensor.pre);//CRC
+                port.Write(data, 0, data.Length);
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        //Коррекция коэффициента усиления ЦАП (команда 46)
+        public bool С46WriteCurrent20mA(float Current)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                Thread.Sleep(WAIT_TIMEOUT);
+                int i;
+                byte[] data = new byte[sensor.pre+9];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x2D;
+                data[i + 3] = 0x04;
+                UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(Current), 0);
+                data[i + 4] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 5] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 7] = (byte)(tmp & 0xFF);
+                data[i + 8] = GetCRC(data, sensor.pre);//CRC
+                port.Write(data, 0, data.Length);
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         //Запись серийного номера ПД(команда 49).
         public bool WriteSerialNumberC49()
         {
@@ -725,8 +787,10 @@ namespace Charaterizator
                                 case 0x2C://Установить единицы измерения первичной переменной  (команда 44)
                                     break;
                                 case 0x2D://Коррекция нуля ЦАП (команда 45)
+                                    ReadCommand45(Adress, indata);
                                     break;
                                 case 0x2E://Коррекция коэффициента усиления ЦАП (команда 46)
+                                    ReadCommand46(Adress, indata);
                                     break;
                                 case 0x2F://Установка функции преобразования первичной переменной (команда 47)
                                     break;
@@ -857,7 +921,8 @@ namespace Charaterizator
             }
                 catch (TimeoutException)
                 {
-                    Console.WriteLine("Превышен таймаут на чтение данных с датчиков!\n");
+//                    Console.WriteLine("Превышен таймаут на чтение данных с датчиков!\n");
+                    Program.txtlog.WriteLineLog("HART:Ошибка чтения данных с датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
                 }
             }
         }
@@ -1044,6 +1109,26 @@ namespace Charaterizator
 
             tmp = (indata[14] << 24) | (indata[15] << 16) | (indata[16] << 8) | indata[17];
             sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+        }
+
+        //Коррекция нуля ЦАП (команда 45)
+        private void ReadCommand45(int addr, byte[] indata)
+        {
+            int tmp;
+            float Current;
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+            Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+        }
+
+        //Коррекция коэффициента усиления ЦАП (команда 46)
+        private void ReadCommand46(int addr, byte[] indata)
+        {
+            int tmp;
+            float Current;
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+            Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
         }
 
         //Ответ на команду запись серийного номера ПД (команда 49)
