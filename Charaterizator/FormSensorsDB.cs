@@ -507,6 +507,7 @@ namespace Charaterizator
                 finally
                 {
                     // закрываем OleDbDataReader
+                    if (reader!=null)
                     reader.Close();
                 }        
             }
@@ -522,16 +523,29 @@ namespace Charaterizator
             if ((eni100 != null)&&(eni100.IsConnect()))
             {
                 eni100.sensor.SerialNumber = Convert.ToUInt32(Serial.Text);
-                eni100.WriteSerialNumberC49();//серийный номер
-
                 eni100.sensor.DownLevel = Convert.ToSingle(Pmin.Text);
                 eni100.sensor.UpLevel = Convert.ToSingle(Pmax.Text);
                 eni100.sensor.MinLevel = Convert.ToSingle(DeltaRangeMin.Text);
-                eni100.UpDownWriteC249();//дипазон 
+                char[] str = lvwModels.SelectedItems[0].SubItems[1].Text.ToCharArray(); ;
+                for (int i = 0; i < eni100.sensor.PressureModel.Length; i++)
+                {
+                    if (str.Length > i)
+                    {
+                        eni100.sensor.PressureModel[i] = str[i];
+                    }
+                    else
+                    {
+                        eni100.sensor.PressureModel[i] = ' ';
+                    }
+                }
 
-                string str = lvwModels.SelectedItems[0].SubItems[1].Text;
-                eni100.sensor.PressureModel = str.ToCharArray();
+                eni100.EnterServis();
+                eni100.WriteSerialNumberC49();//серийный номер
+                eni100.UpDownWriteC249();//дипазон 
                 eni100.C241WritePressureModel();//модель ПД
+
+                MessageBox.Show("Запись индивидуальных параметров в датчик успешно закончена. ", "Завершение операции", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             else
             {

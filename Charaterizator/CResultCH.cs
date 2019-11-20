@@ -50,7 +50,7 @@ namespace Charaterizator
                 string filename = string.Format("CH/CH_Result{0}.txt",ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
-                fs.WriteLine(   "Дата          |" +
+                fs.WriteLine(   "Дата               |" +
                                 "Температура   |" +
                                 "Давление      |" +
                                 "Напряжение    |" +
@@ -101,10 +101,10 @@ namespace Charaterizator
         private string GetStringFromPoint(SPoint point)
         {
             return  point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("f14") + "|" +
-                point.Pressure.ToString("f14") + "|" +
-                point.OutVoltage.ToString("f14") + "|" +
-                point.Resistance.ToString("f14") + "|";
+                point.Temperature.ToString("f11") + "|" +
+                point.Pressure.ToString("f11") + "|" +
+                point.OutVoltage.ToString("f11") + "|" +
+                point.Resistance.ToString("f11") + "|";
         }
         //Сохранение в текстовый файл
         public void SaveToFile(string FileName)

@@ -11,10 +11,9 @@ namespace Charaterizator
     struct SPointCI
     {
         public DateTime Datetime;
-        public float Temperature;
-        public float Pressure;
-        public float I4;
-        public float I20;
+        public double Temperature;
+        public double I4;
+        public double I20;
     }
     
     //структура канала с датчиком, включает множество точек измерения тока
@@ -46,7 +45,7 @@ namespace Charaterizator
                 string filename = string.Format("CI/CI_Result{0}.txt", ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты калибровки датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
-                fs.WriteLine("Дата          |" +
+                fs.WriteLine("Дата               |" +
                             "Температура   |" +
                             "Ток 4мА       |" +
                             "Ток 20мА      |");
@@ -63,12 +62,11 @@ namespace Charaterizator
             FileStream.Clear();
         }
 
-        public void AddPoint(int ch, float Temp, float Press, float I1, float I2)
+        public void AddPoint(int ch, double Temp, double I1, double I2)
         {
             SPointCI point = new SPointCI();
             point.Datetime = DateTime.Now;
             point.Temperature = Temp;
-            point.Pressure = Press;
             point.I4 = I1;
             point.I20 = I2;
 
@@ -80,10 +78,9 @@ namespace Charaterizator
         private string GetStringFromPoint(SPointCI point)
         {
             return point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("f") + "|" +
-//                point.Pressure.ToString("f") + "|" +
-                point.I4.ToString("f") + "|" +
-                point.I20.ToString("f") + "|";
+                point.Temperature.ToString("f11") + "|" +
+                point.I4.ToString("f11") + "|" +
+                point.I20.ToString("f11") + "|";
         }
         //Сохранение в текстовый файл
         public void SaveToFile(string FileName)

@@ -476,7 +476,8 @@ namespace Charaterizator
                         Program.txtlog.WriteLineLog("Ток 20мА не установлен!", 1);
                     }
                     cbChannalCharakterizator.SelectedIndex = i;
-                    ResultCI.AddPoint(i, sensors.sensor.Temperature, sensors.sensor.Pressure, I4, I20);
+                    ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
+
                     UpdateCurrentGrid(i);
                 }
                 else
@@ -532,7 +533,7 @@ namespace Charaterizator
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        ResultCH.AddPoint(i, ThermalCamera.point, Mensor._point, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                        ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
                         cbChannalCharakterizator.SelectedIndex = i;
                         UpDateCharakterizatorGrid(i);
                         Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
@@ -572,7 +573,7 @@ namespace Charaterizator
                 dataGridView4.Rows.Add("", "", "", "", "");
                 dataGridView4.Rows[j].Cells[0].Value = ResultCI.Channal[i].Points[j].Datetime.ToString();                 //
                 dataGridView4.Rows[j].Cells[1].Value = ResultCI.Channal[i].Points[j].Temperature.ToString();   //
-                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].Pressure.ToString("f");   //
+//                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I4.ToString("f");
                 dataGridView4.Rows[j].Cells[4].Value = ResultCI.Channal[i].Points[j].I20.ToString("f");
             }
@@ -600,6 +601,9 @@ namespace Charaterizator
                 {
                     for (int i = 0; i < MaxChannalCount; i++)
                     {
+                        if (!Convert.ToBoolean(dataGridView1.Rows[i].Cells[3].Value))   //Добавлен в список?
+                            continue;
+
                         Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0} ...", i+1), 0);
 
                         // коммутируем
@@ -622,13 +626,14 @@ namespace Charaterizator
 
                         if (sensors.SeachSensor(i))//поиск датчиков
                         {
-                            Thread.Sleep(100);
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                                 sensors.TegRead();          //читаем инфомацию о датчике
                                 sensors.SensorRead();       //чтение данных с датчика
                                 sensors.C140ReadPressureModel();//читаем модель датчика давления
+                                Thread.Sleep(500);          
+                                sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                             }
                             else
@@ -666,8 +671,21 @@ namespace Charaterizator
             {
                 try
                 {
-                    btnSensorSeach.Enabled = false;
-                    SeachConnectedSensor();
+                    int i;
+                    for (i = 0; i < MaxChannalCount; i++)
+                    {
+                        if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[3].Value))   //Добавлен в список?
+                            break;
+                    }
+                    if (i < MaxChannalCount)
+                    {
+                        btnSensorSeach.Enabled = false;
+                        SeachConnectedSensor();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не выбраны каналы для поиска датчиков","Операция прервана",MessageBoxButtons.OK);
+                    }
                 }
                 finally
                 {
@@ -918,25 +936,23 @@ namespace Charaterizator
                         if (ResultCI != null)
                             ResultCI.CloseAll();
 
-                            //***************** создаем файлы результатов характеризации ***********************************
-                            int[] FN = new int[MaxChannalCount];
-                            for (int i = 0; i < MaxChannalCount; i++)
+                        //***************** создаем файлы результатов характеризации ***********************************
+                        int[] FN = new int[MaxChannalCount];
+                        for (int i = 0; i < MaxChannalCount; i++)
+                        {
+                            if (sensors.SelectSensor(i))
                             {
-                                sensors.SelectSensor(i);
                                 FN[i] = (int)sensors.sensor.uni;
                             }
-                            ResultCH = new СResultCH(MaxChannalCount, FN);//результаты характеризации датчиков
-                            //**********************************************************************************************
-
-                            //***************** создаем файлы результатов калибровки ***************************************
-                            for (int i = 0; i < MaxChannalCount; i++)
+                            else
                             {
-                                //sensors.SelectSensor(i);
-                                FN[i] = (int)sensors.sensorList[i].uni;
-                                //FN[i] = (int)sensors.sensor.uni;
+                                FN[i] = 0;
                             }
-                            ResultCI = new CResultCI(MaxChannalCount, FN);//результаты характеризации датчиков
-                            //**********************************************************************************************
+                        }
+                        ResultCH = new СResultCH(MaxChannalCount, FN);//результаты характеризации датчиков
+                        //***************** создаем файлы результатов калибровки ***************************************
+                        ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
+                        //**********************************************************************************************
 
                         cbCHTermoCamera1.Items.Clear();
                         cbCHTermoCamera2.Items.Clear();
@@ -946,7 +962,8 @@ namespace Charaterizator
                         // Проверка
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
-                            SelectModel = new String(sensors.sensorList[0].PressureModel);
+                            if (sensors.sensorList.Count>0)
+                                SelectModel = new String(sensors.sensorList[0].PressureModel);
                             // Занесение данных из ДБ в combobox
                             string SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
                             if (SensParam != null)
@@ -1397,6 +1414,20 @@ namespace Charaterizator
             gbCHLevel1.BackColor = Color.Transparent;
             gbCHLevel3.BackColor = Color.Transparent;
             gbCHLevel4.BackColor = Color.LightGreen;
+        }
+
+        private void bThermalCameraSet_Click(object sender, EventArgs e)
+        {
+            if (ThermalCamera.Connected)
+            {
+                double Point = (double)numTermoCameraPoint.Value;  // получаем заданное значение уставки
+                ThermalCamera.WriteData(Point);
+                Program.txtlog.WriteLineLog(string.Format("Задача выполнена. В термокамере установлена температура {0} градусов.", Point), 1);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Нет Связи. Термокамера не подключена", 1);
+            }
         }
     }
 }

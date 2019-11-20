@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +64,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tbDateTime = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bThermalCameraSet = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.numTermoCameraPoint = new System.Windows.Forms.NumericUpDown();
@@ -262,7 +262,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 983);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1472, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -274,7 +274,7 @@
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1472, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -486,7 +486,7 @@
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1163, 24);
+            this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(309, 959);
             this.panel1.TabIndex = 6;
@@ -506,7 +506,7 @@
             // groupBox4
             // 
             this.groupBox4.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.groupBox4.Controls.Add(this.button1);
+            this.groupBox4.Controls.Add(this.bThermalCameraSet);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.numTermoCameraPoint);
@@ -521,15 +521,16 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Термокамера";
             // 
-            // button1
+            // bThermalCameraSet
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(212, 137);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(81, 49);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Задача";
-            this.button1.UseVisualStyleBackColor = true;
+            this.bThermalCameraSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bThermalCameraSet.Location = new System.Drawing.Point(212, 137);
+            this.bThermalCameraSet.Name = "bThermalCameraSet";
+            this.bThermalCameraSet.Size = new System.Drawing.Size(81, 49);
+            this.bThermalCameraSet.TabIndex = 12;
+            this.bThermalCameraSet.Text = "Задача";
+            this.bThermalCameraSet.UseVisualStyleBackColor = true;
+            this.bThermalCameraSet.Click += new System.EventHandler(this.bThermalCameraSet_Click);
             // 
             // label10
             // 
@@ -925,7 +926,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 801);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1163, 182);
+            this.panel2.Size = new System.Drawing.Size(975, 182);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -937,7 +938,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(576, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(580, 170);
+            this.richTextBox1.Size = new System.Drawing.Size(392, 170);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
@@ -949,7 +950,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(751, 169);
+            this.rtbConsole.Size = new System.Drawing.Size(563, 169);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -963,7 +964,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1163, 777);
+            this.panel3.Size = new System.Drawing.Size(975, 777);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView4
@@ -979,7 +980,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 529);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(886, 248);
+            this.dataGridView4.Size = new System.Drawing.Size(698, 248);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1037,7 +1038,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 0);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(886, 777);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 777);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1103,7 +1104,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(886, 777);
+            this.dataGridView2.Size = new System.Drawing.Size(698, 777);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             // 
@@ -1174,7 +1175,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(277, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(886, 777);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 777);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1220,10 +1221,10 @@
             // 
             // сState
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle7.NullValue = false;
-            this.сState.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.NullValue = false;
+            this.сState.DefaultCellStyle = dataGridViewCellStyle3;
             this.сState.DividerWidth = 1;
             this.сState.FalseValue = "false";
             this.сState.HeaderText = "Подключение";
@@ -1245,10 +1246,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle8.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle4;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -2238,7 +2239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1472, 1005);
+            this.ClientSize = new System.Drawing.Size(1284, 1005);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -2366,7 +2367,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer MainTimer;
         private System.Windows.Forms.RichTextBox rtbConsole;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bThermalCameraSet;
         public System.Windows.Forms.TextBox tbNumCH;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView3;
