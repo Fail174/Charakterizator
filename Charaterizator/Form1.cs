@@ -931,8 +931,9 @@ namespace Charaterizator
                             //***************** создаем файлы результатов калибровки ***************************************
                             for (int i = 0; i < MaxChannalCount; i++)
                             {
-                                sensors.SelectSensor(i);
-                                FN[i] = (int)sensors.sensor.uni;
+                                //sensors.SelectSensor(i);
+                                FN[i] = (int)sensors.sensorList[i].uni;
+                                //FN[i] = (int)sensors.sensor.uni;
                             }
                             ResultCI = new CResultCI(MaxChannalCount, FN);//результаты характеризации датчиков
                             //**********************************************************************************************
@@ -945,6 +946,7 @@ namespace Charaterizator
                         // Проверка
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
+                            SelectModel = new String(sensors.sensorList[0].PressureModel);
                             // Занесение данных из ДБ в combobox
                             string SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
                             if (SensParam != null)
