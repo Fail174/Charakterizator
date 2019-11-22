@@ -42,6 +42,7 @@ namespace Charaterizator
             {
                 SChanalCI ch = new SChanalCI(i + 1, FN[i]);
                 Channal.Add(ch);
+                Directory.CreateDirectory("CI");
                 string filename = string.Format("CI/CI_Result{0}.txt", ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты калибровки датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));

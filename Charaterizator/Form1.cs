@@ -37,6 +37,8 @@ namespace Charaterizator
 //        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
         private СResultCH ResultCH = null;//результаты характеризации датчиков
         private CResultCI ResultCI = null;//результаты калибровки тока датчиков
+        private CResultVR ResultVR = null;//результаты калибровки тока датчиков
+        
 
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
@@ -50,6 +52,9 @@ namespace Charaterizator
         private int WaitPressureTime = 10;//ожидание стабилизации давления в датчике, сек
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
+
+        double PressureStart = 0;//верификация
+        double PressureEnd = 0;//верификация
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -100,6 +105,7 @@ namespace Charaterizator
 //                dataGridView3.Rows.Add("", "", "", "", "");
 
                 cbChannalCharakterizator.Items.Add("Канал " + (i+1).ToString());
+                cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
             }
 
             MainTimer.Enabled = true;
@@ -550,6 +556,69 @@ namespace Charaterizator
             }
         }
 
+        //верификация датчиков
+        //чтение всех измеренных параметров с текущего датчика давления
+        private void ReadSensorPressure(double PressureStart, double PressureEnd)
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = 0;   //конечный канал
+
+//            Program.txtlog.WriteLineLog("Старт операции верификации для выбранных датчиков ... ", 0);
+
+            //******** расчитываем номера каналов текущего выбранного уровня ********************************
+            int step = MaxChannalCount / MaxLevelCount;
+            switch (SelectedLevel)
+            {
+                case 1:
+                    StartNumber = 0;
+                    FinishNumber = step - 1;
+                    break;
+                case 2:
+                    StartNumber = step;
+                    FinishNumber = step * 2 - 1;
+                    break;
+                case 3:
+                    StartNumber = step * 2;
+                    FinishNumber = step * 3 - 1;
+                    break;
+                case 4:
+                    StartNumber = step * 3;
+                    FinishNumber = step * 4 - 1;
+                    break;
+            }
+            //************************************************************************************************
+
+            pbVRProcess.Maximum = FinishNumber - StartNumber;
+            pbVRProcess.Minimum = 0;
+            pbVRProcess.Value = 0;
+
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                pbVRProcess.Value = i - StartNumber;
+
+                Commutator.SetConnectors(i, 2);
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.SensorValueReadC03())
+                    {
+                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, PressureEnd, PressureStart, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Value);
+                        UpDateVerificationGrid(i);
+                        Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Параметры датчика не прочитаны!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+            }
+        }
+
+
         //обновляем грид результатов характеризации для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
@@ -564,6 +633,23 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
             }
         }
+
+        //обновляем грид результатов верификации для датчика в канале i
+        private void UpDateVerificationGrid(int i)
+        {
+            dataGridView3.Rows.Clear();
+            for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
+            {
+                dataGridView3.Rows.Add("", "", "", "", "", "");
+                dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString();      //
+                dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].VPI.ToString("f") +"..."+ ResultVR.Channal[i].Points[j].NPI.ToString("f");   //
+                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f");
+                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f");
+                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f");
+            }
+        }
+
         //обновляем грид калибровки тока для датчика в канале i
         private void UpdateCurrentGrid(int i)
         {
@@ -1015,6 +1101,25 @@ namespace Charaterizator
                 // ОКНО - ВЕРИФИКАЦИЯ
                 case 2:
                     {
+                        //закрываем предыдущие результаты сессии если были открыты
+                        if (ResultVR != null)
+                            ResultVR.CloseAll();
+                        //***************** создаем файлы результатов верификации ***********************************
+                        int[] FN = new int[MaxChannalCount];
+                        for (int i = 0; i < MaxChannalCount; i++)
+                        {
+                            if (sensors.SelectSensor(i))
+                            {
+                                FN[i] = (int)sensors.sensor.uni;
+                            }
+                            else
+                            {
+                                FN[i] = 0;
+                            }
+                        }
+                        ResultVR = new CResultVR(MaxChannalCount, FN);//результаты калибровки датчиков
+                        //**********************************************************************************************
+
                         // Занесение данных из ДБ в combobox                         
                         // Проверка
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
@@ -1424,6 +1529,68 @@ namespace Charaterizator
                 }
 
             }
+        }
+
+        private void btnVRSet1_Click(object sender, EventArgs e)
+        {
+            switch ((sender as Button).Tag)
+            {
+                case "1":
+                    PressureStart = (double)VerRange1_Pmin.Value;
+                    PressureEnd = (double)VerRange1_Pmax.Value;
+                    break;
+                case "2":
+                    PressureStart = (double)VerRange2_Pmin.Value;
+                    PressureEnd = (double)VerRange2_Pmax.Value;
+                    break;
+                case "3":
+                    PressureStart = (double)VerRange3_Pmin.Value;
+                    PressureEnd = (double)VerRange3_Pmax.Value;
+                    break;
+                case "4":
+                    PressureStart = (double)VerRange4_Pmin.Value;
+                    PressureEnd = (double)VerRange4_Pmax.Value;
+                    break;
+            }
+        }
+
+        private void cbChannalVerification_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
+        }
+
+        private void btnVRRead1_Click(object sender, EventArgs e)
+        {
+            switch ((sender as Button).Tag)
+            {
+                case "1":
+                    SelectedLevel = 1;
+                    break;
+                case "2":
+                    SelectedLevel = 2;
+                    break;
+                case "3":
+                    SelectedLevel = 3;
+                    break;
+                case "4":
+                    SelectedLevel = 4;
+                    break;
+            }
+
+            int PressureStep = (int)((PressureEnd - PressureStart) / 5);
+            double Pressure = PressureStart;
+            int i = 10;
+            do
+            {
+                i--;
+                Program.txtlog.WriteLineLog(string.Format("Начинаем верификацию датчиков на давлении {0} кПа", Pressure),0);
+                numMensorPoint.Text = Pressure.ToString();
+                bMensorSet.PerformClick();      //выставляем давление
+                bMensorControl.PerformClick();  //запускаем задачу
+                Thread.Sleep(1000);//ждем уставновления давления
+                ReadSensorPressure(PressureStart, PressureEnd);
+                Pressure = Pressure + PressureStep;
+            } while ((Pressure <= PressureEnd)||(i<=0));
         }
     }
 }

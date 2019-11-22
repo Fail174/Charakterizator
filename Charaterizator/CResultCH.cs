@@ -47,6 +47,7 @@ namespace Charaterizator
             {
                 SChanal ch = new SChanal(i+1, FN[i]);
                 Channal.Add(ch);
+                Directory.CreateDirectory("CH");
                 string filename = string.Format("CH/CH_Result{0}.txt",ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
@@ -87,7 +88,6 @@ namespace Charaterizator
                     Resistance = R,
                 };
                 Channal[ch].Points.Add(point);
-//                FileStream[ch].
                 FileStream[ch].WriteLine(GetStringFromPoint(point));
                 FileStream[ch].Flush();
             }
