@@ -95,5 +95,8 @@
     <Setting Name="FileNameDB" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\\WORK\\BBMW\\Repozitoriy\\Fail174\\Charakterizator\\Charaterizator\\SensorsDB\\Sensors.mdb</Value>
     </Setting>
+    <Setting Name="set_HoldTimeTemp" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

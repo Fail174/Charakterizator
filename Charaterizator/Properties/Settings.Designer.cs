@@ -395,5 +395,17 @@ namespace Charaterizator.Properties {
                 this["FileNameDB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_HoldTimeTemp {
+            get {
+                return ((double)(this["set_HoldTimeTemp"]));
+            }
+            set {
+                this["set_HoldTimeTemp"] = value;
+            }
+        }
     }
 }

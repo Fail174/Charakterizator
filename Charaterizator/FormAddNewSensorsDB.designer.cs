@@ -64,7 +64,7 @@
             // bOK
             // 
             this.bOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bOK.Location = new System.Drawing.Point(26, 147);
+            this.bOK.Location = new System.Drawing.Point(131, 146);
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(165, 30);
             this.bOK.TabIndex = 4;
@@ -75,7 +75,7 @@
             // bCancel
             // 
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(216, 147);
+            this.bCancel.Location = new System.Drawing.Point(25, 146);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(82, 30);
             this.bCancel.TabIndex = 5;
