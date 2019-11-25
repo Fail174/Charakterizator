@@ -36,6 +36,7 @@
             this.ofdDataBase = new System.Windows.Forms.OpenFileDialog();
             this.tab_FormSettings = new System.Windows.Forms.TabControl();
             this.tp_ProgramSettings = new System.Windows.Forms.TabPage();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox26 = new System.Windows.Forms.TextBox();
             this.textBox30 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
@@ -81,15 +82,16 @@
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.tp_MensorSettings = new System.Windows.Forms.TabPage();
+            this.textBox85 = new System.Windows.Forms.TextBox();
+            this.textBox81 = new System.Windows.Forms.TextBox();
+            this.cbMensorSetZero = new System.Windows.Forms.ComboBox();
             this.textBox71 = new System.Windows.Forms.TextBox();
             this.tbMensorReadPeriod = new System.Windows.Forms.TextBox();
             this.textBox73 = new System.Windows.Forms.TextBox();
             this.tbMensorReadPause = new System.Windows.Forms.TextBox();
             this.textBox76 = new System.Windows.Forms.TextBox();
             this.textBox79 = new System.Windows.Forms.TextBox();
-            this.textBox81 = new System.Windows.Forms.TextBox();
             this.textBox83 = new System.Windows.Forms.TextBox();
-            this.textBox85 = new System.Windows.Forms.TextBox();
             this.tp_TermocameraSettings = new System.Windows.Forms.TabPage();
             this.textBox93 = new System.Windows.Forms.TextBox();
             this.textBox94 = new System.Windows.Forms.TextBox();
@@ -113,9 +115,7 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.cbMensorSetZero = new System.Windows.Forms.ComboBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -124,6 +124,7 @@
             this.tp_MensorSettings.SuspendLayout();
             this.tp_TermocameraSettings.SuspendLayout();
             this.tp_SensorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -198,7 +199,7 @@
             // 
             // tp_ProgramSettings
             // 
-            this.tp_ProgramSettings.Controls.Add(this.textBox2);
+            this.tp_ProgramSettings.Controls.Add(this.numericUpDown1);
             this.tp_ProgramSettings.Controls.Add(this.textBox4);
             this.tp_ProgramSettings.Controls.Add(this.textBox26);
             this.tp_ProgramSettings.Controls.Add(this.textBox30);
@@ -229,6 +230,13 @@
             this.tp_ProgramSettings.TabIndex = 0;
             this.tp_ProgramSettings.Text = "Настройки программы";
             this.tp_ProgramSettings.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(52, 187);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(520, 21);
+            this.textBox4.TabIndex = 79;
             // 
             // textBox26
             // 
@@ -631,6 +639,32 @@
             this.tp_MensorSettings.Text = "Задатчик давления";
             this.tp_MensorSettings.UseVisualStyleBackColor = true;
             // 
+            // textBox85
+            // 
+            this.textBox85.Location = new System.Drawing.Point(571, 112);
+            this.textBox85.Name = "textBox85";
+            this.textBox85.Size = new System.Drawing.Size(124, 21);
+            this.textBox85.TabIndex = 90;
+            // 
+            // textBox81
+            // 
+            this.textBox81.Location = new System.Drawing.Point(571, 93);
+            this.textBox81.Name = "textBox81";
+            this.textBox81.Size = new System.Drawing.Size(124, 21);
+            this.textBox81.TabIndex = 88;
+            // 
+            // cbMensorSetZero
+            // 
+            this.cbMensorSetZero.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbMensorSetZero.FormattingEnabled = true;
+            this.cbMensorSetZero.Items.AddRange(new object[] {
+            "Нет",
+            "Да"});
+            this.cbMensorSetZero.Location = new System.Drawing.Point(571, 74);
+            this.cbMensorSetZero.Name = "cbMensorSetZero";
+            this.cbMensorSetZero.Size = new System.Drawing.Size(124, 21);
+            this.cbMensorSetZero.TabIndex = 91;
+            // 
             // textBox71
             // 
             this.textBox71.Location = new System.Drawing.Point(52, 35);
@@ -678,26 +712,12 @@
             this.textBox79.Size = new System.Drawing.Size(520, 21);
             this.textBox79.TabIndex = 87;
             // 
-            // textBox81
-            // 
-            this.textBox81.Location = new System.Drawing.Point(571, 93);
-            this.textBox81.Name = "textBox81";
-            this.textBox81.Size = new System.Drawing.Size(124, 21);
-            this.textBox81.TabIndex = 88;
-            // 
             // textBox83
             // 
             this.textBox83.Location = new System.Drawing.Point(52, 112);
             this.textBox83.Name = "textBox83";
             this.textBox83.Size = new System.Drawing.Size(520, 21);
             this.textBox83.TabIndex = 89;
-            // 
-            // textBox85
-            // 
-            this.textBox85.Location = new System.Drawing.Point(571, 112);
-            this.textBox85.Name = "textBox85";
-            this.textBox85.Size = new System.Drawing.Size(124, 21);
-            this.textBox85.TabIndex = 90;
             // 
             // tp_TermocameraSettings
             // 
@@ -893,31 +913,12 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // numericUpDown1
             // 
-            this.textBox2.Location = new System.Drawing.Point(571, 187);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(124, 21);
-            this.textBox2.TabIndex = 80;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(52, 187);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(520, 21);
-            this.textBox4.TabIndex = 79;
-            // 
-            // cbMensorSetZero
-            // 
-            this.cbMensorSetZero.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbMensorSetZero.FormattingEnabled = true;
-            this.cbMensorSetZero.Items.AddRange(new object[] {
-            "Нет",
-            "Да"});
-            this.cbMensorSetZero.Location = new System.Drawing.Point(571, 74);
-            this.cbMensorSetZero.Name = "cbMensorSetZero";
-            this.cbMensorSetZero.Size = new System.Drawing.Size(124, 21);
-            this.cbMensorSetZero.TabIndex = 91;
+            this.numericUpDown1.Location = new System.Drawing.Point(571, 187);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(124, 21);
+            this.numericUpDown1.TabIndex = 80;
             // 
             // FormSettings
             // 
@@ -945,6 +946,7 @@
             this.tp_TermocameraSettings.PerformLayout();
             this.tp_SensorSettings.ResumeLayout(false);
             this.tp_SensorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1036,8 +1038,8 @@
         private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.TextBox textBox20;
         private System.Windows.Forms.TextBox textBox23;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.ComboBox cbMensorSetZero;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

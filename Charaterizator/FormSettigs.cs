@@ -194,5 +194,7 @@ namespace Charaterizator
 
             
         }
+
+        
     }
 }

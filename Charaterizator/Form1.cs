@@ -1055,7 +1055,7 @@ namespace Charaterizator
                         cbCHPressureSet3.Items.Clear();
                         cbCHPressureSet4.Items.Clear();
 
-                        // Занесение данных из ДБ в combobox                        
+                        // Занесение данных из ДБ в combobox                       
                         
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
@@ -1096,6 +1096,7 @@ namespace Charaterizator
                                 }
                                 else if (NumOfRange == 2)
                                 {
+                                    cbDiapazon1.Enabled = true;
                                     cbDiapazon1.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
@@ -1157,6 +1158,7 @@ namespace Charaterizator
                                 }
                                 else if (NumOfRange == 2)
                                 {
+                                    cbDiapazon2.Enabled = true;
                                     cbDiapazon2.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
@@ -1219,6 +1221,7 @@ namespace Charaterizator
                                 }
                                 else if (NumOfRange == 2)
                                 {
+                                    cbDiapazon3.Enabled = true;
                                     cbDiapazon3.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
@@ -1281,6 +1284,7 @@ namespace Charaterizator
                                 }
                                 else if (NumOfRange == 2)
                                 {
+                                    cbDiapazon4.Enabled = true;
                                     cbDiapazon4.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
@@ -1309,44 +1313,7 @@ namespace Charaterizator
 
                             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                         return;
@@ -1378,38 +1345,83 @@ namespace Charaterizator
                         // Проверка
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
-                            // Занесение данных из ДБ в combobox
-                            string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
-                            {                             
-                                VerRange1_Pmax.Value = Convert.ToDecimal(SensParam);                              
-                            }
-
-
-                            SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
+                            // УРОВЕНЬ - 1
+                            if (sensors.sensorList.Count > 0)
                             {
-                                VerRange1_Pmin.Value = Convert.ToDecimal(SensParam);
+                                SelectModel = new String(sensors.sensorList[0].PressureModel);
+                                // Занесение данных из БД в combobox
+                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange1_Pmax.Value = Convert.ToDecimal(SensParam);
+                                }
+                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange1_Pmin.Value = Convert.ToDecimal(SensParam);
+                                }
                             }
 
 
-                            SensParam = SensorsDB.GetDataSensors(SelectModel, "Range2_Pmax");      // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
+                            // УРОВЕНЬ - 2
+                            if (sensors.sensorList.Count > 8)
                             {
-                                VerRange2_Pmax.Value = Convert.ToDecimal(SensParam);
+                                SelectModel = new String(sensors.sensorList[8].PressureModel);
+                                // Занесение данных из БД в combobox
+                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange2_Pmax.Value = Convert.ToDecimal(SensParam);
+                                }
+                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange2_Pmin.Value = Convert.ToDecimal(SensParam);
+                                }
                             }
 
 
-                            SensParam = SensorsDB.GetDataSensors(SelectModel, "Range2_Pmin"); // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
+                            // УРОВЕНЬ - 3
+                            if (sensors.sensorList.Count > 16)
                             {
-                                VerRange2_Pmin.Value = Convert.ToDecimal(SensParam);
+                                SelectModel = new String(sensors.sensorList[16].PressureModel);
+                                // Занесение данных из БД в combobox
+                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange3_Pmax.Value = Convert.ToDecimal(SensParam);
+                                }
+                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange3_Pmin.Value = Convert.ToDecimal(SensParam);
+                                }
                             }
+
+
+                            // УРОВЕНЬ - 4
+                            if (sensors.sensorList.Count > 24)
+                            {
+                                SelectModel = new String(sensors.sensorList[24].PressureModel);
+                                // Занесение данных из БД в combobox
+                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange4_Pmax.Value = Convert.ToDecimal(SensParam);
+                                }
+                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != null)
+                                {
+                                    VerRange4_Pmin.Value = Convert.ToDecimal(SensParam);
+                                }
+                            }
+
                         }
 
                         return;
-                    }
 
+
+                    }
 
             }       
         }
@@ -2028,7 +2040,7 @@ namespace Charaterizator
         }
 
 
-        // УРОВЕНЬ-3
+        // УРОВЕНЬ-4
         // Выбор диапазона в combobox
         // и отбражение данный по точкам температуры и давлению из БД
         private void cbDiapazon4_SelectedIndexChanged(object sender, EventArgs e)
