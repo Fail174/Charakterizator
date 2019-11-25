@@ -22,6 +22,8 @@ namespace Charaterizator
         const int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
         const int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
 
+        public static int SettingsSelIndex { set; get; }
+
 
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
@@ -1331,12 +1333,7 @@ namespace Charaterizator
         }
 
 
-        private void MenuItemMainSettings_Click(object sender, EventArgs e)
-        {
-            FormSettings Settings = new FormSettings();
-            Settings.ShowDialog();
-
-        }
+       
 
 
         // Обработчик нажатия меню: ФАЙЛ - ОТКРЫТЬ БД
@@ -1591,6 +1588,53 @@ namespace Charaterizator
                 ReadSensorPressure(PressureStart, PressureEnd);
                 Pressure = Pressure + PressureStep;
             } while ((Pressure <= PressureEnd)||(i<=0));
+        }
+
+
+
+        // Меню НАСТРОЙКИ
+        // Настройки программы
+        private void MenuItemMainSettings_Click(object sender, EventArgs e)
+        {
+            SettingsSelIndex = 0;
+            FormSettings Settings = new FormSettings();            
+            Settings.ShowDialog();
+
+        }
+        // Настройки Мультиметра
+        private void параметрыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsSelIndex = 2;
+            FormSettings Settings = new FormSettings();            
+            Settings.ShowDialog();
+        }
+        // Настройки Задатчика давления
+        private void параметрыToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SettingsSelIndex = 3;
+            FormSettings Settings = new FormSettings();
+            Settings.ShowDialog();
+        }
+        // Настройки Коммутатора
+        private void параметрыToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            SettingsSelIndex = 1;
+            FormSettings Settings = new FormSettings();
+            Settings.ShowDialog();
+        }
+        // Настройки Термокамеры
+        private void параметрыToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            SettingsSelIndex = 4;
+            FormSettings Settings = new FormSettings();
+            Settings.ShowDialog();
+        }
+        // Настройки Датчиков
+        private void параметрыToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            SettingsSelIndex = 5;
+            FormSettings Settings = new FormSettings();
+            Settings.ShowDialog();
         }
     }
 }

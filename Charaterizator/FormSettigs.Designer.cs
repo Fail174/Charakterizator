@@ -39,48 +39,53 @@
             this.textBox26 = new System.Windows.Forms.TextBox();
             this.textBox30 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.cbHandleMultimetr = new System.Windows.Forms.ComboBox();
+            this.tbHoldTimeTemp = new System.Windows.Forms.TextBox();
+            this.cbHandlePress = new System.Windows.Forms.ComboBox();
             this.textBox24 = new System.Windows.Forms.TextBox();
-            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.tbHoldTimePress = new System.Windows.Forms.TextBox();
             this.textBox28 = new System.Windows.Forms.TextBox();
             this.textBox29 = new System.Windows.Forms.TextBox();
-            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.tbHoldTimeAfReset = new System.Windows.Forms.TextBox();
             this.textBox32 = new System.Windows.Forms.TextBox();
             this.textBox33 = new System.Windows.Forms.TextBox();
-            this.textBox34 = new System.Windows.Forms.TextBox();
-            this.textBox35 = new System.Windows.Forms.TextBox();
+            this.tbDeltaTemp = new System.Windows.Forms.TextBox();
             this.textBox36 = new System.Windows.Forms.TextBox();
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox38 = new System.Windows.Forms.TextBox();
-            this.textBox39 = new System.Windows.Forms.TextBox();
-            this.textBox40 = new System.Windows.Forms.TextBox();
-            this.textBox41 = new System.Windows.Forms.TextBox();
+            this.tbDeltaPress = new System.Windows.Forms.TextBox();
+            this.tbMainTimer = new System.Windows.Forms.TextBox();
             this.textBox42 = new System.Windows.Forms.TextBox();
-            this.textBox43 = new System.Windows.Forms.TextBox();
             this.tp_CommutatorSettings = new System.Windows.Forms.TabPage();
             this.textBox49 = new System.Windows.Forms.TextBox();
-            this.textBox50 = new System.Windows.Forms.TextBox();
+            this.tbCommReadCH = new System.Windows.Forms.TextBox();
             this.textBox51 = new System.Windows.Forms.TextBox();
-            this.textBox52 = new System.Windows.Forms.TextBox();
+            this.tbCommMaxSetCH = new System.Windows.Forms.TextBox();
             this.textBox54 = new System.Windows.Forms.TextBox();
-            this.textBox55 = new System.Windows.Forms.TextBox();
+            this.tbCommReadPeriod = new System.Windows.Forms.TextBox();
             this.textBox57 = new System.Windows.Forms.TextBox();
-            this.textBox59 = new System.Windows.Forms.TextBox();
+            this.tbCommReadPause = new System.Windows.Forms.TextBox();
             this.textBox61 = new System.Windows.Forms.TextBox();
             this.textBox63 = new System.Windows.Forms.TextBox();
             this.textBox65 = new System.Windows.Forms.TextBox();
             this.textBox67 = new System.Windows.Forms.TextBox();
             this.tp_MultimetrSettings = new System.Windows.Forms.TabPage();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.tbMultimReadCount = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.tbMultimReadPeriod = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.textBox23 = new System.Windows.Forms.TextBox();
             this.tp_MensorSettings = new System.Windows.Forms.TabPage();
             this.textBox71 = new System.Windows.Forms.TextBox();
-            this.textBox72 = new System.Windows.Forms.TextBox();
+            this.tbMensorReadPeriod = new System.Windows.Forms.TextBox();
             this.textBox73 = new System.Windows.Forms.TextBox();
-            this.textBox74 = new System.Windows.Forms.TextBox();
+            this.tbMensorReadPause = new System.Windows.Forms.TextBox();
             this.textBox76 = new System.Windows.Forms.TextBox();
-            this.textBox77 = new System.Windows.Forms.TextBox();
             this.textBox79 = new System.Windows.Forms.TextBox();
             this.textBox81 = new System.Windows.Forms.TextBox();
             this.textBox83 = new System.Windows.Forms.TextBox();
@@ -98,9 +103,9 @@
             this.textBox107 = new System.Windows.Forms.TextBox();
             this.tp_SensorSettings = new System.Windows.Forms.TabPage();
             this.textBox115 = new System.Windows.Forms.TextBox();
-            this.textBox116 = new System.Windows.Forms.TextBox();
+            this.tbSensReadCount = new System.Windows.Forms.TextBox();
             this.textBox117 = new System.Windows.Forms.TextBox();
-            this.textBox118 = new System.Windows.Forms.TextBox();
+            this.tbSensReadPause = new System.Windows.Forms.TextBox();
             this.textBox120 = new System.Windows.Forms.TextBox();
             this.textBox121 = new System.Windows.Forms.TextBox();
             this.textBox123 = new System.Windows.Forms.TextBox();
@@ -108,16 +113,9 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox23 = new System.Windows.Forms.TextBox();
-            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.cbMensorSetZero = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -196,33 +194,32 @@
             this.tab_FormSettings.SelectedIndex = 0;
             this.tab_FormSettings.Size = new System.Drawing.Size(755, 436);
             this.tab_FormSettings.TabIndex = 32;
+            this.tab_FormSettings.SelectedIndexChanged += new System.EventHandler(this.tab_FormSettings_SelectedIndexChanged);
             // 
             // tp_ProgramSettings
             // 
+            this.tp_ProgramSettings.Controls.Add(this.textBox2);
+            this.tp_ProgramSettings.Controls.Add(this.textBox4);
             this.tp_ProgramSettings.Controls.Add(this.textBox26);
             this.tp_ProgramSettings.Controls.Add(this.textBox30);
             this.tp_ProgramSettings.Controls.Add(this.textBox10);
-            this.tp_ProgramSettings.Controls.Add(this.comboBox4);
-            this.tp_ProgramSettings.Controls.Add(this.comboBox5);
-            this.tp_ProgramSettings.Controls.Add(this.textBox3);
-            this.tp_ProgramSettings.Controls.Add(this.comboBox6);
+            this.tp_ProgramSettings.Controls.Add(this.cbHandleMultimetr);
+            this.tp_ProgramSettings.Controls.Add(this.tbHoldTimeTemp);
+            this.tp_ProgramSettings.Controls.Add(this.cbHandlePress);
             this.tp_ProgramSettings.Controls.Add(this.textBox24);
-            this.tp_ProgramSettings.Controls.Add(this.textBox27);
+            this.tp_ProgramSettings.Controls.Add(this.tbHoldTimePress);
             this.tp_ProgramSettings.Controls.Add(this.textBox28);
             this.tp_ProgramSettings.Controls.Add(this.textBox29);
-            this.tp_ProgramSettings.Controls.Add(this.textBox31);
+            this.tp_ProgramSettings.Controls.Add(this.tbHoldTimeAfReset);
             this.tp_ProgramSettings.Controls.Add(this.textBox32);
             this.tp_ProgramSettings.Controls.Add(this.textBox33);
-            this.tp_ProgramSettings.Controls.Add(this.textBox34);
-            this.tp_ProgramSettings.Controls.Add(this.textBox35);
+            this.tp_ProgramSettings.Controls.Add(this.tbDeltaTemp);
             this.tp_ProgramSettings.Controls.Add(this.textBox36);
             this.tp_ProgramSettings.Controls.Add(this.textBox37);
             this.tp_ProgramSettings.Controls.Add(this.textBox38);
-            this.tp_ProgramSettings.Controls.Add(this.textBox39);
-            this.tp_ProgramSettings.Controls.Add(this.textBox40);
-            this.tp_ProgramSettings.Controls.Add(this.textBox41);
+            this.tp_ProgramSettings.Controls.Add(this.tbDeltaPress);
+            this.tp_ProgramSettings.Controls.Add(this.tbMainTimer);
             this.tp_ProgramSettings.Controls.Add(this.textBox42);
-            this.tp_ProgramSettings.Controls.Add(this.textBox43);
             this.tp_ProgramSettings.Controls.Add(this.groupBox1);
             this.tp_ProgramSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tp_ProgramSettings.Location = new System.Drawing.Point(4, 24);
@@ -235,14 +232,14 @@
             // 
             // textBox26
             // 
-            this.textBox26.Location = new System.Drawing.Point(571, 244);
+            this.textBox26.Location = new System.Drawing.Point(571, 226);
             this.textBox26.Name = "textBox26";
             this.textBox26.Size = new System.Drawing.Size(124, 21);
             this.textBox26.TabIndex = 76;
             // 
             // textBox30
             // 
-            this.textBox30.Location = new System.Drawing.Point(571, 225);
+            this.textBox30.Location = new System.Drawing.Point(571, 207);
             this.textBox30.Name = "textBox30";
             this.textBox30.Size = new System.Drawing.Size(124, 21);
             this.textBox30.TabIndex = 74;
@@ -255,52 +252,40 @@
             this.textBox10.TabIndex = 56;
             this.textBox10.Text = "Время выдержки после выхода камеры на температурный режим, [мин]";
             // 
-            // comboBox4
+            // cbHandleMultimetr
             // 
-            this.comboBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "Да",
-            "Нет"});
-            this.comboBox4.Location = new System.Drawing.Point(571, 206);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(124, 21);
-            this.comboBox4.TabIndex = 79;
-            this.comboBox4.Text = "Есть/Нет";
+            this.cbHandleMultimetr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbHandleMultimetr.FormattingEnabled = true;
+            this.cbHandleMultimetr.Items.AddRange(new object[] {
+            "Нет",
+            "Да"});
+            this.cbHandleMultimetr.Location = new System.Drawing.Point(571, 169);
+            this.cbHandleMultimetr.Name = "cbHandleMultimetr";
+            this.cbHandleMultimetr.Size = new System.Drawing.Size(124, 21);
+            this.cbHandleMultimetr.TabIndex = 78;
+            this.cbHandleMultimetr.Tag = "108";
             // 
-            // comboBox5
+            // tbHoldTimeTemp
             // 
-            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
-            "Да",
-            "Нет"});
-            this.comboBox5.Location = new System.Drawing.Point(571, 187);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(124, 21);
-            this.comboBox5.TabIndex = 78;
-            this.comboBox5.Text = "Да/Нет";
+            this.tbHoldTimeTemp.Location = new System.Drawing.Point(571, 35);
+            this.tbHoldTimeTemp.Name = "tbHoldTimeTemp";
+            this.tbHoldTimeTemp.Size = new System.Drawing.Size(124, 21);
+            this.tbHoldTimeTemp.TabIndex = 57;
+            this.tbHoldTimeTemp.Tag = "101";
+            this.tbHoldTimeTemp.Text = "1";
             // 
-            // textBox3
+            // cbHandlePress
             // 
-            this.textBox3.Location = new System.Drawing.Point(571, 35);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(124, 21);
-            this.textBox3.TabIndex = 57;
-            this.textBox3.Text = "5";
-            // 
-            // comboBox6
-            // 
-            this.comboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
-            "Да",
-            "Нет"});
-            this.comboBox6.Location = new System.Drawing.Point(571, 168);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(124, 21);
-            this.comboBox6.TabIndex = 77;
-            this.comboBox6.Text = "Да/Нет";
+            this.cbHandlePress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbHandlePress.FormattingEnabled = true;
+            this.cbHandlePress.Items.AddRange(new object[] {
+            "Нет",
+            "Да"});
+            this.cbHandlePress.Location = new System.Drawing.Point(571, 150);
+            this.cbHandlePress.Name = "cbHandlePress";
+            this.cbHandlePress.Size = new System.Drawing.Size(124, 21);
+            this.cbHandlePress.TabIndex = 77;
+            this.cbHandlePress.Tag = "107";
             // 
             // textBox24
             // 
@@ -310,17 +295,18 @@
             this.textBox24.TabIndex = 58;
             this.textBox24.Text = "Время выдержки после выхода на заданное давление, [мин]";
             // 
-            // textBox27
+            // tbHoldTimePress
             // 
-            this.textBox27.Location = new System.Drawing.Point(571, 54);
-            this.textBox27.Name = "textBox27";
-            this.textBox27.Size = new System.Drawing.Size(124, 21);
-            this.textBox27.TabIndex = 59;
-            this.textBox27.Text = "5";
+            this.tbHoldTimePress.Location = new System.Drawing.Point(571, 54);
+            this.tbHoldTimePress.Name = "tbHoldTimePress";
+            this.tbHoldTimePress.Size = new System.Drawing.Size(124, 21);
+            this.tbHoldTimePress.TabIndex = 59;
+            this.tbHoldTimePress.Tag = "102";
+            this.tbHoldTimePress.Text = "1";
             // 
             // textBox28
             // 
-            this.textBox28.Location = new System.Drawing.Point(52, 244);
+            this.textBox28.Location = new System.Drawing.Point(52, 226);
             this.textBox28.Name = "textBox28";
             this.textBox28.Size = new System.Drawing.Size(520, 21);
             this.textBox28.TabIndex = 75;
@@ -333,17 +319,18 @@
             this.textBox29.TabIndex = 60;
             this.textBox29.Text = "Время выдержки после сброса давления (при раскачке давлением), [мин]";
             // 
-            // textBox31
+            // tbHoldTimeAfReset
             // 
-            this.textBox31.Location = new System.Drawing.Point(571, 73);
-            this.textBox31.Name = "textBox31";
-            this.textBox31.Size = new System.Drawing.Size(124, 21);
-            this.textBox31.TabIndex = 61;
-            this.textBox31.Text = "2";
+            this.tbHoldTimeAfReset.Location = new System.Drawing.Point(571, 73);
+            this.tbHoldTimeAfReset.Name = "tbHoldTimeAfReset";
+            this.tbHoldTimeAfReset.Size = new System.Drawing.Size(124, 21);
+            this.tbHoldTimeAfReset.TabIndex = 61;
+            this.tbHoldTimeAfReset.Tag = "103";
+            this.tbHoldTimeAfReset.Text = "1";
             // 
             // textBox32
             // 
-            this.textBox32.Location = new System.Drawing.Point(52, 225);
+            this.textBox32.Location = new System.Drawing.Point(52, 207);
             this.textBox32.Name = "textBox32";
             this.textBox32.Size = new System.Drawing.Size(520, 21);
             this.textBox32.TabIndex = 73;
@@ -356,25 +343,18 @@
             this.textBox33.TabIndex = 62;
             this.textBox33.Text = "Диапазон в котором должна поддерживаться температура [град]";
             // 
-            // textBox34
+            // tbDeltaTemp
             // 
-            this.textBox34.Location = new System.Drawing.Point(52, 206);
-            this.textBox34.Name = "textBox34";
-            this.textBox34.Size = new System.Drawing.Size(520, 21);
-            this.textBox34.TabIndex = 72;
-            this.textBox34.Text = "Обратный ход при характеризации и верификации [есть / нет]";
-            // 
-            // textBox35
-            // 
-            this.textBox35.Location = new System.Drawing.Point(571, 92);
-            this.textBox35.Name = "textBox35";
-            this.textBox35.Size = new System.Drawing.Size(124, 21);
-            this.textBox35.TabIndex = 63;
-            this.textBox35.Text = "1";
+            this.tbDeltaTemp.Location = new System.Drawing.Point(571, 92);
+            this.tbDeltaTemp.Name = "tbDeltaTemp";
+            this.tbDeltaTemp.Size = new System.Drawing.Size(124, 21);
+            this.tbDeltaTemp.TabIndex = 63;
+            this.tbDeltaTemp.Tag = "104";
+            this.tbDeltaTemp.Text = "1";
             // 
             // textBox36
             // 
-            this.textBox36.Location = new System.Drawing.Point(52, 187);
+            this.textBox36.Location = new System.Drawing.Point(52, 169);
             this.textBox36.Name = "textBox36";
             this.textBox36.Size = new System.Drawing.Size(520, 21);
             this.textBox36.TabIndex = 71;
@@ -390,62 +370,48 @@
             // 
             // textBox38
             // 
-            this.textBox38.Location = new System.Drawing.Point(52, 168);
+            this.textBox38.Location = new System.Drawing.Point(52, 150);
             this.textBox38.Name = "textBox38";
             this.textBox38.Size = new System.Drawing.Size(520, 21);
             this.textBox38.TabIndex = 70;
             this.textBox38.Text = "Проводить  характеризацию/верификацию при отсутствии подключения  к задатчику";
             // 
-            // textBox39
+            // tbDeltaPress
             // 
-            this.textBox39.Location = new System.Drawing.Point(571, 111);
-            this.textBox39.Name = "textBox39";
-            this.textBox39.Size = new System.Drawing.Size(124, 21);
-            this.textBox39.TabIndex = 65;
-            this.textBox39.Text = "10";
+            this.tbDeltaPress.Location = new System.Drawing.Point(571, 111);
+            this.tbDeltaPress.Name = "tbDeltaPress";
+            this.tbDeltaPress.Size = new System.Drawing.Size(124, 21);
+            this.tbDeltaPress.TabIndex = 65;
+            this.tbDeltaPress.Tag = "105";
+            this.tbDeltaPress.Text = "1";
             // 
-            // textBox40
+            // tbMainTimer
             // 
-            this.textBox40.Location = new System.Drawing.Point(571, 149);
-            this.textBox40.Name = "textBox40";
-            this.textBox40.Size = new System.Drawing.Size(124, 21);
-            this.textBox40.TabIndex = 69;
-            this.textBox40.Text = "1";
-            // 
-            // textBox41
-            // 
-            this.textBox41.Location = new System.Drawing.Point(52, 130);
-            this.textBox41.Name = "textBox41";
-            this.textBox41.Size = new System.Drawing.Size(520, 21);
-            this.textBox41.TabIndex = 66;
-            this.textBox41.Text = "Сопротивление тензомоста сенсора датчика, [Ом]";
+            this.tbMainTimer.Location = new System.Drawing.Point(571, 131);
+            this.tbMainTimer.Name = "tbMainTimer";
+            this.tbMainTimer.Size = new System.Drawing.Size(124, 21);
+            this.tbMainTimer.TabIndex = 69;
+            this.tbMainTimer.Tag = "106";
+            this.tbMainTimer.Text = "1";
             // 
             // textBox42
             // 
-            this.textBox42.Location = new System.Drawing.Point(52, 149);
+            this.textBox42.Location = new System.Drawing.Point(52, 131);
             this.textBox42.Name = "textBox42";
             this.textBox42.Size = new System.Drawing.Size(520, 21);
             this.textBox42.TabIndex = 68;
             this.textBox42.Text = "Общий интервал опроса приборов и датчиков,  [сек]";
             // 
-            // textBox43
-            // 
-            this.textBox43.Location = new System.Drawing.Point(571, 130);
-            this.textBox43.Name = "textBox43";
-            this.textBox43.Size = new System.Drawing.Size(124, 21);
-            this.textBox43.TabIndex = 67;
-            this.textBox43.Text = "100";
-            // 
             // tp_CommutatorSettings
             // 
             this.tp_CommutatorSettings.Controls.Add(this.textBox49);
-            this.tp_CommutatorSettings.Controls.Add(this.textBox50);
+            this.tp_CommutatorSettings.Controls.Add(this.tbCommReadCH);
             this.tp_CommutatorSettings.Controls.Add(this.textBox51);
-            this.tp_CommutatorSettings.Controls.Add(this.textBox52);
+            this.tp_CommutatorSettings.Controls.Add(this.tbCommMaxSetCH);
             this.tp_CommutatorSettings.Controls.Add(this.textBox54);
-            this.tp_CommutatorSettings.Controls.Add(this.textBox55);
+            this.tp_CommutatorSettings.Controls.Add(this.tbCommReadPeriod);
             this.tp_CommutatorSettings.Controls.Add(this.textBox57);
-            this.tp_CommutatorSettings.Controls.Add(this.textBox59);
+            this.tp_CommutatorSettings.Controls.Add(this.tbCommReadPause);
             this.tp_CommutatorSettings.Controls.Add(this.textBox61);
             this.tp_CommutatorSettings.Controls.Add(this.textBox63);
             this.tp_CommutatorSettings.Controls.Add(this.textBox65);
@@ -467,13 +433,13 @@
             this.textBox49.TabIndex = 81;
             this.textBox49.Text = "Количество опрашиваемых каналов, [шт]";
             // 
-            // textBox50
+            // tbCommReadCH
             // 
-            this.textBox50.Location = new System.Drawing.Point(571, 35);
-            this.textBox50.Name = "textBox50";
-            this.textBox50.Size = new System.Drawing.Size(124, 21);
-            this.textBox50.TabIndex = 82;
-            this.textBox50.Text = "5";
+            this.tbCommReadCH.Location = new System.Drawing.Point(571, 35);
+            this.tbCommReadCH.Name = "tbCommReadCH";
+            this.tbCommReadCH.Size = new System.Drawing.Size(124, 21);
+            this.tbCommReadCH.TabIndex = 82;
+            this.tbCommReadCH.Text = "1";
             // 
             // textBox51
             // 
@@ -483,13 +449,13 @@
             this.textBox51.TabIndex = 83;
             this.textBox51.Text = "Максимальное кол-во датчиков, подключенных к измерительной цепи [шт.]";
             // 
-            // textBox52
+            // tbCommMaxSetCH
             // 
-            this.textBox52.Location = new System.Drawing.Point(571, 54);
-            this.textBox52.Name = "textBox52";
-            this.textBox52.Size = new System.Drawing.Size(124, 21);
-            this.textBox52.TabIndex = 84;
-            this.textBox52.Text = "5";
+            this.tbCommMaxSetCH.Location = new System.Drawing.Point(571, 54);
+            this.tbCommMaxSetCH.Name = "tbCommMaxSetCH";
+            this.tbCommMaxSetCH.Size = new System.Drawing.Size(124, 21);
+            this.tbCommMaxSetCH.TabIndex = 84;
+            this.tbCommMaxSetCH.Text = "1";
             // 
             // textBox54
             // 
@@ -499,13 +465,13 @@
             this.textBox54.TabIndex = 85;
             this.textBox54.Text = "Интервал опроса состояния коммутатора (при работе с формой) [сек] ";
             // 
-            // textBox55
+            // tbCommReadPeriod
             // 
-            this.textBox55.Location = new System.Drawing.Point(571, 73);
-            this.textBox55.Name = "textBox55";
-            this.textBox55.Size = new System.Drawing.Size(124, 21);
-            this.textBox55.TabIndex = 86;
-            this.textBox55.Text = "2";
+            this.tbCommReadPeriod.Location = new System.Drawing.Point(571, 73);
+            this.tbCommReadPeriod.Name = "tbCommReadPeriod";
+            this.tbCommReadPeriod.Size = new System.Drawing.Size(124, 21);
+            this.tbCommReadPeriod.TabIndex = 86;
+            this.tbCommReadPeriod.Text = "1";
             // 
             // textBox57
             // 
@@ -515,13 +481,13 @@
             this.textBox57.TabIndex = 87;
             this.textBox57.Text = "Пауза между отправкой команд и приемом данных [сек]  ";
             // 
-            // textBox59
+            // tbCommReadPause
             // 
-            this.textBox59.Location = new System.Drawing.Point(571, 92);
-            this.textBox59.Name = "textBox59";
-            this.textBox59.Size = new System.Drawing.Size(124, 21);
-            this.textBox59.TabIndex = 88;
-            this.textBox59.Text = "1";
+            this.tbCommReadPause.Location = new System.Drawing.Point(571, 92);
+            this.tbCommReadPause.Name = "tbCommReadPause";
+            this.tbCommReadPause.Size = new System.Drawing.Size(124, 21);
+            this.tbCommReadPause.TabIndex = 88;
+            this.tbCommReadPause.Text = "1";
             // 
             // textBox61
             // 
@@ -554,9 +520,9 @@
             // tp_MultimetrSettings
             // 
             this.tp_MultimetrSettings.Controls.Add(this.textBox7);
-            this.tp_MultimetrSettings.Controls.Add(this.textBox8);
+            this.tp_MultimetrSettings.Controls.Add(this.tbMultimReadCount);
             this.tp_MultimetrSettings.Controls.Add(this.textBox9);
-            this.tp_MultimetrSettings.Controls.Add(this.textBox11);
+            this.tp_MultimetrSettings.Controls.Add(this.tbMultimReadPeriod);
             this.tp_MultimetrSettings.Controls.Add(this.textBox13);
             this.tp_MultimetrSettings.Controls.Add(this.textBox14);
             this.tp_MultimetrSettings.Controls.Add(this.textBox16);
@@ -571,18 +537,92 @@
             this.tp_MultimetrSettings.Text = "Мультиметр";
             this.tp_MultimetrSettings.UseVisualStyleBackColor = true;
             // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(52, 35);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(520, 21);
+            this.textBox7.TabIndex = 81;
+            this.textBox7.Text = "Количество опросов показаний мультиметра [раз]";
+            // 
+            // tbMultimReadCount
+            // 
+            this.tbMultimReadCount.Location = new System.Drawing.Point(571, 35);
+            this.tbMultimReadCount.Name = "tbMultimReadCount";
+            this.tbMultimReadCount.Size = new System.Drawing.Size(124, 21);
+            this.tbMultimReadCount.TabIndex = 82;
+            this.tbMultimReadCount.Text = "1";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(52, 54);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(520, 21);
+            this.textBox9.TabIndex = 83;
+            this.textBox9.Text = "Период между опросами [сек]";
+            // 
+            // tbMultimReadPeriod
+            // 
+            this.tbMultimReadPeriod.Location = new System.Drawing.Point(571, 54);
+            this.tbMultimReadPeriod.Name = "tbMultimReadPeriod";
+            this.tbMultimReadPeriod.Size = new System.Drawing.Size(124, 21);
+            this.tbMultimReadPeriod.TabIndex = 84;
+            this.tbMultimReadPeriod.Text = "1";
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(52, 73);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(520, 21);
+            this.textBox13.TabIndex = 85;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(571, 73);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(124, 21);
+            this.textBox14.TabIndex = 86;
+            // 
+            // textBox16
+            // 
+            this.textBox16.Location = new System.Drawing.Point(52, 92);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.Size = new System.Drawing.Size(520, 21);
+            this.textBox16.TabIndex = 87;
+            // 
+            // textBox18
+            // 
+            this.textBox18.Location = new System.Drawing.Point(571, 92);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(124, 21);
+            this.textBox18.TabIndex = 88;
+            // 
+            // textBox20
+            // 
+            this.textBox20.Location = new System.Drawing.Point(52, 111);
+            this.textBox20.Name = "textBox20";
+            this.textBox20.Size = new System.Drawing.Size(520, 21);
+            this.textBox20.TabIndex = 89;
+            // 
+            // textBox23
+            // 
+            this.textBox23.Location = new System.Drawing.Point(571, 111);
+            this.textBox23.Name = "textBox23";
+            this.textBox23.Size = new System.Drawing.Size(124, 21);
+            this.textBox23.TabIndex = 90;
+            // 
             // tp_MensorSettings
             // 
-            this.tp_MensorSettings.Controls.Add(this.textBox71);
-            this.tp_MensorSettings.Controls.Add(this.textBox72);
-            this.tp_MensorSettings.Controls.Add(this.textBox73);
-            this.tp_MensorSettings.Controls.Add(this.textBox74);
-            this.tp_MensorSettings.Controls.Add(this.textBox76);
-            this.tp_MensorSettings.Controls.Add(this.textBox77);
-            this.tp_MensorSettings.Controls.Add(this.textBox79);
-            this.tp_MensorSettings.Controls.Add(this.textBox81);
-            this.tp_MensorSettings.Controls.Add(this.textBox83);
             this.tp_MensorSettings.Controls.Add(this.textBox85);
+            this.tp_MensorSettings.Controls.Add(this.textBox81);
+            this.tp_MensorSettings.Controls.Add(this.cbMensorSetZero);
+            this.tp_MensorSettings.Controls.Add(this.textBox71);
+            this.tp_MensorSettings.Controls.Add(this.tbMensorReadPeriod);
+            this.tp_MensorSettings.Controls.Add(this.textBox73);
+            this.tp_MensorSettings.Controls.Add(this.tbMensorReadPause);
+            this.tp_MensorSettings.Controls.Add(this.textBox76);
+            this.tp_MensorSettings.Controls.Add(this.textBox79);
+            this.tp_MensorSettings.Controls.Add(this.textBox83);
             this.tp_MensorSettings.Location = new System.Drawing.Point(4, 24);
             this.tp_MensorSettings.Name = "tp_MensorSettings";
             this.tp_MensorSettings.Padding = new System.Windows.Forms.Padding(3);
@@ -599,13 +639,13 @@
             this.textBox71.TabIndex = 81;
             this.textBox71.Text = "Интервал опроса состояния задатчика (при работе с формой) [сек] ";
             // 
-            // textBox72
+            // tbMensorReadPeriod
             // 
-            this.textBox72.Location = new System.Drawing.Point(571, 35);
-            this.textBox72.Name = "textBox72";
-            this.textBox72.Size = new System.Drawing.Size(124, 21);
-            this.textBox72.TabIndex = 82;
-            this.textBox72.Text = "5";
+            this.tbMensorReadPeriod.Location = new System.Drawing.Point(571, 35);
+            this.tbMensorReadPeriod.Name = "tbMensorReadPeriod";
+            this.tbMensorReadPeriod.Size = new System.Drawing.Size(124, 21);
+            this.tbMensorReadPeriod.TabIndex = 82;
+            this.tbMensorReadPeriod.Text = "1";
             // 
             // textBox73
             // 
@@ -615,13 +655,13 @@
             this.textBox73.TabIndex = 83;
             this.textBox73.Text = "Пауза между отправкой команд и приемом данных [сек]";
             // 
-            // textBox74
+            // tbMensorReadPause
             // 
-            this.textBox74.Location = new System.Drawing.Point(571, 54);
-            this.textBox74.Name = "textBox74";
-            this.textBox74.Size = new System.Drawing.Size(124, 21);
-            this.textBox74.TabIndex = 84;
-            this.textBox74.Text = "5";
+            this.tbMensorReadPause.Location = new System.Drawing.Point(571, 54);
+            this.tbMensorReadPause.Name = "tbMensorReadPause";
+            this.tbMensorReadPause.Size = new System.Drawing.Size(124, 21);
+            this.tbMensorReadPause.TabIndex = 84;
+            this.tbMensorReadPause.Text = "1";
             // 
             // textBox76
             // 
@@ -630,14 +670,6 @@
             this.textBox76.Size = new System.Drawing.Size(520, 21);
             this.textBox76.TabIndex = 85;
             this.textBox76.Text = "Обнуление давления задатчика перед использованием";
-            // 
-            // textBox77
-            // 
-            this.textBox77.Location = new System.Drawing.Point(571, 73);
-            this.textBox77.Name = "textBox77";
-            this.textBox77.Size = new System.Drawing.Size(124, 21);
-            this.textBox77.TabIndex = 86;
-            this.textBox77.Text = "2";
             // 
             // textBox79
             // 
@@ -648,21 +680,21 @@
             // 
             // textBox81
             // 
-            this.textBox81.Location = new System.Drawing.Point(571, 92);
+            this.textBox81.Location = new System.Drawing.Point(571, 93);
             this.textBox81.Name = "textBox81";
             this.textBox81.Size = new System.Drawing.Size(124, 21);
             this.textBox81.TabIndex = 88;
             // 
             // textBox83
             // 
-            this.textBox83.Location = new System.Drawing.Point(52, 111);
+            this.textBox83.Location = new System.Drawing.Point(52, 112);
             this.textBox83.Name = "textBox83";
             this.textBox83.Size = new System.Drawing.Size(520, 21);
             this.textBox83.TabIndex = 89;
             // 
             // textBox85
             // 
-            this.textBox85.Location = new System.Drawing.Point(571, 111);
+            this.textBox85.Location = new System.Drawing.Point(571, 112);
             this.textBox85.Name = "textBox85";
             this.textBox85.Size = new System.Drawing.Size(124, 21);
             this.textBox85.TabIndex = 90;
@@ -760,9 +792,9 @@
             // tp_SensorSettings
             // 
             this.tp_SensorSettings.Controls.Add(this.textBox115);
-            this.tp_SensorSettings.Controls.Add(this.textBox116);
+            this.tp_SensorSettings.Controls.Add(this.tbSensReadCount);
             this.tp_SensorSettings.Controls.Add(this.textBox117);
-            this.tp_SensorSettings.Controls.Add(this.textBox118);
+            this.tp_SensorSettings.Controls.Add(this.tbSensReadPause);
             this.tp_SensorSettings.Controls.Add(this.textBox120);
             this.tp_SensorSettings.Controls.Add(this.textBox121);
             this.tp_SensorSettings.Controls.Add(this.textBox123);
@@ -783,13 +815,15 @@
             this.textBox115.Name = "textBox115";
             this.textBox115.Size = new System.Drawing.Size(520, 21);
             this.textBox115.TabIndex = 81;
+            this.textBox115.Text = "Количество HART-опросов датчиков [раз]";
             // 
-            // textBox116
+            // tbSensReadCount
             // 
-            this.textBox116.Location = new System.Drawing.Point(571, 35);
-            this.textBox116.Name = "textBox116";
-            this.textBox116.Size = new System.Drawing.Size(124, 21);
-            this.textBox116.TabIndex = 82;
+            this.tbSensReadCount.Location = new System.Drawing.Point(571, 35);
+            this.tbSensReadCount.Name = "tbSensReadCount";
+            this.tbSensReadCount.Size = new System.Drawing.Size(124, 21);
+            this.tbSensReadCount.TabIndex = 82;
+            this.tbSensReadCount.Text = "1";
             // 
             // textBox117
             // 
@@ -797,13 +831,15 @@
             this.textBox117.Name = "textBox117";
             this.textBox117.Size = new System.Drawing.Size(520, 21);
             this.textBox117.TabIndex = 83;
+            this.textBox117.Text = "Период ожидания при повторном HART-опросе датчика [сек]";
             // 
-            // textBox118
+            // tbSensReadPause
             // 
-            this.textBox118.Location = new System.Drawing.Point(571, 54);
-            this.textBox118.Name = "textBox118";
-            this.textBox118.Size = new System.Drawing.Size(124, 21);
-            this.textBox118.TabIndex = 84;
+            this.tbSensReadPause.Location = new System.Drawing.Point(571, 54);
+            this.tbSensReadPause.Name = "tbSensReadPause";
+            this.tbSensReadPause.Size = new System.Drawing.Size(124, 21);
+            this.tbSensReadPause.TabIndex = 84;
+            this.tbSensReadPause.Text = "1";
             // 
             // textBox120
             // 
@@ -857,79 +893,31 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // textBox7
+            // textBox2
             // 
-            this.textBox7.Location = new System.Drawing.Point(52, 35);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(520, 21);
-            this.textBox7.TabIndex = 81;
-            this.textBox7.Text = "Количество опросов показаний мультиметра [раз]";
+            this.textBox2.Location = new System.Drawing.Point(571, 187);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(124, 21);
+            this.textBox2.TabIndex = 80;
             // 
-            // textBox8
+            // textBox4
             // 
-            this.textBox8.Location = new System.Drawing.Point(571, 35);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(124, 21);
-            this.textBox8.TabIndex = 82;
-            this.textBox8.Text = "5";
+            this.textBox4.Location = new System.Drawing.Point(52, 187);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(520, 21);
+            this.textBox4.TabIndex = 79;
             // 
-            // textBox9
+            // cbMensorSetZero
             // 
-            this.textBox9.Location = new System.Drawing.Point(52, 54);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(520, 21);
-            this.textBox9.TabIndex = 83;
-            this.textBox9.Text = "Период между опросами [сек]";
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(571, 54);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(124, 21);
-            this.textBox11.TabIndex = 84;
-            this.textBox11.Text = "5";
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(52, 73);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(520, 21);
-            this.textBox13.TabIndex = 85;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(571, 73);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(124, 21);
-            this.textBox14.TabIndex = 86;
-            // 
-            // textBox16
-            // 
-            this.textBox16.Location = new System.Drawing.Point(52, 92);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(520, 21);
-            this.textBox16.TabIndex = 87;
-            // 
-            // textBox18
-            // 
-            this.textBox18.Location = new System.Drawing.Point(571, 92);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(124, 21);
-            this.textBox18.TabIndex = 88;
-            // 
-            // textBox23
-            // 
-            this.textBox23.Location = new System.Drawing.Point(571, 111);
-            this.textBox23.Name = "textBox23";
-            this.textBox23.Size = new System.Drawing.Size(124, 21);
-            this.textBox23.TabIndex = 90;
-            // 
-            // textBox20
-            // 
-            this.textBox20.Location = new System.Drawing.Point(52, 111);
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(520, 21);
-            this.textBox20.TabIndex = 89;
+            this.cbMensorSetZero.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbMensorSetZero.FormattingEnabled = true;
+            this.cbMensorSetZero.Items.AddRange(new object[] {
+            "Нет",
+            "Да"});
+            this.cbMensorSetZero.Location = new System.Drawing.Point(571, 74);
+            this.cbMensorSetZero.Name = "cbMensorSetZero";
+            this.cbMensorSetZero.Size = new System.Drawing.Size(124, 21);
+            this.cbMensorSetZero.TabIndex = 91;
             // 
             // FormSettings
             // 
@@ -980,45 +968,40 @@
         private System.Windows.Forms.TextBox textBox26;
         private System.Windows.Forms.TextBox textBox30;
         private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox cbHandleMultimetr;
+        private System.Windows.Forms.TextBox tbHoldTimeTemp;
+        private System.Windows.Forms.ComboBox cbHandlePress;
         private System.Windows.Forms.TextBox textBox24;
-        private System.Windows.Forms.TextBox textBox27;
+        private System.Windows.Forms.TextBox tbHoldTimePress;
         private System.Windows.Forms.TextBox textBox28;
         private System.Windows.Forms.TextBox textBox29;
-        private System.Windows.Forms.TextBox textBox31;
+        private System.Windows.Forms.TextBox tbHoldTimeAfReset;
         private System.Windows.Forms.TextBox textBox32;
         private System.Windows.Forms.TextBox textBox33;
-        private System.Windows.Forms.TextBox textBox34;
-        private System.Windows.Forms.TextBox textBox35;
+        private System.Windows.Forms.TextBox tbDeltaTemp;
         private System.Windows.Forms.TextBox textBox36;
         private System.Windows.Forms.TextBox textBox37;
         private System.Windows.Forms.TextBox textBox38;
-        private System.Windows.Forms.TextBox textBox39;
-        private System.Windows.Forms.TextBox textBox40;
-        private System.Windows.Forms.TextBox textBox41;
+        private System.Windows.Forms.TextBox tbDeltaPress;
+        private System.Windows.Forms.TextBox tbMainTimer;
         private System.Windows.Forms.TextBox textBox42;
-        private System.Windows.Forms.TextBox textBox43;
         private System.Windows.Forms.TextBox textBox49;
-        private System.Windows.Forms.TextBox textBox50;
+        private System.Windows.Forms.TextBox tbCommReadCH;
         private System.Windows.Forms.TextBox textBox51;
-        private System.Windows.Forms.TextBox textBox52;
+        private System.Windows.Forms.TextBox tbCommMaxSetCH;
         private System.Windows.Forms.TextBox textBox54;
-        private System.Windows.Forms.TextBox textBox55;
+        private System.Windows.Forms.TextBox tbCommReadPeriod;
         private System.Windows.Forms.TextBox textBox57;
-        private System.Windows.Forms.TextBox textBox59;
+        private System.Windows.Forms.TextBox tbCommReadPause;
         private System.Windows.Forms.TextBox textBox61;
         private System.Windows.Forms.TextBox textBox63;
         private System.Windows.Forms.TextBox textBox65;
         private System.Windows.Forms.TextBox textBox67;
         private System.Windows.Forms.TextBox textBox71;
-        private System.Windows.Forms.TextBox textBox72;
+        private System.Windows.Forms.TextBox tbMensorReadPeriod;
         private System.Windows.Forms.TextBox textBox73;
-        private System.Windows.Forms.TextBox textBox74;
+        private System.Windows.Forms.TextBox tbMensorReadPause;
         private System.Windows.Forms.TextBox textBox76;
-        private System.Windows.Forms.TextBox textBox77;
         private System.Windows.Forms.TextBox textBox79;
         private System.Windows.Forms.TextBox textBox81;
         private System.Windows.Forms.TextBox textBox83;
@@ -1034,9 +1017,9 @@
         private System.Windows.Forms.TextBox textBox105;
         private System.Windows.Forms.TextBox textBox107;
         private System.Windows.Forms.TextBox textBox115;
-        private System.Windows.Forms.TextBox textBox116;
+        private System.Windows.Forms.TextBox tbSensReadCount;
         private System.Windows.Forms.TextBox textBox117;
-        private System.Windows.Forms.TextBox textBox118;
+        private System.Windows.Forms.TextBox tbSensReadPause;
         private System.Windows.Forms.TextBox textBox120;
         private System.Windows.Forms.TextBox textBox121;
         private System.Windows.Forms.TextBox textBox123;
@@ -1044,14 +1027,17 @@
         private System.Windows.Forms.TextBox textBox127;
         private System.Windows.Forms.TextBox textBox129;
         private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox tbMultimReadCount;
         private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox tbMultimReadPeriod;
         private System.Windows.Forms.TextBox textBox13;
         private System.Windows.Forms.TextBox textBox14;
         private System.Windows.Forms.TextBox textBox16;
         private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.TextBox textBox20;
         private System.Windows.Forms.TextBox textBox23;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.ComboBox cbMensorSetZero;
     }
 }

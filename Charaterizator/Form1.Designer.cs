@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -220,6 +220,21 @@
             this.label32 = new System.Windows.Forms.Label();
             this.cbCHTermoCamera1 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.cbChannalVerification = new System.Windows.Forms.ComboBox();
+            this.pbVRProcess = new System.Windows.Forms.ProgressBar();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnVRRead4 = new System.Windows.Forms.Button();
+            this.btnVRSet4 = new System.Windows.Forms.Button();
+            this.VerRange4_Pmin = new System.Windows.Forms.NumericUpDown();
+            this.VerRange4_Pmax = new System.Windows.Forms.NumericUpDown();
+            this.label46 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnVRRead3 = new System.Windows.Forms.Button();
+            this.btnVRSet3 = new System.Windows.Forms.Button();
+            this.VerRange3_Pmin = new System.Windows.Forms.NumericUpDown();
+            this.VerRange3_Pmax = new System.Windows.Forms.NumericUpDown();
+            this.label45 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.btnVRRead2 = new System.Windows.Forms.Button();
             this.btnVRSet2 = new System.Windows.Forms.Button();
@@ -234,21 +249,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btnVRRead3 = new System.Windows.Forms.Button();
-            this.btnVRSet3 = new System.Windows.Forms.Button();
-            this.VerRange3_Pmin = new System.Windows.Forms.NumericUpDown();
-            this.VerRange3_Pmax = new System.Windows.Forms.NumericUpDown();
-            this.label45 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.btnVRRead4 = new System.Windows.Forms.Button();
-            this.btnVRSet4 = new System.Windows.Forms.Button();
-            this.VerRange4_Pmin = new System.Windows.Forms.NumericUpDown();
-            this.VerRange4_Pmax = new System.Windows.Forms.NumericUpDown();
-            this.label46 = new System.Windows.Forms.Label();
-            this.pbVRProcess = new System.Windows.Forms.ProgressBar();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.cbChannalVerification = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -274,24 +274,24 @@
             this.groupBox10.SuspendLayout();
             this.gbCHLevel1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmax)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmax)).BeginInit();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmax)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmax)).BeginInit();
-            this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmax)).BeginInit();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmax)).BeginInit();
-            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 983);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
@@ -386,6 +386,7 @@
             this.параметрыToolStripMenuItem.Name = "параметрыToolStripMenuItem";
             this.параметрыToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.параметрыToolStripMenuItem.Text = "Параметры";
+            this.параметрыToolStripMenuItem.Click += new System.EventHandler(this.параметрыToolStripMenuItem_Click);
             // 
             // задатчикДавленияToolStripMenuItem
             // 
@@ -408,6 +409,7 @@
             this.параметрыToolStripMenuItem1.Name = "параметрыToolStripMenuItem1";
             this.параметрыToolStripMenuItem1.Size = new System.Drawing.Size(213, 22);
             this.параметрыToolStripMenuItem1.Text = "Параметры";
+            this.параметрыToolStripMenuItem1.Click += new System.EventHandler(this.параметрыToolStripMenuItem1_Click);
             // 
             // коммутаторToolStripMenuItem
             // 
@@ -430,6 +432,7 @@
             this.параметрыToolStripMenuItem2.Name = "параметрыToolStripMenuItem2";
             this.параметрыToolStripMenuItem2.Size = new System.Drawing.Size(213, 22);
             this.параметрыToolStripMenuItem2.Text = "Параметры";
+            this.параметрыToolStripMenuItem2.Click += new System.EventHandler(this.параметрыToolStripMenuItem2_Click);
             // 
             // холодильнаяКамераToolStripMenuItem
             // 
@@ -452,6 +455,7 @@
             this.параметрыToolStripMenuItem3.Name = "параметрыToolStripMenuItem3";
             this.параметрыToolStripMenuItem3.Size = new System.Drawing.Size(213, 22);
             this.параметрыToolStripMenuItem3.Text = "Параметры";
+            this.параметрыToolStripMenuItem3.Click += new System.EventHandler(this.параметрыToolStripMenuItem3_Click);
             // 
             // датчикиToolStripMenuItem
             // 
@@ -474,6 +478,7 @@
             this.параметрыToolStripMenuItem4.Name = "параметрыToolStripMenuItem4";
             this.параметрыToolStripMenuItem4.Size = new System.Drawing.Size(213, 22);
             this.параметрыToolStripMenuItem4.Text = "Параметры";
+            this.параметрыToolStripMenuItem4.Click += new System.EventHandler(this.параметрыToolStripMenuItem4_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -519,7 +524,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 959);
+            this.panel1.Size = new System.Drawing.Size(309, 703);
             this.panel1.TabIndex = 6;
             // 
             // tbDateTime
@@ -527,7 +532,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 911);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 655);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -955,7 +960,7 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 801);
+            this.panel2.Location = new System.Drawing.Point(0, 545);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(975, 182);
             this.panel2.TabIndex = 7;
@@ -995,7 +1000,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(975, 777);
+            this.panel3.Size = new System.Drawing.Size(975, 521);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView4
@@ -1007,7 +1012,7 @@
             this.cICurrent4mA,
             this.cICurrent20mA});
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView4.Location = new System.Drawing.Point(277, 529);
+            this.dataGridView4.Location = new System.Drawing.Point(277, 273);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.Size = new System.Drawing.Size(698, 248);
@@ -1060,7 +1065,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 0);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(698, 777);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 521);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1126,7 +1131,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(698, 777);
+            this.dataGridView2.Size = new System.Drawing.Size(698, 521);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             // 
@@ -1197,7 +1202,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(277, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(698, 777);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 521);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1243,10 +1248,10 @@
             // 
             // сState
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle5.NullValue = false;
-            this.сState.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle11.NullValue = false;
+            this.сState.DefaultCellStyle = dataGridViewCellStyle11;
             this.сState.DividerWidth = 1;
             this.сState.FalseValue = "false";
             this.сState.HeaderText = "Подключение";
@@ -1268,10 +1273,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle12.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle12;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -1288,7 +1293,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 777);
+            this.panel4.Size = new System.Drawing.Size(277, 521);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1300,7 +1305,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 777);
+            this.tabControl1.Size = new System.Drawing.Size(277, 521);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1315,7 +1320,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 751);
+            this.tabPage1.Size = new System.Drawing.Size(269, 495);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1324,7 +1329,7 @@
             // 
             this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep1.Location = new System.Drawing.Point(8, 714);
+            this.btnNextStep1.Location = new System.Drawing.Point(8, 458);
             this.btnNextStep1.Name = "btnNextStep1";
             this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
             this.btnNextStep1.TabIndex = 7;
@@ -2300,6 +2305,151 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.cbChannalVerification);
+            this.groupBox11.Location = new System.Drawing.Point(8, 8);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(255, 47);
+            this.groupBox11.TabIndex = 6;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Текущий канал";
+            // 
+            // cbChannalVerification
+            // 
+            this.cbChannalVerification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChannalVerification.FormattingEnabled = true;
+            this.cbChannalVerification.Location = new System.Drawing.Point(6, 18);
+            this.cbChannalVerification.Name = "cbChannalVerification";
+            this.cbChannalVerification.Size = new System.Drawing.Size(243, 21);
+            this.cbChannalVerification.TabIndex = 0;
+            this.cbChannalVerification.SelectedIndexChanged += new System.EventHandler(this.cbChannalVerification_SelectedIndexChanged);
+            // 
+            // pbVRProcess
+            // 
+            this.pbVRProcess.Location = new System.Drawing.Point(8, 656);
+            this.pbVRProcess.Name = "pbVRProcess";
+            this.pbVRProcess.Size = new System.Drawing.Size(255, 23);
+            this.pbVRProcess.TabIndex = 4;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnVRRead4);
+            this.groupBox6.Controls.Add(this.btnVRSet4);
+            this.groupBox6.Controls.Add(this.VerRange4_Pmin);
+            this.groupBox6.Controls.Add(this.VerRange4_Pmax);
+            this.groupBox6.Controls.Add(this.label46);
+            this.groupBox6.Location = new System.Drawing.Point(4, 466);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(263, 129);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Уровень 4";
+            // 
+            // btnVRRead4
+            // 
+            this.btnVRRead4.Location = new System.Drawing.Point(8, 91);
+            this.btnVRRead4.Name = "btnVRRead4";
+            this.btnVRRead4.Size = new System.Drawing.Size(244, 32);
+            this.btnVRRead4.TabIndex = 4;
+            this.btnVRRead4.Tag = "4";
+            this.btnVRRead4.Text = "Чтение показаний";
+            this.btnVRRead4.UseVisualStyleBackColor = true;
+            this.btnVRRead4.Click += new System.EventHandler(this.btnVRRead1_Click);
+            // 
+            // btnVRSet4
+            // 
+            this.btnVRSet4.Location = new System.Drawing.Point(147, 39);
+            this.btnVRSet4.Name = "btnVRSet4";
+            this.btnVRSet4.Size = new System.Drawing.Size(105, 46);
+            this.btnVRSet4.TabIndex = 3;
+            this.btnVRSet4.Tag = "4";
+            this.btnVRSet4.Text = "Задать";
+            this.btnVRSet4.UseVisualStyleBackColor = true;
+            this.btnVRSet4.Click += new System.EventHandler(this.btnVRSet1_Click);
+            // 
+            // VerRange4_Pmin
+            // 
+            this.VerRange4_Pmin.Location = new System.Drawing.Point(5, 65);
+            this.VerRange4_Pmin.Name = "VerRange4_Pmin";
+            this.VerRange4_Pmin.Size = new System.Drawing.Size(126, 20);
+            this.VerRange4_Pmin.TabIndex = 2;
+            // 
+            // VerRange4_Pmax
+            // 
+            this.VerRange4_Pmax.Location = new System.Drawing.Point(5, 39);
+            this.VerRange4_Pmax.Name = "VerRange4_Pmax";
+            this.VerRange4_Pmax.Size = new System.Drawing.Size(126, 20);
+            this.VerRange4_Pmax.TabIndex = 1;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(5, 23);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(126, 13);
+            this.label46.TabIndex = 0;
+            this.label46.Text = "ВПИ и НПИ диапазона:";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnVRRead3);
+            this.groupBox5.Controls.Add(this.btnVRSet3);
+            this.groupBox5.Controls.Add(this.VerRange3_Pmin);
+            this.groupBox5.Controls.Add(this.VerRange3_Pmax);
+            this.groupBox5.Controls.Add(this.label45);
+            this.groupBox5.Location = new System.Drawing.Point(3, 331);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(263, 129);
+            this.groupBox5.TabIndex = 2;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Уровень 3";
+            // 
+            // btnVRRead3
+            // 
+            this.btnVRRead3.Location = new System.Drawing.Point(8, 91);
+            this.btnVRRead3.Name = "btnVRRead3";
+            this.btnVRRead3.Size = new System.Drawing.Size(244, 32);
+            this.btnVRRead3.TabIndex = 4;
+            this.btnVRRead3.Tag = "3";
+            this.btnVRRead3.Text = "Чтение показаний";
+            this.btnVRRead3.UseVisualStyleBackColor = true;
+            this.btnVRRead3.Click += new System.EventHandler(this.btnVRRead1_Click);
+            // 
+            // btnVRSet3
+            // 
+            this.btnVRSet3.Location = new System.Drawing.Point(147, 39);
+            this.btnVRSet3.Name = "btnVRSet3";
+            this.btnVRSet3.Size = new System.Drawing.Size(105, 46);
+            this.btnVRSet3.TabIndex = 3;
+            this.btnVRSet3.Tag = "3";
+            this.btnVRSet3.Text = "Задать";
+            this.btnVRSet3.UseVisualStyleBackColor = true;
+            this.btnVRSet3.Click += new System.EventHandler(this.btnVRSet1_Click);
+            // 
+            // VerRange3_Pmin
+            // 
+            this.VerRange3_Pmin.Location = new System.Drawing.Point(5, 65);
+            this.VerRange3_Pmin.Name = "VerRange3_Pmin";
+            this.VerRange3_Pmin.Size = new System.Drawing.Size(126, 20);
+            this.VerRange3_Pmin.TabIndex = 2;
+            // 
+            // VerRange3_Pmax
+            // 
+            this.VerRange3_Pmax.Location = new System.Drawing.Point(5, 39);
+            this.VerRange3_Pmax.Name = "VerRange3_Pmax";
+            this.VerRange3_Pmax.Size = new System.Drawing.Size(126, 20);
+            this.VerRange3_Pmax.TabIndex = 1;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(5, 23);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(126, 13);
+            this.label45.TabIndex = 0;
+            this.label45.Text = "ВПИ и НПИ диапазона:";
+            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.btnVRRead2);
@@ -2422,156 +2572,11 @@
             // 
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.btnVRRead3);
-            this.groupBox5.Controls.Add(this.btnVRSet3);
-            this.groupBox5.Controls.Add(this.VerRange3_Pmin);
-            this.groupBox5.Controls.Add(this.VerRange3_Pmax);
-            this.groupBox5.Controls.Add(this.label45);
-            this.groupBox5.Location = new System.Drawing.Point(3, 331);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(263, 129);
-            this.groupBox5.TabIndex = 2;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Уровень 3";
-            // 
-            // btnVRRead3
-            // 
-            this.btnVRRead3.Location = new System.Drawing.Point(8, 91);
-            this.btnVRRead3.Name = "btnVRRead3";
-            this.btnVRRead3.Size = new System.Drawing.Size(244, 32);
-            this.btnVRRead3.TabIndex = 4;
-            this.btnVRRead3.Tag = "3";
-            this.btnVRRead3.Text = "Чтение показаний";
-            this.btnVRRead3.UseVisualStyleBackColor = true;
-            this.btnVRRead3.Click += new System.EventHandler(this.btnVRRead1_Click);
-            // 
-            // btnVRSet3
-            // 
-            this.btnVRSet3.Location = new System.Drawing.Point(147, 39);
-            this.btnVRSet3.Name = "btnVRSet3";
-            this.btnVRSet3.Size = new System.Drawing.Size(105, 46);
-            this.btnVRSet3.TabIndex = 3;
-            this.btnVRSet3.Tag = "3";
-            this.btnVRSet3.Text = "Задать";
-            this.btnVRSet3.UseVisualStyleBackColor = true;
-            this.btnVRSet3.Click += new System.EventHandler(this.btnVRSet1_Click);
-            // 
-            // VerRange3_Pmin
-            // 
-            this.VerRange3_Pmin.Location = new System.Drawing.Point(5, 65);
-            this.VerRange3_Pmin.Name = "VerRange3_Pmin";
-            this.VerRange3_Pmin.Size = new System.Drawing.Size(126, 20);
-            this.VerRange3_Pmin.TabIndex = 2;
-            // 
-            // VerRange3_Pmax
-            // 
-            this.VerRange3_Pmax.Location = new System.Drawing.Point(5, 39);
-            this.VerRange3_Pmax.Name = "VerRange3_Pmax";
-            this.VerRange3_Pmax.Size = new System.Drawing.Size(126, 20);
-            this.VerRange3_Pmax.TabIndex = 1;
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(5, 23);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(126, 13);
-            this.label45.TabIndex = 0;
-            this.label45.Text = "ВПИ и НПИ диапазона:";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.btnVRRead4);
-            this.groupBox6.Controls.Add(this.btnVRSet4);
-            this.groupBox6.Controls.Add(this.VerRange4_Pmin);
-            this.groupBox6.Controls.Add(this.VerRange4_Pmax);
-            this.groupBox6.Controls.Add(this.label46);
-            this.groupBox6.Location = new System.Drawing.Point(4, 466);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(263, 129);
-            this.groupBox6.TabIndex = 3;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Уровень 4";
-            // 
-            // btnVRRead4
-            // 
-            this.btnVRRead4.Location = new System.Drawing.Point(8, 91);
-            this.btnVRRead4.Name = "btnVRRead4";
-            this.btnVRRead4.Size = new System.Drawing.Size(244, 32);
-            this.btnVRRead4.TabIndex = 4;
-            this.btnVRRead4.Tag = "4";
-            this.btnVRRead4.Text = "Чтение показаний";
-            this.btnVRRead4.UseVisualStyleBackColor = true;
-            this.btnVRRead4.Click += new System.EventHandler(this.btnVRRead1_Click);
-            // 
-            // btnVRSet4
-            // 
-            this.btnVRSet4.Location = new System.Drawing.Point(147, 39);
-            this.btnVRSet4.Name = "btnVRSet4";
-            this.btnVRSet4.Size = new System.Drawing.Size(105, 46);
-            this.btnVRSet4.TabIndex = 3;
-            this.btnVRSet4.Tag = "4";
-            this.btnVRSet4.Text = "Задать";
-            this.btnVRSet4.UseVisualStyleBackColor = true;
-            this.btnVRSet4.Click += new System.EventHandler(this.btnVRSet1_Click);
-            // 
-            // VerRange4_Pmin
-            // 
-            this.VerRange4_Pmin.Location = new System.Drawing.Point(5, 65);
-            this.VerRange4_Pmin.Name = "VerRange4_Pmin";
-            this.VerRange4_Pmin.Size = new System.Drawing.Size(126, 20);
-            this.VerRange4_Pmin.TabIndex = 2;
-            // 
-            // VerRange4_Pmax
-            // 
-            this.VerRange4_Pmax.Location = new System.Drawing.Point(5, 39);
-            this.VerRange4_Pmax.Name = "VerRange4_Pmax";
-            this.VerRange4_Pmax.Size = new System.Drawing.Size(126, 20);
-            this.VerRange4_Pmax.TabIndex = 1;
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(5, 23);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(126, 13);
-            this.label46.TabIndex = 0;
-            this.label46.Text = "ВПИ и НПИ диапазона:";
-            // 
-            // pbVRProcess
-            // 
-            this.pbVRProcess.Location = new System.Drawing.Point(8, 656);
-            this.pbVRProcess.Name = "pbVRProcess";
-            this.pbVRProcess.Size = new System.Drawing.Size(255, 23);
-            this.pbVRProcess.TabIndex = 4;
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.cbChannalVerification);
-            this.groupBox11.Location = new System.Drawing.Point(8, 8);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(255, 47);
-            this.groupBox11.TabIndex = 6;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Текущий канал";
-            // 
-            // cbChannalVerification
-            // 
-            this.cbChannalVerification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbChannalVerification.FormattingEnabled = true;
-            this.cbChannalVerification.Location = new System.Drawing.Point(6, 18);
-            this.cbChannalVerification.Name = "cbChannalVerification";
-            this.cbChannalVerification.Size = new System.Drawing.Size(243, 21);
-            this.cbChannalVerification.TabIndex = 0;
-            this.cbChannalVerification.SelectedIndexChanged += new System.EventHandler(this.cbChannalVerification_SelectedIndexChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 1005);
+            this.ClientSize = new System.Drawing.Size(1284, 749);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -2620,6 +2625,15 @@
             this.gbCHLevel1.ResumeLayout(false);
             this.gbCHLevel1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmax)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmax)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange2_Pmin)).EndInit();
@@ -2628,15 +2642,6 @@
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VerRange1_Pmax)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange3_Pmax)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VerRange4_Pmax)).EndInit();
-            this.groupBox11.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

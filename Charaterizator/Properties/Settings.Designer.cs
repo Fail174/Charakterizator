@@ -12,7 +12,7 @@ namespace Charaterizator.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -405,6 +405,222 @@ namespace Charaterizator.Properties {
             }
             set {
                 this["set_HoldTimeTemp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_HoldTimePress {
+            get {
+                return ((double)(this["set_HoldTimePress"]));
+            }
+            set {
+                this["set_HoldTimePress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_HoldTimeAfReset {
+            get {
+                return ((double)(this["set_HoldTimeAfReset"]));
+            }
+            set {
+                this["set_HoldTimeAfReset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_DeltaTemp {
+            get {
+                return ((double)(this["set_DeltaTemp"]));
+            }
+            set {
+                this["set_DeltaTemp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_DeltaPress {
+            get {
+                return ((double)(this["set_DeltaPress"]));
+            }
+            set {
+                this["set_DeltaPress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool set_HandleContrPress {
+            get {
+                return ((bool)(this["set_HandleContrPress"]));
+            }
+            set {
+                this["set_HandleContrPress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool set_HandleContrMultimetr {
+            get {
+                return ((bool)(this["set_HandleContrMultimetr"]));
+            }
+            set {
+                this["set_HandleContrMultimetr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_MainTimer {
+            get {
+                return ((double)(this["set_MainTimer"]));
+            }
+            set {
+                this["set_MainTimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int set_CommReadCH {
+            get {
+                return ((int)(this["set_CommReadCH"]));
+            }
+            set {
+                this["set_CommReadCH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int set_CommMaxSetCH {
+            get {
+                return ((int)(this["set_CommMaxSetCH"]));
+            }
+            set {
+                this["set_CommMaxSetCH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_CommReadPeriod {
+            get {
+                return ((double)(this["set_CommReadPeriod"]));
+            }
+            set {
+                this["set_CommReadPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_CommReadPause {
+            get {
+                return ((double)(this["set_CommReadPause"]));
+            }
+            set {
+                this["set_CommReadPause"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int set_MultimReadCount {
+            get {
+                return ((int)(this["set_MultimReadCount"]));
+            }
+            set {
+                this["set_MultimReadCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_MultimReadPeriod {
+            get {
+                return ((double)(this["set_MultimReadPeriod"]));
+            }
+            set {
+                this["set_MultimReadPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_MensorReadPeriod {
+            get {
+                return ((double)(this["set_MensorReadPeriod"]));
+            }
+            set {
+                this["set_MensorReadPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_MensorReadPause {
+            get {
+                return ((double)(this["set_MensorReadPause"]));
+            }
+            set {
+                this["set_MensorReadPause"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool set_MensorSetZero {
+            get {
+                return ((bool)(this["set_MensorSetZero"]));
+            }
+            set {
+                this["set_MensorSetZero"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_SensReadCount {
+            get {
+                return ((double)(this["set_SensReadCount"]));
+            }
+            set {
+                this["set_SensReadCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double set_SensReadPause {
+            get {
+                return ((double)(this["set_SensReadPause"]));
+            }
+            set {
+                this["set_SensReadPause"] = value;
             }
         }
     }
