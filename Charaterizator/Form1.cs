@@ -1021,7 +1021,7 @@ namespace Charaterizator
                         //закрываем предыдущие результаты сессии если были открыты
                         if(ResultCH != null)
                             ResultCH.CloseAll();
-                        if (ResultCI != null)
+                        if(ResultCI != null)
                             ResultCI.CloseAll();
 
                         //***************** создаем файлы результатов характеризации ***********************************
@@ -1042,10 +1042,10 @@ namespace Charaterizator
                         ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
                         //**********************************************************************************************
 
-                        cbDiapazon1.SelectedIndex = 0;
-                        cbDiapazon2.SelectedIndex = 0;
-                        cbDiapazon3.SelectedIndex = 0;
-                        cbDiapazon4.SelectedIndex = 0;
+                        //cbDiapazon1.SelectedIndex = 0;
+                        //cbDiapazon2.SelectedIndex = 0;
+                        //cbDiapazon3.SelectedIndex = 0;
+                        //cbDiapazon4.SelectedIndex = 0;
                         cbCHTermoCamera1.Items.Clear();
                         cbCHTermoCamera2.Items.Clear();
                         cbCHTermoCamera3.Items.Clear();
@@ -1054,49 +1054,301 @@ namespace Charaterizator
                         cbCHPressureSet2.Items.Clear();
                         cbCHPressureSet3.Items.Clear();
                         cbCHPressureSet4.Items.Clear();
-                        // Занесение данных из ДБ в combobox                         
-                        // Проверка
+
+                        // Занесение данных из ДБ в combobox                        
+                        
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
-                            if (sensors.sensorList.Count>0)
+                            int NumOfRange = -1;
+                            string SensParam;
+
+
+                            // УРОВЕНЬ - 1
+                            if (sensors.sensorList.Count > 0)
+                            {
                                 SelectModel = new String(sensors.sensorList[0].PressureModel);
-                            // Занесение данных из ДБ в combobox
-                            string SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
-                            {
-                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                cbCHTermoCamera1.Items.AddRange(SPcmbox);
-                                cbCHTermoCamera1.SelectedIndex = 0;
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));  
+
+                                if (NumOfRange == 1)
+                                {
+                                    cbDiapazon1.SelectedIndex = 0;
+                                    cbDiapazon1.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet1.Items.Clear();
+                                        cbCHTermoCamera1.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera1.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet1.Items.Clear();
+                                        cbCHPressureSet1.Items.AddRange(SPcmbox);
+                                        cbCHPressureSet1.SelectedIndex = 0;
+                                    }
+
+                                }
+                                else if (NumOfRange == 2)
+                                {
+                                    cbDiapazon1.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet1.Items.Clear();
+                                        cbCHTermoCamera1.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera1.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet1.Items.Clear();
+                                        cbCHPressureSet1.Items.AddRange(SPcmbox);                               
+                                        cbCHPressureSet1.SelectedIndex = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    cbDiapazon1.SelectedIndex = -1;
+                                    cbDiapazon1.Enabled = false;
+                                }                                
                             }
 
-                            SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
-                            {
-                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                cbCHPressureSet1.Items.AddRange(SPcmbox);
-                                cbCHPressureSet1.SelectedIndex = 0;
-                            }
 
+                            // УРОВЕНЬ - 2
                             if (sensors.sensorList.Count > 8)
+                            {
                                 SelectModel = new String(sensors.sensorList[8].PressureModel);
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));  
 
-                            SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");      // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
-                            {
-                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                cbCHTermoCamera2.Items.AddRange(SPcmbox);
-                                cbCHTermoCamera2.SelectedIndex = 0;
+                                if (NumOfRange == 1)
+                                {
+                                    cbDiapazon2.SelectedIndex = 0;
+                                    cbDiapazon2.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet2.Items.Clear();
+                                        cbCHTermoCamera2.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera2.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet2.Items.Clear();
+                                        cbCHPressureSet2.Items.AddRange(SPcmbox);
+                                        cbCHPressureSet2.SelectedIndex = 0;
+                                    }
+
+                                }
+                                else if (NumOfRange == 2)
+                                {
+                                    cbDiapazon2.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet2.Items.Clear();
+                                        cbCHTermoCamera2.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera2.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet2.Items.Clear();
+                                        cbCHPressureSet2.Items.AddRange(SPcmbox);                               
+                                        cbCHPressureSet2.SelectedIndex = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    cbDiapazon2.SelectedIndex = -1;
+                                    cbDiapazon2.Enabled = false;
+                                }                                
+
                             }
 
 
-                            SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                            if (SensParam != null)
+                            // УРОВЕНЬ - 3
+                            if (sensors.sensorList.Count > 16)
                             {
-                                string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                cbCHPressureSet2.Items.AddRange(SPcmbox);
-                                cbCHPressureSet2.SelectedIndex = 0;
+                                SelectModel = new String(sensors.sensorList[16].PressureModel);
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));
+
+                                if (NumOfRange == 1)
+                                {
+                                    cbDiapazon3.SelectedIndex = 0;
+                                    cbDiapazon3.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHTermoCamera3.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera3.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHPressureSet3.Items.AddRange(SPcmbox);
+                                        cbCHPressureSet3.SelectedIndex = 0;
+                                    }
+
+                                }
+                                else if (NumOfRange == 2)
+                                {
+                                    cbDiapazon3.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHTermoCamera3.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera3.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHPressureSet3.Items.AddRange(SPcmbox);
+                                        cbCHPressureSet3.SelectedIndex = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    cbDiapazon3.SelectedIndex = -1;
+                                    cbDiapazon3.Enabled = false;
+                                }
+
                             }
+
+
+                            // УРОВЕНЬ - 4
+                            if (sensors.sensorList.Count > 24)
+                            {
+                                SelectModel = new String(sensors.sensorList[24].PressureModel);
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));
+
+                                if (NumOfRange == 1)
+                                {
+                                    cbDiapazon4.SelectedIndex = 0;
+                                    cbDiapazon4.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet4.Items.Clear();
+                                        cbCHTermoCamera4.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera4.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet4.Items.Clear();
+                                        cbCHPressureSet4.Items.AddRange(SPcmbox);
+                                        cbCHPressureSet4.SelectedIndex = 0;
+                                    }
+
+                                }
+                                else if (NumOfRange == 2)
+                                {
+                                    cbDiapazon4.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet4.Items.Clear();
+                                        cbCHTermoCamera4.Items.AddRange(SPcmbox);
+                                        cbCHTermoCamera4.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbCHPressureSet4.Items.Clear();
+                                        cbCHPressureSet4.Items.AddRange(SPcmbox);
+                                        cbCHPressureSet4.SelectedIndex = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    cbDiapazon4.SelectedIndex = -1;
+                                    cbDiapazon4.Enabled = false;
+                                }
+
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         return;
                     }
 
@@ -1636,6 +1888,206 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             Settings.ShowDialog();
         }
+
+
+
+
+        // ХАРАКТЕРИЗАЦИЯ
+        // УРОВЕНЬ-1
+        // Выбор диапазона в combobox
+        // и отбражение данный по точкам температуры и давлению из ДБ
+        private void cbDiapazon1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {                
+                string SensParam;
+
+                if (sensors.sensorList.Count > 0)
+                {
+                    string SelectModel = new String(sensors.sensorList[0].PressureModel);                 
+
+                    if (cbDiapazon1.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet1.Items.Clear();
+                            cbCHPressureSet1.Items.AddRange(SPcmbox);
+                            cbCHPressureSet1.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbDiapazon1.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet1.Items.Clear();
+                            cbCHPressureSet1.Items.AddRange(SPcmbox);
+                            cbCHPressureSet1.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {                        
+                    }
+                }
+
+            }
+
+        }
+
+        // УРОВЕНЬ-2
+        // Выбор диапазона в combobox
+        // и отбражение данный по точкам температуры и давлению из БД
+        private void cbDiapazon2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 8)
+                {
+                    string SelectModel = new String(sensors.sensorList[8].PressureModel);
+
+                    if (cbDiapazon2.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet2.Items.Clear();
+                            cbCHPressureSet2.Items.AddRange(SPcmbox);
+                            cbCHPressureSet2.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbDiapazon2.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet2.Items.Clear();
+                            cbCHPressureSet2.Items.AddRange(SPcmbox);
+                            cbCHPressureSet2.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
+
+
+        // УРОВЕНЬ-3
+        // Выбор диапазона в combobox
+        // и отбражение данный по точкам температуры и давлению из БД
+        private void cbDiapazon3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 16)
+                {
+                    string SelectModel = new String(sensors.sensorList[16].PressureModel);
+
+                    if (cbDiapazon3.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet3.Items.Clear();
+                            cbCHPressureSet3.Items.AddRange(SPcmbox);
+                            cbCHPressureSet3.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbDiapazon3.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet3.Items.Clear();
+                            cbCHPressureSet3.Items.AddRange(SPcmbox);
+                            cbCHPressureSet3.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
+
+
+        // УРОВЕНЬ-3
+        // Выбор диапазона в combobox
+        // и отбражение данный по точкам температуры и давлению из БД
+        private void cbDiapazon4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 24)
+                {
+                    string SelectModel = new String(sensors.sensorList[24].PressureModel);
+
+                    if (cbDiapazon4.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet4.Items.Clear();
+                            cbCHPressureSet4.Items.AddRange(SPcmbox);
+                            cbCHPressureSet4.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbDiapazon4.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbCHPressureSet4.Items.Clear();
+                            cbCHPressureSet4.Items.AddRange(SPcmbox);
+                            cbCHPressureSet4.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 
