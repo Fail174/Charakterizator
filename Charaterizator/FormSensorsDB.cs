@@ -157,6 +157,18 @@ namespace Charaterizator
 
                 foreach (var gb in this.Controls.OfType<GroupBox>())
                 {
+                    foreach (var tb in gb.Controls.OfType<NumericUpDown>())
+                    {
+                        if ((tb is NumericUpDown) && (tb.Tag != null))
+                        {
+                            tb.Text = reader[Convert.ToInt32(tb.Tag)].ToString();
+                        }
+                    }
+                }
+
+                
+                foreach (var gb in this.Controls.OfType<GroupBox>())
+                {
                     foreach (var tb in gb.Controls.OfType<TextBox>())
                     {
                         if ((tb is TextBox) && (tb.Tag != null))
@@ -164,7 +176,8 @@ namespace Charaterizator
                             tb.Text = reader[Convert.ToInt32(tb.Tag)].ToString();
                         }
                     }
-                }
+                }                              
+
 
                 int numofrange = Convert.ToInt32(reader[5].ToString());
                 if (numofrange == 1)
@@ -220,6 +233,8 @@ namespace Charaterizator
 
 
         //-----------------------------------------------------------------------------------------------
+
+        // Подсказка - отображает типовые названия датчиков (из БД) при добавлении нового
         private string FormSensNameList(object sender, EventArgs e)
         {
             string str = null; 
@@ -248,9 +263,10 @@ namespace Charaterizator
 
         }
 
-            //-----------------------------------------------------------------------------------------------
+        
+        //-----------------------------------------------------------------------------------------------
 
-            // Обработчик добавить запись в БД
+        // Обработчик добавить запись в БД
         private void bAddLines_Click(object sender, EventArgs e)
         {
             // получаем названия датчиков из БД
@@ -358,6 +374,17 @@ namespace Charaterizator
 
             foreach (var gb in this.Controls.OfType<GroupBox>())
             {
+                foreach (var tb in gb.Controls.OfType<NumericUpDown>())
+                {
+                    if ((tb is NumericUpDown) && (tb.Tag != null))
+                    {
+                        partQuery = partQuery + tb.Name + "=" + "'" + tb.Text + "'" + ",";
+                    }
+                }
+            }
+
+            foreach (var gb in this.Controls.OfType<GroupBox>())
+            {
                 foreach (var tb in gb.Controls.OfType<TextBox>())
                 {
                     if ((tb is TextBox) && (tb.Tag != null))
@@ -366,6 +393,7 @@ namespace Charaterizator
                     }
                 }
             }
+
 
             partQuery = partQuery.TrimEnd(new char[] { ',' });
             // текст запроса
@@ -552,6 +580,16 @@ namespace Charaterizator
             {
                 MessageBox.Show("Нет подключения к датчику!","Подключение к датчику. Операция прервана",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 Program.txtlog.WriteLineLog("Нет подключения к датчику!", 1);
+            }
+        }
+
+        // Проверка на корректность вводимы значений диапазонов температур и давлений
+        private void HarTempPoint1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && number != 8 && number != 44 && number != 45 && number != 46 && number != 59 && number != 127 && number != 32) 
+            {
+                e.Handled = true;
             }
         }
     }

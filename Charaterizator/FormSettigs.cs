@@ -21,10 +21,7 @@ namespace Charaterizator
 
         
 
-        private void btnOpenFile_Click(object sender, EventArgs e)
-        {
-            ofdDataBase.ShowDialog();
-        }
+       
 
 
         // Сохранение данных из формы в settings
@@ -60,6 +57,8 @@ namespace Charaterizator
                 {
                     Properties.Settings.Default.set_HandleContrMultimetr = false;
                 }
+                Properties.Settings.Default.FileNameDB = tbPathFile.Text;
+                       
 
                 // 1
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt16(tbCommReadCH.Text);
@@ -84,21 +83,19 @@ namespace Charaterizator
                 }
 
                 //4
-
+                Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToDouble(tbTCameraReadPeriod.Text);
 
                 //5            
                 Properties.Settings.Default.set_SensReadCount = Convert.ToDouble(tbSensReadCount.Text);
                 Properties.Settings.Default.set_SensReadPause = Convert.ToDouble(tbSensReadPause.Text);
+
+                //
+                Properties.Settings.Default.Save();   
             }
 
             catch
             {
-                /*tab_FormSettings.SelectedIndex = page_ind;
-                TextBox tb = new TextBox();
-                tb.Focus();
-                bSetSettings.DialogResult = DialogResult.None;*/
-                
-
+               
             }
 
             finally
@@ -108,7 +105,6 @@ namespace Charaterizator
           
         }
       
-
 
         // Обработчик пререключений между окнами настроек
         private void tab_FormSettings_SelectedIndexChanged(object sender, EventArgs e)
@@ -148,6 +144,8 @@ namespace Charaterizator
                         {
                             cbHandleMultimetr.SelectedIndex = 0;
                         }
+                        tbPathFile.Text = Properties.Settings.Default.FileNameDB;
+
                         return;
                     }
                 case 1:
@@ -181,6 +179,7 @@ namespace Charaterizator
                     }
                 case 4:
                     {
+                        tbTCameraReadPeriod.Text = Properties.Settings.Default.set_TCameraReadPeriod.ToString();                     
                         return;
                     }
                 case 5:
@@ -189,12 +188,56 @@ namespace Charaterizator
                         tbSensReadPause.Text = Properties.Settings.Default.set_SensReadPause.ToString();
                         return;
                     }           
-            }
-
-
-            
+            }            
         }
 
-        
+        // Обработчик открыть файл с БД
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog _openFileDialog = new OpenFileDialog();
+            _openFileDialog.Filter = "access files (*.mdb)|*.mdb";
+
+            if (_openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // получаем выбранный файл
+                    string filename = _openFileDialog.FileName;
+                    //Properties.Settings.Default.FileNameDB = filename;
+                    //Properties.Settings.Default.Save();
+
+                    // Если соединение с БД установлено - то закрываем
+                    if (MainForm.SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+                    {
+                        MainForm.SensorsDB._сonnection.Close();
+                    }
+
+                    // Устанавливаем соединение с БД
+                    MainForm.SensorsDB.SetConnectionDB(filename);
+
+                    // выводим путь к файлу на форму
+                    tbPathFile.Text = filename;
+
+                    // Загружает данные в ListBox)
+                    MainForm.SensorsDB.GetData();
+
+
+
+
+                }
+
+                catch
+                {
+                    //MessageBox.Show(ex.Message);
+                    MessageBox.Show("Не удалось открыть файл с базой данных!", "Открытие файла БД. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+
+
+
+
+
     }
 }

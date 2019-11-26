@@ -30,7 +30,7 @@ namespace Charaterizator
         private ClassEni100 sensors = new ClassEni100();
         private FormSwitch Commutator = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
-        private FormSensorsDB SensorsDB = new FormSensorsDB();
+        public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
@@ -1042,10 +1042,10 @@ namespace Charaterizator
                         ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
                         //**********************************************************************************************
 
-                        //cbDiapazon1.SelectedIndex = 0;
-                        //cbDiapazon2.SelectedIndex = 0;
-                        //cbDiapazon3.SelectedIndex = 0;
-                        //cbDiapazon4.SelectedIndex = 0;
+                        //cbDiapazon1.SelectedIndex = -1;
+                        //cbDiapazon2.SelectedIndex = -1;
+                        //cbDiapazon3.SelectedIndex = -1;
+                        //cbDiapazon4.SelectedIndex = -1;
                         cbCHTermoCamera1.Items.Clear();
                         cbCHTermoCamera2.Items.Clear();
                         cbCHTermoCamera3.Items.Clear();
@@ -1055,8 +1055,7 @@ namespace Charaterizator
                         cbCHPressureSet3.Items.Clear();
                         cbCHPressureSet4.Items.Clear();
 
-                        // Занесение данных из ДБ в combobox                       
-                        
+                        // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
                             int NumOfRange = -1;
@@ -1069,7 +1068,7 @@ namespace Charaterizator
                                 SelectModel = new String(sensors.sensorList[0].PressureModel);
                                 // Определяем сколько диапазонов у датчиков                               
                                 NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));  
-
+                                                               
                                 if (NumOfRange == 1)
                                 {
                                     cbDiapazon1.SelectedIndex = 0;
