@@ -55,9 +55,6 @@ namespace Charaterizator
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
 
-        double PressureStart = 0;//верификация
-        double PressureEnd = 0;//верификация
-
         //Инициализация переменных основной программы
         public MainForm()
         {
@@ -95,8 +92,8 @@ namespace Charaterizator
             btnCommutator.PerformClick();
             btnMensor.PerformClick();
             btnThermalCamera.PerformClick();
+            Application.DoEvents();
 
-            // btnSensorSeach.PerformClick();
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 dataGridView1.Rows.Add(i + 1, "Нет данных", "Нет данных", false, false, false);
@@ -534,6 +531,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 pbCHProcess.Value = i - StartNumber;
+                Application.DoEvents();
 
                 Commutator.SetConnectors(i, 2);
 
@@ -560,32 +558,37 @@ namespace Charaterizator
 
         //верификация датчиков
         //чтение всех измеренных параметров с текущего датчика давления
-        private void ReadSensorPressure(double PressureStart, double PressureEnd)
+        private void ReadSensorPressure()
         {
             int StartNumber = 0;    //начальный канал
             int FinishNumber = 0;   //конечный канал
 
-//            Program.txtlog.WriteLineLog("Старт операции верификации для выбранных датчиков ... ", 0);
+            Program.txtlog.WriteLineLog("Старт операции характеризации для выбранных датчиков ... ", 0);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             int step = MaxChannalCount / MaxLevelCount;
+            int Diapazon=1;
             switch (SelectedLevel)
             {
                 case 1:
                     StartNumber = 0;
                     FinishNumber = step - 1;
+                    Diapazon = Convert.ToInt32(cbVRDiapazon1.Text);
                     break;
                 case 2:
                     StartNumber = step;
                     FinishNumber = step * 2 - 1;
+                    Diapazon = Convert.ToInt32(cbVRDiapazon2.Text);
                     break;
                 case 3:
                     StartNumber = step * 2;
                     FinishNumber = step * 3 - 1;
+                    Diapazon = Convert.ToInt32(cbVRDiapazon3.Text);
                     break;
                 case 4:
                     StartNumber = step * 3;
                     FinishNumber = step * 4 - 1;
+                    Diapazon = Convert.ToInt32(cbVRDiapazon4.Text);
                     break;
             }
             //************************************************************************************************
@@ -593,18 +596,18 @@ namespace Charaterizator
             pbVRProcess.Maximum = FinishNumber - StartNumber;
             pbVRProcess.Minimum = 0;
             pbVRProcess.Value = 0;
-
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                pbVRProcess.Value = i - StartNumber;
+                    pbVRProcess.Value = i - StartNumber;
+                    Application.DoEvents();
 
-                Commutator.SetConnectors(i, 2);
+                    Commutator.SetConnectors(i, 2);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, PressureEnd, PressureStart, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Value);
+                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Value);
                         UpDateVerificationGrid(i);
                         Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
@@ -630,9 +633,25 @@ namespace Charaterizator
                 dataGridView2.Rows.Add("", "", "", "", "", "");
                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
                 dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
-                dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
-                dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
-                dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
+                switch (SelectedLevel)
+                {
+                    case 1:
+                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon1.Text;   //
+                        break;
+                    case 2:
+                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon2.Text;   //
+                        break;
+                    case 3:
+                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon3.Text;   //
+                        break;
+                    case 4:
+                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon4.Text;   //
+                        break;
+                }
+
+                dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
+                dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
+                dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
             }
         }
 
@@ -645,7 +664,21 @@ namespace Charaterizator
                 dataGridView3.Rows.Add("", "", "", "", "", "");
                 dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString();      //
                 dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
-                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].VPI.ToString("f") +"..."+ ResultVR.Channal[i].Points[j].NPI.ToString("f");   //
+                switch (SelectedLevel)
+                {
+                    case 1:
+                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon1.Text;   //
+                        break;
+                    case 2:
+                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon2.Text;   //
+                        break;
+                    case 3:
+                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon3.Text;   //
+                        break;
+                    case 4:
+                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon4.Text;   //
+                        break;
+                }
                 dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f");
                 dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f");
                 dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f");
@@ -1352,12 +1385,12 @@ namespace Charaterizator
                                 string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange1_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange1_Pmax.Value = Convert.ToDecimal(SensParam);
                                 }
                                 SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange1_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange1_Pmin.Value = Convert.ToDecimal(SensParam);
                                 }
                             }
 
@@ -1370,12 +1403,12 @@ namespace Charaterizator
                                 string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange2_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange2_Pmax.Value = Convert.ToDecimal(SensParam);
                                 }
                                 SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange2_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange2_Pmin.Value = Convert.ToDecimal(SensParam);
                                 }
                             }
 
@@ -1388,12 +1421,12 @@ namespace Charaterizator
                                 string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange3_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange3_Pmax.Value = Convert.ToDecimal(SensParam);
                                 }
                                 SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange3_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange3_Pmin.Value = Convert.ToDecimal(SensParam);
                                 }
                             }
 
@@ -1406,12 +1439,12 @@ namespace Charaterizator
                                 string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange4_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange4_Pmax.Value = Convert.ToDecimal(SensParam);
                                 }
                                 SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
                                 if (SensParam != null)
                                 {
-                                    VerRange4_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    //VerRange4_Pmin.Value = Convert.ToDecimal(SensParam);
                                 }
                             }
 
@@ -1595,8 +1628,10 @@ namespace Charaterizator
             tabControl1.SelectedIndex = 2;
         }
 
-
-       
+        private void btnNextStep3_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
 
 
         // Обработчик нажатия меню: ФАЙЛ - ОТКРЫТЬ БД
@@ -1611,21 +1646,31 @@ namespace Charaterizator
                        
         }
         
-        //Установка температуры для характеризации группы 1
+        //Установка температуры для характеризации группы 
         private void btnCHTemperatureSet1_Click(object sender, EventArgs e)
         {
             TemperatureReady = false;
+            string strValue="";
+            switch ((sender as Button).Tag)
+            {
+                case "1":
+                    strValue = cbCHTermoCamera1.Text;
+                    break;
+                case "2":
+                    strValue = cbCHTermoCamera2.Text;
+                    break;
+                case "3":
+                    strValue = cbCHTermoCamera3.Text;
+                    break;
+                case "4":
+                    strValue = cbCHTermoCamera4.Text;
+                    break;
+            }
+
             if (ThermalCamera.Connected)
             {
+                numTermoCameraPoint.Text = strValue;
                 Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
-
-/*                btnCHPressureSet1.Enabled = false;
-                double Point = Convert.ToDouble(cbCHPressureSet1.Text);  // получаем заданное значение уставки
-                //double shift;
-                numMensorPoint.Text = cbCHPressureSet1.Text;
-                bMensorSet.PerformClick();      //выставляем давление
-                bMensorControl.PerformClick();  //запускаем задачу*/
-
                 TemperatureReady = true;
             }
             else
@@ -1633,19 +1678,14 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("Нет cвязи c термокамерой.", 1);
                 if (MessageBox.Show("Хотите установить температуру в ручную?", "Нет соединения с Термокамерой", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
-                    numTermoCameraPoint.Text = cbCHTermoCamera1.Text;
+                    numTermoCameraPoint.Text = strValue;
                     TemperatureReady = true;
                 }
             }
         }
         
-        //Установка температуры для характеризации группы 2
-        private void btnCHTemperatureSet2_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        //Установка давления для характеризации группы 1
+        //Установка давления для характеризации группы 
         private void btnCHPressureSet1_Click(object sender, EventArgs e)
         {
             string strValue="";
@@ -1719,7 +1759,6 @@ namespace Charaterizator
                     btnReadCAP.BackColor = Color.LightGreen;
                 }
             }
-
         }
 
 
@@ -1791,69 +1830,10 @@ namespace Charaterizator
             }
         }
 
-        private void btnVRSet1_Click(object sender, EventArgs e)
-        {
-            switch ((sender as Button).Tag)
-            {
-                case "1":
-                    PressureStart = (double)VerRange1_Pmin.Value;
-                    PressureEnd = (double)VerRange1_Pmax.Value;
-                    break;
-                case "2":
-                    PressureStart = (double)VerRange2_Pmin.Value;
-                    PressureEnd = (double)VerRange2_Pmax.Value;
-                    break;
-                case "3":
-                    PressureStart = (double)VerRange3_Pmin.Value;
-                    PressureEnd = (double)VerRange3_Pmax.Value;
-                    break;
-                case "4":
-                    PressureStart = (double)VerRange4_Pmin.Value;
-                    PressureEnd = (double)VerRange4_Pmax.Value;
-                    break;
-            }
-        }
-
         private void cbChannalVerification_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
         }
-
-        private void btnVRRead1_Click(object sender, EventArgs e)
-        {
-            switch ((sender as Button).Tag)
-            {
-                case "1":
-                    SelectedLevel = 1;
-                    break;
-                case "2":
-                    SelectedLevel = 2;
-                    break;
-                case "3":
-                    SelectedLevel = 3;
-                    break;
-                case "4":
-                    SelectedLevel = 4;
-                    break;
-            }
-
-            int PressureStep = (int)((PressureEnd - PressureStart) / 5);
-            double Pressure = PressureStart;
-            int i = 10;
-            do
-            {
-                i--;
-                Program.txtlog.WriteLineLog(string.Format("Начинаем верификацию датчиков на давлении {0} кПа", Pressure),0);
-                numMensorPoint.Text = Pressure.ToString();
-                bMensorSet.PerformClick();      //выставляем давление
-                bMensorControl.PerformClick();  //запускаем задачу
-                Thread.Sleep(1000);//ждем уставновления давления
-                ReadSensorPressure(PressureStart, PressureEnd);
-                Pressure = Pressure + PressureStep;
-            } while ((Pressure <= PressureEnd)||(i<=0));
-        }
-
-
 
         // Меню НАСТРОЙКИ
         // Настройки программы
@@ -2083,22 +2063,186 @@ namespace Charaterizator
             }
         }
 
+        private void btnVRTemperatureSet1_Click(object sender, EventArgs e)
+        {
+            TemperatureReady = false;
+            string strValue = "";
+            switch ((sender as Button).Tag)
+            {
+                case "1":
+                    strValue = cbVRTermoCamera1.Text;
+                    break;
+                case "2":
+                    strValue = cbVRTermoCamera2.Text;
+                    break;
+                case "3":
+                    strValue = cbVRTermoCamera3.Text;
+                    break;
+                case "4":
+                    strValue = cbVRTermoCamera4.Text;
+                    break;
+            }
 
+            if (ThermalCamera.Connected)
+            {
+                numTermoCameraPoint.Text = strValue;
+                Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
+                TemperatureReady = true;
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Нет cвязи c термокамерой.", 1);
+                if (MessageBox.Show("Хотите установить температуру в ручную?", "Нет соединения с Термокамерой", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    numTermoCameraPoint.Text = strValue;
+                    TemperatureReady = true;
+                }
+            }
 
+        }
 
+        private void btnVRPressureSet1_Click(object sender, EventArgs e)
+        {
+            string strValue = "";
+            switch ((sender as Button).Tag)
+            {
+                case "1":
+                    strValue = cbVRPressureSet1.Text;
+                    break;
+                case "2":
+                    strValue = cbVRPressureSet2.Text;
+                    break;
+                case "3":
+                    strValue = cbVRPressureSet3.Text;
+                    break;
+                case "4":
+                    strValue = cbVRPressureSet4.Text;
+                    break;
+            }
 
+            if (Mensor.Connected)
+            {
+                double Point;
+                double shift;
+                try
+                {
+                    btnVRPressureSet1.Enabled = false;
+                    btnVRPressureSet2.Enabled = false;
+                    btnVRPressureSet3.Enabled = false;
+                    btnVRPressureSet4.Enabled = false;
+                    Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
+                    numMensorPoint.Text = strValue;
+                    bMensorSet.PerformClick();      //выставляем давление
+                    bMensorControl.PerformClick();  //запускаем задачу
 
+                    int i = 0;
+                    do//ожидаем установления давления
+                    {
+                        i++;
+                        Thread.Sleep(1000);
+                        double realpoint = Convert.ToDouble(tbMensorData.Text);
+                        shift = Math.Abs(realpoint - Point);
+                    } while ((shift < SKOPressure) && (i < 100));
+                    if (i >= 100)
+                    {//давление не установлено
+                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
+                    }
+                    else
+                    {//давление установлено
+                        Thread.Sleep(WaitPressureTime * 1000);//ожидаем стабилизации
+                        PressureReady = true;
+//                        btnCHStart.BackColor = Color.LightGreen;
+//                        btnReadCAP.BackColor = Color.LightGreen;
+                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
+                    }
+                }
+                finally
+                {
+                    btnVRPressureSet1.Enabled = true;
+                    btnVRPressureSet2.Enabled = true;
+                    btnVRPressureSet3.Enabled = true;
+                    btnVRPressureSet4.Enabled = true;
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с Менсором", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    numMensorPoint.Text = strValue;
+                    PressureReady = true;
+                    btnCHStart.BackColor = Color.LightGreen;
+                    btnReadCAP.BackColor = Color.LightGreen;
+                }
+            }
 
+        }
 
+        private void btnVRParamRead_Click(object sender, EventArgs e)
+        {
+            switch ((sender as Button).Tag)
+            {
+                case "1":
+                    SelectedLevel = 1;
+                    break;
+                case "2":
+                    SelectedLevel = 2;
+                    break;
+                case "3":
+                    SelectedLevel = 3;
+                    break;
+                case "4":
+                    SelectedLevel = 4;
+                    break;
+            }
 
+            if (TemperatureReady && PressureReady)
+            {
+                btnCHStart.BackColor = Color.IndianRed;
+                btnCHStart.Text = "Выполняется процесс верификации ...";
+                ReadSensorPressure();
+                btnCHStart.Text = "Чтение показаний";
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
+            }
+        }
 
+        private void gbVRLevel1_Enter(object sender, EventArgs e)
+        {
+            switch ((sender as GroupBox).Tag)
+            {
+                case "1":
+                    SelectedLevel = 1;
+                    gbVRLevel1.BackColor = Color.LightGreen;
+                    gbVRLevel2.BackColor = Color.Transparent;
+                    gbVRLevel3.BackColor = Color.Transparent;
+                    gbVRLevel4.BackColor = Color.Transparent;
+                    break;
+                case "2":
+                    SelectedLevel = 2;
+                    gbVRLevel1.BackColor = Color.Transparent;
+                    gbVRLevel2.BackColor = Color.LightGreen;
+                    gbVRLevel3.BackColor = Color.Transparent;
+                    gbVRLevel4.BackColor = Color.Transparent;
+                    break;
+                case "3":
+                    SelectedLevel = 3;
+                    gbVRLevel1.BackColor = Color.Transparent;
+                    gbVRLevel2.BackColor = Color.Transparent;
+                    gbVRLevel3.BackColor = Color.LightGreen;
+                    gbVRLevel4.BackColor = Color.Transparent;
+                    break;
+                case "4":
+                    SelectedLevel = 4;
+                    gbVRLevel1.BackColor = Color.Transparent;
+                    gbVRLevel2.BackColor = Color.Transparent;
+                    gbVRLevel3.BackColor = Color.Transparent;
+                    gbVRLevel4.BackColor = Color.LightGreen;
+                    break;
+            }
 
-
-
-
-
-
-
+        }
     }
 }
 

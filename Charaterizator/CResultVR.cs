@@ -12,8 +12,7 @@ namespace Charaterizator
     {
         public DateTime Datetime;
         public double Temperature;
-        public double VPI;
-        public double NPI;
+        public int Diapazon;
         public double PressureZ;
         public double PressureF;
         public double CurrentF;
@@ -54,7 +53,7 @@ namespace Charaterizator
                 fs.WriteLine(string.Format("Результаты верификации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
                 fs.WriteLine("Дата               |" +
                                 "Температура   |" +
-                                "ВПИ...НПИ     |" +
+                                "Диапазон      |" +
                                 "Давление (з)  |" +
                                 "Давление (ф)  |" +
                                 "Ток (ф)       |");
@@ -72,7 +71,7 @@ namespace Charaterizator
             FileStream.Clear();
         }
 
-        public void AddPoint(int ch, double Temp, double V, double N, double PressZ, double PressF, double CurF)
+        public void AddPoint(int ch, double Temp, int D, double PressZ, double PressF, double CurF)
         {
             try
             {
@@ -80,8 +79,7 @@ namespace Charaterizator
                 {
                     Datetime = DateTime.Now,
                     Temperature = Temp,
-                    VPI = V,
-                    NPI = N,
+                    Diapazon = D,
                     PressureZ = PressZ,
                     PressureF = PressF,
                     CurrentF = CurF,
@@ -102,7 +100,7 @@ namespace Charaterizator
         {
             return point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("f11") + "|" +
-                point.VPI.ToString("f5") + "-" +point.NPI.ToString("f5") + "|" +
+                point.Diapazon.ToString("f11") + "|" +
                 point.PressureZ.ToString("f11") + "|" +
                 point.PressureF.ToString("f11") + "|" +
                 point.CurrentF.ToString("f11") + "|";
