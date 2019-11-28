@@ -498,6 +498,7 @@ namespace Charaterizator
         {
             int StartNumber=0;    //начальный канал
             int FinishNumber=0;   //конечный канал
+            int Diapazon = 1;
 
             Program.txtlog.WriteLineLog("Старт операции характеризации для выбранных датчиков ... ", 0);
 
@@ -508,18 +509,22 @@ namespace Charaterizator
                 case 1:
                     StartNumber = 0;
                     FinishNumber = step - 1;
+                    Diapazon = Convert.ToInt32(cbDiapazon1.Text);
                     break;
                 case 2:
                     StartNumber = step;
                     FinishNumber = step * 2 - 1;
+                    Diapazon = Convert.ToInt32(cbDiapazon2.Text);
                     break;
                 case 3:
                     StartNumber = step * 2;
                     FinishNumber = step * 3 - 1;
+                    Diapazon = Convert.ToInt32(cbDiapazon3.Text);
                     break;
                 case 4:
                     StartNumber = step * 3;
                     FinishNumber = step * 4 - 1;
+                    Diapazon = Convert.ToInt32(cbDiapazon4.Text);
                     break;
             }
             //************************************************************************************************
@@ -539,7 +544,7 @@ namespace Charaterizator
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                        ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
                         cbChannalCharakterizator.SelectedIndex = i;
                         UpDateCharakterizatorGrid(i);
                         Program.txtlog.WriteLineLog("Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);

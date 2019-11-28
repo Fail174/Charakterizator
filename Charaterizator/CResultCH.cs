@@ -12,6 +12,7 @@ namespace Charaterizator
     {
         public DateTime Datetime;
         public double Temperature;
+        public int Diapazon;
         public double Pressure;
         public double OutVoltage;
         public double Resistance;
@@ -53,6 +54,7 @@ namespace Charaterizator
                 fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
                 fs.WriteLine(   "Дата               |" +
                                 "Температура   |" +
+                                "Диапазон      |" +
                                 "Давление      |" +
                                 "Напряжение    |" +
                                 "Сопротивление |");
@@ -75,7 +77,7 @@ namespace Charaterizator
             
         }
 
-        public void AddPoint(int ch, double Temp, double Press, double U, double R)
+        public void AddPoint(int ch, double Temp, int D, double Press, double U, double R)
         {
             try
             {
@@ -83,6 +85,7 @@ namespace Charaterizator
                 {
                     Datetime = DateTime.Now,
                     Temperature = Temp,
+                    Diapazon = D,
                     Pressure = Press,
                     OutVoltage = U,
                     Resistance = R,
@@ -102,6 +105,7 @@ namespace Charaterizator
         {
             return  point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("f11") + "|" +
+                point.Diapazon.ToString("f11") + "|" +
                 point.Pressure.ToString("f11") + "|" +
                 point.OutVoltage.ToString("f11") + "|" +
                 point.Resistance.ToString("f11") + "|";
