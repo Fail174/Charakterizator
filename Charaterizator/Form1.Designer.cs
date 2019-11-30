@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1264,10 +1264,10 @@
             // 
             // сState
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle5.NullValue = false;
-            this.сState.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle9.NullValue = false;
+            this.сState.DefaultCellStyle = dataGridViewCellStyle9;
             this.сState.DividerWidth = 1;
             this.сState.FalseValue = "false";
             this.сState.HeaderText = "Подключение";
@@ -1289,10 +1289,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle10.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -2329,7 +2329,7 @@
             // 
             // btnVRParamRead
             // 
-            this.btnVRParamRead.Location = new System.Drawing.Point(8, 508);
+            this.btnVRParamRead.Location = new System.Drawing.Point(8, 515);
             this.btnVRParamRead.Name = "btnVRParamRead";
             this.btnVRParamRead.Size = new System.Drawing.Size(255, 46);
             this.btnVRParamRead.TabIndex = 13;
@@ -2350,7 +2350,7 @@
             this.gbVRLevel4.Controls.Add(this.label55);
             this.gbVRLevel4.Controls.Add(this.cbVRTermoCamera4);
             this.gbVRLevel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel4.Location = new System.Drawing.Point(8, 394);
+            this.gbVRLevel4.Location = new System.Drawing.Point(8, 401);
             this.gbVRLevel4.Name = "gbVRLevel4";
             this.gbVRLevel4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.gbVRLevel4.Size = new System.Drawing.Size(255, 105);
@@ -2375,6 +2375,7 @@
             this.cbVRDiapazon4.Name = "cbVRDiapazon4";
             this.cbVRDiapazon4.Size = new System.Drawing.Size(66, 24);
             this.cbVRDiapazon4.TabIndex = 9;
+            this.cbVRDiapazon4.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon4_SelectedIndexChanged);
             // 
             // label53
             // 
@@ -2455,7 +2456,7 @@
             this.gbVRLevel3.Controls.Add(this.label52);
             this.gbVRLevel3.Controls.Add(this.cbVRTermoCamera3);
             this.gbVRLevel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel3.Location = new System.Drawing.Point(8, 283);
+            this.gbVRLevel3.Location = new System.Drawing.Point(8, 290);
             this.gbVRLevel3.Name = "gbVRLevel3";
             this.gbVRLevel3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.gbVRLevel3.Size = new System.Drawing.Size(255, 105);
@@ -2480,6 +2481,7 @@
             this.cbVRDiapazon3.Name = "cbVRDiapazon3";
             this.cbVRDiapazon3.Size = new System.Drawing.Size(66, 24);
             this.cbVRDiapazon3.TabIndex = 9;
+            this.cbVRDiapazon3.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon3_SelectedIndexChanged);
             // 
             // label50
             // 
@@ -2560,7 +2562,7 @@
             this.gbVRLevel2.Controls.Add(this.label49);
             this.gbVRLevel2.Controls.Add(this.cbVRTermoCamera2);
             this.gbVRLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel2.Location = new System.Drawing.Point(8, 172);
+            this.gbVRLevel2.Location = new System.Drawing.Point(8, 179);
             this.gbVRLevel2.Name = "gbVRLevel2";
             this.gbVRLevel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.gbVRLevel2.Size = new System.Drawing.Size(255, 105);
@@ -2585,6 +2587,7 @@
             this.cbVRDiapazon2.Name = "cbVRDiapazon2";
             this.cbVRDiapazon2.Size = new System.Drawing.Size(66, 24);
             this.cbVRDiapazon2.TabIndex = 9;
+            this.cbVRDiapazon2.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon2_SelectedIndexChanged);
             // 
             // label12
             // 
@@ -2665,7 +2668,7 @@
             this.gbVRLevel1.Controls.Add(this.label48);
             this.gbVRLevel1.Controls.Add(this.cbVRTermoCamera1);
             this.gbVRLevel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel1.Location = new System.Drawing.Point(8, 61);
+            this.gbVRLevel1.Location = new System.Drawing.Point(8, 68);
             this.gbVRLevel1.Name = "gbVRLevel1";
             this.gbVRLevel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.gbVRLevel1.Size = new System.Drawing.Size(255, 105);
@@ -2690,6 +2693,7 @@
             this.cbVRDiapazon1.Name = "cbVRDiapazon1";
             this.cbVRDiapazon1.Size = new System.Drawing.Size(66, 24);
             this.cbVRDiapazon1.TabIndex = 9;
+            this.cbVRDiapazon1.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon1_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -2775,7 +2779,7 @@
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.cbChannalVerification);
-            this.groupBox11.Location = new System.Drawing.Point(8, 8);
+            this.groupBox11.Location = new System.Drawing.Point(8, 13);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(255, 47);
             this.groupBox11.TabIndex = 6;
@@ -2794,7 +2798,7 @@
             // 
             // pbVRProcess
             // 
-            this.pbVRProcess.Location = new System.Drawing.Point(8, 560);
+            this.pbVRProcess.Location = new System.Drawing.Point(8, 567);
             this.pbVRProcess.Name = "pbVRProcess";
             this.pbVRProcess.Size = new System.Drawing.Size(255, 23);
             this.pbVRProcess.TabIndex = 4;

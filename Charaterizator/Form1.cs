@@ -1116,7 +1116,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet1.Items.Clear();
+                                        cbCHTermoCamera1.Items.Clear();
                                         cbCHTermoCamera1.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera1.SelectedIndex = 0;
                                     }
@@ -1140,7 +1140,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet1.Items.Clear();
+                                        cbCHTermoCamera1.Items.Clear();
                                         cbCHTermoCamera1.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera1.SelectedIndex = 0;
                                     }
@@ -1178,7 +1178,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet2.Items.Clear();
+                                        cbCHTermoCamera2.Items.Clear();
                                         cbCHTermoCamera2.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera2.SelectedIndex = 0;
                                     }
@@ -1202,7 +1202,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet2.Items.Clear();
+                                        cbCHTermoCamera2.Items.Clear();
                                         cbCHTermoCamera2.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera2.SelectedIndex = 0;
                                     }
@@ -1241,7 +1241,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHTermoCamera3.Items.Clear();
                                         cbCHTermoCamera3.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera3.SelectedIndex = 0;
                                     }
@@ -1250,7 +1250,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHTermoCamera3.Items.Clear();
                                         cbCHPressureSet3.Items.AddRange(SPcmbox);
                                         cbCHPressureSet3.SelectedIndex = 0;
                                     }
@@ -1265,7 +1265,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet3.Items.Clear();
+                                        cbCHTermoCamera3.Items.Clear();
                                         cbCHTermoCamera3.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera3.SelectedIndex = 0;
                                     }
@@ -1304,7 +1304,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet4.Items.Clear();
+                                        cbCHTermoCamera4.Items.Clear();
                                         cbCHTermoCamera4.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera4.SelectedIndex = 0;
                                     }
@@ -1328,7 +1328,7 @@ namespace Charaterizator
                                     if (SensParam != null)
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                                        cbCHPressureSet4.Items.Clear();
+                                        cbCHTermoCamera4.Items.Clear();
                                         cbCHTermoCamera4.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera4.SelectedIndex = 0;
                                     }
@@ -1378,24 +1378,73 @@ namespace Charaterizator
                         ResultVR = new CResultVR(MaxChannalCount, FN);//результаты калибровки датчиков
                         //**********************************************************************************************
 
-                        // Занесение данных из ДБ в combobox                         
-                        // Проверка
+
+
+                        // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
+                            int NumOfRange = -1;
+                            string SensParam;
+
+
                             // УРОВЕНЬ - 1
                             if (sensors.sensorList.Count > 0)
                             {
                                 SelectModel = new String(sensors.sensorList[0].PressureModel);
-                                // Занесение данных из БД в combobox
-                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));
+
+                                if (NumOfRange == 1)
                                 {
-                                    //VerRange1_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon1.SelectedIndex = 0;
+                                    cbVRDiapazon1.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera1.Items.Clear();
+                                        cbVRTermoCamera1.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera1.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet1.Items.Clear();
+                                        cbVRPressureSet1.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet1.SelectedIndex = 0;
+                                    }
+
                                 }
-                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                else if (NumOfRange == 2)
                                 {
-                                    //VerRange1_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon1.Enabled = true;
+                                    cbVRDiapazon1.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera1.Items.Clear();
+                                        cbVRTermoCamera1.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera1.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet1.Items.Clear();
+                                        cbVRPressureSet1.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet1.SelectedIndex = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    cbVRDiapazon1.SelectedIndex = -1;
+                                    cbVRDiapazon1.Enabled = false;
                                 }
                             }
 
@@ -1404,17 +1453,62 @@ namespace Charaterizator
                             if (sensors.sensorList.Count > 8)
                             {
                                 SelectModel = new String(sensors.sensorList[8].PressureModel);
-                                // Занесение данных из БД в combobox
-                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));
+
+                                if (NumOfRange == 1)
                                 {
-                                    //VerRange2_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon2.SelectedIndex = 0;
+                                    cbVRDiapazon2.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera2.Items.Clear();
+                                        cbVRTermoCamera2.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera2.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet2.Items.Clear();
+                                        cbVRPressureSet2.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet2.SelectedIndex = 0;
+                                    }
+
                                 }
-                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                else if (NumOfRange == 2)
                                 {
-                                    //VerRange2_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon2.Enabled = true;
+                                    cbVRDiapazon2.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera2.Items.Clear();
+                                        cbVRTermoCamera2.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera2.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet2.Items.Clear();
+                                        cbVRPressureSet2.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet2.SelectedIndex = 0;
+                                    }
                                 }
+                                else
+                                {
+                                    cbVRDiapazon2.SelectedIndex = -1;
+                                    cbVRDiapazon2.Enabled = false;
+                                }
+
                             }
 
 
@@ -1422,17 +1516,62 @@ namespace Charaterizator
                             if (sensors.sensorList.Count > 16)
                             {
                                 SelectModel = new String(sensors.sensorList[16].PressureModel);
-                                // Занесение данных из БД в combobox
-                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));
+
+                                if (NumOfRange == 1)
                                 {
-                                    //VerRange3_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon3.SelectedIndex = 0;
+                                    cbVRDiapazon3.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera3.Items.Clear();
+                                        cbVRTermoCamera3.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera3.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet3.Items.Clear();
+                                        cbVRPressureSet3.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet3.SelectedIndex = 0;
+                                    }
+
                                 }
-                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                else if (NumOfRange == 2)
                                 {
-                                    //VerRange3_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon3.Enabled = true;
+                                    cbVRDiapazon3.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera3.Items.Clear();
+                                        cbVRTermoCamera3.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera3.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet3.Items.Clear();
+                                        cbVRPressureSet3.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet3.SelectedIndex = 0;
+                                    }
                                 }
+                                else
+                                {
+                                    cbVRDiapazon3.SelectedIndex = -1;
+                                    cbVRDiapazon3.Enabled = false;
+                                }
+
                             }
 
 
@@ -1440,17 +1579,62 @@ namespace Charaterizator
                             if (sensors.sensorList.Count > 24)
                             {
                                 SelectModel = new String(sensors.sensorList[24].PressureModel);
-                                // Занесение данных из БД в combobox
-                                string SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmax");  // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                // Определяем сколько диапазонов у датчиков                               
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectModel, "NumOfRange"));
+
+                                if (NumOfRange == 1)
                                 {
-                                    //VerRange4_Pmax.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon4.SelectedIndex = 0;
+                                    cbVRDiapazon4.Enabled = false;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera4.Items.Clear();
+                                        cbVRTermoCamera4.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera4.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet4.Items.Clear();
+                                        cbVRPressureSet4.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet4.SelectedIndex = 0;
+                                    }
+
                                 }
-                                SensParam = SensorsDB.GetDataSensors(SelectModel, "Range1_Pmin"); // функция запроса данных из БД по номеру модели и параметру
-                                if (SensParam != null)
+                                else if (NumOfRange == 2)
                                 {
-                                    //VerRange4_Pmin.Value = Convert.ToDecimal(SensParam);
+                                    cbVRDiapazon4.Enabled = true;
+                                    cbVRDiapazon4.SelectedIndex = 0;
+                                    // Занесение данных из ДБ в combobox
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRTermoCamera4.Items.Clear();
+                                        cbVRTermoCamera4.Items.AddRange(SPcmbox);
+                                        cbVRTermoCamera4.SelectedIndex = 0;
+                                    }
+
+                                    SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                    if (SensParam != null)
+                                    {
+                                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        cbVRPressureSet4.Items.Clear();
+                                        cbVRPressureSet4.Items.AddRange(SPcmbox);
+                                        cbVRPressureSet4.SelectedIndex = 0;
+                                    }
                                 }
+                                else
+                                {
+                                    cbVRDiapazon4.SelectedIndex = -1;
+                                    cbVRDiapazon4.Enabled = false;
+                                }
+
                             }
 
                         }
@@ -2247,6 +2431,170 @@ namespace Charaterizator
                     break;
             }
 
+        }
+
+        private void cbVRDiapazon1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 0)
+                {
+                    string SelectModel = new String(sensors.sensorList[0].PressureModel);
+
+                    if (cbVRDiapazon1.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet1.Items.Clear();
+                            cbVRPressureSet1.Items.AddRange(SPcmbox);
+                            cbVRPressureSet1.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbVRDiapazon1.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet1.Items.Clear();
+                            cbVRPressureSet1.Items.AddRange(SPcmbox);
+                            cbVRPressureSet1.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
+
+        private void cbVRDiapazon2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 0)
+                {
+                    string SelectModel = new String(sensors.sensorList[0].PressureModel);
+
+                    if (cbVRDiapazon2.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet2.Items.Clear();
+                            cbVRPressureSet2.Items.AddRange(SPcmbox);
+                            cbVRPressureSet2.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbVRDiapazon2.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet2.Items.Clear();
+                            cbVRPressureSet2.Items.AddRange(SPcmbox);
+                            cbVRPressureSet2.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
+
+        private void cbVRDiapazon3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 0)
+                {
+                    string SelectModel = new String(sensors.sensorList[0].PressureModel);
+
+                    if (cbVRDiapazon3.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet3.Items.Clear();
+                            cbVRPressureSet3.Items.AddRange(SPcmbox);
+                            cbVRPressureSet3.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbVRDiapazon3.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet3.Items.Clear();
+                            cbVRPressureSet3.Items.AddRange(SPcmbox);
+                            cbVRPressureSet3.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
+
+        private void cbVRDiapazon4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
+            {
+                string SensParam;
+
+                if (sensors.sensorList.Count > 0)
+                {
+                    string SelectModel = new String(sensors.sensorList[0].PressureModel);
+
+                    if (cbVRDiapazon4.SelectedIndex == 0)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet4.Items.Clear();
+                            cbVRPressureSet4.Items.AddRange(SPcmbox);
+                            cbVRPressureSet4.SelectedIndex = 0;
+                        }
+                    }
+                    else if (cbVRDiapazon4.SelectedIndex == 1)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint2"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet4.Items.Clear();
+                            cbVRPressureSet4.Items.AddRange(SPcmbox);
+                            cbVRPressureSet4.SelectedIndex = 0;
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
         }
     }
 }
