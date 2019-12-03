@@ -47,8 +47,8 @@ namespace Charaterizator
                 Port.DataBits = DataBits;
                 Port.StopBits = (StopBits)StopBits;
                 Port.Parity = (Parity)Parity;
-                Port.ReadTimeout = 3000;
-                Port.WriteTimeout = 3000;
+                Port.ReadTimeout = 2000;
+                Port.WriteTimeout = 2000;
                 Port.DtrEnable = true;
                 Port.RtsEnable = true;
                 Port.Open();
@@ -96,6 +96,8 @@ namespace Charaterizator
                     Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
                     Thread.Sleep(900);
                     string str = Port.ReadLine();
+                    str = str.Replace(".","");
+                    //Value = double.Parse(str.Replace(".", ""););
                     Value = double.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     //Value = Convert.ToSingle(str);
                     return Value;

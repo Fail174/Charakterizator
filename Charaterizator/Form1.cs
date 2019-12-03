@@ -88,10 +88,10 @@ namespace Charaterizator
             string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
             SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
 
-            //btmMultimetr.PerformClick();
-           // btnCommutator.PerformClick();
-            //btnMensor.PerformClick();
-            //btnThermalCamera.PerformClick();
+            btmMultimetr.PerformClick();
+            btnCommutator.PerformClick();
+            btnMensor.PerformClick();
+            btnThermalCamera.PerformClick();
             Application.DoEvents();
 
             for (int i = 0; i < MaxChannalCount; i++)
@@ -725,6 +725,7 @@ namespace Charaterizator
                     Properties.Settings.Default.COMSensor_StopBits,
                     Properties.Settings.Default.COMSensor_Parity) >= 0)
                 {
+                    btnSensorSeach.Text = "Идет поиск датчиков... ";
                     for (int i = 0; i < MaxChannalCount; i++)
                     {
                         if (!Convert.ToBoolean(dataGridView1.Rows[i].Cells[3].Value))   //Добавлен в список?
@@ -785,6 +786,7 @@ namespace Charaterizator
             }
             finally
             {
+                btnSensorSeach.Text = "Поиск датчиков";
                 SensorBusy = false;
                 pbSensorSeach.Value = 0;
             }

@@ -1790,7 +1790,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(269, 716);
+            this.tabPage2.Size = new System.Drawing.Size(269, 495);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2322,7 +2322,7 @@
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(269, 716);
+            this.tabPage3.Size = new System.Drawing.Size(269, 495);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 

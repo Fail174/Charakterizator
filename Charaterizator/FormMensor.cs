@@ -16,6 +16,7 @@ namespace Charaterizator
     public partial class FormMensor : Form
         
     {
+        private Thread ReadThread;
         public SerialPort _serialPort_M;           // переменная для работы с COM портом      
         int pause_ms;                       // задержка между приемом и передачей команд по COM порту, мс 
        
@@ -26,7 +27,7 @@ namespace Charaterizator
         
 
         public bool Connected = false;      // true  - соединение установлено, 
-               
+
         public int activCH = -1;            // номер активного канала (0 - канал А, 1 - канал В)
         public int _activCH
         {
@@ -118,11 +119,14 @@ namespace Charaterizator
             if (Connected)
             {
                 // останавливаем таймер                
-                timer1.Stop();
-                timer1.Enabled = false;
+//              timer1.Stop();
+//              timer1.Enabled = false;
+                if (ReadThread != null)
+                    ReadThread.Abort(0);
 
                 _serialPort_M.Close();
                 Connected = false;
+
                 return 0;
             }
             else
@@ -152,19 +156,24 @@ namespace Charaterizator
                 _serialPort_M.RtsEnable = true;
                 _serialPort_M.Open();
 
-                bool ReadMensorID = true;  // заглушка, д.б. функция считывающая что менсор ресльно подключен а не просто открыт порт для него
-
-                if (ReadMensorID)
+                //bool ReadMensorID = true;  // заглушка, д.б. функция считывающая что менсор ресльно подключен а не просто открыт порт для него
+                int ReadMensorID = ChannelRead();
+                if ((ReadMensorID==0) && (ReadMensorID == 1))
                 {
                   
                     // устанавливаем заданные паузу и таймер (время считывания информации с mensor)
                     pause_ms = Convert.ToInt32(tbPauseMC.Text);
-                    timer1.Interval = Convert.ToInt32(tbTimer.Text);
+//                    timer1.Interval = Convert.ToInt32(tbTimer.Text);
                     // запускаем таймер
-                    timer1.Enabled = true;
-                    timer1.Start();
-                    timer1_Tick(null, null);
-                  Connected = true;
+//                    timer1.Enabled = true;
+//                    timer1.Start();
+//                    timer1_Tick(null, null);
+                    Connected = true;
+
+                    ReadThread = new Thread(MensorReadThread);
+                    ReadThread.Priority = ThreadPriority.AboveNormal;
+                    ReadThread.Start();
+
                     return 0;
                 }
                 else
@@ -305,16 +314,18 @@ namespace Charaterizator
         {
             try
             {
-                timer1.Stop();
-                timer1.Enabled = false;
+//                timer1.Stop();
+//                timer1.Enabled = false;
+                ReadThread.Suspend();
                 int num = cbRangeCHA.SelectedIndex;     // Получаем индекс выбранного диапазона-преобразователя (0..1 - ПРЕОБР.(Д1 и Д2), 2 - AutoRange)                       
                 SetTypeRange(num);                      // Отправляем команду установить заданный диапазон-преобразователь
                 //Thread.Sleep(pause_ms);
             }
             finally
             {
-                timer1.Enabled = true;
-                timer1.Start();
+                ReadThread.Resume();
+//                timer1.Enabled = true;
+//                timer1.Start();
             }           
         }
 
@@ -324,17 +335,19 @@ namespace Charaterizator
         {
             try
             {
-                timer1.Stop();
-                timer1.Enabled = false;
+//                timer1.Stop();
+//                timer1.Enabled = false;
+                ReadThread.Suspend();
                 int num = cbRangeCHB.SelectedIndex;     // Получаем индекс выбранного диапазона-преобразователя (0..3 - ПРЕОБР.(0..3), 4 - AutoRange)                       
                 SetTypeRange(num);                      // Отправляем команду установить заданный диапазон-преобразователь
                 //Thread.Sleep(pause_ms);
             }
             finally
             {
-                timer1.Enabled = true;
-                timer1.Start();
-            }           
+//                timer1.Enabled = true;
+//                timer1.Start();
+                ReadThread.Resume();
+            }
         }
         //................................................................................
 
@@ -381,9 +394,10 @@ namespace Charaterizator
         private void cbUMeasCHA_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
-            {                
-                timer1.Stop();
-                timer1.Enabled = false;
+            {
+                //                timer1.Stop();
+                //                timer1.Enabled = false;
+                ReadThread.Suspend();
 
                 int num = cbUMeasCHA.SelectedIndex; // получаем номер выбранной ед.изм.            
                 SetUMeas(num);                      // передаем команду установить соотв. ед. изм.
@@ -391,9 +405,10 @@ namespace Charaterizator
             }
             finally
             {
-                timer1.Enabled = true;
-                timer1.Start();
-            }           
+//                timer1.Enabled = true;
+//                timer1.Start();
+                ReadThread.Resume();
+            }
         }
 
         //CHB
@@ -401,8 +416,9 @@ namespace Charaterizator
         {
             try
             {
-                timer1.Stop();
-                timer1.Enabled = false;
+//                timer1.Stop();
+//                timer1.Enabled = false;
+                ReadThread.Suspend();
 
                 int num = cbUMeasCHB.SelectedIndex; // получаем номер выбранной ед.изм.            
                 SetUMeas(num);                      // передаем команду установить соотв. ед. изм.
@@ -410,9 +426,10 @@ namespace Charaterizator
             }
             finally
             {
-                timer1.Enabled = true;
-                timer1.Start();
-            }            
+                //                timer1.Enabled = true;
+                //                timer1.Start();
+                ReadThread.Resume();
+            }
         }
         //................................................................................
 
@@ -425,8 +442,9 @@ namespace Charaterizator
         {
             try
             {
-                timer1.Stop();
-                timer1.Enabled = false;
+//                timer1.Stop();
+//                timer1.Enabled = false;
+                ReadThread.Suspend();
 
                 int num = cbTypePressCHA.SelectedIndex;     // получаем выбранный пользователем тип давления (номер 0 - Абс, 1 - Избыт.)
                 SetTypePress(num);                          // передаем команду установить тип давления 
@@ -434,8 +452,9 @@ namespace Charaterizator
             }
             finally
             {
-                timer1.Enabled = true;
-                timer1.Start();
+  //              timer1.Enabled = true;
+  //              timer1.Start();
+                ReadThread.Resume();
             }
         }
 
@@ -444,8 +463,9 @@ namespace Charaterizator
         {
             try
             {                
-                timer1.Stop();
-                timer1.Enabled = false;
+//                timer1.Stop();
+//                timer1.Enabled = false;
+                ReadThread.Suspend();
 
                 int num = cbTypePressCHB.SelectedIndex;     // получаем выбранный пользователем тип давления (номер 0 - Абс, 1 - Избыт.)
                 SetTypePress(num);                          // передаем команду установить тип давления        
@@ -453,9 +473,10 @@ namespace Charaterizator
             }
             finally
             {
-                timer1.Enabled = true;
-                timer1.Start();
-            }             
+//                timer1.Enabled = true;
+//                timer1.Start();
+                ReadThread.Resume();
+            }
         }
         //................................................................................
 
@@ -689,6 +710,56 @@ namespace Charaterizator
         }
         //................................................................................
 
+        //Поток опроса менсора 
+         //Поток останавливается при завершении сенса связи с менсором
+        void MensorReadThread()
+        {
+            while (_serialPort_M.IsOpen)
+            {
+                try
+                {
+                    activCH = ChannelRead();    // считываем номер активного канала  
+
+                    switch (activCH)
+                    {
+                        case 0: // Канал A
+                                // Меняем цвет кнопок                
+                            bSetCHA.BackColor = Color.DarkGreen;
+                            bSetCHB.BackColor = Color.Transparent;
+                            // Делаем активными кнопки поля канала A и неактивными поля канала B                   
+                            EnableCHA(true);
+                            EnableCHB(false);
+                            // Читаем и устанавливаем значения параметров окна A
+                            ReadInitialSet(0);
+                            break;
+
+                        case 1: // Канал B
+                                // Меняем цвет кнопок                
+                            bSetCHA.BackColor = Color.Transparent;
+                            bSetCHB.BackColor = Color.DarkSlateBlue;
+                            // Делаем активными кнопки поля канала B и неактивными поля канала A                    
+                            EnableCHA(false);
+                            EnableCHB(true);
+                            // Читаем и устанавливаем значения параметров окна B
+                            ReadInitialSet(1);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                catch
+                {
+                    // если считать не удалось (ошибка по TimeOut или другая... перезапускаем COM-порт)
+                    //Program.txtlog.WriteLineLog("Mensor: Ошибка чтения данных", 1);
+                    //Console.WriteLine("Mensor: Ошибка чтения данных");
+                    _serialPort_M.Close();
+                    Connected = false;
+                    /*_serialPort_M.Open();
+                    Task.Delay(20);*/
+                }
+            }
+        }
 
 
         //................................................................................
@@ -795,26 +866,32 @@ namespace Charaterizator
         {
             string str = "";
             int res = -1;
-
-            _serialPort_M.WriteLine("OUTP:CHAN?");  // запрашиваем номер активного канала
-            //toolStripStatusLabel1.Text = ("SEND: " + "OUTP:CHAN?");
-
-            Thread.Sleep(pause_ms);
-
-            str = _serialPort_M.ReadLine();         // считываем
-            //toolStripStatusLabel2.Text = ("READ: " + str);
-
-            if ((str == "A")|(str == "0"))
+            try
             {
-                res = 0;
+                _serialPort_M.WriteLine("OUTP:CHAN?");  // запрашиваем номер активного канала
+                                                        //toolStripStatusLabel1.Text = ("SEND: " + "OUTP:CHAN?");
+                                                        //            Task.Delay(pause_ms);
+                Thread.Sleep(pause_ms);
+
+                str = _serialPort_M.ReadLine();         // считываем
+                                                        //toolStripStatusLabel2.Text = ("READ: " + str);
+
+                if ((str == "A") | (str == "0"))
+                {
+                    res = 0;
+                }
+                else if ((str == "B") | (str == "1"))
+                {
+                    res = 1;
+                }
+                else
+                {
+                    res = -1;
+                }
             }
-            else if((str == "B")|(str == "1"))
+            catch
             {
-                res = 1;
-            }
-            else
-            {
-                res = -1;
+                return -1;
             }
             return res;
         }
@@ -1274,25 +1351,44 @@ namespace Charaterizator
         // возвращаемые значения:  нет
         private void ZeroCHA_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
-            timer1.Enabled = false;
 
-            _serialPort_M.WriteLine("CAL:PRES:ZERO:RUN");
-            //toolStripStatusLabel1.Text = ("SEND: CAL: PRES: ZERO: RUN");
-            timer1.Enabled = true;
-            timer1.Start();
+            //            timer1.Stop();
+            //            timer1.Enabled = false;
+            try
+            {
+
+
+                ReadThread.Suspend();
+
+                _serialPort_M.WriteLine("CAL:PRES:ZERO:RUN");
+                //toolStripStatusLabel1.Text = ("SEND: CAL: PRES: ZERO: RUN");
+            }
+            finally
+            {
+                //            timer1.Enabled = true;
+                //            timer1.Start();
+                ReadThread.Resume();
+            }
         }
 
         //CHB
         private void ZeroCHB_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
-            timer1.Enabled = false;
+            try
+            {
+                //            timer1.Stop();
+                //            timer1.Enabled = false;
+                ReadThread.Suspend();
 
-            _serialPort_M.WriteLine("CAL:PRES:ZERO:RUN");
-            //toolStripStatusLabel1.Text = ("SEND: CAL: PRES: ZERO: RUN");
-            timer1.Enabled = true;
-            timer1.Start();
+                _serialPort_M.WriteLine("CAL:PRES:ZERO:RUN");
+                //toolStripStatusLabel1.Text = ("SEND: CAL: PRES: ZERO: RUN");
+            }
+            finally
+            {
+                ReadThread.Resume();
+                //            timer1.Enabled = true;
+                //            timer1.Start();
+            }
         }
         //--------------------------------------------------------------------------------
 
@@ -1348,8 +1444,9 @@ namespace Charaterizator
             if (checkBox1.Checked)
             {
              // останавливаем таймер                
-                timer1.Stop();
-                timer1.Enabled = false;
+//                timer1.Stop();
+//                timer1.Enabled = false;
+                ReadThread.Suspend();
 
                 bSendCom.Enabled = true;
                 EnableCHA(false);
@@ -1362,9 +1459,10 @@ namespace Charaterizator
 
                 bSendCom.Enabled = false;
                 // запускаем таймер
-                timer1.Enabled = true;
-                timer1.Start();               
-            }           
+//                timer1.Enabled = true;
+//                timer1.Start();
+                ReadThread.Resume();
+            }
         }
 
 

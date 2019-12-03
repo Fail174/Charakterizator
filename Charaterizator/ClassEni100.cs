@@ -193,7 +193,7 @@ namespace Charaterizator
     public class ClassEni100
     {
         const int WAIT_TIMEOUT = 200;//таймаут ожидания ответа от датчика
-        const int WRITE_COUNT = 1;//число попыток записи команд в датчик
+        const int WRITE_COUNT = 2;//число попыток записи команд в датчик
 
         static SerialPort port = null;
         static FastFifo readbuf = new FastFifo();
