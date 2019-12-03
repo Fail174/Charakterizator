@@ -469,7 +469,7 @@ namespace Charaterizator
         }
 
         //Коррекция нуля ЦАП (команда 45).
-        public bool С45WriteCurrent4mA(float Current)
+        public bool С45WriteCurrent4mA(double Current)
         {
             if ((port != null) && (SensorConnect))
             {
@@ -500,7 +500,7 @@ namespace Charaterizator
         }
 
         //Коррекция коэффициента усиления ЦАП (команда 46)
-        public bool С46WriteCurrent20mA(float Current)
+        public bool С46WriteCurrent20mA(double Current)
         {
             if ((port != null) && (SensorConnect))
             {

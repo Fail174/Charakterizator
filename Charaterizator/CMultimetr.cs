@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Threading;
+using System.Globalization;
 
 namespace Charaterizator
 {
     class CMultimetr
     {
         public bool Connected;
-        public float Value;
+        public double Value;
         private SerialPort Port;
 
         public CMultimetr()
@@ -46,14 +47,16 @@ namespace Charaterizator
                 Port.DataBits = DataBits;
                 Port.StopBits = (StopBits)StopBits;
                 Port.Parity = (Parity)Parity;
-                Port.ReadTimeout = 1000;
-                Port.WriteTimeout = 1000;
+                Port.ReadTimeout = 3000;
+                Port.WriteTimeout = 3000;
                 Port.DtrEnable = true;
                 Port.RtsEnable = true;
                 Port.Open();
-                if (ReadData() >= 0)
+                Connected = true;
+                InitDevice();
+                if (ReadData() > -10000)
                 {
-                    Connected = true;
+
                     return 0;
                 }
                 else
@@ -73,7 +76,9 @@ namespace Charaterizator
         {
             if (Connected)
             {
+                Thread.Sleep(100);
                 Port.WriteLine("SYST:REM");
+                Thread.Sleep(1000);
                 return 0;
             }
             else
@@ -81,16 +86,18 @@ namespace Charaterizator
                 return -1;
             }
         }
-        public float ReadData()
+        public double ReadData()
         {
             if (Connected)
             {
                 try
                 {
+
                     Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
-                    Thread.Sleep(300);
+                    Thread.Sleep(900);
                     string str = Port.ReadLine();
-                    Value = Convert.ToSingle(str);
+                    Value = double.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    //Value = Convert.ToSingle(str);
                     return Value;
                 }
                 catch
@@ -98,14 +105,16 @@ namespace Charaterizator
                     //запись в лог
                     //                    Connected = false;
                     Program.txtlog.WriteLineLog("Agilent: Устройство не отвечает. ", 1);
+                    Port.Close();
+                    Port.Open();
                     Value = 0;
-                    return -2;
+                    return -10000;
                 }
             }
             else
             {
                 Value = 0;
-                return -1;
+                return -10000;
             }
         }
     }

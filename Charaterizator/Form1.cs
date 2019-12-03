@@ -88,10 +88,10 @@ namespace Charaterizator
             string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
             SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
 
-            btmMultimetr.PerformClick();
-            btnCommutator.PerformClick();
-            btnMensor.PerformClick();
-            btnThermalCamera.PerformClick();
+            //btmMultimetr.PerformClick();
+           // btnCommutator.PerformClick();
+            //btnMensor.PerformClick();
+            //btnThermalCamera.PerformClick();
             Application.DoEvents();
 
             for (int i = 0; i < MaxChannalCount; i++)
@@ -458,7 +458,7 @@ namespace Charaterizator
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
 
-                    float I4=0, I20=0;
+                    double I4=0, I20=0;
                     sensors.sensor.CurrentExit = 0;//ток 4мА
                     if (sensors.C129WriteCurrenExit())
                     {
@@ -911,7 +911,7 @@ namespace Charaterizator
         //чтение данных с мультиметра
         private void ReadMultimetr()
         {
-            float mData = Multimetr.ReadData();
+            double mData = Multimetr.ReadData();
             if (mData != 0)
             {
                 tbMultimetrData.Text = mData.ToString();
@@ -1998,7 +1998,7 @@ namespace Charaterizator
                         sensors.sensor.CurrentExit = 0;
                         sensors.C129WriteCurrenExit();
                         Thread.Sleep(1000);//ожидаем измерения мультиметром
-                        float Current = Multimetr.Value;
+                        double Current = Multimetr.Value;
                         sensors.С45WriteCurrent4mA(Current);
 
 //                        Thread.Sleep(500);
@@ -2556,6 +2556,7 @@ namespace Charaterizator
             }
         }
 
+
         private void cbVRDiapazon4_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
@@ -2587,7 +2588,6 @@ namespace Charaterizator
                             cbVRPressureSet4.Items.AddRange(SPcmbox);
                             cbVRPressureSet4.SelectedIndex = 0;
                         }
-
                     }
                     else
                     {

@@ -163,7 +163,8 @@ namespace Charaterizator
                     // запускаем таймер
                     timer1.Enabled = true;
                     timer1.Start();
-                    Connected = true;
+                    timer1_Tick(null, null);
+                  Connected = true;
                     return 0;
                 }
                 else
@@ -1459,7 +1460,7 @@ namespace Charaterizator
         }
 
         
-        // Перевод числа в double (вне зависимости от разделителя  точка или запятая)
+        // Перевод числа в double (вне зависимости от разделителя точка или запятая)
         double StrToDouble(string s)
         {
             // string str = s.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
