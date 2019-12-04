@@ -11,6 +11,8 @@ namespace Charaterizator
 {
     class CMultimetr
     {
+        const int WAIT_TIMEOUT = 1000;//таймаут ожидания ответа от мултиметра
+
         public bool Connected;
         public double Value;
         private SerialPort Port;
@@ -92,14 +94,16 @@ namespace Charaterizator
             {
                 try
                 {
-
                     Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
-                    Thread.Sleep(900);
+                    int i = 0;
+                    while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
+                    {
+                        i++;
+                        Thread.Sleep(1);
+                    }
                     string str = Port.ReadLine();
                     str = str.Replace(".","");
-                    //Value = double.Parse(str.Replace(".", ""););
                     Value = double.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                    //Value = Convert.ToSingle(str);
                     return Value;
                 }
                 catch
@@ -108,6 +112,7 @@ namespace Charaterizator
                     //                    Connected = false;
                     Program.txtlog.WriteLineLog("Agilent: Устройство не отвечает. ", 1);
                     Port.Close();
+                    Thread.Sleep(1);
                     Port.Open();
                     Value = 0;
                     return -10000;
