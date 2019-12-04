@@ -34,6 +34,16 @@
             this.bDeleteLines = new System.Windows.Forms.Button();
             this.bSaveLines = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Range2_Pmax = new System.Windows.Forms.NumericUpDown();
+            this.Range2_Pmin = new System.Windows.Forms.NumericUpDown();
+            this.Gain2 = new System.Windows.Forms.NumericUpDown();
+            this.Range1_Pmax = new System.Windows.Forms.NumericUpDown();
+            this.Range1_Pmin = new System.Windows.Forms.NumericUpDown();
+            this.Gain1 = new System.Windows.Forms.NumericUpDown();
+            this.DeltaRangeMin = new System.Windows.Forms.NumericUpDown();
+            this.Pmax = new System.Windows.Forms.NumericUpDown();
+            this.Pmin = new System.Windows.Forms.NumericUpDown();
+            this.Serial = new System.Windows.Forms.NumericUpDown();
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox12 = new System.Windows.Forms.TextBox();
@@ -67,31 +77,21 @@
             this.lvwModels = new System.Windows.Forms.ListView();
             this.lvwType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Serial = new System.Windows.Forms.NumericUpDown();
-            this.Pmin = new System.Windows.Forms.NumericUpDown();
-            this.Pmax = new System.Windows.Forms.NumericUpDown();
-            this.DeltaRangeMin = new System.Windows.Forms.NumericUpDown();
-            this.Gain1 = new System.Windows.Forms.NumericUpDown();
-            this.Range1_Pmin = new System.Windows.Forms.NumericUpDown();
-            this.Range1_Pmax = new System.Windows.Forms.NumericUpDown();
-            this.Gain2 = new System.Windows.Forms.NumericUpDown();
-            this.Range2_Pmin = new System.Windows.Forms.NumericUpDown();
-            this.Range2_Pmax = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Gain2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Gain1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeltaRangeMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pmax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Serial)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Serial)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pmin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pmax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeltaRangeMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Gain1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Gain2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).BeginInit();
             this.SuspendLayout();
             // 
             // bOpenFile
@@ -181,6 +181,190 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Индивидуальные параметры";
+            // 
+            // Range2_Pmax
+            // 
+            this.Range2_Pmax.DecimalPlaces = 1;
+            this.Range2_Pmax.Location = new System.Drawing.Point(365, 222);
+            this.Range2_Pmax.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Range2_Pmax.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Range2_Pmax.Name = "Range2_Pmax";
+            this.Range2_Pmax.Size = new System.Drawing.Size(217, 21);
+            this.Range2_Pmax.TabIndex = 11;
+            this.Range2_Pmax.Tag = "11";
+            // 
+            // Range2_Pmin
+            // 
+            this.Range2_Pmin.DecimalPlaces = 1;
+            this.Range2_Pmin.Location = new System.Drawing.Point(365, 202);
+            this.Range2_Pmin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Range2_Pmin.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Range2_Pmin.Name = "Range2_Pmin";
+            this.Range2_Pmin.Size = new System.Drawing.Size(217, 21);
+            this.Range2_Pmin.TabIndex = 10;
+            this.Range2_Pmin.Tag = "10";
+            // 
+            // Gain2
+            // 
+            this.Gain2.DecimalPlaces = 1;
+            this.Gain2.Location = new System.Drawing.Point(365, 182);
+            this.Gain2.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Gain2.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Gain2.Name = "Gain2";
+            this.Gain2.Size = new System.Drawing.Size(217, 21);
+            this.Gain2.TabIndex = 9;
+            this.Gain2.Tag = "7";
+            // 
+            // Range1_Pmax
+            // 
+            this.Range1_Pmax.DecimalPlaces = 1;
+            this.Range1_Pmax.Location = new System.Drawing.Point(365, 162);
+            this.Range1_Pmax.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Range1_Pmax.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Range1_Pmax.Name = "Range1_Pmax";
+            this.Range1_Pmax.Size = new System.Drawing.Size(217, 21);
+            this.Range1_Pmax.TabIndex = 8;
+            this.Range1_Pmax.Tag = "9";
+            // 
+            // Range1_Pmin
+            // 
+            this.Range1_Pmin.DecimalPlaces = 1;
+            this.Range1_Pmin.Location = new System.Drawing.Point(365, 142);
+            this.Range1_Pmin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Range1_Pmin.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Range1_Pmin.Name = "Range1_Pmin";
+            this.Range1_Pmin.Size = new System.Drawing.Size(217, 21);
+            this.Range1_Pmin.TabIndex = 7;
+            this.Range1_Pmin.Tag = "8";
+            // 
+            // Gain1
+            // 
+            this.Gain1.DecimalPlaces = 1;
+            this.Gain1.Location = new System.Drawing.Point(365, 122);
+            this.Gain1.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Gain1.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Gain1.Name = "Gain1";
+            this.Gain1.Size = new System.Drawing.Size(217, 21);
+            this.Gain1.TabIndex = 6;
+            this.Gain1.Tag = "6";
+            // 
+            // DeltaRangeMin
+            // 
+            this.DeltaRangeMin.DecimalPlaces = 1;
+            this.DeltaRangeMin.Location = new System.Drawing.Point(365, 82);
+            this.DeltaRangeMin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.DeltaRangeMin.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.DeltaRangeMin.Name = "DeltaRangeMin";
+            this.DeltaRangeMin.Size = new System.Drawing.Size(217, 21);
+            this.DeltaRangeMin.TabIndex = 4;
+            this.DeltaRangeMin.Tag = "12";
+            // 
+            // Pmax
+            // 
+            this.Pmax.DecimalPlaces = 1;
+            this.Pmax.Location = new System.Drawing.Point(365, 62);
+            this.Pmax.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Pmax.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Pmax.Name = "Pmax";
+            this.Pmax.Size = new System.Drawing.Size(217, 21);
+            this.Pmax.TabIndex = 3;
+            this.Pmax.Tag = "4";
+            // 
+            // Pmin
+            // 
+            this.Pmin.DecimalPlaces = 1;
+            this.Pmin.Location = new System.Drawing.Point(365, 42);
+            this.Pmin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.Pmin.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.Pmin.Name = "Pmin";
+            this.Pmin.Size = new System.Drawing.Size(217, 21);
+            this.Pmin.TabIndex = 2;
+            this.Pmin.Tag = "3";
+            // 
+            // Serial
+            // 
+            this.Serial.Location = new System.Drawing.Point(365, 22);
+            this.Serial.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.Serial.Name = "Serial";
+            this.Serial.Size = new System.Drawing.Size(217, 21);
+            this.Serial.TabIndex = 1;
+            this.Serial.Tag = "2";
             // 
             // textBox16
             // 
@@ -331,7 +515,7 @@
             this.groupBox2.Size = new System.Drawing.Size(600, 102);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Параметры характеризации";
+            this.groupBox2.Text = "Параметры характеризации (данные вводить через пробел или точку с запятой)";
             // 
             // HarPressPoint2
             // 
@@ -401,7 +585,7 @@
             this.groupBox3.Size = new System.Drawing.Size(600, 103);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Параметры верификации";
+            this.groupBox3.Text = "Параметры верификации (данные вводить через пробел или точку с запятой)";
             // 
             // VerPressPoint2
             // 
@@ -500,86 +684,6 @@
             this.lvwModel.Text = "Модель";
             this.lvwModel.Width = 90;
             // 
-            // Serial
-            // 
-            this.Serial.Location = new System.Drawing.Point(365, 22);
-            this.Serial.Name = "Serial";
-            this.Serial.Size = new System.Drawing.Size(217, 21);
-            this.Serial.TabIndex = 1;
-            this.Serial.Tag = "2";
-            // 
-            // Pmin
-            // 
-            this.Pmin.Location = new System.Drawing.Point(365, 42);
-            this.Pmin.Name = "Pmin";
-            this.Pmin.Size = new System.Drawing.Size(217, 21);
-            this.Pmin.TabIndex = 2;
-            this.Pmin.Tag = "3";
-            // 
-            // Pmax
-            // 
-            this.Pmax.Location = new System.Drawing.Point(365, 62);
-            this.Pmax.Name = "Pmax";
-            this.Pmax.Size = new System.Drawing.Size(217, 21);
-            this.Pmax.TabIndex = 3;
-            this.Pmax.Tag = "4";
-            // 
-            // DeltaRangeMin
-            // 
-            this.DeltaRangeMin.Location = new System.Drawing.Point(365, 82);
-            this.DeltaRangeMin.Name = "DeltaRangeMin";
-            this.DeltaRangeMin.Size = new System.Drawing.Size(217, 21);
-            this.DeltaRangeMin.TabIndex = 4;
-            this.DeltaRangeMin.Tag = "12";
-            // 
-            // Gain1
-            // 
-            this.Gain1.Location = new System.Drawing.Point(365, 122);
-            this.Gain1.Name = "Gain1";
-            this.Gain1.Size = new System.Drawing.Size(217, 21);
-            this.Gain1.TabIndex = 6;
-            this.Gain1.Tag = "6";
-            // 
-            // Range1_Pmin
-            // 
-            this.Range1_Pmin.Location = new System.Drawing.Point(365, 142);
-            this.Range1_Pmin.Name = "Range1_Pmin";
-            this.Range1_Pmin.Size = new System.Drawing.Size(217, 21);
-            this.Range1_Pmin.TabIndex = 7;
-            this.Range1_Pmin.Tag = "8";
-            // 
-            // Range1_Pmax
-            // 
-            this.Range1_Pmax.Location = new System.Drawing.Point(365, 162);
-            this.Range1_Pmax.Name = "Range1_Pmax";
-            this.Range1_Pmax.Size = new System.Drawing.Size(217, 21);
-            this.Range1_Pmax.TabIndex = 8;
-            this.Range1_Pmax.Tag = "9";
-            // 
-            // Gain2
-            // 
-            this.Gain2.Location = new System.Drawing.Point(365, 182);
-            this.Gain2.Name = "Gain2";
-            this.Gain2.Size = new System.Drawing.Size(217, 21);
-            this.Gain2.TabIndex = 9;
-            this.Gain2.Tag = "7";
-            // 
-            // Range2_Pmin
-            // 
-            this.Range2_Pmin.Location = new System.Drawing.Point(365, 202);
-            this.Range2_Pmin.Name = "Range2_Pmin";
-            this.Range2_Pmin.Size = new System.Drawing.Size(217, 21);
-            this.Range2_Pmin.TabIndex = 10;
-            this.Range2_Pmin.Tag = "10";
-            // 
-            // Range2_Pmax
-            // 
-            this.Range2_Pmax.Location = new System.Drawing.Point(365, 222);
-            this.Range2_Pmax.Name = "Range2_Pmax";
-            this.Range2_Pmax.Size = new System.Drawing.Size(217, 21);
-            this.Range2_Pmax.TabIndex = 11;
-            this.Range2_Pmax.Tag = "11";
-            // 
             // FormSensorsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -602,6 +706,16 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Gain2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Gain1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeltaRangeMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pmax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Serial)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -610,16 +724,6 @@
             this.groupBox3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Serial)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pmin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pmax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeltaRangeMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Gain1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range1_Pmax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Gain2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

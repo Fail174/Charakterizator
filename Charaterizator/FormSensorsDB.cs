@@ -23,6 +23,7 @@ namespace Charaterizator
         public static string newModelSens;
         public static string SensNameList;
         public ClassEni100 eni100=null;
+        public int SelectInd = -1;
 
         public FormSensorsDB()
         {
@@ -474,9 +475,11 @@ namespace Charaterizator
 
         //-----------------------------------------------------------------------------------------------
 
+        // Обработчик выбора датчика из списка  ListBox
         private void lvwModels_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lvwModels.SelectedItems.Count <= 0) return;
+          
             string str = lvwModels.SelectedItems[0].SubItems[1].Text;
             SetSensorsData(str);
         }
@@ -517,6 +520,7 @@ namespace Charaterizator
             {
                 try
                 {
+                  
                     // текст запроса
                     string query = "SELECT " + strField + " FROM TSensors WHERE Model = " + "'" + strModel + "'";
                     // создаем объект OleDbCommand для выполнения запроса к БД MS Access
@@ -587,7 +591,7 @@ namespace Charaterizator
         private void HarTempPoint1_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && number != 8 && number != 44 && number != 45 && number != 46 && number != 59 && number != 127 && number != 32) 
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && number != 8 && number != 44 && number != 45 && number != 59 && number != 127 && number != 32) 
             {
                 e.Handled = true;
             }
