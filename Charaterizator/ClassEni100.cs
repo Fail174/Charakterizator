@@ -282,7 +282,7 @@ namespace Charaterizator
                 return false;
             }*/
         }
-        //чтение списка подключенных датчиков
+        //поиск подключенных датчиков в заданном канале
         public bool SeachSensor(int ch)
         {
             if((port != null)&&(SensorConnect))

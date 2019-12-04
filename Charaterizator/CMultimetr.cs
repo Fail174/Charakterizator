@@ -11,10 +11,18 @@ namespace Charaterizator
 {
     class CMultimetr
     {
-        const int WAIT_TIMEOUT = 1000;//таймаут ожидания ответа от мултиметра
+        const int WAIT_TIMEOUT = 1000;//таймаут ожидания ответа от мультиметра
+        const int REZISTOR = 500;     //Сопротивление резистора (Ом)
 
         public bool Connected;
-        public double Value;
+        private double Value;//Напряжение в мВ
+        public double Current//ток в мА
+        {
+            get { return Value/REZISTOR;}
+            set { }
+        }
+
+
         private SerialPort Port;
 
         public CMultimetr()
@@ -56,9 +64,8 @@ namespace Charaterizator
                 Port.Open();
                 Connected = true;
                 InitDevice();
-                if (ReadData() > -10000)
+                if (ReadData() )
                 {
-
                     return 0;
                 }
                 else
@@ -88,7 +95,9 @@ namespace Charaterizator
                 return -1;
             }
         }
-        public double ReadData()
+
+        //Читает напряжение в мВ
+        public bool ReadData()
         {
             if (Connected)
             {
@@ -104,7 +113,7 @@ namespace Charaterizator
                     string str = Port.ReadLine();
                     str = str.Replace(".","");
                     Value = double.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                    return Value;
+                    return true;
                 }
                 catch
                 {
@@ -115,13 +124,13 @@ namespace Charaterizator
                     Thread.Sleep(1);
                     Port.Open();
                     Value = 0;
-                    return -10000;
+                    return false;
                 }
             }
             else
             {
                 Value = 0;
-                return -10000;
+                return false;
             }
         }
     }
