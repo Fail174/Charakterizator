@@ -17,9 +17,17 @@ namespace Charaterizator
     public partial class FormSwitch : Form
     {
 
+        //временные константы
+        int TimeSleep = 100;            // Время опроса и обновление информации, мс
+        int WaitTime = 100;   //время выдержки после переключения коммутатора (переходные процессы), мс
+        int MAXBUSY = 2000;             //Максимальное количество циклов ожидания (по 1 мс)
+
+        bool CommutatorBusy = false;//признак доступности коммутатора для приема команд
+        public bool Connected = false;      // true  - соединение установлено, 
+        private SerialPort serialPort1;
+
         // Состяние выходов коммутатора
         Int32 StateCHPower = 0;     // Питание
-                     
         public Int32 _StateCHPower
         {
             get
@@ -33,8 +41,6 @@ namespace Charaterizator
             }
 
         }
-                                  
-       // public Int32 StateCH { get; set;}
 
         Int32 StateCH = 0;          // Измерительная цепь
         public Int32 _StateCH
@@ -66,20 +72,6 @@ namespace Charaterizator
             }
 
         }
-
-
-
-        int TimeSleep = 100;        // Время опроса и обновление информации, мс
-     
-
-        bool CommutatorBusy = false;//
-        int busycount = 0;          //
-        int MAXBUSY = 2000;         //
-        
-        public bool Connected = false;      // true  - соединение установлено, 
-        private SerialPort serialPort1;
-        
-
 
         public FormSwitch()
         {
@@ -165,7 +157,7 @@ namespace Charaterizator
         private void bPower_Click(object sender, EventArgs e)
         {            
             Button b = (Button)sender;
-            busycount = 0;
+            int busycount = 0;
             while ((CommutatorBusy) && (busycount < MAXBUSY))
             {
                 Thread.Sleep(1);
@@ -228,7 +220,7 @@ namespace Charaterizator
             int mode = 4;
             
 
-            busycount = 0;
+            int busycount = 0;
             while ((CommutatorBusy) && (busycount < MAXBUSY))
             {
                 Thread.Sleep(1);
@@ -340,9 +332,9 @@ namespace Charaterizator
                     break;
 
             }
+            Thread.Sleep(WaitTime);//ждем установления подключения
+        }
 
-        }    
-          
 
 
 
@@ -786,7 +778,7 @@ namespace Charaterizator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            busycount = 0;
+            int busycount = 0;
             while ((CommutatorBusy) && (busycount < MAXBUSY))
             {
                 Thread.Sleep(1);
