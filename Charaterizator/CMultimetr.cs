@@ -11,14 +11,14 @@ namespace Charaterizator
 {
     class CMultimetr
     {
-        const int WAIT_TIMEOUT = 1000;//таймаут ожидания ответа от мультиметра
+        const int WAIT_TIMEOUT = 100;//таймаут ожидания ответа от мультиметра
         const int REZISTOR = 500;     //Сопротивление резистора (Ом)
 
         public bool Connected;
-        private double Value;//Напряжение в мВ
-        public double Current//ток в мА
+        private float Value;//Напряжение в мВ
+        public float Current//ток в мА
         {
-            get { return Value/REZISTOR;}
+            get { return Value*1000/REZISTOR; }
             set { }
         }
 
@@ -103,7 +103,7 @@ namespace Charaterizator
             {
                 try
                 {
-                    Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
+                    Port.WriteLine("MEAS:VOLT:DC? 10, 0.01");
                     int i = 0;
                     while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
                     {
@@ -111,8 +111,8 @@ namespace Charaterizator
                         Thread.Sleep(1);
                     }
                     string str = Port.ReadLine();
-                    str = str.Replace(".","");
-                    Value = double.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                   // str = str.Replace(".","");
+                    Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     return true;
                 }
                 catch

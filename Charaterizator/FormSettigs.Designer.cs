@@ -53,14 +53,25 @@
             this.textBox38 = new System.Windows.Forms.TextBox();
             this.textBox42 = new System.Windows.Forms.TextBox();
             this.tp_CommutatorSettings = new System.Windows.Forms.TabPage();
+            this.tbCommReadPause = new System.Windows.Forms.NumericUpDown();
+            this.tbCommReadPeriod = new System.Windows.Forms.NumericUpDown();
+            this.tbCommMaxSetCH = new System.Windows.Forms.NumericUpDown();
             this.tbCommReadCH = new System.Windows.Forms.NumericUpDown();
             this.textBox49 = new System.Windows.Forms.TextBox();
             this.textBox51 = new System.Windows.Forms.TextBox();
             this.textBox54 = new System.Windows.Forms.TextBox();
             this.textBox57 = new System.Windows.Forms.TextBox();
             this.textBox61 = new System.Windows.Forms.TextBox();
+            this.textBox63 = new System.Windows.Forms.TextBox();
             this.textBox65 = new System.Windows.Forms.TextBox();
+            this.textBox67 = new System.Windows.Forms.TextBox();
             this.tp_MultimetrSettings = new System.Windows.Forms.TabPage();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbMultimReadPeriod = new System.Windows.Forms.NumericUpDown();
+            this.tbMultimReadCount = new System.Windows.Forms.NumericUpDown();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
@@ -68,6 +79,10 @@
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.tp_MensorSettings = new System.Windows.Forms.TabPage();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.tbMensorReadPause = new System.Windows.Forms.NumericUpDown();
+            this.tbMensorReadPeriod = new System.Windows.Forms.NumericUpDown();
             this.textBox85 = new System.Windows.Forms.TextBox();
             this.textBox81 = new System.Windows.Forms.TextBox();
             this.cbMensorSetZero = new System.Windows.Forms.ComboBox();
@@ -77,16 +92,23 @@
             this.textBox79 = new System.Windows.Forms.TextBox();
             this.textBox83 = new System.Windows.Forms.TextBox();
             this.tp_TermocameraSettings = new System.Windows.Forms.TabPage();
+            this.tbTCameraReadPeriod = new System.Windows.Forms.NumericUpDown();
+            this.textBox96 = new System.Windows.Forms.TextBox();
+            this.textBox99 = new System.Windows.Forms.TextBox();
+            this.textBox103 = new System.Windows.Forms.TextBox();
+            this.textBox107 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
             this.textBox93 = new System.Windows.Forms.TextBox();
             this.textBox95 = new System.Windows.Forms.TextBox();
-            this.textBox96 = new System.Windows.Forms.TextBox();
             this.textBox98 = new System.Windows.Forms.TextBox();
-            this.textBox99 = new System.Windows.Forms.TextBox();
             this.textBox101 = new System.Windows.Forms.TextBox();
-            this.textBox103 = new System.Windows.Forms.TextBox();
             this.textBox105 = new System.Windows.Forms.TextBox();
-            this.textBox107 = new System.Windows.Forms.TextBox();
             this.tp_SensorSettings = new System.Windows.Forms.TabPage();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.tbSensReadPause = new System.Windows.Forms.NumericUpDown();
+            this.tbSensReadCount = new System.Windows.Forms.NumericUpDown();
             this.textBox115 = new System.Windows.Forms.TextBox();
             this.textBox117 = new System.Windows.Forms.TextBox();
             this.textBox120 = new System.Windows.Forms.TextBox();
@@ -96,28 +118,6 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.tbCommMaxSetCH = new System.Windows.Forms.NumericUpDown();
-            this.tbCommReadPeriod = new System.Windows.Forms.NumericUpDown();
-            this.tbCommReadPause = new System.Windows.Forms.NumericUpDown();
-            this.textBox67 = new System.Windows.Forms.TextBox();
-            this.textBox63 = new System.Windows.Forms.TextBox();
-            this.tbMultimReadPeriod = new System.Windows.Forms.NumericUpDown();
-            this.tbMultimReadCount = new System.Windows.Forms.NumericUpDown();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.tbMensorReadPause = new System.Windows.Forms.NumericUpDown();
-            this.tbMensorReadPeriod = new System.Windows.Forms.NumericUpDown();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.tbSensReadPause = new System.Windows.Forms.NumericUpDown();
-            this.tbSensReadCount = new System.Windows.Forms.NumericUpDown();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.tbTCameraReadPeriod = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -128,21 +128,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimePress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeTemp)).BeginInit();
             this.tp_CommutatorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH)).BeginInit();
             this.tp_MultimetrSettings.SuspendLayout();
-            this.tp_MensorSettings.SuspendLayout();
-            this.tp_TermocameraSettings.SuspendLayout();
-            this.tp_SensorSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadPeriod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadCount)).BeginInit();
+            this.tp_MensorSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorReadPeriod)).BeginInit();
+            this.tp_TermocameraSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).BeginInit();
+            this.tp_SensorSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -407,6 +407,27 @@
             this.tp_CommutatorSettings.Text = "Коммутатор";
             this.tp_CommutatorSettings.UseVisualStyleBackColor = true;
             // 
+            // tbCommReadPause
+            // 
+            this.tbCommReadPause.Location = new System.Drawing.Point(595, 94);
+            this.tbCommReadPause.Name = "tbCommReadPause";
+            this.tbCommReadPause.Size = new System.Drawing.Size(100, 21);
+            this.tbCommReadPause.TabIndex = 93;
+            // 
+            // tbCommReadPeriod
+            // 
+            this.tbCommReadPeriod.Location = new System.Drawing.Point(595, 75);
+            this.tbCommReadPeriod.Name = "tbCommReadPeriod";
+            this.tbCommReadPeriod.Size = new System.Drawing.Size(100, 21);
+            this.tbCommReadPeriod.TabIndex = 93;
+            // 
+            // tbCommMaxSetCH
+            // 
+            this.tbCommMaxSetCH.Location = new System.Drawing.Point(595, 55);
+            this.tbCommMaxSetCH.Name = "tbCommMaxSetCH";
+            this.tbCommMaxSetCH.Size = new System.Drawing.Size(100, 21);
+            this.tbCommMaxSetCH.TabIndex = 93;
+            // 
             // tbCommReadCH
             // 
             this.tbCommReadCH.Location = new System.Drawing.Point(595, 35);
@@ -453,12 +474,26 @@
             this.textBox61.Size = new System.Drawing.Size(544, 21);
             this.textBox61.TabIndex = 89;
             // 
+            // textBox63
+            // 
+            this.textBox63.Location = new System.Drawing.Point(595, 114);
+            this.textBox63.Name = "textBox63";
+            this.textBox63.Size = new System.Drawing.Size(100, 21);
+            this.textBox63.TabIndex = 90;
+            // 
             // textBox65
             // 
             this.textBox65.Location = new System.Drawing.Point(52, 134);
             this.textBox65.Name = "textBox65";
             this.textBox65.Size = new System.Drawing.Size(544, 21);
             this.textBox65.TabIndex = 91;
+            // 
+            // textBox67
+            // 
+            this.textBox67.Location = new System.Drawing.Point(595, 134);
+            this.textBox67.Name = "textBox67";
+            this.textBox67.Size = new System.Drawing.Size(100, 21);
+            this.textBox67.TabIndex = 92;
             // 
             // tp_MultimetrSettings
             // 
@@ -481,6 +516,48 @@
             this.tp_MultimetrSettings.TabIndex = 2;
             this.tp_MultimetrSettings.Text = "Мультиметр";
             this.tp_MultimetrSettings.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(595, 135);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 21);
+            this.textBox4.TabIndex = 99;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(52, 135);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(544, 21);
+            this.textBox5.TabIndex = 98;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(595, 115);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 21);
+            this.textBox3.TabIndex = 97;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(595, 95);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 96;
+            // 
+            // tbMultimReadPeriod
+            // 
+            this.tbMultimReadPeriod.Location = new System.Drawing.Point(595, 55);
+            this.tbMultimReadPeriod.Name = "tbMultimReadPeriod";
+            this.tbMultimReadPeriod.Size = new System.Drawing.Size(100, 21);
+            this.tbMultimReadPeriod.TabIndex = 94;
+            // 
+            // tbMultimReadCount
+            // 
+            this.tbMultimReadCount.Location = new System.Drawing.Point(595, 35);
+            this.tbMultimReadCount.Name = "tbMultimReadCount";
+            this.tbMultimReadCount.Size = new System.Drawing.Size(100, 21);
+            this.tbMultimReadCount.TabIndex = 95;
             // 
             // textBox7
             // 
@@ -547,6 +624,34 @@
             this.tp_MensorSettings.TabIndex = 3;
             this.tp_MensorSettings.Text = "Задатчик давления";
             this.tp_MensorSettings.UseVisualStyleBackColor = true;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(595, 135);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(100, 21);
+            this.textBox6.TabIndex = 99;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(52, 135);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(544, 21);
+            this.textBox8.TabIndex = 98;
+            // 
+            // tbMensorReadPause
+            // 
+            this.tbMensorReadPause.Location = new System.Drawing.Point(595, 55);
+            this.tbMensorReadPause.Name = "tbMensorReadPause";
+            this.tbMensorReadPause.Size = new System.Drawing.Size(100, 21);
+            this.tbMensorReadPause.TabIndex = 96;
+            // 
+            // tbMensorReadPeriod
+            // 
+            this.tbMensorReadPeriod.Location = new System.Drawing.Point(595, 35);
+            this.tbMensorReadPeriod.Name = "tbMensorReadPeriod";
+            this.tbMensorReadPeriod.Size = new System.Drawing.Size(100, 21);
+            this.tbMensorReadPeriod.TabIndex = 97;
             // 
             // textBox85
             // 
@@ -635,6 +740,55 @@
             this.tp_TermocameraSettings.Text = "Термокамера";
             this.tp_TermocameraSettings.UseVisualStyleBackColor = true;
             // 
+            // tbTCameraReadPeriod
+            // 
+            this.tbTCameraReadPeriod.Location = new System.Drawing.Point(595, 35);
+            this.tbTCameraReadPeriod.Name = "tbTCameraReadPeriod";
+            this.tbTCameraReadPeriod.Size = new System.Drawing.Size(100, 21);
+            this.tbTCameraReadPeriod.TabIndex = 98;
+            // 
+            // textBox96
+            // 
+            this.textBox96.Location = new System.Drawing.Point(595, 55);
+            this.textBox96.Name = "textBox96";
+            this.textBox96.Size = new System.Drawing.Size(100, 21);
+            this.textBox96.TabIndex = 84;
+            // 
+            // textBox99
+            // 
+            this.textBox99.Location = new System.Drawing.Point(595, 75);
+            this.textBox99.Name = "textBox99";
+            this.textBox99.Size = new System.Drawing.Size(100, 21);
+            this.textBox99.TabIndex = 86;
+            // 
+            // textBox103
+            // 
+            this.textBox103.Location = new System.Drawing.Point(595, 95);
+            this.textBox103.Name = "textBox103";
+            this.textBox103.Size = new System.Drawing.Size(100, 21);
+            this.textBox103.TabIndex = 88;
+            // 
+            // textBox107
+            // 
+            this.textBox107.Location = new System.Drawing.Point(595, 115);
+            this.textBox107.Name = "textBox107";
+            this.textBox107.Size = new System.Drawing.Size(100, 21);
+            this.textBox107.TabIndex = 90;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(595, 135);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 21);
+            this.textBox12.TabIndex = 92;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(52, 135);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(546, 21);
+            this.textBox11.TabIndex = 91;
+            // 
             // textBox93
             // 
             this.textBox93.Location = new System.Drawing.Point(52, 35);
@@ -650,26 +804,12 @@
             this.textBox95.Size = new System.Drawing.Size(546, 21);
             this.textBox95.TabIndex = 83;
             // 
-            // textBox96
-            // 
-            this.textBox96.Location = new System.Drawing.Point(595, 55);
-            this.textBox96.Name = "textBox96";
-            this.textBox96.Size = new System.Drawing.Size(100, 21);
-            this.textBox96.TabIndex = 84;
-            // 
             // textBox98
             // 
             this.textBox98.Location = new System.Drawing.Point(52, 75);
             this.textBox98.Name = "textBox98";
             this.textBox98.Size = new System.Drawing.Size(546, 21);
             this.textBox98.TabIndex = 85;
-            // 
-            // textBox99
-            // 
-            this.textBox99.Location = new System.Drawing.Point(595, 75);
-            this.textBox99.Name = "textBox99";
-            this.textBox99.Size = new System.Drawing.Size(100, 21);
-            this.textBox99.TabIndex = 86;
             // 
             // textBox101
             // 
@@ -678,26 +818,12 @@
             this.textBox101.Size = new System.Drawing.Size(546, 21);
             this.textBox101.TabIndex = 87;
             // 
-            // textBox103
-            // 
-            this.textBox103.Location = new System.Drawing.Point(595, 95);
-            this.textBox103.Name = "textBox103";
-            this.textBox103.Size = new System.Drawing.Size(100, 21);
-            this.textBox103.TabIndex = 88;
-            // 
             // textBox105
             // 
             this.textBox105.Location = new System.Drawing.Point(52, 115);
             this.textBox105.Name = "textBox105";
             this.textBox105.Size = new System.Drawing.Size(546, 21);
             this.textBox105.TabIndex = 89;
-            // 
-            // textBox107
-            // 
-            this.textBox107.Location = new System.Drawing.Point(595, 115);
-            this.textBox107.Name = "textBox107";
-            this.textBox107.Size = new System.Drawing.Size(100, 21);
-            this.textBox107.TabIndex = 90;
             // 
             // tp_SensorSettings
             // 
@@ -720,6 +846,39 @@
             this.tp_SensorSettings.TabIndex = 5;
             this.tp_SensorSettings.Text = "Датчики";
             this.tp_SensorSettings.UseVisualStyleBackColor = true;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(52, 135);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(544, 21);
+            this.textBox14.TabIndex = 100;
+            // 
+            // textBox15
+            // 
+            this.textBox15.Location = new System.Drawing.Point(595, 135);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.Size = new System.Drawing.Size(100, 21);
+            this.textBox15.TabIndex = 101;
+            // 
+            // tbSensReadPause
+            // 
+            this.tbSensReadPause.Location = new System.Drawing.Point(595, 55);
+            this.tbSensReadPause.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.tbSensReadPause.Name = "tbSensReadPause";
+            this.tbSensReadPause.Size = new System.Drawing.Size(100, 21);
+            this.tbSensReadPause.TabIndex = 98;
+            // 
+            // tbSensReadCount
+            // 
+            this.tbSensReadCount.Location = new System.Drawing.Point(595, 35);
+            this.tbSensReadCount.Name = "tbSensReadCount";
+            this.tbSensReadCount.Size = new System.Drawing.Size(100, 21);
+            this.tbSensReadCount.TabIndex = 99;
             // 
             // textBox115
             // 
@@ -789,160 +948,6 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // tbCommMaxSetCH
-            // 
-            this.tbCommMaxSetCH.Location = new System.Drawing.Point(595, 55);
-            this.tbCommMaxSetCH.Name = "tbCommMaxSetCH";
-            this.tbCommMaxSetCH.Size = new System.Drawing.Size(100, 21);
-            this.tbCommMaxSetCH.TabIndex = 93;
-            // 
-            // tbCommReadPeriod
-            // 
-            this.tbCommReadPeriod.Location = new System.Drawing.Point(595, 75);
-            this.tbCommReadPeriod.Name = "tbCommReadPeriod";
-            this.tbCommReadPeriod.Size = new System.Drawing.Size(100, 21);
-            this.tbCommReadPeriod.TabIndex = 93;
-            // 
-            // tbCommReadPause
-            // 
-            this.tbCommReadPause.Location = new System.Drawing.Point(595, 94);
-            this.tbCommReadPause.Name = "tbCommReadPause";
-            this.tbCommReadPause.Size = new System.Drawing.Size(100, 21);
-            this.tbCommReadPause.TabIndex = 93;
-            // 
-            // textBox67
-            // 
-            this.textBox67.Location = new System.Drawing.Point(595, 134);
-            this.textBox67.Name = "textBox67";
-            this.textBox67.Size = new System.Drawing.Size(100, 21);
-            this.textBox67.TabIndex = 92;
-            // 
-            // textBox63
-            // 
-            this.textBox63.Location = new System.Drawing.Point(595, 114);
-            this.textBox63.Name = "textBox63";
-            this.textBox63.Size = new System.Drawing.Size(100, 21);
-            this.textBox63.TabIndex = 90;
-            // 
-            // tbMultimReadPeriod
-            // 
-            this.tbMultimReadPeriod.Location = new System.Drawing.Point(595, 55);
-            this.tbMultimReadPeriod.Name = "tbMultimReadPeriod";
-            this.tbMultimReadPeriod.Size = new System.Drawing.Size(100, 21);
-            this.tbMultimReadPeriod.TabIndex = 94;
-            // 
-            // tbMultimReadCount
-            // 
-            this.tbMultimReadCount.Location = new System.Drawing.Point(595, 35);
-            this.tbMultimReadCount.Name = "tbMultimReadCount";
-            this.tbMultimReadCount.Size = new System.Drawing.Size(100, 21);
-            this.tbMultimReadCount.TabIndex = 95;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(595, 95);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 21);
-            this.textBox2.TabIndex = 96;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(595, 115);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 21);
-            this.textBox3.TabIndex = 97;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(595, 135);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 21);
-            this.textBox4.TabIndex = 99;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(52, 135);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(544, 21);
-            this.textBox5.TabIndex = 98;
-            // 
-            // tbMensorReadPause
-            // 
-            this.tbMensorReadPause.Location = new System.Drawing.Point(595, 55);
-            this.tbMensorReadPause.Name = "tbMensorReadPause";
-            this.tbMensorReadPause.Size = new System.Drawing.Size(100, 21);
-            this.tbMensorReadPause.TabIndex = 96;
-            // 
-            // tbMensorReadPeriod
-            // 
-            this.tbMensorReadPeriod.Location = new System.Drawing.Point(595, 35);
-            this.tbMensorReadPeriod.Name = "tbMensorReadPeriod";
-            this.tbMensorReadPeriod.Size = new System.Drawing.Size(100, 21);
-            this.tbMensorReadPeriod.TabIndex = 97;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(595, 135);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 21);
-            this.textBox6.TabIndex = 99;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(52, 135);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(544, 21);
-            this.textBox8.TabIndex = 98;
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(52, 135);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(546, 21);
-            this.textBox11.TabIndex = 91;
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(595, 135);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 21);
-            this.textBox12.TabIndex = 92;
-            // 
-            // tbSensReadPause
-            // 
-            this.tbSensReadPause.Location = new System.Drawing.Point(595, 55);
-            this.tbSensReadPause.Name = "tbSensReadPause";
-            this.tbSensReadPause.Size = new System.Drawing.Size(100, 21);
-            this.tbSensReadPause.TabIndex = 98;
-            // 
-            // tbSensReadCount
-            // 
-            this.tbSensReadCount.Location = new System.Drawing.Point(595, 35);
-            this.tbSensReadCount.Name = "tbSensReadCount";
-            this.tbSensReadCount.Size = new System.Drawing.Size(100, 21);
-            this.tbSensReadCount.TabIndex = 99;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(52, 135);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(544, 21);
-            this.textBox14.TabIndex = 100;
-            // 
-            // textBox15
-            // 
-            this.textBox15.Location = new System.Drawing.Point(595, 135);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(100, 21);
-            this.textBox15.TabIndex = 101;
-            // 
-            // tbTCameraReadPeriod
-            // 
-            this.tbTCameraReadPeriod.Location = new System.Drawing.Point(595, 35);
-            this.tbTCameraReadPeriod.Name = "tbTCameraReadPeriod";
-            this.tbTCameraReadPeriod.Size = new System.Drawing.Size(100, 21);
-            this.tbTCameraReadPeriod.TabIndex = 98;
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -968,25 +973,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeTemp)).EndInit();
             this.tp_CommutatorSettings.ResumeLayout(false);
             this.tp_CommutatorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH)).EndInit();
             this.tp_MultimetrSettings.ResumeLayout(false);
             this.tp_MultimetrSettings.PerformLayout();
-            this.tp_MensorSettings.ResumeLayout(false);
-            this.tp_MensorSettings.PerformLayout();
-            this.tp_TermocameraSettings.ResumeLayout(false);
-            this.tp_TermocameraSettings.PerformLayout();
-            this.tp_SensorSettings.ResumeLayout(false);
-            this.tp_SensorSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadPeriod)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadCount)).EndInit();
+            this.tp_MensorSettings.ResumeLayout(false);
+            this.tp_MensorSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorReadPeriod)).EndInit();
+            this.tp_TermocameraSettings.ResumeLayout(false);
+            this.tp_TermocameraSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).EndInit();
+            this.tp_SensorSettings.ResumeLayout(false);
+            this.tp_SensorSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).EndInit();
             this.ResumeLayout(false);
 
         }

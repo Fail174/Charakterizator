@@ -192,8 +192,8 @@ namespace Charaterizator
  
     public class ClassEni100
     {
-        const int WAIT_TIMEOUT = 200;//таймаут ожидания ответа от датчика
-        const int WRITE_COUNT = 2;//число попыток записи команд в датчик
+        const int WAIT_TIMEOUT = 300;//таймаут ожидания ответа от датчика
+        const int WRITE_COUNT = 3;//число попыток записи команд в датчик
 
         static SerialPort port = null;
         static FastFifo readbuf = new FastFifo();
@@ -468,8 +468,39 @@ namespace Charaterizator
             return false;
         }
 
+        //Режим фиксированного тока (команда 40)
+        public bool С40WriteFixCurrent(float Current)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                Thread.Sleep(WAIT_TIMEOUT);
+                int i;
+                byte[] data = new byte[sensor.pre + 9];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x28;
+                data[i + 3] = 0x04;
+                UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(Current), 0);
+                data[i + 4] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 5] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 7] = (byte)(tmp & 0xFF);
+                data[i + 8] = GetCRC(data, sensor.pre);//CRC
+                port.Write(data, 0, data.Length);
+                WaitSensorAnswer(10, WAIT_TIMEOUT);
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         //Коррекция нуля ЦАП (команда 45).
-        public bool С45WriteCurrent4mA(double Current)
+        public bool С45WriteCurrent4mA(float Current)
         {
             if ((port != null) && (SensorConnect))
             {
@@ -500,7 +531,7 @@ namespace Charaterizator
         }
 
         //Коррекция коэффициента усиления ЦАП (команда 46)
-        public bool С46WriteCurrent20mA(double Current)
+        public bool С46WriteCurrent20mA(float Current)
         {
             if ((port != null) && (SensorConnect))
             {
@@ -511,7 +542,7 @@ namespace Charaterizator
                 i = sensor.pre;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
-                data[i + 2] = 0x2D;
+                data[i + 2] = 0x2E;
                 data[i + 3] = 0x04;
                 UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(Current), 0);
                 data[i + 4] = (byte)((tmp >> 24) & 0xFF);
@@ -574,7 +605,7 @@ namespace Charaterizator
                 data[i + 4] = sensor.PressureType;
                 for (int j=0;j<5;j++)
                 {
-                    data[i + 5 + j] = (byte)sensor.PressureModel[4-j];
+                    data[i + 5 + j] = (byte)sensor.PressureModel[j];
                 }
 
                 data[15] = GetCRC(data, sensor.pre);//CRC
@@ -777,6 +808,7 @@ namespace Charaterizator
                                 case 0x26://Сброс флага изменения конфигурации (команда 38)
                                     break;
                                 case 0x28://Вход/выход в режим фиксированного тока (команда 40)
+                                    ReadCommand40(Adress, indata);
                                     break;
                                 case 0x29://Запрос на выполнение самодиагностики (команда 41)
                                     break;
@@ -1111,6 +1143,16 @@ namespace Charaterizator
             sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
         }
 
+        //Режим фиксированного тока (команда 40)
+        private void ReadCommand40(int addr, byte[] indata)
+        {
+            int tmp;
+            float Current;
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+            Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+        }
+
         //Коррекция нуля ЦАП (команда 45)
         private void ReadCommand45(int addr, byte[] indata)
         {
@@ -1158,7 +1200,7 @@ namespace Charaterizator
             sensor.PressureType = indata[2];
             for (int i = 0; i < 5; i++)//5 символов
             {
-                sensor.PressureModel[4-i] = (char)indata[i+3];
+                sensor.PressureModel[i] = (char)indata[i+3];
             }
         }
 
@@ -1171,11 +1213,11 @@ namespace Charaterizator
             {
                 if (indata.Length > (i + 3))
                 {
-                    sensor.PressureModel[4 - i] = (char)indata[i + 3];
+                    sensor.PressureModel[i] = (char)indata[i + 3];
                 }
                 else
                 {
-                    sensor.PressureModel[4 - i] = ' ';
+                    sensor.PressureModel[i] = ' ';
                 }
             }
         }

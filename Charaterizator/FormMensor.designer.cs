@@ -73,25 +73,7 @@
             this.bPointSetOKCHB = new System.Windows.Forms.Button();
             this.numPointSetCHB = new System.Windows.Forms.NumericUpDown();
             this.cbRangeCHB = new System.Windows.Forms.ComboBox();
-            this.cbSetComPort = new System.Windows.Forms.ComboBox();
-            this.bComPortConnect = new System.Windows.Forms.Button();
-            this.lComPortState = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbComamd = new System.Windows.Forms.TextBox();
-            this.tbAnswer = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.bSendCom = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbRTOut = new System.Windows.Forms.TextBox();
-            this.tbWTOut = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbPauseMC = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tbTimer = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.pCHA.SuspendLayout();
             this.pPoinSetCHA.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPointSetCHA)).BeginInit();
@@ -122,11 +104,10 @@
             this.pCHA.Controls.Add(this.lRangeMinCHA);
             this.pCHA.Controls.Add(this.bPointCHA);
             this.pCHA.Controls.Add(this.bSetCHA);
-            this.pCHA.Enabled = false;
             this.pCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.pCHA.Location = new System.Drawing.Point(1, 22);
+            this.pCHA.Location = new System.Drawing.Point(1, 1);
             this.pCHA.Name = "pCHA";
-            this.pCHA.Size = new System.Drawing.Size(320, 500);
+            this.pCHA.Size = new System.Drawing.Size(320, 515);
             this.pCHA.TabIndex = 0;
             // 
             // ZeroCHA
@@ -135,7 +116,7 @@
             this.ZeroCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ZeroCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ZeroCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.ZeroCHA.Location = new System.Drawing.Point(7, 137);
+            this.ZeroCHA.Location = new System.Drawing.Point(7, 145);
             this.ZeroCHA.Name = "ZeroCHA";
             this.ZeroCHA.Size = new System.Drawing.Size(94, 28);
             this.ZeroCHA.TabIndex = 22;
@@ -152,6 +133,7 @@
             "кПа",
             "МПа"});
             this.cbRangeCHA.BackColor = System.Drawing.Color.SeaGreen;
+            this.cbRangeCHA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRangeCHA.DropDownWidth = 150;
             this.cbRangeCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbRangeCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -166,7 +148,7 @@
             this.cbRangeCHA.Name = "cbRangeCHA";
             this.cbRangeCHA.Size = new System.Drawing.Size(145, 28);
             this.cbRangeCHA.TabIndex = 21;
-            this.cbRangeCHA.Text = "Удерж. диап.";
+            this.cbRangeCHA.DropDown += new System.EventHandler(this.cbRangeCHA_DropDown);
             this.cbRangeCHA.SelectedIndexChanged += new System.EventHandler(this.cbRangeCHA_SelectedIndexChanged);
             // 
             // pPoinSetCHA
@@ -222,6 +204,7 @@
             "кПа",
             "МПа"});
             this.cbTypePressCHA.BackColor = System.Drawing.Color.SeaGreen;
+            this.cbTypePressCHA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypePressCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbTypePressCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbTypePressCHA.ForeColor = System.Drawing.SystemColors.Window;
@@ -230,11 +213,11 @@
             this.cbTypePressCHA.Items.AddRange(new object[] {
             "Абсолютное",
             "Избыточное"});
-            this.cbTypePressCHA.Location = new System.Drawing.Point(168, 270);
+            this.cbTypePressCHA.Location = new System.Drawing.Point(168, 280);
             this.cbTypePressCHA.Name = "cbTypePressCHA";
             this.cbTypePressCHA.Size = new System.Drawing.Size(145, 28);
             this.cbTypePressCHA.TabIndex = 18;
-            this.cbTypePressCHA.Text = "Тип давл.";
+            this.cbTypePressCHA.DropDown += new System.EventHandler(this.cbTypePressCHA_DropDown);
             this.cbTypePressCHA.SelectedIndexChanged += new System.EventHandler(this.cbTypePressCHA_SelectedIndexChanged);
             // 
             // cbUMeasCHA
@@ -246,6 +229,7 @@
             "кПа",
             "МПа"});
             this.cbUMeasCHA.BackColor = System.Drawing.Color.SeaGreen;
+            this.cbUMeasCHA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUMeasCHA.DropDownWidth = 150;
             this.cbUMeasCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbUMeasCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -258,11 +242,11 @@
             "Па",
             "кПа",
             "МПа"});
-            this.cbUMeasCHA.Location = new System.Drawing.Point(7, 270);
+            this.cbUMeasCHA.Location = new System.Drawing.Point(7, 280);
             this.cbUMeasCHA.Name = "cbUMeasCHA";
             this.cbUMeasCHA.Size = new System.Drawing.Size(145, 28);
             this.cbUMeasCHA.TabIndex = 17;
-            this.cbUMeasCHA.Text = "Ед. изм.-я";
+            this.cbUMeasCHA.DropDown += new System.EventHandler(this.cbUMeasCHA_DropDown);
             this.cbUMeasCHA.SelectedIndexChanged += new System.EventHandler(this.cbUMeasCHA_SelectedIndexChanged);
             // 
             // lSpeedCHA
@@ -270,7 +254,7 @@
             this.lSpeedCHA.AutoSize = true;
             this.lSpeedCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lSpeedCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.lSpeedCHA.Location = new System.Drawing.Point(144, 361);
+            this.lSpeedCHA.Location = new System.Drawing.Point(144, 371);
             this.lSpeedCHA.Name = "lSpeedCHA";
             this.lSpeedCHA.Size = new System.Drawing.Size(71, 24);
             this.lSpeedCHA.TabIndex = 16;
@@ -282,7 +266,7 @@
             this.lBarometerCHA.AutoSize = true;
             this.lBarometerCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lBarometerCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.lBarometerCHA.Location = new System.Drawing.Point(144, 326);
+            this.lBarometerCHA.Location = new System.Drawing.Point(144, 336);
             this.lBarometerCHA.Name = "lBarometerCHA";
             this.lBarometerCHA.Size = new System.Drawing.Size(71, 24);
             this.lBarometerCHA.TabIndex = 15;
@@ -295,7 +279,7 @@
             this.bSpeedCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSpeedCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bSpeedCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.bSpeedCHA.Location = new System.Drawing.Point(6, 354);
+            this.bSpeedCHA.Location = new System.Drawing.Point(6, 364);
             this.bSpeedCHA.Name = "bSpeedCHA";
             this.bSpeedCHA.Size = new System.Drawing.Size(130, 35);
             this.bSpeedCHA.TabIndex = 14;
@@ -309,7 +293,7 @@
             this.bBarometerCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bBarometerCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bBarometerCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.bBarometerCHA.Location = new System.Drawing.Point(6, 318);
+            this.bBarometerCHA.Location = new System.Drawing.Point(6, 328);
             this.bBarometerCHA.Name = "bBarometerCHA";
             this.bBarometerCHA.Size = new System.Drawing.Size(130, 35);
             this.bBarometerCHA.TabIndex = 13;
@@ -376,7 +360,7 @@
             this.lDataCHA.AutoSize = true;
             this.lDataCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 44.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lDataCHA.ForeColor = System.Drawing.Color.White;
-            this.lDataCHA.Location = new System.Drawing.Point(-5, 175);
+            this.lDataCHA.Location = new System.Drawing.Point(-5, 185);
             this.lDataCHA.Name = "lDataCHA";
             this.lDataCHA.Size = new System.Drawing.Size(318, 67);
             this.lDataCHA.TabIndex = 6;
@@ -439,7 +423,7 @@
             this.bSetCHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSetCHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bSetCHA.ForeColor = System.Drawing.SystemColors.Window;
-            this.bSetCHA.Location = new System.Drawing.Point(7, 5);
+            this.bSetCHA.Location = new System.Drawing.Point(7, 10);
             this.bSetCHA.Name = "bSetCHA";
             this.bSetCHA.Size = new System.Drawing.Size(140, 40);
             this.bSetCHA.TabIndex = 0;
@@ -452,7 +436,7 @@
             this.lSpeedCHB.AutoSize = true;
             this.lSpeedCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lSpeedCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.lSpeedCHB.Location = new System.Drawing.Point(144, 361);
+            this.lSpeedCHB.Location = new System.Drawing.Point(144, 371);
             this.lSpeedCHB.Name = "lSpeedCHB";
             this.lSpeedCHB.Size = new System.Drawing.Size(71, 24);
             this.lSpeedCHB.TabIndex = 16;
@@ -464,7 +448,7 @@
             this.lBarometerCHB.AutoSize = true;
             this.lBarometerCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lBarometerCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.lBarometerCHB.Location = new System.Drawing.Point(144, 326);
+            this.lBarometerCHB.Location = new System.Drawing.Point(144, 336);
             this.lBarometerCHB.Name = "lBarometerCHB";
             this.lBarometerCHB.Size = new System.Drawing.Size(71, 24);
             this.lBarometerCHB.TabIndex = 15;
@@ -477,7 +461,7 @@
             this.bSpeedCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSpeedCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bSpeedCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.bSpeedCHB.Location = new System.Drawing.Point(6, 354);
+            this.bSpeedCHB.Location = new System.Drawing.Point(6, 364);
             this.bSpeedCHB.Name = "bSpeedCHB";
             this.bSpeedCHB.Size = new System.Drawing.Size(130, 35);
             this.bSpeedCHB.TabIndex = 14;
@@ -491,7 +475,7 @@
             this.bBarometerCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bBarometerCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bBarometerCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.bBarometerCHB.Location = new System.Drawing.Point(6, 318);
+            this.bBarometerCHB.Location = new System.Drawing.Point(6, 328);
             this.bBarometerCHB.Name = "bBarometerCHB";
             this.bBarometerCHB.Size = new System.Drawing.Size(130, 35);
             this.bBarometerCHB.TabIndex = 13;
@@ -558,7 +542,7 @@
             this.lDataCHB.AutoSize = true;
             this.lDataCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 44.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lDataCHB.ForeColor = System.Drawing.Color.White;
-            this.lDataCHB.Location = new System.Drawing.Point(-4, 175);
+            this.lDataCHB.Location = new System.Drawing.Point(-4, 185);
             this.lDataCHB.Name = "lDataCHB";
             this.lDataCHB.Size = new System.Drawing.Size(318, 67);
             this.lDataCHB.TabIndex = 6;
@@ -621,7 +605,7 @@
             this.bSetCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSetCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bSetCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.bSetCHB.Location = new System.Drawing.Point(7, 5);
+            this.bSetCHB.Location = new System.Drawing.Point(7, 10);
             this.bSetCHB.Name = "bSetCHB";
             this.bSetCHB.Size = new System.Drawing.Size(140, 40);
             this.bSetCHB.TabIndex = 0;
@@ -651,11 +635,10 @@
             this.pCHB.Controls.Add(this.lRangeMinCHB);
             this.pCHB.Controls.Add(this.bPointCHB);
             this.pCHB.Controls.Add(this.bSetCHB);
-            this.pCHB.Enabled = false;
             this.pCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.pCHB.Location = new System.Drawing.Point(322, 22);
+            this.pCHB.Location = new System.Drawing.Point(322, 1);
             this.pCHB.Name = "pCHB";
-            this.pCHB.Size = new System.Drawing.Size(320, 500);
+            this.pCHB.Size = new System.Drawing.Size(320, 515);
             this.pCHB.TabIndex = 1;
             // 
             // ZeroCHB
@@ -664,7 +647,7 @@
             this.ZeroCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ZeroCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ZeroCHB.ForeColor = System.Drawing.SystemColors.Window;
-            this.ZeroCHB.Location = new System.Drawing.Point(11, 138);
+            this.ZeroCHB.Location = new System.Drawing.Point(11, 146);
             this.ZeroCHB.Name = "ZeroCHB";
             this.ZeroCHB.Size = new System.Drawing.Size(94, 28);
             this.ZeroCHB.TabIndex = 23;
@@ -681,6 +664,7 @@
             "кПа",
             "МПа"});
             this.cbTypePressCHB.BackColor = System.Drawing.Color.SlateBlue;
+            this.cbTypePressCHB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypePressCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbTypePressCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbTypePressCHB.ForeColor = System.Drawing.SystemColors.Window;
@@ -689,11 +673,11 @@
             this.cbTypePressCHB.Items.AddRange(new object[] {
             "Абсолютное",
             "Избыточное"});
-            this.cbTypePressCHB.Location = new System.Drawing.Point(167, 270);
+            this.cbTypePressCHB.Location = new System.Drawing.Point(167, 280);
             this.cbTypePressCHB.Name = "cbTypePressCHB";
             this.cbTypePressCHB.Size = new System.Drawing.Size(145, 28);
             this.cbTypePressCHB.TabIndex = 25;
-            this.cbTypePressCHB.Text = "Тип давл.";
+            this.cbTypePressCHB.DropDown += new System.EventHandler(this.cbTypePressCHB_DropDown);
             this.cbTypePressCHB.SelectedIndexChanged += new System.EventHandler(this.cbTypePressCHB_SelectedIndexChanged);
             // 
             // cbUMeasCHB
@@ -705,6 +689,7 @@
             "кПа",
             "МПа"});
             this.cbUMeasCHB.BackColor = System.Drawing.Color.SlateBlue;
+            this.cbUMeasCHB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUMeasCHB.DropDownWidth = 150;
             this.cbUMeasCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbUMeasCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -717,11 +702,11 @@
             "Па",
             "кПа",
             "МПа"});
-            this.cbUMeasCHB.Location = new System.Drawing.Point(7, 270);
+            this.cbUMeasCHB.Location = new System.Drawing.Point(7, 280);
             this.cbUMeasCHB.Name = "cbUMeasCHB";
             this.cbUMeasCHB.Size = new System.Drawing.Size(145, 28);
             this.cbUMeasCHB.TabIndex = 24;
-            this.cbUMeasCHB.Text = "Ед. изм.-я";
+            this.cbUMeasCHB.DropDown += new System.EventHandler(this.cbUMeasCHB_DropDown);
             this.cbUMeasCHB.SelectedIndexChanged += new System.EventHandler(this.cbUMeasCHB_SelectedIndexChanged);
             // 
             // pPoinSetCHB
@@ -779,6 +764,7 @@
             "кПа",
             "МПа"});
             this.cbRangeCHB.BackColor = System.Drawing.Color.SlateBlue;
+            this.cbRangeCHB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRangeCHB.DropDownWidth = 150;
             this.cbRangeCHB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbRangeCHB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -793,215 +779,28 @@
             this.cbRangeCHB.Name = "cbRangeCHB";
             this.cbRangeCHB.Size = new System.Drawing.Size(145, 28);
             this.cbRangeCHB.TabIndex = 22;
-            this.cbRangeCHB.Text = "Удерж. диап.";
+            this.cbRangeCHB.DropDown += new System.EventHandler(this.cbRangeCHB_DropDown);
             this.cbRangeCHB.SelectedIndexChanged += new System.EventHandler(this.cbRangeCHB_SelectedIndexChanged);
-            // 
-            // cbSetComPort
-            // 
-            this.cbSetComPort.BackColor = System.Drawing.SystemColors.Window;
-            this.cbSetComPort.FormattingEnabled = true;
-            this.cbSetComPort.Location = new System.Drawing.Point(7, 9);
-            this.cbSetComPort.Name = "cbSetComPort";
-            this.cbSetComPort.Size = new System.Drawing.Size(151, 21);
-            this.cbSetComPort.TabIndex = 2;
-            this.cbSetComPort.Visible = false;
-            this.cbSetComPort.SelectedIndexChanged += new System.EventHandler(this.cbSetComPort_SelectedIndexChanged);
-            // 
-            // bComPortConnect
-            // 
-            this.bComPortConnect.Enabled = false;
-            this.bComPortConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bComPortConnect.Location = new System.Drawing.Point(164, 8);
-            this.bComPortConnect.Name = "bComPortConnect";
-            this.bComPortConnect.Size = new System.Drawing.Size(157, 23);
-            this.bComPortConnect.TabIndex = 3;
-            this.bComPortConnect.Text = "Подключить";
-            this.bComPortConnect.UseVisualStyleBackColor = true;
-            this.bComPortConnect.Visible = false;
-            this.bComPortConnect.Click += new System.EventHandler(this.bComPortConnect_Click);
-            // 
-            // lComPortState
-            // 
-            this.lComPortState.AutoSize = true;
-            this.lComPortState.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lComPortState.ForeColor = System.Drawing.Color.Red;
-            this.lComPortState.Location = new System.Drawing.Point(327, 12);
-            this.lComPortState.Name = "lComPortState";
-            this.lComPortState.Size = new System.Drawing.Size(166, 15);
-            this.lComPortState.TabIndex = 4;
-            this.lComPortState.Text = "Устройство отключено!";
-            this.lComPortState.Visible = false;
             // 
             // timer1
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.Location = new System.Drawing.Point(5, 548);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(50, 17);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "Man";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(49, 549);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(36, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "| Com:";
-            // 
-            // tbComamd
-            // 
-            this.tbComamd.Location = new System.Drawing.Point(83, 545);
-            this.tbComamd.Name = "tbComamd";
-            this.tbComamd.Size = new System.Drawing.Size(77, 20);
-            this.tbComamd.TabIndex = 8;
-            // 
-            // tbAnswer
-            // 
-            this.tbAnswer.Location = new System.Drawing.Point(260, 545);
-            this.tbAnswer.Name = "tbAnswer";
-            this.tbAnswer.Size = new System.Drawing.Size(83, 20);
-            this.tbAnswer.TabIndex = 10;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(226, 548);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "| Ans:";
-            // 
-            // bSendCom
-            // 
-            this.bSendCom.Enabled = false;
-            this.bSendCom.Location = new System.Drawing.Point(163, 544);
-            this.bSendCom.Name = "bSendCom";
-            this.bSendCom.Size = new System.Drawing.Size(46, 22);
-            this.bSendCom.TabIndex = 11;
-            this.bSendCom.Text = "SEND";
-            this.bSendCom.UseVisualStyleBackColor = true;
-            this.bSendCom.Click += new System.EventHandler(this.bSendCom_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(347, 548);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(33, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "RTO:";
-            // 
-            // tbRTOut
-            // 
-            this.tbRTOut.Location = new System.Drawing.Point(378, 545);
-            this.tbRTOut.Name = "tbRTOut";
-            this.tbRTOut.Size = new System.Drawing.Size(36, 20);
-            this.tbRTOut.TabIndex = 13;
-            this.tbRTOut.Text = "500";
-            // 
-            // tbWTOut
-            // 
-            this.tbWTOut.Location = new System.Drawing.Point(451, 545);
-            this.tbWTOut.Name = "tbWTOut";
-            this.tbWTOut.Size = new System.Drawing.Size(36, 20);
-            this.tbWTOut.TabIndex = 15;
-            this.tbWTOut.Text = "300";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(417, 548);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(36, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "WTO:";
-            // 
-            // tbPauseMC
-            // 
-            this.tbPauseMC.Location = new System.Drawing.Point(598, 544);
-            this.tbPauseMC.Name = "tbPauseMC";
-            this.tbPauseMC.Size = new System.Drawing.Size(36, 20);
-            this.tbPauseMC.TabIndex = 17;
-            this.tbPauseMC.Text = "50";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(560, 547);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 13);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Pause:";
-            // 
-            // tbTimer
-            // 
-            this.tbTimer.Location = new System.Drawing.Point(523, 544);
-            this.tbTimer.Name = "tbTimer";
-            this.tbTimer.Size = new System.Drawing.Size(36, 20);
-            this.tbTimer.TabIndex = 20;
-            this.tbTimer.Text = "1000";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(489, 548);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(36, 13);
-            this.label8.TabIndex = 19;
-            this.label8.Text = "Timer:";
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox2.Location = new System.Drawing.Point(212, 549);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 21;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
             // FormMensor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(644, 570);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.tbTimer);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.tbPauseMC);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.tbWTOut);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbRTOut);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.bSendCom);
-            this.Controls.Add(this.tbAnswer);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbComamd);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.checkBox1);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(644, 518);
             this.Controls.Add(this.pCHB);
             this.Controls.Add(this.pCHA);
-            this.Controls.Add(this.cbSetComPort);
-            this.Controls.Add(this.bComPortConnect);
-            this.Controls.Add(this.lComPortState);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormMensor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Mensor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMensor_FormClosed);
             this.pCHA.ResumeLayout(false);
             this.pCHA.PerformLayout();
             this.pPoinSetCHA.ResumeLayout(false);
@@ -1011,7 +810,6 @@
             this.pPoinSetCHB.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numPointSetCHB)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1047,9 +845,6 @@
         private System.Windows.Forms.Button bPointCHB;
         private System.Windows.Forms.Button bSetCHB;
         private System.Windows.Forms.Panel pCHB;
-        private System.Windows.Forms.ComboBox cbSetComPort;
-        private System.Windows.Forms.Button bComPortConnect;
-        private System.Windows.Forms.Label lComPortState;
         private System.Windows.Forms.ComboBox cbUMeasCHA;
         private System.Windows.Forms.ComboBox cbTypePressCHA;
         private System.Windows.Forms.NumericUpDown numPointSetCHA;
@@ -1063,23 +858,8 @@
         private System.Windows.Forms.NumericUpDown numPointSetCHB;
         private System.Windows.Forms.ComboBox cbUMeasCHB;
         private System.Windows.Forms.ComboBox cbTypePressCHB;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbComamd;
-        private System.Windows.Forms.TextBox tbAnswer;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button bSendCom;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbRTOut;
-        private System.Windows.Forms.TextBox tbWTOut;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbPauseMC;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tbTimer;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button ZeroCHA;
         private System.Windows.Forms.Button ZeroCHB;
-        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 
