@@ -192,8 +192,9 @@ namespace Charaterizator
  
     public class ClassEni100
     {
-        const int WAIT_TIMEOUT = 300;//таймаут ожидания ответа от датчика
-        const int WRITE_COUNT = 3;//число попыток записи команд в датчик
+        public int WRITE_PERIOD = 100;  //период выдачи команд
+        public int WRITE_COUNT = 3;     //число попыток записи команд в датчик
+        public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от датчика
 
         static SerialPort port = null;
         static FastFifo readbuf = new FastFifo();
@@ -287,28 +288,18 @@ namespace Charaterizator
         {
             if((port != null)&&(SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x00, 0x00, 0x82 };
-                //sensorList.Clear();
-                /*                for (int i = 0; i < 15; i++)
-                                {
-                                    data[6] = (byte)(0x80 | i);
-                                    data[data.Length - 1] = GetCRC(data, 5);
-                                    port.Write(data, 0, data.Length);
-                                    WaitSensorAnswer(20, WAIT_TIMEOUT);
-                                    if (ParseReadBuffer(WAIT_TIMEOUT)>=0)//выходим при обнаружении первого попавшегося датчика
-                                    {
-                                        break;
-                                    }
-                                }*/
+
                 //поиск производим только по 0му адресу 30.10.2019
                 SelSensorChannal = ch;
                 data[data.Length - 1] = GetCRC(data, 5);
-                port.Write(data, 0, data.Length);
-                WaitSensorAnswer(20, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(20, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -321,15 +312,16 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0D, 0x00, 0x8F };
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, 10);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -342,17 +334,18 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0E, 0x00, 0x8C };
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
 //                data[9] = (byte)(data[9] + sensor.Addr);
 
-                port.Write(data, 0, 10);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -365,15 +358,16 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x03, 0x00, 0x00 };
                 data[sensor.pre+1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, 10);
-                WaitSensorAnswer(20, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(20, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -386,15 +380,16 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0E, 0x00, 0x8C };
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, data.Length);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -406,15 +401,18 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0xF5, 0x06, 0x41, 0x73, 0x62, 0x4D, 0x6B, 0x39, 0x00};
+
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length-1] = GetCRC(data, sensor.pre);//CRC
 
-                port.Write(data, 0, 16);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, 16);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -427,7 +425,7 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
                 byte[] data = new byte[23];
                 for(i=0;i< sensor.pre; i++) data[i] = 0xFF;
@@ -456,11 +454,11 @@ namespace Charaterizator
 
                 data[22] = GetCRC(data,sensor.pre);//CRC
 
-                port.Write(data, 0, data.Length);
-
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -473,7 +471,7 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
                 byte[] data = new byte[sensor.pre + 9];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
@@ -488,10 +486,11 @@ namespace Charaterizator
                 data[i + 6] = (byte)((tmp >> 8) & 0xFF);
                 data[i + 7] = (byte)(tmp & 0xFF);
                 data[i + 8] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, data.Length);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -504,7 +503,7 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
                 byte[] data = new byte[sensor.pre + 9];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
@@ -519,10 +518,11 @@ namespace Charaterizator
                 data[i + 6] = (byte)((tmp >> 8) & 0xFF);
                 data[i + 7] = (byte)(tmp & 0xFF);
                 data[i + 8] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, data.Length);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -535,7 +535,8 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+
                 int i;
                 byte[] data = new byte[sensor.pre+9];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
@@ -550,10 +551,11 @@ namespace Charaterizator
                 data[i + 6] = (byte)((tmp >> 8) & 0xFF);
                 data[i + 7] = (byte)(tmp & 0xFF);
                 data[i + 8] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, data.Length);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -566,7 +568,7 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
                 byte[] data = new byte[13];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
@@ -578,10 +580,11 @@ namespace Charaterizator
                 data[i + 5] = (byte)((sensor.SerialNumber >> 8) & 0xFF);
                 data[i + 6] = (byte)(sensor.SerialNumber & 0xFF);
                 data[12] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, 13);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -594,7 +597,8 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+
                 int i;
                 byte[] data = new byte[16];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
@@ -609,10 +613,11 @@ namespace Charaterizator
                 }
 
                 data[15] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, 16);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -625,7 +630,7 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
                 byte[] data = new byte[10];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
@@ -634,10 +639,11 @@ namespace Charaterizator
                 data[i + 2] = 0x8C;
                 data[i + 3] = 0x00;
                 data[9] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, 10);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -649,7 +655,7 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0xFB, 0x01, 0x00, 0x00 };
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
@@ -657,14 +663,14 @@ namespace Charaterizator
                 {
                     data[data.Length - 2] = (byte)i;
                     data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
-                    port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(20, WAIT_TIMEOUT);
                     for (int j = 0; j < WRITE_COUNT; j++)
                     {
+                        Thread.Sleep(WRITE_PERIOD);
+                        port.Write(data, 0, data.Length);
+                        WaitSensorAnswer(20, WAIT_TIMEOUT);
                         if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
-                            continue;
+                            break;
                     }
-//                    ParseReadBuffer(WAIT_TIMEOUT);
                 }
                 return true;
             }
@@ -676,9 +682,10 @@ namespace Charaterizator
         {
             if ((port != null) && (SensorConnect))
             {
-                Thread.Sleep(WAIT_TIMEOUT);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+
                 int i;
-                byte[] data = new byte[13];
+                byte[] data = new byte[11];
                 for (i = 0; i < 5; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
@@ -686,10 +693,11 @@ namespace Charaterizator
                 data[i + 3] = 0x01;
                 data[i + 4] = (byte)((sensor.CurrentExit) & 0xFF);
                 data[10] = GetCRC(data, sensor.pre);//CRC
-                port.Write(data, 0, 11);
-                WaitSensorAnswer(10, WAIT_TIMEOUT);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -941,20 +949,11 @@ namespace Charaterizator
                         int indata = port.ReadByte();
                         readbuf.PushByte((byte)indata);
                     }
-                    /*                    if (port.BytesToRead > 0)
-                                        {
-                                            Console.WriteLine(port.BytesToRead);
-                                            byte[] indata = new byte[port.BytesToRead];
-                                            if (port.Read(indata, 0, port.BytesToRead) > 0)
-                                            {
-                                                readbuf.Push(indata);
-                                            }
-                                        }*/
-            }
+                }
                 catch (TimeoutException)
                 {
 //                    Console.WriteLine("Превышен таймаут на чтение данных с датчиков!\n");
-                    Program.txtlog.WriteLineLog("HART:Ошибка чтения данных с датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
+                    Program.txtlog.WriteLineLog("HART: Ошибка чтения порта датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
                 }
             }
         }

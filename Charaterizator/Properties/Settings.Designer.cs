@@ -554,10 +554,10 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_MultimReadPeriod {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_MultimReadPeriod {
             get {
-                return ((double)(this["set_MultimReadPeriod"]));
+                return ((int)(this["set_MultimReadPeriod"]));
             }
             set {
                 this["set_MultimReadPeriod"] = value;
@@ -603,9 +603,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_SensReadCount {
+        public int set_SensReadCount {
             get {
-                return ((double)(this["set_SensReadCount"]));
+                return ((int)(this["set_SensReadCount"]));
             }
             set {
                 this["set_SensReadCount"] = value;
@@ -614,10 +614,10 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_SensReadPause {
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int set_SensReadPause {
             get {
-                return ((double)(this["set_SensReadPause"]));
+                return ((int)(this["set_SensReadPause"]));
             }
             set {
                 this["set_SensReadPause"] = value;
@@ -633,6 +633,42 @@ namespace Charaterizator.Properties {
             }
             set {
                 this["set_TCameraReadPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_SensWaitTimeout {
+            get {
+                return ((int)(this["set_SensWaitTimeout"]));
+            }
+            set {
+                this["set_SensWaitTimeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_MultimReadTimeout {
+            get {
+                return ((int)(this["set_MultimReadTimeout"]));
+            }
+            set {
+                this["set_MultimReadTimeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_MultimDataReady {
+            get {
+                return ((int)(this["set_MultimDataReady"]));
+            }
+            set {
+                this["set_MultimDataReady"] = value;
             }
         }
     }

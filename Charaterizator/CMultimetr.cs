@@ -11,8 +11,12 @@ namespace Charaterizator
 {
     class CMultimetr
     {
-        const int WAIT_TIMEOUT = 100;//таймаут ожидания ответа от мультиметра
-        const int REZISTOR = 500;     //Сопротивление резистора (Ом)
+        public int REZISTOR = 500;      //Сопротивление нагрузочного резистора, Ом
+
+        public int WAIT_READY = 100;    //время ожидания стабилизации тока, мсек
+        public int WAIT_TIMEOUT = 100;  //таймаут ожидания ответа от мультиметра, мсек
+        public int READ_COUNT = 1;      //количество опросов мультиметра, раз
+        public int READ_PERIOD = 100;   //период опроса мультиметра, мсек
 
         public bool Connected;
         private float Value;//Напряжение в мВ
@@ -85,9 +89,9 @@ namespace Charaterizator
         {
             if (Connected)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(WAIT_READY);
                 Port.WriteLine("SYST:REM");
-                Thread.Sleep(1000);
+                Thread.Sleep(READ_PERIOD);
                 return 0;
             }
             else
@@ -96,6 +100,14 @@ namespace Charaterizator
             }
         }
 
+
+        //Port.WriteLine("CONF:VOLT:DC 10, 0.01");
+        //Port.WriteLine("SAMP:COUN 10");
+        //Port.WriteLine("CALC:AVER:STAT ON");
+        //Port.WriteLine("INIT");
+        //Port.WriteLine("* WAI");
+        //Port.WriteLine("CALC:AVER:AVER?");
+
         //Читает напряжение в мВ
         public bool ReadData()
         {
@@ -103,23 +115,34 @@ namespace Charaterizator
             {
                 try
                 {
-                    Port.WriteLine("MEAS:VOLT:DC? 10, 0.01");
-                    int i = 0;
-                    while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
+                    //Port.WriteLine("CONF:VOLT:DC 10, 0.01");
+                    //Port.WriteLine("READ?");
+                    Thread.Sleep(WAIT_READY);
+                    float Mean =0;
+                    for (int c = 0; c < READ_COUNT; c++)
                     {
-                        i++;
-                        Thread.Sleep(1);
+                        //Port.WriteLine("CALC:AVER:AVER?");
+                        Port.WriteLine("MEAS:VOLT:DC? 10, 0.01");
+                        int i = 0;
+                        while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
+                        {
+                            i++;
+                            Thread.Sleep(1);
+                        }
+                        string str = Port.ReadLine();
+                        // str = str.Replace(".","");
+                        Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        Mean = Value + Mean;
+                        Thread.Sleep(READ_PERIOD);
                     }
-                    string str = Port.ReadLine();
-                   // str = str.Replace(".","");
-                    Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    Value = Mean / READ_COUNT;//усредняем
+                    Program.txtlog.WriteLineLog(string.Format("Agilent: Произведено измерение напряжения мультиметра {0} ", Value), 0);
                     return true;
                 }
                 catch
                 {
                     //запись в лог
-                    //                    Connected = false;
-                    Program.txtlog.WriteLineLog("Agilent: Устройство не отвечает. ", 1);
+                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных. ", 1);
                     Port.Close();
                     Thread.Sleep(1);
                     Port.Open();

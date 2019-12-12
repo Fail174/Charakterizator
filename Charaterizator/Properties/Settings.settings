@@ -134,8 +134,8 @@
     <Setting Name="set_MultimReadCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="set_MultimReadPeriod" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+    <Setting Name="set_MultimReadPeriod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="set_MensorReadPeriod" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -146,14 +146,23 @@
     <Setting Name="set_MensorSetZero" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="set_SensReadCount" Type="System.Double" Scope="User">
+    <Setting Name="set_SensReadCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="set_SensReadPause" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+    <Setting Name="set_SensReadPause" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="set_TCameraReadPeriod" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="set_SensWaitTimeout" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="set_MultimReadTimeout" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="set_MultimDataReady" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -66,9 +66,11 @@ namespace Charaterizator
                 Properties.Settings.Default.set_CommReadPeriod = Convert.ToDouble(tbCommReadPeriod.Text);
                 Properties.Settings.Default.set_CommReadPause = Convert.ToDouble(tbCommReadPause.Text);
 
-                //2
-                Properties.Settings.Default.set_MultimReadCount = Convert.ToInt16(tbMultimReadCount.Text);
-                Properties.Settings.Default.set_MultimReadPeriod = Convert.ToDouble(tbMultimReadPeriod.Text);
+                //2 - Мультиметр
+                Properties.Settings.Default.set_MultimReadCount = Convert.ToInt32(tbMultimReadCount.Text);
+                Properties.Settings.Default.set_MultimReadPeriod = Convert.ToInt32(tbMultimReadPeriod.Text);
+                Properties.Settings.Default.set_MultimReadTimeout = Convert.ToInt32(tbMultimReadTimeOut.Text);
+                Properties.Settings.Default.set_MultimDataReady = Convert.ToInt32(tbMultimWaitReady.Text);
 
                 //3
                 Properties.Settings.Default.set_MensorReadPeriod = Convert.ToDouble(tbMensorReadPeriod.Text);
@@ -85,24 +87,22 @@ namespace Charaterizator
                 //4
                 Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToDouble(tbTCameraReadPeriod.Text);
 
-                //5            
-                Properties.Settings.Default.set_SensReadCount = Convert.ToDouble(tbSensReadCount.Text);
-                Properties.Settings.Default.set_SensReadPause = Convert.ToDouble(tbSensReadPause.Text);
+                //5 - Датчики
+                Properties.Settings.Default.set_SensReadCount = Convert.ToInt32(tbSensReadCount.Text);
+                Properties.Settings.Default.set_SensReadPause = Convert.ToInt32(tbSensReadPause.Text);
+                Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Text);
 
-                //
-                Properties.Settings.Default.Save();   
+                //Сохраняем настройки
+                Properties.Settings.Default.Save();
+                Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
             }
-
             catch
             {
-               
+                Program.txtlog.WriteLineLog("Непредвиденная ошибка сохранения настроек программы!", 1);
             }
-
             finally
             {
-
             }
-          
         }
       
 
@@ -160,6 +160,8 @@ namespace Charaterizator
                     {
                         tbMultimReadCount.Text = Properties.Settings.Default.set_MultimReadCount.ToString();
                         tbMultimReadPeriod.Text = Properties.Settings.Default.set_MultimReadPeriod.ToString();
+                        tbMultimReadTimeOut.Text = Properties.Settings.Default.set_MultimReadTimeout.ToString();
+                        tbMultimWaitReady.Text = Properties.Settings.Default.set_MultimDataReady.ToString();
                         return;
                     }
                 case 3:
@@ -186,6 +188,7 @@ namespace Charaterizator
                     {
                         tbSensReadCount.Text = Properties.Settings.Default.set_SensReadCount.ToString();
                         tbSensReadPause.Text = Properties.Settings.Default.set_SensReadPause.ToString();
+                        tbSensWaitPause.Text = Properties.Settings.Default.set_SensWaitTimeout.ToString();
                         return;
                     }           
             }            
