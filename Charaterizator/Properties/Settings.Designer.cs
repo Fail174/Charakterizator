@@ -399,9 +399,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_HoldTimeTemp {
+        public int set_HoldTimeTemp {
             get {
-                return ((double)(this["set_HoldTimeTemp"]));
+                return ((int)(this["set_HoldTimeTemp"]));
             }
             set {
                 this["set_HoldTimeTemp"] = value;
@@ -411,9 +411,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_HoldTimePress {
+        public int set_HoldTimePress {
             get {
-                return ((double)(this["set_HoldTimePress"]));
+                return ((int)(this["set_HoldTimePress"]));
             }
             set {
                 this["set_HoldTimePress"] = value;
@@ -423,9 +423,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_HoldTimeAfReset {
+        public int set_HoldTimeAfReset {
             get {
-                return ((double)(this["set_HoldTimeAfReset"]));
+                return ((int)(this["set_HoldTimeAfReset"]));
             }
             set {
                 this["set_HoldTimeAfReset"] = value;
@@ -435,9 +435,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_DeltaTemp {
+        public int set_DeltaTemp {
             get {
-                return ((double)(this["set_DeltaTemp"]));
+                return ((int)(this["set_DeltaTemp"]));
             }
             set {
                 this["set_DeltaTemp"] = value;
@@ -447,9 +447,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_DeltaPress {
+        public int set_DeltaPress {
             get {
-                return ((double)(this["set_DeltaPress"]));
+                return ((int)(this["set_DeltaPress"]));
             }
             set {
                 this["set_DeltaPress"] = value;
@@ -483,66 +483,6 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_MainTimer {
-            get {
-                return ((double)(this["set_MainTimer"]));
-            }
-            set {
-                this["set_MainTimer"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int set_CommReadCH {
-            get {
-                return ((int)(this["set_CommReadCH"]));
-            }
-            set {
-                this["set_CommReadCH"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int set_CommMaxSetCH {
-            get {
-                return ((int)(this["set_CommMaxSetCH"]));
-            }
-            set {
-                this["set_CommMaxSetCH"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_CommReadPeriod {
-            get {
-                return ((double)(this["set_CommReadPeriod"]));
-            }
-            set {
-                this["set_CommReadPeriod"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_CommReadPause {
-            get {
-                return ((double)(this["set_CommReadPause"]));
-            }
-            set {
-                this["set_CommReadPause"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int set_MultimReadCount {
             get {
                 return ((int)(this["set_MultimReadCount"]));
@@ -561,30 +501,6 @@ namespace Charaterizator.Properties {
             }
             set {
                 this["set_MultimReadPeriod"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_MensorReadPeriod {
-            get {
-                return ((double)(this["set_MensorReadPeriod"]));
-            }
-            set {
-                this["set_MensorReadPeriod"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_MensorReadPause {
-            get {
-                return ((double)(this["set_MensorReadPause"]));
-            }
-            set {
-                this["set_MensorReadPause"] = value;
             }
         }
         
@@ -627,9 +543,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double set_TCameraReadPeriod {
+        public int set_TCameraReadPeriod {
             get {
-                return ((double)(this["set_TCameraReadPeriod"]));
+                return ((int)(this["set_TCameraReadPeriod"]));
             }
             set {
                 this["set_TCameraReadPeriod"] = value;
@@ -669,6 +585,90 @@ namespace Charaterizator.Properties {
             }
             set {
                 this["set_MultimDataReady"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int set_MainTimer {
+            get {
+                return ((int)(this["set_MainTimer"]));
+            }
+            set {
+                this["set_MainTimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_CommReadCH {
+            get {
+                return ((int)(this["set_CommReadCH"]));
+            }
+            set {
+                this["set_CommReadCH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        public int set_CommMaxSetCH {
+            get {
+                return ((int)(this["set_CommMaxSetCH"]));
+            }
+            set {
+                this["set_CommMaxSetCH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int set_CommReadPeriod {
+            get {
+                return ((int)(this["set_CommReadPeriod"]));
+            }
+            set {
+                this["set_CommReadPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_CommReadPause {
+            get {
+                return ((int)(this["set_CommReadPause"]));
+            }
+            set {
+                this["set_CommReadPause"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int set_MensorReadPeriod {
+            get {
+                return ((int)(this["set_MensorReadPeriod"]));
+            }
+            set {
+                this["set_MensorReadPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int set_MensorReadPause {
+            get {
+                return ((int)(this["set_MensorReadPause"]));
+            }
+            set {
+                this["set_MensorReadPause"] = value;
             }
         }
     }

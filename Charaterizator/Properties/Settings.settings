@@ -95,19 +95,19 @@
     <Setting Name="FileNameDB" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\\WORK\\BBMW\\Repozitoriy\\Fail174\\Charakterizator\\Charaterizator\\SensorsDB\\Sensors.mdb</Value>
     </Setting>
-    <Setting Name="set_HoldTimeTemp" Type="System.Double" Scope="User">
+    <Setting Name="set_HoldTimeTemp" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="set_HoldTimePress" Type="System.Double" Scope="User">
+    <Setting Name="set_HoldTimePress" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="set_HoldTimeAfReset" Type="System.Double" Scope="User">
+    <Setting Name="set_HoldTimeAfReset" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="set_DeltaTemp" Type="System.Double" Scope="User">
+    <Setting Name="set_DeltaTemp" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="set_DeltaPress" Type="System.Double" Scope="User">
+    <Setting Name="set_DeltaPress" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="set_HandleContrPress" Type="System.Boolean" Scope="User">
@@ -116,32 +116,11 @@
     <Setting Name="set_HandleContrMultimetr" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="set_MainTimer" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_CommReadCH" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_CommMaxSetCH" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_CommReadPeriod" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_CommReadPause" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
     <Setting Name="set_MultimReadCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="set_MultimReadPeriod" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="set_MensorReadPeriod" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_MensorReadPause" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="set_MensorSetZero" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -152,7 +131,7 @@
     <Setting Name="set_SensReadPause" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">300</Value>
     </Setting>
-    <Setting Name="set_TCameraReadPeriod" Type="System.Double" Scope="User">
+    <Setting Name="set_TCameraReadPeriod" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="set_SensWaitTimeout" Type="System.Int32" Scope="User">
@@ -163,6 +142,27 @@
     </Setting>
     <Setting Name="set_MultimDataReady" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="set_MainTimer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="set_CommReadCH" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="set_CommMaxSetCH" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="set_CommReadPeriod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="set_CommReadPause" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="set_MensorReadPeriod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="set_MensorReadPause" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
     </Setting>
   </Settings>
 </SettingsFile>

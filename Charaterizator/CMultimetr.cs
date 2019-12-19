@@ -13,8 +13,8 @@ namespace Charaterizator
     {
         public int REZISTOR = 500;      //Сопротивление нагрузочного резистора, Ом
 
-        public int WAIT_READY = 100;    //время ожидания стабилизации тока, мсек
-        public int WAIT_TIMEOUT = 100;  //таймаут ожидания ответа от мультиметра, мсек
+        public int WAIT_READY = 300;    //время ожидания стабилизации тока, мсек
+        public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от мультиметра, мсек
         public int READ_COUNT = 1;      //количество опросов мультиметра, раз
         public int READ_PERIOD = 1000;   //период опроса мультиметра, мсек
 
@@ -39,12 +39,13 @@ namespace Charaterizator
 
         public int DisConnect()
         {
-            if (Connected)
+            Connected = false;
+            if (ReadThread != null)
+                ReadThread.Abort(0);
+
+            if (Port.IsOpen)
             {
-                Connected = false;
                 Port.Close();
-                if (ReadThread != null)
-                    ReadThread.Abort(0);
                 return 0;
             }
             else
@@ -56,7 +57,8 @@ namespace Charaterizator
         {
             if (Connected)
             {
-                return 1;
+                DisConnect();
+                //return 1;
             }
             try
             {
@@ -115,11 +117,19 @@ namespace Charaterizator
             {
                 try
                 {
-                    ReadData();
+                   if(ReadData())
+                    {
+                        Error = false;
+                    }
+                    else
+                    {
+                        Error = true;
+                    }
                 }
                 catch
                 {
-                    Console.WriteLine("Multimetr: Ошибка чтения данных");
+                    //Console.WriteLine("Multimetr: Ошибка чтения данных");
+                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных. ", 1);
                     Error = true;
                 }
             }
@@ -153,25 +163,23 @@ namespace Charaterizator
                     string str = Port.ReadLine();
                     Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     //Program.txtlog.WriteLineLog(string.Format("Agilent: Произведено измерение напряжения мультиметра {0} ", Value), 0);
-                    Error = false;
                     return true;
                 }
                 catch
                 {
                     //запись в лог
                     //Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных. ", 1);
+                    //PortClear();//отчищаем буферы порта
                     Port.Close();
                     Thread.Sleep(1);
                     Port.Open();
                     Value = 0;
-                    Error = true;
                     return false;
                 }
             }
             else
             {
                 Value = 0;
-                Error = true;
                 return false;
             }
         }

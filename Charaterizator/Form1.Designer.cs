@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,10 +101,6 @@
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,13 +109,6 @@
             this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDiapazon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUtk2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сSensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -264,6 +253,16 @@
             this.pbVRProcess = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
+            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDiapazon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -1020,44 +1019,12 @@
             this.cICurrent4mA,
             this.cICurrent20mA});
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView4.Location = new System.Drawing.Point(277, 321);
+            this.dataGridView4.Location = new System.Drawing.Point(277, 350);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(442, 200);
+            this.dataGridView4.Size = new System.Drawing.Size(442, 171);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
-            // 
-            // сIDataTime
-            // 
-            this.сIDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.сIDataTime.HeaderText = "Дата и время";
-            this.сIDataTime.MinimumWidth = 200;
-            this.сIDataTime.Name = "сIDataTime";
-            this.сIDataTime.ReadOnly = true;
-            // 
-            // сITemperature
-            // 
-            this.сITemperature.HeaderText = "Температура, С";
-            this.сITemperature.MinimumWidth = 200;
-            this.сITemperature.Name = "сITemperature";
-            this.сITemperature.ReadOnly = true;
-            this.сITemperature.Width = 200;
-            // 
-            // cICurrent4mA
-            // 
-            this.cICurrent4mA.HeaderText = "Ток 4мА";
-            this.cICurrent4mA.MinimumWidth = 200;
-            this.cICurrent4mA.Name = "cICurrent4mA";
-            this.cICurrent4mA.ReadOnly = true;
-            this.cICurrent4mA.Width = 200;
-            // 
-            // cICurrent20mA
-            // 
-            this.cICurrent20mA.HeaderText = "Ток 20мА";
-            this.cICurrent20mA.MinimumWidth = 200;
-            this.cICurrent20mA.Name = "cICurrent20mA";
-            this.cICurrent20mA.ReadOnly = true;
-            this.cICurrent20mA.Width = 200;
             // 
             // dataGridView3
             // 
@@ -1070,10 +1037,10 @@
             this.cPressureF,
             this.сCurrentF});
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(277, 321);
+            this.dataGridView3.Location = new System.Drawing.Point(277, 350);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(442, 200);
+            this.dataGridView3.Size = new System.Drawing.Size(442, 171);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1134,70 +1101,14 @@
             this.cDiapazon,
             this.сPressure2,
             this.cUTemp2,
-            this.cUPress2,
-            this.cUtk2});
+            this.cUPress2});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(442, 321);
+            this.dataGridView2.Size = new System.Drawing.Size(442, 350);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
-            // 
-            // cDataTime2
-            // 
-            this.cDataTime2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cDataTime2.HeaderText = "Дата и Время";
-            this.cDataTime2.MinimumWidth = 200;
-            this.cDataTime2.Name = "cDataTime2";
-            this.cDataTime2.ReadOnly = true;
-            // 
-            // cTempreture2
-            // 
-            this.cTempreture2.HeaderText = "Температура (°C)";
-            this.cTempreture2.MinimumWidth = 200;
-            this.cTempreture2.Name = "cTempreture2";
-            this.cTempreture2.ReadOnly = true;
-            this.cTempreture2.Width = 200;
-            // 
-            // cDiapazon
-            // 
-            this.cDiapazon.HeaderText = "Диапазон";
-            this.cDiapazon.MinimumWidth = 100;
-            this.cDiapazon.Name = "cDiapazon";
-            this.cDiapazon.ReadOnly = true;
-            // 
-            // сPressure2
-            // 
-            this.сPressure2.HeaderText = "Давление (кПа)";
-            this.сPressure2.MinimumWidth = 200;
-            this.сPressure2.Name = "сPressure2";
-            this.сPressure2.ReadOnly = true;
-            this.сPressure2.Width = 200;
-            // 
-            // cUTemp2
-            // 
-            this.cUTemp2.HeaderText = "Напряжение";
-            this.cUTemp2.MinimumWidth = 200;
-            this.cUTemp2.Name = "cUTemp2";
-            this.cUTemp2.ReadOnly = true;
-            this.cUTemp2.Width = 200;
-            // 
-            // cUPress2
-            // 
-            this.cUPress2.HeaderText = "Сопротивление";
-            this.cUPress2.MinimumWidth = 200;
-            this.cUPress2.Name = "cUPress2";
-            this.cUPress2.ReadOnly = true;
-            this.cUPress2.Width = 200;
-            // 
-            // cUtk2
-            // 
-            this.cUtk2.HeaderText = "Ток";
-            this.cUtk2.MinimumWidth = 150;
-            this.cUtk2.Name = "cUtk2";
-            this.cUtk2.ReadOnly = true;
-            this.cUtk2.Width = 150;
             // 
             // dataGridView1
             // 
@@ -1264,10 +1175,10 @@
             // 
             // сState
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle5.NullValue = false;
-            this.сState.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.NullValue = false;
+            this.сState.DefaultCellStyle = dataGridViewCellStyle1;
             this.сState.DividerWidth = 1;
             this.сState.FalseValue = "false";
             this.сState.HeaderText = "Подключение";
@@ -1289,10 +1200,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -2157,9 +2068,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 1108);
+            this.btnNextStep2.Location = new System.Drawing.Point(8, 1325);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(246, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(243, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2399,6 +2310,7 @@
             this.btnVRPressureSet4.Tag = "4";
             this.btnVRPressureSet4.Text = "Установить";
             this.btnVRPressureSet4.UseVisualStyleBackColor = true;
+            this.btnVRPressureSet4.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
             // 
             // cbVRPressureSet4
             // 
@@ -2419,6 +2331,7 @@
             this.btnVRTemperatureSet4.Tag = "4";
             this.btnVRTemperatureSet4.Text = "Установить";
             this.btnVRTemperatureSet4.UseVisualStyleBackColor = true;
+            this.btnVRTemperatureSet4.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
             // 
             // label54
             // 
@@ -2505,7 +2418,7 @@
             this.btnVRPressureSet3.Tag = "3";
             this.btnVRPressureSet3.Text = "Установить";
             this.btnVRPressureSet3.UseVisualStyleBackColor = true;
-            this.btnVRPressureSet3.Click += new System.EventHandler(this.btnVRPressureSet3_Click);
+            this.btnVRPressureSet3.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
             // 
             // cbVRPressureSet3
             // 
@@ -2526,6 +2439,7 @@
             this.btnVRTemperatureSet3.Tag = "3";
             this.btnVRTemperatureSet3.Text = "Установить";
             this.btnVRTemperatureSet3.UseVisualStyleBackColor = true;
+            this.btnVRTemperatureSet3.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
             // 
             // label51
             // 
@@ -2612,6 +2526,7 @@
             this.btnVRPressureSet2.Tag = "2";
             this.btnVRPressureSet2.Text = "Установить";
             this.btnVRPressureSet2.UseVisualStyleBackColor = true;
+            this.btnVRPressureSet2.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
             // 
             // cbVRPressureSet2
             // 
@@ -2632,6 +2547,7 @@
             this.btnVRTemperatureSet2.Tag = "2";
             this.btnVRTemperatureSet2.Text = "Установить";
             this.btnVRTemperatureSet2.UseVisualStyleBackColor = true;
+            this.btnVRTemperatureSet2.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
             // 
             // label45
             // 
@@ -2772,9 +2688,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 870);
+            this.btnNextStep3.Location = new System.Drawing.Point(8, 965);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(243, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(237, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2811,6 +2727,85 @@
             // 
             this.MainTimer.Interval = 1000;
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
+            // 
+            // cDataTime2
+            // 
+            this.cDataTime2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cDataTime2.HeaderText = "Дата и Время";
+            this.cDataTime2.MinimumWidth = 200;
+            this.cDataTime2.Name = "cDataTime2";
+            this.cDataTime2.ReadOnly = true;
+            // 
+            // cTempreture2
+            // 
+            this.cTempreture2.HeaderText = "Температура (°C)";
+            this.cTempreture2.MinimumWidth = 200;
+            this.cTempreture2.Name = "cTempreture2";
+            this.cTempreture2.ReadOnly = true;
+            this.cTempreture2.Width = 200;
+            // 
+            // cDiapazon
+            // 
+            this.cDiapazon.HeaderText = "Диапазон";
+            this.cDiapazon.MinimumWidth = 100;
+            this.cDiapazon.Name = "cDiapazon";
+            this.cDiapazon.ReadOnly = true;
+            // 
+            // сPressure2
+            // 
+            this.сPressure2.HeaderText = "Давление (кПа)";
+            this.сPressure2.MinimumWidth = 200;
+            this.сPressure2.Name = "сPressure2";
+            this.сPressure2.ReadOnly = true;
+            this.сPressure2.Width = 200;
+            // 
+            // cUTemp2
+            // 
+            this.cUTemp2.HeaderText = "Напряжение (мВ)";
+            this.cUTemp2.MinimumWidth = 200;
+            this.cUTemp2.Name = "cUTemp2";
+            this.cUTemp2.ReadOnly = true;
+            this.cUTemp2.Width = 200;
+            // 
+            // cUPress2
+            // 
+            this.cUPress2.HeaderText = "Сопротивление (Ом)";
+            this.cUPress2.MinimumWidth = 200;
+            this.cUPress2.Name = "cUPress2";
+            this.cUPress2.ReadOnly = true;
+            this.cUPress2.Width = 200;
+            // 
+            // сIDataTime
+            // 
+            this.сIDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.сIDataTime.HeaderText = "Дата и время";
+            this.сIDataTime.MinimumWidth = 200;
+            this.сIDataTime.Name = "сIDataTime";
+            this.сIDataTime.ReadOnly = true;
+            // 
+            // сITemperature
+            // 
+            this.сITemperature.HeaderText = "Температура (°C)";
+            this.сITemperature.MinimumWidth = 200;
+            this.сITemperature.Name = "сITemperature";
+            this.сITemperature.ReadOnly = true;
+            this.сITemperature.Width = 200;
+            // 
+            // cICurrent4mA
+            // 
+            this.cICurrent4mA.HeaderText = "Ток 4мА (мА)";
+            this.cICurrent4mA.MinimumWidth = 200;
+            this.cICurrent4mA.Name = "cICurrent4mA";
+            this.cICurrent4mA.ReadOnly = true;
+            this.cICurrent4mA.Width = 200;
+            // 
+            // cICurrent20mA
+            // 
+            this.cICurrent20mA.HeaderText = "Ток 20мА (мА)";
+            this.cICurrent20mA.MinimumWidth = 200;
+            this.cICurrent20mA.Name = "cICurrent20mA";
+            this.cICurrent20mA.ReadOnly = true;
+            this.cICurrent20mA.Width = 200;
             // 
             // MainForm
             // 
@@ -3025,10 +3020,6 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Button btnCalibrateCurrent;
         private System.Windows.Forms.Button btnCalculateCoeff;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сIDataTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сITemperature;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent4mA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
         private System.Windows.Forms.ComboBox cbDiapazon1;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.GroupBox gbCHLevel4;
@@ -3099,19 +3090,22 @@
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.ComboBox cbVRTermoCamera2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDiapazon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUtk2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPressureLimit;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPressureZ;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPressureF;
         private System.Windows.Forms.DataGridViewTextBoxColumn сCurrentF;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сIDataTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сITemperature;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent4mA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDiapazon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
     }
 }
 

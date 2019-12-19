@@ -22,7 +22,4 @@ namespace Charaterizator
         }
         public static CTxtlog txtlog;
     }
-    // Тест - добавлен комментарий в Program.cs
-    //
-
 }
