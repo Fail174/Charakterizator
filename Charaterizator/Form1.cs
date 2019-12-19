@@ -103,8 +103,28 @@ namespace Charaterizator
             numMensorPoint.Font = DrawingFont;
             numTermoCameraPoint.Font = DrawingFont;
             //**********************************************************
+            UpdateItems();//обновляем списки визуальных элементов
         }
 
+        //Обновление визуальных элементов согласно установленным параметрам
+        private void UpdateItems()
+        {
+            cbChannalCharakterizator.Items.Clear();
+            cbChannalVerification.Items.Clear();
+            dataGridView1.Rows.Clear();
+            for (int i = 0; i < MaxChannalCount; i++)
+            {
+                cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
+                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
+
+                dataGridView1.Rows.Add(i + 1, "Нет данных", "Нет данных", false, false, false);
+                dataGridView1[4, i].Style.BackColor = Color.IndianRed;
+                dataGridView1[5, i].Style.BackColor = Color.IndianRed;
+                dataGridView1[6, i].Style.BackColor = Color.IndianRed;
+//                cbChannalCharakterizator.Items.Add("Канал " + (i + 1).ToString());
+//                cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
+            }
+        }
         //Выполняем при загрузке главной формы
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -119,17 +139,6 @@ namespace Charaterizator
                 btnMensor.PerformClick();
                 btnThermalCamera.PerformClick();
                 Application.DoEvents();
-
-                for (int i = 0; i < MaxChannalCount; i++)
-                {
-                    dataGridView1.Rows.Add(i + 1, "Нет данных", "Нет данных", false, false, false);
-                    dataGridView1[4, i].Style.BackColor = Color.IndianRed;
-                    dataGridView1[5, i].Style.BackColor = Color.IndianRed;
-                    dataGridView1[6, i].Style.BackColor = Color.IndianRed;
-
-                    cbChannalCharakterizator.Items.Add("Канал " + (i + 1).ToString());
-                    cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
-                }
 
                 MainTimer.Interval = 2000;//MAIN_TIMER;
                 MainTimer.Enabled = true;
@@ -452,7 +461,7 @@ namespace Charaterizator
         private void ReadSensorCurrent()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount;   //конечный канал
+            int FinishNumber = MaxChannalCount-1;   //конечный канал
 
             Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 0);
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
