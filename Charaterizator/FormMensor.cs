@@ -15,9 +15,14 @@ namespace Charaterizator
 {
     public partial class FormMensor : Form        
     {
+        // Занесены в настройки
+        public int READ_PERIOD = 1000;  // Время опроса состояния менсора при работе с формой
+        public int READ_PAUSE = 50;            // задержка между приемом и передачей команд по COM порту, мс      
+
+
+        // Не занесенные
         private Thread ReadThread;          // поток
-        public SerialPort _serialPort_M;    // переменная для работы с COM портом      
-        int pause_ms;                       // задержка между приемом и передачей команд по COM порту, мс        
+        public SerialPort _serialPort_M;    // переменная для работы с COM портом     
         public bool checkTimer = false;     // флаг запущен таймер или нет         
         public bool Connected = false;      // true  - соединение установлено,         
         public const double PsiToPa = 0.14503773773;  // для перевода psi в кПА    
@@ -417,21 +422,21 @@ namespace Charaterizator
                 {
                     // Считываем тип датчика-преобразователя
                     typeR = ReadTypeRange();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем установленную ед. измерения            
                     umeas = ReadUMeas();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем минимальный и максимальный значения диапазона, 
                     val = ReadRangeVal();
                     typeR_Pmin = val[0] * CalcMultCHA(umeas);
                     typeR_Pmax = val[1] * CalcMultCHA(umeas);
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем значение уставки и выводим на экран
                     point = ReadPoint();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // считываем установленный тип давления
                     tpress = ReadTypePress();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем текущее давление, Барометр и Скорость - выводим на экран           
                     press = ReadPRESS();
                     barometr = ReadBAR();
@@ -445,21 +450,21 @@ namespace Charaterizator
                 {
                     // Считываем тип датчика-преобразователя
                     typeR = ReadTypeRange();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем установленную ед. измерения          
                     umeas = ReadUMeas();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем минимальный и максимальный значения диапазона    
                     val = ReadRangeVal();
                     typeR_Pmin = val[0] * CalcMultCHB(umeas);
                     typeR_Pmax = val[1] * CalcMultCHB(umeas);
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем значение уставки
                     point = ReadPoint();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // считываем установленный тип давления            
                     tpress = ReadTypePress();
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
                     // Считываем текущее давление, и  - выводим на экран           
                     press = ReadPRESS();
                     // Барометр 
@@ -718,7 +723,7 @@ namespace Charaterizator
             try
             {
                 _serialPort_M.WriteLine("OUTP:CHAN?");  // запрашиваем номер активного канала                                                      
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
                 str = _serialPort_M.ReadLine();         // считываем                                                  
 
                 if ((str == "A") | (str == "0"))
@@ -812,7 +817,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("OUTP:AUTOR?");  // запрашиваем состояние AutoRange (ON/OFF)
                                                          //toolStripStatusLabel1.Text = ("SEND: " + "OUTP:AUTOR?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 str = _serialPort_M.ReadLine();           // считываем ответ прибора 
                                                           //toolStripStatusLabel2.Text = ("READ: " + str);
@@ -827,7 +832,7 @@ namespace Charaterizator
                     _serialPort_M.WriteLine("SENS:ACT?");
                     //toolStripStatusLabel1.Text = ("SEND: " + "SENS:ACT?");
 
-                    Thread.Sleep(pause_ms);
+                    Thread.Sleep(READ_PAUSE);
 
                     str = _serialPort_M.ReadLine();   // Считываем ответ прибора (что возвращает номер или имя?)
                                                       //toolStripStatusLabel2.Text = ("READ: " + str);               
@@ -875,7 +880,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("SENS:PRES:RANG:LOW?");  // запрашиваем мин. значение диапазона
                                                                  //toolStripStatusLabel1.Text = ("SEND: " + "SENS:RANG:LOW?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 str = _serialPort_M.ReadLine();     // считываем
                 val[0] = StrToDouble(str);
@@ -885,7 +890,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("SENS:PRES:RANG:UPP?");   // запрашиваем макс. значение диапазона
                                                                   //toolStripStatusLabel1.Text = ("SEND: " + "SENS:RANG:UPP?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 str = _serialPort_M.ReadLine();
                 val[1] = StrToDouble(str);    // считываем
@@ -932,7 +937,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("SOUR:PRES:LEV:IMM:AMPL?");
                 //toolStripStatusLabel1.Text = ("SEND: " + "SOUR:PRES:LEV:IMM:AMPL?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 string str = _serialPort_M.ReadLine();
                 //toolStripStatusLabel2.Text = ("READ: " + str);
@@ -1013,7 +1018,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("UNIT:INDEX?");
                 //toolStripStatusLabel1.Text = ("SEND: " + "UNIT:INDEX?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 ind = Convert.ToInt32(_serialPort_M.ReadLine());
                 //toolStripStatusLabel2.Text = ("READ: " + Convert.ToString(ind));
@@ -1097,7 +1102,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("SENS:PRES:MODE?");     // запрашиваем установленный тип давления
                                                                 //toolStripStatusLabel1.Text = ("SEND: " + "SENS:PRES:MODE?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 str = _serialPort_M.ReadLine();         // считываем
                                                         //toolStripStatusLabel2.Text = ("READ: " + str);
@@ -1174,7 +1179,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("OUTP:MODE?");   // Запрашиваем режим работы
                                                          //toolStripStatusLabel1.Text = ("SEND: " + "OUTP:MODE?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 str = _serialPort_M.ReadLine();
                 //toolStripStatusLabel2.Text = ("READ: " + str);
@@ -1214,7 +1219,7 @@ namespace Charaterizator
             {
                 _serialPort_M.WriteLine("MEAS:PRES?");     // запрашиваем показание (не понятно диапазон R???)
                                                            //toolStripStatusLabel1.Text = ("SEND: " + "MEAS:PRES?");
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 string str = _serialPort_M.ReadLine();
                 res = StrToDouble(str);
@@ -1243,7 +1248,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("MEAS:BARO?");     // запрашиваем показание
                                                            //toolStripStatusLabel1.Text = ("SEND: " + "MEAS:BARO?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 string str = _serialPort_M.ReadLine();
                 res = StrToDouble(str);
@@ -1273,7 +1278,7 @@ namespace Charaterizator
                 _serialPort_M.WriteLine("MEAS:RATE?");     // запрашиваем показание
                                                            //toolStripStatusLabel1.Text = ("SEND: " + "MEAS:RATE?");
 
-                Thread.Sleep(pause_ms);
+                Thread.Sleep(READ_PAUSE);
 
                 string str = _serialPort_M.ReadLine();
                 res = StrToDouble(str);
@@ -1469,9 +1474,8 @@ namespace Charaterizator
         // Включаем таймер (при открытии формы)
         public void MenStartTimer()
         {
-            // Устанавливаем интервал таймера и задержку
-            pause_ms = 50;
-            timer1.Interval = 1000;
+            // Устанавливаем интервал таймера и задержку            
+            timer1.Interval = READ_PERIOD;
 
             // запускаем таймер
             timer1.Enabled = true;

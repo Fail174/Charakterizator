@@ -18,10 +18,15 @@ namespace Charaterizator
 
     public partial class MainForm : Form
     {
+        // Занесены в настройку
+        public int MAIN_TIMER = 1000;
+
+        // Не занесены
+
         const int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
         const int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
         const int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
-        const int MENSOR_PRESSUER_WAIT = 100;//время установления давления в датчиках в сек
+        const int MENSOR_PRESSUER_WAIT = 10;//время установления давления в датчиках в сек
 
         public static int SettingsSelIndex { set; get; }
 
@@ -51,8 +56,8 @@ namespace Charaterizator
         private bool TemperatureReady=false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
 
-        private double SKOPressure = 1;//допуск по давлению
-        private int WaitPressureTime = 10;//ожидание стабилизации давления в датчике, сек
+        private double SKOPressure = 0.5;//допуск по давлению
+        private int WaitPressureTime = 5;//ожидание стабилизации давления в датчике, сек
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
 
@@ -64,6 +69,7 @@ namespace Charaterizator
                                                                             //                        btmMultimetr_Click(null, null);           
                                                                             //                        btnCommutator_Click(null, null);
                                                                             //                        btnMensor_Click(null, null);
+
             Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
             Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
             Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
@@ -72,6 +78,16 @@ namespace Charaterizator
             sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
             sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
             sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
+
+            Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;     // максимально разрешенное коичество подключаемых к изм. линии датчиков
+            Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod; // Время опроса и обновление информации, мс
+            Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
+            Commutator.WaitTime = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
+
+            Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;
+            Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;
+
+            MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
 
             //********************  Цифровой шрифт *********************
             tbDateTime.Font = DrawingFont;
@@ -83,6 +99,7 @@ namespace Charaterizator
             numMensorPoint.Font = DrawingFont;
             numTermoCameraPoint.Font = DrawingFont;
             //**********************************************************
+            //Properties.Settings.Default.Save();
         }
 
         //Выполняем при загрузке главной формы
@@ -110,6 +127,7 @@ namespace Charaterizator
                 cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
             }
 
+            MainTimer.Interval = 10;// MAIN_TIMER;
             MainTimer.Enabled = true;
             MainTimer.Start();
 
@@ -327,8 +345,10 @@ namespace Charaterizator
         {
             if (Mensor != null)
             {
+                
                 Mensor.MenStartTimer();
                 Mensor.ShowDialog();
+                
             }
             else
             {
@@ -383,7 +403,7 @@ namespace Charaterizator
                 if (result == DialogResult.Yes)
                 {
                     // коммутируем
-                    Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
+                    Commutator.SetConnectors(i, 0); // команда подключить датчик с индексом i
                     if (sensors.IsConnect())
                     {
                         if (sensors.SeachSensor(i))//поиск датчиков
@@ -414,7 +434,7 @@ namespace Charaterizator
                         Program.txtlog.WriteLineLog("Нет подключение к датчикам!", 1);
                     }
 
-                    Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                    Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                 }
             }
         }
@@ -452,13 +472,13 @@ namespace Charaterizator
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
-            int Wait_Multimetr = Convert.ToInt32(Properties.Settings.Default.set_SensReadPause);
+ //           int Wait_Multimetr = Convert.ToInt32(Properties.Settings.Default.set_SensReadPause);
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-                Commutator.SetConnectors(i, 2);
+                Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
@@ -467,7 +487,8 @@ namespace Charaterizator
                     double I4 =0, I20=0;
                     if (sensors.С40WriteFixCurrent(4))
                     {
-                        Thread.Sleep(Wait_Multimetr);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                        //Multimetr.ReadData();
                         I4 = Multimetr.Current;
                         Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
@@ -479,7 +500,8 @@ namespace Charaterizator
 
                     if (sensors.С40WriteFixCurrent(20))
                     {
-                        Thread.Sleep(Wait_Multimetr);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                        //Multimetr.ReadData();
                         I20 = Multimetr.Current;
                         Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
@@ -498,8 +520,8 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CAP: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
                 sensors.С40WriteFixCurrent(0);
-                Thread.Sleep(Wait_Multimetr);
-                Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                //Thread.Sleep(Wait_Multimetr);
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
         }
@@ -563,7 +585,7 @@ namespace Charaterizator
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
-                Commutator.SetConnectors(i, 2);
+                Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
@@ -583,7 +605,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
             }
             Program.txtlog.WriteLineLog("CH: Операция характеризации завершена ... ", 0);
         }
@@ -634,7 +656,7 @@ namespace Charaterizator
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
-                Commutator.SetConnectors(i, 2);
+                Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
@@ -653,7 +675,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
             Program.txtlog.WriteLineLog("VR: Операция верификации завершена ... ", 0);
@@ -715,9 +737,9 @@ namespace Charaterizator
                         dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon4.Text;   //
                         break;
                 }
-                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f");
-                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f");
-                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f");
+                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
+                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
+                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
         }
 
@@ -729,10 +751,10 @@ namespace Charaterizator
             {
                 dataGridView4.Rows.Add("", "", "", "", "");
                 dataGridView4.Rows[j].Cells[0].Value = ResultCI.Channal[i].Points[j].Datetime.ToString();                 //
-                dataGridView4.Rows[j].Cells[1].Value = ResultCI.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView4.Rows[j].Cells[1].Value = ResultCI.Channal[i].Points[j].Temperature.ToString("f2");   //
 //                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].Pressure.ToString("f");   //
-                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].I4.ToString("f");
-                dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I20.ToString("f");
+                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].I4.ToString("f4");
+                dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I20.ToString("f4");
             }
         }
 
@@ -769,12 +791,14 @@ namespace Charaterizator
                         Program.txtlog.WriteLineLog(string.Format("Поиск датчиков на линии {0} ...", i+1), 0);
 
                         // коммутируем
-                        Commutator.SetConnectors(i, 2); // команда подключить датчик с индексом i
+                        Commutator.SetConnectors(i, 0); // команда подключить датчик с индексом i
 
                         //***** поиск датчиков по току потребления ********************************************
                         if (Multimetr.Connected)
                         {
-                            Multimetr.ReadData();
+                            //Multimetr.ReadData();
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+
                             double Current = Multimetr.Current;
                             if (Current == 0)//чтение тока мультиметра 
                             {
@@ -795,6 +819,7 @@ namespace Charaterizator
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
+                                sensors.EnterServis();
                                 sensors.TegRead();          //читаем информацию о датчике
                                 sensors.SensorRead();       //чтение данных с датчика
                                 sensors.C140ReadPressureModel();//читаем модель ПД
@@ -814,7 +839,7 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
                         }
 
-                        Commutator.SetConnectors(i, 3); // команда отключить датчик с индексом i                    
+                        Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
                     }
                 }
@@ -846,6 +871,7 @@ namespace Charaterizator
                 try
                 {
                     SensorBusy = true;
+                   // MainTimer.Enabled = false;
                     int i;
                     for (i = 0; i < MaxChannalCount; i++)
                     {
@@ -868,6 +894,7 @@ namespace Charaterizator
                     //                    btnSensorSeach.Enabled = true;
                     btnSensorSeach.Text = "Поиск датчиков";
                     SensorBusy = false;
+                //    MainTimer.Enabled = true;
                 }
             }
             else
@@ -880,7 +907,7 @@ namespace Charaterizator
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            Properties.Settings.Default.Save();
             MainTimer.Stop();
             MainTimer.Enabled = false;
             sensors.DisConnect();
@@ -922,11 +949,11 @@ namespace Charaterizator
             if (CH_mensor != -1)
             {
                 // Получаем текущее значение давления и обновляем гл. форму 
-                tbMensorData.Text = Mensor._press.ToString();
+                tbMensorData.Text = Mensor._press.ToString("f3");
                 // Получаем тек. значение уставки  и обновляем гл. форму
-                numMensorPoint.Text = Mensor._point.ToString();
+                numMensorPoint.Text = Mensor._point.ToString("f2");
                 // Получаем тек. значение скорости  и обновляем гл. форму
-                tbMensorRate.Text = Mensor._rate.ToString();
+                tbMensorRate.Text = Mensor._rate.ToString("f2");
 
                 // Получаем тип преобразователя (удерживаемый диапазон)
                 int typeR = Mensor._typeR;  // 0-Д1П1,  1-Д2П1,  2-AutoRange 
@@ -965,10 +992,10 @@ namespace Charaterizator
         //чтение данных с мультиметра
         private void ReadMultimetr()
         {
-            bool res = Multimetr.ReadData();
-            if (res)
+            bool res = Multimetr.Error;
+            if (!res)
             {
-                tbMultimetrData.Text = Multimetr.Current.ToString();
+                tbMultimetrData.Text = Multimetr.Current.ToString("f4");
                 MultimetrReadError = 0;
             }
             else
@@ -1037,6 +1064,7 @@ namespace Charaterizator
                 MessageBox.Show("Нет подключения к коммутатору!", "Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
+            if (e.RowIndex < 0) return;
 
             if (e.ColumnIndex <= 2)//выбор датчика
             {
@@ -1049,13 +1077,13 @@ namespace Charaterizator
 
                 if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value))
                 {
-                    Commutator.SetConnectors(e.RowIndex, 2); // команда подключить датчик с индексом e.RowIndex
+                    Commutator.SetConnectors(e.RowIndex, 0); // команда подключить датчик с индексом e.RowIndex
                     dataGridView1[4, e.RowIndex].Style.BackColor = Color.Green;
 
                 }
                 else
                 {
-                    Commutator.SetConnectors(e.RowIndex, 3); // команда отключить датчик с индексом e.RowIndex
+                    Commutator.SetConnectors(e.RowIndex, 1); // команда отключить датчик с индексом e.RowIndex
                     dataGridView1[4, e.RowIndex].Style.BackColor = Color.IndianRed;
 
                 }
@@ -1745,7 +1773,7 @@ namespace Charaterizator
                     Thread.Sleep(100);
                     Mensor.SetTypeRange(ind);     // Устанавливаем тип выбранного преобразователя
                 }
-                else if ((ind >= 0) && (ind <= 2)) // активный канал B
+                else if ((ind >= 3) && (ind <= 5)) // активный канал B
                 {
                     Mensor.ChannelSet("B");   // устанвливаем активным канал B
                     Thread.Sleep(100);
@@ -1779,11 +1807,20 @@ namespace Charaterizator
         {
             if (TemperatureReady && PressureReady)
             {
-                btnCHStart.BackColor = Color.IndianRed;
-                btnCHStart.Text = "Выполняется процесс характеризации ...";
-                ReadSensorParametrs();
-                btnCalculateCoeff.BackColor = Color.LightGreen;
-                btnCHStart.Text = "Старт характеризации";
+                try
+                {
+                   // MainTimer.Enabled = false;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Text = "Выполняется процесс характеризации ...";
+                    ReadSensorParametrs();
+                    btnCalculateCoeff.BackColor = Color.LightGreen;
+                    btnCHStart.Text = "Старт характеризации";
+                }
+                finally
+                {
+                   // MainTimer.Enabled = true;
+                }
             }
             else
             {
@@ -1949,16 +1986,16 @@ namespace Charaterizator
                     numMensorPoint.Text = strValue;
                     bMensorSet.PerformClick();      //выставляем давление
                     bMensorControl.PerformClick();  //запускаем задачу
-
                     int i = 0;
                     do//ожидаем установления давления
                     {
+                        Application.DoEvents();
                         i++;
                         Thread.Sleep(1000);
-                        double realpoint = Convert.ToDouble(tbMensorData.Text);
+                        double realpoint = Mensor._press;//Convert.ToDouble(tbMensorData.Text);
                         shift = Math.Abs(realpoint - Point);
-                    } while ((shift < SKOPressure) && (i < 100));
-                    if (i >= 100)
+                    } while ((shift < SKOPressure) || (i > MENSOR_PRESSUER_WAIT));
+                    if (i >= MENSOR_PRESSUER_WAIT)
                     {//давление не установлено
                         MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
                     }
@@ -2012,10 +2049,18 @@ namespace Charaterizator
         {
             if (TemperatureReady && PressureReady)
             {
-                btnReadCAP.BackColor = Color.IndianRed;
-                btnReadCAP.Text = "Выполняется процесс чтения ЦАП...";
-                ReadSensorCurrent();
-                btnReadCAP.Text = "Чтение параметров ЦАП";
+                try
+                {
+                   // MainTimer.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Text = "Выполняется процесс чтения ЦАП...";
+                    ReadSensorCurrent();
+                    btnReadCAP.Text = "Чтение параметров ЦАП";
+                }
+                finally
+                {
+                  //  MainTimer.Enabled = true;
+                }
             }
             else
             {
@@ -2032,41 +2077,51 @@ namespace Charaterizator
             }
             if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Продолжить калибровку?", numTermoCameraPoint.Text), "Подтверждение операции",MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
-                for (int i = 0; i < MaxChannalCount; i++)
+                try
                 {
-
-                    Application.DoEvents();
-                    if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-
-                    Commutator.SetConnectors(i, 2);
-
-                    if (sensors.SelectSensor(i))
+                   // MainTimer.Enabled = false;
+                
+                Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
+                    for (int i = 0; i < MaxChannalCount; i++)
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
 
-                        sensors.С40WriteFixCurrent(4);
-                        Multimetr.ReadData();
-                        sensors.С45WriteCurrent4mA(Multimetr.Current);
+                        Application.DoEvents();
+                        if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
-                        sensors.С40WriteFixCurrent(0);
-                        Thread.Sleep(1000);
+                        Commutator.SetConnectors(i, 0);
 
-                        sensors.С40WriteFixCurrent(20);
-                        Multimetr.ReadData();
-                        sensors.С46WriteCurrent20mA(Multimetr.Current);
+                        if (sensors.SelectSensor(i))
+                        {
+                            Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
 
-                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} выполнена", i + 1), 0);
-                        sensors.С40WriteFixCurrent(0);
-                        Thread.Sleep(1000);
+                            sensors.С40WriteFixCurrent(4);
+                            //                            Multimetr.ReadData();
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                            sensors.С45WriteCurrent4mA(Multimetr.Current);
+
+                            sensors.С40WriteFixCurrent(0);
+                            Thread.Sleep(1000);
+
+                            sensors.С40WriteFixCurrent(20);
+//                            Multimetr.ReadData();
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                            sensors.С46WriteCurrent20mA(Multimetr.Current);
+
+                            Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} выполнена", i + 1), 0);
+                            sensors.С40WriteFixCurrent(0);
+                            Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i + 1), 1);
+                        }
+                        Commutator.SetConnectors(i, 1);
                     }
-                    else
-                    {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i+1), 1);
-                    }
-                    Commutator.SetConnectors(i, 3);
                 }
-
+                finally
+                {
+                  //  MainTimer.Enabled = true;
+                }
             }
         }
 
@@ -2080,50 +2135,83 @@ namespace Charaterizator
         private void MenuItemMainSettings_Click(object sender, EventArgs e)
         {
             SettingsSelIndex = 0;
-            FormSettings Settings = new FormSettings();            
-            Settings.ShowDialog();
+            FormSettings Settings = new FormSettings();
+            if (Settings.ShowDialog() == DialogResult.OK)
+            {
+                MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
+                MainTimer.Stop();
+                MainTimer.Enabled = false;
+                MainTimer.Interval = MAIN_TIMER;
+                MainTimer.Enabled = true;
+                MainTimer.Start();
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
         }
         // Настройки Мультиметра
         private void параметрыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsSelIndex = 2;
-            FormSettings Settings = new FormSettings();            
-            Settings.ShowDialog();
-            Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
-            Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
-            Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
-            Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
+            FormSettings Settings = new FormSettings();
+            if (Settings.ShowDialog() == DialogResult.OK)
+            {
+                Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
+                Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
+                Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
+                Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
         }
         // Настройки Задатчика давления
         private void параметрыToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             SettingsSelIndex = 3;
             FormSettings Settings = new FormSettings();
-            Settings.ShowDialog();
+            if (Settings.ShowDialog() == DialogResult.OK)
+            {
+                Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;
+                Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
         }
         // Настройки Коммутатора
         private void параметрыToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             SettingsSelIndex = 1;
             FormSettings Settings = new FormSettings();
-            Settings.ShowDialog();
+            if (Settings.ShowDialog() == DialogResult.OK)
+            {
+
+                Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;     // максимально разрешенное коичество подключаемых к изм. линии датчиков
+                Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod; // Время опроса и обновление информации, мс
+                Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
+                Commutator.WaitTime = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+                Commutator.CommStartTimer();
+            }
         }
         // Настройки Термокамеры
         private void параметрыToolStripMenuItem3_Click(object sender, EventArgs e)
         {
             SettingsSelIndex = 4;
             FormSettings Settings = new FormSettings();
-            Settings.ShowDialog();
+            if(Settings.ShowDialog()== DialogResult.OK)
+            {
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+
+            }
         }
         // Настройки Датчиков
         private void параметрыToolStripMenuItem4_Click(object sender, EventArgs e)
         {
             SettingsSelIndex = 5;
             FormSettings Settings = new FormSettings();
-            Settings.ShowDialog();
-            sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
-            sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
-            sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
+            if (Settings.ShowDialog() == DialogResult.OK)
+            {
+                sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
+                sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
+                sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
         }
 
 
@@ -2347,6 +2435,7 @@ namespace Charaterizator
 
         }
 
+        //установка давления (верификация)
         private void btnVRPressureSet1_Click(object sender, EventArgs e)
         {
             string strValue = "";
@@ -2383,12 +2472,12 @@ namespace Charaterizator
                     int i = 0;
                     do//ожидаем установления давления
                     {
-                        i++;
                         Application.DoEvents();
+                        i++;
                         Thread.Sleep(1000);
-                        double realpoint = Convert.ToDouble(tbMensorData.Text);
+                        double realpoint = Mensor._press;
                         shift = Math.Abs(realpoint - Point);
-                    } while ((shift < SKOPressure) && (i < MENSOR_PRESSUER_WAIT));
+                    } while ((shift < SKOPressure) || (i > MENSOR_PRESSUER_WAIT));
                     if (i >= MENSOR_PRESSUER_WAIT)
                     {//давление не установлено
                         MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
@@ -2426,10 +2515,18 @@ namespace Charaterizator
         {
             if (TemperatureReady && PressureReady)
             {
-                btnVRParamRead.BackColor = Color.IndianRed;
-                btnVRParamRead.Text = "Выполняется процесс верификации ...";
-                ReadSensorPressure();
-                btnVRParamRead.Text = "Чтение показаний";
+                try
+                {
+                  //  MainTimer.Enabled = false;
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Text = "Выполняется процесс верификации ...";
+                    ReadSensorPressure();
+                    btnVRParamRead.Text = "Чтение показаний";
+                }
+                finally
+                {
+                  //  MainTimer.Enabled = true;
+                }
             }
             else
             {
@@ -2635,6 +2732,18 @@ namespace Charaterizator
                 }
 
             }
+        }
+
+        private void cbMensorTypeR_DropDown(object sender, EventArgs e)
+        {
+            MainTimer.Stop();
+            MainTimer.Enabled = false;
+
+        }
+
+        private void btnVRPressureSet3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

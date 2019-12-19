@@ -1069,7 +1069,7 @@ namespace Charaterizator
         {
             int tmp;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            tmp = (indata[5] << 24) | (indata[4] << 16) | (indata[3] << 8) | indata[2];
+            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
             sensor.OutCurrent = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
             sensor.PressueUnit = indata[6];

@@ -16,14 +16,12 @@ namespace Charaterizator
         {
             InitializeComponent();           
             tab_FormSettings.SelectedIndex = MainForm.SettingsSelIndex;
-            ReadSettings(MainForm.SettingsSelIndex);
+            Properties.Settings.Default.Reload();
+            ReadSettings();
+            //ReadSettings(MainForm.SettingsSelIndex);
         }
 
         
-
-       
-
-
         // Сохранение данных из формы в settings
         private void bSetSettings_Click(object sender, EventArgs e)
         {
@@ -35,12 +33,12 @@ namespace Charaterizator
                 // 0
                 //page_ind = 0;
                 //tag = Convert.ToInt32(tbHoldTimeTemp.Tag);
-                Properties.Settings.Default.set_HoldTimeTemp = Convert.ToDouble(tbHoldTimeTemp.Text);
-                Properties.Settings.Default.set_HoldTimePress = Convert.ToDouble(tbHoldTimePress.Text);
-                Properties.Settings.Default.set_HoldTimeAfReset = Convert.ToDouble(tbHoldTimeAfReset.Text);
-                Properties.Settings.Default.set_DeltaPress = Convert.ToDouble(tbDeltaPress.Text);
-                Properties.Settings.Default.set_DeltaTemp = Convert.ToDouble(tbDeltaTemp.Text);
-                Properties.Settings.Default.set_MainTimer = Convert.ToDouble(tbMainTimer.Text);
+                Properties.Settings.Default.set_HoldTimeTemp = Convert.ToInt32(tbHoldTimeTemp.Value);
+                Properties.Settings.Default.set_HoldTimePress = Convert.ToInt32(tbHoldTimePress.Value);
+                Properties.Settings.Default.set_HoldTimeAfReset = Convert.ToInt32(tbHoldTimeAfReset.Value);
+                Properties.Settings.Default.set_DeltaPress = Convert.ToInt32(tbDeltaPress.Value);
+                Properties.Settings.Default.set_DeltaTemp = Convert.ToInt32(tbDeltaTemp.Value);
+                Properties.Settings.Default.set_MainTimer = Convert.ToInt32(tbMainTimer.Value);
                 if (cbHandlePress.SelectedIndex == 1)
                 {
                     Properties.Settings.Default.set_HandleContrPress = true;
@@ -58,23 +56,23 @@ namespace Charaterizator
                     Properties.Settings.Default.set_HandleContrMultimetr = false;
                 }
                 Properties.Settings.Default.FileNameDB = tbPathFile.Text;
-                       
 
-                // 1
-                Properties.Settings.Default.set_CommReadCH = Convert.ToInt16(tbCommReadCH.Text);
-                Properties.Settings.Default.set_CommMaxSetCH = Convert.ToInt16(tbCommMaxSetCH.Text);
-                Properties.Settings.Default.set_CommReadPeriod = Convert.ToDouble(tbCommReadPeriod.Text);
-                Properties.Settings.Default.set_CommReadPause = Convert.ToDouble(tbCommReadPause.Text);
+
+                // 1 - Коммутатор
+                Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value); //Convert.ToInt16(tbCommReadCH.Text);
+                Properties.Settings.Default.set_CommMaxSetCH = Convert.ToInt32(tbCommMaxSetCH.Value);
+                Properties.Settings.Default.set_CommReadPeriod = Convert.ToInt32(tbCommReadPeriod.Value);
+                Properties.Settings.Default.set_CommReadPause = Convert.ToInt32(tbCommReadPause.Value);
 
                 //2 - Мультиметр
-                Properties.Settings.Default.set_MultimReadCount = Convert.ToInt32(tbMultimReadCount.Text);
-                Properties.Settings.Default.set_MultimReadPeriod = Convert.ToInt32(tbMultimReadPeriod.Text);
-                Properties.Settings.Default.set_MultimReadTimeout = Convert.ToInt32(tbMultimReadTimeOut.Text);
-                Properties.Settings.Default.set_MultimDataReady = Convert.ToInt32(tbMultimWaitReady.Text);
+                Properties.Settings.Default.set_MultimReadCount = Convert.ToInt32(tbMultimReadCount.Value);
+                Properties.Settings.Default.set_MultimReadPeriod = Convert.ToInt32(tbMultimReadPeriod.Value);
+                Properties.Settings.Default.set_MultimReadTimeout = Convert.ToInt32(tbMultimReadTimeOut.Value);
+                Properties.Settings.Default.set_MultimDataReady = Convert.ToInt32(tbMultimWaitReady.Value);
 
-                //3
-                Properties.Settings.Default.set_MensorReadPeriod = Convert.ToDouble(tbMensorReadPeriod.Text);
-                Properties.Settings.Default.set_MensorReadPause = Convert.ToDouble(tbMensorReadPause.Text);
+                //3 - МЕНСОР
+                Properties.Settings.Default.set_MensorReadPeriod = Convert.ToInt32(tbMensorReadPeriod.Value);
+                Properties.Settings.Default.set_MensorReadPause = Convert.ToInt32(tbMensorReadPause.Value);
                 if (cbMensorSetZero.SelectedIndex == 1)
                 {
                     Properties.Settings.Default.set_MensorSetZero = true;
@@ -85,15 +83,16 @@ namespace Charaterizator
                 }
 
                 //4
-                Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToDouble(tbTCameraReadPeriod.Text);
+                Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToInt32(tbTCameraReadPeriod.Value);
 
                 //5 - Датчики
-                Properties.Settings.Default.set_SensReadCount = Convert.ToInt32(tbSensReadCount.Text);
-                Properties.Settings.Default.set_SensReadPause = Convert.ToInt32(tbSensReadPause.Text);
-                Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Text);
+                Properties.Settings.Default.set_SensReadCount = Convert.ToInt32(tbSensReadCount.Value);
+                Properties.Settings.Default.set_SensReadPause = Convert.ToInt32(tbSensReadPause.Value);
+                Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Value);
+                //tbSensWaitPause.Value;
 
                 //Сохраняем настройки
-                Properties.Settings.Default.Save();
+                //Properties.Settings.Default.Save();
                 Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
             }
             catch
@@ -109,25 +108,25 @@ namespace Charaterizator
         // Обработчик пререключений между окнами настроек
         private void tab_FormSettings_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int ind = tab_FormSettings.SelectedIndex;
-            ReadSettings(ind);
+            //int ind = tab_FormSettings.SelectedIndex;
+            //ReadSettings(ind);
         }
 
 
         // Обновление данных выбранной вкладки с настройками
-        private void ReadSettings(int ind)
+        private void ReadSettings()
         {
-            switch (ind)
+           /* switch (ind)
             {
-                case 0:
+                case 0:*/
                     {
                         // считываем данные из Settings и выводим на форму с настройками
-                        tbHoldTimeTemp.Text = Properties.Settings.Default.set_HoldTimeTemp.ToString();
-                        tbHoldTimePress.Text = Properties.Settings.Default.set_HoldTimePress.ToString();
-                        tbHoldTimeAfReset.Text = Properties.Settings.Default.set_HoldTimeAfReset.ToString();
-                        tbDeltaTemp.Text = Properties.Settings.Default.set_DeltaTemp.ToString();
-                        tbDeltaPress.Text = Properties.Settings.Default.set_DeltaPress.ToString();                        
-                        tbMainTimer.Text = Properties.Settings.Default.set_MainTimer.ToString();
+                        tbHoldTimeTemp.Value = Properties.Settings.Default.set_HoldTimeTemp;
+                        tbHoldTimePress.Value = Properties.Settings.Default.set_HoldTimePress;
+                        tbHoldTimeAfReset.Value = Properties.Settings.Default.set_HoldTimeAfReset;
+                        tbDeltaTemp.Value = Properties.Settings.Default.set_DeltaTemp;
+                        tbDeltaPress.Value = Properties.Settings.Default.set_DeltaPress;                        
+                        tbMainTimer.Value = Properties.Settings.Default.set_MainTimer;
                         if (Properties.Settings.Default.set_HandleContrPress)
                         {
                             cbHandlePress.SelectedIndex = 1;                          
@@ -146,28 +145,28 @@ namespace Charaterizator
                         }
                         tbPathFile.Text = Properties.Settings.Default.FileNameDB;
 
-                        return;
+          //              return;
                     }
-                case 1:
+               // case 1:
                     {
-                        tbCommReadCH.Text = Properties.Settings.Default.set_CommReadCH.ToString();
-                        tbCommMaxSetCH.Text = Properties.Settings.Default.set_CommMaxSetCH.ToString();
-                        tbCommReadPeriod.Text = Properties.Settings.Default.set_CommReadPeriod.ToString();
-                        tbCommReadPause.Text = Properties.Settings.Default.set_CommReadPause.ToString();
-                        return;
+                        tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
+                        tbCommMaxSetCH.Value = Properties.Settings.Default.set_CommMaxSetCH;
+                        tbCommReadPeriod.Value = Properties.Settings.Default.set_CommReadPeriod;
+                        tbCommReadPause.Value = Properties.Settings.Default.set_CommReadPause;
+         //               return;
                     }
-                case 2:
+               // case 2:
                     {
-                        tbMultimReadCount.Text = Properties.Settings.Default.set_MultimReadCount.ToString();
-                        tbMultimReadPeriod.Text = Properties.Settings.Default.set_MultimReadPeriod.ToString();
-                        tbMultimReadTimeOut.Text = Properties.Settings.Default.set_MultimReadTimeout.ToString();
-                        tbMultimWaitReady.Text = Properties.Settings.Default.set_MultimDataReady.ToString();
-                        return;
+                        tbMultimReadCount.Value = Properties.Settings.Default.set_MultimReadCount;
+                        tbMultimReadPeriod.Value = Properties.Settings.Default.set_MultimReadPeriod;
+                        tbMultimReadTimeOut.Value = Properties.Settings.Default.set_MultimReadTimeout;
+                        tbMultimWaitReady.Value = Properties.Settings.Default.set_MultimDataReady;
+         //               return;
                     }
-                case 3:
+              //  case 3:
                     {
-                        tbMensorReadPeriod.Text = Properties.Settings.Default.set_MensorReadPeriod.ToString();
-                        tbMensorReadPause.Text = Properties.Settings.Default.set_MensorReadPause.ToString();
+                        tbMensorReadPeriod.Value = Properties.Settings.Default.set_MensorReadPeriod;
+                        tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
                         if (Properties.Settings.Default.set_MensorSetZero)
                         {
                             cbMensorSetZero.SelectedIndex = 1;
@@ -177,21 +176,21 @@ namespace Charaterizator
                             cbMensorSetZero.SelectedIndex = 0;
                         }
                         
-                        return;
+          //              return;
                     }
-                case 4:
+              //  case 4:
                     {
-                        tbTCameraReadPeriod.Text = Properties.Settings.Default.set_TCameraReadPeriod.ToString();                     
-                        return;
+                        tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;                     
+         //               return;
                     }
-                case 5:
+              //  case 5:
                     {
-                        tbSensReadCount.Text = Properties.Settings.Default.set_SensReadCount.ToString();
-                        tbSensReadPause.Text = Properties.Settings.Default.set_SensReadPause.ToString();
-                        tbSensWaitPause.Text = Properties.Settings.Default.set_SensWaitTimeout.ToString();
-                        return;
+                        tbSensReadCount.Value = Properties.Settings.Default.set_SensReadCount;
+                        tbSensReadPause.Value = Properties.Settings.Default.set_SensReadPause;
+                        tbSensWaitPause.Value = Properties.Settings.Default.set_SensWaitTimeout;
+           //             return;
                     }           
-            }            
+          //  }            
         }
 
         // Обработчик открыть файл с БД

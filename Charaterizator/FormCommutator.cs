@@ -17,9 +17,14 @@ namespace Charaterizator
     public partial class FormSwitch : Form
     {
 
-        //временные константы
-        int TimeSleep = 100;            // Время опроса и обновление информации, мс
-        int WaitTime = 100;   //время выдержки после переключения коммутатора (переходные процессы), мс
+
+        // Занесены в настройки
+        public int MAX_SETCH = 14;        // максимально разрешенное коичество подключаемых к изм. линии датчиков начиная с нулевого
+        public int READ_PERIOD = 1000;    // Время опроса и обновление информации, мс
+        public int READ_PAUSE = 100;       //время выдержки после переключения коммутатора (переходные процессы), мс
+        public int WaitTime = 100;        //время выдержки после переключения коммутатора (переходные процессы), мс
+
+        //не занесена в настройки
         int MAXBUSY = 2000;             //Максимальное количество циклов ожидания (по 1 мс)
 
         bool CommutatorBusy = false;//признак доступности коммутатора для приема команд
@@ -127,6 +132,7 @@ namespace Charaterizator
                 if (ReadCommutatorID())
                 {
                     // Запускаем таймер
+                    timer1.Interval = READ_PERIOD;
                     timer1.Enabled = true;
                     timer1.Start();
                     Connected = true;
@@ -149,7 +155,22 @@ namespace Charaterizator
             }
         }
 
-     
+
+
+        public void CommStartTimer()
+
+        {
+            // останавливаем таймер                
+            timer1.Stop();
+            timer1.Enabled = false;
+
+            // Запускаем таймер
+            timer1.Interval = READ_PERIOD;
+            timer1.Enabled = true;
+            timer1.Start();
+        }
+
+
 
 
         //-----------------------------------------------------------------------------
@@ -186,7 +207,7 @@ namespace Charaterizator
             {
                 Int32 _CH = (1 << CH) | StateCHPower;
                 serialPort1.Write(WriteHoldingRegister(0, _CH), 0, 9);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
 
                 serialPort1.Read(indata, 0, 10);
                 StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
@@ -200,7 +221,7 @@ namespace Charaterizator
                 CH = ~CH;
                 Int32 _CH = StateCHPower & CH;
                 serialPort1.Write(WriteHoldingRegister(0, _CH), 0, 9);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
                 serialPort1.Read(indata, 0, 10);
                 StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                 SetState(StateCHPower, StateCH);
@@ -279,13 +300,13 @@ namespace Charaterizator
                 // если датчик не подключен, отключам все, подключаем текущий, отключаем все
                 case 0:
                     serialPort1.Write(WriteHoldingRegister(1, 0), 0, 9);
-                    Thread.Sleep(TimeSleep);
+                    Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
-                    Thread.Sleep(TimeSleep);
+                    Thread.Sleep(READ_PAUSE);
 
                     _CH = (1 << CH);
                     serialPort1.Write(WriteHoldingRegister(1, _CH), 0, 9);
-                    Thread.Sleep(TimeSleep);
+                    Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
 
                     // Сохраняем состояния подключенных датчиков
@@ -296,7 +317,7 @@ namespace Charaterizator
                 // если датчик уже подключен, то отключаем его и все остальные
                 case 1:
                     serialPort1.Write(WriteHoldingRegister(1, 0), 0, 9);
-                    Thread.Sleep(TimeSleep);
+                    Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
                     StateCH = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                     SetState(StateCHPower, StateCH);
@@ -304,11 +325,11 @@ namespace Charaterizator
 
                 //режим подключения нескольких датчиков датчиков, подключаем заданный к измерительной петле
                 case 2:
-                    if (NumOfConnectInputs <= 14)
+                    if (NumOfConnectInputs <= MAX_SETCH)
                     {
                         _CH = (1 << CH) | StateCH;
                         serialPort1.Write(WriteHoldingRegister(1, _CH), 0, 9);
-                        Thread.Sleep(TimeSleep);
+                        Thread.Sleep(READ_PAUSE);
                         serialPort1.Read(indata, 0, 10);
                         StateCH = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                         SetState(StateCHPower, StateCH);
@@ -322,7 +343,7 @@ namespace Charaterizator
                     CH = ~CH;
                     _CH = StateCH & CH;
                     serialPort1.Write(WriteHoldingRegister(1, _CH), 0, 9);
-                    Thread.Sleep(TimeSleep);
+                    Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
                     StateCH = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                     SetState(StateCHPower, StateCH);
@@ -434,7 +455,7 @@ namespace Charaterizator
 
 
                 serialPort1.Write(WriteHoldingRegister(0, 0x3FFFFFFF), 0, 9);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
                 serialPort1.Read(indata, 0, 10);
                 StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                 SetState(StateCHPower, StateCH);
@@ -481,7 +502,7 @@ namespace Charaterizator
 
 
                 serialPort1.Write(WriteHoldingRegister(0, 0x0), 0, 9);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
                 serialPort1.Read(indata, 0, 10);
                 StateCHPower = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                 SetState(StateCHPower, StateCH);
@@ -608,52 +629,7 @@ namespace Charaterizator
             return btn;
         }
 
-  //      private void bComPort_Click(object sender, EventArgs e)
-  //      {
-
-    //        if (serialPort1.IsOpen)
-    //        {
-    //            serialPort1.Close();
-    //            bComPort.Text = "Подключить коммутатор";
-    //            timer1.Stop();
-    //            timer1.Enabled = false;
-    //        }
-    //        else
-    //        {
-
-
-
-                /*Form2 newForm = new Form2();
-                newForm.ShowDialog();
-                serialPort1.PortName = newForm.ComPortName;
-                serialPort1.Open();
-                bComPort.Text = "Отключить коммутатор";
-                newForm.Close();
-                timer1.Enabled = true;
-                timer1.Start();*/
-
-/*
-                serialPort1.PortName = "COM5";
-                serialPort1.BaudRate = 19200;
-                serialPort1.DataBits = 8;
-               // serialPort1.StopBits = 2;
-                serialPort1.Parity = 0;
-                serialPort1.ReadTimeout = 1000;
-                serialPort1.WriteTimeout = 1000;
-                serialPort1.DtrEnable = true;
-                serialPort1.RtsEnable = true;
-                serialPort1.Open();
-
-            timer1.Enabled = true;
-            timer1.Start();
-
-
-
-            //   }
-        }
-
-
-    */
+  
         public static void myCRC(byte[] message, int length, out byte CRCHigh, out byte CRCLow)
         {
             ushort CRCFull = 0xFFFF;
@@ -718,9 +694,9 @@ namespace Charaterizator
             if (serialPort1.IsOpen)
             {
                 serialPort1.Write(ReadHoldingRegister(), 0, 4);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
                 serialPort1.Read(indata, 0, 13);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
 
                 // Сохраняем состояния элементов питания каналов
                 data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
@@ -746,9 +722,9 @@ namespace Charaterizator
             if (serialPort1.IsOpen)
             {
                 serialPort1.Write(ReadHoldingRegister(), 0, 4);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
                 serialPort1.Read(indata, 0, 13);
-                Thread.Sleep(TimeSleep);
+                Thread.Sleep(READ_PAUSE);
 
                 // проверка заголовка ответного слова коммутатора
                 if((indata[0] == 01)&&(indata[1]==69)&&(indata[2]==08))
