@@ -452,11 +452,13 @@ namespace Charaterizator
         private void ReadSensorCurrent()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = 0;   //конечный канал
+            int FinishNumber = MaxChannalCount;   //конечный канал
 
             Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 0);
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
-            int step = MaxChannalCount / MaxLevelCount;
+            //int StartNumber = 0;    //начальный канал
+            //int FinishNumber = 0;   //конечный канал
+/*            int step = MaxChannalCount / MaxLevelCount;
             switch (SelectedLevel)
             {
                 case 1:
@@ -475,15 +477,16 @@ namespace Charaterizator
                     StartNumber = step * 3;
                     FinishNumber = step * 4 - 1;
                     break;
-            }
+            }*/
             //************************************************************************************************
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
- //           int Wait_Multimetr = Convert.ToInt32(Properties.Settings.Default.set_SensReadPause);
+
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
+                cbChannalCharakterizator.SelectedIndex = i;
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
@@ -497,7 +500,6 @@ namespace Charaterizator
                     if (sensors.С40WriteFixCurrent(4))
                     {
                         Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
-                        //Multimetr.ReadData();
                         I4 = Multimetr.Current;
                         Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
@@ -510,7 +512,6 @@ namespace Charaterizator
                     if (sensors.С40WriteFixCurrent(20))
                     {
                         Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
-                        //Multimetr.ReadData();
                         I20 = Multimetr.Current;
                         Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
@@ -519,9 +520,7 @@ namespace Charaterizator
                         I20 = 0;
                         Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
                     }
-                    cbChannalCharakterizator.SelectedIndex = i;
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
-
                     UpdateCurrentGrid(i);
                 }
                 else
@@ -529,9 +528,7 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CAP: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
                 sensors.С40WriteFixCurrent(0);
-                //Thread.Sleep(Wait_Multimetr);
                 Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
-
             }
         }
 
@@ -1968,13 +1965,18 @@ namespace Charaterizator
                     strValue = cbCHTermoCamera4.Text;
                     break;
             }
+            if (strValue == "")
+            {
+                MessageBox.Show("Введите значение температуры", "Не задана температура в термокамере");
+                return;
+            }
 
             if (ThermalCamera.Connected)
             {
                 numTermoCameraPoint.Text = strValue;
                 Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
                 TemperatureReady = true;
-                btnReadCAP.BackColor = Color.LightGreen;
+                //btnReadCAP.BackColor = Color.LightGreen;
                 MessageBox.Show("температура установлена.", "Успешное завершение операции");
             }
             else
@@ -1984,7 +1986,7 @@ namespace Charaterizator
                 {
                     numTermoCameraPoint.Text = strValue;
                     TemperatureReady = true;
-                    btnReadCAP.BackColor = Color.LightGreen;
+                    //btnReadCAP.BackColor = Color.LightGreen;
                 }
             }
         }
@@ -2009,11 +2011,16 @@ namespace Charaterizator
                     strValue = cbCHPressureSet4.Text;
                     break;
             }
+            if (strValue == "")
+            {
+                MessageBox.Show("Введите значение давления в кПа", "Не установлено давление в задатчике");
+                return;
+            }
 
             if (Mensor.Connected)
             {
-                double Point;
-                double shift;
+                double Point=0;
+                double shift=0;
                 try
                 {
                     btnCHPressureSet1.Enabled = false;
@@ -2030,12 +2037,12 @@ namespace Charaterizator
                         Application.DoEvents();
                         i++;
                         Thread.Sleep(1000);
-                        double realpoint = Mensor._press;//Convert.ToDouble(tbMensorData.Text);
-                        shift = Math.Abs(realpoint - Point);
+                        shift = Math.Abs(Mensor._press - Point);
                     } while ((shift > SKO_PRESSURE) && (i < MENSOR_PRESSUER_WAIT));
                     if (i >= MENSOR_PRESSUER_WAIT)
                     {//давление не установлено
-                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
+                        Program.txtlog.WriteLineLog("CH: Истекло время установки давления в датчиках", 1);
+                        //MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
                     }
                     else
                     {//давление установлено
@@ -2043,7 +2050,8 @@ namespace Charaterizator
                         PressureReady = true;
                         btnCHStart.BackColor = Color.LightGreen;
                         btnCalculateCoeff.BackColor = Color.IndianRed;
-                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
+                        Program.txtlog.WriteLineLog("CH: Давление в датчиках установлено.", 1);
+                        //MessageBox.Show("Давление установлено.", "Успешное завершение операции");
                     }
                 }
                 finally
@@ -2085,24 +2093,24 @@ namespace Charaterizator
         //чтение параметров ЦАП
         private void btnReadCAP_Click(object sender, EventArgs e)
         {
-            if (TemperatureReady && PressureReady)
+//            if (TemperatureReady)
+            if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Выполнить чтение ЦАП?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 try
                 {
-                   // MainTimer.Enabled = false;
-                    //btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.BackColor = Color.IndianRed;
                     btnReadCAP.Text = "Выполняется процесс чтения ЦАП...";
                     ReadSensorCurrent();
-                    btnReadCAP.Text = "Чтение параметров ЦАП";
                 }
                 finally
                 {
-                  //  MainTimer.Enabled = true;
+                    btnReadCAP.Text = "Чтение параметров ЦАП";
+                    btnReadCAP.BackColor = Color.LightGreen;
                 }
             }
             else
             {
-                Program.txtlog.WriteLineLog("Не заданны параметры для чтения ЦАП.", 1);
+//                Program.txtlog.WriteLineLog("Не заданны температура для чтения ЦАП.", 1);
             }
         }
 
@@ -2117,8 +2125,8 @@ namespace Charaterizator
             {
                 try
                 {
-                    // MainTimer.Enabled = false;
                     btnCalibrateCurrent.Text = "Выполняется калибровка. Ожидайте...";
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
                     pbCHProcess.Maximum = MaxChannalCount;
                     pbCHProcess.Minimum = 0;
                     pbCHProcess.Value = 0;
@@ -2137,7 +2145,6 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
 
                             sensors.С40WriteFixCurrent(4);
-                            //                            Multimetr.ReadData();
                             Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
                             sensors.С45WriteCurrent4mA(Multimetr.Current);
 
@@ -2145,7 +2152,6 @@ namespace Charaterizator
                             Thread.Sleep(1000);
 
                             sensors.С40WriteFixCurrent(20);
-//                            Multimetr.ReadData();
                             Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
                             sensors.С46WriteCurrent20mA(Multimetr.Current);
 
@@ -2162,8 +2168,8 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    //  MainTimer.Enabled = true;
                     btnCalibrateCurrent.Text = "Калибровка тока    (4 и 20 мА)";
+                    btnCalibrateCurrent.BackColor = Color.LightGreen;
                 }
             }
         }
@@ -2440,6 +2446,7 @@ namespace Charaterizator
             }
         }
 
+        //Установка температуры в термокамере для верификации
         private void btnVRTemperatureSet1_Click(object sender, EventArgs e)
         {
             TemperatureReady = false;
@@ -2458,6 +2465,11 @@ namespace Charaterizator
                 case "4":
                     strValue = cbVRTermoCamera4.Text;
                     break;
+            }
+            if (strValue == "")
+            {
+                MessageBox.Show("Введите значение температуры", "Не задана температура в термокамере");
+                return;
             }
 
             if (ThermalCamera.Connected)
@@ -2498,6 +2510,11 @@ namespace Charaterizator
                     break;
             }
 
+            if (strValue == "")
+            {
+                MessageBox.Show("Введите значение давления в кПа", "Не задано давление в задатчике");
+                return;
+            }
             if (Mensor.Connected)
             {
                 double Point;
@@ -2524,14 +2541,14 @@ namespace Charaterizator
                     if (i >= MENSOR_PRESSUER_WAIT)
                     {//давление не установлено
                         Program.txtlog.WriteLineLog("VR: Истекло время установки давления в датчиках", 1);
-                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
+//                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
                     }
                     else
                     {//давление установлено
                         Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
                         PressureReady = true;
                         btnVRParamRead.BackColor = Color.LightGreen;
-                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
+//                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
                         Program.txtlog.WriteLineLog("VR: Давление установлено", 0);
                     }
                 }
