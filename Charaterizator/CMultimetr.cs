@@ -128,7 +128,8 @@ namespace Charaterizator
                 }
                 catch
                 {
-                    Console.WriteLine("Multimetr: Ошибка чтения данных");
+                    //Console.WriteLine("Multimetr: Ошибка чтения данных");
+                    //Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных. ", 1);
                     Error = true;
                 }
             }
