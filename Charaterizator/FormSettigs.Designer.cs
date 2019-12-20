@@ -267,7 +267,7 @@
             0,
             0});
             this.tbMainTimer.Minimum = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
@@ -275,7 +275,7 @@
             this.tbMainTimer.Size = new System.Drawing.Size(101, 21);
             this.tbMainTimer.TabIndex = 85;
             this.tbMainTimer.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});

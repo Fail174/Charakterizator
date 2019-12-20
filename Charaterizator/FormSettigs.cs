@@ -16,7 +16,7 @@ namespace Charaterizator
         {
             InitializeComponent();           
             tab_FormSettings.SelectedIndex = MainForm.SettingsSelIndex;
-            Properties.Settings.Default.Reload();
+           // Properties.Settings.Default.Reload();
             ReadSettings();
             //ReadSettings(MainForm.SettingsSelIndex);
         }
@@ -33,6 +33,7 @@ namespace Charaterizator
                 // 0
                 //page_ind = 0;
                 //tag = Convert.ToInt32(tbHoldTimeTemp.Tag);
+                
                 Properties.Settings.Default.set_HoldTimeTemp = Convert.ToInt32(tbHoldTimeTemp.Value);
                 Properties.Settings.Default.set_HoldTimePress = Convert.ToInt32(tbHoldTimePress.Value);
                 Properties.Settings.Default.set_HoldTimeAfReset = Convert.ToInt32(tbHoldTimeAfReset.Value);
@@ -90,7 +91,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_SensReadPause = Convert.ToInt32(tbSensReadPause.Value);
                 Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Value);
                 //tbSensWaitPause.Value;
-
+                
                 //Сохраняем настройки
                 //Properties.Settings.Default.Save();
                 Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);

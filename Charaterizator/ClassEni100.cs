@@ -195,6 +195,7 @@ namespace Charaterizator
         public int WRITE_PERIOD = 100;  //период выдачи команд
         public int WRITE_COUNT = 3;     //число попыток записи команд в датчик
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от датчика
+        public int MaxSensorOnLevel = 8;//количество датиков на уровне
 
         static SerialPort port = null;
         static FastFifo readbuf = new FastFifo();
@@ -211,8 +212,10 @@ namespace Charaterizator
         private int CountByteToRead = 0;    //количество байт в команде
         private byte Adress = 0;               //адрес устройства
 
-        public ClassEni100()
+        public ClassEni100(int sl)
         {
+            MaxSensorOnLevel = sl;//количество датиков на уровне
+
             SelSensorChannal = 0;
             sensorList.Clear();
             port = new SerialPort();
@@ -1044,6 +1047,20 @@ namespace Charaterizator
             }
         }
 
+        //Поиск наличия датчиков в группе ig
+        public int FindSensorGroup(int ig)
+        {
+            for (int i = 0; i < sensorList.Count; i++)
+            {
+                if (sensorList[i].Group == ig)
+                    return i;
+            }
+            return -1;
+        }
+
+
+
+
         //Ответ на комманду Запрос уникального идентификатора (команда 0)
         private void ReadCommand0(byte addr, byte[] indata)
         {
@@ -1052,6 +1069,7 @@ namespace Charaterizator
             //            if (crc != indata[indata.Length-1])
             //                return;
             id.Channal = SelSensorChannal;
+            id.Group = (int)(SelSensorChannal/MaxSensorOnLevel) +1;
             id.state = (ushort)((indata[0] << 8) | indata[1]);
             id.devCode = indata[3];
             id.devType = indata[4];
