@@ -98,7 +98,7 @@ namespace Charaterizator
             tbMensorData.Font = DrawingFont;
             tbNumCH.Font = DrawingFont;
             tbMultimetrData.Font = DrawingFont;
-            tbMensorRate.Font = DrawingFont;
+            //tbMensorRate.Font = DrawingFont;
             tbTemperature.Font = DrawingFont;
             numMensorPoint.Font = DrawingFont;
             numTermoCameraPoint.Font = DrawingFont;
@@ -987,7 +987,7 @@ namespace Charaterizator
                 // Получаем тек. значение уставки  и обновляем гл. форму
                 //numMensorPoint.Text = Mensor._point.ToString("f2");
                 // Получаем тек. значение скорости  и обновляем гл. форму
-                tbMensorRate.Text = Mensor._rate.ToString("f2");
+                //tbMensorRate.Text = Mensor._rate.ToString("f2");
 
                 // Получаем тип преобразователя (удерживаемый диапазон)
                 int typeR = Mensor._typeR;  // 0-Д1П1,  1-Д2П1,  2-AutoRange 
@@ -1006,7 +1006,7 @@ namespace Charaterizator
             else
             {
                 tbMensorData.Text = "";
-                tbMensorRate.Text = "";
+                //tbMensorRate.Text = "";
                 numMensorPoint.Text = "";
                 cbMensorTypeR.SelectedIndex = -1;
                 MensorReadError++;
