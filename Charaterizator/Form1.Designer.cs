@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -255,10 +255,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.сSensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.сState = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.сPower = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.сWork = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuStrip1.SuspendLayout();
@@ -1173,10 +1172,9 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сChannalNum,
+            this.сSelect,
             this.сSensor,
             this.сFactoryNumber,
-            this.сSelect,
-            this.сState,
             this.сPower,
             this.сWork});
             this.dataGridView1.Cursor = System.Windows.Forms.Cursors.Default;
@@ -2707,13 +2705,25 @@
             // 
             // сChannalNum
             // 
-            this.сChannalNum.DividerWidth = 1;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
-            this.сChannalNum.HeaderText = "Номер канала";
+            this.сChannalNum.HeaderText = "";
+            this.сChannalNum.MinimumWidth = 20;
             this.сChannalNum.Name = "сChannalNum";
             this.сChannalNum.ReadOnly = true;
             this.сChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сChannalNum.Width = 50;
+            this.сChannalNum.Width = 20;
+            // 
+            // сSelect
+            // 
+            this.сSelect.DividerWidth = 1;
+            this.сSelect.HeaderText = "Номер канала";
+            this.сSelect.MinimumWidth = 50;
+            this.сSelect.Name = "сSelect";
+            this.сSelect.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.сSelect.Width = 50;
             // 
             // сSensor
             // 
@@ -2733,31 +2743,6 @@
             this.сFactoryNumber.ReadOnly = true;
             this.сFactoryNumber.Width = 200;
             // 
-            // сSelect
-            // 
-            this.сSelect.DividerWidth = 1;
-            this.сSelect.HeaderText = "Выбор";
-            this.сSelect.MinimumWidth = 100;
-            this.сSelect.Name = "сSelect";
-            this.сSelect.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            // 
-            // сState
-            // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle11.NullValue = false;
-            this.сState.DefaultCellStyle = dataGridViewCellStyle11;
-            this.сState.DividerWidth = 1;
-            this.сState.FalseValue = "false";
-            this.сState.HeaderText = "Подключение";
-            this.сState.IndeterminateValue = "null";
-            this.сState.MinimumWidth = 100;
-            this.сState.Name = "сState";
-            this.сState.ReadOnly = true;
-            this.сState.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сState.TrueValue = "true";
-            // 
             // сPower
             // 
             this.сPower.DividerWidth = 1;
@@ -2769,10 +2754,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle12.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -3074,10 +3059,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.DataGridViewTextBoxColumn сChannalNum;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn сSelect;
         private System.Windows.Forms.DataGridViewTextBoxColumn сSensor;
         private System.Windows.Forms.DataGridViewTextBoxColumn сFactoryNumber;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn сSelect;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn сState;
         private System.Windows.Forms.DataGridViewCheckBoxColumn сPower;
         private System.Windows.Forms.DataGridViewCheckBoxColumn сWork;
     }

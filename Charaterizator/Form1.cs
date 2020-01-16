@@ -18,6 +18,9 @@ namespace Charaterizator
 
     public partial class MainForm : Form
     {
+        
+        
+        
         // Занесены в настройку
         public int MAIN_TIMER = 1000;
         // Не занесены
@@ -32,6 +35,19 @@ namespace Charaterizator
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
         private double SKO_PRESSURE = 0.5;//(СКО) допуск по давлению, кПа
+
+
+        // Номера столбцов в dataGrid1 - начальное окно с выбором датчиков
+        byte ch = 0;        // номер канала
+        byte sel = 1;       // выбор
+        byte sen = 2;       // датчик
+        byte zn = 3;        // заводской номер        
+        byte pow = 4;       // питание
+        byte ok = 5;        // исправность
+
+
+
+
 
         public static int SettingsSelIndex { set; get; }
 
@@ -112,15 +128,15 @@ namespace Charaterizator
             cbChannalCharakterizator.Items.Clear();
             cbChannalVerification.Items.Clear();
             dataGridView1.Rows.Clear();
+
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
-                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
-
-                dataGridView1.Rows.Add(i + 1, "Нет данных", "Нет данных", false, false, false);
-                dataGridView1[4, i].Style.BackColor = Color.IndianRed;
-                dataGridView1[5, i].Style.BackColor = Color.IndianRed;
-                dataGridView1[6, i].Style.BackColor = Color.IndianRed;
+                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));               
+                dataGridView1.Rows.Add(i + 1, false, "Нет данных", "Нет данных",  false, false);
+               
+                dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
+                dataGridView1[ok, i].Style.BackColor = Color.IndianRed;
 //                cbChannalCharakterizator.Items.Add("Канал " + (i + 1).ToString());
 //                cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
             }
@@ -376,12 +392,12 @@ namespace Charaterizator
 
         private void UpdateDataGrids(int i)
         {
-            dataGridView1.Rows[i].Cells[1].Value = sensors.sensor.GetdevType() + " : " + new String(sensors.sensor.PressureModel);     //тип датчика
-            dataGridView1.Rows[i].Cells[2].Value = sensors.sensor.uni.ToString();   //заводской номер
-            dataGridView1.Rows[i].Cells[3].Value = true;   //Добавлен в список
+            dataGridView1.Rows[i].Cells[sen].Value = sensors.sensor.GetdevType() + " : " + new String(sensors.sensor.PressureModel);     //тип датчика
+            dataGridView1.Rows[i].Cells[zn].Value = sensors.sensor.uni.ToString();   //заводской номер
+            dataGridView1.Rows[i].Cells[sel].Value = true;   //Добавлен в список
 //            dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.Green;
-            dataGridView1.Rows[i].Cells[6].Style.BackColor = Color.Green;
-            dataGridView1.Rows[i].Cells[6].Value = true;                            //исправность датчика                            
+            dataGridView1.Rows[i].Cells[ok].Style.BackColor = Color.Green;
+            dataGridView1.Rows[i].Cells[ok].Value = true;                            //исправность датчика                            
         }
         private void UpdateSensorInfoPanel(int i)
         {
@@ -544,7 +560,7 @@ namespace Charaterizator
         //Проверка доступности канала(по выбору пользователя)
         private bool CheckChannalEnable(int i)
         {
-            if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[3].Value))   //Добавлен в список?
+            if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[sel].Value))   //Добавлен в список?
             {
                 return true;
             }
@@ -803,7 +819,7 @@ namespace Charaterizator
                         if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
                         dataGridView1.Rows[i].Selected = true;
-                        dataGridView1.Rows[i].Cells[0].Selected = true;
+                        dataGridView1.Rows[i].Cells[ch].Selected = true;
                         Application.DoEvents();
 
 
@@ -1052,19 +1068,19 @@ namespace Charaterizator
         private void StateComutators(Int32 data32)
         {
 
-            for (int i = 0; i < MaxChannalCount; i++)
+           /* for (int i = 0; i < MaxChannalCount; i++)
             {
                 if (((data32 >> i) & 01) == 1)
                 {
-                    dataGridView1.Rows[i].Cells[4].Value = 1;
-                    dataGridView1[4, i].Style.BackColor = Color.Green;
+                    //dataGridView1.Rows[i].Cells[4].Value = 1;
+                    //dataGridView1[4, i].Style.BackColor = Color.Green;
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[4].Value = 0;
-                    dataGridView1[4, i].Style.BackColor = Color.IndianRed;
+                    //dataGridView1.Rows[i].Cells[4].Value = 0;
+                    //dataGridView1[4, i].Style.BackColor = Color.IndianRed;
                 }
-            }
+            }*/
 
             tbNumCH.Text = Convert.ToString(Commutator._NumOfConnectInputs);
         }
@@ -1077,13 +1093,13 @@ namespace Charaterizator
             {
                 if (((data32 >> i) & 01) == 1)
                 {
-                    dataGridView1.Rows[i].Cells[5].Value = true;
-                    dataGridView1[5, i].Style.BackColor = Color.Green;
+                    dataGridView1.Rows[i].Cells[pow].Value = true;
+                    dataGridView1[pow, i].Style.BackColor = Color.Green;
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[5].Value = false;
-                    dataGridView1[5, i].Style.BackColor = Color.IndianRed;
+                    dataGridView1.Rows[i].Cells[pow].Value = false;
+                    dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
                 }
             }
         }
@@ -1100,12 +1116,13 @@ namespace Charaterizator
             }
             if (e.RowIndex < 0) return;
 
-            if (e.ColumnIndex <= 2)//выбор датчика
+            //if (e.ColumnIndex <= 2)//выбор датчика     - было
+            if (e.ColumnIndex == 0)//выбор датчика         
             {
                 UpdateSensorInfoPanel(e.RowIndex);
             }
 
-            if (e.ColumnIndex == 4)//Состояние датчика - подключение
+           /* if (e.ColumnIndex == 4)//Состояние датчика - подключение
             {
                 dataGridView1.Rows[e.RowIndex].Cells[4].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[4].Value);
 
@@ -1122,22 +1139,22 @@ namespace Charaterizator
 
                 }
 
-            }
+            }*/
 
-            else if (e.ColumnIndex == 5)// Питание датчика - подключение
+            else if (e.ColumnIndex == pow)// Питание датчика - подключение
             {
-                dataGridView1.Rows[e.RowIndex].Cells[5].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[5].Value);
+                dataGridView1.Rows[e.RowIndex].Cells[pow].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[pow].Value);
 
 
-                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[5].Value))
+                if (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[pow].Value))
                 {
                     Commutator.SetPower(e.RowIndex, 0);     // команда подключить питание датчика
-                    dataGridView1[5, e.RowIndex].Style.BackColor = Color.Green;
+                    dataGridView1[pow, e.RowIndex].Style.BackColor = Color.Green;
                 }
                 else
                 {
                     Commutator.SetPower(e.RowIndex, 1);   // команда отключить питание датчика
-                    dataGridView1[5, e.RowIndex].Style.BackColor = Color.IndianRed;
+                    dataGridView1[pow, e.RowIndex].Style.BackColor = Color.IndianRed;
                 }
             }
 
@@ -1874,12 +1891,12 @@ namespace Charaterizator
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if ((e.ColumnIndex == 3)&&(dataGridView1.RowCount>0))//выбор датчиков
+            if ((e.ColumnIndex == sel)&&(dataGridView1.RowCount>0))//выбор датчиков
             {
-                bool CurentSet = Convert.ToBoolean(dataGridView1.Rows[0].Cells[3].Value);
+                bool CurentSet = Convert.ToBoolean(dataGridView1.Rows[0].Cells[sel].Value);
                 for (int i = 0; i <= (dataGridView1.RowCount - 1); i++)
                 {
-                    dataGridView1.Rows[i].Cells[3].Value = !CurentSet;
+                    dataGridView1.Rows[i].Cells[sel].Value = !CurentSet;
 //                    dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.White;
                 }
             }

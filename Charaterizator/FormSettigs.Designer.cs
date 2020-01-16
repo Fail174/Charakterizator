@@ -267,7 +267,7 @@
             0,
             0});
             this.tbMainTimer.Minimum = new decimal(new int[] {
-            100,
+            1,
             0,
             0,
             0});
@@ -504,11 +504,6 @@
             0,
             0,
             0});
-            this.tbCommReadPause.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbCommReadPause.Name = "tbCommReadPause";
             this.tbCommReadPause.Size = new System.Drawing.Size(100, 21);
             this.tbCommReadPause.TabIndex = 93;
@@ -531,11 +526,6 @@
             0,
             0,
             0});
-            this.tbCommReadPeriod.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbCommReadPeriod.Name = "tbCommReadPeriod";
             this.tbCommReadPeriod.Size = new System.Drawing.Size(100, 21);
             this.tbCommReadPeriod.TabIndex = 93;
@@ -553,11 +543,6 @@
             0,
             0});
             this.tbCommMaxSetCH.Location = new System.Drawing.Point(595, 55);
-            this.tbCommMaxSetCH.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbCommMaxSetCH.Name = "tbCommMaxSetCH";
             this.tbCommMaxSetCH.Size = new System.Drawing.Size(100, 21);
             this.tbCommMaxSetCH.TabIndex = 93;
@@ -574,6 +559,11 @@
             this.tbCommReadCH.Name = "tbCommReadCH";
             this.tbCommReadCH.Size = new System.Drawing.Size(100, 21);
             this.tbCommReadCH.TabIndex = 93;
+            this.tbCommReadCH.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
             // 
             // textBox49
             // 
@@ -675,11 +665,6 @@
             0,
             0,
             0});
-            this.tbMultimWaitReady.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbMultimWaitReady.Name = "tbMultimWaitReady";
             this.tbMultimWaitReady.Size = new System.Drawing.Size(100, 21);
             this.tbMultimWaitReady.TabIndex = 103;
@@ -707,11 +692,6 @@
             this.tbMultimReadTimeOut.Location = new System.Drawing.Point(595, 75);
             this.tbMultimReadTimeOut.Maximum = new decimal(new int[] {
             10000,
-            0,
-            0,
-            0});
-            this.tbMultimReadTimeOut.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
@@ -773,11 +753,6 @@
             0,
             0,
             0});
-            this.tbMultimReadPeriod.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbMultimReadPeriod.Name = "tbMultimReadPeriod";
             this.tbMultimReadPeriod.Size = new System.Drawing.Size(100, 21);
             this.tbMultimReadPeriod.TabIndex = 94;
@@ -790,11 +765,6 @@
             // tbMultimReadCount
             // 
             this.tbMultimReadCount.Location = new System.Drawing.Point(595, 35);
-            this.tbMultimReadCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbMultimReadCount.Name = "tbMultimReadCount";
             this.tbMultimReadCount.Size = new System.Drawing.Size(100, 21);
             this.tbMultimReadCount.TabIndex = 95;
@@ -897,11 +867,6 @@
             0,
             0,
             0});
-            this.tbMensorReadPause.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbMensorReadPause.Name = "tbMensorReadPause";
             this.tbMensorReadPause.Size = new System.Drawing.Size(100, 21);
             this.tbMensorReadPause.TabIndex = 96;
@@ -921,11 +886,6 @@
             this.tbMensorReadPeriod.Location = new System.Drawing.Point(595, 35);
             this.tbMensorReadPeriod.Maximum = new decimal(new int[] {
             10000,
-            0,
-            0,
-            0});
-            this.tbMensorReadPeriod.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
@@ -1032,11 +992,6 @@
             this.tbTCameraReadPeriod.Location = new System.Drawing.Point(595, 35);
             this.tbTCameraReadPeriod.Maximum = new decimal(new int[] {
             10000,
-            0,
-            0,
-            0});
-            this.tbTCameraReadPeriod.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
@@ -1164,11 +1119,6 @@
             0,
             0,
             0});
-            this.tbSensWaitPause.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbSensWaitPause.Name = "tbSensWaitPause";
             this.tbSensWaitPause.Size = new System.Drawing.Size(100, 21);
             this.tbSensWaitPause.TabIndex = 103;
@@ -1213,11 +1163,6 @@
             0,
             0,
             0});
-            this.tbSensReadPause.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbSensReadPause.Name = "tbSensReadPause";
             this.tbSensReadPause.Size = new System.Drawing.Size(100, 21);
             this.tbSensReadPause.TabIndex = 98;
@@ -1230,11 +1175,6 @@
             // tbSensReadCount
             // 
             this.tbSensReadCount.Location = new System.Drawing.Point(595, 35);
-            this.tbSensReadCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.tbSensReadCount.Name = "tbSensReadCount";
             this.tbSensReadCount.Size = new System.Drawing.Size(100, 21);
             this.tbSensReadCount.TabIndex = 99;
