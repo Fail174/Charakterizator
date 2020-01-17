@@ -18,9 +18,9 @@ namespace Charaterizator
 
     public partial class MainForm : Form
     {
-        
-        
-        
+
+
+
         // Занесены в настройку
         public int MAIN_TIMER = 1000;
         // Не занесены
@@ -30,7 +30,7 @@ namespace Charaterizator
 
 
 
-        const double MIN_SENSOR_CURRENT = 1.0;//минимльный ток датчика для обнаружения, мА
+        const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
 
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
@@ -62,19 +62,19 @@ namespace Charaterizator
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
 
-//        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
-//        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
+        //        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
+        //        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
         private СResultCH ResultCH = null;//результаты характеризации датчиков
         private CResultCI ResultCI = null;//результаты калибровки тока датчиков
         private CResultVR ResultVR = null;//результаты калибровки тока датчиков
-        
+
 
 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
         private bool SensorBusy = false;//Признак обмена данными с датчиками
 
-        private bool TemperatureReady=false;//готовность термокамеры , температура датчиков стабилизирована
+        private bool TemperatureReady = false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
 
 
@@ -88,7 +88,7 @@ namespace Charaterizator
                                                                             //                        btmMultimetr_Click(null, null);           
                                                                             //                        btnCommutator_Click(null, null);
                                                                             //                        btnMensor_Click(null, null);
-           // Properties.Settings.Default.Reset();
+                                                                            // Properties.Settings.Default.Reset();
             Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
             Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
             Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
@@ -132,13 +132,13 @@ namespace Charaterizator
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
-                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));               
-                dataGridView1.Rows.Add(i + 1, false, "Нет данных", "Нет данных",  false, false);
-               
+                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
+                dataGridView1.Rows.Add(i + 1, false, "Нет данных", "Нет данных", false, false);
+
                 dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
                 dataGridView1[ok, i].Style.BackColor = Color.IndianRed;
-//                cbChannalCharakterizator.Items.Add("Канал " + (i + 1).ToString());
-//                cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
+                //                cbChannalCharakterizator.Items.Add("Канал " + (i + 1).ToString());
+                //                cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
             }
         }
         //Выполняем при загрузке главной формы
@@ -146,7 +146,7 @@ namespace Charaterizator
         {
             try
             {
-//                Visible = false;
+                //                Visible = false;
                 string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
                 SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
                 // устанавливаем связь с БД
@@ -162,7 +162,7 @@ namespace Charaterizator
             }
             finally
             {
-//                Visible = true;
+                //                Visible = true;
             }
         }
 
@@ -263,7 +263,7 @@ namespace Charaterizator
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
             }
         }
-        
+
         //подключение термокамеры
         private void btnThermalCamera_Click(object sender, EventArgs e)
         {
@@ -378,10 +378,10 @@ namespace Charaterizator
         {
             if (Mensor != null)
             {
-                
+
                 Mensor.MenStartTimer();
                 Mensor.ShowDialog();
-                
+
             }
             else
             {
@@ -395,7 +395,7 @@ namespace Charaterizator
             dataGridView1.Rows[i].Cells[sen].Value = sensors.sensor.GetdevType() + " : " + new String(sensors.sensor.PressureModel);     //тип датчика
             dataGridView1.Rows[i].Cells[zn].Value = sensors.sensor.uni.ToString();   //заводской номер
             dataGridView1.Rows[i].Cells[sel].Value = true;   //Добавлен в список
-//            dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.Green;
+                                                             //            dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[ok].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[ok].Value = true;                            //исправность датчика                            
         }
@@ -403,7 +403,7 @@ namespace Charaterizator
         {
             if (sensors.SelectSensor(i))
             {
-                tbSelChannalNumber.Text = string.Format("Канал {0}" , i+1);
+                tbSelChannalNumber.Text = string.Format("Канал {0}", i + 1);
                 tbInfoDesc.Text = sensors.sensor.GetDesc();
                 tbInfoTeg.Text = sensors.sensor.GetTeg();
                 tbInfoPressureModel.Text = new String(sensors.sensor.PressureModel);
@@ -477,32 +477,32 @@ namespace Charaterizator
         private void ReadSensorCurrent()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount-1;   //конечный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
 
             Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 0);
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             //int StartNumber = 0;    //начальный канал
             //int FinishNumber = 0;   //конечный канал
-/*            int step = MaxChannalCount / MaxLevelCount;
-            switch (SelectedLevel)
-            {
-                case 1:
-                    StartNumber = 0;
-                    FinishNumber = step - 1;
-                    break;
-                case 2:
-                    StartNumber = step;
-                    FinishNumber = step * 2 - 1;
-                    break;
-                case 3:
-                    StartNumber = step * 2;
-                    FinishNumber = step * 3 - 1;
-                    break;
-                case 4:
-                    StartNumber = step * 3;
-                    FinishNumber = step * 4 - 1;
-                    break;
-            }*/
+            /*            int step = MaxChannalCount / MaxLevelCount;
+                        switch (SelectedLevel)
+                        {
+                            case 1:
+                                StartNumber = 0;
+                                FinishNumber = step - 1;
+                                break;
+                            case 2:
+                                StartNumber = step;
+                                FinishNumber = step * 2 - 1;
+                                break;
+                            case 3:
+                                StartNumber = step * 2;
+                                FinishNumber = step * 3 - 1;
+                                break;
+                            case 4:
+                                StartNumber = step * 3;
+                                FinishNumber = step * 4 - 1;
+                                break;
+                        }*/
             //************************************************************************************************
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
@@ -521,10 +521,10 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("CAP: Выполняем чтение датчика в канале " + (i + 1).ToString(), 0);
 
-                    double I4 =0, I20=0;
+                    double I4 = 0, I20 = 0;
                     if (sensors.С40WriteFixCurrent(4))
                     {
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
                         I4 = Multimetr.Current;
                         Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
@@ -536,7 +536,7 @@ namespace Charaterizator
 
                     if (sensors.С40WriteFixCurrent(20))
                     {
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
                         I20 = Multimetr.Current;
                         Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
                     }
@@ -573,8 +573,8 @@ namespace Charaterizator
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
-            int StartNumber=0;    //начальный канал
-            int FinishNumber=0;   //конечный канал
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = 0;   //конечный канал
             int Diapazon = 1;
 
             Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 0);
@@ -652,7 +652,7 @@ namespace Charaterizator
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             int step = MaxChannalCount / MaxLevelCount;
-            int Diapazon=1;
+            int Diapazon = 1;
             switch (SelectedLevel)
             {
                 case 1:
@@ -718,8 +718,13 @@ namespace Charaterizator
         //обновляем грид результатов характеризации для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
+            if ((ResultCH == null) || (ResultCH.Channal.Count <= i))
+            {
+                Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1);
+                return;
+            }
             dataGridView2.Rows.Clear();
-            for (int j=0;j<ResultCH.Channal[i].Points.Count;j++)//заполняем грид данными текущего датчика
+            for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add("", "", "", "", "", "");
                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
@@ -749,6 +754,12 @@ namespace Charaterizator
         //обновляем грид результатов верификации для датчика в канале i
         private void UpDateVerificationGrid(int i)
         {
+            if ((ResultVR == null)||(ResultVR.Channal.Count <= i))
+            {
+                Program.txtlog.WriteLineLog("Result VR: Результаты верификации не сформированы!", 1);
+                return;
+            }
+
             dataGridView3.Rows.Clear();
             for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
@@ -779,6 +790,12 @@ namespace Charaterizator
         //обновляем грид калибровки тока для датчика в канале i
         private void UpdateCurrentGrid(int i)
         {
+            if ((ResultCI == null) || (ResultCI.Channal.Count <= i))
+            {
+                Program.txtlog.WriteLineLog("Result CL: Результаты чтения ЦАП не сформированы!", 1);
+                return;
+            }
+
             dataGridView4.Rows.Clear();
             for (int j = 0; j < ResultCI.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
@@ -1912,16 +1929,19 @@ namespace Charaterizator
         {
             UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
             UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
-            UpdateUpStatus();
+            UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
 
         }
 
 
-        private void UpdateUpStatus()
+        private void UpdateUpStatus(int i)
         {
-            UpStModel.Text = new String(sensors.sensor.PressureModel); ; 
-            UpStSerial.Text = sensors.sensor.SerialNumber.ToString(); 
-            UpStCh.Text = sensors.sensor.Channal.ToString();
+            if ((i < sensors.sensorList.Count) && (i >= 0))
+            {
+                UpStModel.Text = new String(sensors.sensorList[i].PressureModel); ;
+                UpStSerial.Text = sensors.sensorList[i].uni.ToString();
+                UpStCh.Text = sensors.sensorList[i].Channal.ToString();
+            }
         }
 
 
@@ -2164,8 +2184,14 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("CL: Нет подключения к мультиметру, калибровка не выполнена!", 0);
                 return;
             }
-            if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Продолжить калибровку?", numTermoCameraPoint.Text), "Подтверждение операции",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if(numTermoCameraPoint.Value != 23)
             {
+                if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Продолжить калибровку?", numTermoCameraPoint.Text), "Подтверждение операции",MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    Program.txtlog.WriteLineLog("CL: Операция прервана. Установите температуру в камере 23 градуса и продолжите калибровку!", 1);
+                    return;
+                }
+            }
                 try
                 {
                     btnCalibrateCurrent.Text = "Выполняется калибровка. Ожидайте...";
@@ -2214,7 +2240,6 @@ namespace Charaterizator
                     btnCalibrateCurrent.Text = "Калибровка тока    (4 и 20 мА)";
                     btnCalibrateCurrent.BackColor = Color.LightGreen;
                 }
-            }
         }
 
         private void cbChannalVerification_SelectedIndexChanged(object sender, EventArgs e)
