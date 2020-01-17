@@ -1175,6 +1175,7 @@ namespace Charaterizator
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
 
+
             // При переключении  tabControl1 необходимо получить модель выбранного датчика
             // для обновления cmbox и др элементов
             string SelectModel = "2450";   /// модель выбранного датчика
@@ -1184,12 +1185,15 @@ namespace Charaterizator
             {
                 case 0:
                     {
+                        pUpStatusBar.Visible = false;
                         return;
                     }
 
                 // ОКНО - ХАРАКТЕРИЗАЦИЯ    
                 case 1:  
                     {
+                        pUpStatusBar.Visible = true;
+
                         cbCHTermoCamera1.Items.Clear();
                         cbCHTermoCamera2.Items.Clear();
                         cbCHTermoCamera3.Items.Clear();
@@ -1466,6 +1470,8 @@ namespace Charaterizator
                 // ОКНО - ВЕРИФИКАЦИЯ
                 case 2:
                     {
+                        pUpStatusBar.Visible = true;
+
                         // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
                         {
@@ -1906,7 +1912,18 @@ namespace Charaterizator
         {
             UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
             UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+            UpdateUpStatus();
+
         }
+
+
+        private void UpdateUpStatus()
+        {
+            UpStModel.Text = new String(sensors.sensor.PressureModel); ; 
+            UpStSerial.Text = sensors.sensor.SerialNumber.ToString(); 
+            UpStCh.Text = sensors.sensor.Channal.ToString();
+        }
+
 
         private void gbCHLevel1_Enter(object sender, EventArgs e)
         {
@@ -2828,6 +2845,8 @@ namespace Charaterizator
             MainTimer.Enabled = false;
 
         }
+
+       
     }
 }
 

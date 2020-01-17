@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,6 +118,12 @@
             this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.сSensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сPower = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.сWork = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -254,12 +260,13 @@
             this.pbVRProcess = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.сSensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сFactoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сPower = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.сWork = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.pUpStatusBar = new System.Windows.Forms.Panel();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.UpStModel = new System.Windows.Forms.Label();
+            this.UpStSerial = new System.Windows.Forms.Label();
+            this.UpStCh = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -290,6 +297,7 @@
             this.gbVRLevel2.SuspendLayout();
             this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
+            this.pUpStatusBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -1169,6 +1177,7 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сChannalNum,
@@ -1188,6 +1197,72 @@
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // сChannalNum
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle9;
+            this.сChannalNum.DividerWidth = 1;
+            this.сChannalNum.Frozen = true;
+            this.сChannalNum.HeaderText = "";
+            this.сChannalNum.MinimumWidth = 25;
+            this.сChannalNum.Name = "сChannalNum";
+            this.сChannalNum.ReadOnly = true;
+            this.сChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сChannalNum.Width = 25;
+            // 
+            // сSelect
+            // 
+            this.сSelect.DividerWidth = 1;
+            this.сSelect.HeaderText = "Номер канала";
+            this.сSelect.MinimumWidth = 50;
+            this.сSelect.Name = "сSelect";
+            this.сSelect.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.сSelect.Width = 50;
+            // 
+            // сSensor
+            // 
+            this.сSensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.сSensor.DividerWidth = 1;
+            this.сSensor.HeaderText = "Датчик";
+            this.сSensor.MinimumWidth = 200;
+            this.сSensor.Name = "сSensor";
+            this.сSensor.ReadOnly = true;
+            // 
+            // сFactoryNumber
+            // 
+            this.сFactoryNumber.DividerWidth = 1;
+            this.сFactoryNumber.HeaderText = "Заводской номер";
+            this.сFactoryNumber.MinimumWidth = 200;
+            this.сFactoryNumber.Name = "сFactoryNumber";
+            this.сFactoryNumber.ReadOnly = true;
+            this.сFactoryNumber.Width = 200;
+            // 
+            // сPower
+            // 
+            this.сPower.DividerWidth = 1;
+            this.сPower.HeaderText = "Питание";
+            this.сPower.MinimumWidth = 100;
+            this.сPower.Name = "сPower";
+            this.сPower.ReadOnly = true;
+            this.сPower.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // сWork
+            // 
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle10.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
+            this.сWork.DividerWidth = 1;
+            this.сWork.FalseValue = "false";
+            this.сWork.HeaderText = "Исправность";
+            this.сWork.IndeterminateValue = "null";
+            this.сWork.MinimumWidth = 100;
+            this.сWork.Name = "сWork";
+            this.сWork.ReadOnly = true;
+            this.сWork.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сWork.TrueValue = "true";
             // 
             // panel4
             // 
@@ -2703,76 +2778,86 @@
             this.MainTimer.Interval = 1000;
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // сChannalNum
+            // pUpStatusBar
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
-            this.сChannalNum.Frozen = true;
-            this.сChannalNum.HeaderText = "";
-            this.сChannalNum.MinimumWidth = 20;
-            this.сChannalNum.Name = "сChannalNum";
-            this.сChannalNum.ReadOnly = true;
-            this.сChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сChannalNum.Width = 20;
+            this.pUpStatusBar.Controls.Add(this.UpStCh);
+            this.pUpStatusBar.Controls.Add(this.UpStSerial);
+            this.pUpStatusBar.Controls.Add(this.UpStModel);
+            this.pUpStatusBar.Controls.Add(this.label46);
+            this.pUpStatusBar.Controls.Add(this.label36);
+            this.pUpStatusBar.Controls.Add(this.label5);
+            this.pUpStatusBar.Location = new System.Drawing.Point(308, 1);
+            this.pUpStatusBar.Name = "pUpStatusBar";
+            this.pUpStatusBar.Size = new System.Drawing.Size(707, 22);
+            this.pUpStatusBar.TabIndex = 9;
+            this.pUpStatusBar.Visible = false;
             // 
-            // сSelect
+            // label46
             // 
-            this.сSelect.DividerWidth = 1;
-            this.сSelect.HeaderText = "Номер канала";
-            this.сSelect.MinimumWidth = 50;
-            this.сSelect.Name = "сSelect";
-            this.сSelect.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.сSelect.Width = 50;
+            this.label46.AutoSize = true;
+            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label46.Location = new System.Drawing.Point(186, 4);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(127, 15);
+            this.label46.TabIndex = 4;
+            this.label46.Text = "|   Заводской номер: ";
             // 
-            // сSensor
+            // label36
             // 
-            this.сSensor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.сSensor.DividerWidth = 1;
-            this.сSensor.HeaderText = "Датчик";
-            this.сSensor.MinimumWidth = 200;
-            this.сSensor.Name = "сSensor";
-            this.сSensor.ReadOnly = true;
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label36.Location = new System.Drawing.Point(6, 4);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(71, 15);
+            this.label36.TabIndex = 2;
+            this.label36.Text = "|   Модель: ";
             // 
-            // сFactoryNumber
+            // label5
             // 
-            this.сFactoryNumber.DividerWidth = 1;
-            this.сFactoryNumber.HeaderText = "Заводской номер";
-            this.сFactoryNumber.MinimumWidth = 200;
-            this.сFactoryNumber.Name = "сFactoryNumber";
-            this.сFactoryNumber.ReadOnly = true;
-            this.сFactoryNumber.Width = 200;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(430, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(119, 15);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "   |   Текущий канал: ";
             // 
-            // сPower
+            // UpStModel
             // 
-            this.сPower.DividerWidth = 1;
-            this.сPower.HeaderText = "Питание";
-            this.сPower.MinimumWidth = 100;
-            this.сPower.Name = "сPower";
-            this.сPower.ReadOnly = true;
-            this.сPower.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.UpStModel.AutoSize = true;
+            this.UpStModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UpStModel.Location = new System.Drawing.Point(72, 4);
+            this.UpStModel.Name = "UpStModel";
+            this.UpStModel.Size = new System.Drawing.Size(65, 15);
+            this.UpStModel.TabIndex = 5;
+            this.UpStModel.Text = "ЭНИ-100";
             // 
-            // сWork
+            // UpStSerial
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
-            this.сWork.DividerWidth = 1;
-            this.сWork.FalseValue = "false";
-            this.сWork.HeaderText = "Исправность";
-            this.сWork.IndeterminateValue = "null";
-            this.сWork.MinimumWidth = 100;
-            this.сWork.Name = "сWork";
-            this.сWork.ReadOnly = true;
-            this.сWork.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сWork.TrueValue = "true";
+            this.UpStSerial.AutoSize = true;
+            this.UpStSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UpStSerial.Location = new System.Drawing.Point(308, 4);
+            this.UpStSerial.Name = "UpStSerial";
+            this.UpStSerial.Size = new System.Drawing.Size(87, 15);
+            this.UpStSerial.TabIndex = 6;
+            this.UpStSerial.Text = "8800200500";
+            // 
+            // UpStCh
+            // 
+            this.UpStCh.AutoSize = true;
+            this.UpStCh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UpStCh.Location = new System.Drawing.Point(543, 4);
+            this.UpStCh.Name = "UpStCh";
+            this.UpStCh.Size = new System.Drawing.Size(15, 15);
+            this.UpStCh.TabIndex = 7;
+            this.UpStCh.Text = "8";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1284, 1005);
+            this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -2830,6 +2915,8 @@
             this.gbVRLevel1.ResumeLayout(false);
             this.gbVRLevel1.PerformLayout();
             this.groupBox11.ResumeLayout(false);
+            this.pUpStatusBar.ResumeLayout(false);
+            this.pUpStatusBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3064,6 +3151,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn сFactoryNumber;
         private System.Windows.Forms.DataGridViewCheckBoxColumn сPower;
         private System.Windows.Forms.DataGridViewCheckBoxColumn сWork;
+        private System.Windows.Forms.Panel pUpStatusBar;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label UpStCh;
+        private System.Windows.Forms.Label UpStSerial;
+        public System.Windows.Forms.Label UpStModel;
     }
 }
 
