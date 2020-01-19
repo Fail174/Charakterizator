@@ -511,6 +511,8 @@ namespace Charaterizator
 
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
+                if (!SensorBusy) return;//прекращаем поиск 
+
                 cbChannalCharakterizator.SelectedIndex = i;
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -555,6 +557,51 @@ namespace Charaterizator
                 sensors.С40WriteFixCurrent(0);
                 Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
             }
+        }
+        
+        //Калибровка датчиков
+        private void SensorCalibration()
+        {
+                pbCHProcess.Maximum = MaxChannalCount;
+                pbCHProcess.Minimum = 0;
+                pbCHProcess.Value = 0;
+
+                Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
+                for (int i = 0; i < MaxChannalCount; i++)
+                {
+                    if (!SensorBusy) return;//прекращаем поиск 
+
+                    pbCHProcess.Value = i + 1;
+                    Application.DoEvents();
+
+                    if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+                    Commutator.SetConnectors(i, 0);
+
+                    if (sensors.SelectSensor(i))
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
+
+                        sensors.С40WriteFixCurrent(4);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                        sensors.С45WriteCurrent4mA(Multimetr.Current);
+
+                        sensors.С40WriteFixCurrent(0);
+                        Thread.Sleep(1000);
+
+                        sensors.С40WriteFixCurrent(20);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                        sensors.С46WriteCurrent20mA(Multimetr.Current);
+
+                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} выполнена", i + 1), 0);
+                        sensors.С40WriteFixCurrent(0);
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i + 1), 1);
+                    }
+                    Commutator.SetConnectors(i, 1);
+                }
         }
 
         //Проверка доступности канала(по выбору пользователя)
@@ -612,6 +659,8 @@ namespace Charaterizator
 
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
+                if (!SensorBusy) return;//прекращаем поиск 
+
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
@@ -1889,26 +1938,37 @@ namespace Charaterizator
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (TemperatureReady && PressureReady)
+            if (!SensorBusy)
             {
-                try
+                if (TemperatureReady && PressureReady)
                 {
-                   // MainTimer.Enabled = false;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Text = "Выполняется процесс характеризации ...";
-                    ReadSensorParametrs();
-                    btnCalculateCoeff.BackColor = Color.LightGreen;
-                    btnCHStart.Text = "Старт характеризации";
+                    try
+                    {
+                        SensorBusy = true;
+                        btnCHStart.BackColor = Color.IndianRed;
+                        btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
+                        ReadSensorParametrs();
+                    }
+                    finally
+                    {
+                        SensorBusy = false;
+                        btnCalculateCoeff.BackColor = Color.LightGreen;
+                        btnCHStart.Text = "Старт характеризации";
+                        SensorBusy = false;
+                    }
                 }
-                finally
+                else
                 {
-                   // MainTimer.Enabled = true;
+                    Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
                 }
             }
             else
             {
-                Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
+                if (MessageBox.Show("Отменить характеризацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+//                    SensorBusy = false;
+                    Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
+                }
             }
         }
 
@@ -2156,90 +2216,79 @@ namespace Charaterizator
         //чтение параметров ЦАП
         private void btnReadCAP_Click(object sender, EventArgs e)
         {
-//            if (TemperatureReady)
-            if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Выполнить чтение ЦАП?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (!SensorBusy)
             {
-                try
+                //            if (TemperatureReady)
+                if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Выполнить чтение ЦАП?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Text = "Выполняется процесс чтения ЦАП...";
-                    ReadSensorCurrent();
+                    try
+                    {
+                        SensorBusy = true;
+                        btnReadCAP.BackColor = Color.IndianRed;
+                        btnReadCAP.Text = "Выполняется процесс чтения ЦАП... Отменить?";
+                        ReadSensorCurrent();
+                    }
+                    finally
+                    {
+                        SensorBusy = false;
+                        btnReadCAP.Text = "Чтение параметров ЦАП";
+                        btnReadCAP.BackColor = Color.LightGreen;
+                    }
                 }
-                finally
+                else
                 {
-                    btnReadCAP.Text = "Чтение параметров ЦАП";
-                    btnReadCAP.BackColor = Color.LightGreen;
+                    //Program.txtlog.WriteLineLog("Не заданны температура для чтения ЦАП.", 1);
                 }
             }
             else
             {
-//                Program.txtlog.WriteLineLog("Не заданны температура для чтения ЦАП.", 1);
+                if (MessageBox.Show("Отменить чтение ЦАП датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+//                    SensorBusy = false;
+                    Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
+                }
             }
         }
 
         private void btnCalibrateCurrent_Click(object sender, EventArgs e)
         {
-            if (!Multimetr.Connected)
+            if (!SensorBusy)
             {
-                Program.txtlog.WriteLineLog("CL: Нет подключения к мультиметру, калибровка не выполнена!", 0);
-                return;
-            }
-            if(numTermoCameraPoint.Value != 23)
-            {
-                if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Продолжить калибровку?", numTermoCameraPoint.Text), "Подтверждение операции",MessageBoxButtons.YesNo) != DialogResult.Yes)
+                SensorBusy = true;
+                if (!Multimetr.Connected)
                 {
-                    Program.txtlog.WriteLineLog("CL: Операция прервана. Установите температуру в камере 23 градуса и продолжите калибровку!", 1);
+                    Program.txtlog.WriteLineLog("CL: Нет подключения к мультиметру, калибровка не выполнена!", 0);
                     return;
                 }
-            }
+                if (numTermoCameraPoint.Value != 23)
+                {
+                    if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Продолжить калибровку?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    {
+                        Program.txtlog.WriteLineLog("CL: Операция прервана. Установите температуру в камере 23 градуса и продолжите калибровку!", 1);
+                        return;
+                    }
+                }
                 try
                 {
-                    btnCalibrateCurrent.Text = "Выполняется калибровка. Ожидайте...";
+                    btnCalibrateCurrent.Text = "Выполняется калибровка... Отменить?";
                     btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    pbCHProcess.Maximum = MaxChannalCount;
-                    pbCHProcess.Minimum = 0;
-                    pbCHProcess.Value = 0;
-
-                    Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
-                    for (int i = 0; i < MaxChannalCount; i++)
-                    {
-                        pbCHProcess.Value = i+1;
-                        Application.DoEvents();
-
-                        if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-                        Commutator.SetConnectors(i, 0);
-
-                        if (sensors.SelectSensor(i))
-                        {
-                            Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
-
-                            sensors.С40WriteFixCurrent(4);
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
-                            sensors.С45WriteCurrent4mA(Multimetr.Current);
-
-                            sensors.С40WriteFixCurrent(0);
-                            Thread.Sleep(1000);
-
-                            sensors.С40WriteFixCurrent(20);
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
-                            sensors.С46WriteCurrent20mA(Multimetr.Current);
-
-                            Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} выполнена", i + 1), 0);
-                            sensors.С40WriteFixCurrent(0);
-                            Thread.Sleep(1000);
-                        }
-                        else
-                        {
-                            Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i + 1), 1);
-                        }
-                        Commutator.SetConnectors(i, 1);
-                    }
+                    SensorCalibration();
                 }
                 finally
                 {
                     btnCalibrateCurrent.Text = "Калибровка тока    (4 и 20 мА)";
                     btnCalibrateCurrent.BackColor = Color.LightGreen;
+                    SensorBusy = false;
                 }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить калибровку датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+//                    SensorBusy = false;
+                    Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
+                }
+            }
         }
 
         private void cbChannalVerification_SelectedIndexChanged(object sender, EventArgs e)

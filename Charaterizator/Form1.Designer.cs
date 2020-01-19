@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -261,12 +261,12 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.pUpStatusBar = new System.Windows.Forms.Panel();
+            this.UpStCh = new System.Windows.Forms.Label();
+            this.UpStSerial = new System.Windows.Forms.Label();
+            this.UpStModel = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.UpStModel = new System.Windows.Forms.Label();
-            this.UpStSerial = new System.Windows.Forms.Label();
-            this.UpStCh = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -1200,8 +1200,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.DividerWidth = 1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "";
@@ -1250,10 +1250,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle10.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -2792,6 +2792,36 @@
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
             // 
+            // UpStCh
+            // 
+            this.UpStCh.AutoSize = true;
+            this.UpStCh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UpStCh.Location = new System.Drawing.Point(513, 4);
+            this.UpStCh.Name = "UpStCh";
+            this.UpStCh.Size = new System.Drawing.Size(15, 15);
+            this.UpStCh.TabIndex = 7;
+            this.UpStCh.Text = "8";
+            // 
+            // UpStSerial
+            // 
+            this.UpStSerial.AutoSize = true;
+            this.UpStSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UpStSerial.Location = new System.Drawing.Point(308, 4);
+            this.UpStSerial.Name = "UpStSerial";
+            this.UpStSerial.Size = new System.Drawing.Size(87, 15);
+            this.UpStSerial.TabIndex = 6;
+            this.UpStSerial.Text = "8800200500";
+            // 
+            // UpStModel
+            // 
+            this.UpStModel.AutoSize = true;
+            this.UpStModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UpStModel.Location = new System.Drawing.Point(72, 4);
+            this.UpStModel.Name = "UpStModel";
+            this.UpStModel.Size = new System.Drawing.Size(65, 15);
+            this.UpStModel.TabIndex = 5;
+            this.UpStModel.Text = "ЭНИ-100";
+            // 
             // label46
             // 
             this.label46.AutoSize = true;
@@ -2816,41 +2846,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(430, 4);
+            this.label5.Location = new System.Drawing.Point(397, 4);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(119, 15);
             this.label5.TabIndex = 0;
             this.label5.Text = "   |   Текущий канал: ";
-            // 
-            // UpStModel
-            // 
-            this.UpStModel.AutoSize = true;
-            this.UpStModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UpStModel.Location = new System.Drawing.Point(72, 4);
-            this.UpStModel.Name = "UpStModel";
-            this.UpStModel.Size = new System.Drawing.Size(65, 15);
-            this.UpStModel.TabIndex = 5;
-            this.UpStModel.Text = "ЭНИ-100";
-            // 
-            // UpStSerial
-            // 
-            this.UpStSerial.AutoSize = true;
-            this.UpStSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UpStSerial.Location = new System.Drawing.Point(308, 4);
-            this.UpStSerial.Name = "UpStSerial";
-            this.UpStSerial.Size = new System.Drawing.Size(87, 15);
-            this.UpStSerial.TabIndex = 6;
-            this.UpStSerial.Text = "8800200500";
-            // 
-            // UpStCh
-            // 
-            this.UpStCh.AutoSize = true;
-            this.UpStCh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UpStCh.Location = new System.Drawing.Point(543, 4);
-            this.UpStCh.Name = "UpStCh";
-            this.UpStCh.Size = new System.Drawing.Size(15, 15);
-            this.UpStCh.TabIndex = 7;
-            this.UpStCh.Text = "8";
             // 
             // MainForm
             // 
