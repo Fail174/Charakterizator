@@ -35,6 +35,8 @@ namespace Charaterizator
     {
         public List<StreamWriter> FileStream = new List<StreamWriter>();
         public List<SChanalCI> Channal = new List<SChanalCI>();//список обнаруженных датчиков
+        string FileName = "CI_Result.txt";
+
         public CResultCI(int ChannalCount, int[] FN)
         {
             StreamWriter fs;
@@ -45,7 +47,7 @@ namespace Charaterizator
                 Directory.CreateDirectory("CI");
                 string filename = string.Format("CI/CI_Result{0}.txt", ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
-                fs.WriteLine(string.Format("Результаты калибровки датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
+                fs.WriteLine(string.Format("Результаты чтения ЦАП датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
                 fs.WriteLine("Дата               |" +
                             "Температура   |" +
                             "Ток 4мА       |" +
@@ -84,25 +86,57 @@ namespace Charaterizator
                 point.I20.ToString("f11") + "|";
         }
         //Сохранение в текстовый файл
-        public void SaveToFile(string FileName)
+        public void SaveToFile()
         {
-            /*StreamWriter writer = File.CreateText(FileName);//создаем файл сессии
+            StreamWriter writer;
+            if (!File.Exists(FileName))
+            {
+                writer = File.CreateText(FileName);//создаем файл БД
+                if (writer != null)
+                {
+                    try
+                    {
+                        writer.WriteLine(string.Format("Файл данных ЦАП датчиков"));
+                        writer.WriteLine("Дата и время       |" +
+                                        "Зав. номер    |" +
+                                        "Номер канала  |" +
+                                        "Температура   |" +
+                                        "Ток 4мА       |" +
+                                        "Ток 20мА      |");
+                    }
+                    catch
+                    {
+                        writer.Close();
+                        writer = null;
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("CI:Ошибка создания файла результатов ЦАП!", 1);
+                    return;
+                }
+            }
+            else
+            {
+                writer = new StreamWriter(FileName, true);//открываем файл БД
+            }
+
             if (writer != null)
             {
                 try
                 {
-                    writer.WriteLine("№ Канала" + " |" +
-                                    "Дата          |" +
-                                    "Температура   |" +
-                                    "Давление      |" +
-                                    "Ток 4мА       |" +
-                                    "Ток 20мА      |");
                     for (int i = 0; i < Channal.Count; i++)//перебор каналов
                     {
-                        SChanalCI ch = new SChanalCI(i);
+                        SChanalCI ch = Channal[i];
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
-                            writer.WriteLine(GetStringFromPoint(i + 1, ch.Points[j]));
+                            string str = ch.Points[j].Datetime.ToString() + "|" +
+                                         ch.FactoryNumber.ToString("      00000000") + "|" +
+                                         ch.ChannalNummber.ToString("           000") + "|" +
+                                         ch.Points[j].Temperature.ToString("    0000.0000") + "|" +
+                                         ch.Points[j].I4.ToString("    00000.0000") + "|" +
+                                         ch.Points[j].I20.ToString("    00000.0000") + "|";
+                            writer.WriteLine(str);
                         }
                     }
                 }
@@ -111,7 +145,11 @@ namespace Charaterizator
                     writer.Close();
                     writer = null;
                 }
-            }*/
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CI:Ошибка доступа к файлу результатов ЦАП!", 1);
+            }
         }
 
     }

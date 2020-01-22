@@ -2292,6 +2292,7 @@ namespace Charaterizator
                         SensorBusy = false;
                         btnReadCAP.Text = "Чтение параметров ЦАП";
                         btnReadCAP.BackColor = Color.LightGreen;
+                        ResultCI.SaveToFile();
                     }
                 }
                 else
@@ -2763,7 +2764,9 @@ namespace Charaterizator
                 }
                 finally
                 {
-                  //  MainTimer.Enabled = true;
+                    ResultVR.SaveToFile();
+
+                    //  MainTimer.Enabled = true;
                 }
             }
             else

@@ -37,6 +37,7 @@ namespace Charaterizator
         //StreamWriter[] FileStream;//поток записи
         public List<StreamWriter> FileStream = new List<StreamWriter>();
         public List<SChanalVR> Channal = new List<SChanalVR>();//список обнаруженных датчиков
+        string FileName = "VR_Result.txt";
 
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
@@ -91,7 +92,7 @@ namespace Charaterizator
             }
             catch
             {
-                Program.txtlog.WriteLineLog(string.Format("Ошибка записи в файл результатов верификации (канал {0})", ch), 1);
+                Program.txtlog.WriteLineLog(string.Format("VR:Ошибка записи в файл результатов верификации (канал {0})", ch), 1);
             }
         }
 
@@ -104,6 +105,78 @@ namespace Charaterizator
                 point.PressureZ.ToString("f11") + "|" +
                 point.PressureF.ToString("f11") + "|" +
                 point.CurrentF.ToString("f11") + "|";
+        }
+
+
+        //Сохранение в текстовый файл
+        public void SaveToFile()
+        {
+            StreamWriter writer;
+            if (!File.Exists(FileName))
+            {
+                writer = File.CreateText(FileName);//создаем файл БД
+                if (writer != null)
+                {
+                    try
+                    {
+                        writer.WriteLine(string.Format("Файл данных верификации датчиков"));
+                        writer.WriteLine("Дата и время       |" +
+                                        "Зав. номер    |" +
+                                        "Номер канала  |" +
+                                        "Температура   |" +
+                                        "Диапазон      |" +
+                                        "Давление (з)  |" +
+                                        "Давление (ф)  |" +
+                                        "Ток (ф)       |");
+                    }
+                    catch
+                    {
+                        writer.Close();
+                        writer = null;
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("VR:Ошибка создания файла результатов верификации!", 1);
+                    return;
+                }
+            }
+            else
+            {
+                writer = new StreamWriter(FileName, true);//открываем файл БД
+            }
+
+            if (writer != null)
+            {
+                try
+                {
+                    for (int i = 0; i < Channal.Count; i++)//перебор каналов
+                    {
+                        SChanalVR ch = Channal[i];
+                        for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
+                        {
+                            string str = ch.Points[j].Datetime.ToString() + "|" +
+                                         ch.FactoryNumber.ToString("      00000000") + "|" +
+                                         ch.ChannalNummber.ToString("           000") + "|" +
+                                         ch.Points[j].Temperature.ToString("    0000.0000") + "|" +
+                                         ch.Points[j].Diapazon.ToString("          0000") + "|" +
+                                         ch.Points[j].PressureZ.ToString("    00000.0000") + "|" +
+                                         ch.Points[j].PressureF.ToString("    00000.0000") + "|" +
+                                         ch.Points[j].CurrentF.ToString("    00000.0000") + "|";
+                            writer.WriteLine(str);
+                        }
+                    }
+                }
+                finally
+                {
+                    writer.Close();
+                    writer = null;
+                }
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("VR:Ошибка доступа к файлу результатов верификации!", 1);
+            }
         }
     }
 }

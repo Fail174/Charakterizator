@@ -123,6 +123,7 @@ namespace Charaterizator
                 {
                     try
                     {
+                        writer.WriteLine(string.Format("Файл данных характеризации датчиков"));
                         writer.WriteLine("Дата и время       |" +
                                         "Зав. номер    |" +
                                         "Номер канала  |" +
