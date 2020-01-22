@@ -38,7 +38,8 @@ namespace Charaterizator
         //StreamWriter[] FileStream;//поток записи
         public List<StreamWriter> FileStream = new List<StreamWriter>();
         public List<SChanal> Channal = new List<SChanal>();//список обнаруженных датчиков
-                                                           
+        string FileName = "CH_Result.txt";
+
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
         public СResultCH(int ChannalCount, int[] FN)
@@ -52,7 +53,7 @@ namespace Charaterizator
                 string filename = string.Format("CH/CH_Result{0}.txt",ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
-                fs.WriteLine(   "Дата               |" +
+                fs.WriteLine(   "Дата и время       |" +
                                 "Температура   |" +
                                 "Диапазон      |" +
                                 "Давление      |" +
@@ -110,26 +111,62 @@ namespace Charaterizator
                 point.OutVoltage.ToString("f11") + "|" +
                 point.Resistance.ToString("f11") + "|";
         }
+
         //Сохранение в текстовый файл
-        public void SaveToFile(string FileName)
+        public void SaveToFile()
         {
-          /*  StreamWriter writer = File.CreateText(FileName);//создаем файл сессии
+            StreamWriter writer;
+            if (!File.Exists(FileName))
+            {
+                writer = File.CreateText(FileName);//создаем файл БД
+                if (writer != null)
+                {
+                    try
+                    {
+                        writer.WriteLine("Дата и время       |" +
+                                        "Зав. номер    |" +
+                                        "Номер канала  |" +
+                                        "Температура   |" +
+                                        "Диапазон      |" +
+                                        "Давление      |" +
+                                        "Напряжение    |" +
+                                        "Сопротивление |");
+                    }
+                    catch
+                    {
+                        writer.Close();
+                        writer = null;
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("CH:Ошибка создания файла результатов характеризации!", 1);
+                    return;
+                }
+            }
+            else
+            {
+                writer = new StreamWriter(FileName, true);//открываем файл БД
+            }
+
             if (writer != null)
             {
                 try
                 {
-                    writer.WriteLine("Дата          |" +
-                                    "Температура   |" +
-                                    "Давление      |" +
-                                    "Напряжение    |" +
-                                    "Сопротивление |" +
-                                    "Ток           |");
                     for (int i = 0; i < Channal.Count; i++)//перебор каналов
                     {
                         SChanal ch = Channal[i];
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
-                            writer.WriteLine(GetStringFromPoint(i+1, ch.Points[j]));
+                            string str = ch.Points[j].Datetime.ToString() + "|" +
+                                         ch.FactoryNumber.ToString("      00000000") + "|" +
+                                         ch.ChannalNummber.ToString("           000") + "|" +
+                                         ch.Points[j].Temperature.ToString("    0000.0000") + "|" +
+                                         ch.Points[j].Diapazon.ToString("          0000") + "|" +
+                                         ch.Points[j].Pressure.ToString("    00000.0000") + "|" +
+                                         ch.Points[j].OutVoltage.ToString("    00000.0000") + "|" +
+                                         ch.Points[j].Resistance.ToString("    00000.0000") + "|";
+                            writer.WriteLine(str);
                         }
                     }
                 }
@@ -138,7 +175,11 @@ namespace Charaterizator
                     writer.Close();
                     writer = null;
                 }
-            }*/
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка доступа к файлу результатов характеризации!", 1);
+            }
         }
     }
 }

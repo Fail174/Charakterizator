@@ -1998,7 +1998,7 @@ namespace Charaterizator
                     }
                     finally
                     {
-                        SensorBusy = false;
+                        ResultCH.SaveToFile();
                         btnCalculateCoeff.BackColor = Color.LightGreen;
                         btnCHStart.Text = "Старт характеризации";
                         SensorBusy = false;
