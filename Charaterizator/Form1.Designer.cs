@@ -72,12 +72,13 @@
             this.tbTemperature = new System.Windows.Forms.TextBox();
             this.btnThermalCamera = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.bMensorMeas = new System.Windows.Forms.Button();
             this.bMensorSet = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.numMensorPoint = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.bMensorControl = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.bMensorVent = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cbMensorTypeR = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -302,7 +303,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 983);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
@@ -535,7 +536,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 959);
+            this.panel1.Size = new System.Drawing.Size(309, 703);
             this.panel1.TabIndex = 6;
             // 
             // tbDateTime
@@ -543,7 +544,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 911);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 655);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -661,12 +662,13 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.groupBox3.Controls.Add(this.bMensorMeas);
             this.groupBox3.Controls.Add(this.bMensorSet);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.numMensorPoint);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.bMensorControl);
-            this.groupBox3.Controls.Add(this.button7);
+            this.groupBox3.Controls.Add(this.bMensorVent);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.cbMensorTypeR);
             this.groupBox3.Controls.Add(this.label2);
@@ -674,17 +676,28 @@
             this.groupBox3.Controls.Add(this.tbMensorData);
             this.groupBox3.Controls.Add(this.btnMensor);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(5, 300);
+            this.groupBox3.Location = new System.Drawing.Point(5, 294);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(299, 371);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Задатчик давления";
             // 
+            // bMensorMeas
+            // 
+            this.bMensorMeas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bMensorMeas.Location = new System.Drawing.Point(6, 313);
+            this.bMensorMeas.Name = "bMensorMeas";
+            this.bMensorMeas.Size = new System.Drawing.Size(97, 49);
+            this.bMensorMeas.TabIndex = 12;
+            this.bMensorMeas.Text = "Измерение";
+            this.bMensorMeas.UseVisualStyleBackColor = true;
+            this.bMensorMeas.Click += new System.EventHandler(this.bMensorMeas_Click);
+            // 
             // bMensorSet
             // 
             this.bMensorSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bMensorSet.Location = new System.Drawing.Point(192, 250);
+            this.bMensorSet.Location = new System.Drawing.Point(204, 250);
             this.bMensorSet.Name = "bMensorSet";
             this.bMensorSet.Size = new System.Drawing.Size(90, 49);
             this.bMensorSet.TabIndex = 11;
@@ -704,13 +717,13 @@
             // 
             // numMensorPoint
             // 
-            this.numMensorPoint.DecimalPlaces = 1;
+            this.numMensorPoint.DecimalPlaces = 2;
             this.numMensorPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numMensorPoint.Increment = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
-            65536});
+            0});
             this.numMensorPoint.Location = new System.Drawing.Point(7, 250);
             this.numMensorPoint.Maximum = new decimal(new int[] {
             10000,
@@ -723,10 +736,10 @@
             0,
             -2147483648});
             this.numMensorPoint.Name = "numMensorPoint";
-            this.numMensorPoint.Size = new System.Drawing.Size(169, 49);
+            this.numMensorPoint.Size = new System.Drawing.Size(189, 49);
             this.numMensorPoint.TabIndex = 5;
             this.numMensorPoint.Value = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
@@ -744,24 +757,24 @@
             // bMensorControl
             // 
             this.bMensorControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bMensorControl.Location = new System.Drawing.Point(7, 314);
+            this.bMensorControl.Location = new System.Drawing.Point(111, 314);
             this.bMensorControl.Name = "bMensorControl";
-            this.bMensorControl.Size = new System.Drawing.Size(169, 49);
+            this.bMensorControl.Size = new System.Drawing.Size(85, 49);
             this.bMensorControl.TabIndex = 6;
             this.bMensorControl.Text = "Задача";
             this.bMensorControl.UseVisualStyleBackColor = true;
             this.bMensorControl.Click += new System.EventHandler(this.bMensorControl_Click);
             // 
-            // button7
+            // bMensorVent
             // 
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(192, 314);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(89, 49);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "Сброс";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.bMensorVent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bMensorVent.Location = new System.Drawing.Point(204, 314);
+            this.bMensorVent.Name = "bMensorVent";
+            this.bMensorVent.Size = new System.Drawing.Size(89, 49);
+            this.bMensorVent.TabIndex = 7;
+            this.bMensorVent.Text = "Сброс";
+            this.bMensorVent.UseVisualStyleBackColor = true;
+            this.bMensorVent.Click += new System.EventHandler(this.button7_Click);
             // 
             // label3
             // 
@@ -785,7 +798,7 @@
             "[канал В]  AutoRange"});
             this.cbMensorTypeR.Location = new System.Drawing.Point(6, 106);
             this.cbMensorTypeR.Name = "cbMensorTypeR";
-            this.cbMensorTypeR.Size = new System.Drawing.Size(276, 33);
+            this.cbMensorTypeR.Size = new System.Drawing.Size(285, 33);
             this.cbMensorTypeR.TabIndex = 6;
             this.cbMensorTypeR.DropDown += new System.EventHandler(this.cbMensorTypeR_DropDown);
             this.cbMensorTypeR.SelectedIndexChanged += new System.EventHandler(this.cbMensorTypeR_SelectedIndexChanged);
@@ -805,7 +818,7 @@
             this.btnFormMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnFormMensor.Location = new System.Drawing.Point(125, 30);
             this.btnFormMensor.Name = "btnFormMensor";
-            this.btnFormMensor.Size = new System.Drawing.Size(158, 46);
+            this.btnFormMensor.Size = new System.Drawing.Size(166, 46);
             this.btnFormMensor.TabIndex = 4;
             this.btnFormMensor.Text = "Управление";
             this.btnFormMensor.UseVisualStyleBackColor = true;
@@ -816,7 +829,8 @@
             this.tbMensorData.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbMensorData.Location = new System.Drawing.Point(7, 170);
             this.tbMensorData.Name = "tbMensorData";
-            this.tbMensorData.Size = new System.Drawing.Size(169, 49);
+            this.tbMensorData.ReadOnly = true;
+            this.tbMensorData.Size = new System.Drawing.Size(189, 49);
             this.tbMensorData.TabIndex = 3;
             this.tbMensorData.Text = "200,000";
             // 
@@ -894,29 +908,31 @@
             // 
             // tbNumCH
             // 
-            this.tbNumCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbNumCH.Location = new System.Drawing.Point(212, 88);
+            this.tbNumCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbNumCH.Location = new System.Drawing.Point(222, 87);
             this.tbNumCH.Name = "tbNumCH";
-            this.tbNumCH.Size = new System.Drawing.Size(68, 40);
+            this.tbNumCH.Size = new System.Drawing.Size(69, 35);
             this.tbNumCH.TabIndex = 3;
-            this.tbNumCH.Text = "15";
+            this.tbNumCH.Text = "0";
+            this.tbNumCH.Visible = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(2, 103);
+            this.label1.Location = new System.Drawing.Point(14, 97);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(205, 20);
+            this.label1.Size = new System.Drawing.Size(196, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Число открытых каналов:";
+            this.label1.Text = "Номер текущего канала:";
+            this.label1.Visible = false;
             // 
             // btnFormCommutator
             // 
             this.btnFormCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnFormCommutator.Location = new System.Drawing.Point(124, 29);
+            this.btnFormCommutator.Location = new System.Drawing.Point(124, 32);
             this.btnFormCommutator.Name = "btnFormCommutator";
-            this.btnFormCommutator.Size = new System.Drawing.Size(158, 46);
+            this.btnFormCommutator.Size = new System.Drawing.Size(167, 46);
             this.btnFormCommutator.TabIndex = 1;
             this.btnFormCommutator.Text = "Управление";
             this.btnFormCommutator.UseVisualStyleBackColor = true;
@@ -926,7 +942,7 @@
             // 
             this.btnCommutator.BackColor = System.Drawing.Color.Green;
             this.btnCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCommutator.Location = new System.Drawing.Point(11, 29);
+            this.btnCommutator.Location = new System.Drawing.Point(11, 32);
             this.btnCommutator.Name = "btnCommutator";
             this.btnCommutator.Size = new System.Drawing.Size(107, 46);
             this.btnCommutator.TabIndex = 0;
@@ -940,7 +956,7 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 801);
+            this.panel2.Location = new System.Drawing.Point(0, 545);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(975, 182);
             this.panel2.TabIndex = 7;
@@ -957,6 +973,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(392, 170);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.richTextBox1.Visible = false;
             // 
             // rtbConsole
             // 
@@ -981,7 +998,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(975, 777);
+            this.panel3.Size = new System.Drawing.Size(975, 521);
             this.panel3.TabIndex = 8;
             // 
             // splitter1
@@ -1005,7 +1022,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 471);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(698, 306);
+            this.dataGridView4.Size = new System.Drawing.Size(698, 50);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1055,7 +1072,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 471);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(698, 306);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 50);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1191,7 +1208,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(277, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(698, 777);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 521);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1270,7 +1287,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 777);
+            this.panel4.Size = new System.Drawing.Size(277, 521);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1282,7 +1299,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 777);
+            this.tabControl1.Size = new System.Drawing.Size(277, 521);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1297,7 +1314,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 751);
+            this.tabPage1.Size = new System.Drawing.Size(269, 495);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1306,7 +1323,7 @@
             // 
             this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep1.Location = new System.Drawing.Point(6, 711);
+            this.btnNextStep1.Location = new System.Drawing.Point(6, 455);
             this.btnNextStep1.Name = "btnNextStep1";
             this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
             this.btnNextStep1.TabIndex = 7;
@@ -1753,7 +1770,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(269, 751);
+            this.tabPage2.Size = new System.Drawing.Size(269, 495);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2118,9 +2135,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 710);
+            this.btnNextStep2.Location = new System.Drawing.Point(8, 1096);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(255, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(237, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2286,7 +2303,7 @@
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(269, 751);
+            this.tabPage3.Size = new System.Drawing.Size(269, 495);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
@@ -2738,9 +2755,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 709);
+            this.btnNextStep3.Location = new System.Drawing.Point(8, 899);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(255, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(243, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2788,7 +2805,7 @@
             this.pUpStatusBar.Controls.Add(this.label5);
             this.pUpStatusBar.Location = new System.Drawing.Point(308, 1);
             this.pUpStatusBar.Name = "pUpStatusBar";
-            this.pUpStatusBar.Size = new System.Drawing.Size(707, 22);
+            this.pUpStatusBar.Size = new System.Drawing.Size(976, 22);
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
             // 
@@ -2796,31 +2813,28 @@
             // 
             this.UpStCh.AutoSize = true;
             this.UpStCh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UpStCh.Location = new System.Drawing.Point(513, 4);
+            this.UpStCh.Location = new System.Drawing.Point(516, 4);
             this.UpStCh.Name = "UpStCh";
-            this.UpStCh.Size = new System.Drawing.Size(15, 15);
+            this.UpStCh.Size = new System.Drawing.Size(0, 15);
             this.UpStCh.TabIndex = 7;
-            this.UpStCh.Text = "8";
             // 
             // UpStSerial
             // 
             this.UpStSerial.AutoSize = true;
             this.UpStSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UpStSerial.Location = new System.Drawing.Point(308, 4);
+            this.UpStSerial.Location = new System.Drawing.Point(312, 4);
             this.UpStSerial.Name = "UpStSerial";
-            this.UpStSerial.Size = new System.Drawing.Size(87, 15);
+            this.UpStSerial.Size = new System.Drawing.Size(0, 15);
             this.UpStSerial.TabIndex = 6;
-            this.UpStSerial.Text = "8800200500";
             // 
             // UpStModel
             // 
             this.UpStModel.AutoSize = true;
             this.UpStModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UpStModel.Location = new System.Drawing.Point(72, 4);
+            this.UpStModel.Location = new System.Drawing.Point(74, 4);
             this.UpStModel.Name = "UpStModel";
-            this.UpStModel.Size = new System.Drawing.Size(65, 15);
+            this.UpStModel.Size = new System.Drawing.Size(0, 15);
             this.UpStModel.TabIndex = 5;
-            this.UpStModel.Text = "ЭНИ-100";
             // 
             // label46
             // 
@@ -2856,7 +2870,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 1005);
+            this.ClientSize = new System.Drawing.Size(1284, 749);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -2955,7 +2969,7 @@
         private System.Windows.Forms.Button btnFormMensor;
         private System.Windows.Forms.TextBox tbMensorData;
         private System.Windows.Forms.Button btnMensor;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button bMensorVent;
         private System.Windows.Forms.Button bMensorControl;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label7;
@@ -3158,6 +3172,7 @@
         private System.Windows.Forms.Label UpStCh;
         private System.Windows.Forms.Label UpStSerial;
         public System.Windows.Forms.Label UpStModel;
+        private System.Windows.Forms.Button bMensorMeas;
     }
 }
 

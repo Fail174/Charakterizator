@@ -30,11 +30,14 @@ namespace Charaterizator
 
 
 
-        const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
 
+        const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
+        const int MAX_COUNT_POINT =5;
+
+        private int MensorCountPoint = 0;// счетчик для уставки (выдержки) давления в датчиках - для установки зелены цветом 
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
-        private double SKO_PRESSURE = 0.5;//(СКО) допуск по давлению, кПа
+        private double SKO_PRESSURE = 0.2;//(СКО) допуск по давлению, кПа
 
 
         // Номера столбцов в dataGrid1 - начальное окно с выбором датчиков
@@ -557,8 +560,10 @@ namespace Charaterizator
                 sensors.С40WriteFixCurrent(0);
                 Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
             }
+            Program.txtlog.WriteLineLog("Чтение ЦАП завершено!", 0);
+
         }
-        
+
         //Калибровка датчиков
         private void SensorCalibration()
         {
@@ -602,6 +607,8 @@ namespace Charaterizator
                     }
                     Commutator.SetConnectors(i, 1);
                 }
+                Program.txtlog.WriteLineLog("Калибровка ЦАП завершена!", 0);
+
         }
 
         //Проверка доступности канала(по выбору пользователя)
@@ -943,11 +950,12 @@ namespace Charaterizator
                         Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
                     }
+                    Program.txtlog.WriteLineLog("Поиск датчиков завершен!", 0);
+
                 }
                 else
                 {
                     Program.txtlog.WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1);
-
                 }
             }
             finally
@@ -1024,7 +1032,7 @@ namespace Charaterizator
 
             if (Commutator.Connected)
             {
-                StateComutators(Commutator._StateCH);
+                //StateComutators(Commutator._StateCH);
                 PowerComutators(Commutator._StateCHPower); //обновляем данные с коммутатора
             }
 
@@ -1045,6 +1053,8 @@ namespace Charaterizator
         //чтение данных с МЕНСОРА
         private void ReadMensor()
         {
+
+
             int CH_mensor = Mensor._activCH;    // Получаем номер активного канала (0 значит А,   1 значит B,   -1 = не прочитали )                    
 
             if (CH_mensor != -1)
@@ -1053,13 +1063,19 @@ namespace Charaterizator
 
                 // текущее давление
                 //                if ((Mensor._press >= (numMensorPoint.Value - SKO_PRESSURE))&& (Mensor._press <= ( + SKO_PRESSURE)))
-                if (SKO_PRESSURE > Math.Abs(Mensor._press - Convert.ToDouble(numMensorPoint.Value)))
+                
+                if (SKO_PRESSURE > Math.Abs(Mensor._press - Mensor.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
                 {
-                    tbMensorData.BackColor = Color.MediumSeaGreen;
+                    MensorCountPoint++;
+                    if (MensorCountPoint >= MAX_COUNT_POINT)
+                    {
+                        tbMensorData.BackColor = Color.MediumSeaGreen;
+                    }
                 }
                 else
                 {
                     tbMensorData.BackColor = Color.White;
+                    MensorCountPoint = 0;
                 }
                 
                 // Получаем текущее значение давления и обновляем гл. форму 
@@ -1083,13 +1099,35 @@ namespace Charaterizator
                     cbMensorTypeR.SelectedIndex = typeR + 3; // от 3 до 5-ти по списку
                 }
 
+                switch (Mensor._mode)
+                {
+                    case 0:
+                        bMensorMeas.BackColor = Color.LightGreen;
+                        bMensorControl.BackColor = Color.Transparent;
+                        bMensorVent.BackColor = Color.Transparent;
+                        break;
+                    case 1:
+                        bMensorMeas.BackColor = Color.Transparent;
+                        bMensorControl.BackColor = Color.LightGreen;
+                        bMensorVent.BackColor = Color.Transparent;
+                        break;
+                    case 2:
+                        bMensorMeas.BackColor = Color.Transparent;
+                        bMensorControl.BackColor = Color.Transparent;
+                        bMensorVent.BackColor = Color.LightGreen;
+                        break;
+                }
+
+
+
+
                 MensorReadError = 0;
             }
             else
             {
-                tbMensorData.Text = "";
-                //tbMensorRate.Text = "";
-                numMensorPoint.Text = "";
+                tbMensorData.Text = "0";
+                //tbMensorRate.Text = "0";
+                numMensorPoint.Text = "0";
                 cbMensorTypeR.SelectedIndex = -1;
                 MensorReadError++;
             }
@@ -1111,7 +1149,7 @@ namespace Charaterizator
             bool res = Multimetr.Error;
             if (!res)
             {
-                tbMultimetrData.Text = Multimetr.Current.ToString("f4");
+                tbMultimetrData.Text = Multimetr.Current.ToString("f3");
                 MultimetrReadError = 0;
             }
             else
@@ -1252,6 +1290,8 @@ namespace Charaterizator
                 case 0:
                     {
                         pUpStatusBar.Visible = false;
+                        label1.Visible = false;
+                        tbNumCH.Visible = false;
                         return;
                     }
 
@@ -1259,6 +1299,9 @@ namespace Charaterizator
                 case 1:  
                     {
                         pUpStatusBar.Visible = true;
+                        label1.Visible = true;
+                        tbNumCH.Visible = true; 
+
 
                         cbCHTermoCamera1.Items.Clear();
                         cbCHTermoCamera2.Items.Clear();
@@ -1537,6 +1580,8 @@ namespace Charaterizator
                 case 2:
                     {
                         pUpStatusBar.Visible = true;
+                        label1.Visible = true;
+                        tbNumCH.Visible = true;
 
                         // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
@@ -1852,6 +1897,7 @@ namespace Charaterizator
         {
             if (Mensor._serialPort_M.IsOpen)
             {
+                bMensorControl.BackColor = Color.LightGreen;
                 Mensor.SetMode(1);
             }
             else
@@ -1866,6 +1912,7 @@ namespace Charaterizator
         {
             if (Mensor._serialPort_M.IsOpen)
             {
+                bMensorVent.BackColor = Color.LightGreen;
                 Mensor.SetMode(2);
             }
             else
@@ -2000,9 +2047,20 @@ namespace Charaterizator
             {
                 UpStModel.Text = new String(sensors.sensorList[i].PressureModel); ;
                 UpStSerial.Text = sensors.sensorList[i].uni.ToString();
-                UpStCh.Text = sensors.sensorList[i].Channal.ToString();
+                UpStCh.Text = (sensors.sensorList[i].Channal + 1).ToString();
+
+                UpdateCHnumber(sensors.sensorList[i].Channal + 1);
             }
         }
+
+        public void UpdateCHnumber(int i)
+        {           
+                tbNumCH.Text = i.ToString();
+           
+        }
+
+
+
 
 
         private void gbCHLevel1_Enter(object sender, EventArgs e)
@@ -2227,6 +2285,7 @@ namespace Charaterizator
                         btnReadCAP.BackColor = Color.IndianRed;
                         btnReadCAP.Text = "Выполняется процесс чтения ЦАП... Отменить?";
                         ReadSensorCurrent();
+
                     }
                     finally
                     {
@@ -2920,7 +2979,19 @@ namespace Charaterizator
 
         }
 
-       
+        private void bMensorMeas_Click(object sender, EventArgs e)
+        {
+            if (Mensor._serialPort_M.IsOpen)
+            {
+                bMensorMeas.BackColor = Color.LightGreen;
+                Mensor.SetMode(0);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+            }
+        }
+
     }
 }
 

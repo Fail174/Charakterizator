@@ -27,7 +27,7 @@ namespace Charaterizator
         public bool Connected = false;      // true  - соединение установлено,         
         public const double PsiToPa = 0.14503773773;  // для перевода psi в кПА    
 
-
+        public double UserPoint = 0;
 
         public int activCH = -1;            // номер активного канала (0 - канал А, 1 - канал В)
         public int _activCH
@@ -473,6 +473,7 @@ namespace Charaterizator
                     rate = ReadRATE();
                     // считываем установленный режим           
                     mode = ReadMode();
+
                 }
             }
             catch
@@ -579,6 +580,8 @@ namespace Charaterizator
                     // Скорость
                     lSpeedCHA.Text = String.Format("{0,-8:#0.000#}", rate);
 
+
+
                     // установленный режим          
                     if (mode == 0)
                     {
@@ -649,7 +652,8 @@ namespace Charaterizator
 
                     //Скорость                
                     lSpeedCHB.Text = String.Format("{0,-8:#0.000#}", rate);
-
+                    
+                   
                     // установленный режим       
                     if (mode == 0)
                     {
@@ -914,8 +918,11 @@ namespace Charaterizator
         {
             try
             {
-                _serialPort_M.WriteLine("SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val));
+                UserPoint = Val;
+                _serialPort_M.WriteLine("SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val).Replace(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, "."));
                 //toolStripStatusLabel1.Text = ("SEND: " + "SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val));
+
+               
             }
             catch
             {
@@ -1184,11 +1191,11 @@ namespace Charaterizator
                 str = _serialPort_M.ReadLine();
                 //toolStripStatusLabel2.Text = ("READ: " + str);
 
-                if (str == "\"MEAS\"")
+                if (str == "\"MEASURE\"")
                 {
                     res = 0;
                 }
-                else if (str == "\"CONT\"")
+                else if (str == "\"CONTROL\"")
                 {
                     res = 1;
                 }
