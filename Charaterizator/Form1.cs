@@ -33,12 +33,15 @@ namespace Charaterizator
 
         const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
         const int MAX_COUNT_POINT =5;
+        const int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
 
         private int MensorCountPoint = 0;// счетчик для уставки (выдержки) давления в датчиках - для установки зелены цветом 
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
         private double SKO_PRESSURE = 0.2;//(СКО) допуск по давлению, кПа
+        const double SKO_CURRENT = 0.2;//допуск по току ЦАП датчика, мА
 
+        const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
         // Номера столбцов в dataGrid1 - начальное окно с выбором датчиков
         byte ch = 0;        // номер канала
@@ -483,30 +486,6 @@ namespace Charaterizator
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
 
             Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 0);
-            //******** расчитываем номера каналов текущего выбранного уровня ********************************
-            //int StartNumber = 0;    //начальный канал
-            //int FinishNumber = 0;   //конечный канал
-            /*            int step = MaxChannalCount / MaxLevelCount;
-                        switch (SelectedLevel)
-                        {
-                            case 1:
-                                StartNumber = 0;
-                                FinishNumber = step - 1;
-                                break;
-                            case 2:
-                                StartNumber = step;
-                                FinishNumber = step * 2 - 1;
-                                break;
-                            case 3:
-                                StartNumber = step * 2;
-                                FinishNumber = step * 3 - 1;
-                                break;
-                            case 4:
-                                StartNumber = step * 3;
-                                FinishNumber = step * 4 - 1;
-                                break;
-                        }*/
-            //************************************************************************************************
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
@@ -515,11 +494,11 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (!SensorBusy) return;//прекращаем поиск 
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
                 cbChannalCharakterizator.SelectedIndex = i;
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
-                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
                 Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
@@ -527,29 +506,39 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CAP: Выполняем чтение датчика в канале " + (i + 1).ToString(), 0);
 
                     double I4 = 0, I20 = 0;
-                    if (sensors.С40WriteFixCurrent(4))
+                    int ci = 0;//счетчик циклов чтения ЦАП
+                    do
                     {
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
-                        I4 = Multimetr.Current;
-                        Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
-                    }
-                    else
-                    {
-                        I4 = 0;
-                        Program.txtlog.WriteLineLog("CAP:Ток 4мА не установлен!", 1);
-                    }
+                        if (sensors.С40WriteFixCurrent(4))
+                        {
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            I4 = Multimetr.Current;
+                            Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
+                        }
+                        else
+                        {
+                            I4 = 0;
+                            Program.txtlog.WriteLineLog("CAP:Ток 4мА не установлен!", 1);
+                        }
+                        ci++;
+                    } while ((Math.Abs(I4-4.0) > SKO_CURRENT) ||(ci>= MAX_COUNT_CAP_READ));
 
-                    if (sensors.С40WriteFixCurrent(20))
+                    ci = 0;
+                    do
                     {
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
-                        I20 = Multimetr.Current;
-                        Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
-                    }
-                    else
-                    {
-                        I20 = 0;
-                        Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
-                    }
+                        if (sensors.С40WriteFixCurrent(20))
+                        {
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            I20 = Multimetr.Current;
+                            Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
+                        }
+                        else
+                        {
+                            I20 = 0;
+                            Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
+                        }
+                    } while ((Math.Abs(I4 - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
                     UpdateCurrentGrid(i);
                 }
@@ -567,49 +556,79 @@ namespace Charaterizator
         //Калибровка датчиков
         private void SensorCalibration()
         {
-                pbCHProcess.Maximum = MaxChannalCount;
-                pbCHProcess.Minimum = 0;
-                pbCHProcess.Value = 0;
+            pbCHProcess.Maximum = MaxChannalCount;
+            pbCHProcess.Minimum = 0;
+            pbCHProcess.Value = 0;
+            int ci = 0;
+            float I=0;
 
-                Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
-                for (int i = 0; i < MaxChannalCount; i++)
+            Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
+            for (int i = 0; i < MaxChannalCount; i++)
+            {
+                if (!SensorBusy) return;//прекращаем поиск 
+
+                pbCHProcess.Value = i + 1;
+                Application.DoEvents();
+
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+                Commutator.SetConnectors(i, 0);
+
+                if (sensors.SelectSensor(i))
                 {
-                    if (!SensorBusy) return;//прекращаем поиск 
+                    Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
 
-                    pbCHProcess.Value = i + 1;
-                    Application.DoEvents();
-
-                    if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-                    Commutator.SetConnectors(i, 0);
-
-                    if (sensors.SelectSensor(i))
+                    ci = 0;
+                    do
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
-
                         sensors.С40WriteFixCurrent(4);
                         Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
-                        sensors.С45WriteCurrent4mA(Multimetr.Current);
+                        I = Multimetr.Current;
+                        ci++;
+                    } while ((Math.Abs(I - 4.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
 
-                        sensors.С40WriteFixCurrent(0);
-                        Thread.Sleep(1000);
-
-                        sensors.С40WriteFixCurrent(20);
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
-                        sensors.С46WriteCurrent20mA(Multimetr.Current);
-
-                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} выполнена", i + 1), 0);
-                        sensors.С40WriteFixCurrent(0);
-                        Thread.Sleep(1000);
+                    if (Math.Abs(I - 4.0) > SKO_CURRENT)
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 4мА:{}, калибровка не выполнена...", I), 0);
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i + 1), 1);
+                        sensors.С45WriteCurrent4mA(I);
                     }
-                    Commutator.SetConnectors(i, 1);
-                }
-                Program.txtlog.WriteLineLog("Калибровка ЦАП завершена!", 0);
 
+                    sensors.С40WriteFixCurrent(0);
+                    Thread.Sleep(1000);
+
+                    ci = 0;
+                    do
+                    {
+                        sensors.С40WriteFixCurrent(20);
+                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                        I = Multimetr.Current;
+                        ci++;
+                    } while ((Math.Abs(I - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+
+                    if (Math.Abs(I - 20.0) > SKO_CURRENT)
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 20мА:{}, калибровка не выполнена...", I), 0);
+                    }
+                    else
+                    {
+                        sensors.С46WriteCurrent20mA(I);
+                    }
+
+                    Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} завершена", i + 1), 0);
+                    sensors.С40WriteFixCurrent(0);
+                    Thread.Sleep(1000);
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i + 1), 1);
+                }
+                Commutator.SetConnectors(i, 1);
+            }
+            Program.txtlog.WriteLineLog("Калибровка ЦАП завершена!", 0);
         }
+        
 
         //Проверка доступности канала(по выбору пользователя)
         private bool CheckChannalEnable(int i)
@@ -2276,8 +2295,7 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
-                //            if (TemperatureReady)
-                if (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Выполнить чтение ЦАП?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if ((Math.Abs((double)numTermoCameraPoint.Value - DEFAULT_TEMPERATURE) <= 0.1) || (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Выполнить чтение ЦАП?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) == DialogResult.Yes))
                 {
                     try
                     {
@@ -2297,7 +2315,7 @@ namespace Charaterizator
                 }
                 else
                 {
-                    //Program.txtlog.WriteLineLog("Не заданны температура для чтения ЦАП.", 1);
+                    Program.txtlog.WriteLineLog("Не заданны температура 23град для чтения ЦАП.", 1);
                 }
             }
             else
@@ -2310,11 +2328,11 @@ namespace Charaterizator
             }
         }
 
+        //Запуск калибровки токов ЦАП
         private void btnCalibrateCurrent_Click(object sender, EventArgs e)
         {
             if (!SensorBusy)
             {
-                SensorBusy = true;
                 if (!Multimetr.Connected)
                 {
                     Program.txtlog.WriteLineLog("CL: Нет подключения к мультиметру, калибровка не выполнена!", 0);
@@ -2330,6 +2348,7 @@ namespace Charaterizator
                 }
                 try
                 {
+                    SensorBusy = true;
                     btnCalibrateCurrent.Text = "Выполняется калибровка... Отменить?";
                     btnCalibrateCurrent.BackColor = Color.IndianRed;
                     SensorCalibration();
