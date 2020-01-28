@@ -34,12 +34,14 @@ namespace Charaterizator
         const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
         const int MAX_COUNT_POINT =5;
         const int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
+        const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП
 
         private int MensorCountPoint = 0;// счетчик для уставки (выдержки) давления в датчиках - для установки зелены цветом 
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
         private double SKO_PRESSURE = 0.2;//(СКО) допуск по давлению, кПа
-        const double SKO_CURRENT = 0.003;//допуск по току ЦАП датчика, мА
+        const double SKO_CURRENT = 0.5;//допуск по току ЦАП датчика до калибровки, мА
+        const double SKO_CALIBRATION_CURRENT = 0.003;//допуск по току ЦАП после калибровки, мА
 
         const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
@@ -564,6 +566,7 @@ namespace Charaterizator
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
             int ci = 0;
+            int cc = 0;
             float I=0;
 
             Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
@@ -581,43 +584,63 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog(string.Format("CL: Датчик в канале {0} подключен, выполяем калибровку...", i + 1), 0);
 
-                    ci = 0;
-                    do
+                    cc = 0;
+                    do//цикл калибровки (MAX_CALIBRATION_COUNT попыток)
                     {
+                        ci = 0;
+                        do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
+                        {
+                            sensors.С40WriteFixCurrent(4);
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            I = Multimetr.Current;
+                            ci++;
+                        } while ((Math.Abs(I - 4.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+
+                        sensors.С45WriteCurrent4mA(I);//Калибруем...
+
+                        Thread.Sleep(Multimetr.READ_PERIOD);
+                        sensors.С40WriteFixCurrent(0);
+                        Thread.Sleep(Multimetr.READ_PERIOD);
                         sensors.С40WriteFixCurrent(4);
                         Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
-                        I = Multimetr.Current;
-                        ci++;
-                    } while ((Math.Abs(I - 4.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+                        I = Multimetr.Current;//проверка результата калибровки
 
-                    if (Math.Abs(I - 4.0) > SKO_CURRENT)
+                        cc++;
+                    }while ((Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT) || (cc >= MAX_CALIBRATION_COUNT));
+                    if (Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT)
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 4мА:{}, калибровка не выполнена...", I), 0);
-                    }
-                    else
-                    {
-                        sensors.С45WriteCurrent4mA(I);
+                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 4мА:{}, калибровка не выполнена...", I), 1);
                     }
 
                     sensors.С40WriteFixCurrent(0);
                     Thread.Sleep(1000);
 
-                    ci = 0;
-                    do
+                    cc = 0;
+                    do//цикл калибровки (MAX_CALIBRATION_COUNT попыток)
                     {
+                        ci = 0;
+                        do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
+                        {
+                            sensors.С40WriteFixCurrent(20);
+                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            I = Multimetr.Current;
+                            ci++;
+                        } while ((Math.Abs(I - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+
+                        sensors.С46WriteCurrent20mA(I);//Калибруем...
+
+                        Thread.Sleep(Multimetr.READ_PERIOD);
+                        sensors.С40WriteFixCurrent(0);
+                        Thread.Sleep(Multimetr.READ_PERIOD);
                         sensors.С40WriteFixCurrent(20);
                         Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
-                        I = Multimetr.Current;
-                        ci++;
-                    } while ((Math.Abs(I - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+                        I = Multimetr.Current;//проверка результата калибровки
 
-                    if (Math.Abs(I - 20.0) > SKO_CURRENT)
+                        cc++;
+                    } while ((Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT) || (ci >= MAX_CALIBRATION_COUNT));
+                    if (Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT)
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 20мА:{}, калибровка не выполнена...", I), 0);
-                    }
-                    else
-                    {
-                        sensors.С46WriteCurrent20mA(I);
+                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 20мА:{}, калибровка не выполнена...", I), 1);
                     }
 
                     Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} завершена", i + 1), 0);
@@ -626,13 +649,13 @@ namespace Charaterizator
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog(string.Format("CL: Калибровка: Датчик не обнаружен в канале {0}", i + 1), 1);
+                    Program.txtlog.WriteLineLog(string.Format("CL: Датчик не обнаружен в канале {0}", i + 1), 1);
                 }
                 Commutator.SetConnectors(i, 1);
             }
-            Program.txtlog.WriteLineLog("Калибровка ЦАП завершена!", 0);
+            Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 0);
         }
-        
+
 
         //Проверка доступности канала(по выбору пользователя)
         private bool CheckChannalEnable(int i)
