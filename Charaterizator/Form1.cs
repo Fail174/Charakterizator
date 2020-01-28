@@ -39,7 +39,7 @@ namespace Charaterizator
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
         private double SKO_PRESSURE = 0.2;//(СКО) допуск по давлению, кПа
-        const double SKO_CURRENT = 0.2;//допуск по току ЦАП датчика, мА
+        const double SKO_CURRENT = 0.003;//допуск по току ЦАП датчика, мА
 
         const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
@@ -100,7 +100,8 @@ namespace Charaterizator
             Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
             Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
 
-            sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
+
+            sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;
             sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
             sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
 
@@ -134,6 +135,8 @@ namespace Charaterizator
             cbChannalCharakterizator.Items.Clear();
             cbChannalVerification.Items.Clear();
             dataGridView1.Rows.Clear();
+//            dataGridView2.Rows.Clear();
+//            dataGridView2.AutoScrollOffset = new Point(dataGridView2.Width, dataGridView2.Height);
 
             for (int i = 0; i < MaxChannalCount; i++)
             {
@@ -162,7 +165,7 @@ namespace Charaterizator
                 btnThermalCamera.PerformClick();
                 Application.DoEvents();
 
-                MainTimer.Interval = 2000;//MAIN_TIMER;
+                MainTimer.Interval = MAIN_TIMER;
                 MainTimer.Enabled = true;
                 MainTimer.Start();
             }
@@ -537,7 +540,8 @@ namespace Charaterizator
                             I20 = 0;
                             Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
                         }
-                    } while ((Math.Abs(I4 - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+                        ci++;
+                    } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
 
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
                     UpdateCurrentGrid(i);
@@ -802,7 +806,7 @@ namespace Charaterizator
             for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add("", "", "", "", "", "");
-                dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
+                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
                 dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
                 switch (SelectedLevel)
                 {
@@ -824,6 +828,8 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
             }
+            dataGridView2.AutoScrollOffset = new Point(0, dataGridView2.VerticalScrollingOffset);
+//            dataGridView2.FirstDisplayedScrollingRowIndex = dataGridView2.Rows.Count-1;
         }
 
         //обновляем грид результатов верификации для датчика в канале i
@@ -930,7 +936,9 @@ namespace Charaterizator
                             if (Current < MIN_SENSOR_CURRENT)
                             {
                                 //нет тока мультиметра, => датчик отсутсвует
-                                Program.txtlog.WriteLineLog("Датчик не обнаружен! Ток потребления: " + Current.ToString(), 1);
+                                //                                Program.txtlog.WriteLineLog("Датчик не обнаружен! Ток потребления: " + Current.ToString(), 1);
+                                Program.txtlog.WriteLineLog("Датчик не обнаружен! Ток потребления менее 1.5мА!", 1);
+
                                 continue;
                             }
                             else
@@ -1238,6 +1246,23 @@ namespace Charaterizator
                 return;
             }
             if (e.RowIndex < 0) return;
+
+
+            if((e.ColumnIndex == sel)&&(Control.ModifierKeys == System.Windows.Forms.Keys.Control))
+            {
+                for(int i = e.RowIndex; i>=0; i--)
+                {
+                    if(Convert.ToBoolean(dataGridView1.Rows[i].Cells[sel].Value)==true)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells[sel].Value = true;
+                    }
+                }
+            }
+
 
             //if (e.ColumnIndex <= 2)//выбор датчика     - было
             if (e.ColumnIndex == 0)//выбор датчика         

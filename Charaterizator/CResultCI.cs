@@ -81,9 +81,9 @@ namespace Charaterizator
         private string GetStringFromPoint(SPointCI point)
         {
             return point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("f11") + "|" +
-                point.I4.ToString("f11") + "|" +
-                point.I20.ToString("f11") + "|";
+                point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                point.I4.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                point.I20.ToString("     +0000.00;     -0000.00;          0.0") + " |";
         }
         //Сохранение в текстовый файл
         public void SaveToFile()
@@ -131,11 +131,11 @@ namespace Charaterizator
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             string str = ch.Points[j].Datetime.ToString() + "|" +
-                                         ch.FactoryNumber.ToString("      00000000") + "|" +
-                                         ch.ChannalNummber.ToString("           000") + "|" +
-                                         ch.Points[j].Temperature.ToString("    0000.0000") + "|" +
-                                         ch.Points[j].I4.ToString("    00000.0000") + "|" +
-                                         ch.Points[j].I20.ToString("    00000.0000") + "|";
+                                         ch.FactoryNumber.ToString("      0000000") + " |" +
+                                         ch.ChannalNummber.ToString("           00") + " |" +
+                                         ch.Points[j].Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                                         ch.Points[j].I4.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                                         ch.Points[j].I20.ToString("     +0000.00;     -0000.00;          0.0") + " |";
                             writer.WriteLine(str);
                         }
                     }

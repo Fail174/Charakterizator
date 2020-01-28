@@ -105,11 +105,11 @@ namespace Charaterizator
         private string GetStringFromPoint(SPoint point)
         {
             return  point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("f11") + "|" +
-                point.Diapazon.ToString("f11") + "|" +
-                point.Pressure.ToString("f11") + "|" +
-                point.OutVoltage.ToString("f11") + "|" +
-                point.Resistance.ToString("f11") + "|";
+                point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                point.Diapazon.ToString("           00") + " |" +
+                point.Pressure.ToString("   +00000.00;   -00000.00;         0.0") + " |" +
+                point.OutVoltage.ToString("    +0000.00;    -0000.00;         0.0") + " |" +
+                point.Resistance.ToString("     00000.00") + " |";
         }
 
         //Сохранение в текстовый файл
@@ -160,20 +160,20 @@ namespace Charaterizator
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             string str = ch.Points[j].Datetime.ToString() + "|" +
-                                         ch.FactoryNumber.ToString("      00000000") + "|" +
-                                         ch.ChannalNummber.ToString("           000") + "|" +
-                                         ch.Points[j].Temperature.ToString("    0000.0000") + "|" +
-                                         ch.Points[j].Diapazon.ToString("          0000") + "|" +
-                                         ch.Points[j].Pressure.ToString("    00000.0000") + "|" +
-                                         ch.Points[j].OutVoltage.ToString("    00000.0000") + "|" +
-                                         ch.Points[j].Resistance.ToString("    00000.0000") + "|";
+                                         ch.FactoryNumber.ToString("      0000000") + " |" +
+                                         ch.ChannalNummber.ToString("           00") + " |" +
+                                         ch.Points[j].Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                                         ch.Points[j].Diapazon.ToString("           00") + " |" +
+                                         ch.Points[j].Pressure.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
+                                         ch.Points[j].OutVoltage.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                                         ch.Points[j].Resistance.ToString("     00000.00") + " |";
                             writer.WriteLine(str);
                         }
                     }
                 }
                 finally
                 {
-                    writer.Close();
+                    writer.Close(); 
                     writer = null;
                 }
             }
