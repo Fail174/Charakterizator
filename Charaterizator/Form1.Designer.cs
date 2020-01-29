@@ -268,6 +268,8 @@
             this.label46 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.contextMenuStripCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -299,6 +301,7 @@
             this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.pUpStatusBar.SuspendLayout();
+            this.contextMenuStripCharacterizationTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -1134,8 +1137,10 @@
             this.сPressure2,
             this.cUTemp2,
             this.cUPress2});
+            this.dataGridView2.ContextMenuStrip = this.contextMenuStripCharacterizationTable;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
+            this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.Size = new System.Drawing.Size(784, 543);
@@ -2136,9 +2141,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 1808);
+            this.btnNextStep2.Location = new System.Drawing.Point(8, 2022);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(213, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(207, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2756,9 +2761,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 1089);
+            this.btnNextStep3.Location = new System.Drawing.Point(8, 1184);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(231, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(225, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2867,6 +2872,20 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "   |   Текущий канал: ";
             // 
+            // contextMenuStripCharacterizationTable
+            // 
+            this.contextMenuStripCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuDeleteResult});
+            this.contextMenuStripCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
+            this.contextMenuStripCharacterizationTable.Size = new System.Drawing.Size(168, 48);
+            // 
+            // ToolStripMenuDeleteResult
+            // 
+            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
+            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
+            this.ToolStripMenuDeleteResult.Text = "Удаление записи";
+            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.удалениеЗаписиToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2932,6 +2951,7 @@
             this.groupBox11.ResumeLayout(false);
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
+            this.contextMenuStripCharacterizationTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3174,6 +3194,8 @@
         private System.Windows.Forms.Label UpStSerial;
         public System.Windows.Forms.Label UpStModel;
         private System.Windows.Forms.Button bMensorMeas;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripCharacterizationTable;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuDeleteResult;
     }
 }
 

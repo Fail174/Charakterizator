@@ -29,7 +29,7 @@ namespace Charaterizator
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
-            FileNameArchiv = string.Format("Archiv/CH/Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
             Points = new List<SPoint>();
         }
     }
@@ -79,6 +79,18 @@ namespace Charaterizator
         ~СResultCH()
         {
             
+        }
+
+        public void DeletePoint(int ch, int i)
+        {
+            if ((Channal.Count > ch) && (Channal[ch].Points.Count > i))
+            {
+                Channal[ch].Points.RemoveAt(i);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка удаления записи в таблице характеризации:", 1);
+            }
         }
 
         public void AddPoint(int ch, double Temp, int D, double Press, double U, double R)

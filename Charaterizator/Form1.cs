@@ -3062,6 +3062,29 @@ namespace Charaterizator
             }
         }
 
+        private void удалениеЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ResultCH != null)
+            {
+                DialogResult result = MessageBox.Show(
+                        "Выбранные записи будут удалены из таблицы и архива данных характеризации. Продолжить?",
+                        "Подтверждение операции",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information,
+                        MessageBoxDefaultButton.Button1,
+                        MessageBoxOptions.DefaultDesktopOnly);
+                if (result == DialogResult.Yes)
+                {
+                    DataGridViewSelectedRowCollection s = dataGridView2.SelectedRows;
+                    for (int i = 0; i < s.Count; i++)
+                    {
+                        ResultCH.DeletePoint(cbChannalCharakterizator.SelectedIndex, s[i].Index);
+                    }
+                    UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                    ResultCH.SaveToFile();
+                }
+            }
+        }
     }
 }
 
