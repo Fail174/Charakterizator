@@ -526,7 +526,7 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog("CAP:Ток 4мА не установлен!", 1);
                         }
                         ci++;
-                    } while ((Math.Abs(I4-4.0) > SKO_CURRENT) ||(ci>= MAX_COUNT_CAP_READ));
+                    } while ((Math.Abs(I4-4.0) > SKO_CURRENT) && (ci< MAX_COUNT_CAP_READ));
 
                     ci = 0;
                     do
@@ -543,7 +543,7 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
                         }
                         ci++;
-                    } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+                    } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
                     UpdateCurrentGrid(i);
@@ -594,7 +594,7 @@ namespace Charaterizator
                             Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
                             I = Multimetr.Current;
                             ci++;
-                        } while ((Math.Abs(I - 4.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+                        } while ((Math.Abs(I - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                         sensors.С45WriteCurrent4mA(I);//Калибруем...
 
@@ -606,7 +606,7 @@ namespace Charaterizator
                         I = Multimetr.Current;//проверка результата калибровки
 
                         cc++;
-                    }while ((Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT) || (cc >= MAX_CALIBRATION_COUNT));
+                    }while ((Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT) && (cc < MAX_CALIBRATION_COUNT));
                     if (Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT)
                     {
                         Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 4мА:{}, калибровка не выполнена...", I), 1);
@@ -625,7 +625,7 @@ namespace Charaterizator
                             Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
                             I = Multimetr.Current;
                             ci++;
-                        } while ((Math.Abs(I - 20.0) > SKO_CURRENT) || (ci >= MAX_COUNT_CAP_READ));
+                        } while ((Math.Abs(I - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                         sensors.С46WriteCurrent20mA(I);//Калибруем...
 
@@ -637,7 +637,7 @@ namespace Charaterizator
                         I = Multimetr.Current;//проверка результата калибровки
 
                         cc++;
-                    } while ((Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT) || (ci >= MAX_CALIBRATION_COUNT));
+                    } while ((Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_CALIBRATION_COUNT));
                     if (Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT)
                     {
                         Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 20мА:{}, калибровка не выполнена...", I), 1);

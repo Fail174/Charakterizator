@@ -118,6 +118,8 @@
             this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStripCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -268,8 +270,6 @@
             this.label46 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.contextMenuStripCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -283,6 +283,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.contextMenuStripCharacterizationTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -301,14 +302,13 @@
             this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.pUpStatusBar.SuspendLayout();
-            this.contextMenuStripCharacterizationTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 727);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -320,7 +320,7 @@
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -537,7 +537,7 @@
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1061, 24);
+            this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(309, 703);
             this.panel1.TabIndex = 6;
@@ -961,7 +961,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 545);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1061, 182);
+            this.panel2.Size = new System.Drawing.Size(975, 182);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -973,7 +973,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(576, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(478, 170);
+            this.richTextBox1.Size = new System.Drawing.Size(392, 170);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.Visible = false;
@@ -986,7 +986,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(649, 169);
+            this.rtbConsole.Size = new System.Drawing.Size(563, 169);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -1001,7 +1001,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1061, 521);
+            this.panel3.Size = new System.Drawing.Size(975, 521);
             this.panel3.TabIndex = 8;
             // 
             // splitter1
@@ -1009,7 +1009,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter1.Location = new System.Drawing.Point(277, 543);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(784, 3);
+            this.splitter1.Size = new System.Drawing.Size(698, 3);
             this.splitter1.TabIndex = 8;
             this.splitter1.TabStop = false;
             // 
@@ -1025,7 +1025,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 543);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(784, 0);
+            this.dataGridView4.Size = new System.Drawing.Size(698, 0);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1075,7 +1075,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 543);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(784, 0);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 0);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             // 
@@ -1143,7 +1143,7 @@
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(784, 543);
+            this.dataGridView2.Size = new System.Drawing.Size(698, 543);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             // 
@@ -1194,6 +1194,20 @@
             this.cUPress2.ReadOnly = true;
             this.cUPress2.Width = 200;
             // 
+            // contextMenuStripCharacterizationTable
+            // 
+            this.contextMenuStripCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuDeleteResult});
+            this.contextMenuStripCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
+            this.contextMenuStripCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            // 
+            // ToolStripMenuDeleteResult
+            // 
+            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
+            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
+            this.ToolStripMenuDeleteResult.Text = "Удаление записи";
+            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.удалениеЗаписиToolStripMenuItem_Click);
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -1214,7 +1228,7 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(784, 521);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 521);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -2141,9 +2155,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 2022);
+            this.btnNextStep2.Location = new System.Drawing.Point(8, 2236);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(207, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(201, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2761,9 +2775,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 1184);
+            this.btnNextStep3.Location = new System.Drawing.Point(8, 1279);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(225, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(219, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2872,25 +2886,11 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "   |   Текущий канал: ";
             // 
-            // contextMenuStripCharacterizationTable
-            // 
-            this.contextMenuStripCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuDeleteResult});
-            this.contextMenuStripCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
-            this.contextMenuStripCharacterizationTable.Size = new System.Drawing.Size(168, 48);
-            // 
-            // ToolStripMenuDeleteResult
-            // 
-            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
-            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
-            this.ToolStripMenuDeleteResult.Text = "Удаление записи";
-            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.удалениеЗаписиToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1284, 749);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -2922,6 +2922,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.contextMenuStripCharacterizationTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -2951,7 +2952,6 @@
             this.groupBox11.ResumeLayout(false);
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
-            this.contextMenuStripCharacterizationTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
