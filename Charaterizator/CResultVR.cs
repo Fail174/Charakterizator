@@ -105,9 +105,9 @@ namespace Charaterizator
             return  point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
                 point.Diapazon.ToString("           00") + " |" +
-                point.PressureZ.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
-                point.PressureF.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
-                point.CurrentF.ToString("    +00000.00;    -00000.00;          0.0") + " |";
+                point.PressureZ.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
+                point.PressureF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
+                point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
         }
 
 
@@ -121,6 +121,8 @@ namespace Charaterizator
                 for (int i = 0; i < Channal.Count; i++)//перебор каналов
                 {
                     SChanalVR ch = Channal[i];
+                    if (ch.Points.Count <= 0) continue;
+
                     writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
                     if (writer != null)
                     {

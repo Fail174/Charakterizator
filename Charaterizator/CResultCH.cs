@@ -122,9 +122,9 @@ namespace Charaterizator
             return  point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
                 point.Diapazon.ToString("           00") + " |" +
-                point.Pressure.ToString("   +00000.00;   -00000.00;         0.0") + " |" +
-                point.OutVoltage.ToString("    +0000.00;    -0000.00;         0.0") + " |" +
-                point.Resistance.ToString("     00000.00") + " |";
+                point.Pressure.ToString(" +00000.0000; -00000.0000;         0.0") + " |" +
+                point.OutVoltage.ToString("  +0000.0000;  -0000.0000;         0.0") + " |" +
+                point.Resistance.ToString("   00000.0000") + " |";
         }
 
         //Сохранение в текстовый файл
@@ -137,6 +137,8 @@ namespace Charaterizator
                 for (int i = 0; i < Channal.Count; i++)//перебор каналов
                 {
                     SChanal ch = Channal[i];
+                    if (ch.Points.Count <= 0) continue;
+
                     writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
                     if (writer != null)
                     {

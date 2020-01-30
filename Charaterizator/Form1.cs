@@ -500,8 +500,9 @@ namespace Charaterizator
             {
                 if (!SensorBusy) return;//прекращаем поиск 
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+                if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
+                    cbChannalCharakterizator.SelectedIndex = i;
 
-                cbChannalCharakterizator.SelectedIndex = i;
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
                 Commutator.SetConnectors(i, 0);
@@ -546,7 +547,7 @@ namespace Charaterizator
                     } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
-                    UpdateCurrentGrid(i);
+                    UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
                 }
                 else
                 {
@@ -725,8 +726,9 @@ namespace Charaterizator
                     if (sensors.SensorValueReadC03())
                     {
                         ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
-                        cbChannalCharakterizator.SelectedIndex = i;
-                        UpDateCharakterizatorGrid(i);
+                        if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
+                            cbChannalCharakterizator.SelectedIndex = i;
+                        UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
                         Program.txtlog.WriteLineLog("CH: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
@@ -2065,10 +2067,11 @@ namespace Charaterizator
                     }
                     finally
                     {
-                        ResultCH.SaveToFile();
+                        SensorBusy = false;
+                        if (ResultCH!=null)
+                            ResultCH.SaveToFile();
                         btnCalculateCoeff.BackColor = Color.LightGreen;
                         btnCHStart.Text = "Старт характеризации";
-                        SensorBusy = false;
                     }
                 }
                 else
@@ -2358,7 +2361,8 @@ namespace Charaterizator
                         SensorBusy = false;
                         btnReadCAP.Text = "Чтение параметров ЦАП";
                         btnReadCAP.BackColor = Color.LightGreen;
-                        ResultCI.SaveToFile();
+                        if(ResultCI != null)
+                            ResultCI.SaveToFile();
                     }
                 }
                 else
@@ -2819,26 +2823,38 @@ namespace Charaterizator
 
         private void btnVRParamRead_Click(object sender, EventArgs e)
         {
-            if (TemperatureReady && PressureReady)
+            if (!SensorBusy)
             {
-                try
-                {
-                  //  MainTimer.Enabled = false;
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Text = "Выполняется процесс верификации ...";
-                    ReadSensorPressure();
-                    btnVRParamRead.Text = "Чтение показаний";
-                }
-                finally
-                {
-                    ResultVR.SaveToFile();
 
-                    //  MainTimer.Enabled = true;
+                if (TemperatureReady && PressureReady)
+                {
+                    try
+                    {
+                        SensorBusy = true;
+                        btnVRParamRead.BackColor = Color.IndianRed;
+                        btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
+                        ReadSensorPressure();
+                    }
+                    finally
+                    {
+                        SensorBusy = false;
+                        if (ResultVR != null)
+                            ResultVR.SaveToFile();
+                        btnVRParamRead.Text = "Старт верификации";
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("Не установлены параметры для верификации.", 1);
                 }
             }
             else
             {
-                Program.txtlog.WriteLineLog("Не установлены параметры для верификации.", 1);
+                if (MessageBox.Show("Отменить верификацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    //                    SensorBusy = false;
+                    Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
+                }
             }
         }
 
@@ -3084,6 +3100,11 @@ namespace Charaterizator
                     ResultCH.SaveToFile();
                 }
             }
+        }
+
+        private void cbChannalFix_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
