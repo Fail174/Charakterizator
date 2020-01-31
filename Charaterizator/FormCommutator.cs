@@ -693,22 +693,34 @@ namespace Charaterizator
 
             if (serialPort1.IsOpen)
             {
-                serialPort1.Write(ReadHoldingRegister(), 0, 4);
-                Thread.Sleep(READ_PAUSE);
-                serialPort1.Read(indata, 0, 13);
-                Thread.Sleep(READ_PAUSE);
+                try
+                {
+                    serialPort1.Write(ReadHoldingRegister(), 0, 4);
+                    Thread.Sleep(READ_PAUSE);
+                    serialPort1.Read(indata, 0, 13);
+                    Thread.Sleep(READ_PAUSE);
 
-                // Сохраняем состояния элементов питания каналов
-                data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
-                StateCHPower = data32;
+                    // Сохраняем состояния элементов питания каналов
+                    data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
+                    StateCHPower = data32;
 
-                // Сохраняем состояния подключенных датчиков
-                data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
-                StateCH = data32;
+                    // Сохраняем состояния подключенных датчиков
+                    data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
+                    StateCH = data32;
 
-                SetState(StateCHPower, StateCH);
+                    SetState(StateCHPower, StateCH);
+                }
+                catch
+                {
+                    StateCH = -1;
+                    StateCHPower = -1;
+                }
 
-
+            }
+            else
+            {
+                StateCH = -1;
+                StateCHPower = -1;
             }
         }
 

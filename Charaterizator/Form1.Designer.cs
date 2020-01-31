@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -207,6 +207,7 @@
             this.btnReadCAP = new System.Windows.Forms.Button();
             this.btnNextStep2 = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cbChannalFix = new System.Windows.Forms.CheckBox();
             this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
             this.btnCHStart = new System.Windows.Forms.Button();
             this.pbCHProcess = new System.Windows.Forms.ProgressBar();
@@ -270,7 +271,6 @@
             this.label46 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbChannalFix = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -1238,8 +1238,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.DividerWidth = 1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "";
@@ -1288,10 +1288,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle10.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -2156,9 +2156,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 2450);
+            this.btnNextStep2.Location = new System.Drawing.Point(8, 2664);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(195, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(189, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2174,6 +2174,18 @@
             this.groupBox10.TabIndex = 5;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Текущий канал";
+            // 
+            // cbChannalFix
+            // 
+            this.cbChannalFix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbChannalFix.Location = new System.Drawing.Point(223, 18);
+            this.cbChannalFix.MaximumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFix.MinimumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFix.Name = "cbChannalFix";
+            this.cbChannalFix.Size = new System.Drawing.Size(20, 20);
+            this.cbChannalFix.TabIndex = 10;
+            this.cbChannalFix.UseVisualStyleBackColor = true;
+            this.cbChannalFix.CheckedChanged += new System.EventHandler(this.cbChannalFix_CheckedChanged);
             // 
             // cbChannalCharakterizator
             // 
@@ -2777,9 +2789,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 1374);
+            this.btnNextStep3.Location = new System.Drawing.Point(8, 1469);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(213, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(207, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2887,18 +2899,6 @@
             this.label5.Size = new System.Drawing.Size(119, 15);
             this.label5.TabIndex = 0;
             this.label5.Text = "   |   Текущий канал: ";
-            // 
-            // cbChannalFix
-            // 
-            this.cbChannalFix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbChannalFix.Location = new System.Drawing.Point(223, 18);
-            this.cbChannalFix.MaximumSize = new System.Drawing.Size(20, 20);
-            this.cbChannalFix.MinimumSize = new System.Drawing.Size(20, 20);
-            this.cbChannalFix.Name = "cbChannalFix";
-            this.cbChannalFix.Size = new System.Drawing.Size(20, 20);
-            this.cbChannalFix.TabIndex = 10;
-            this.cbChannalFix.UseVisualStyleBackColor = true;
-            this.cbChannalFix.CheckedChanged += new System.EventHandler(this.cbChannalFix_CheckedChanged);
             // 
             // MainForm
             // 

@@ -765,11 +765,21 @@
             // tbMultimReadCount
             // 
             this.tbMultimReadCount.Location = new System.Drawing.Point(595, 35);
+            this.tbMultimReadCount.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.tbMultimReadCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.tbMultimReadCount.Name = "tbMultimReadCount";
             this.tbMultimReadCount.Size = new System.Drawing.Size(100, 21);
             this.tbMultimReadCount.TabIndex = 95;
             this.tbMultimReadCount.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -780,7 +790,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(544, 21);
             this.textBox7.TabIndex = 81;
-            this.textBox7.Text = "Количество опросов показаний мультиметра,  [раз]";
+            this.textBox7.Text = "Количество отсчетов при усреднении показаний мультиметра,  [ед]";
             // 
             // textBox9
             // 

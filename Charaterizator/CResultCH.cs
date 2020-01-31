@@ -122,9 +122,9 @@ namespace Charaterizator
             return  point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
                 point.Diapazon.ToString("           00") + " |" +
-                point.Pressure.ToString(" +00000.0000; -00000.0000;         0.0") + " |" +
-                point.OutVoltage.ToString("  +0000.0000;  -0000.0000;         0.0") + " |" +
-                point.Resistance.ToString("   00000.0000") + " |";
+                point.Pressure.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
+                point.OutVoltage.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
+                point.Resistance.ToString("    00000.0000") + " |";
         }
 
         //Сохранение в текстовый файл
@@ -138,14 +138,24 @@ namespace Charaterizator
                 {
                     SChanal ch = Channal[i];
                     if (ch.Points.Count <= 0) continue;
-
-                    writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
+                    if (!File.Exists(ch.FileNameArchiv))
+                    {
+                        writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
+                        if (writer != null)
+                        {
+                            writer.WriteLine(string.Format("Файл данных характеризации датчика"));
+                            writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                            writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                            writer.WriteLine(HeaderString);
+                            writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                        }
+                    }
+                    else
+                    {
+                        writer = new StreamWriter(ch.FileNameArchiv, true);//открываем файл БД
+                    }
                     if (writer != null)
                     {
-                        writer.WriteLine(string.Format("Файл данных характеризации датчика"));
-                        writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
-                        writer.WriteLine(HeaderString);
-                        writer.WriteLine("--------------------------------------------------------------------------------------------");
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             writer.WriteLine(GetStringFromPoint(ch.Points[j]));
@@ -155,7 +165,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("CH:Ошибка создания файла данных характеризации: " + ch.FileNameArchiv, 1);
+                        Program.txtlog.WriteLineLog("CH:Ошибка открытия файла данных характеризации: " + ch.FileNameArchiv, 1);
                         continue;
                     }
                 }

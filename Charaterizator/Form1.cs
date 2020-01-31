@@ -27,9 +27,7 @@ namespace Charaterizator
         const int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
         const int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
         const int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
-
-
-
+        
 
         const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
         const int MAX_COUNT_POINT =5;
@@ -53,8 +51,7 @@ namespace Charaterizator
         byte pow = 4;       // питание
         byte ok = 5;        // исправность
 
-
-
+        
 
 
         public static int SettingsSelIndex { set; get; }
@@ -77,7 +74,7 @@ namespace Charaterizator
         private CResultVR ResultVR = null;//результаты калибровки тока датчиков
 
 
-
+        private int CommutatorReadError = 0;//число ошибко чтения данных с коммутатора 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
         private bool SensorBusy = false;//Признак обмена данными с датчиками
@@ -99,7 +96,7 @@ namespace Charaterizator
                                                                             // Properties.Settings.Default.Reset();
             Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
             Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
-            Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
+            Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество отчетов измерения мультиметром, раз
             Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
 
 
@@ -130,6 +127,7 @@ namespace Charaterizator
             //**********************************************************
             UpdateItems();//обновляем списки визуальных элементов
         }
+
 
         //Обновление визуальных элементов согласно установленным параметрам
         private void UpdateItems()
@@ -300,6 +298,7 @@ namespace Charaterizator
         //подключение мультиметра
         private void btmMultimetr_Click(object sender, EventArgs e)
         {
+            MultimetrReadError = 0;
             if (Multimetr.Connect(Properties.Settings.Default.COMMultimetr,
                 Properties.Settings.Default.COMMultimetr_Speed,
                 Properties.Settings.Default.COMMultimetr_DatabBits,
@@ -323,6 +322,7 @@ namespace Charaterizator
         // Подключение КОММУТАТОРА
         private void btnCommutator_Click(object sender, EventArgs e)
         {
+            CommutatorReadError = 0;
             if (Commutator.Connect(Properties.Settings.Default.COMComutator,
                Properties.Settings.Default.COMComutator_Speed,
                Properties.Settings.Default.COMComutator_DataBits,
@@ -346,6 +346,7 @@ namespace Charaterizator
         // Подключение МЕНСОРА
         private void btnMensor_Click(object sender, EventArgs e)
         {
+            MensorReadError = 0;
             if (Mensor.Connect(Properties.Settings.Default.COMMensor,
               Properties.Settings.Default.COMMensor_Speed,
               Properties.Settings.Default.COMMensor_DataBits,
@@ -517,7 +518,7 @@ namespace Charaterizator
                     {
                         if (sensors.С40WriteFixCurrent(4))
                         {
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            Thread.Sleep(Multimetr.WAIT_READY*4 + Multimetr.READ_PERIOD * 2);
                             I4 = Multimetr.Current;
                             Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
                         }
@@ -534,7 +535,7 @@ namespace Charaterizator
                     {
                         if (sensors.С40WriteFixCurrent(20))
                         {
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            Thread.Sleep(Multimetr.WAIT_READY*4 + Multimetr.READ_PERIOD * 2);
                             I20 = Multimetr.Current;
                             Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
                         }
@@ -579,6 +580,9 @@ namespace Charaterizator
                 Application.DoEvents();
 
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+                if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
+                    cbChannalCharakterizator.SelectedIndex = i;
+
                 Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))
@@ -592,7 +596,7 @@ namespace Charaterizator
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
                             sensors.С40WriteFixCurrent(4);
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            Thread.Sleep(Multimetr.WAIT_READY*4 + Multimetr.READ_PERIOD * 2);
                             I = Multimetr.Current;
                             ci++;
                         } while ((Math.Abs(I - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
@@ -603,7 +607,7 @@ namespace Charaterizator
                         sensors.С40WriteFixCurrent(0);
                         Thread.Sleep(Multimetr.READ_PERIOD);
                         sensors.С40WriteFixCurrent(4);
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                        Thread.Sleep(Multimetr.WAIT_READY*4 + Multimetr.READ_PERIOD * 2);
                         I = Multimetr.Current;//проверка результата калибровки
 
                         cc++;
@@ -623,7 +627,7 @@ namespace Charaterizator
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
                             sensors.С40WriteFixCurrent(20);
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                            Thread.Sleep(Multimetr.WAIT_READY*4 + Multimetr.READ_PERIOD * 2);
                             I = Multimetr.Current;
                             ci++;
                         } while ((Math.Abs(I - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
@@ -634,7 +638,7 @@ namespace Charaterizator
                         sensors.С40WriteFixCurrent(0);
                         Thread.Sleep(Multimetr.READ_PERIOD);
                         sensors.С40WriteFixCurrent(20);
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);
+                        Thread.Sleep(Multimetr.WAIT_READY*4 + Multimetr.READ_PERIOD * 2);
                         I = Multimetr.Current;//проверка результата калибровки
 
                         cc++;
@@ -1068,7 +1072,7 @@ namespace Charaterizator
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Properties.Settings.Default.Save();
+            //Properties.Settings.Default.Save();
             MainTimer.Stop();
             MainTimer.Enabled = false;
             sensors.DisConnect();
@@ -1245,21 +1249,35 @@ namespace Charaterizator
         // Обновление на главной форме состояния питания коммутатора (checkbox)
         private void PowerComutators(Int32 data32)
         {
-            for (int i = 0; i < MaxChannalCount; i++)
+            if (data32 >= 0)
             {
-                if (((data32 >> i) & 01) == 1)
+                for (int i = 0; i < MaxChannalCount; i++)
                 {
-                    dataGridView1.Rows[i].Cells[pow].Value = true;
-                    dataGridView1[pow, i].Style.BackColor = Color.Green;
+                    if (((data32 >> i) & 01) == 1)
+                    {
+                        dataGridView1.Rows[i].Cells[pow].Value = true;
+                        dataGridView1[pow, i].Style.BackColor = Color.Green;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells[pow].Value = false;
+                        dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
+                    }
                 }
-                else
+                CommutatorReadError = 0;
+            }
+            else
+            {
+                CommutatorReadError++;
+                if (CommutatorReadError >= MAX_ERROR_COUNT)
                 {
-                    dataGridView1.Rows[i].Cells[pow].Value = false;
-                    dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
+                    Commutator.DisConnect();
+                    btnCommutator.BackColor = Color.IndianRed;
+                    btnCommutator.Text = "Не подключен";
+                    Program.txtlog.WriteLineLog("Нет данных с коммутатора. Устройство отключено.", 1);
                 }
             }
         }
-
 
 
 
@@ -3058,6 +3076,8 @@ namespace Charaterizator
             }
         }
 
+
+        // Останавливаем таймер при работе с комбобосом Выбор преобразователя
         private void cbMensorTypeR_DropDown(object sender, EventArgs e)
         {
             MainTimer.Stop();

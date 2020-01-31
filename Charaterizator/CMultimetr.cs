@@ -17,6 +17,7 @@ namespace Charaterizator
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от мультиметра, мсек
         public int READ_COUNT = 1;      //количество опросов мультиметра, раз
         public int READ_PERIOD = 1000;   //период опроса мультиметра, мсек
+        public int SAMPLE_COUNT = 30;   //количество отчетов при усреднении
 
         public bool Connected;
         private float Value;//Напряжение в мВ
@@ -57,8 +58,8 @@ namespace Charaterizator
         {
             if (Connected)
             {
-                DisConnect();
-                //return 1;
+                //DisConnect();
+                return 1;
             }
             try
             {
@@ -91,7 +92,8 @@ namespace Charaterizator
             }
             catch
             {
-                Connected = false;
+                //                Connected = false;
+                DisConnect();
                 return -1;
             }
         }
@@ -99,6 +101,7 @@ namespace Charaterizator
         {
             if (Connected)
             {
+                Port.WriteLine("*RST");
                 Thread.Sleep(WAIT_READY);
                 Port.WriteLine("SYST:REM");
                 Thread.Sleep(READ_PERIOD);
@@ -142,14 +145,14 @@ namespace Charaterizator
                 try
                 {
                     Thread.Sleep(WAIT_READY);
-                    Port.WriteLine("CONF:VOLT:DC 10, 0.0001");
-                    Thread.Sleep(1);
-                    Port.WriteLine("SAMP:COUN 100");
-                    Thread.Sleep(1);
+                    Port.WriteLine("CONF:VOLT:DC 10, 0.00005");
+                    Thread.Sleep(10);
+                    Port.WriteLine("SAMP:COUN " + SAMPLE_COUNT.ToString());
+                    Thread.Sleep(10);
                     Port.WriteLine("CALC:FUNC AVER");
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                     Port.WriteLine("CALC:STAT ON");
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                     Port.WriteLine("INIT");
                     //Port.WriteLine("* WAI");
                     Thread.Sleep(READ_PERIOD);

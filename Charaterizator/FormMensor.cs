@@ -515,6 +515,7 @@ namespace Charaterizator
                     // если считать не удалось (ошибка по TimeOut или другая... перезапускаем COM-порт)
                     //Program.txtlog.WriteLineLog("Mensor: Ошибка чтения данных", 1);
                     Console.WriteLine("Mensor: Ошибка чтения данных");
+                    activCH = -1;
                     //_serialPort_M.Close();
                     //Connected = false;
                     //Thread.Sleep(20);
@@ -522,6 +523,7 @@ namespace Charaterizator
                     //Task.Delay(20);
                 }
             }
+            activCH = -1;
         }
 
 

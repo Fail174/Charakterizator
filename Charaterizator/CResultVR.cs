@@ -60,7 +60,9 @@ namespace Charaterizator
                 string filename = string.Format("VR/VR_Result{0}.txt", ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты верификации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
+                fs.WriteLine("-----------------------------------------------------------------------------------------------");
                 fs.WriteLine(HeaderString);
+                fs.WriteLine("-----------------------------------------------------------------------------------------------");
                 fs.Flush();
                 FileStream.Add(fs);
             }
@@ -122,14 +124,23 @@ namespace Charaterizator
                 {
                     SChanalVR ch = Channal[i];
                     if (ch.Points.Count <= 0) continue;
-
-                    writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
+                    if (!File.Exists(ch.FileNameArchiv))
+                    {
+                        writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
+                        if (writer != null)
+                        {
+                            writer.WriteLine(string.Format("Файл данных верификации датчика"));
+                            writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                            writer.WriteLine(HeaderString);
+                            writer.WriteLine("-----------------------------------------------------------------------------");
+                        }
+                    }
+                    else
+                    {
+                        writer = new StreamWriter(ch.FileNameArchiv, true);//открываем файл БД
+                    }
                     if (writer != null)
                     {
-                        writer.WriteLine(string.Format("Файл данных верификации датчика"));
-                        writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
-                        writer.WriteLine(HeaderString);
-                        writer.WriteLine("--------------------------------------------------------------------------------------------");
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             writer.WriteLine(GetStringFromPoint(ch.Points[j]));
@@ -139,7 +150,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR:Ошибка создания файла данных верификации: " + ch.FileNameArchiv, 1);
+                        Program.txtlog.WriteLineLog("VR:Ошибка открытия файла данных верификации: " + ch.FileNameArchiv, 1);
                         continue;
                     }
                 }
