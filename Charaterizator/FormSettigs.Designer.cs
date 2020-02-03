@@ -120,10 +120,10 @@
             this.textBox120 = new System.Windows.Forms.TextBox();
             this.textBox121 = new System.Windows.Forms.TextBox();
             this.textBox123 = new System.Windows.Forms.TextBox();
-            this.textBox125 = new System.Windows.Forms.TextBox();
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.tbSensSKOCalibrCurrent = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -152,6 +152,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -1094,6 +1095,7 @@
             // 
             // tp_SensorSettings
             // 
+            this.tp_SensorSettings.Controls.Add(this.tbSensSKOCalibrCurrent);
             this.tp_SensorSettings.Controls.Add(this.tbSensWaitPause);
             this.tp_SensorSettings.Controls.Add(this.textBox1);
             this.tp_SensorSettings.Controls.Add(this.textBox14);
@@ -1105,7 +1107,6 @@
             this.tp_SensorSettings.Controls.Add(this.textBox120);
             this.tp_SensorSettings.Controls.Add(this.textBox121);
             this.tp_SensorSettings.Controls.Add(this.textBox123);
-            this.tp_SensorSettings.Controls.Add(this.textBox125);
             this.tp_SensorSettings.Controls.Add(this.textBox127);
             this.tp_SensorSettings.Controls.Add(this.textBox129);
             this.tp_SensorSettings.Location = new System.Drawing.Point(4, 24);
@@ -1230,13 +1231,7 @@
             this.textBox123.Name = "textBox123";
             this.textBox123.Size = new System.Drawing.Size(544, 21);
             this.textBox123.TabIndex = 87;
-            // 
-            // textBox125
-            // 
-            this.textBox125.Location = new System.Drawing.Point(595, 95);
-            this.textBox125.Name = "textBox125";
-            this.textBox125.Size = new System.Drawing.Size(100, 21);
-            this.textBox125.TabIndex = 88;
+            this.textBox123.Text = "Допуск по току ЦАП после калибровки, мА";
             // 
             // textBox127
             // 
@@ -1261,6 +1256,29 @@
             this.bCancelSettings.TabIndex = 33;
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
+            // 
+            // tbSensSKOCalibrCurrent
+            // 
+            this.tbSensSKOCalibrCurrent.DecimalPlaces = 4;
+            this.tbSensSKOCalibrCurrent.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.tbSensSKOCalibrCurrent.Location = new System.Drawing.Point(595, 95);
+            this.tbSensSKOCalibrCurrent.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbSensSKOCalibrCurrent.Name = "tbSensSKOCalibrCurrent";
+            this.tbSensSKOCalibrCurrent.Size = new System.Drawing.Size(100, 21);
+            this.tbSensSKOCalibrCurrent.TabIndex = 104;
+            this.tbSensSKOCalibrCurrent.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            196608});
             // 
             // FormSettings
             // 
@@ -1309,6 +1327,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1366,7 +1385,6 @@
         private System.Windows.Forms.TextBox textBox120;
         private System.Windows.Forms.TextBox textBox121;
         private System.Windows.Forms.TextBox textBox123;
-        private System.Windows.Forms.TextBox textBox125;
         private System.Windows.Forms.TextBox textBox127;
         private System.Windows.Forms.TextBox textBox129;
         private System.Windows.Forms.TextBox textBox7;
@@ -1411,5 +1429,6 @@
         private System.Windows.Forms.TextBox textBox17;
         private System.Windows.Forms.NumericUpDown tbMultimWaitReady;
         private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.NumericUpDown tbSensSKOCalibrCurrent;
     }
 }

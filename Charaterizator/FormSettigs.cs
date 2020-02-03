@@ -90,8 +90,9 @@ namespace Charaterizator
                 Properties.Settings.Default.set_SensReadCount = Convert.ToInt32(tbSensReadCount.Value);
                 Properties.Settings.Default.set_SensReadPause = Convert.ToInt32(tbSensReadPause.Value);
                 Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Value);
+                Properties.Settings.Default.set_SensSKOCalibrCurrent = Convert.ToDouble(tbSensSKOCalibrCurrent.Value);
                 //tbSensWaitPause.Value;
-                
+
                 //Сохраняем настройки
                 //Properties.Settings.Default.Save();
                 Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
@@ -189,8 +190,9 @@ namespace Charaterizator
                         tbSensReadCount.Value = Properties.Settings.Default.set_SensReadCount;
                         tbSensReadPause.Value = Properties.Settings.Default.set_SensReadPause;
                         tbSensWaitPause.Value = Properties.Settings.Default.set_SensWaitTimeout;
-           //             return;
-                    }           
+                        tbSensSKOCalibrCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SensSKOCalibrCurrent);
+                //             return;
+            }           
           //  }            
         }
 
