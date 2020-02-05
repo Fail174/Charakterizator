@@ -760,13 +760,28 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    if (sensors.SensorValueReadC03())
+                    bool readresult = false;
+                    int ch = 0;
+                    do
                     {
-                        ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
-                        if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
-                            cbChannalCharakterizator.SelectedIndex = i;
-                        UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                        Program.txtlog.WriteLineLog("CH: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
+                       readresult =  sensors.SensorValueReadC03();
+                        ch++;
+                    } while (((sensors.sensor.OutVoltage == 0) || (sensors.sensor.Resistance == 0)) && (ch < sensors.WRITE_COUNT));
+
+                    if (readresult)
+                    {
+                        if ((sensors.sensor.OutVoltage == 0) || (sensors.sensor.Resistance == 0))
+                        {
+                            Program.txtlog.WriteLineLog("CH: Ошибка чтения параметров датчика в канале " + (i + 1).ToString(), 1);
+                        }
+                        else
+                        {
+                            ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                            if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
+                                cbChannalCharakterizator.SelectedIndex = i;
+                            UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                            Program.txtlog.WriteLineLog("CH: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
+                        }
                     }
                     else
                     {
