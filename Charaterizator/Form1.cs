@@ -31,7 +31,7 @@ namespace Charaterizator
         
 
         const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
-        const int MAX_COUNT_POINT =5;
+        const int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
         const int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП
 
@@ -1171,6 +1171,10 @@ namespace Charaterizator
                     if (MensorCountPoint >= MAX_COUNT_POINT)
                     {
                         tbMensorData.BackColor = Color.MediumSeaGreen;
+                    }
+                    else
+                    {
+                        tbMensorData.BackColor = Color.Yellow;
                     }
                 }
                 else

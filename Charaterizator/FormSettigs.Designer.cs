@@ -109,6 +109,7 @@
             this.textBox101 = new System.Windows.Forms.TextBox();
             this.textBox105 = new System.Windows.Forms.TextBox();
             this.tp_SensorSettings = new System.Windows.Forms.TabPage();
+            this.tbSensSKOCalibrCurrent = new System.Windows.Forms.NumericUpDown();
             this.tbSensWaitPause = new System.Windows.Forms.NumericUpDown();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox14 = new System.Windows.Forms.TextBox();
@@ -123,7 +124,6 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.tbSensSKOCalibrCurrent = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -149,10 +149,10 @@
             this.tp_TermocameraSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).BeginInit();
             this.tp_SensorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -1117,6 +1117,29 @@
             this.tp_SensorSettings.Text = "Датчики";
             this.tp_SensorSettings.UseVisualStyleBackColor = true;
             // 
+            // tbSensSKOCalibrCurrent
+            // 
+            this.tbSensSKOCalibrCurrent.DecimalPlaces = 4;
+            this.tbSensSKOCalibrCurrent.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.tbSensSKOCalibrCurrent.Location = new System.Drawing.Point(595, 95);
+            this.tbSensSKOCalibrCurrent.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbSensSKOCalibrCurrent.Name = "tbSensSKOCalibrCurrent";
+            this.tbSensSKOCalibrCurrent.Size = new System.Drawing.Size(100, 21);
+            this.tbSensSKOCalibrCurrent.TabIndex = 104;
+            this.tbSensSKOCalibrCurrent.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            196608});
+            // 
             // tbSensWaitPause
             // 
             this.tbSensWaitPause.Increment = new decimal(new int[] {
@@ -1209,7 +1232,7 @@
             this.textBox117.Name = "textBox117";
             this.textBox117.Size = new System.Drawing.Size(544, 21);
             this.textBox117.TabIndex = 83;
-            this.textBox117.Text = "Период ожидания при повторном HART-опросе датчика,  [мс]";
+            this.textBox117.Text = "Время ожидания при повторном HART-опросе датчика,  [мс]";
             // 
             // textBox120
             // 
@@ -1257,29 +1280,6 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // tbSensSKOCalibrCurrent
-            // 
-            this.tbSensSKOCalibrCurrent.DecimalPlaces = 4;
-            this.tbSensSKOCalibrCurrent.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.tbSensSKOCalibrCurrent.Location = new System.Drawing.Point(595, 95);
-            this.tbSensSKOCalibrCurrent.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbSensSKOCalibrCurrent.Name = "tbSensSKOCalibrCurrent";
-            this.tbSensSKOCalibrCurrent.Size = new System.Drawing.Size(100, 21);
-            this.tbSensSKOCalibrCurrent.TabIndex = 104;
-            this.tbSensSKOCalibrCurrent.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            196608});
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1324,10 +1324,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).EndInit();
             this.tp_SensorSettings.ResumeLayout(false);
             this.tp_SensorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).EndInit();
             this.ResumeLayout(false);
 
         }
