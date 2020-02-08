@@ -119,10 +119,13 @@ namespace Charaterizator
                     }
                     if (writer != null)
                     {
-                        for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
+                        if(ch.Points.Count>0)
+                            writer.WriteLine(GetStringFromPoint(ch.Points[ch.Points.Count-1]));
+
+/*                        for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             writer.WriteLine(GetStringFromPoint(ch.Points[j]));
-                        }
+                        }*/
                         writer.Close();
                         writer = null;
                     }

@@ -156,10 +156,13 @@ namespace Charaterizator
                     }
                     if (writer != null)
                     {
+                        if (ch.Points.Count > 0)
+                            writer.WriteLine(GetStringFromPoint(ch.Points[ch.Points.Count - 1]));
+/*
                         for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
                         {
                             writer.WriteLine(GetStringFromPoint(ch.Points[j]));
-                        }
+                        }*/
                         writer.Close();
                         writer = null;
                     }
@@ -175,5 +178,62 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("CH:Критическая ошибка записи в архив характеризации!", 1);
             }
         }
+
+        //Чтение из файла
+        public void LoadFromFile()
+        {
+            StreamReader reader;
+
+            try
+            {
+                for (int i = 0; i < Channal.Count; i++)//перебор каналов
+                {
+                    SChanal ch = Channal[i];
+                    if (!File.Exists(ch.FileNameArchiv))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        reader = new StreamReader(ch.FileNameArchiv);//открываем файл БД
+                    }
+                    if (reader != null)
+                    {
+                        string str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        do {
+                            str = reader.ReadLine();
+                            string[] strarr = str.Split('|');
+                            SPoint point;
+                            if (strarr.Length > 5)
+                            {
+                                point.Datetime = Convert.ToDateTime(strarr[0]);
+                                point.Temperature = Convert.ToDouble(strarr[1]);
+                                point.Diapazon = Convert.ToInt32(strarr[2]);
+                                point.Pressure = Convert.ToDouble(strarr[3]);
+                                point.OutVoltage = Convert.ToDouble(strarr[4]);
+                                point.Resistance = Convert.ToDouble(strarr[5]);
+                                ch.Points.Add(point);
+                            }
+                        } while (!reader.EndOfStream);
+                        reader.Close();
+                        reader = null;
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("CH:Ошибка открытия файла данных характеризации: " + ch.FileNameArchiv, 1);
+                        continue;
+                    }
+                }
+            }
+            catch
+            {
+                Program.txtlog.WriteLineLog("CH:Критическая ошибка чтения архива характеризации!", 1);
+            }
+        }
+
     }
 }

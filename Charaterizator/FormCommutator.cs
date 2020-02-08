@@ -325,7 +325,7 @@ namespace Charaterizator
 
                 //режим подключения нескольких датчиков датчиков, подключаем заданный к измерительной петле
                 case 2:
-                    if (NumOfConnectInputs <= MAX_SETCH)
+                    if (NumOfConnectInputs <= MAX_SETCH - 1)
                     {
                         _CH = (1 << CH) | StateCH;
                         serialPort1.Write(WriteHoldingRegister(1, _CH), 0, 9);
@@ -353,7 +353,7 @@ namespace Charaterizator
                     break;
 
             }
-            Thread.Sleep(WaitTime);//ждем установления подключения
+            Thread.Sleep(READ_PAUSE);//ждем установления подключения
         }
 
 

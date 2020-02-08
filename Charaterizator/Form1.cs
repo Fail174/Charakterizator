@@ -23,6 +23,7 @@ namespace Charaterizator
 
         // Занесены в настройку
         public int MAIN_TIMER = 1000;
+
         // Не занесены
         const int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
         const int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
@@ -30,7 +31,7 @@ namespace Charaterizator
         
 
         const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
-        const int MAX_COUNT_POINT =5;
+        const int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
         const int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП
 
@@ -38,8 +39,8 @@ namespace Charaterizator
         private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
         private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
         private double SKO_PRESSURE = 0.2;//(СКО) допуск по давлению, кПа
-        const double SKO_CURRENT = 2;//допуск по току ЦАП датчика до калибровки, мА
-        const double SKO_CALIBRATION_CURRENT = 0.003;//допуск по току ЦАП после калибровки, мА
+        private double SKO_CURRENT = 0.5;//допуск по току ЦАП датчика до калибровки, мА
+        private double SKO_CALIBRATION_CURRENT = 0.003;//допуск по току ЦАП после калибровки, мА
 
         const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
@@ -103,6 +104,8 @@ namespace Charaterizator
             sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;
             sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
             sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
+                
+
 
             Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;     // максимально разрешенное коичество подключаемых к изм. линии датчиков
             Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod; // Время опроса и обновление информации, мс
@@ -114,6 +117,7 @@ namespace Charaterizator
 
 
             MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
+            SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SensSKOCalibrCurrent;
 
             //********************  Цифровой шрифт *********************
             tbDateTime.Font = DrawingFont;
@@ -518,7 +522,7 @@ namespace Charaterizator
                     {
                         if (sensors.С40WriteFixCurrent(4))
                         {
-                            Thread.Sleep(Multimetr.WAIT_READY*2 + Multimetr.READ_PERIOD * 2);
+                            Thread.Sleep(Multimetr.WAIT_READY);
                             I4 = Multimetr.Current;
                             Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
                         }
@@ -535,7 +539,7 @@ namespace Charaterizator
                     {
                         if (sensors.С40WriteFixCurrent(20))
                         {
-                            Thread.Sleep(Multimetr.WAIT_READY*2 + Multimetr.READ_PERIOD * 2);
+                            Thread.Sleep(Multimetr.WAIT_READY);
                             I20 = Multimetr.Current;
                             Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
                         }
@@ -569,7 +573,8 @@ namespace Charaterizator
             pbCHProcess.Value = 0;
             int ci = 0;
             int cc = 0;
-            float I=0;
+            float I4 = 0;
+            float I20=0;
 
             Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
             for (int i = 0; i < MaxChannalCount; i++)
@@ -593,16 +598,14 @@ namespace Charaterizator
                     {
                         ci = 0;
                         sensors.С40WriteFixCurrent(4);
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD);
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
-//                            sensors.С40WriteFixCurrent(4);
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD);
-                            I = Multimetr.Current;
+                            Thread.Sleep(Multimetr.WAIT_READY);
+                            I4 = Multimetr.Current;
                             ci++;
-                        } while ((Math.Abs(I - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
+                        } while ((Math.Abs(I4 - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
-                        if (Math.Abs(I - 4.0) > SKO_CURRENT)
+                        if (Math.Abs(I4 - 4.0) > SKO_CURRENT)
                         {
                             DialogResult result = MessageBox.Show(
                                     "Выполнить калибровку?",
@@ -617,39 +620,19 @@ namespace Charaterizator
                                 continue;
                             }
                         }
-                        sensors.С45WriteCurrent4mA(I);//Калибруем...
-                        Thread.Sleep(Multimetr.READ_PERIOD);
+                        sensors.С45WriteCurrent4mA(I4);//Калибруем...
+                        Program.txtlog.WriteLineLog("CL:Выполняем калибровку ЦАП 4мА...", 0);
 
-//                        sensors.С40WriteFixCurrent(0);
-//                        Thread.Sleep(Multimetr.READ_PERIOD);
-                        sensors.С40WriteFixCurrent(4);
-                        Thread.Sleep(Multimetr.WAIT_READY*2 + Multimetr.READ_PERIOD * 2);
-                        I = Multimetr.Current;//проверка результата калибровки
-
-                        cc++;
-                    }while ((Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT) && (cc < MAX_CALIBRATION_COUNT));
-                    if (Math.Abs(I - 4.0) > SKO_CALIBRATION_CURRENT)
-                    {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 4мА после калибровки:{}, калибровка не выполнена...", I), 1);
-                    }
-
-                    sensors.С40WriteFixCurrent(0);
-                    Thread.Sleep(1000);
-
-                    cc = 0;
-                    do//цикл калибровки (MAX_CALIBRATION_COUNT попыток)
-                    {
                         ci = 0;
                         sensors.С40WriteFixCurrent(20);
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD);
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD);
-                            I = Multimetr.Current;
+                            Thread.Sleep(Multimetr.WAIT_READY);
+                            I20 = Multimetr.Current;
                             ci++;
-                        } while ((Math.Abs(I - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
+                        } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
-                        if (Math.Abs(I - 20.0) > SKO_CURRENT)
+                        if (Math.Abs(I20 - 20.0) > SKO_CURRENT)
                         {
                             DialogResult result = MessageBox.Show(
                                     "Выполнить калибровку?",
@@ -665,25 +648,39 @@ namespace Charaterizator
                             }
                         }
 
-                        sensors.С46WriteCurrent20mA(I);//Калибруем...
+                        sensors.С46WriteCurrent20mA(I20);//Калибруем...
+                        Program.txtlog.WriteLineLog("CL:Выполняем калибровку ЦАП 20мА...", 0);
+                        
+                        ci = 0;
+                        do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
+                        {
+                            sensors.С40WriteFixCurrent(4);
+                            Thread.Sleep(Multimetr.WAIT_READY);
+                            I4 = Multimetr.Current;
+                            ci++;
+                        } while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
-//                        Thread.Sleep(Multimetr.READ_PERIOD);
-//                        sensors.С40WriteFixCurrent(0);
-                        Thread.Sleep(Multimetr.READ_PERIOD);
-                        sensors.С40WriteFixCurrent(20);
-                        Thread.Sleep(Multimetr.WAIT_READY*2 + Multimetr.READ_PERIOD * 2);
-                        I = Multimetr.Current;//проверка результата калибровки
+                        ci = 0;
+                        do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
+                        {
+                            sensors.С40WriteFixCurrent(20);
+                            Thread.Sleep(Multimetr.WAIT_READY);
+                            I20 = Multimetr.Current;
+                            ci++;
+                        } while ((Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                         cc++;
-                    } while ((Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_CALIBRATION_COUNT));
-                    if (Math.Abs(I - 20.0) > SKO_CALIBRATION_CURRENT)
-                    {
-                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП 20мА после калибровки:{}, калибровка не выполнена...", I), 1);
-                    }
+                    }while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (cc < MAX_CALIBRATION_COUNT));
 
-                    Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} завершена", i + 1), 0);
+                    if ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT)&& (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT))
+                    {
+                        Program.txtlog.WriteLineLog("CL: Значение тока ЦАП вне допуска. Калибровка не выполнена!", 1);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CL: Калибровка датчика в канале {0} завершена", i + 1), 0);
+                    }
                     sensors.С40WriteFixCurrent(0);
-                    Thread.Sleep(Multimetr.READ_PERIOD);
                 }
                 else
                 {
@@ -874,7 +871,7 @@ namespace Charaterizator
         //обновляем грид результатов характеризации для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
-            if ((ResultCH == null) || (ResultCH.Channal.Count <= i))
+            if ((ResultCH == null) || (ResultCH.Channal.Count <= i) || (i<0))
             {
                 Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1);
                 return;
@@ -1174,6 +1171,10 @@ namespace Charaterizator
                     if (MensorCountPoint >= MAX_COUNT_POINT)
                     {
                         tbMensorData.BackColor = Color.MediumSeaGreen;
+                    }
+                    else
+                    {
+                        tbMensorData.BackColor = Color.Yellow;
                     }
                 }
                 else
@@ -2016,6 +2017,8 @@ namespace Charaterizator
 
             //***************** создаем файлы результатов характеризации ***********************************
             ResultCH = new СResultCH(MaxChannalCount, FN);//результаты характеризации датчиков
+            ResultCH.LoadFromFile();
+            //UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
 
             //***************** создаем файлы результатов калибровки ***************************************
             ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
@@ -2493,6 +2496,8 @@ namespace Charaterizator
             UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
         }
 
+
+
         // Меню НАСТРОЙКИ
         // Настройки программы
         private void MenuItemMainSettings_Click(object sender, EventArgs e)
@@ -2519,7 +2524,7 @@ namespace Charaterizator
             {
                 Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
                 Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
-                Multimetr.READ_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
+                Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
                 Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
             }
@@ -2573,6 +2578,7 @@ namespace Charaterizator
                 sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
+                SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SensSKOCalibrCurrent;
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
             }
         }
