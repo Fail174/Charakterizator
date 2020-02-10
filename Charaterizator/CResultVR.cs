@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -105,10 +106,10 @@ namespace Charaterizator
         private string GetStringFromPoint(SPointVR point)
         {
             return  point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                point.Temperature.ToString("       +000.0;       -000.0;          0.0") + " |" +
                 point.Diapazon.ToString("           00") + " |" +
-                point.PressureZ.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
-                point.PressureF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
+                point.PressureZ.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
+                point.PressureF.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
         }
 
@@ -163,5 +164,65 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("VR:Критическая ошибка записи в архив верификации!", 1);
             }
         }
+
+        //Чтение из файла
+        public void LoadFromFile()
+        {
+            StreamReader reader;
+
+            try
+            {
+                for (int i = 0; i < Channal.Count; i++)//перебор каналов
+                {
+                    SChanalVR ch = Channal[i];
+                    if (!File.Exists(ch.FileNameArchiv))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        reader = new StreamReader(ch.FileNameArchiv);//открываем файл БД
+                    }
+                    if (reader != null)
+                    {
+                        string str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        do
+                        {
+                            str = reader.ReadLine();
+                            string[] strarr = str.Split('|');
+                            SPointVR point;
+                            if (strarr.Length > 5)
+                            {
+                                point.Datetime = Convert.ToDateTime(strarr[0]);
+                                point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.Diapazon = Convert.ToInt32(strarr[2]);
+                                point.PressureF = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.PressureZ = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.CurrentF = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+
+                                ch.Points.Add(point);
+                            }
+                        } while (!reader.EndOfStream);
+                        Program.txtlog.WriteLineLog("VR:архив данных верификации загружен из файла: " + ch.FileNameArchiv, 0);
+                        reader.Close();
+                        reader = null;
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("VR:Ошибка открытия файла данных верификации: " + ch.FileNameArchiv, 1);
+                        continue;
+                    }
+                }
+            }
+            catch
+            {
+                Program.txtlog.WriteLineLog("VR:Критическая ошибка чтения архива верификации!", 1);
+            }
+        }
+
     }
 }

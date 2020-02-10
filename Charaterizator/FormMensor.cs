@@ -439,8 +439,11 @@ namespace Charaterizator
                     Thread.Sleep(READ_PAUSE);
                     // Считываем текущее давление, Барометр и Скорость - выводим на экран           
                     press = ReadPRESS();
+                    Thread.Sleep(READ_PAUSE);
                     barometr = ReadBAR();
+                    Thread.Sleep(READ_PAUSE);
                     rate = ReadRATE();
+                    Thread.Sleep(READ_PAUSE);
                     // считываем установленный режим            
                     mode = ReadMode();
                 }
@@ -467,12 +470,16 @@ namespace Charaterizator
                     Thread.Sleep(READ_PAUSE);
                     // Считываем текущее давление, и  - выводим на экран           
                     press = ReadPRESS();
+                    Thread.Sleep(READ_PAUSE);
                     // Барометр 
                     barometr = ReadBAR();
+                    Thread.Sleep(READ_PAUSE);
                     //Скорость
                     rate = ReadRATE();
+                    Thread.Sleep(READ_PAUSE);
                     // считываем установленный режим           
                     mode = ReadMode();
+                    Thread.Sleep(READ_PAUSE);
 
                 }
             }
@@ -492,6 +499,9 @@ namespace Charaterizator
             {
                 try
                 {
+                    while(_serialPort_M.BytesToRead > 0)
+                        _serialPort_M.ReadLine();
+
                     activCH = ChannelRead();    // считываем номер активного канала  
                    
                     switch (activCH)
@@ -524,6 +534,7 @@ namespace Charaterizator
                 }
             }
             activCH = -1;
+            //Program.txtlog.WriteLineLog("Mensor: Поток чтения данных завершен", 1);
         }
 
 

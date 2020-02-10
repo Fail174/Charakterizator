@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Charaterizator
@@ -30,6 +31,7 @@ namespace Charaterizator
             str = DateTime.Now + ": " + str;
             writer.WriteLine(str);
             writer.Flush();
+            //Thread.Sleep(10);
             if (status == 0)
             {
                 //                rtbConsole.ForeColor = Color.Black;

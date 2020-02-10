@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 namespace Charaterizator
 {
@@ -85,7 +86,7 @@ namespace Charaterizator
         private string GetStringFromPoint(SPointCI point)
         {
             return point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("     +0000.00;     -0000.00;          0.0") + " |" +
+                point.Temperature.ToString("       +000.0;       -000.0;          0.0") + " |" +
                 point.I4.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
                 point.I20.ToString("   +0000.0000;   -0000.0000;          0.0") + " |";
         }
@@ -141,5 +142,68 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("CI:Критическая ошибка записи в архив данных ЦАП!", 1);
             }
         }
+
+        //Чтение из файла
+        public void LoadFromFile()
+        {
+            StreamReader reader;
+
+            try
+            {
+                for (int i = 0; i < Channal.Count; i++)//перебор каналов
+                {
+                    SChanalCI ch = Channal[i];
+                    if (!File.Exists(ch.FileNameArchiv))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        reader = new StreamReader(ch.FileNameArchiv);//открываем файл БД
+                    }
+                    if (reader != null)
+                    {
+                        string str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        str = reader.ReadLine();
+                        do
+                        {
+                            str = reader.ReadLine();
+                            string[] strarr = str.Split('|');
+                            SPointCI point;
+                            if (strarr.Length > 3)
+                            {
+                                point.Datetime = Convert.ToDateTime(strarr[0]);
+                                point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.I4 = double.Parse(strarr[2].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.I20 = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                /*
+                                point.Temperature = Convert.ToDouble(strarr[1]);
+                                point.I4 = Convert.ToDouble(strarr[2]);
+                                point.I20 = Convert.ToDouble(strarr[3]);
+                                */
+                                ch.Points.Add(point);
+                            }
+                        } while (!reader.EndOfStream);
+                        Program.txtlog.WriteLineLog("CI:архив данных ЦАП загружен из файла: " + ch.FileNameArchiv, 0);
+
+                        reader.Close();
+                        reader = null;
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("CI:Ошибка открытия файла данных ЦАП: " + ch.FileNameArchiv, 1);
+                        continue;
+                    }
+                }
+            }
+            catch
+            {
+                Program.txtlog.WriteLineLog("CI:Критическая ошибка чтения архива ЦАП!", 1);
+            }
+        }
+
     }
 }

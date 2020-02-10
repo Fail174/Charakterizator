@@ -1130,6 +1130,8 @@
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cDataTime2,
@@ -1141,12 +1143,12 @@
             this.dataGridView2.ContextMenuStrip = this.contextMenuStripCharacterizationTable;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
-            this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.Size = new System.Drawing.Size(698, 543);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
+            this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
             // 
             // cDataTime2
             // 
@@ -1807,6 +1809,7 @@
             this.gbCHLevel4.Controls.Add(this.label43);
             this.gbCHLevel4.Controls.Add(this.label44);
             this.gbCHLevel4.Controls.Add(this.cbCHTermoCamera4);
+            this.gbCHLevel4.Enabled = false;
             this.gbCHLevel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbCHLevel4.Location = new System.Drawing.Point(8, 401);
             this.gbCHLevel4.Name = "gbCHLevel4";
@@ -1915,6 +1918,7 @@
             this.gbCHLevel3.Controls.Add(this.label39);
             this.gbCHLevel3.Controls.Add(this.label40);
             this.gbCHLevel3.Controls.Add(this.cbCHTermoCamera3);
+            this.gbCHLevel3.Enabled = false;
             this.gbCHLevel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbCHLevel3.Location = new System.Drawing.Point(8, 290);
             this.gbCHLevel3.Name = "gbCHLevel3";
@@ -2023,6 +2027,7 @@
             this.gbCHLevel2.Controls.Add(this.label35);
             this.gbCHLevel2.Controls.Add(this.label37);
             this.gbCHLevel2.Controls.Add(this.cbCHTermoCamera2);
+            this.gbCHLevel2.Enabled = false;
             this.gbCHLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbCHLevel2.Location = new System.Drawing.Point(8, 179);
             this.gbCHLevel2.Name = "gbCHLevel2";
@@ -2156,9 +2161,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 3306);
+            this.btnNextStep2.Location = new System.Drawing.Point(8, 3734);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(171, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(159, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2789,9 +2794,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 1754);
+            this.btnNextStep3.Location = new System.Drawing.Point(8, 1944);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(189, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(177, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2894,7 +2899,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(397, 4);
+            this.label5.Location = new System.Drawing.Point(399, 4);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(119, 15);
             this.label5.TabIndex = 0;
@@ -3187,12 +3192,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn сITemperature;
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent4mA;
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDiapazon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.DataGridViewTextBoxColumn сChannalNum;
         private System.Windows.Forms.DataGridViewCheckBoxColumn сSelect;
@@ -3211,6 +3210,12 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripCharacterizationTable;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuDeleteResult;
         private System.Windows.Forms.CheckBox cbChannalFix;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDiapazon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
     }
 }
 

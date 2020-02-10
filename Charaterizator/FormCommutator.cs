@@ -78,6 +78,14 @@ namespace Charaterizator
 
         }
 
+
+        public Int32 ActivCH;   // Номер активного канала
+       
+
+
+
+
+
         public FormSwitch()
         {
             InitializeComponent();
@@ -285,9 +293,9 @@ namespace Charaterizator
         }
 
 
-        // Функция отправки КОМАНД по COM порту для ПОДКЛ / ОТКЛ датчиков к измерительной петле
 
 
+        // Функция отправки КОМАНД по COM порту для ПОДКЛ / ОТКЛ датчиков к измерительной петле        
         public void SetConnectors(Int32 CH, int mode)
         {
             if (!serialPort1.IsOpen) return;
@@ -312,6 +320,8 @@ namespace Charaterizator
                     // Сохраняем состояния подключенных датчиков
                     StateCH = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                     SetState(StateCHPower, StateCH);
+                   
+                   
                     break;
 
                 // если датчик уже подключен, то отключаем его и все остальные
@@ -780,6 +790,7 @@ namespace Charaterizator
         }
 
 
+        // Определение числа открытых каналов
         public int CalcNumOfConnectInputs(Int32 StateInputs)
         {
             int Num = 0;
@@ -794,6 +805,32 @@ namespace Charaterizator
 
             return Num;
         }
+
+
+
+
+        // Определение номера активного канала 
+        public int CalcActCH (Int32 StateInputs)
+        {
+            int Num = 0;
+           
+            for (int i = 0; i < 30; i++)
+            {               
+                    if ((StateInputs & 0x01) == 1)
+                    {
+                        Num = i+1;
+                        break;
+                    }
+
+                StateInputs = StateInputs >> 1;
+            }
+
+            return Num;
+        }
+
+
+
+
 
 
 
@@ -858,10 +895,15 @@ namespace Charaterizator
             bInput13.ImageIndex = (data32 & 0x2000) >> 13; bInput28.ImageIndex = (data32 & 0x10000000) >> 28;
             bInput14.ImageIndex = (data32 & 0x4000) >> 14; bInput29.ImageIndex = (data32 & 0x20000000) >> 29;
 
+
+
+
             // Проверяем количество подключенных выходов
             NumOfConnectInputs = CalcNumOfConnectInputs(StateCH);
             lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
-           
+
+            // Получаем номер активного канала
+            ActivCH = CalcActCH(StateCH);
 
         }
 

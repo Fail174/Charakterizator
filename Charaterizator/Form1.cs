@@ -532,6 +532,8 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog("CAP:Ток 4мА не установлен!", 1);
                         }
                         ci++;
+                        Application.DoEvents();
+
                     } while ((Math.Abs(I4-4.0) > SKO_CURRENT) && (ci< MAX_COUNT_CAP_READ));
 
                     ci = 0;
@@ -549,6 +551,8 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
                         }
                         ci++;
+                        Application.DoEvents();
+
                     } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
@@ -670,7 +674,9 @@ namespace Charaterizator
                         } while ((Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                         cc++;
-                    }while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (cc < MAX_CALIBRATION_COUNT));
+                        Application.DoEvents();
+
+                    } while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (cc < MAX_CALIBRATION_COUNT));
 
                     if ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT)&& (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT))
                     {
@@ -695,6 +701,8 @@ namespace Charaterizator
         //Проверка доступности канала(по выбору пользователя)
         private bool CheckChannalEnable(int i)
         {
+            if (i >= dataGridView1.Rows.Count) return false;
+
             if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[sel].Value))   //Добавлен в список?
             {
                 return true;
@@ -709,13 +717,13 @@ namespace Charaterizator
         private void ReadSensorParametrs()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = 0;   //конечный канал
+            int FinishNumber = MaxChannalCount-1;   //конечный канал
             int Diapazon = 1;
 
             Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 0);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
-            int step = MaxChannalCount / MaxLevelCount;
+/*            int step = MaxChannalCount / MaxLevelCount;
             switch (SelectedLevel)
             {
                 case 1:
@@ -738,7 +746,7 @@ namespace Charaterizator
                     FinishNumber = step * 4 - 1;
                     Diapazon = Convert.ToInt32(cbDiapazon4.Text);
                     break;
-            }
+            }*/
             //************************************************************************************************
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
@@ -762,6 +770,7 @@ namespace Charaterizator
                     do
                     {
                        readresult =  sensors.SensorValueReadC03();
+                        Application.DoEvents();
                         ch++;
                     } while (((sensors.sensor.OutVoltage == 0) || (sensors.sensor.Resistance == 0)) && (ch < sensors.WRITE_COUNT));
 
@@ -799,13 +808,13 @@ namespace Charaterizator
         private void ReadSensorPressure()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = 0;   //конечный канал
+            int FinishNumber = MaxChannalCount-1;   //конечный канал
+            int Diapazon = 1;
 
             Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранных датчиков ... ", 0);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
-            int step = MaxChannalCount / MaxLevelCount;
-            int Diapazon = 1;
+ /*           int step = MaxChannalCount / MaxLevelCount;
             switch (SelectedLevel)
             {
                 case 1:
@@ -828,7 +837,7 @@ namespace Charaterizator
                     FinishNumber = step * 4 - 1;
                     Diapazon = Convert.ToInt32(cbVRDiapazon4.Text);
                     break;
-            }
+            }*/
             //************************************************************************************************
 
             pbVRProcess.Maximum = FinishNumber - StartNumber;
@@ -871,16 +880,16 @@ namespace Charaterizator
         //обновляем грид результатов характеризации для датчика в канале i
         private void UpDateCharakterizatorGrid(int i)
         {
-            if ((ResultCH == null) || (ResultCH.Channal.Count <= i) || (i<0))
+            dataGridView2.Rows.Clear();
+            if ((ResultCH == null) || (ResultCH.Channal.Count <= i) || (i<0) || (ResultCH.Channal[i].Points.Count <= 0))
             {
                 Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1);
                 return;
             }
-            dataGridView2.Rows.Clear();
             for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add("", "", "", "", "", "");
-                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString();                 //
+                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");                 //
                 dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
                 switch (SelectedLevel)
                 {
@@ -901,9 +910,12 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
+                //dataGridView2.Rows[j].Cells[0].Selected = false;
             }
-            dataGridView2.AutoScrollOffset = new Point(0, dataGridView2.VerticalScrollingOffset);
-//            dataGridView2.FirstDisplayedScrollingRowIndex = dataGridView2.Rows.Count-1;
+            dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
+            dataGridView2.ClearSelection();
+            dataGridView2.Rows[0].Cells[0].Selected = true;
+            //dataGridView2.FirstDisplayedCell = dataGridView2.Rows[0].Cells[0];
         }
 
         //обновляем грид результатов верификации для датчика в канале i
@@ -1128,6 +1140,14 @@ namespace Charaterizator
 
 
 
+
+//**************************************************************************************************
+//
+// СРАБАТЫВАНИЕ ГЛАВНОГО ТАЙМЕРА
+//
+//**************************************************************************************************
+
+
         private void MainTimer_Tick(object sender, EventArgs e)
         {
 
@@ -1135,6 +1155,8 @@ namespace Charaterizator
             {
                 //StateComutators(Commutator._StateCH);
                 PowerComutators(Commutator._StateCHPower); //обновляем данные с коммутатора
+                // Обновление номера активного канала
+                tbNumCH.Text = Convert.ToString(Commutator.ActivCH);
             }
 
             if (Multimetr.Connected)
@@ -1154,16 +1176,10 @@ namespace Charaterizator
         //чтение данных с МЕНСОРА
         private void ReadMensor()
         {
-
-
-            int CH_mensor = Mensor._activCH;    // Получаем номер активного канала (0 значит А,   1 значит B,   -1 = не прочитали )                    
-
+            int CH_mensor = Mensor._activCH;    // Получаем номер активного канала (0 значит А,   1 значит B,   -1 = не прочитали )                   
             if (CH_mensor != -1)
-            {
-
-
-                // текущее давление
-                //                if ((Mensor._press >= (numMensorPoint.Value - SKO_PRESSURE))&& (Mensor._press <= ( + SKO_PRESSURE)))
+            {                
+               
                 
                 if (SKO_PRESSURE > Math.Abs(Mensor._press - Mensor.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
                 {
@@ -1224,17 +1240,16 @@ namespace Charaterizator
                 }
 
 
-
-
                 MensorReadError = 0;
             }
             else
             {
-                tbMensorData.Text = "0";
-                //tbMensorRate.Text = "0";
-                numMensorPoint.Text = "0";
-                cbMensorTypeR.SelectedIndex = -1;
+                tbMensorData.Text = "-1";
+                //tbMensorRate.Text = "-1";
+                numMensorPoint.Text = "-1";
+                cbMensorTypeR.SelectedIndex = -1;               
                 MensorReadError++;
+                Program.txtlog.WriteLineLog("Ошибка чтения данных с Менсора. Количество ошибок: " + MensorReadError.ToString(), 1);
             }
 
             if (MensorReadError >= MAX_ERROR_COUNT)
@@ -1277,21 +1292,22 @@ namespace Charaterizator
         private void StateComutators(Int32 data32)
         {
 
-           /* for (int i = 0; i < MaxChannalCount; i++)
-            {
-                if (((data32 >> i) & 01) == 1)
-                {
-                    //dataGridView1.Rows[i].Cells[4].Value = 1;
-                    //dataGridView1[4, i].Style.BackColor = Color.Green;
-                }
-                else
-                {
-                    //dataGridView1.Rows[i].Cells[4].Value = 0;
-                    //dataGridView1[4, i].Style.BackColor = Color.IndianRed;
-                }
-            }*/
+            /* for (int i = 0; i < MaxChannalCount; i++)
+             {
+                 if (((data32 >> i) & 01) == 1)
+                 {
+                     //dataGridView1.Rows[i].Cells[4].Value = 1;
+                     //dataGridView1[4, i].Style.BackColor = Color.Green;
+                 }
+                 else
+                 {
+                     //dataGridView1.Rows[i].Cells[4].Value = 0;
+                     //dataGridView1[4, i].Style.BackColor = Color.IndianRed;
+                 }
+             }*/
 
-            tbNumCH.Text = Convert.ToString(Commutator._NumOfConnectInputs);
+            //tbNumCH.Text = Convert.ToString(Commutator._NumOfConnectInputs);
+           
         }
 
 
@@ -2022,9 +2038,11 @@ namespace Charaterizator
 
             //***************** создаем файлы результатов калибровки ***************************************
             ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
+            ResultCI.LoadFromFile();
 
             //***************** создаем файлы результатов верификации ***********************************
             ResultVR = new CResultVR(MaxChannalCount, FN);
+            ResultVR.LoadFromFile();
 
             //**********************************************************************************************
 
@@ -2137,8 +2155,8 @@ namespace Charaterizator
                     finally
                     {
                         SensorBusy = false;
-                        if (ResultCH!=null)
-                            ResultCH.SaveToFile();
+//                        if (ResultCH!=null)
+//                            ResultCH.SaveToFile();
                         btnCalculateCoeff.BackColor = Color.LightGreen;
                         btnCHStart.Text = "Старт характеризации";
                     }
@@ -2182,22 +2200,32 @@ namespace Charaterizator
 
         private void UpdateUpStatus(int i)
         {
-            if ((i < sensors.sensorList.Count) && (i >= 0))
+            if (i >= 0)
             {
-                UpStModel.Text = new String(sensors.sensorList[i].PressureModel); ;
-                UpStSerial.Text = sensors.sensorList[i].uni.ToString();
-                UpStCh.Text = (sensors.sensorList[i].Channal + 1).ToString();
-
-                UpdateCHnumber(sensors.sensorList[i].Channal + 1);
+                if (sensors.SelectSensor(i))
+                {
+                    UpStModel.Text = new String(sensors.sensor.PressureModel); 
+                    UpStSerial.Text = sensors.sensor.uni.ToString();
+                    UpStCh.Text = (sensors.sensor.Channal + 1).ToString();
+                    //UpdateCHnumber(sensors.sensorList[i].Channal + 1);
+                }
+                else
+                {
+                    UpStModel.Text = "";
+                    UpStSerial.Text = "";
+                    UpStCh.Text = "";
+                }
             }
         }
 
+
+/*
         public void UpdateCHnumber(int i)
         {           
                 tbNumCH.Text = i.ToString();
            
         }
-
+*/
 
 
 
@@ -2370,7 +2398,7 @@ namespace Charaterizator
                         PressureReady = true;
                         btnCHStart.BackColor = Color.LightGreen;
                         btnCalculateCoeff.BackColor = Color.IndianRed;
-                        Program.txtlog.WriteLineLog("CH: Давление в датчиках установлено.", 1);
+                        Program.txtlog.WriteLineLog("CH: Давление в датчиках установлено.", 0);
                         //MessageBox.Show("Давление установлено.", "Успешное завершение операции");
                     }
                 }
@@ -2541,6 +2569,7 @@ namespace Charaterizator
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
             }
         }
+
         // Настройки Коммутатора
         private void параметрыToolStripMenuItem2_Click(object sender, EventArgs e)
         {
@@ -3156,6 +3185,9 @@ namespace Charaterizator
         {
             if (ResultCH != null)
             {
+                DataGridViewSelectedRowCollection s = dataGridView2.SelectedRows;
+                if (s.Count <= 0) return;
+
                 DialogResult result = MessageBox.Show(
                         "Выбранные записи будут удалены из таблицы и архива данных характеризации. Продолжить?",
                         "Подтверждение операции",
@@ -3165,13 +3197,13 @@ namespace Charaterizator
                         MessageBoxOptions.DefaultDesktopOnly);
                 if (result == DialogResult.Yes)
                 {
-                    DataGridViewSelectedRowCollection s = dataGridView2.SelectedRows;
+                    dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Ascending);
                     for (int i = 0; i < s.Count; i++)
                     {
                         ResultCH.DeletePoint(cbChannalCharakterizator.SelectedIndex, s[i].Index);
                     }
                     UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                    ResultCH.SaveToFile();
+                    ResultCH.SaveToArhiv(cbChannalCharakterizator.SelectedIndex);
                 }
             }
         }
@@ -3179,6 +3211,11 @@ namespace Charaterizator
         private void cbChannalFix_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView2_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            удалениеЗаписиToolStripMenuItem_Click(sender,null);
         }
     }
 }
