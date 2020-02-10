@@ -194,13 +194,11 @@ namespace Charaterizator
             {
                 try
                 {
-                    //Port.WriteLine("CONF:VOLT:DC 10, 0.01");
-                    //Port.WriteLine("READ?");
                     Thread.Sleep(WAIT_TIMEOUT);
                     float Mean =0;
+                    float Min = 100000, Max = -100000;
                     for (int c = 0; c < SAMPLE_COUNT; c++)
                     {
-                        //Port.WriteLine("CALC:AVER:AVER?");
                         Port.WriteLine("MEAS:VOLT:DC? 10, 0.00001");
                         int i = 0;
                         while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
@@ -208,20 +206,35 @@ namespace Charaterizator
                             i++;
                             Thread.Sleep(1);
                         }
-                        string str = Port.ReadLine();
-                        // str = str.Replace(".","");
-                        Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                        Mean = Value + Mean;
-                        Thread.Sleep(READ_PERIOD);
+                        if (Port.BytesToRead > 0)
+                        {
+                            string str = Port.ReadLine();
+                            Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                            Mean = Value + Mean;
+                            if (Max < Value) Max = Value;
+                            if (Min > Value) Min = Value;
+                            Thread.Sleep(READ_PERIOD);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Agilent: Отсутсвуют данных для чтения.", 1);
+                            return false;
+                        }
                     }
-                    Value = Mean / SAMPLE_COUNT;//усредняем
-                    //Program.txtlog.WriteLineLog(string.Format("Agilent: Произведено измерение напряжения мультиметра {0} ", Value), 0);
+                    if (SAMPLE_COUNT >= 3)
+                    {
+                        Value = (Mean - Max - Min)/ (SAMPLE_COUNT-2);//усредняем
+                    }
+                    else
+                    {
+                        Value = Mean / SAMPLE_COUNT;//усредняем
+                    }
                     return true;
                 }
                 catch
                 {
                     //запись в лог
-                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных. ", 1);
+                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных.", 1);
                     Port.Close();
                     Thread.Sleep(1);
                     Port.Open();

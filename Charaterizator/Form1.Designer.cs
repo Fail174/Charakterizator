@@ -265,12 +265,15 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.pUpStatusBar = new System.Windows.Forms.Panel();
+            this.cbSensorPeriodRead = new System.Windows.Forms.CheckBox();
             this.UpStCh = new System.Windows.Forms.Label();
             this.UpStSerial = new System.Windows.Forms.Label();
             this.UpStModel = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.contextMenuStripVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuVerificationDetele = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -303,11 +306,12 @@
             this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.pUpStatusBar.SuspendLayout();
+            this.contextMenuStripVerificationTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 976);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
@@ -540,7 +544,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 703);
+            this.panel1.Size = new System.Drawing.Size(309, 952);
             this.panel1.TabIndex = 6;
             // 
             // tbDateTime
@@ -548,7 +552,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 655);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 904);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -960,7 +964,7 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 545);
+            this.panel2.Location = new System.Drawing.Point(0, 794);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(975, 182);
             this.panel2.TabIndex = 7;
@@ -1002,7 +1006,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(975, 521);
+            this.panel3.Size = new System.Drawing.Size(975, 770);
             this.panel3.TabIndex = 8;
             // 
             // splitter1
@@ -1016,6 +1020,8 @@
             // 
             // dataGridView4
             // 
+            this.dataGridView4.AllowUserToAddRows = false;
+            this.dataGridView4.AllowUserToDeleteRows = false;
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сIDataTime,
@@ -1026,7 +1032,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 543);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(698, 0);
+            this.dataGridView4.Size = new System.Drawing.Size(698, 227);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1064,6 +1070,8 @@
             // 
             // dataGridView3
             // 
+            this.dataGridView3.AllowUserToAddRows = false;
+            this.dataGridView3.AllowUserToDeleteRows = false;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cDataTime,
@@ -1076,9 +1084,10 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 543);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(698, 0);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 227);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
+            this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
             // 
             // cDataTime
             // 
@@ -1209,7 +1218,7 @@
             this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
             this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
             this.ToolStripMenuDeleteResult.Text = "Удаление записи";
-            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.удалениеЗаписиToolStripMenuItem_Click);
+            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
             // 
             // dataGridView1
             // 
@@ -1231,7 +1240,7 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(698, 521);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 770);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1310,7 +1319,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 521);
+            this.panel4.Size = new System.Drawing.Size(277, 770);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1322,7 +1331,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 521);
+            this.tabControl1.Size = new System.Drawing.Size(277, 770);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1337,7 +1346,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 495);
+            this.tabPage1.Size = new System.Drawing.Size(269, 744);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1346,7 +1355,7 @@
             // 
             this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep1.Location = new System.Drawing.Point(6, 455);
+            this.btnNextStep1.Location = new System.Drawing.Point(6, 704);
             this.btnNextStep1.Name = "btnNextStep1";
             this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
             this.btnNextStep1.TabIndex = 7;
@@ -1793,7 +1802,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(269, 495);
+            this.tabPage2.Size = new System.Drawing.Size(269, 744);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2161,9 +2170,9 @@
             // 
             this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(8, 3734);
+            this.btnNextStep2.Location = new System.Drawing.Point(6, 704);
             this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(159, 30);
+            this.btnNextStep2.Size = new System.Drawing.Size(255, 30);
             this.btnNextStep2.TabIndex = 8;
             this.btnNextStep2.Text = "Переход к верификации";
             this.btnNextStep2.UseVisualStyleBackColor = true;
@@ -2190,7 +2199,6 @@
             this.cbChannalFix.Size = new System.Drawing.Size(20, 20);
             this.cbChannalFix.TabIndex = 10;
             this.cbChannalFix.UseVisualStyleBackColor = true;
-            this.cbChannalFix.CheckedChanged += new System.EventHandler(this.cbChannalFix_CheckedChanged);
             // 
             // cbChannalCharakterizator
             // 
@@ -2342,7 +2350,7 @@
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(269, 495);
+            this.tabPage3.Size = new System.Drawing.Size(269, 744);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
@@ -2369,6 +2377,7 @@
             this.gbVRLevel4.Controls.Add(this.label54);
             this.gbVRLevel4.Controls.Add(this.label55);
             this.gbVRLevel4.Controls.Add(this.cbVRTermoCamera4);
+            this.gbVRLevel4.Enabled = false;
             this.gbVRLevel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbVRLevel4.Location = new System.Drawing.Point(8, 401);
             this.gbVRLevel4.Name = "gbVRLevel4";
@@ -2477,6 +2486,7 @@
             this.gbVRLevel3.Controls.Add(this.label51);
             this.gbVRLevel3.Controls.Add(this.label52);
             this.gbVRLevel3.Controls.Add(this.cbVRTermoCamera3);
+            this.gbVRLevel3.Enabled = false;
             this.gbVRLevel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbVRLevel3.Location = new System.Drawing.Point(8, 290);
             this.gbVRLevel3.Name = "gbVRLevel3";
@@ -2585,6 +2595,7 @@
             this.gbVRLevel2.Controls.Add(this.label45);
             this.gbVRLevel2.Controls.Add(this.label49);
             this.gbVRLevel2.Controls.Add(this.cbVRTermoCamera2);
+            this.gbVRLevel2.Enabled = false;
             this.gbVRLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbVRLevel2.Location = new System.Drawing.Point(8, 179);
             this.gbVRLevel2.Name = "gbVRLevel2";
@@ -2794,9 +2805,9 @@
             // 
             this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(8, 1944);
+            this.btnNextStep3.Location = new System.Drawing.Point(6, 704);
             this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(177, 30);
+            this.btnNextStep3.Size = new System.Drawing.Size(255, 30);
             this.btnNextStep3.TabIndex = 8;
             this.btnNextStep3.Text = "Переход к выбору датчиков";
             this.btnNextStep3.UseVisualStyleBackColor = true;
@@ -2836,6 +2847,7 @@
             // 
             // pUpStatusBar
             // 
+            this.pUpStatusBar.Controls.Add(this.cbSensorPeriodRead);
             this.pUpStatusBar.Controls.Add(this.UpStCh);
             this.pUpStatusBar.Controls.Add(this.UpStSerial);
             this.pUpStatusBar.Controls.Add(this.UpStModel);
@@ -2847,6 +2859,17 @@
             this.pUpStatusBar.Size = new System.Drawing.Size(976, 22);
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
+            // 
+            // cbSensorPeriodRead
+            // 
+            this.cbSensorPeriodRead.AutoSize = true;
+            this.cbSensorPeriodRead.Location = new System.Drawing.Point(563, 4);
+            this.cbSensorPeriodRead.Name = "cbSensorPeriodRead";
+            this.cbSensorPeriodRead.Size = new System.Drawing.Size(142, 17);
+            this.cbSensorPeriodRead.TabIndex = 8;
+            this.cbSensorPeriodRead.Text = "Периодическое чтение";
+            this.cbSensorPeriodRead.UseVisualStyleBackColor = true;
+            this.cbSensorPeriodRead.CheckedChanged += new System.EventHandler(this.cbSensorPeriodRead_CheckedChanged);
             // 
             // UpStCh
             // 
@@ -2905,11 +2928,25 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "   |   Текущий канал: ";
             // 
+            // contextMenuStripVerificationTable
+            // 
+            this.contextMenuStripVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuVerificationDetele});
+            this.contextMenuStripVerificationTable.Name = "contextMenuStripVerificationTable";
+            this.contextMenuStripVerificationTable.Size = new System.Drawing.Size(127, 26);
+            // 
+            // tsMenuVerificationDetele
+            // 
+            this.tsMenuVerificationDetele.Name = "tsMenuVerificationDetele";
+            this.tsMenuVerificationDetele.Size = new System.Drawing.Size(126, 22);
+            this.tsMenuVerificationDetele.Text = "Удаление";
+            this.tsMenuVerificationDetele.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 749);
+            this.ClientSize = new System.Drawing.Size(1284, 998);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -2971,6 +3008,7 @@
             this.groupBox11.ResumeLayout(false);
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
+            this.contextMenuStripVerificationTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3216,6 +3254,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripVerificationTable;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuVerificationDetele;
+        private System.Windows.Forms.CheckBox cbSensorPeriodRead;
     }
 }
 

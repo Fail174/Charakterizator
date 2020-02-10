@@ -242,6 +242,19 @@ namespace Charaterizator
             return res;
         }
 
+        //проверка сопротивления и выходного напряжения датчика на корректность
+        public bool ValidateSensorParam()
+        {
+            if ((Math.Abs(sensor.Resistance) < 0.001) || (Math.Abs(sensor.OutVoltage) < 0.001))
+            {
+                return false;//проверка не пройдена
+            }
+            else
+            {
+                return true;//проверка пройдена
+            }
+        }
+
         //ожидание ответа от датчика
         //Вход: 
         //count - количество байт для чтения

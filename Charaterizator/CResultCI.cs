@@ -70,6 +70,18 @@ namespace Charaterizator
             FileStream.Clear();
         }
 
+        public void DeletePoint(int ch, int i)
+        {
+            if ((Channal.Count > ch) && (Channal[ch].Points.Count > i))
+            {
+                Channal[ch].Points.RemoveAt(i);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CI: Ошибка удаления записи в таблице данных ЦАП", 1);
+            }
+        }
+
         public void AddPoint(int ch, double Temp, double I1, double I2)
         {
             SPointCI point = new SPointCI();
@@ -81,6 +93,7 @@ namespace Charaterizator
             Channal[ch].Points.Add(point);
             FileStream[ch].WriteLine(GetStringFromPoint(point));
             FileStream[ch].Flush();
+            WriteToArhiv(Channal[ch], point);
         }
 
         private string GetStringFromPoint(SPointCI point)
@@ -90,56 +103,87 @@ namespace Charaterizator
                 point.I4.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
                 point.I20.ToString("   +0000.0000;   -0000.0000;          0.0") + " |";
         }
-        //Сохранение в текстовый файл
+        //создаем файл  архива на диске
+        private StreamWriter CreateFileArhiv(SChanalCI ch)
+        {
+            StreamWriter writer = null;
+            writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
+            if (writer != null)
+            {
+                writer.WriteLine(string.Format("Архив данных ЦАП"));
+                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                writer.WriteLine(HeaderString);
+                writer.WriteLine("-----------------------------------------------------------------------------------------------");
+            }
+            return writer;
+        }
+
+        //Добавление записи текущего измрения в архив для датчика в канале ch
+        public void WriteToArhiv(SChanalCI ch, SPointCI point)
+        {
+            StreamWriter writer = null;
+            if (!File.Exists(ch.FileNameArchiv))
+            {
+                writer = CreateFileArhiv(ch);
+            }
+            else
+            {
+                writer = new StreamWriter(ch.FileNameArchiv, true);//открываем файл БД
+            }
+
+            if (writer != null)
+            {
+                writer.WriteLine(GetStringFromPoint(point));
+                writer.Close();
+                writer = null;
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка записи в архив ЦАП: " + ch.FileNameArchiv, 1);
+            }
+
+        }
+
+        //пересоздаем архив для датчика в канале i
+        public void SaveToArhiv(int i)
+        {
+            if ((Channal.Count <= 0) || (i >= Channal.Count))
+            {
+                Program.txtlog.WriteLineLog("CH:Отсутсвуют данные ЦАП для датчика в канале: " + i, 1);
+                return;
+            }
+            SChanalCI ch = Channal[i];
+            StreamWriter writer = CreateFileArhiv(ch);
+            if (writer != null)
+            {
+                for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
+                {
+                    writer.WriteLine(GetStringFromPoint(ch.Points[j]));
+                }
+                writer.Close();
+                writer = null;
+                Program.txtlog.WriteLineLog("CH:Данные ЦАП успешно записаны в архив: " + ch.FileNameArchiv, 0);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка записи в архив данных ЦАП: " + ch.FileNameArchiv, 1);
+            }
+        }
+
+        //Полная перезапись всех данных характеризации в архивы
         public void SaveToFile()
         {
-
-            StreamWriter writer;
-
             try
             {
                 for (int i = 0; i < Channal.Count; i++)//перебор каналов
                 {
-                    SChanalCI ch = Channal[i];
-                    if (ch.Points.Count <= 0) continue;
-                    if (!File.Exists(ch.FileNameArchiv))
-                    {
-                        writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
-                        if (writer != null)
-                        {
-                            writer.WriteLine(string.Format("Файл данных ЦАП датчика"));
-                            writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
-                            writer.WriteLine("-----------------------------------------------------------------");
-                            writer.WriteLine(HeaderString);
-                            writer.WriteLine("-----------------------------------------------------------------");
-                        }
-                    }
-                    else
-                    {
-                        writer = new StreamWriter(ch.FileNameArchiv, true);//открываем файл БД
-                    }
-                    if (writer != null)
-                    {
-                        if(ch.Points.Count>0)
-                            writer.WriteLine(GetStringFromPoint(ch.Points[ch.Points.Count-1]));
-
-/*                        for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
-                        {
-                            writer.WriteLine(GetStringFromPoint(ch.Points[j]));
-                        }*/
-                        writer.Close();
-                        writer = null;
-                    }
-                    else
-                    {
-                        Program.txtlog.WriteLineLog("CI:Ошибка открытия файла данных ЦАП: " + ch.FileNameArchiv, 1);
-                        continue;
-                    }
+                    SaveToArhiv(i);
                 }
             }
             catch
             {
-                Program.txtlog.WriteLineLog("CI:Критическая ошибка записи в архив данных ЦАП!", 1);
+                Program.txtlog.WriteLineLog("CH:Критическая ошибка записи в архив данных ЦАП!", 1);
             }
         }
 
@@ -187,14 +231,14 @@ namespace Charaterizator
                                 ch.Points.Add(point);
                             }
                         } while (!reader.EndOfStream);
-                        Program.txtlog.WriteLineLog("CI:архив данных ЦАП загружен из файла: " + ch.FileNameArchiv, 0);
+                        Program.txtlog.WriteLineLog("CI:Архив данных ЦАП загружен из файла: " + ch.FileNameArchiv, 0);
 
                         reader.Close();
                         reader = null;
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("CI:Ошибка открытия файла данных ЦАП: " + ch.FileNameArchiv, 1);
+                        Program.txtlog.WriteLineLog("CI:Ошибка доступа к архиву данных ЦАП: " + ch.FileNameArchiv, 1);
                         continue;
                     }
                 }

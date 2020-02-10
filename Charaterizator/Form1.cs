@@ -82,7 +82,7 @@ namespace Charaterizator
 
         private bool TemperatureReady = false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
-
+//        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
 
@@ -712,13 +712,55 @@ namespace Charaterizator
                 return false;
             }
         }
+
+
+        //Чтение параметров выбранного датчика
+        private void ReadSensor()
+        {
+            int i = cbChannalCharakterizator.SelectedIndex;
+            int Diapazon;
+            if (cbDiapazon1.Text != "")
+            {
+                Diapazon = Convert.ToInt32(cbDiapazon1.Text);
+            }
+            else
+            {
+                Diapazon = 1;
+            }
+
+            if (sensors.SensorValueReadC03())
+            {
+                if (!sensors.ValidateSensorParam())
+                {
+                    Program.txtlog.WriteLineLog("Считаны не допустимые параметры датчика в канале " + (i + 1).ToString(), 1);
+                }
+                else
+                {
+                    ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                    UpDateCharakterizatorGrid(i);
+                }
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Параметры датчика не прочитаны в канале " + (i + 1).ToString(), 1);
+            }
+
+        }
         //характеризация датчиков
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount-1;   //конечный канал
-            int Diapazon = 1;
+            int Diapazon;
+            if (cbDiapazon1.Text != "")
+            {
+                Diapazon = Convert.ToInt32(cbDiapazon1.Text);
+            }
+            else
+            {
+                Diapazon = 1;
+            }
 
             Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 0);
 
@@ -769,16 +811,16 @@ namespace Charaterizator
                     int ch = 0;
                     do
                     {
-                       readresult =  sensors.SensorValueReadC03();
+                        readresult =  sensors.SensorValueReadC03();
                         Application.DoEvents();
                         ch++;
-                    } while (((sensors.sensor.OutVoltage == 0) || (sensors.sensor.Resistance == 0)) && (ch < sensors.WRITE_COUNT));
+                    } while ((!sensors.ValidateSensorParam()) && (ch < sensors.WRITE_COUNT));
 
                     if (readresult)
                     {
-                        if ((sensors.sensor.OutVoltage == 0) || (sensors.sensor.Resistance == 0))
+                        if (!sensors.ValidateSensorParam())
                         {
-                            Program.txtlog.WriteLineLog("CH: Ошибка чтения параметров датчика в канале " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Считаны не допустимые параметры датчика в канале " + (i + 1).ToString(), 1);
                         }
                         else
                         {
@@ -800,7 +842,7 @@ namespace Charaterizator
                 }
                 Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
             }
-            Program.txtlog.WriteLineLog("CH: Операция характеризации завершена ... ", 0);
+            Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 0);
         }
 
         //верификация датчиков
@@ -809,7 +851,15 @@ namespace Charaterizator
         {
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount-1;   //конечный канал
-            int Diapazon = 1;
+            int Diapazon;
+            if (cbDiapazon1.Text != "")
+            {
+                Diapazon = Convert.ToInt32(cbVRDiapazon1.Text);
+            }
+            else
+            {
+                Diapazon = 1;
+            }
 
             Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранных датчиков ... ", 0);
 
@@ -855,8 +905,7 @@ namespace Charaterizator
                 {
                     if (sensors.SensorValueReadC03())
                     {
-                        Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD * 2);//ждем измерения мультиметром
-
+                        Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
                         ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current);
                         UpDateVerificationGrid(i);
                         Program.txtlog.WriteLineLog("VR: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
@@ -921,7 +970,7 @@ namespace Charaterizator
         //обновляем грид результатов верификации для датчика в канале i
         private void UpDateVerificationGrid(int i)
         {
-            if ((ResultVR == null)||(ResultVR.Channal.Count <= i))
+            if ((ResultVR == null) || (ResultVR.Channal.Count <= i) || (i < 0) || (ResultVR.Channal[i].Points.Count <= 0))
             {
                 Program.txtlog.WriteLineLog("Result VR: Результаты верификации не сформированы!", 1);
                 return;
@@ -931,7 +980,7 @@ namespace Charaterizator
             for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView3.Rows.Add("", "", "", "", "", "");
-                dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString();      //
+                dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
                 dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
                 switch (SelectedLevel)
                 {
@@ -952,6 +1001,9 @@ namespace Charaterizator
                 dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
                 dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
+            dataGridView3.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
+            dataGridView3.ClearSelection();
+            dataGridView3.Rows[0].Cells[0].Selected = true;
         }
 
         //обновляем грид калибровки тока для датчика в канале i
@@ -1122,7 +1174,6 @@ namespace Charaterizator
             else
             {
                 SensorBusy = false;
-                //                Program.txtlog.WriteLineLog("Команда не выполнена. Идет обмен данными с датчиками.",0);
                 Program.txtlog.WriteLineLog("Поиск прекращен по команде пользователя", 0);
             }
         }
@@ -1169,6 +1220,16 @@ namespace Charaterizator
             {
                 ReadMensor(); //обновляем данные с Менсора
             }
+
+            if (!SensorBusy && sensors.IsConnect() && cbSensorPeriodRead.Checked) 
+            {
+                ReadSensor(); //выполняем переодичекое чтение датчика
+            }
+            else
+            {
+                cbSensorPeriodRead.Checked = false;
+            }
+
             tbDateTime.Text = DateTime.Now.ToString();
         }
 
@@ -2143,8 +2204,8 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
-                if (TemperatureReady && PressureReady)
-                {
+//                if (TemperatureReady && PressureReady)
+//                {
                     try
                     {
                         SensorBusy = true;
@@ -2155,22 +2216,20 @@ namespace Charaterizator
                     finally
                     {
                         SensorBusy = false;
-//                        if (ResultCH!=null)
-//                            ResultCH.SaveToFile();
                         btnCalculateCoeff.BackColor = Color.LightGreen;
                         btnCHStart.Text = "Старт характеризации";
                     }
-                }
+/*                }
                 else
                 {
                     Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
-                }
+                }*/
             }
             else
             {
-                if (MessageBox.Show("Отменить характеризацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-//                    SensorBusy = false;
+                    SensorBusy = false;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
                 }
             }
@@ -2458,8 +2517,6 @@ namespace Charaterizator
                         SensorBusy = false;
                         btnReadCAP.Text = "Чтение параметров ЦАП";
                         btnReadCAP.BackColor = Color.LightGreen;
-                        if(ResultCI != null)
-                            ResultCI.SaveToFile();
                     }
                 }
                 else
@@ -2469,9 +2526,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить чтение ЦАП датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-//                    SensorBusy = false;
+                    SensorBusy = false;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
                 }
             }
@@ -2511,9 +2568,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить калибровку датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-//                    SensorBusy = false;
+                    SensorBusy = false;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
                 }
             }
@@ -2522,6 +2579,8 @@ namespace Charaterizator
         private void cbChannalVerification_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
+            UpdateUpStatus(cbChannalVerification.SelectedIndex);
+
         }
 
 
@@ -2927,8 +2986,8 @@ namespace Charaterizator
             if (!SensorBusy)
             {
 
-                if (TemperatureReady && PressureReady)
-                {
+//                if (TemperatureReady && PressureReady)
+//                {
                     try
                     {
                         SensorBusy = true;
@@ -2939,21 +2998,19 @@ namespace Charaterizator
                     finally
                     {
                         SensorBusy = false;
-                        if (ResultVR != null)
-                            ResultVR.SaveToFile();
                         btnVRParamRead.Text = "Старт верификации";
                     }
-                }
+/*                }
                 else
                 {
                     Program.txtlog.WriteLineLog("Не установлены параметры для верификации.", 1);
-                }
+                }*/
             }
             else
             {
                 if (MessageBox.Show("Отменить верификацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    //                    SensorBusy = false;
+                    SensorBusy = false;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
                 }
             }
@@ -3181,7 +3238,12 @@ namespace Charaterizator
             }
         }
 
-        private void удалениеЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void dataGridView2_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            ToolStripMenuDeleteResult_Click(sender,null);
+        }
+
+        private void ToolStripMenuDeleteResult_Click(object sender, EventArgs e)
         {
             if (ResultCH != null)
             {
@@ -3206,16 +3268,49 @@ namespace Charaterizator
                     ResultCH.SaveToArhiv(cbChannalCharakterizator.SelectedIndex);
                 }
             }
-        }
-
-        private void cbChannalFix_CheckedChanged(object sender, EventArgs e)
-        {
 
         }
 
-        private void dataGridView2_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        private void tsMenuVerificationDetele_Click(object sender, EventArgs e)
         {
-            удалениеЗаписиToolStripMenuItem_Click(sender,null);
+            if (ResultVR != null)
+            {
+                DataGridViewSelectedRowCollection s = dataGridView3.SelectedRows;
+                if (s.Count <= 0) return;
+
+                DialogResult result = MessageBox.Show(
+                        "Выбранные записи будут удалены из таблицы и архива данных верификации. Продолжить?",
+                        "Подтверждение операции",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information,
+                        MessageBoxDefaultButton.Button1,
+                        MessageBoxOptions.DefaultDesktopOnly);
+                if (result == DialogResult.Yes)
+                {
+                    dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Ascending);
+                    for (int i = 0; i < s.Count; i++)
+                    {
+                        ResultVR.DeletePoint(cbChannalVerification.SelectedIndex, s[i].Index);
+                    }
+                    UpDateCharakterizatorGrid(cbChannalVerification.SelectedIndex);
+                    ResultVR.SaveToArhiv(cbChannalVerification.SelectedIndex);
+                }
+            }
+
+        }
+
+        private void dataGridView3_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            tsMenuVerificationDetele_Click(sender, null);
+        }
+
+        private void cbSensorPeriodRead_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SensorBusy)
+            {
+                cbSensorPeriodRead.Checked = false;
+                MessageBox.Show("Отмените текущие операции с датчиками.", "Процесс занят...", MessageBoxButtons.OK);
+            }
         }
     }
 }

@@ -78,6 +78,19 @@ namespace Charaterizator
             FileStream.Clear();
         }
 
+        public void DeletePoint(int ch, int i)
+        {
+            if ((Channal.Count > ch) && (Channal[ch].Points.Count > i))
+            {
+                Channal[ch].Points.RemoveAt(i);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("VR: Ошибка удаления записи в таблице верификации", 1);
+            }
+        }
+
+
         public void AddPoint(int ch, double Temp, int D, double PressZ, double PressF, double CurF)
         {
             try
@@ -92,9 +105,9 @@ namespace Charaterizator
                     CurrentF = CurF,
                 };
                 Channal[ch].Points.Add(point);
-                //                FileStream[ch].
                 FileStream[ch].WriteLine(GetStringFromPoint(point));
                 FileStream[ch].Flush();
+                WriteToArhiv(Channal[ch],point);
             }
             catch
             {
@@ -113,55 +126,89 @@ namespace Charaterizator
                 point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
         }
 
+        //создаем файл  архива на диске
+        private StreamWriter CreateFileArhiv(SChanalVR ch)
+        {
+            StreamWriter writer = null;
+            writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
+            if (writer != null)
+            {
+                writer.WriteLine(string.Format("Архив данных верификации датчика"));
+                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                writer.WriteLine(HeaderString);
+                writer.WriteLine("-----------------------------------------------------------------------------------------------");
+            }
+            return writer;
+        }
 
-        //Сохранение в текстовый файл
+        //Добавление записи текущего измерения в архив для датчика в канале ch
+        public void WriteToArhiv(SChanalVR ch, SPointVR point)
+        {
+            StreamWriter writer = null;
+            if (!File.Exists(ch.FileNameArchiv))
+            {
+                writer = CreateFileArhiv(ch);
+            }
+            else
+            {
+                writer = new StreamWriter(ch.FileNameArchiv, true);//открываем файл БД
+            }
+
+            if (writer != null)
+            {
+                //                if (ch.Points.Count > 0)
+                //                    writer.WriteLine(GetStringFromPoint(ch.Points[ch.Points.Count - 1]));
+                writer.WriteLine(GetStringFromPoint(point));
+                writer.Close();
+                writer = null;
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка записи в архив характеризации: " + ch.FileNameArchiv, 1);
+            }
+
+        }
+
+        //пересоздаем архив для датчика в канале i
+        public void SaveToArhiv(int i)
+        {
+            if ((Channal.Count <= 0) || (i >= Channal.Count))
+            {
+                Program.txtlog.WriteLineLog("CH:Отсутсвуют данные характеризации для датчика в канале: " + i, 1);
+                return;
+            }
+            SChanalVR ch = Channal[i];
+            StreamWriter writer = CreateFileArhiv(ch);
+            if (writer != null)
+            {
+                for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
+                {
+                    writer.WriteLine(GetStringFromPoint(ch.Points[j]));
+                }
+                writer.Close();
+                writer = null;
+                Program.txtlog.WriteLineLog("CH:Данные характеризации успешно перезаписаны.", 0);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка записи в файл данных характеризации: " + ch.FileNameArchiv, 1);
+            }
+        }
+
+        //Полная перезапись всех данных верификации в архивы
         public void SaveToFile()
         {
-            StreamWriter writer;
-
             try
             {
                 for (int i = 0; i < Channal.Count; i++)//перебор каналов
                 {
-                    SChanalVR ch = Channal[i];
-                    if (ch.Points.Count <= 0) continue;
-                    if (!File.Exists(ch.FileNameArchiv))
-                    {
-                        writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
-                        if (writer != null)
-                        {
-                            writer.WriteLine(string.Format("Файл данных верификации датчика"));
-                            writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
-                            writer.WriteLine(HeaderString);
-                            writer.WriteLine("-----------------------------------------------------------------------------");
-                        }
-                    }
-                    else
-                    {
-                        writer = new StreamWriter(ch.FileNameArchiv, true);//открываем файл БД
-                    }
-                    if (writer != null)
-                    {
-                        if (ch.Points.Count > 0)
-                            writer.WriteLine(GetStringFromPoint(ch.Points[ch.Points.Count - 1]));
-/*
-                        for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
-                        {
-                            writer.WriteLine(GetStringFromPoint(ch.Points[j]));
-                        }*/
-                        writer.Close();
-                        writer = null;
-                    }
-                    else
-                    {
-                        Program.txtlog.WriteLineLog("VR:Ошибка открытия файла данных верификации: " + ch.FileNameArchiv, 1);
-                        continue;
-                    }
+                    SaveToArhiv(i);
                 }
             }
             catch
             {
-                Program.txtlog.WriteLineLog("VR:Критическая ошибка записи в архив верификации!", 1);
+                Program.txtlog.WriteLineLog("CH:Критическая ошибка записи в архив верификации!", 1);
             }
         }
 
@@ -207,13 +254,13 @@ namespace Charaterizator
                                 ch.Points.Add(point);
                             }
                         } while (!reader.EndOfStream);
-                        Program.txtlog.WriteLineLog("VR:архив данных верификации загружен из файла: " + ch.FileNameArchiv, 0);
+                        Program.txtlog.WriteLineLog("VR:Архив данных верификации загружен из файла: " + ch.FileNameArchiv, 0);
                         reader.Close();
                         reader = null;
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR:Ошибка открытия файла данных верификации: " + ch.FileNameArchiv, 1);
+                        Program.txtlog.WriteLineLog("VR:Ошибка доступа к файлу архива верификации: " + ch.FileNameArchiv, 1);
                         continue;
                     }
                 }
