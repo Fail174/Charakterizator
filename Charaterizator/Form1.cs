@@ -418,6 +418,12 @@ namespace Charaterizator
         }
         private void UpdateSensorInfoPanel(int i)
         {
+            if (SensorBusy)
+            {
+                Program.txtlog.WriteLineLog("Процесс занят. Дождитесь завершения текущих операций", 0);
+                return;
+            }
+
             if (sensors.SelectSensor(i))
             {
                 tbSelChannalNumber.Text = string.Format("Канал {0}", i + 1);
@@ -508,8 +514,6 @@ namespace Charaterizator
 
                 pbCHProcess.Value = i - StartNumber;
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-                if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
-                    cbChannalCharakterizator.SelectedIndex = i;
 
                 Application.DoEvents();
                 Commutator.SetConnectors(i, 0);
@@ -558,7 +562,22 @@ namespace Charaterizator
                     } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                     ResultCI.AddPoint(i, (double)numTermoCameraPoint.Value, I4, I20);
-                    UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+
+                    if (!cbChannalFix.Checked)
+                    {//если стоит фиксация канал не меняем
+                        cbChannalCharakterizator.SelectedIndex = i;
+                        UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                        UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+                        UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                    }
+                    else
+                    {
+                        if (cbChannalCharakterizator.SelectedIndex == i)
+                        {
+                            UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+                        }
+                    }
+
                 }
                 else
                 {
@@ -589,8 +608,14 @@ namespace Charaterizator
                 pbCHProcess.Value = i + 1;
 
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-                if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
+                if (!cbChannalFix.Checked)
+                {//если стоит фиксация канал не меняем
                     cbChannalCharakterizator.SelectedIndex = i;
+                    UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                    UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+                    UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                }
+
 
                 Application.DoEvents();
                 Commutator.SetConnectors(i, 0);
@@ -616,7 +641,7 @@ namespace Charaterizator
                         {
                             DialogResult result = MessageBox.Show(
                                     "Выполнить калибровку?",
-                                    "Превышен максимальный уровень тока ЦАП (4мА)!",
+                                    "Превышено максимальное отклонение тока ЦАП (4мА)!",
                                     MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Information,
                                     MessageBoxDefaultButton.Button1,
@@ -644,7 +669,7 @@ namespace Charaterizator
                         {
                             DialogResult result = MessageBox.Show(
                                     "Выполнить калибровку?",
-                                    "Превышен максимальный уровень тока ЦАП (20мА)!",
+                                    "Превышено максимальное отклонение тока ЦАП (20мА)!",
                                     MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Information,
                                     MessageBoxDefaultButton.Button1,
@@ -830,9 +855,20 @@ namespace Charaterizator
                         else
                         {
                             ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
-                            if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
+                            if (!cbChannalFix.Checked)
+                            {//если стоит фиксация канал не меняем
                                 cbChannalCharakterizator.SelectedIndex = i;
-                            UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                                UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                                UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+                                UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                            }
+                            else
+                            {
+                                if (cbChannalCharakterizator.SelectedIndex == i)
+                                {
+                                    UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                                }
+                            }
                             Program.txtlog.WriteLineLog("CH: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                         }
                     }
@@ -1256,9 +1292,12 @@ namespace Charaterizator
             }
 
 
-            if (!SensorBusy && sensors.IsConnect() && cbSensorPeriodRead.Checked) 
+            if (!SensorBusy && sensors.IsConnect()) 
             {
-                ReadSensor(); //выполняем переодичекое чтение датчика
+                if (cbSensorPeriodRead.Checked)
+                {
+                    ReadSensor(); //выполняем переодичекое чтение датчика
+                }
             }
             else
             {
@@ -2239,10 +2278,22 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
-//                if (TemperatureReady && PressureReady)
-//                {
-                    try
-                    {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для характеризации датчиков. Операция прервана.", 0);
+                    return;
+                }
+
+                //                if (TemperatureReady && PressureReady)
+                //                {
+                try
+                {
                         btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
                         UpdateItemState(2);
                         ReadSensorParametrs();
@@ -2283,10 +2334,12 @@ namespace Charaterizator
 
         private void cbChannalCharakterizator_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-            UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
-            UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
-
+            if (!SensorBusy)
+            {
+                UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+                UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+            }
         }
 
 
@@ -2535,6 +2588,12 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
+                if (!Multimetr.Connected)
+                {
+                    Program.txtlog.WriteLineLog("CI: Нет подключения к мультиметру, чтение ЦАП не выполнено!", 0);
+                    return;
+                }
+
                 if ((Math.Abs((double)numTermoCameraPoint.Value - DEFAULT_TEMPERATURE) <= 0.1) || (MessageBox.Show(string.Format("CL: Температура в камере: {0}. Выполнить чтение ЦАП?", numTermoCameraPoint.Text), "Подтверждение операции", MessageBoxButtons.YesNo) == DialogResult.Yes))
                 {
                     try
@@ -2607,8 +2666,11 @@ namespace Charaterizator
 
         private void cbChannalVerification_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
-            UpdateUpStatus(cbChannalVerification.SelectedIndex);
+            if (!SensorBusy)
+            {
+                UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
+                UpdateUpStatus(cbChannalVerification.SelectedIndex);
+            }
 
         }
 
@@ -3014,11 +3076,22 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для верификации датчиков. Операция прервана.", 0);
+                    return;
+                }
 
-//                if (TemperatureReady && PressureReady)
-//                {
-                    try
-                    {
+                //                if (TemperatureReady && PressureReady)
+                //                {
+                try
+                {
                         btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
                         UpdateItemState(6);
                         ReadSensorPressure();
