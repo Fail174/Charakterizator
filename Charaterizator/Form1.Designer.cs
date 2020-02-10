@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,7 +88,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tbMultimetrData = new System.Windows.Forms.TextBox();
-            this.btmMultimetr = new System.Windows.Forms.Button();
+            this.btnMultimetr = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbNumCH = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -859,7 +859,7 @@
             this.groupBox2.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.tbMultimetrData);
-            this.groupBox2.Controls.Add(this.btmMultimetr);
+            this.groupBox2.Controls.Add(this.btnMultimetr);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(5, 152);
             this.groupBox2.Name = "groupBox2";
@@ -887,17 +887,17 @@
             this.tbMultimetrData.TabIndex = 2;
             this.tbMultimetrData.Text = "1,00689";
             // 
-            // btmMultimetr
+            // btnMultimetr
             // 
-            this.btmMultimetr.BackColor = System.Drawing.Color.Green;
-            this.btmMultimetr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btmMultimetr.Location = new System.Drawing.Point(10, 25);
-            this.btmMultimetr.Name = "btmMultimetr";
-            this.btmMultimetr.Size = new System.Drawing.Size(107, 44);
-            this.btmMultimetr.TabIndex = 1;
-            this.btmMultimetr.Text = "Подключен";
-            this.btmMultimetr.UseVisualStyleBackColor = false;
-            this.btmMultimetr.Click += new System.EventHandler(this.btmMultimetr_Click);
+            this.btnMultimetr.BackColor = System.Drawing.Color.Green;
+            this.btnMultimetr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnMultimetr.Location = new System.Drawing.Point(10, 25);
+            this.btnMultimetr.Name = "btnMultimetr";
+            this.btnMultimetr.Size = new System.Drawing.Size(107, 44);
+            this.btnMultimetr.TabIndex = 1;
+            this.btnMultimetr.Text = "Подключен";
+            this.btnMultimetr.UseVisualStyleBackColor = false;
+            this.btnMultimetr.Click += new System.EventHandler(this.btmMultimetr_Click);
             // 
             // groupBox1
             // 
@@ -1249,8 +1249,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle11;
             this.сChannalNum.DividerWidth = 1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "";
@@ -1299,10 +1299,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle12.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle12;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -2137,9 +2137,9 @@
             // btnCalibrateCurrent
             // 
             this.btnCalibrateCurrent.BackColor = System.Drawing.Color.LightGreen;
-            this.btnCalibrateCurrent.Location = new System.Drawing.Point(138, 656);
+            this.btnCalibrateCurrent.Location = new System.Drawing.Point(144, 568);
             this.btnCalibrateCurrent.Name = "btnCalibrateCurrent";
-            this.btnCalibrateCurrent.Size = new System.Drawing.Size(119, 53);
+            this.btnCalibrateCurrent.Size = new System.Drawing.Size(119, 48);
             this.btnCalibrateCurrent.TabIndex = 13;
             this.btnCalibrateCurrent.Text = "Калибровка тока    (4 и 20 мА)";
             this.btnCalibrateCurrent.UseVisualStyleBackColor = false;
@@ -2148,19 +2148,20 @@
             // btnCalculateCoeff
             // 
             this.btnCalculateCoeff.BackColor = System.Drawing.Color.IndianRed;
-            this.btnCalculateCoeff.Location = new System.Drawing.Point(11, 656);
+            this.btnCalculateCoeff.Location = new System.Drawing.Point(8, 656);
             this.btnCalculateCoeff.Name = "btnCalculateCoeff";
-            this.btnCalculateCoeff.Size = new System.Drawing.Size(121, 53);
+            this.btnCalculateCoeff.Size = new System.Drawing.Size(255, 53);
             this.btnCalculateCoeff.TabIndex = 12;
             this.btnCalculateCoeff.Text = "Расчет коэффициентов";
             this.btnCalculateCoeff.UseVisualStyleBackColor = false;
+            this.btnCalculateCoeff.Click += new System.EventHandler(this.btnCalculateCoeff_Click);
             // 
             // btnReadCAP
             // 
             this.btnReadCAP.BackColor = System.Drawing.Color.LightGreen;
-            this.btnReadCAP.Location = new System.Drawing.Point(8, 599);
+            this.btnReadCAP.Location = new System.Drawing.Point(8, 568);
             this.btnReadCAP.Name = "btnReadCAP";
-            this.btnReadCAP.Size = new System.Drawing.Size(255, 48);
+            this.btnReadCAP.Size = new System.Drawing.Size(124, 48);
             this.btnReadCAP.TabIndex = 9;
             this.btnReadCAP.Text = "Чтение параметров ЦАП";
             this.btnReadCAP.UseVisualStyleBackColor = false;
@@ -2212,7 +2213,7 @@
             // 
             // btnCHStart
             // 
-            this.btnCHStart.BackColor = System.Drawing.Color.IndianRed;
+            this.btnCHStart.BackColor = System.Drawing.Color.LightGreen;
             this.btnCHStart.Location = new System.Drawing.Point(8, 515);
             this.btnCHStart.Name = "btnCHStart";
             this.btnCHStart.Size = new System.Drawing.Size(255, 47);
@@ -2223,7 +2224,7 @@
             // 
             // pbCHProcess
             // 
-            this.pbCHProcess.Location = new System.Drawing.Point(8, 568);
+            this.pbCHProcess.Location = new System.Drawing.Point(8, 622);
             this.pbCHProcess.Name = "pbCHProcess";
             this.pbCHProcess.Size = new System.Drawing.Size(255, 23);
             this.pbCHProcess.TabIndex = 3;
@@ -2356,7 +2357,7 @@
             // 
             // btnVRParamRead
             // 
-            this.btnVRParamRead.BackColor = System.Drawing.Color.IndianRed;
+            this.btnVRParamRead.BackColor = System.Drawing.Color.LightGreen;
             this.btnVRParamRead.Location = new System.Drawing.Point(8, 515);
             this.btnVRParamRead.Name = "btnVRParamRead";
             this.btnVRParamRead.Size = new System.Drawing.Size(255, 46);
@@ -3036,7 +3037,7 @@
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox tbMultimetrData;
-        private System.Windows.Forms.Button btmMultimetr;
+        private System.Windows.Forms.Button btnMultimetr;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnFormCommutator;
         private System.Windows.Forms.Button btnCommutator;

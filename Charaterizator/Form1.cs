@@ -79,6 +79,7 @@ namespace Charaterizator
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
         private bool SensorBusy = false;//Признак обмена данными с датчиками
+        private bool ProcessStop = false;//Флаг остановки операции
 
         private bool TemperatureReady = false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
@@ -163,7 +164,7 @@ namespace Charaterizator
                 string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
                 SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
                 // устанавливаем связь с БД
-                btmMultimetr.PerformClick();
+                btnMultimetr.PerformClick();
                 btnCommutator.PerformClick();
                 btnMensor.PerformClick();
                 btnThermalCamera.PerformClick();
@@ -309,14 +310,14 @@ namespace Charaterizator
                 Properties.Settings.Default.COMMultimetr_StopBits,
                 Properties.Settings.Default.COMMultimetr_Parity) >= 0)
             {
-                btmMultimetr.BackColor = Color.Green;
-                btmMultimetr.Text = "Подключен";
+                btnMultimetr.BackColor = Color.Green;
+                btnMultimetr.Text = "Подключен";
                 Program.txtlog.WriteLineLog("Мультиметр подключен", 0);
             }
             else
             {
-                btmMultimetr.BackColor = Color.IndianRed;
-                btmMultimetr.Text = "Не подключен";
+                btnMultimetr.BackColor = Color.IndianRed;
+                btnMultimetr.Text = "Не подключен";
                 Program.txtlog.WriteLineLog("Мультиметр не подключен", 1);
             }
         }
@@ -503,7 +504,8 @@ namespace Charaterizator
 
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                if (!SensorBusy) return;//прекращаем поиск 
+                if (ProcessStop) return;//прекращаем поиск 
+
                 pbCHProcess.Value = i - StartNumber;
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
                 if (!cbChannalFix.Checked)//если стоит фиксация канал не меняем
@@ -583,7 +585,7 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
             for (int i = 0; i < MaxChannalCount; i++)
             {
-                if (!SensorBusy) return;//прекращаем поиск 
+                if (ProcessStop) return;//прекращаем поиск 
                 pbCHProcess.Value = i + 1;
 
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
@@ -608,6 +610,7 @@ namespace Charaterizator
                             I4 = Multimetr.Current;
                             ci++;
                         } while ((Math.Abs(I4 - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
+                        Application.DoEvents();
 
                         if (Math.Abs(I4 - 4.0) > SKO_CURRENT)
                         {
@@ -635,6 +638,7 @@ namespace Charaterizator
                             I20 = Multimetr.Current;
                             ci++;
                         } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
+                        Application.DoEvents();
 
                         if (Math.Abs(I20 - 20.0) > SKO_CURRENT)
                         {
@@ -663,6 +667,7 @@ namespace Charaterizator
                             I4 = Multimetr.Current;
                             ci++;
                         } while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_COUNT_CAP_READ));
+                        Application.DoEvents();
 
                         ci = 0;
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
@@ -797,7 +802,7 @@ namespace Charaterizator
 
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                if (!SensorBusy) return;//прекращаем поиск 
+                if (ProcessStop) return;//прекращаем поиск 
 
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -820,7 +825,7 @@ namespace Charaterizator
                     {
                         if (!sensors.ValidateSensorParam())
                         {
-                            Program.txtlog.WriteLineLog("CH: Считаны не допустимые параметры датчика в канале " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Считаны недопустимые параметры датчика в канале " + (i + 1).ToString(), 1);
                         }
                         else
                         {
@@ -895,6 +900,8 @@ namespace Charaterizator
             pbVRProcess.Value = 0;
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
+                if (ProcessStop) return;//прекращаем верификацию 
+
                 pbVRProcess.Value = i - StartNumber;
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
@@ -1033,7 +1040,6 @@ namespace Charaterizator
         private int SeachConnectedSensor()
         {
             bool SensorFind = false;
-//            SensorBusy = true;
             try
             {
                 Program.txtlog.WriteLineLog("Старт поиска датчиков...", 0);
@@ -1050,7 +1056,7 @@ namespace Charaterizator
                 {
                     for (int i = 0; i < MaxChannalCount; i++)
                     {
-                        if (!SensorBusy) break;//прекращаем поиск 
+                        if (ProcessStop) break;//прекращаем поиск 
 
                         if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
@@ -1125,7 +1131,6 @@ namespace Charaterizator
             }
             finally
             {
-//                SensorBusy = false;
                 pbSensorSeach.Value = 0;
             }
             if (SensorFind)
@@ -1144,8 +1149,6 @@ namespace Charaterizator
             {
                 try
                 {
-                    SensorBusy = true;
-                   // MainTimer.Enabled = false;
                     int i;
                     for (i = 0; i < MaxChannalCount; i++)
                     {
@@ -1154,8 +1157,8 @@ namespace Charaterizator
                     }
                     if (i < MaxChannalCount)
                     {
-                        //                        btnSensorSeach.Enabled = false;
                         btnSensorSeach.Text = "Идет поиск датчиков... Остановить! ";
+                        UpdateItemState(1);
                         SeachConnectedSensor();
                     }
                     else
@@ -1165,15 +1168,13 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    //                    btnSensorSeach.Enabled = true;
                     btnSensorSeach.Text = "Поиск датчиков";
-                    SensorBusy = false;
-                //    MainTimer.Enabled = true;
+                    UpdateItemState(0);
                 }
             }
             else
             {
-                SensorBusy = false;
+                ProcessStop = true;
                 Program.txtlog.WriteLineLog("Поиск прекращен по команде пользователя", 0);
             }
         }
@@ -1209,10 +1210,32 @@ namespace Charaterizator
                 // Обновление номера активного канала
                 tbNumCH.Text = Convert.ToString(Commutator.ActivCH);
             }
+            else
+            {
+                if (btnCommutator.BackColor != Color.IndianRed)
+                {
+                    btnCommutator.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    btnCommutator.BackColor = Color.Transparent;
+                }
+            }
 
             if (Multimetr.Connected)
             {
                 ReadMultimetr(); //обновляем данные с мультиметра
+            }
+            else
+            {
+                if (btnMultimetr.BackColor != Color.IndianRed)
+                {
+                    btnMultimetr.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    btnMultimetr.BackColor = Color.Transparent;
+                }
             }
 
 
@@ -1220,6 +1243,18 @@ namespace Charaterizator
             {
                 ReadMensor(); //обновляем данные с Менсора
             }
+            else
+            {
+                if (btnMensor.BackColor != Color.IndianRed)
+                {
+                    btnMensor.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    btnMensor.BackColor = Color.Transparent;
+                }
+            }
+
 
             if (!SensorBusy && sensors.IsConnect() && cbSensorPeriodRead.Checked) 
             {
@@ -1341,8 +1376,8 @@ namespace Charaterizator
             if (MultimetrReadError >= MAX_ERROR_COUNT)
             {
                 Multimetr.DisConnect();
-                btmMultimetr.BackColor = Color.IndianRed;
-                btmMultimetr.Text = "Не подключен";
+                btnMultimetr.BackColor = Color.IndianRed;
+                btnMultimetr.Text = "Не подключен";
                 Program.txtlog.WriteLineLog("Нет данных с мультиметра. Устройство отключено.", 1);
             }
         }
@@ -2208,28 +2243,26 @@ namespace Charaterizator
 //                {
                     try
                     {
-                        SensorBusy = true;
-                        btnCHStart.BackColor = Color.IndianRed;
                         btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
+                        UpdateItemState(2);
                         ReadSensorParametrs();
                     }
                     finally
                     {
-                        SensorBusy = false;
-                        btnCalculateCoeff.BackColor = Color.LightGreen;
                         btnCHStart.Text = "Старт характеризации";
+                        UpdateItemState(0);
                     }
-/*                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
-                }*/
+                /*                }
+                                else
+                                {
+                                    Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
+                                }*/
             }
             else
             {
                 if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    SensorBusy = false;
+                    ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
                 }
             }
@@ -2455,8 +2488,8 @@ namespace Charaterizator
                     {//давление установлено
                         Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
                         PressureReady = true;
-                        btnCHStart.BackColor = Color.LightGreen;
-                        btnCalculateCoeff.BackColor = Color.IndianRed;
+//                        btnCHStart.BackColor = Color.LightGreen;
+//                        btnCalculateCoeff.BackColor = Color.IndianRed;
                         Program.txtlog.WriteLineLog("CH: Давление в датчиках установлено.", 0);
                         //MessageBox.Show("Давление установлено.", "Успешное завершение операции");
                     }
@@ -2476,8 +2509,8 @@ namespace Charaterizator
                 {
                     numMensorPoint.Text = strValue;
                     PressureReady = true;
-                    btnCHStart.BackColor = Color.LightGreen;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
+//                    btnCHStart.BackColor = Color.LightGreen;
+//                    btnCalculateCoeff.BackColor = Color.IndianRed;
                 }
             }
         }
@@ -2506,17 +2539,15 @@ namespace Charaterizator
                 {
                     try
                     {
-                        SensorBusy = true;
-                        btnReadCAP.BackColor = Color.IndianRed;
                         btnReadCAP.Text = "Выполняется процесс чтения ЦАП... Отменить?";
+                        UpdateItemState(3);
                         ReadSensorCurrent();
 
                     }
                     finally
                     {
-                        SensorBusy = false;
                         btnReadCAP.Text = "Чтение параметров ЦАП";
-                        btnReadCAP.BackColor = Color.LightGreen;
+                        UpdateItemState(0);
                     }
                 }
                 else
@@ -2528,7 +2559,7 @@ namespace Charaterizator
             {
                 if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    SensorBusy = false;
+                    ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
                 }
             }
@@ -2554,23 +2585,21 @@ namespace Charaterizator
                 }
                 try
                 {
-                    SensorBusy = true;
                     btnCalibrateCurrent.Text = "Выполняется калибровка... Отменить?";
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    UpdateItemState(4);
                     SensorCalibration();
                 }
                 finally
                 {
                     btnCalibrateCurrent.Text = "Калибровка тока    (4 и 20 мА)";
-                    btnCalibrateCurrent.BackColor = Color.LightGreen;
-                    SensorBusy = false;
+                    UpdateItemState(0);
                 }
             }
             else
             {
                 if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    SensorBusy = false;
+                    ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
                 }
             }
@@ -2955,7 +2984,7 @@ namespace Charaterizator
                     {//давление установлено
                         Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
                         PressureReady = true;
-                        btnVRParamRead.BackColor = Color.LightGreen;
+//                        btnVRParamRead.BackColor = Color.LightGreen;
 //                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
                         Program.txtlog.WriteLineLog("VR: Давление установлено", 0);
                     }
@@ -2990,27 +3019,26 @@ namespace Charaterizator
 //                {
                     try
                     {
-                        SensorBusy = true;
-                        btnVRParamRead.BackColor = Color.IndianRed;
                         btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
+                        UpdateItemState(6);
                         ReadSensorPressure();
                     }
                     finally
                     {
-                        SensorBusy = false;
                         btnVRParamRead.Text = "Старт верификации";
+                        UpdateItemState(0);
                     }
-/*                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Не установлены параметры для верификации.", 1);
-                }*/
+                /*                }
+                                else
+                                {
+                                    Program.txtlog.WriteLineLog("Не установлены параметры для верификации.", 1);
+                                }*/
             }
             else
             {
                 if (MessageBox.Show("Отменить верификацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    SensorBusy = false;
+                    ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
                 }
             }
@@ -3311,6 +3339,165 @@ namespace Charaterizator
                 cbSensorPeriodRead.Checked = false;
                 MessageBox.Show("Отмените текущие операции с датчиками.", "Процесс занят...", MessageBoxButtons.OK);
             }
+        }
+
+        private void UpdateItemState(int state)
+        {
+            switch (state)
+            {
+                case 0://исходное состояние
+                    btnSensorSeach.Enabled = true;
+                    btnSensorSeach.BackColor = Color.LightGreen;
+
+                    btnCHStart.BackColor = Color.LightGreen;
+                    btnCHStart.Enabled = true;
+                    btnReadCAP.BackColor = Color.LightGreen;
+                    btnReadCAP.Enabled = true;
+                    btnCalibrateCurrent.BackColor = Color.LightGreen;
+                    btnCalibrateCurrent.Enabled = true;
+                    btnCalculateCoeff.BackColor = Color.LightGreen;
+                    btnCalculateCoeff.Enabled = true;
+                    cbChannalCharakterizator.Enabled = true;
+
+                    btnVRParamRead.BackColor = Color.LightGreen;
+                    btnVRParamRead.Enabled = true;
+                    cbChannalVerification.Enabled = true;
+
+                    SensorBusy = false;
+                    ProcessStop = true;
+                    break;
+                case 1://поиск датчиков
+                    btnSensorSeach.Enabled = true;
+                    btnSensorSeach.BackColor = Color.LightGreen;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 2://характеризация
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.LightGreen;
+                    btnCHStart.Enabled = true;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 3://чтение ЦАП
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.LightGreen;
+                    btnReadCAP.Enabled = true;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 4://калибровка
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.LightGreen;
+                    btnCalibrateCurrent.Enabled = true;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 5://расчет коэффициентов
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.LightGreen;
+                    btnCalculateCoeff.Enabled = true;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 6://верификация
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.LightGreen;
+                    btnVRParamRead.Enabled = true;
+                    cbChannalVerification.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+            }
+        }
+
+        private void btnCalculateCoeff_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
