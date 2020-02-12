@@ -92,11 +92,11 @@ namespace Charaterizator
         {
             InitializeComponent();
             Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл
-                                                                            //                        btmMultimetr_Click(null, null);           
-                                                                            //                        btnCommutator_Click(null, null);
-                                                                            //                        btnMensor_Click(null, null);
-                                                                            // Properties.Settings.Default.Reset();
-            Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
+//            Properties.Settings.Default.Reset();
+            Program.txtlog.WriteLineLog("Версия программы: " + Application.ProductVersion, 0);
+
+                        
+                Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
             Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
             Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество отчетов измерения мультиметром, раз
             Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
@@ -950,6 +950,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
                         ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current);
+
                         UpDateVerificationGrid(i);
                         Program.txtlog.WriteLineLog("VR: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
@@ -1044,7 +1045,7 @@ namespace Charaterizator
                 dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
                 dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
-            dataGridView3.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
+            dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
             dataGridView3.ClearSelection();
             dataGridView3.Rows[0].Cells[0].Selected = true;
         }

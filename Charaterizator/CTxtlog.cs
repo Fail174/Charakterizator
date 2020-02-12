@@ -11,8 +11,8 @@ namespace Charaterizator
 {
     public class CTxtlog
     {
-        private System.Windows.Forms.RichTextBox rtbConsole;
-        private StreamWriter writer;//для лога
+        private System.Windows.Forms.RichTextBox rtbConsole=null;
+        private StreamWriter writer=null;//для лога
         public string LogFileName;
 
         public CTxtlog(System.Windows.Forms.RichTextBox rtb, string lfn)
@@ -23,27 +23,47 @@ namespace Charaterizator
         }
         ~CTxtlog()
         {
+//            if(writer!=null)
 //           writer.Close();
         }
 
         public void WriteLineLog(string str, int status = 0)
         {
-            str = DateTime.Now + ": " + str;
-            writer.WriteLine(str);
-            writer.Flush();
-            //Thread.Sleep(10);
-            if (status == 0)
+            try
             {
-                //                rtbConsole.ForeColor = Color.Black;
-                rtbConsole.SelectionColor = Color.Black;
+                str = DateTime.Now + ": " + str;
+                if (writer != null)
+                {
+                    writer.WriteLine(str);
+                    writer.Flush();
+                }
+                //Thread.Sleep(10);
+                if (rtbConsole != null)
+                {
+
+                    switch (status)
+                    {
+                        case 0:
+                            rtbConsole.SelectionColor = Color.Black;
+                            break;
+                        case 1:
+                            rtbConsole.SelectionColor = Color.Red;
+                            break;
+                        case 2:
+                            rtbConsole.SelectionColor = Color.Green;
+                            break;
+                        default:
+                            rtbConsole.SelectionColor = Color.Black;
+                            break;
+                    }
+                    rtbConsole.AppendText(str + Environment.NewLine);
+                    rtbConsole.ScrollToCaret();
+                }
             }
-            else
+            catch
             {
-                //                rtbConsole.ForeColor = Color.Red;
-                rtbConsole.SelectionColor = Color.Red;
+                Console.WriteLine("Ошибка записи в лог!");
             }
-            rtbConsole.AppendText(str + Environment.NewLine);
-            rtbConsole.ScrollToCaret();
         }
 
     }
