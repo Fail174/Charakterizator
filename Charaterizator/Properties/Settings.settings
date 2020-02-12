@@ -96,19 +96,10 @@
       <Value Profile="(Default)">D:\\WORK\\BBMW\\Repozitoriy\\Fail174\\Charakterizator\\Charaterizator\\SensorsDB\\Sensors.mdb</Value>
     </Setting>
     <Setting Name="set_HoldTimeTemp" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1000</Value>
     </Setting>
-    <Setting Name="set_HoldTimePress" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_HoldTimeAfReset" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_DeltaTemp" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="set_DeltaPress" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+    <Setting Name="set_DeltaTemp" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="set_HandleContrPress" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -117,13 +108,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="set_MultimReadCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="set_MultimReadPeriod" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="set_MensorSetZero" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="set_SensReadCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -132,25 +120,25 @@
       <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="set_TCameraReadPeriod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="set_SensWaitTimeout" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="set_MultimReadTimeout" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="set_MultimDataReady" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">5000</Value>
     </Setting>
     <Setting Name="set_MainTimer" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="set_CommReadCH" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">32</Value>
     </Setting>
     <Setting Name="set_CommMaxSetCH" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">14</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="set_CommReadPeriod" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
@@ -164,8 +152,32 @@
     <Setting Name="set_MensorReadPause" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
     </Setting>
-    <Setting Name="set_SensSKOCalibrCurrent" Type="System.Double" Scope="User">
+    <Setting Name="set_MensorSKOPressure" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.2</Value>
+    </Setting>
+    <Setting Name="set_MensorMaxCountPoint" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
+    </Setting>
+    <Setting Name="set_CommMaxLevelCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="set_MaxErrorCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="set_MinSensorCurrent" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1.5</Value>
+    </Setting>
+    <Setting Name="set_MaxCountCAPRead" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="set_SKOCurrent" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
+    <Setting Name="set_SKOCalibrationCurrent" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.003</Value>
+    </Setting>
+    <Setting Name="set_Rezistor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
     </Setting>
   </Settings>
 </SettingsFile>

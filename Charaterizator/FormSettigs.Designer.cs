@@ -36,22 +36,12 @@
             this.ofdDataBase = new System.Windows.Forms.OpenFileDialog();
             this.tab_FormSettings = new System.Windows.Forms.TabControl();
             this.tp_ProgramSettings = new System.Windows.Forms.TabPage();
-            this.tbMainTimer = new System.Windows.Forms.NumericUpDown();
-            this.tbDeltaPress = new System.Windows.Forms.NumericUpDown();
-            this.tbDeltaTemp = new System.Windows.Forms.NumericUpDown();
-            this.tbHoldTimeAfReset = new System.Windows.Forms.NumericUpDown();
-            this.tbHoldTimePress = new System.Windows.Forms.NumericUpDown();
             this.tbHoldTimeTemp = new System.Windows.Forms.NumericUpDown();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.cbHandleMultimetr = new System.Windows.Forms.ComboBox();
             this.cbHandlePress = new System.Windows.Forms.ComboBox();
-            this.textBox24 = new System.Windows.Forms.TextBox();
-            this.textBox29 = new System.Windows.Forms.TextBox();
-            this.textBox33 = new System.Windows.Forms.TextBox();
             this.textBox36 = new System.Windows.Forms.TextBox();
-            this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox38 = new System.Windows.Forms.TextBox();
-            this.textBox42 = new System.Windows.Forms.TextBox();
             this.tp_CommutatorSettings = new System.Windows.Forms.TabPage();
             this.tbCommReadPause = new System.Windows.Forms.NumericUpDown();
             this.tbCommReadPeriod = new System.Windows.Forms.NumericUpDown();
@@ -62,7 +52,6 @@
             this.textBox54 = new System.Windows.Forms.TextBox();
             this.textBox57 = new System.Windows.Forms.TextBox();
             this.textBox61 = new System.Windows.Forms.TextBox();
-            this.textBox63 = new System.Windows.Forms.TextBox();
             this.textBox65 = new System.Windows.Forms.TextBox();
             this.textBox67 = new System.Windows.Forms.TextBox();
             this.tp_MultimetrSettings = new System.Windows.Forms.TabPage();
@@ -88,11 +77,8 @@
             this.tbMensorReadPause = new System.Windows.Forms.NumericUpDown();
             this.tbMensorReadPeriod = new System.Windows.Forms.NumericUpDown();
             this.textBox85 = new System.Windows.Forms.TextBox();
-            this.textBox81 = new System.Windows.Forms.TextBox();
-            this.cbMensorSetZero = new System.Windows.Forms.ComboBox();
             this.textBox71 = new System.Windows.Forms.TextBox();
             this.textBox73 = new System.Windows.Forms.TextBox();
-            this.textBox76 = new System.Windows.Forms.TextBox();
             this.textBox79 = new System.Windows.Forms.TextBox();
             this.textBox83 = new System.Windows.Forms.TextBox();
             this.tp_TermocameraSettings = new System.Windows.Forms.TabPage();
@@ -109,7 +95,6 @@
             this.textBox101 = new System.Windows.Forms.TextBox();
             this.textBox105 = new System.Windows.Forms.TextBox();
             this.tp_SensorSettings = new System.Windows.Forms.TabPage();
-            this.tbSensSKOCalibrCurrent = new System.Windows.Forms.NumericUpDown();
             this.tbSensWaitPause = new System.Windows.Forms.NumericUpDown();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox14 = new System.Windows.Forms.TextBox();
@@ -120,18 +105,34 @@
             this.textBox117 = new System.Windows.Forms.TextBox();
             this.textBox120 = new System.Windows.Forms.TextBox();
             this.textBox121 = new System.Windows.Forms.TextBox();
-            this.textBox123 = new System.Windows.Forms.TextBox();
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.tbMensorSKOPressure = new System.Windows.Forms.NumericUpDown();
+            this.tbMensorMaxCountPoint = new System.Windows.Forms.NumericUpDown();
+            this.tbCommMaxLevelCount = new System.Windows.Forms.NumericUpDown();
+            this.textBox42 = new System.Windows.Forms.TextBox();
+            this.textBox33 = new System.Windows.Forms.TextBox();
+            this.tbDeltaTemp = new System.Windows.Forms.NumericUpDown();
+            this.tbMainTimer = new System.Windows.Forms.NumericUpDown();
+            this.tbMaxErrorCount = new System.Windows.Forms.NumericUpDown();
+            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.tbMinSensorCurrent = new System.Windows.Forms.NumericUpDown();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.tbMaxCountCAPRead = new System.Windows.Forms.NumericUpDown();
+            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.tbSKOCurrent = new System.Windows.Forms.NumericUpDown();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.tb_SKOCalibrationCurrent = new System.Windows.Forms.NumericUpDown();
+            this.tb = new System.Windows.Forms.TextBox();
+            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.tbRezistor = new System.Windows.Forms.NumericUpDown();
+            this.textBox28 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMainTimer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDeltaPress)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDeltaTemp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeAfReset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimePress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeTemp)).BeginInit();
             this.tp_CommutatorSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).BeginInit();
@@ -149,10 +150,20 @@
             this.tp_TermocameraSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).BeginInit();
             this.tp_SensorSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMensorSKOPressure)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMensorMaxCountPoint)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbDeltaTemp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMainTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxErrorCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMinSensorCurrent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxCountCAPRead)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSKOCurrent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_SKOCalibrationCurrent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbRezistor)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -228,20 +239,26 @@
             // 
             // tp_ProgramSettings
             // 
+            this.tp_ProgramSettings.Controls.Add(this.tbRezistor);
+            this.tp_ProgramSettings.Controls.Add(this.textBox28);
+            this.tp_ProgramSettings.Controls.Add(this.tb_SKOCalibrationCurrent);
+            this.tp_ProgramSettings.Controls.Add(this.tb);
+            this.tp_ProgramSettings.Controls.Add(this.tbSKOCurrent);
+            this.tp_ProgramSettings.Controls.Add(this.textBox25);
+            this.tp_ProgramSettings.Controls.Add(this.tbMaxCountCAPRead);
+            this.tp_ProgramSettings.Controls.Add(this.textBox24);
+            this.tp_ProgramSettings.Controls.Add(this.tbMinSensorCurrent);
+            this.tp_ProgramSettings.Controls.Add(this.textBox22);
+            this.tp_ProgramSettings.Controls.Add(this.tbMaxErrorCount);
+            this.tp_ProgramSettings.Controls.Add(this.textBox21);
             this.tp_ProgramSettings.Controls.Add(this.tbMainTimer);
-            this.tp_ProgramSettings.Controls.Add(this.tbDeltaPress);
             this.tp_ProgramSettings.Controls.Add(this.tbDeltaTemp);
-            this.tp_ProgramSettings.Controls.Add(this.tbHoldTimeAfReset);
-            this.tp_ProgramSettings.Controls.Add(this.tbHoldTimePress);
             this.tp_ProgramSettings.Controls.Add(this.tbHoldTimeTemp);
             this.tp_ProgramSettings.Controls.Add(this.textBox10);
             this.tp_ProgramSettings.Controls.Add(this.cbHandleMultimetr);
             this.tp_ProgramSettings.Controls.Add(this.cbHandlePress);
-            this.tp_ProgramSettings.Controls.Add(this.textBox24);
-            this.tp_ProgramSettings.Controls.Add(this.textBox29);
             this.tp_ProgramSettings.Controls.Add(this.textBox33);
             this.tp_ProgramSettings.Controls.Add(this.textBox36);
-            this.tp_ProgramSettings.Controls.Add(this.textBox37);
             this.tp_ProgramSettings.Controls.Add(this.textBox38);
             this.tp_ProgramSettings.Controls.Add(this.textBox42);
             this.tp_ProgramSettings.Controls.Add(this.groupBox1);
@@ -254,117 +271,22 @@
             this.tp_ProgramSettings.Text = "Настройки программы";
             this.tp_ProgramSettings.UseVisualStyleBackColor = true;
             // 
-            // tbMainTimer
-            // 
-            this.tbMainTimer.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.tbMainTimer.Location = new System.Drawing.Point(594, 135);
-            this.tbMainTimer.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.tbMainTimer.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbMainTimer.Name = "tbMainTimer";
-            this.tbMainTimer.Size = new System.Drawing.Size(101, 21);
-            this.tbMainTimer.TabIndex = 85;
-            this.tbMainTimer.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // tbDeltaPress
-            // 
-            this.tbDeltaPress.Location = new System.Drawing.Point(594, 115);
-            this.tbDeltaPress.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tbDeltaPress.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.tbDeltaPress.Name = "tbDeltaPress";
-            this.tbDeltaPress.Size = new System.Drawing.Size(101, 21);
-            this.tbDeltaPress.TabIndex = 84;
-            // 
-            // tbDeltaTemp
-            // 
-            this.tbDeltaTemp.Location = new System.Drawing.Point(594, 95);
-            this.tbDeltaTemp.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.tbDeltaTemp.Name = "tbDeltaTemp";
-            this.tbDeltaTemp.Size = new System.Drawing.Size(101, 21);
-            this.tbDeltaTemp.TabIndex = 83;
-            // 
-            // tbHoldTimeAfReset
-            // 
-            this.tbHoldTimeAfReset.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.tbHoldTimeAfReset.Location = new System.Drawing.Point(594, 75);
-            this.tbHoldTimeAfReset.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbHoldTimeAfReset.Name = "tbHoldTimeAfReset";
-            this.tbHoldTimeAfReset.Size = new System.Drawing.Size(101, 21);
-            this.tbHoldTimeAfReset.TabIndex = 82;
-            this.tbHoldTimeAfReset.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // tbHoldTimePress
-            // 
-            this.tbHoldTimePress.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.tbHoldTimePress.Location = new System.Drawing.Point(594, 55);
-            this.tbHoldTimePress.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbHoldTimePress.Name = "tbHoldTimePress";
-            this.tbHoldTimePress.Size = new System.Drawing.Size(101, 21);
-            this.tbHoldTimePress.TabIndex = 81;
-            this.tbHoldTimePress.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // tbHoldTimeTemp
             // 
             this.tbHoldTimeTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbHoldTimeTemp.Increment = new decimal(new int[] {
-            100,
+            1000,
             0,
             0,
             0});
             this.tbHoldTimeTemp.Location = new System.Drawing.Point(594, 35);
+            this.tbHoldTimeTemp.Maximum = new decimal(new int[] {
+            60000,
+            0,
+            0,
+            0});
             this.tbHoldTimeTemp.Minimum = new decimal(new int[] {
-            1,
+            1000,
             0,
             0,
             0});
@@ -372,7 +294,7 @@
             this.tbHoldTimeTemp.Size = new System.Drawing.Size(101, 21);
             this.tbHoldTimeTemp.TabIndex = 80;
             this.tbHoldTimeTemp.Value = new decimal(new int[] {
-            1,
+            1000,
             0,
             0,
             0});
@@ -383,7 +305,7 @@
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(544, 21);
             this.textBox10.TabIndex = 56;
-            this.textBox10.Text = "Время выдержки после выхода камеры на температурный режим,  [мин]";
+            this.textBox10.Text = "Время выдержки после выхода камеры на температурный режим,  [мс]";
             // 
             // cbHandleMultimetr
             // 
@@ -393,11 +315,12 @@
             this.cbHandleMultimetr.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 175);
+            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 244);
             this.cbHandleMultimetr.Name = "cbHandleMultimetr";
             this.cbHandleMultimetr.Size = new System.Drawing.Size(101, 21);
             this.cbHandleMultimetr.TabIndex = 78;
             this.cbHandleMultimetr.Tag = "108";
+            this.cbHandleMultimetr.Visible = false;
             // 
             // cbHandlePress
             // 
@@ -407,70 +330,34 @@
             this.cbHandlePress.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandlePress.Location = new System.Drawing.Point(594, 155);
+            this.cbHandlePress.Location = new System.Drawing.Point(594, 224);
             this.cbHandlePress.Name = "cbHandlePress";
             this.cbHandlePress.Size = new System.Drawing.Size(101, 21);
             this.cbHandlePress.TabIndex = 77;
             this.cbHandlePress.Tag = "107";
-            // 
-            // textBox24
-            // 
-            this.textBox24.Location = new System.Drawing.Point(52, 55);
-            this.textBox24.Name = "textBox24";
-            this.textBox24.Size = new System.Drawing.Size(544, 21);
-            this.textBox24.TabIndex = 58;
-            this.textBox24.Text = "Время выдержки после выхода на заданное давление,  [мин]";
-            // 
-            // textBox29
-            // 
-            this.textBox29.Location = new System.Drawing.Point(52, 75);
-            this.textBox29.Name = "textBox29";
-            this.textBox29.Size = new System.Drawing.Size(544, 21);
-            this.textBox29.TabIndex = 60;
-            this.textBox29.Text = "Время выдержки после сброса давления (при раскачке давлением),  [мин]";
-            // 
-            // textBox33
-            // 
-            this.textBox33.Location = new System.Drawing.Point(52, 95);
-            this.textBox33.Name = "textBox33";
-            this.textBox33.Size = new System.Drawing.Size(544, 21);
-            this.textBox33.TabIndex = 62;
-            this.textBox33.Text = "Диапазон в котором должна поддерживаться температура,  [град]";
+            this.cbHandlePress.Visible = false;
             // 
             // textBox36
             // 
-            this.textBox36.Location = new System.Drawing.Point(52, 175);
+            this.textBox36.Location = new System.Drawing.Point(52, 244);
             this.textBox36.Name = "textBox36";
             this.textBox36.Size = new System.Drawing.Size(544, 21);
             this.textBox36.TabIndex = 71;
-            this.textBox36.Text = "Проводить  характеризацию/верификацию при отсутствии подключения  к задатчику";
-            // 
-            // textBox37
-            // 
-            this.textBox37.Location = new System.Drawing.Point(52, 115);
-            this.textBox37.Name = "textBox37";
-            this.textBox37.Size = new System.Drawing.Size(544, 21);
-            this.textBox37.TabIndex = 64;
-            this.textBox37.Text = "Диапазон в котором должно поддерживаться давление,  [Па]";
+            this.textBox36.Text = "Проводить  характеризацию/верификацию при отсутствии подключения  к мультиметру";
+            this.textBox36.Visible = false;
             // 
             // textBox38
             // 
-            this.textBox38.Location = new System.Drawing.Point(52, 155);
+            this.textBox38.Location = new System.Drawing.Point(52, 224);
             this.textBox38.Name = "textBox38";
             this.textBox38.Size = new System.Drawing.Size(544, 21);
             this.textBox38.TabIndex = 70;
             this.textBox38.Text = "Проводить  характеризацию/верификацию при отсутствии подключения  к задатчику";
-            // 
-            // textBox42
-            // 
-            this.textBox42.Location = new System.Drawing.Point(52, 135);
-            this.textBox42.Name = "textBox42";
-            this.textBox42.Size = new System.Drawing.Size(544, 21);
-            this.textBox42.TabIndex = 68;
-            this.textBox42.Text = "Общий интервал опроса приборов и датчиков,  [сек]";
+            this.textBox38.Visible = false;
             // 
             // tp_CommutatorSettings
             // 
+            this.tp_CommutatorSettings.Controls.Add(this.tbCommMaxLevelCount);
             this.tp_CommutatorSettings.Controls.Add(this.tbCommReadPause);
             this.tp_CommutatorSettings.Controls.Add(this.tbCommReadPeriod);
             this.tp_CommutatorSettings.Controls.Add(this.tbCommMaxSetCH);
@@ -480,7 +367,6 @@
             this.tp_CommutatorSettings.Controls.Add(this.textBox54);
             this.tp_CommutatorSettings.Controls.Add(this.textBox57);
             this.tp_CommutatorSettings.Controls.Add(this.textBox61);
-            this.tp_CommutatorSettings.Controls.Add(this.textBox63);
             this.tp_CommutatorSettings.Controls.Add(this.textBox65);
             this.tp_CommutatorSettings.Controls.Add(this.textBox67);
             this.tp_CommutatorSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -495,13 +381,18 @@
             // tbCommReadPause
             // 
             this.tbCommReadPause.Increment = new decimal(new int[] {
-            100,
+            50,
             0,
             0,
             0});
             this.tbCommReadPause.Location = new System.Drawing.Point(595, 94);
             this.tbCommReadPause.Maximum = new decimal(new int[] {
-            1000,
+            500,
+            0,
+            0,
+            0});
+            this.tbCommReadPause.Minimum = new decimal(new int[] {
+            50,
             0,
             0,
             0});
@@ -509,7 +400,7 @@
             this.tbCommReadPause.Size = new System.Drawing.Size(100, 21);
             this.tbCommReadPause.TabIndex = 93;
             this.tbCommReadPause.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
@@ -527,28 +418,33 @@
             0,
             0,
             0});
+            this.tbCommReadPeriod.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.tbCommReadPeriod.Name = "tbCommReadPeriod";
             this.tbCommReadPeriod.Size = new System.Drawing.Size(100, 21);
             this.tbCommReadPeriod.TabIndex = 93;
             this.tbCommReadPeriod.Value = new decimal(new int[] {
-            1,
+            1000,
             0,
             0,
             0});
             // 
             // tbCommMaxSetCH
             // 
-            this.tbCommMaxSetCH.Increment = new decimal(new int[] {
-            100,
+            this.tbCommMaxSetCH.Location = new System.Drawing.Point(595, 55);
+            this.tbCommMaxSetCH.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
-            this.tbCommMaxSetCH.Location = new System.Drawing.Point(595, 55);
             this.tbCommMaxSetCH.Name = "tbCommMaxSetCH";
             this.tbCommMaxSetCH.Size = new System.Drawing.Size(100, 21);
             this.tbCommMaxSetCH.TabIndex = 93;
             this.tbCommMaxSetCH.Value = new decimal(new int[] {
-            1,
+            15,
             0,
             0,
             0});
@@ -557,6 +453,11 @@
             // 
             this.tbCommReadCH.Enabled = false;
             this.tbCommReadCH.Location = new System.Drawing.Point(595, 35);
+            this.tbCommReadCH.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.tbCommReadCH.Name = "tbCommReadCH";
             this.tbCommReadCH.Size = new System.Drawing.Size(100, 21);
             this.tbCommReadCH.TabIndex = 93;
@@ -573,7 +474,7 @@
             this.textBox49.Name = "textBox49";
             this.textBox49.Size = new System.Drawing.Size(544, 21);
             this.textBox49.TabIndex = 81;
-            this.textBox49.Text = "Количество опрашиваемых каналов,  [шт] ";
+            this.textBox49.Text = "Максимальное количество каналов коммутатора,  [шт] ";
             // 
             // textBox51
             // 
@@ -581,7 +482,8 @@
             this.textBox51.Name = "textBox51";
             this.textBox51.Size = new System.Drawing.Size(544, 21);
             this.textBox51.TabIndex = 83;
-            this.textBox51.Text = "Максимальное кол-во датчиков, подключенных к измерительной цепи,  [шт.]";
+            this.textBox51.Text = "Максимально разрешенное кол-во датчиков, подключенных к измерительной цепи,  [шт." +
+    "]";
             // 
             // textBox54
             // 
@@ -597,7 +499,7 @@
             this.textBox57.Name = "textBox57";
             this.textBox57.Size = new System.Drawing.Size(544, 21);
             this.textBox57.TabIndex = 87;
-            this.textBox57.Text = "Пауза между отправкой команд и приемом данных,  [мс]  ";
+            this.textBox57.Text = "Время ожидания ответа от коммутатора,  [мс]";
             // 
             // textBox61
             // 
@@ -605,13 +507,7 @@
             this.textBox61.Name = "textBox61";
             this.textBox61.Size = new System.Drawing.Size(544, 21);
             this.textBox61.TabIndex = 89;
-            // 
-            // textBox63
-            // 
-            this.textBox63.Location = new System.Drawing.Point(595, 114);
-            this.textBox63.Name = "textBox63";
-            this.textBox63.Size = new System.Drawing.Size(100, 21);
-            this.textBox63.TabIndex = 90;
+            this.textBox61.Text = "Максимальное количество уровней, [шт.] ";
             // 
             // textBox65
             // 
@@ -666,11 +562,16 @@
             0,
             0,
             0});
+            this.tbMultimWaitReady.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.tbMultimWaitReady.Name = "tbMultimWaitReady";
             this.tbMultimWaitReady.Size = new System.Drawing.Size(100, 21);
             this.tbMultimWaitReady.TabIndex = 103;
             this.tbMultimWaitReady.Value = new decimal(new int[] {
-            1,
+            5000,
             0,
             0,
             0});
@@ -692,7 +593,12 @@
             0});
             this.tbMultimReadTimeOut.Location = new System.Drawing.Point(595, 75);
             this.tbMultimReadTimeOut.Maximum = new decimal(new int[] {
-            10000,
+            1000,
+            0,
+            0,
+            0});
+            this.tbMultimReadTimeOut.Minimum = new decimal(new int[] {
+            100,
             0,
             0,
             0});
@@ -700,7 +606,7 @@
             this.tbMultimReadTimeOut.Size = new System.Drawing.Size(100, 21);
             this.tbMultimReadTimeOut.TabIndex = 101;
             this.tbMultimReadTimeOut.Value = new decimal(new int[] {
-            1,
+            300,
             0,
             0,
             0});
@@ -744,7 +650,7 @@
             // tbMultimReadPeriod
             // 
             this.tbMultimReadPeriod.Increment = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
@@ -754,11 +660,16 @@
             0,
             0,
             0});
+            this.tbMultimReadPeriod.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.tbMultimReadPeriod.Name = "tbMultimReadPeriod";
             this.tbMultimReadPeriod.Size = new System.Drawing.Size(100, 21);
             this.tbMultimReadPeriod.TabIndex = 94;
             this.tbMultimReadPeriod.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
@@ -766,11 +677,6 @@
             // tbMultimReadCount
             // 
             this.tbMultimReadCount.Location = new System.Drawing.Point(595, 35);
-            this.tbMultimReadCount.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
             this.tbMultimReadCount.Minimum = new decimal(new int[] {
             1,
             0,
@@ -791,7 +697,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(544, 21);
             this.textBox7.TabIndex = 81;
-            this.textBox7.Text = "Количество отсчетов при усреднении показаний мультиметра,  [ед]";
+            this.textBox7.Text = "Количество накапливаемых отсчетов для усреднения показаний мультиметра,  [ед]";
             // 
             // textBox9
             // 
@@ -799,7 +705,7 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(544, 21);
             this.textBox9.TabIndex = 83;
-            this.textBox9.Text = "Период между опросами,  [мс]";
+            this.textBox9.Text = "Интервал опроса показаний мультиметра,  [мс]";
             // 
             // textBox13
             // 
@@ -831,16 +737,16 @@
             // 
             // tp_MensorSettings
             // 
+            this.tp_MensorSettings.Controls.Add(this.tbMensorMaxCountPoint);
+            this.tp_MensorSettings.Controls.Add(this.tbMensorSKOPressure);
+            this.tp_MensorSettings.Controls.Add(this.textBox19);
             this.tp_MensorSettings.Controls.Add(this.textBox6);
             this.tp_MensorSettings.Controls.Add(this.textBox8);
             this.tp_MensorSettings.Controls.Add(this.tbMensorReadPause);
             this.tp_MensorSettings.Controls.Add(this.tbMensorReadPeriod);
             this.tp_MensorSettings.Controls.Add(this.textBox85);
-            this.tp_MensorSettings.Controls.Add(this.textBox81);
-            this.tp_MensorSettings.Controls.Add(this.cbMensorSetZero);
             this.tp_MensorSettings.Controls.Add(this.textBox71);
             this.tp_MensorSettings.Controls.Add(this.textBox73);
-            this.tp_MensorSettings.Controls.Add(this.textBox76);
             this.tp_MensorSettings.Controls.Add(this.textBox79);
             this.tp_MensorSettings.Controls.Add(this.textBox83);
             this.tp_MensorSettings.Location = new System.Drawing.Point(4, 24);
@@ -868,13 +774,18 @@
             // tbMensorReadPause
             // 
             this.tbMensorReadPause.Increment = new decimal(new int[] {
-            50,
+            10,
             0,
             0,
             0});
             this.tbMensorReadPause.Location = new System.Drawing.Point(595, 55);
             this.tbMensorReadPause.Maximum = new decimal(new int[] {
-            10000,
+            500,
+            0,
+            0,
+            0});
+            this.tbMensorReadPause.Minimum = new decimal(new int[] {
+            50,
             0,
             0,
             0});
@@ -882,7 +793,7 @@
             this.tbMensorReadPause.Size = new System.Drawing.Size(100, 21);
             this.tbMensorReadPause.TabIndex = 96;
             this.tbMensorReadPause.Value = new decimal(new int[] {
-            1,
+            50,
             0,
             0,
             0});
@@ -896,7 +807,12 @@
             0});
             this.tbMensorReadPeriod.Location = new System.Drawing.Point(595, 35);
             this.tbMensorReadPeriod.Maximum = new decimal(new int[] {
-            10000,
+            5000,
+            0,
+            0,
+            0});
+            this.tbMensorReadPeriod.Minimum = new decimal(new int[] {
+            500,
             0,
             0,
             0});
@@ -904,7 +820,7 @@
             this.tbMensorReadPeriod.Size = new System.Drawing.Size(100, 21);
             this.tbMensorReadPeriod.TabIndex = 97;
             this.tbMensorReadPeriod.Value = new decimal(new int[] {
-            1,
+            1000,
             0,
             0,
             0});
@@ -915,27 +831,6 @@
             this.textBox85.Name = "textBox85";
             this.textBox85.Size = new System.Drawing.Size(100, 21);
             this.textBox85.TabIndex = 90;
-            // 
-            // textBox81
-            // 
-            this.textBox81.Location = new System.Drawing.Point(595, 95);
-            this.textBox81.Name = "textBox81";
-            this.textBox81.Size = new System.Drawing.Size(100, 21);
-            this.textBox81.TabIndex = 88;
-            // 
-            // cbMensorSetZero
-            // 
-            this.cbMensorSetZero.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMensorSetZero.Enabled = false;
-            this.cbMensorSetZero.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbMensorSetZero.FormattingEnabled = true;
-            this.cbMensorSetZero.Items.AddRange(new object[] {
-            "Нет",
-            "Да"});
-            this.cbMensorSetZero.Location = new System.Drawing.Point(595, 76);
-            this.cbMensorSetZero.Name = "cbMensorSetZero";
-            this.cbMensorSetZero.Size = new System.Drawing.Size(100, 21);
-            this.cbMensorSetZero.TabIndex = 91;
             // 
             // textBox71
             // 
@@ -951,16 +846,7 @@
             this.textBox73.Name = "textBox73";
             this.textBox73.Size = new System.Drawing.Size(544, 21);
             this.textBox73.TabIndex = 83;
-            this.textBox73.Text = "Пауза между отправкой команд и приемом данных,  [мс]";
-            // 
-            // textBox76
-            // 
-            this.textBox76.Enabled = false;
-            this.textBox76.Location = new System.Drawing.Point(52, 75);
-            this.textBox76.Name = "textBox76";
-            this.textBox76.Size = new System.Drawing.Size(544, 21);
-            this.textBox76.TabIndex = 85;
-            this.textBox76.Text = "Обнуление давления задатчика перед использованием";
+            this.textBox73.Text = "Время ожидания ответа от задатчика  на команду,  [мс]";
             // 
             // textBox79
             // 
@@ -968,6 +854,7 @@
             this.textBox79.Name = "textBox79";
             this.textBox79.Size = new System.Drawing.Size(544, 21);
             this.textBox79.TabIndex = 87;
+            this.textBox79.Text = "Время ожидания стабилизации давления в датчиках, [мс]";
             // 
             // textBox83
             // 
@@ -1000,9 +887,19 @@
             // 
             // tbTCameraReadPeriod
             // 
+            this.tbTCameraReadPeriod.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.tbTCameraReadPeriod.Location = new System.Drawing.Point(595, 35);
             this.tbTCameraReadPeriod.Maximum = new decimal(new int[] {
             10000,
+            0,
+            0,
+            0});
+            this.tbTCameraReadPeriod.Minimum = new decimal(new int[] {
+            100,
             0,
             0,
             0});
@@ -1010,7 +907,7 @@
             this.tbTCameraReadPeriod.Size = new System.Drawing.Size(100, 21);
             this.tbTCameraReadPeriod.TabIndex = 98;
             this.tbTCameraReadPeriod.Value = new decimal(new int[] {
-            1,
+            2000,
             0,
             0,
             0});
@@ -1095,7 +992,8 @@
             // 
             // tp_SensorSettings
             // 
-            this.tp_SensorSettings.Controls.Add(this.tbSensSKOCalibrCurrent);
+            this.tp_SensorSettings.Controls.Add(this.textBox26);
+            this.tp_SensorSettings.Controls.Add(this.textBox27);
             this.tp_SensorSettings.Controls.Add(this.tbSensWaitPause);
             this.tp_SensorSettings.Controls.Add(this.textBox1);
             this.tp_SensorSettings.Controls.Add(this.textBox14);
@@ -1106,7 +1004,6 @@
             this.tp_SensorSettings.Controls.Add(this.textBox117);
             this.tp_SensorSettings.Controls.Add(this.textBox120);
             this.tp_SensorSettings.Controls.Add(this.textBox121);
-            this.tp_SensorSettings.Controls.Add(this.textBox123);
             this.tp_SensorSettings.Controls.Add(this.textBox127);
             this.tp_SensorSettings.Controls.Add(this.textBox129);
             this.tp_SensorSettings.Location = new System.Drawing.Point(4, 24);
@@ -1117,39 +1014,21 @@
             this.tp_SensorSettings.Text = "Датчики";
             this.tp_SensorSettings.UseVisualStyleBackColor = true;
             // 
-            // tbSensSKOCalibrCurrent
-            // 
-            this.tbSensSKOCalibrCurrent.DecimalPlaces = 4;
-            this.tbSensSKOCalibrCurrent.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.tbSensSKOCalibrCurrent.Location = new System.Drawing.Point(595, 95);
-            this.tbSensSKOCalibrCurrent.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbSensSKOCalibrCurrent.Name = "tbSensSKOCalibrCurrent";
-            this.tbSensSKOCalibrCurrent.Size = new System.Drawing.Size(100, 21);
-            this.tbSensSKOCalibrCurrent.TabIndex = 104;
-            this.tbSensSKOCalibrCurrent.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            196608});
-            // 
             // tbSensWaitPause
             // 
             this.tbSensWaitPause.Increment = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
             this.tbSensWaitPause.Location = new System.Drawing.Point(595, 75);
             this.tbSensWaitPause.Maximum = new decimal(new int[] {
-            10000,
+            500,
+            0,
+            0,
+            0});
+            this.tbSensWaitPause.Minimum = new decimal(new int[] {
+            50,
             0,
             0,
             0});
@@ -1157,7 +1036,7 @@
             this.tbSensWaitPause.Size = new System.Drawing.Size(100, 21);
             this.tbSensWaitPause.TabIndex = 103;
             this.tbSensWaitPause.Value = new decimal(new int[] {
-            1,
+            300,
             0,
             0,
             0});
@@ -1187,13 +1066,18 @@
             // tbSensReadPause
             // 
             this.tbSensReadPause.Increment = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
             this.tbSensReadPause.Location = new System.Drawing.Point(595, 55);
             this.tbSensReadPause.Maximum = new decimal(new int[] {
-            10000,
+            500,
+            0,
+            0,
+            0});
+            this.tbSensReadPause.Minimum = new decimal(new int[] {
+            100,
             0,
             0,
             0});
@@ -1201,7 +1085,7 @@
             this.tbSensReadPause.Size = new System.Drawing.Size(100, 21);
             this.tbSensReadPause.TabIndex = 98;
             this.tbSensReadPause.Value = new decimal(new int[] {
-            1,
+            300,
             0,
             0,
             0});
@@ -1209,6 +1093,11 @@
             // tbSensReadCount
             // 
             this.tbSensReadCount.Location = new System.Drawing.Point(595, 35);
+            this.tbSensReadCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.tbSensReadCount.Name = "tbSensReadCount";
             this.tbSensReadCount.Size = new System.Drawing.Size(100, 21);
             this.tbSensReadCount.TabIndex = 99;
@@ -1232,7 +1121,7 @@
             this.textBox117.Name = "textBox117";
             this.textBox117.Size = new System.Drawing.Size(544, 21);
             this.textBox117.TabIndex = 83;
-            this.textBox117.Text = "Время ожидания при повторном HART-опросе датчика,  [мс]";
+            this.textBox117.Text = "Интервал опроса датчика,  [мс]";
             // 
             // textBox120
             // 
@@ -1247,14 +1136,6 @@
             this.textBox121.Name = "textBox121";
             this.textBox121.Size = new System.Drawing.Size(100, 21);
             this.textBox121.TabIndex = 86;
-            // 
-            // textBox123
-            // 
-            this.textBox123.Location = new System.Drawing.Point(52, 95);
-            this.textBox123.Name = "textBox123";
-            this.textBox123.Size = new System.Drawing.Size(544, 21);
-            this.textBox123.TabIndex = 87;
-            this.textBox123.Text = "Допуск по току ЦАП после калибровки, мА";
             // 
             // textBox127
             // 
@@ -1280,6 +1161,380 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
+            // textBox19
+            // 
+            this.textBox19.Location = new System.Drawing.Point(52, 75);
+            this.textBox19.Name = "textBox19";
+            this.textBox19.Size = new System.Drawing.Size(544, 21);
+            this.textBox19.TabIndex = 100;
+            this.textBox19.Text = "Допуск задатчика по выходу на заданное давление, [кПа]";
+            // 
+            // tbMensorSKOPressure
+            // 
+            this.tbMensorSKOPressure.DecimalPlaces = 2;
+            this.tbMensorSKOPressure.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.tbMensorSKOPressure.Location = new System.Drawing.Point(595, 75);
+            this.tbMensorSKOPressure.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbMensorSKOPressure.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.tbMensorSKOPressure.Name = "tbMensorSKOPressure";
+            this.tbMensorSKOPressure.Size = new System.Drawing.Size(100, 21);
+            this.tbMensorSKOPressure.TabIndex = 101;
+            this.tbMensorSKOPressure.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            // 
+            // tbMensorMaxCountPoint
+            // 
+            this.tbMensorMaxCountPoint.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tbMensorMaxCountPoint.Location = new System.Drawing.Point(595, 95);
+            this.tbMensorMaxCountPoint.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.tbMensorMaxCountPoint.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.tbMensorMaxCountPoint.Name = "tbMensorMaxCountPoint";
+            this.tbMensorMaxCountPoint.Size = new System.Drawing.Size(100, 21);
+            this.tbMensorMaxCountPoint.TabIndex = 102;
+            this.tbMensorMaxCountPoint.Value = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            // 
+            // tbCommMaxLevelCount
+            // 
+            this.tbCommMaxLevelCount.Location = new System.Drawing.Point(595, 114);
+            this.tbCommMaxLevelCount.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.tbCommMaxLevelCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbCommMaxLevelCount.Name = "tbCommMaxLevelCount";
+            this.tbCommMaxLevelCount.Size = new System.Drawing.Size(100, 21);
+            this.tbCommMaxLevelCount.TabIndex = 94;
+            this.tbCommMaxLevelCount.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // textBox42
+            // 
+            this.textBox42.Location = new System.Drawing.Point(52, 75);
+            this.textBox42.Name = "textBox42";
+            this.textBox42.Size = new System.Drawing.Size(544, 21);
+            this.textBox42.TabIndex = 68;
+            this.textBox42.Text = "Общий интервал опроса приборов и датчиков,  [сек]";
+            // 
+            // textBox33
+            // 
+            this.textBox33.Location = new System.Drawing.Point(52, 55);
+            this.textBox33.Name = "textBox33";
+            this.textBox33.Size = new System.Drawing.Size(544, 21);
+            this.textBox33.TabIndex = 62;
+            this.textBox33.Text = "Диапазон в котором должна поддерживаться температура,  [град]";
+            // 
+            // tbDeltaTemp
+            // 
+            this.tbDeltaTemp.DecimalPlaces = 1;
+            this.tbDeltaTemp.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tbDeltaTemp.Location = new System.Drawing.Point(594, 55);
+            this.tbDeltaTemp.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbDeltaTemp.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tbDeltaTemp.Name = "tbDeltaTemp";
+            this.tbDeltaTemp.Size = new System.Drawing.Size(101, 21);
+            this.tbDeltaTemp.TabIndex = 83;
+            this.tbDeltaTemp.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            // 
+            // tbMainTimer
+            // 
+            this.tbMainTimer.Increment = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.tbMainTimer.Location = new System.Drawing.Point(594, 75);
+            this.tbMainTimer.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.tbMainTimer.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbMainTimer.Name = "tbMainTimer";
+            this.tbMainTimer.Size = new System.Drawing.Size(101, 21);
+            this.tbMainTimer.TabIndex = 85;
+            this.tbMainTimer.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // tbMaxErrorCount
+            // 
+            this.tbMaxErrorCount.Location = new System.Drawing.Point(594, 95);
+            this.tbMaxErrorCount.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbMaxErrorCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbMaxErrorCount.Name = "tbMaxErrorCount";
+            this.tbMaxErrorCount.Size = new System.Drawing.Size(101, 21);
+            this.tbMaxErrorCount.TabIndex = 87;
+            this.tbMaxErrorCount.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // textBox21
+            // 
+            this.textBox21.Location = new System.Drawing.Point(52, 95);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new System.Drawing.Size(544, 21);
+            this.textBox21.TabIndex = 86;
+            this.textBox21.Text = "Количество ошибок чтения данных с подключенных устройств перед их отключением, [р" +
+    "аз]";
+            // 
+            // tbMinSensorCurrent
+            // 
+            this.tbMinSensorCurrent.DecimalPlaces = 1;
+            this.tbMinSensorCurrent.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tbMinSensorCurrent.Location = new System.Drawing.Point(594, 115);
+            this.tbMinSensorCurrent.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.tbMinSensorCurrent.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tbMinSensorCurrent.Name = "tbMinSensorCurrent";
+            this.tbMinSensorCurrent.Size = new System.Drawing.Size(101, 21);
+            this.tbMinSensorCurrent.TabIndex = 89;
+            this.tbMinSensorCurrent.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            65536});
+            // 
+            // textBox22
+            // 
+            this.textBox22.Location = new System.Drawing.Point(52, 115);
+            this.textBox22.Name = "textBox22";
+            this.textBox22.Size = new System.Drawing.Size(544, 21);
+            this.textBox22.TabIndex = 88;
+            this.textBox22.Text = "Минимальный ток датчика для обнаружения, [мА]";
+            // 
+            // tbMaxCountCAPRead
+            // 
+            this.tbMaxCountCAPRead.Location = new System.Drawing.Point(594, 135);
+            this.tbMaxCountCAPRead.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbMaxCountCAPRead.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbMaxCountCAPRead.Name = "tbMaxCountCAPRead";
+            this.tbMaxCountCAPRead.Size = new System.Drawing.Size(101, 21);
+            this.tbMaxCountCAPRead.TabIndex = 91;
+            this.tbMaxCountCAPRead.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // textBox24
+            // 
+            this.textBox24.Location = new System.Drawing.Point(52, 135);
+            this.textBox24.Name = "textBox24";
+            this.textBox24.Size = new System.Drawing.Size(544, 21);
+            this.textBox24.TabIndex = 90;
+            this.textBox24.Text = "Максимальное количество циклов чтения тока ЦАП  датчика, [раз]";
+            // 
+            // tbSKOCurrent
+            // 
+            this.tbSKOCurrent.DecimalPlaces = 1;
+            this.tbSKOCurrent.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tbSKOCurrent.Location = new System.Drawing.Point(594, 155);
+            this.tbSKOCurrent.Maximum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.tbSKOCurrent.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tbSKOCurrent.Name = "tbSKOCurrent";
+            this.tbSKOCurrent.Size = new System.Drawing.Size(101, 21);
+            this.tbSKOCurrent.TabIndex = 93;
+            this.tbSKOCurrent.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            // 
+            // textBox25
+            // 
+            this.textBox25.Location = new System.Drawing.Point(52, 155);
+            this.textBox25.Name = "textBox25";
+            this.textBox25.Size = new System.Drawing.Size(544, 21);
+            this.textBox25.TabIndex = 92;
+            this.textBox25.Text = "Допуск по току ЦАП датчика до калибровки, [мА]";
+            // 
+            // tb_SKOCalibrationCurrent
+            // 
+            this.tb_SKOCalibrationCurrent.DecimalPlaces = 4;
+            this.tb_SKOCalibrationCurrent.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.tb_SKOCalibrationCurrent.Location = new System.Drawing.Point(594, 175);
+            this.tb_SKOCalibrationCurrent.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.tb_SKOCalibrationCurrent.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.tb_SKOCalibrationCurrent.Name = "tb_SKOCalibrationCurrent";
+            this.tb_SKOCalibrationCurrent.Size = new System.Drawing.Size(101, 21);
+            this.tb_SKOCalibrationCurrent.TabIndex = 95;
+            this.tb_SKOCalibrationCurrent.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            196608});
+            // 
+            // tb
+            // 
+            this.tb.Location = new System.Drawing.Point(52, 175);
+            this.tb.Name = "tb";
+            this.tb.Size = new System.Drawing.Size(544, 21);
+            this.tb.TabIndex = 94;
+            this.tb.Text = "Допуск по току ЦАП датчика после калибровки, [мА]";
+            // 
+            // textBox26
+            // 
+            this.textBox26.Location = new System.Drawing.Point(52, 95);
+            this.textBox26.Name = "textBox26";
+            this.textBox26.Size = new System.Drawing.Size(544, 21);
+            this.textBox26.TabIndex = 104;
+            // 
+            // textBox27
+            // 
+            this.textBox27.Location = new System.Drawing.Point(595, 95);
+            this.textBox27.Name = "textBox27";
+            this.textBox27.Size = new System.Drawing.Size(100, 21);
+            this.textBox27.TabIndex = 105;
+            // 
+            // tbRezistor
+            // 
+            this.tbRezistor.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbRezistor.Location = new System.Drawing.Point(594, 195);
+            this.tbRezistor.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.tbRezistor.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tbRezistor.Name = "tbRezistor";
+            this.tbRezistor.Size = new System.Drawing.Size(101, 21);
+            this.tbRezistor.TabIndex = 97;
+            this.tbRezistor.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
+            // textBox28
+            // 
+            this.textBox28.Location = new System.Drawing.Point(52, 195);
+            this.textBox28.Name = "textBox28";
+            this.textBox28.Size = new System.Drawing.Size(544, 21);
+            this.textBox28.TabIndex = 96;
+            this.textBox28.Text = "Сопротивление нагрузочного резистора, [Ом]";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1297,11 +1552,6 @@
             this.tab_FormSettings.ResumeLayout(false);
             this.tp_ProgramSettings.ResumeLayout(false);
             this.tp_ProgramSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMainTimer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDeltaPress)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDeltaTemp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeAfReset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimePress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeTemp)).EndInit();
             this.tp_CommutatorSettings.ResumeLayout(false);
             this.tp_CommutatorSettings.PerformLayout();
@@ -1324,10 +1574,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbTCameraReadPeriod)).EndInit();
             this.tp_SensorSettings.ResumeLayout(false);
             this.tp_SensorSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSensSKOCalibrCurrent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMensorSKOPressure)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMensorMaxCountPoint)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbDeltaTemp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMainTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxErrorCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMinSensorCurrent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMaxCountCAPRead)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSKOCurrent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_SKOCalibrationCurrent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbRezistor)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1351,13 +1611,8 @@
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.ComboBox cbHandleMultimetr;
         private System.Windows.Forms.ComboBox cbHandlePress;
-        private System.Windows.Forms.TextBox textBox24;
-        private System.Windows.Forms.TextBox textBox29;
-        private System.Windows.Forms.TextBox textBox33;
         private System.Windows.Forms.TextBox textBox36;
-        private System.Windows.Forms.TextBox textBox37;
         private System.Windows.Forms.TextBox textBox38;
-        private System.Windows.Forms.TextBox textBox42;
         private System.Windows.Forms.TextBox textBox49;
         private System.Windows.Forms.TextBox textBox51;
         private System.Windows.Forms.TextBox textBox54;
@@ -1366,9 +1621,7 @@
         private System.Windows.Forms.TextBox textBox65;
         private System.Windows.Forms.TextBox textBox71;
         private System.Windows.Forms.TextBox textBox73;
-        private System.Windows.Forms.TextBox textBox76;
         private System.Windows.Forms.TextBox textBox79;
-        private System.Windows.Forms.TextBox textBox81;
         private System.Windows.Forms.TextBox textBox83;
         private System.Windows.Forms.TextBox textBox85;
         private System.Windows.Forms.TextBox textBox93;
@@ -1384,7 +1637,6 @@
         private System.Windows.Forms.TextBox textBox117;
         private System.Windows.Forms.TextBox textBox120;
         private System.Windows.Forms.TextBox textBox121;
-        private System.Windows.Forms.TextBox textBox123;
         private System.Windows.Forms.TextBox textBox127;
         private System.Windows.Forms.TextBox textBox129;
         private System.Windows.Forms.TextBox textBox7;
@@ -1393,18 +1645,11 @@
         private System.Windows.Forms.TextBox textBox16;
         private System.Windows.Forms.TextBox textBox20;
         private System.Windows.Forms.TextBox textBox23;
-        private System.Windows.Forms.ComboBox cbMensorSetZero;
         private System.Windows.Forms.NumericUpDown tbHoldTimeTemp;
-        private System.Windows.Forms.NumericUpDown tbMainTimer;
-        private System.Windows.Forms.NumericUpDown tbDeltaPress;
-        private System.Windows.Forms.NumericUpDown tbDeltaTemp;
-        private System.Windows.Forms.NumericUpDown tbHoldTimeAfReset;
-        private System.Windows.Forms.NumericUpDown tbHoldTimePress;
         private System.Windows.Forms.NumericUpDown tbCommReadCH;
         private System.Windows.Forms.NumericUpDown tbCommReadPause;
         private System.Windows.Forms.NumericUpDown tbCommReadPeriod;
         private System.Windows.Forms.NumericUpDown tbCommMaxSetCH;
-        private System.Windows.Forms.TextBox textBox63;
         private System.Windows.Forms.TextBox textBox67;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
@@ -1429,6 +1674,27 @@
         private System.Windows.Forms.TextBox textBox17;
         private System.Windows.Forms.NumericUpDown tbMultimWaitReady;
         private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.NumericUpDown tbSensSKOCalibrCurrent;
+        private System.Windows.Forms.NumericUpDown tbMensorSKOPressure;
+        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.NumericUpDown tbMensorMaxCountPoint;
+        private System.Windows.Forms.NumericUpDown tbCommMaxLevelCount;
+        private System.Windows.Forms.NumericUpDown tbMainTimer;
+        private System.Windows.Forms.NumericUpDown tbDeltaTemp;
+        private System.Windows.Forms.TextBox textBox33;
+        private System.Windows.Forms.TextBox textBox42;
+        private System.Windows.Forms.NumericUpDown tbMaxErrorCount;
+        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.NumericUpDown tbMinSensorCurrent;
+        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.NumericUpDown tbMaxCountCAPRead;
+        private System.Windows.Forms.TextBox textBox24;
+        private System.Windows.Forms.NumericUpDown tbSKOCurrent;
+        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.NumericUpDown tb_SKOCalibrationCurrent;
+        private System.Windows.Forms.TextBox tb;
+        private System.Windows.Forms.TextBox textBox26;
+        private System.Windows.Forms.TextBox textBox27;
+        private System.Windows.Forms.NumericUpDown tbRezistor;
+        private System.Windows.Forms.TextBox textBox28;
     }
 }
