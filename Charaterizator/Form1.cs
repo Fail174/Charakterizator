@@ -118,7 +118,7 @@ namespace Charaterizator
 
 
             MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
-            SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SensSKOCalibrCurrent;
+            SKO_CALIBRATION_CURRENT = 0.003;// Properties.Settings.Default.set_SensSKOCalibrCurrent;
 
             //********************  Цифровой шрифт *********************
             tbDateTime.Font = DrawingFont;
@@ -2757,7 +2757,7 @@ namespace Charaterizator
                 sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
-                SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SensSKOCalibrCurrent;
+                SKO_CALIBRATION_CURRENT = 0.003; // Properties.Settings.Default.set_SensSKOCalibrCurrent;
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
             }
         }
