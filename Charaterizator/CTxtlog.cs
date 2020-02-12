@@ -6,9 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Forms;
 
 namespace Charaterizator
 {
@@ -23,9 +20,6 @@ namespace Charaterizator
             rtbConsole = rtb;
             LogFileName = lfn;
             writer = File.CreateText(LogFileName);//создаем лог файл сессии
-            WriteLineLog(Application.ProductName + "  v." + Application.ProductVersion.ToString(),0);
-            WriteLineLog("Версия сборки:" + (FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location)).FileVersion.ToString(), 0);
-
         }
         ~CTxtlog()
         {
