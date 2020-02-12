@@ -1588,7 +1588,8 @@ namespace Charaterizator
                     {
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
-                        tbNumCH.Visible = true; 
+                        tbNumCH.Visible = true;
+                        cbSensorPeriodRead.Visible = true;
 
 
                         cbCHTermoCamera1.Items.Clear();
@@ -1870,6 +1871,8 @@ namespace Charaterizator
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
                         tbNumCH.Visible = true;
+                        cbSensorPeriodRead.Visible = false;
+
 
                         // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
