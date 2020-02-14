@@ -12,7 +12,6 @@ namespace Charaterizator
     class CMultimetr
     {
         public int REZISTOR = 500;      //Сопротивление нагрузочного резистора, Ом
-
         public int WAIT_READY = 300;    //время ожидания стабилизации тока, мсек
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от мультиметра, мсек
 //        public int READ_COUNT = 20;      //количество опросов мультиметра, раз
@@ -46,6 +45,7 @@ namespace Charaterizator
 
             if (Port.IsOpen)
             {
+                Port.WriteLine("*RST");
                 Port.Close();
                 return 0;
             }
@@ -75,9 +75,10 @@ namespace Charaterizator
                 Port.Open();
                 Connected = true;
                 InitDevice();
-                if (ReadData() )
+                if (ConnectionTest() )
                 {
                     // Запускаем поток
+                    Error = false;
                     ReadThread = new Thread(MultimetrReadThread);
                     ReadThread.Priority = ThreadPriority.AboveNormal;
                     ReadThread.Start();
@@ -120,7 +121,12 @@ namespace Charaterizator
             {
                 try
                 {
-                   if(ReadData())
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }
+
+                    if (ReadData())
                     {
                         Error = false;
                     }
@@ -132,7 +138,7 @@ namespace Charaterizator
                 catch
                 {
                     //Console.WriteLine("Multimetr: Ошибка чтения данных");
-                    //Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных. ", 1);
+                    Program.txtlog.WriteLineLog("Agilent: Ошибка выполнения потока", 1);
                     Error = true;
                 }
             }
@@ -145,7 +151,7 @@ namespace Charaterizator
                 try
                 {
                    // Thread.Sleep(WAIT_READY);
-                    Port.WriteLine("CONF:VOLT:DC 10, 0.00005");
+                    Port.WriteLine("CONF:VOLT:DC 10, 0.0001");
                     Thread.Sleep(10);
                     Port.WriteLine("SAMP:COUN " + SAMPLE_COUNT.ToString());
                     Thread.Sleep(10);
@@ -186,6 +192,50 @@ namespace Charaterizator
                 return false;
             }
         }
+        public bool ConnectionTest()
+        {
+            if (Connected)
+            {
+                try
+                {
+                        Thread.Sleep(WAIT_TIMEOUT);
+                        Port.WriteLine("MEAS:VOLT:DC? 10, 0.00001");
+                        int i = 0;
+                        while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
+                        {
+                            i++;
+                            Thread.Sleep(1);
+                        }
+                        if (Port.BytesToRead > 0)
+                        {
+                            string str = Port.ReadLine();
+                            Value = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Agilent: Отсутсвуют данные для чтения.", 1);
+                            return false;
+                        }
+                    return true;
+                }
+                catch
+                {
+                    //запись в лог
+                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных.", 1);
+                    Port.Close();
+                    Thread.Sleep(1);
+                    Port.Open();
+                    Value = 0;
+                    return false;
+                }
+            }
+            else
+            {
+                Value = 0;
+                return false;
+            }
+
+        }
 
         //Читает напряжение в мВ
         public bool ReadData()
@@ -217,7 +267,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog("Agilent: Отсутсвуют данных для чтения.", 1);
+                            Program.txtlog.WriteLineLog("Agilent: Отсутсвуют данные для чтения.", 1);
                             return false;
                         }
                     }

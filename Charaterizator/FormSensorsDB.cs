@@ -515,7 +515,7 @@ namespace Charaterizator
 
         public string GetDataSensors(string strModel, string strField)
         {
-            string strValue = null;
+            string strValue = "";
 
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
@@ -556,7 +556,7 @@ namespace Charaterizator
             if ((eni100 != null)&&(eni100.IsConnect()))
             {
                 Program.txtlog.WriteLineLog("Старт записи индивидуальных параметров в датчик...", 0);
-                eni100.sensor.SerialNumber = Convert.ToUInt32(Serial.Text);
+                //eni100.sensor.SerialNumber = Convert.ToUInt32(Serial.Text);
                 eni100.sensor.DownLevel = Convert.ToSingle(Pmin.Text);
                 eni100.sensor.UpLevel = Convert.ToSingle(Pmax.Text);
                 eni100.sensor.MinLevel = Convert.ToSingle(DeltaRangeMin.Text);
@@ -574,7 +574,7 @@ namespace Charaterizator
                 }
 
                 eni100.EnterServis();
-                eni100.WriteSerialNumberC49();//серийный номер
+                //eni100.WriteSerialNumberC49();//серийный номер
                 eni100.UpDownWriteC249();//дипазон 
                 eni100.C241WritePressureModel();//модель ПД
 

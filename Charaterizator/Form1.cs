@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Globalization;
 //using ENI100;
 
 
@@ -18,30 +19,27 @@ namespace Charaterizator
 
     public partial class MainForm : Form
     {
-
-
-
-        // Занесены в настройку
-        public int MAIN_TIMER = 1000;
-
-        // Не занесены
-        const int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
-        const int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
-        const int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
         
-
-        const double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
-        const int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
-        const int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
-        const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП
-
-        private int MensorCountPoint = 0;// счетчик для уставки (выдержки) давления в датчиках - для установки зелены цветом 
-        private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
-        private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек
-        private double SKO_PRESSURE = 0.2;//(СКО) допуск по давлению, кПа
+        // Занесены в настройку
+        public int MAIN_TIMER = 1000;        
+        private int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
+        private double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
+        private int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
         private double SKO_CURRENT = 0.5;//допуск по току ЦАП датчика до калибровки, мА
         private double SKO_CALIBRATION_CURRENT = 0.003;//допуск по току ЦАП после калибровки, мА
 
+        private static int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
+        private static int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
+       
+        private int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
+        private double SKO_PRESSURE = 0.2;  //(СКО) допуск по давлению, кПа
+
+
+
+        //Не занесены в настройку
+        const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП        
+        private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
+        private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек        
         const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
         // Номера столбцов в dataGrid1 - начальное окно с выбором датчиков
@@ -52,9 +50,8 @@ namespace Charaterizator
         byte pow = 4;       // питание
         byte ok = 5;        // исправность
 
+        private int MensorCountPoint = 0;// счетчик для уставки (выдержки) давления в датчиках - для установки зелены цветом 
         
-
-
         public static int SettingsSelIndex { set; get; }
 
 
@@ -66,7 +63,7 @@ namespace Charaterizator
         public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
 
-        //        private int MaxChannalCount = 30;//максимальное количество каналов коммутаторы
+        //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
 
         //        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
         //        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
@@ -83,42 +80,67 @@ namespace Charaterizator
 
         private bool TemperatureReady = false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
-//        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
+        private bool isSensorRead = false;
+        //        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
+
+
 
         //Инициализация переменных основной программы
         public MainForm()
         {
             InitializeComponent();
             Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл
-//            Properties.Settings.Default.Reset();
-            Program.txtlog.WriteLineLog("Версия программы: " + Application.ProductVersion, 0);
+                                                                            //                        btmMultimetr_Click(null, null);           
+                                                                            //                        btnCommutator_Click(null, null);
+                                                                            //                        btnMensor_Click(null, null);
+                                                                            // Properties.Settings.Default.Reset();
 
-                        
-                Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
-            Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
-            Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество отчетов измерения мультиметром, раз
-            Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
+            try
+            {
+                // ЗАГРУЗКА настроек из файла settings - в переменные, 
+                // Общие настройки программы
+                MAIN_TIMER = Properties.Settings.Default.set_MainTimer;                     // Общий интервал опроса
+                MAX_ERROR_COUNT = Properties.Settings.Default.set_MaxErrorCount;            //Количество ошибок чтения данных с устройств перед отключением
+                MIN_SENSOR_CURRENT = Properties.Settings.Default.set_MinSensorCurrent;      //минимльный ток датчика для обнаружения, мА
+                MAX_COUNT_CAP_READ = Properties.Settings.Default.set_MaxCountCAPRead;       //максимальное количество циклов чтения тока ЦАП
+                SKO_CURRENT = Properties.Settings.Default.set_SKOCurrent;                   //допуск по току ЦАП датчика до калибровки, мА
+                SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SKOCalibrationCurrent; //допуск по току ЦАП после калибровки, мА            
+                Multimetr.REZISTOR = Properties.Settings.Default.set_Rezistor;              // сопротивление резистора
+
+                Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
+                Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout; //таймаут ожидания ответа от мультиметра, мсек
+                Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;   //количество отчетов измерения мультиметром, раз
+                Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
+
+                Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
+                Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                MaxChannalCount = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
+
+                Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
+                Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
+
+                MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint/MAIN_TIMER+1;      //ожидание стабилизации давления в датчике, в циклах таймера
 
 
-            sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;
-            sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
-            sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
-                
+                SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
+
+                sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;     //таймаут ожидания ответа от датчика
+                sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик
+                sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;       //период выдачи команд
+
+            }
+            // нужно ли вычислять MaxSensorOnLevel = 8;//количество датиков на уровне
+            catch
+            {
+                Program.txtlog.WriteLineLog("Не удалось загрузить настройки из файла", 1);
+            }
 
 
-            Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;     // максимально разрешенное коичество подключаемых к изм. линии датчиков
-            Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod; // Время опроса и обновление информации, мс
-            Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
-            Commutator.WaitTime = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
 
-            Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;
-            Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;
-
-
-            MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
-            SKO_CALIBRATION_CURRENT = 0.003;// Properties.Settings.Default.set_SensSKOCalibrCurrent;
 
             //********************  Цифровой шрифт *********************
             tbDateTime.Font = DrawingFont;
@@ -162,7 +184,7 @@ namespace Charaterizator
             {
                 //                Visible = false;
                 string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
-                SensorsDB.SetConnectionDB(strFileNameDB);                                  // устанавливаем соединение с БД           
+                SensorsDB.SetConnectionDB(strFileNameDB);                                       // устанавливаем соединение с БД           
                 // устанавливаем связь с БД
                 btnMultimetr.PerformClick();
                 btnCommutator.PerformClick();
@@ -747,34 +769,48 @@ namespace Charaterizator
         //Чтение параметров выбранного датчика
         private void ReadSensor()
         {
-            int i = cbChannalCharakterizator.SelectedIndex;
-            int Diapazon;
-            if (cbDiapazon1.Text != "")
+            try
             {
-                Diapazon = Convert.ToInt32(cbDiapazon1.Text);
-            }
-            else
-            {
-                Diapazon = 1;
-            }
+                isSensorRead = true;
+                int i = cbChannalCharakterizator.SelectedIndex;
+                if ((i < 0) || !CheckChannalEnable(i)) return;//Если канал не выбран пропускаем обработку
 
-            if (sensors.SensorValueReadC03())
-            {
-                if (!sensors.ValidateSensorParam())
+                Commutator.SetConnectors(i, 0);
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    Program.txtlog.WriteLineLog("Считаны не допустимые параметры датчика в канале " + (i + 1).ToString(), 1);
-                }
-                else
-                {
-                    ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
-                    UpDateCharakterizatorGrid(i);
-                }
-            }
-            else
-            {
-                Program.txtlog.WriteLineLog("Параметры датчика не прочитаны в канале " + (i + 1).ToString(), 1);
-            }
 
+                    int Diapazon;
+                    if (cbDiapazon1.Text != "")
+                    {
+                        Diapazon = Convert.ToInt32(cbDiapazon1.Text);
+                    }
+                    else
+                    {
+                        Diapazon = 1;
+                    }
+
+                    if (sensors.SensorValueReadC03())
+                    {
+                        if (!sensors.ValidateSensorParam())
+                        {
+                            Program.txtlog.WriteLineLog("Считаны не допустимые параметры датчика в канале " + (i + 1).ToString(), 1);
+                        }
+                        else
+                        {
+                            ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                            UpDateCharakterizatorGrid(i);
+                        }
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Параметры датчика не прочитаны в канале " + (i + 1).ToString(), 1);
+                    }
+                }
+            }
+            finally
+            {
+                isSensorRead = false;
+            }
         }
         //характеризация датчиков
         //чтение всех измеренных параметров с текущего датчика давления
@@ -951,6 +987,20 @@ namespace Charaterizator
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
                         ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current);
 
+                        if (!cbChannalFixVR.Checked)
+                        {//если стоит фиксация канал не меняем
+                            cbChannalVerification.SelectedIndex = i;
+                            UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
+                            UpdateUpStatus(cbChannalVerification.SelectedIndex);
+                        }
+                        else
+                        {
+                            if (cbChannalVerification.SelectedIndex == i)
+                            {
+                                UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
+                            }
+                        }
+
                         UpDateVerificationGrid(i);
                         Program.txtlog.WriteLineLog("VR: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
@@ -984,70 +1034,43 @@ namespace Charaterizator
                 dataGridView2.Rows.Add("", "", "", "", "", "");
                  dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");                 //
                 dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
-                switch (SelectedLevel)
-                {
-                    case 1:
-                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon1.Text;   //
-                        break;
-                    case 2:
-                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon2.Text;   //
-                        break;
-                    case 3:
-                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon3.Text;   //
-                        break;
-                    case 4:
-                        dataGridView2.Rows[j].Cells[2].Value = cbDiapazon4.Text;   //
-                        break;
-                }
-
+                dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Diapazon.ToString();
                 dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
-                //dataGridView2.Rows[j].Cells[0].Selected = false;
             }
             dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
             dataGridView2.ClearSelection();
-            dataGridView2.Rows[0].Cells[0].Selected = true;
+            dataGridView2.Rows[0].Selected = true;
+//            dataGridView2.Rows[0].Cells[0].Selected = true;
             //dataGridView2.FirstDisplayedCell = dataGridView2.Rows[0].Cells[0];
         }
 
         //обновляем грид результатов верификации для датчика в канале i
         private void UpDateVerificationGrid(int i)
         {
+            dataGridView3.Rows.Clear();
+
             if ((ResultVR == null) || (ResultVR.Channal.Count <= i) || (i < 0) || (ResultVR.Channal[i].Points.Count <= 0))
             {
                 Program.txtlog.WriteLineLog("Result VR: Результаты верификации не сформированы!", 1);
                 return;
             }
 
-            dataGridView3.Rows.Clear();
             for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView3.Rows.Add("", "", "", "", "", "");
                 dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
                 dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
-                switch (SelectedLevel)
-                {
-                    case 1:
-                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon1.Text;   //
-                        break;
-                    case 2:
-                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon2.Text;   //
-                        break;
-                    case 3:
-                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon3.Text;   //
-                        break;
-                    case 4:
-                        dataGridView3.Rows[j].Cells[2].Value = cbVRDiapazon4.Text;   //
-                        break;
-                }
+                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].Diapazon.ToString();   //
                 dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
                 dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
                 dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
             dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
             dataGridView3.ClearSelection();
-            dataGridView3.Rows[0].Cells[0].Selected = true;
+            dataGridView3.Rows[0].Selected = true;
+//            dataGridView3.Rows[0].Cells[0].Selected = true;
         }
 
         //обновляем грид калибровки тока для датчика в канале i
@@ -1111,7 +1134,7 @@ namespace Charaterizator
                         if (Multimetr.Connected)
                         {
                             //Multimetr.ReadData();
-                            Thread.Sleep(Multimetr.WAIT_READY + Multimetr.READ_PERIOD*2);
+                            Thread.Sleep(700 + Multimetr.WAIT_TIMEOUT);
 
                             double Current = Multimetr.Current;//чтение тока мультиметра 
                             if (Current < MIN_SENSOR_CURRENT)
@@ -1295,7 +1318,7 @@ namespace Charaterizator
 
             if (!SensorBusy && sensors.IsConnect()) 
             {
-                if (cbSensorPeriodRead.Checked)
+                if ((cbSensorPeriodRead.Checked)&&(!isSensorRead))
                 {
                     ReadSensor(); //выполняем переодичекое чтение датчика
                 }
@@ -1588,8 +1611,7 @@ namespace Charaterizator
                     {
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
-                        tbNumCH.Visible = true;
-                        cbSensorPeriodRead.Visible = true;
+                        tbNumCH.Visible = true; 
 
 
                         cbCHTermoCamera1.Items.Clear();
@@ -1622,7 +1644,7 @@ namespace Charaterizator
                                     cbDiapazon1.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera1.Items.Clear();
@@ -1631,7 +1653,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet1.Items.Clear();
@@ -1646,16 +1668,17 @@ namespace Charaterizator
                                     cbDiapazon1.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera1.Items.Clear();
+
                                         cbCHTermoCamera1.Items.AddRange(SPcmbox);
                                         cbCHTermoCamera1.SelectedIndex = 0;
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet1.Items.Clear();
@@ -1685,7 +1708,7 @@ namespace Charaterizator
                                     cbDiapazon2.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera2.Items.Clear();
@@ -1694,7 +1717,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet2.Items.Clear();
@@ -1709,7 +1732,7 @@ namespace Charaterizator
                                     cbDiapazon2.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera2.Items.Clear();
@@ -1718,7 +1741,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet2.Items.Clear();
@@ -1749,7 +1772,7 @@ namespace Charaterizator
                                     cbDiapazon3.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera3.Items.Clear();
@@ -1758,7 +1781,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera3.Items.Clear();
@@ -1773,7 +1796,7 @@ namespace Charaterizator
                                     cbDiapazon3.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera3.Items.Clear();
@@ -1782,7 +1805,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet3.Items.Clear();
@@ -1813,7 +1836,7 @@ namespace Charaterizator
                                     cbDiapazon4.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera4.Items.Clear();
@@ -1822,7 +1845,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet4.Items.Clear();
@@ -1837,7 +1860,7 @@ namespace Charaterizator
                                     cbDiapazon4.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHTermoCamera4.Items.Clear();
@@ -1846,7 +1869,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "HarPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbCHPressureSet4.Items.Clear();
@@ -1871,8 +1894,6 @@ namespace Charaterizator
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
                         tbNumCH.Visible = true;
-                        cbSensorPeriodRead.Visible = false;
-
 
                         // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
@@ -1895,7 +1916,7 @@ namespace Charaterizator
                                     cbVRDiapazon1.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera1.Items.Clear();
@@ -1904,7 +1925,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet1.Items.Clear();
@@ -1919,7 +1940,7 @@ namespace Charaterizator
                                     cbVRDiapazon1.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera1.Items.Clear();
@@ -1928,7 +1949,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet1.Items.Clear();
@@ -1958,7 +1979,7 @@ namespace Charaterizator
                                     cbVRDiapazon2.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera2.Items.Clear();
@@ -1967,7 +1988,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet2.Items.Clear();
@@ -1982,7 +2003,7 @@ namespace Charaterizator
                                     cbVRDiapazon2.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera2.Items.Clear();
@@ -1991,7 +2012,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet2.Items.Clear();
@@ -2022,7 +2043,7 @@ namespace Charaterizator
                                     cbVRDiapazon3.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera3.Items.Clear();
@@ -2031,7 +2052,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet3.Items.Clear();
@@ -2046,7 +2067,7 @@ namespace Charaterizator
                                     cbVRDiapazon3.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera3.Items.Clear();
@@ -2055,7 +2076,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet3.Items.Clear();
@@ -2086,7 +2107,7 @@ namespace Charaterizator
                                     cbVRDiapazon4.Enabled = false;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera4.Items.Clear();
@@ -2095,7 +2116,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet4.Items.Clear();
@@ -2110,7 +2131,7 @@ namespace Charaterizator
                                     cbVRDiapazon4.SelectedIndex = 0;
                                     // Занесение данных из ДБ в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRTermoCamera4.Items.Clear();
@@ -2119,7 +2140,7 @@ namespace Charaterizator
                                     }
 
                                     SensParam = SensorsDB.GetDataSensors(SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
-                                    if (SensParam != null)
+                                    if (SensParam != "")
                                     {
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet4.Items.Clear();
@@ -2414,22 +2435,6 @@ namespace Charaterizator
             }
         }
 
-        private void btnNextStep1_Click(object sender, EventArgs e)
-        {
-            tabControl1.SelectedIndex = 1;
-        }
-
-        private void btnNextStep2_Click(object sender, EventArgs e)
-        {
-            tabControl1.SelectedIndex = 2;
-        }
-
-        private void btnNextStep3_Click(object sender, EventArgs e)
-        {
-            tabControl1.SelectedIndex = 0;
-        }
-
-
         // Обработчик нажатия меню: ФАЙЛ - ОТКРЫТЬ БД
         private void открытьБДДатчиковToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2524,7 +2529,10 @@ namespace Charaterizator
                     btnCHPressureSet2.Enabled = false;
                     btnCHPressureSet3.Enabled = false;
                     btnCHPressureSet4.Enabled = false;
-                    Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
+
+
+                    Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture); 
+                    //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
                     numMensorPoint.Text = strValue;
                     bMensorSet.PerformClick();      //выставляем давление
                     bMensorControl.PerformClick();  //запускаем задачу
@@ -2688,13 +2696,14 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             if (Settings.ShowDialog() == DialogResult.OK)
             {
-                MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
+                SetSettings();
+                /*MAIN_TIMER = Properties.Settings.Default.set_MainTimer;
                 MainTimer.Stop();
                 MainTimer.Enabled = false;
                 MainTimer.Interval = MAIN_TIMER;
                 MainTimer.Enabled = true;
                 MainTimer.Start();
-                Properties.Settings.Default.Save();  // Сохраняем переменные.
+                Properties.Settings.Default.Save();  // Сохраняем переменные.*/
             }
         }
         // Настройки Мультиметра
@@ -2704,11 +2713,12 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             if (Settings.ShowDialog() == DialogResult.OK)
             {
-                Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
+                SetSettings();
+               /* Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;    //время ожидания стабилизации тока, мсек
                 Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout;  //таймаут ожидания ответа от мультиметра, мсек
                 Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;      //количество опросов мультиметра, раз
                 Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
-                Properties.Settings.Default.Save();  // Сохраняем переменные.
+                Properties.Settings.Default.Save();  // Сохраняем переменные.*/
             }
         }
         // Настройки Задатчика давления
@@ -2718,9 +2728,10 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             if (Settings.ShowDialog() == DialogResult.OK)
             {
-                Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;
+                SetSettings();
+                /*Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;
-                Properties.Settings.Default.Save();  // Сохраняем переменные.
+                Properties.Settings.Default.Save();  // Сохраняем переменные.*/
             }
         }
 
@@ -2731,13 +2742,13 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             if (Settings.ShowDialog() == DialogResult.OK)
             {
-
-                Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;     // максимально разрешенное коичество подключаемых к изм. линии датчиков
+                SetSettings();
+                /*Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;     // максимально разрешенное коичество подключаемых к изм. линии датчиков
                 Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod; // Время опроса и обновление информации, мс
                 Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
-                Commutator.WaitTime = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
+                //Commutator.WaitTime = Properties.Settings.Default.set_CommReadPause;    //время выдержки после переключения коммутатора (переходные процессы), мс
                 Properties.Settings.Default.Save();  // Сохраняем переменные.
-                Commutator.CommStartTimer();
+                Commutator.CommStartTimer();*/
             }
         }
         // Настройки Термокамеры
@@ -2747,7 +2758,8 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             if(Settings.ShowDialog()== DialogResult.OK)
             {
-                Properties.Settings.Default.Save();  // Сохраняем переменные.
+                SetSettings();
+                //Properties.Settings.Default.Save();  // Сохраняем переменные.
 
             }
         }
@@ -2758,13 +2770,66 @@ namespace Charaterizator
             FormSettings Settings = new FormSettings();
             if (Settings.ShowDialog() == DialogResult.OK)
             {
-                sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
+                SetSettings();
+                /*sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensReadPause;
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;
                 SKO_CALIBRATION_CURRENT = 0.003; // Properties.Settings.Default.set_SensSKOCalibrCurrent;
-                Properties.Settings.Default.Save();  // Сохраняем переменные.
+                Properties.Settings.Default.Save();  // Сохраняем переменные.*/
             }
         }
+
+
+        private void SetSettings()
+        {
+            try
+            {
+                // Общие настройки программы
+                MAIN_TIMER = Properties.Settings.Default.set_MainTimer;                     // Общий интервал опроса
+
+                MainTimer.Stop();
+                MainTimer.Enabled = false;
+                MainTimer.Interval = MAIN_TIMER;
+
+                MAX_ERROR_COUNT = Properties.Settings.Default.set_MaxErrorCount;            //Количество ошибок чтения данных с устройств перед отключением
+                MIN_SENSOR_CURRENT = Properties.Settings.Default.set_MinSensorCurrent;      //минимльный ток датчика для обнаружения, мА
+                MAX_COUNT_CAP_READ = Properties.Settings.Default.set_MaxCountCAPRead;       //максимальное количество циклов чтения тока ЦАП
+                SKO_CURRENT = Properties.Settings.Default.set_SKOCurrent;                   //допуск по току ЦАП датчика до калибровки, мА
+                SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SKOCalibrationCurrent; //допуск по току ЦАП после калибровки, мА            
+                Multimetr.REZISTOR = Properties.Settings.Default.set_Rezistor;              // сопротивление резистора
+
+                Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
+                Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout; //таймаут ожидания ответа от мультиметра, мсек
+                Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;   //количество отчетов измерения мультиметром, раз
+                Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
+
+                Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
+                Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                MaxChannalCount = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
+
+                Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
+                Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
+                MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint / MAIN_TIMER + 1;        //ожидание стабилизации давления в датчике, в циклах таймера
+                SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
+
+                sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;     //таймаут ожидания ответа от датчика
+                sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик
+                sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;       //период выдачи команд
+
+                MainTimer.Enabled = true;
+                MainTimer.Start();
+            }
+            catch
+            {
+                Program.txtlog.WriteLineLog("Не удалось задать настройки программы", 1);
+            }
+        }
+
+
+
+
 
 
 
@@ -3028,7 +3093,8 @@ namespace Charaterizator
                     btnVRPressureSet2.Enabled = false;
                     btnVRPressureSet3.Enabled = false;
                     btnVRPressureSet4.Enabled = false;
-                    Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
+                    Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
                     numMensorPoint.Text = strValue;
                     bMensorSet.PerformClick();      //выставляем давление
                     bMensorControl.PerformClick();  //запускаем задачу

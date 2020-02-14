@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,7 +130,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnNextStep1 = new System.Windows.Forms.Button();
             this.pbSensorSeach = new System.Windows.Forms.ProgressBar();
             this.tbSelChannalNumber = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -205,7 +204,6 @@
             this.btnCalibrateCurrent = new System.Windows.Forms.Button();
             this.btnCalculateCoeff = new System.Windows.Forms.Button();
             this.btnReadCAP = new System.Windows.Forms.Button();
-            this.btnNextStep2 = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.cbChannalFix = new System.Windows.Forms.CheckBox();
             this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
@@ -258,8 +256,8 @@
             this.label47 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.cbVRTermoCamera1 = new System.Windows.Forms.ComboBox();
-            this.btnNextStep3 = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.cbChannalFixVR = new System.Windows.Forms.CheckBox();
             this.cbChannalVerification = new System.Windows.Forms.ComboBox();
             this.pbVRProcess = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -311,7 +309,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 976);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 3;
@@ -544,7 +542,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(975, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 952);
+            this.panel1.Size = new System.Drawing.Size(309, 703);
             this.panel1.TabIndex = 6;
             // 
             // tbDateTime
@@ -552,7 +550,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 904);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 655);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -964,9 +962,9 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 794);
+            this.panel2.Location = new System.Drawing.Point(0, 547);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(975, 182);
+            this.panel2.Size = new System.Drawing.Size(975, 180);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -978,7 +976,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(576, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(392, 170);
+            this.richTextBox1.Size = new System.Drawing.Size(392, 168);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.Visible = false;
@@ -991,7 +989,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(563, 169);
+            this.rtbConsole.Size = new System.Drawing.Size(563, 167);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -1006,7 +1004,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(975, 770);
+            this.panel3.Size = new System.Drawing.Size(975, 523);
             this.panel3.TabIndex = 8;
             // 
             // splitter1
@@ -1032,7 +1030,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(277, 543);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(698, 227);
+            this.dataGridView4.Size = new System.Drawing.Size(698, 0);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1084,7 +1082,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(277, 543);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(698, 227);
+            this.dataGridView3.Size = new System.Drawing.Size(698, 0);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
@@ -1240,7 +1238,7 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(698, 770);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 523);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1249,8 +1247,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle9;
             this.сChannalNum.DividerWidth = 1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "";
@@ -1299,10 +1297,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle12.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle10.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
             this.сWork.DividerWidth = 1;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
@@ -1319,7 +1317,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 770);
+            this.panel4.Size = new System.Drawing.Size(277, 523);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1331,13 +1329,12 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 770);
+            this.tabControl1.Size = new System.Drawing.Size(277, 523);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.btnNextStep1);
             this.tabPage1.Controls.Add(this.pbSensorSeach);
             this.tabPage1.Controls.Add(this.tbSelChannalNumber);
             this.tabPage1.Controls.Add(this.label31);
@@ -1346,22 +1343,10 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 744);
+            this.tabPage1.Size = new System.Drawing.Size(269, 497);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnNextStep1
-            // 
-            this.btnNextStep1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep1.Location = new System.Drawing.Point(6, 704);
-            this.btnNextStep1.Name = "btnNextStep1";
-            this.btnNextStep1.Size = new System.Drawing.Size(255, 30);
-            this.btnNextStep1.TabIndex = 7;
-            this.btnNextStep1.Text = "Переход к характеризации";
-            this.btnNextStep1.UseVisualStyleBackColor = true;
-            this.btnNextStep1.Click += new System.EventHandler(this.btnNextStep1_Click);
             // 
             // pbSensorSeach
             // 
@@ -1794,7 +1779,6 @@
             this.tabPage2.Controls.Add(this.btnCalibrateCurrent);
             this.tabPage2.Controls.Add(this.btnCalculateCoeff);
             this.tabPage2.Controls.Add(this.btnReadCAP);
-            this.tabPage2.Controls.Add(this.btnNextStep2);
             this.tabPage2.Controls.Add(this.groupBox10);
             this.tabPage2.Controls.Add(this.btnCHStart);
             this.tabPage2.Controls.Add(this.pbCHProcess);
@@ -1802,7 +1786,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(269, 744);
+            this.tabPage2.Size = new System.Drawing.Size(269, 497);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2167,18 +2151,6 @@
             this.btnReadCAP.UseVisualStyleBackColor = false;
             this.btnReadCAP.Click += new System.EventHandler(this.btnReadCAP_Click);
             // 
-            // btnNextStep2
-            // 
-            this.btnNextStep2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep2.Location = new System.Drawing.Point(6, 704);
-            this.btnNextStep2.Name = "btnNextStep2";
-            this.btnNextStep2.Size = new System.Drawing.Size(255, 30);
-            this.btnNextStep2.TabIndex = 8;
-            this.btnNextStep2.Text = "Переход к верификации";
-            this.btnNextStep2.UseVisualStyleBackColor = true;
-            this.btnNextStep2.Click += new System.EventHandler(this.btnNextStep2_Click);
-            // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.cbChannalFix);
@@ -2346,12 +2318,11 @@
             this.tabPage3.Controls.Add(this.gbVRLevel3);
             this.tabPage3.Controls.Add(this.gbVRLevel2);
             this.tabPage3.Controls.Add(this.gbVRLevel1);
-            this.tabPage3.Controls.Add(this.btnNextStep3);
             this.tabPage3.Controls.Add(this.groupBox11);
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(269, 744);
+            this.tabPage3.Size = new System.Drawing.Size(269, 497);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
@@ -2802,20 +2773,9 @@
             this.cbVRTermoCamera1.Size = new System.Drawing.Size(66, 24);
             this.cbVRTermoCamera1.TabIndex = 0;
             // 
-            // btnNextStep3
-            // 
-            this.btnNextStep3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextStep3.Location = new System.Drawing.Point(6, 704);
-            this.btnNextStep3.Name = "btnNextStep3";
-            this.btnNextStep3.Size = new System.Drawing.Size(255, 30);
-            this.btnNextStep3.TabIndex = 8;
-            this.btnNextStep3.Text = "Переход к выбору датчиков";
-            this.btnNextStep3.UseVisualStyleBackColor = true;
-            this.btnNextStep3.Click += new System.EventHandler(this.btnNextStep3_Click);
-            // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.cbChannalFixVR);
             this.groupBox11.Controls.Add(this.cbChannalVerification);
             this.groupBox11.Location = new System.Drawing.Point(8, 13);
             this.groupBox11.Name = "groupBox11";
@@ -2824,13 +2784,24 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Текущий канал";
             // 
+            // cbChannalFixVR
+            // 
+            this.cbChannalFixVR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbChannalFixVR.Location = new System.Drawing.Point(223, 18);
+            this.cbChannalFixVR.MaximumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixVR.MinimumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixVR.Name = "cbChannalFixVR";
+            this.cbChannalFixVR.Size = new System.Drawing.Size(20, 20);
+            this.cbChannalFixVR.TabIndex = 11;
+            this.cbChannalFixVR.UseVisualStyleBackColor = true;
+            // 
             // cbChannalVerification
             // 
             this.cbChannalVerification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbChannalVerification.FormattingEnabled = true;
             this.cbChannalVerification.Location = new System.Drawing.Point(6, 18);
             this.cbChannalVerification.Name = "cbChannalVerification";
-            this.cbChannalVerification.Size = new System.Drawing.Size(243, 21);
+            this.cbChannalVerification.Size = new System.Drawing.Size(211, 21);
             this.cbChannalVerification.TabIndex = 0;
             this.cbChannalVerification.SelectedIndexChanged += new System.EventHandler(this.cbChannalVerification_SelectedIndexChanged);
             // 
@@ -2947,7 +2918,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 998);
+            this.ClientSize = new System.Drawing.Size(1284, 749);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -3137,8 +3108,6 @@
         private System.Windows.Forms.ComboBox cbCHPressureSet1;
         private System.Windows.Forms.Button btnCHTemperatureSet1;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Button btnNextStep1;
-        private System.Windows.Forms.Button btnNextStep2;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.Button btnReadCAP;
         private System.Windows.Forms.TextBox tbDateTime;
@@ -3183,7 +3152,6 @@
         private System.Windows.Forms.ProgressBar pbVRProcess;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.ComboBox cbChannalVerification;
-        private System.Windows.Forms.Button btnNextStep3;
         private System.Windows.Forms.GroupBox gbVRLevel1;
         private System.Windows.Forms.ComboBox cbVRDiapazon1;
         private System.Windows.Forms.Label label11;
@@ -3258,6 +3226,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripVerificationTable;
         private System.Windows.Forms.ToolStripMenuItem tsMenuVerificationDetele;
         private System.Windows.Forms.CheckBox cbSensorPeriodRead;
+        private System.Windows.Forms.CheckBox cbChannalFixVR;
     }
 }
 

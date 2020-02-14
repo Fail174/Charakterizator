@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="COMComutator" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM5</Value>
+      <Value Profile="(Default)">COM21</Value>
     </Setting>
     <Setting Name="COMMensor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM6</Value>
+      <Value Profile="(Default)">COM18</Value>
     </Setting>
     <Setting Name="COMMultimetr" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM3</Value>
+      <Value Profile="(Default)">COM15</Value>
     </Setting>
     <Setting Name="COMSensor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM4</Value>
+      <Value Profile="(Default)">COM7</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="User">
       <Value Profile="(Default)">0.001</Value>
@@ -42,25 +42,25 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="COMMensor_DataBits" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">7</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="COMMultimetr_Speed" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2400</Value>
+      <Value Profile="(Default)">9600</Value>
     </Setting>
     <Setting Name="COMMultimetr_Parity" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="COMMultimetr_StopBits" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="COMMultimetr_DatabBits" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">7</Value>
     </Setting>
     <Setting Name="COMSensor_Speed" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1200</Value>
     </Setting>
     <Setting Name="COMSensor_Parity" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="COMSensor_StopBits" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>

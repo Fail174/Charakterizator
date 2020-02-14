@@ -16,20 +16,25 @@ namespace Charaterizator
         {
             InitializeComponent();           
             tab_FormSettings.SelectedIndex = MainForm.SettingsSelIndex;
-           // Properties.Settings.Default.Reload();
-            ReadSettings();
-            //ReadSettings(MainForm.SettingsSelIndex);
+            // Properties.Settings.Default.Reload();
+            try
+            {
+                ReadSettings();
+                //ReadSettings(MainForm.SettingsSelIndex);
+            }
+            catch
+            {
+                Properties.Settings.Default.Reset();
+            }
         }
 
         
         // Сохранение данных из формы в settings
         private void bSetSettings_Click(object sender, EventArgs e)
-        {
-            //int tag = 0;
-            //int page_ind = 0;
+        {           
             try
             {
-                // считываем данные из формы и сохраняем их в Settings                
+                // считываем данные из формы и сохраняем их в Settings               
                 
                 // 0 - Общие настройки программы
                 Properties.Settings.Default.set_HoldTimeTemp = Convert.ToInt32(tbHoldTimeTemp.Value);               //
@@ -62,9 +67,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_SKOCurrent = Convert.ToDouble(tbSKOCurrent.Value);
                 Properties.Settings.Default.set_SKOCalibrationCurrent = Convert.ToDouble(tb_SKOCalibrationCurrent.Value);
                 Properties.Settings.Default.set_Rezistor = Convert.ToInt32(tbRezistor.Value);
-
-
-
+                
                 // 1 - Коммутатор
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
                 Properties.Settings.Default.set_CommMaxSetCH = Convert.ToInt32(tbCommMaxSetCH.Value);                   //
@@ -84,15 +87,15 @@ namespace Charaterizator
                 Properties.Settings.Default.set_MensorSKOPressure = Convert.ToDouble(tbMensorSKOPressure.Value);        // допуск по давлению
                 Properties.Settings.Default.set_MensorMaxCountPoint = Convert.ToInt32(tbMensorMaxCountPoint.Value);     // время стабилизации давления
 
-                //4
+                //4 - ТЕРМОКАМЕРА
                 Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToInt32(tbTCameraReadPeriod.Value);         //
 
                 //5 - Датчики
                 Properties.Settings.Default.set_SensReadCount = Convert.ToInt32(tbSensReadCount.Value);                 //
                 Properties.Settings.Default.set_SensReadPause = Convert.ToInt32(tbSensReadPause.Value);                 //
-                Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Value);               //
-                
+                Properties.Settings.Default.set_SensWaitTimeout = Convert.ToInt32(tbSensWaitPause.Value);               //                
 
+                Properties.Settings.Default.Save();  // Сохраняем переменные.*/
                 Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
             }
             catch
@@ -104,6 +107,8 @@ namespace Charaterizator
             }
         }
       
+
+
 
         // Обработчик пререключений между окнами настроек
         private void tab_FormSettings_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,11 +123,11 @@ namespace Charaterizator
         {
          
                    
-               // считываем данные из Settings и выводим на форму с настройками
-                        tbHoldTimeTemp.Value = Properties.Settings.Default.set_HoldTimeTemp;                     
-                        tbDeltaTemp.Value = Convert.ToDecimal(Properties.Settings.Default.set_DeltaTemp);      
-                        tbMainTimer.Value = Properties.Settings.Default.set_MainTimer;
-                        tbPathFile.Text = Properties.Settings.Default.FileNameDB;
+            // считываем данные из Settings и выводим на форму с настройками
+            tbHoldTimeTemp.Value = Properties.Settings.Default.set_HoldTimeTemp;                     
+            tbDeltaTemp.Value = Convert.ToDecimal(Properties.Settings.Default.set_DeltaTemp);      
+            tbMainTimer.Value = Properties.Settings.Default.set_MainTimer;
+            tbPathFile.Text = Properties.Settings.Default.FileNameDB;
 
             // Проводить характ/вериф при отсутствии подключения к задатчику или мультиметру
             // пока не используется
@@ -143,45 +148,44 @@ namespace Charaterizator
                        cbHandleMultimetr.SelectedIndex = 0;
                    }*/
 
+
             tbMaxErrorCount.Value = Properties.Settings.Default.set_MaxErrorCount;
             tbMinSensorCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_MinSensorCurrent);
             tbMaxCountCAPRead.Value = Properties.Settings.Default.set_MaxCountCAPRead;
             tbSKOCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCurrent);
             tb_SKOCalibrationCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCalibrationCurrent);
             tbRezistor.Value = Properties.Settings.Default.set_Rezistor;
-
-
-
-            // case 1:                  
+            
+            // 1 - Коммутатор                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
-                        tbCommMaxSetCH.Value = Properties.Settings.Default.set_CommMaxSetCH;
-                        tbCommReadPeriod.Value = Properties.Settings.Default.set_CommReadPeriod;
-                        tbCommReadPause.Value = Properties.Settings.Default.set_CommReadPause;
-                        tbCommMaxLevelCount.Value = Properties.Settings.Default.set_CommMaxLevelCount;
+            tbCommMaxSetCH.Value = Properties.Settings.Default.set_CommMaxSetCH;
+            tbCommReadPeriod.Value = Properties.Settings.Default.set_CommReadPeriod;
+            tbCommReadPause.Value = Properties.Settings.Default.set_CommReadPause;
+            tbCommMaxLevelCount.Value = Properties.Settings.Default.set_CommMaxLevelCount;
 
-              //2 - Мультиметр
-                        tbMultimReadCount.Value = Properties.Settings.Default.set_MultimReadCount;
-                        tbMultimReadPeriod.Value = Properties.Settings.Default.set_MultimReadPeriod;
-                        tbMultimReadTimeOut.Value = Properties.Settings.Default.set_MultimReadTimeout;
-                        tbMultimWaitReady.Value = Properties.Settings.Default.set_MultimDataReady;
+             //2 - Мультиметр
+             tbMultimReadCount.Value = Properties.Settings.Default.set_MultimReadCount;
+             tbMultimReadPeriod.Value = Properties.Settings.Default.set_MultimReadPeriod;
+             tbMultimReadTimeOut.Value = Properties.Settings.Default.set_MultimReadTimeout;
+             tbMultimWaitReady.Value = Properties.Settings.Default.set_MultimDataReady;
                    
               //3 - Менсор                   
-                        tbMensorReadPeriod.Value = Properties.Settings.Default.set_MensorReadPeriod;
-                        tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
-                        tbMensorSKOPressure.Value = Convert.ToDecimal(Properties.Settings.Default.set_MensorSKOPressure);
-                        tbMensorMaxCountPoint.Value = Properties.Settings.Default.set_MensorMaxCountPoint;
+             tbMensorReadPeriod.Value = Properties.Settings.Default.set_MensorReadPeriod;
+             tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
+             tbMensorSKOPressure.Value = Convert.ToDecimal(Properties.Settings.Default.set_MensorSKOPressure);
+             tbMensorMaxCountPoint.Value = Properties.Settings.Default.set_MensorMaxCountPoint;
             
-              //  case 4:
-                         tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;                     
+             // 4 - Термокамера
+             tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;                     
        
                    
-              //  case 5:                    
-                        tbSensReadCount.Value = Properties.Settings.Default.set_SensReadCount;
-                        tbSensReadPause.Value = Properties.Settings.Default.set_SensReadPause;
-                        tbSensWaitPause.Value = Properties.Settings.Default.set_SensWaitTimeout;
-                    
-                  
+             // 5 - Датчики                   
+             tbSensReadCount.Value = Properties.Settings.Default.set_SensReadCount;
+             tbSensReadPause.Value = Properties.Settings.Default.set_SensReadPause;
+             tbSensWaitPause.Value = Properties.Settings.Default.set_SensWaitTimeout;                         
         }
+    
+
 
         // Обработчик открыть файл с БД
         private void btnOpenFile_Click(object sender, EventArgs e)
@@ -212,10 +216,6 @@ namespace Charaterizator
 
                     // Загружает данные в ListBox)
                     MainForm.SensorsDB.GetData();
-
-
-
-
                 }
 
                 catch
