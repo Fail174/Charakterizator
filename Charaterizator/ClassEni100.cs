@@ -481,6 +481,39 @@ namespace Charaterizator
             }
             return false;
         }
+        //Запись ВПИ и НПИ (команда 35)
+        public bool С35WriteVPI_MPI(float VPI, float NPI)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 9];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x23;//код команды
+                data[i + 3] = 0x09;//количество байт
+                UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(VPI), 0);
+                data[i + 4] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 5] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 7] = (byte)(tmp & 0xFF);
+                data[i + 8] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+
 
         //Режим фиксированного тока (команда 40)
         public bool С40WriteFixCurrent(float Current)
