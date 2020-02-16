@@ -159,24 +159,32 @@ namespace Charaterizator
         //Обновление визуальных элементов согласно установленным параметрам
         private void UpdateItems()
         {
-            cbChannalCharakterizator.Items.Clear();
-            cbChannalVerification.Items.Clear();
+//            cbChannalCharakterizator.Items.Clear();
+//            cbChannalVerification.Items.Clear();
             dataGridView1.Rows.Clear();
-//            dataGridView2.Rows.Clear();
-//            dataGridView2.AutoScrollOffset = new Point(dataGridView2.Width, dataGridView2.Height);
-
             for (int i = 0; i < MaxChannalCount; i++)
             {
-                cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
-                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
                 dataGridView1.Rows.Add(i + 1, false, "Нет данных", "Нет данных", false, false);
-
                 dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
                 dataGridView1[ok, i].Style.BackColor = Color.IndianRed;
-                //                cbChannalCharakterizator.Items.Add("Канал " + (i + 1).ToString());
-                //                cbChannalVerification.Items.Add("Канал " + (i + 1).ToString());
+
+//                cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
+//                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
             }
         }
+
+        private void UpDateSelectedChannal()
+        {
+            cbChannalCharakterizator.Items.Clear();
+            cbChannalVerification.Items.Clear();
+            for (int i = 0; i < MaxChannalCount; i++)
+            {
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем 
+                cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
+                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
+            }
+        }
+
         //Выполняем при загрузке главной формы
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -521,10 +529,11 @@ namespace Charaterizator
         //чтение ЦАП
         private void ReadSensorCurrent()
         {
+            int seli = 0;
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
 
-            Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 0);
+            Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 2);
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
@@ -539,6 +548,7 @@ namespace Charaterizator
 
                 Application.DoEvents();
                 Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
@@ -587,16 +597,16 @@ namespace Charaterizator
 
                     if (!cbChannalFix.Checked)
                     {//если стоит фиксация канал не меняем
-                        cbChannalCharakterizator.SelectedIndex = i;
-                        UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                        UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
-                        UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                        cbChannalCharakterizator.SelectedIndex = seli;
+                        UpDateCharakterizatorGrid(i);
+                        UpdateCurrentGrid(i);
+                        UpdateUpStatus(i);
                     }
                     else
                     {
-                        if (cbChannalCharakterizator.SelectedIndex == i)
+                        if (cbChannalCharakterizator.SelectedIndex == seli)
                         {
-                            UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
+                            UpdateCurrentGrid(i);
                         }
                     }
 
@@ -606,15 +616,17 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CAP: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
                 sensors.С40WriteFixCurrent(0);
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i           
+                seli++;
             }
-            Program.txtlog.WriteLineLog("Чтение ЦАП завершено!", 0);
+            Program.txtlog.WriteLineLog("Чтение ЦАП завершено!", 2);
 
         }
 
         //Калибровка датчиков
         private void SensorCalibration()
         {
+            int seli = 0;
             pbCHProcess.Maximum = MaxChannalCount;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
@@ -623,7 +635,7 @@ namespace Charaterizator
             float I4 = 0;
             float I20=0;
 
-            Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 0);
+            Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 2);
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 if (ProcessStop) return;//прекращаем поиск 
@@ -632,15 +644,16 @@ namespace Charaterizator
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
                 if (!cbChannalFix.Checked)
                 {//если стоит фиксация канал не меняем
-                    cbChannalCharakterizator.SelectedIndex = i;
-                    UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                    UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
-                    UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                    cbChannalCharakterizator.SelectedIndex = seli;
+                    UpDateCharakterizatorGrid(i);
+                    UpdateCurrentGrid(i);
+                    UpdateUpStatus(i);
                 }
 
 
                 Application.DoEvents();
                 Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
 
                 if (sensors.SelectSensor(i))
                 {
@@ -745,8 +758,9 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog(string.Format("CL: Датчик не обнаружен в канале {0}", i + 1), 1);
                 }
                 Commutator.SetConnectors(i, 1);
+                seli++;
             }
-            Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 0);
+            Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 2);
         }
 
 
@@ -769,10 +783,16 @@ namespace Charaterizator
         //Чтение параметров выбранного датчика
         private void ReadSensor()
         {
+            if (cbChannalCharakterizator.Text == "") return;
             try
             {
                 isSensorRead = true;
-                int i = cbChannalCharakterizator.SelectedIndex;
+
+                string str = cbChannalCharakterizator.Text.Remove(0, 6);
+                int i = Convert.ToInt32(str)-1;
+
+                //                int i = cbChannalCharakterizator.SelectedIndex;
+
                 if ((i < 0) || !CheckChannalEnable(i)) return;//Если канал не выбран пропускаем обработку
 
                 Commutator.SetConnectors(i, 0);
@@ -816,6 +836,7 @@ namespace Charaterizator
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorParametrs()
         {
+            int seli = 0;
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount-1;   //конечный канал
             int Diapazon;
@@ -828,7 +849,7 @@ namespace Charaterizator
                 Diapazon = 1;
             }
 
-            Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 0);
+            Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
 /*            int step = MaxChannalCount / MaxLevelCount;
@@ -868,8 +889,8 @@ namespace Charaterizator
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
-
                 Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
@@ -893,16 +914,16 @@ namespace Charaterizator
                             ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
                             if (!cbChannalFix.Checked)
                             {//если стоит фиксация канал не меняем
-                                cbChannalCharakterizator.SelectedIndex = i;
-                                UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                                UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
-                                UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                                cbChannalCharakterizator.SelectedIndex = seli;
+                                UpDateCharakterizatorGrid(i);
+                                UpdateCurrentGrid(i);
+                                UpdateUpStatus(i);
                             }
                             else
                             {
-                                if (cbChannalCharakterizator.SelectedIndex == i)
+                                if (cbChannalCharakterizator.SelectedIndex == seli)
                                 {
-                                    UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
+                                    UpDateCharakterizatorGrid(i);
                                 }
                             }
                             Program.txtlog.WriteLineLog("CH: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
@@ -917,28 +938,24 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
+                seli++;
             }
-            Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 0);
+            Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2);
         }
 
         //верификация датчиков
         //чтение всех измеренных параметров с текущего датчика давления
         private void ReadSensorPressure()
         {
+            int seli = 0;
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount-1;   //конечный канал
-            int Diapazon;
-            if (cbDiapazon1.Text != "")
-            {
-                Diapazon = Convert.ToInt32(cbVRDiapazon1.Text);
-            }
-            else
-            {
-                Diapazon = 1;
-            }
+            float VPI, NPI;
+            VPI = Convert.ToSingle(nud_VR_VPI.Value);
+            NPI = Convert.ToSingle(nud_VR_NPI.Value);
 
-            Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранных датчиков ... ", 0);
+            Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранных датчиков ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
  /*           int step = MaxChannalCount / MaxLevelCount;
@@ -979,29 +996,32 @@ namespace Charaterizator
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
 
                 Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
                     if (sensors.SensorValueReadC03())
                     {
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
-                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current);
+
+                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, NPI, VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current);
 
                         if (!cbChannalFixVR.Checked)
                         {//если стоит фиксация канал не меняем
-                            cbChannalVerification.SelectedIndex = i;
-                            UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
-                            UpdateUpStatus(cbChannalVerification.SelectedIndex);
+                            cbChannalVerification.SelectedIndex = seli;
+                            UpDateVerificationGrid(i);
+                            UpdateUpStatus(i);
                         }
                         else
                         {
-                            if (cbChannalVerification.SelectedIndex == i)
+                            if (cbChannalVerification.SelectedIndex == seli)
                             {
-                                UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
+                                UpDateVerificationGrid(i);
                             }
                         }
 
-                        UpDateVerificationGrid(i);
+//                        UpDateVerificationGrid(i);
                         Program.txtlog.WriteLineLog("VR: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
@@ -1014,9 +1034,98 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
                 Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                seli++;
+            }
+            Program.txtlog.WriteLineLog("VR: Операция верификации завершена ... ", 2);
+        }
+
+        //Запись НПИ и ВПИ в выбранные датчики
+        private void WriteSensorVPI_NPI()
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            float VPI, NPI;
+            VPI = Convert.ToSingle(nud_VR_VPI.Value);
+            NPI = Convert.ToSingle(nud_VR_NPI.Value);
+
+            Program.txtlog.WriteLineLog("VR: Старт записи НПИ ВПИ для выбранных датчиков ... ", 2);
+            pbVRProcess.Maximum = FinishNumber - StartNumber;
+            pbVRProcess.Minimum = 0;
+            pbVRProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbVRProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С35WriteVPI_NPI(VPI,NPI))
+                    {
+                        Program.txtlog.WriteLineLog("VR: Выполнена запись НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("VR: Запись НПИ ВПИ датчика не выполнена!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("VR: Операция верификации завершена ... ", 0);
+            Program.txtlog.WriteLineLog("VR: Операция записи НПИ ВПИ завершена", 2);
+
+        }
+
+        //Установка нуля для датчиков
+        private void SetZero()
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+
+            Program.txtlog.WriteLineLog("VR: Установка нуля для выбранных датчиков ... ", 2);
+            pbVRProcess.Maximum = FinishNumber - StartNumber;
+            pbVRProcess.Minimum = 0;
+            pbVRProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbVRProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С43SetZero())
+                    {
+
+                        Program.txtlog.WriteLineLog("VR: Выполнена установка нуля датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("VR: Установка нуля датчика не выполнена!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+
+            }
+            Program.txtlog.WriteLineLog("VR: Операция установки нуля завершена", 2);
         }
 
 
@@ -1059,13 +1168,14 @@ namespace Charaterizator
 
             for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
-                dataGridView3.Rows.Add("", "", "", "", "", "");
+                dataGridView3.Rows.Add("", "", "", "", "", "", "");
                 dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
                 dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
-                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].Diapazon.ToString();   //
-                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
-                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
-                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
+                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].NPI.ToString();   //
+                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].VPI.ToString();   //
+                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
+                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
+                dataGridView3.Rows[j].Cells[6].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
             dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
             dataGridView3.ClearSelection();
@@ -1102,7 +1212,7 @@ namespace Charaterizator
             bool SensorFind = false;
             try
             {
-                Program.txtlog.WriteLineLog("Старт поиска датчиков...", 0);
+                Program.txtlog.WriteLineLog("Старт поиска датчиков...", 2);
                 pbSensorSeach.Maximum = MaxChannalCount;
                 pbSensorSeach.Minimum = 0;
                 pbSensorSeach.Value = 0;
@@ -1129,12 +1239,13 @@ namespace Charaterizator
 
                         // коммутируем
                         Commutator.SetConnectors(i, 0); // команда подключить датчик с индексом i
+                        Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
 
                         //***** поиск датчиков по току потребления ********************************************
                         if (Multimetr.Connected)
                         {
                             //Multimetr.ReadData();
-                            Thread.Sleep(700 + Multimetr.WAIT_TIMEOUT);
+                            Thread.Sleep(Multimetr.WAIT_TIMEOUT);
 
                             double Current = Multimetr.Current;//чтение тока мультиметра 
                             if (Current < MIN_SENSOR_CURRENT)
@@ -1181,7 +1292,7 @@ namespace Charaterizator
                         Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
                     }
-                    Program.txtlog.WriteLineLog("Поиск датчиков завершен!", 0);
+                    Program.txtlog.WriteLineLog("Поиск датчиков завершен!", 2);
 
                 }
                 else
@@ -1510,32 +1621,35 @@ namespace Charaterizator
             if (!Commutator.Connected)
             {
                 MessageBox.Show("Нет подключения к коммутатору!", "Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
+//                return;
             }
             if (e.RowIndex < 0) return;
 
-
-            if((e.ColumnIndex == sel)&&(Control.ModifierKeys == System.Windows.Forms.Keys.Control))
+            if (e.ColumnIndex == sel)
             {
-                for(int i = e.RowIndex; i>=0; i--)
+                if (Control.ModifierKeys == System.Windows.Forms.Keys.Control)
                 {
-                    if(Convert.ToBoolean(dataGridView1.Rows[i].Cells[sel].Value)==true)
+                    for (int i = e.RowIndex; i >= 0; i--)
                     {
-                        break;
-                    }
-                    else
-                    {
-                        dataGridView1.Rows[i].Cells[sel].Value = true;
+                        if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[sel].Value) == true)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dataGridView1.Rows[i].Cells[sel].Value = true;
+                        }
                     }
                 }
+//                UpDateSelectedChannal();
             }
 
 
             //if (e.ColumnIndex <= 2)//выбор датчика     - было
-            if (e.ColumnIndex == 0)//выбор датчика         
-            {
-                UpdateSensorInfoPanel(e.RowIndex);
-            }
+            //            if (e.ColumnIndex == 0)//выбор датчика         
+            //            {
+            UpdateSensorInfoPanel(e.RowIndex);
+//            }
 
            /* if (e.ColumnIndex == 4)//Состояние датчика - подключение
             {
@@ -1556,7 +1670,7 @@ namespace Charaterizator
 
             }*/
 
-            else if (e.ColumnIndex == pow)// Питание датчика - подключение
+            if (e.ColumnIndex == pow)// Питание датчика - подключение
             {
                 dataGridView1.Rows[e.RowIndex].Cells[pow].Value = !Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[pow].Value);
 
@@ -1603,6 +1717,9 @@ namespace Charaterizator
                         pUpStatusBar.Visible = false;
                         label1.Visible = false;
                         tbNumCH.Visible = false;
+                        cbSensorPeriodRead.Visible = false;
+                        splitter1.Visible = false;
+
                         return;
                     }
 
@@ -1611,7 +1728,10 @@ namespace Charaterizator
                     {
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
-                        tbNumCH.Visible = true; 
+                        tbNumCH.Visible = true;
+                        cbSensorPeriodRead.Visible = true;
+                        splitter1.Visible = true;
+                        UpDateSelectedChannal();
 
 
                         cbCHTermoCamera1.Items.Clear();
@@ -1894,6 +2014,10 @@ namespace Charaterizator
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
                         tbNumCH.Visible = true;
+                        cbSensorPeriodRead.Visible = false;
+                        splitter1.Visible = false;
+                        UpDateSelectedChannal();
+
 
                         // Занесение данных из ДБ в combobox                     
                         if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
@@ -2194,7 +2318,6 @@ namespace Charaterizator
             //***************** создаем файлы результатов характеризации ***********************************
             ResultCH = new СResultCH(MaxChannalCount, FN);//результаты характеризации датчиков
             ResultCH.LoadFromFile();
-            //UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
 
             //***************** создаем файлы результатов калибровки ***************************************
             ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
@@ -2361,9 +2484,14 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
-                UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                UpdateCurrentGrid(cbChannalCharakterizator.SelectedIndex);
-                UpdateUpStatus(cbChannalCharakterizator.SelectedIndex);
+                if (cbChannalCharakterizator.Text == "") return;
+
+                string str = cbChannalCharakterizator.Text.Remove(0, 6);
+                int i = Convert.ToInt32(str)-1;
+
+                UpDateCharakterizatorGrid(i);
+                UpdateCurrentGrid(i);
+                UpdateUpStatus(i);
             }
         }
 
@@ -2680,8 +2808,13 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
-                UpDateVerificationGrid(cbChannalVerification.SelectedIndex);
-                UpdateUpStatus(cbChannalVerification.SelectedIndex);
+                if (cbChannalVerification.Text == "") return;
+
+                string str = cbChannalVerification.Text.Remove(0, 6);
+                int ii = Convert.ToInt32(str) - 1;
+
+                UpDateVerificationGrid(ii);
+                UpdateUpStatus(ii);
             }
 
         }
@@ -3418,6 +3551,11 @@ namespace Charaterizator
         {
             if (ResultCH != null)
             {
+                if (cbChannalCharakterizator.Text == "") return;
+
+                string str = cbChannalCharakterizator.Text.Remove(0, 6);
+                int ii = Convert.ToInt32(str)-1;
+
                 DataGridViewSelectedRowCollection s = dataGridView2.SelectedRows;
                 if (s.Count <= 0) return;
 
@@ -3433,10 +3571,10 @@ namespace Charaterizator
                     dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Ascending);
                     for (int i = 0; i < s.Count; i++)
                     {
-                        ResultCH.DeletePoint(cbChannalCharakterizator.SelectedIndex, s[i].Index);
+                        ResultCH.DeletePoint(ii, s[i].Index);
                     }
-                    UpDateCharakterizatorGrid(cbChannalCharakterizator.SelectedIndex);
-                    ResultCH.SaveToArhiv(cbChannalCharakterizator.SelectedIndex);
+                    UpDateCharakterizatorGrid(ii);
+                    ResultCH.SaveToArhiv(ii);
                 }
             }
 
@@ -3446,6 +3584,10 @@ namespace Charaterizator
         {
             if (ResultVR != null)
             {
+                if (cbChannalVerification.Text == "") return;
+                string str = cbChannalVerification.Text.Remove(0, 6);
+                int ii = Convert.ToInt32(str)-1;
+
                 DataGridViewSelectedRowCollection s = dataGridView3.SelectedRows;
                 if (s.Count <= 0) return;
 
@@ -3461,10 +3603,10 @@ namespace Charaterizator
                     dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Ascending);
                     for (int i = 0; i < s.Count; i++)
                     {
-                        ResultVR.DeletePoint(cbChannalVerification.SelectedIndex, s[i].Index);
+                        ResultVR.DeletePoint(ii, s[i].Index);
                     }
-                    UpDateCharakterizatorGrid(cbChannalVerification.SelectedIndex);
-                    ResultVR.SaveToArhiv(cbChannalVerification.SelectedIndex);
+                    UpDateCharakterizatorGrid(ii);
+                    ResultVR.SaveToArhiv(ii);
                 }
             }
 
@@ -3506,6 +3648,12 @@ namespace Charaterizator
                     btnVRParamRead.Enabled = true;
                     cbChannalVerification.Enabled = true;
 
+                    btnVR_VPI_NPI.BackColor = Color.LightGreen;
+                    btnVR_VPI_NPI.Enabled = true;
+
+                    btnVR_SetZero.BackColor = Color.LightGreen;
+                    btnVR_SetZero.Enabled = true;
+
                     SensorBusy = false;
                     ProcessStop = true;
                     break;
@@ -3526,6 +3674,12 @@ namespace Charaterizator
                     btnVRParamRead.BackColor = Color.IndianRed;
                     btnVRParamRead.Enabled = false;
                     cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -3548,6 +3702,12 @@ namespace Charaterizator
                     btnVRParamRead.Enabled = false;
                     cbChannalVerification.Enabled = false;
 
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -3568,6 +3728,12 @@ namespace Charaterizator
                     btnVRParamRead.BackColor = Color.IndianRed;
                     btnVRParamRead.Enabled = false;
                     cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -3590,6 +3756,12 @@ namespace Charaterizator
                     btnVRParamRead.Enabled = false;
                     cbChannalVerification.Enabled = false;
 
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -3610,6 +3782,12 @@ namespace Charaterizator
                     btnVRParamRead.BackColor = Color.IndianRed;
                     btnVRParamRead.Enabled = false;
                     cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -3632,6 +3810,66 @@ namespace Charaterizator
                     btnVRParamRead.Enabled = true;
                     cbChannalVerification.Enabled = false;
 
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 7://ВПИ НПИ
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.LightGreen;
+                    btnVR_VPI_NPI.Enabled = true;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 8://Установка нуля
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.LightGreen;
+                    btnVR_SetZero.Enabled = true;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -3640,6 +3878,85 @@ namespace Charaterizator
 
         private void btnCalculateCoeff_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void btn_VR_VPI_NPI_Click(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для записи ВПИ НПИ датчиков. Операция прервана.", 0);
+                    return;
+                }
+
+                try
+                {
+                    btnVR_VPI_NPI.Text = "Отменить";
+                    UpdateItemState(7);
+                    WriteSensorVPI_NPI();
+                }
+                finally
+                {
+                    btnVR_VPI_NPI.Text = "Задать";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить запись ВПИ НПИ датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
+                }
+            }
+
+        }
+
+        private void btnVR_SetZero_Click(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
+                    return;
+                }
+
+                try
+                {
+                    btnVR_SetZero.Text = "Отменить";
+                    UpdateItemState(8);
+                    SetZero();
+                }
+                finally
+                {
+                    btnVR_SetZero.Text = "Обнулить";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
+                }
+            }
+
 
         }
     }

@@ -13,7 +13,8 @@ namespace Charaterizator
     {
         public DateTime Datetime;
         public double Temperature;
-        public int Diapazon;
+        public double NPI;
+        public double VPI;
         public double PressureZ;
         public double PressureF;
         public double CurrentF;
@@ -91,7 +92,7 @@ namespace Charaterizator
         }
 
 
-        public void AddPoint(int ch, double Temp, int D, double PressZ, double PressF, double CurF)
+        public void AddPoint(int ch, double Temp, double npi, double vpi, double PressZ, double PressF, double CurF)
         {
             try
             {
@@ -99,7 +100,8 @@ namespace Charaterizator
                 {
                     Datetime = DateTime.Now,
                     Temperature = Temp,
-                    Diapazon = D,
+                    NPI = npi,
+                    VPI = vpi,
                     PressureZ = PressZ,
                     PressureF = PressF,
                     CurrentF = CurF,
@@ -120,7 +122,8 @@ namespace Charaterizator
         {
             return  point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("       +000.0;       -000.0;          0.0") + " |" +
-                point.Diapazon.ToString("           00") + " |" +
+                point.NPI.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
+                point.VPI.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.PressureZ.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.PressureF.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
@@ -242,14 +245,15 @@ namespace Charaterizator
                             str = reader.ReadLine();
                             string[] strarr = str.Split('|');
                             SPointVR point;
-                            if (strarr.Length > 5)
+                            if (strarr.Length > 6)
                             {
                                 point.Datetime = Convert.ToDateTime(strarr[0]);
                                 point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.Diapazon = Convert.ToInt32(strarr[2]);
-                                point.PressureZ = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.PressureF = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.CurrentF = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.NPI = double.Parse(strarr[2].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.VPI = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.PressureZ = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.PressureF = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.CurrentF = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
 
                                 ch.Points.Add(point);
                             }

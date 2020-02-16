@@ -50,7 +50,7 @@ namespace Charaterizator
                             rtbConsole.SelectionColor = Color.Red;
                             break;
                         case 2:
-                            rtbConsole.SelectionColor = Color.Green;
+                            rtbConsole.SelectionColor = Color.DarkGreen;
                             break;
                         default:
                             rtbConsole.SelectionColor = Color.Black;
