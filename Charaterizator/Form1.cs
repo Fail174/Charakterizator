@@ -799,26 +799,17 @@ namespace Charaterizator
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
 
-                    int Diapazon;
-                    if (cbDiapazon1.Text != "")
-                    {
-                        Diapazon = Convert.ToInt32(cbDiapazon1.Text);
-                    }
-                    else
-                    {
-                        Diapazon = 1;
-                    }
-
                     if (sensors.SensorValueReadC03())
                     {
                         if (!sensors.ValidateSensorParam())
                         {
-                            Program.txtlog.WriteLineLog("Считаны не допустимые параметры датчика в канале " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("Считаны недопустимые параметры датчика в канале " + (i + 1).ToString(), 1);
                         }
                         else
                         {
-                            ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
-                            UpDateCharakterizatorGrid(i);
+                             UpdateUpStatus(i);
+//                            ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+//                            UpDateCharakterizatorGrid(i);
                         }
                     }
                     else
@@ -1001,11 +992,22 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
+                    if (sensors.С15ReadVPI_NPI())
+                    {
+                        Program.txtlog.WriteLineLog("VR: Выполнено чтение НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                    }
+
+
                     if (sensors.SensorValueReadC03())
                     {
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
 
-                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, NPI, VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current);
+                        float Ir = 4 + (16 / (sensors.sensor.VPI - sensors.sensor.NPI)) * ((float)numMensorPoint.Value - sensors.sensor.NPI);//расчетный ток
+                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current, Ir);
 
                         if (!cbChannalFixVR.Checked)
                         {//если стоит фиксация канал не меняем
@@ -1168,14 +1170,15 @@ namespace Charaterizator
 
             for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
-                dataGridView3.Rows.Add("", "", "", "", "", "", "");
+                dataGridView3.Rows.Add("", "", "", "", "", "", "", "");
                 dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
                 dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
                 dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].NPI.ToString();   //
                 dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].VPI.ToString();   //
                 dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
                 dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
-                dataGridView3.Rows[j].Cells[6].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
+                dataGridView3.Rows[j].Cells[6].Value = ResultVR.Channal[i].Points[j].CurrentR.ToString("f4");
+                dataGridView3.Rows[j].Cells[7].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
             dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
             dataGridView3.ClearSelection();
@@ -1717,7 +1720,6 @@ namespace Charaterizator
                         pUpStatusBar.Visible = false;
                         label1.Visible = false;
                         tbNumCH.Visible = false;
-                        cbSensorPeriodRead.Visible = false;
                         splitter1.Visible = false;
 
                         return;
@@ -1729,7 +1731,6 @@ namespace Charaterizator
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
                         tbNumCH.Visible = true;
-                        cbSensorPeriodRead.Visible = true;
                         splitter1.Visible = true;
                         UpDateSelectedChannal();
 
@@ -2014,7 +2015,6 @@ namespace Charaterizator
                         pUpStatusBar.Visible = true;
                         label1.Visible = true;
                         tbNumCH.Visible = true;
-                        cbSensorPeriodRead.Visible = false;
                         splitter1.Visible = false;
                         UpDateSelectedChannal();
 
@@ -2505,6 +2505,11 @@ namespace Charaterizator
                     UpStModel.Text = new String(sensors.sensor.PressureModel); 
                     UpStSerial.Text = sensors.sensor.uni.ToString();
                     UpStCh.Text = (sensors.sensor.Channal + 1).ToString();
+
+                    label_UpStVoltage.Text = sensors.sensor.OutVoltage.ToString();
+                    label_UpStResistance.Text = sensors.sensor.Resistance.ToString();
+                    label_UpStPressure.Text = sensors.sensor.Pressure.ToString();
+
                     //UpdateCHnumber(sensors.sensorList[i].Channal + 1);
                 }
                 else

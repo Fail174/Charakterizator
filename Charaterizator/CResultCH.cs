@@ -30,7 +30,8 @@ namespace Charaterizator
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
-            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            //            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            FileNameArchiv = string.Format("Archiv/CH/CH_FN_{0}.txt",  FactoryNumber);
             Points = new List<SPoint>();
         }
     }

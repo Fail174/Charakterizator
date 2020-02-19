@@ -273,12 +273,19 @@
             this.label5 = new System.Windows.Forms.Label();
             this.contextMenuStripVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsMenuVerificationDetele = new System.Windows.Forms.ToolStripMenuItem();
+            this.label_UpStV = new System.Windows.Forms.Label();
+            this.label_UpStR = new System.Windows.Forms.Label();
+            this.label_UpStVoltage = new System.Windows.Forms.Label();
+            this.label_UpStResistance = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label_UpStPressure = new System.Windows.Forms.Label();
             this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cNPI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cVPI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPressureZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сCurrentR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1091,6 +1098,7 @@
             this.cVPI,
             this.cPressureZ,
             this.cPressureF,
+            this.сCurrentR,
             this.сCurrentF});
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView3.Location = new System.Drawing.Point(277, 543);
@@ -2887,6 +2895,12 @@
             // 
             // pUpStatusBar
             // 
+            this.pUpStatusBar.Controls.Add(this.label_UpStPressure);
+            this.pUpStatusBar.Controls.Add(this.label58);
+            this.pUpStatusBar.Controls.Add(this.label_UpStResistance);
+            this.pUpStatusBar.Controls.Add(this.label_UpStVoltage);
+            this.pUpStatusBar.Controls.Add(this.label_UpStR);
+            this.pUpStatusBar.Controls.Add(this.label_UpStV);
             this.pUpStatusBar.Controls.Add(this.cbSensorPeriodRead);
             this.pUpStatusBar.Controls.Add(this.UpStCh);
             this.pUpStatusBar.Controls.Add(this.UpStSerial);
@@ -2896,14 +2910,14 @@
             this.pUpStatusBar.Controls.Add(this.label5);
             this.pUpStatusBar.Location = new System.Drawing.Point(308, 1);
             this.pUpStatusBar.Name = "pUpStatusBar";
-            this.pUpStatusBar.Size = new System.Drawing.Size(976, 22);
+            this.pUpStatusBar.Size = new System.Drawing.Size(1296, 22);
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
             // 
             // cbSensorPeriodRead
             // 
             this.cbSensorPeriodRead.AutoSize = true;
-            this.cbSensorPeriodRead.Location = new System.Drawing.Point(831, 3);
+            this.cbSensorPeriodRead.Location = new System.Drawing.Point(1137, 3);
             this.cbSensorPeriodRead.Name = "cbSensorPeriodRead";
             this.cbSensorPeriodRead.Size = new System.Drawing.Size(142, 17);
             this.cbSensorPeriodRead.TabIndex = 8;
@@ -2917,8 +2931,9 @@
             this.UpStCh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.UpStCh.Location = new System.Drawing.Point(516, 4);
             this.UpStCh.Name = "UpStCh";
-            this.UpStCh.Size = new System.Drawing.Size(0, 15);
+            this.UpStCh.Size = new System.Drawing.Size(23, 15);
             this.UpStCh.TabIndex = 7;
+            this.UpStCh.Text = "    ";
             // 
             // UpStSerial
             // 
@@ -2926,8 +2941,9 @@
             this.UpStSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.UpStSerial.Location = new System.Drawing.Point(312, 4);
             this.UpStSerial.Name = "UpStSerial";
-            this.UpStSerial.Size = new System.Drawing.Size(0, 15);
+            this.UpStSerial.Size = new System.Drawing.Size(23, 15);
             this.UpStSerial.TabIndex = 6;
+            this.UpStSerial.Text = "    ";
             // 
             // UpStModel
             // 
@@ -2935,8 +2951,9 @@
             this.UpStModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.UpStModel.Location = new System.Drawing.Point(74, 4);
             this.UpStModel.Name = "UpStModel";
-            this.UpStModel.Size = new System.Drawing.Size(0, 15);
+            this.UpStModel.Size = new System.Drawing.Size(23, 15);
             this.UpStModel.TabIndex = 5;
+            this.UpStModel.Text = "    ";
             // 
             // label46
             // 
@@ -2982,11 +2999,71 @@
             this.tsMenuVerificationDetele.Text = "Удаление";
             this.tsMenuVerificationDetele.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
             // 
+            // label_UpStV
+            // 
+            this.label_UpStV.AutoSize = true;
+            this.label_UpStV.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_UpStV.Location = new System.Drawing.Point(589, 4);
+            this.label_UpStV.Name = "label_UpStV";
+            this.label_UpStV.Size = new System.Drawing.Size(127, 15);
+            this.label_UpStV.TabIndex = 9;
+            this.label_UpStV.Text = "|   Напряжение (мВ): ";
+            // 
+            // label_UpStR
+            // 
+            this.label_UpStR.AutoSize = true;
+            this.label_UpStR.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_UpStR.Location = new System.Drawing.Point(771, 4);
+            this.label_UpStR.Name = "label_UpStR";
+            this.label_UpStR.Size = new System.Drawing.Size(143, 15);
+            this.label_UpStR.TabIndex = 10;
+            this.label_UpStR.Text = "|   Сопротивление(Ом) :";
+            // 
+            // label_UpStVoltage
+            // 
+            this.label_UpStVoltage.AutoSize = true;
+            this.label_UpStVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_UpStVoltage.Location = new System.Drawing.Point(713, 4);
+            this.label_UpStVoltage.Name = "label_UpStVoltage";
+            this.label_UpStVoltage.Size = new System.Drawing.Size(23, 15);
+            this.label_UpStVoltage.TabIndex = 13;
+            this.label_UpStVoltage.Text = "    ";
+            // 
+            // label_UpStResistance
+            // 
+            this.label_UpStResistance.AutoSize = true;
+            this.label_UpStResistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_UpStResistance.Location = new System.Drawing.Point(915, 4);
+            this.label_UpStResistance.Name = "label_UpStResistance";
+            this.label_UpStResistance.Size = new System.Drawing.Size(23, 15);
+            this.label_UpStResistance.TabIndex = 14;
+            this.label_UpStResistance.Text = "    ";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label58.Location = new System.Drawing.Point(966, 4);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(113, 15);
+            this.label58.TabIndex = 15;
+            this.label58.Text = "|  Давление (кПа) :";
+            // 
+            // label_UpStPressure
+            // 
+            this.label_UpStPressure.AutoSize = true;
+            this.label_UpStPressure.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_UpStPressure.Location = new System.Drawing.Point(1085, 3);
+            this.label_UpStPressure.Name = "label_UpStPressure";
+            this.label_UpStPressure.Size = new System.Drawing.Size(23, 15);
+            this.label_UpStPressure.TabIndex = 16;
+            this.label_UpStPressure.Text = "    ";
+            // 
             // cDataTime
             // 
             this.cDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.cDataTime.HeaderText = "Дата и Время";
-            this.cDataTime.MinimumWidth = 200;
+            this.cDataTime.MinimumWidth = 100;
             this.cDataTime.Name = "cDataTime";
             this.cDataTime.ReadOnly = true;
             // 
@@ -3028,13 +3105,21 @@
             this.cPressureF.ReadOnly = true;
             this.cPressureF.Width = 200;
             // 
+            // сCurrentR
+            // 
+            this.сCurrentR.HeaderText = "Iр (мА)";
+            this.сCurrentR.MinimumWidth = 150;
+            this.сCurrentR.Name = "сCurrentR";
+            this.сCurrentR.ReadOnly = true;
+            this.сCurrentR.Width = 150;
+            // 
             // сCurrentF
             // 
             this.сCurrentF.HeaderText = "Iф (мА)";
-            this.сCurrentF.MinimumWidth = 200;
+            this.сCurrentF.MinimumWidth = 150;
             this.сCurrentF.Name = "сCurrentF";
             this.сCurrentF.ReadOnly = true;
-            this.сCurrentF.Width = 200;
+            this.сCurrentF.Width = 150;
             // 
             // MainForm
             // 
@@ -3354,12 +3439,19 @@
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.NumericUpDown nud_VR_NPI;
         private System.Windows.Forms.Button btnVR_SetZero;
+        private System.Windows.Forms.Label label_UpStR;
+        private System.Windows.Forms.Label label_UpStV;
+        private System.Windows.Forms.Label label_UpStResistance;
+        private System.Windows.Forms.Label label_UpStVoltage;
+        private System.Windows.Forms.Label label_UpStPressure;
+        private System.Windows.Forms.Label label58;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDataTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn cTempreture;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNPI;
         private System.Windows.Forms.DataGridViewTextBoxColumn cVPI;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPressureZ;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPressureF;
+        private System.Windows.Forms.DataGridViewTextBoxColumn сCurrentR;
         private System.Windows.Forms.DataGridViewTextBoxColumn сCurrentF;
     }
 }

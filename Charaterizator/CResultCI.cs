@@ -29,7 +29,9 @@ namespace Charaterizator
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
-            FileNameArchiv = string.Format("Archiv/CI/CI_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+//            FileNameArchiv = string.Format("Archiv/CI/CI_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            FileNameArchiv = string.Format("Archiv/CI/CI_FN_{0}.txt", FactoryNumber);
+
             Points = new List<SPointCI>();
             //PointsCount = 0;
         }

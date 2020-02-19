@@ -17,6 +17,7 @@ namespace Charaterizator
         public double VPI;
         public double PressureZ;
         public double PressureF;
+        public double CurrentR;
         public double CurrentF;
     }
 
@@ -31,7 +32,9 @@ namespace Charaterizator
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
-            FileNameArchiv = string.Format("Archiv/VR/VR_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+//            FileNameArchiv = string.Format("Archiv/VR/VR_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            FileNameArchiv = string.Format("Archiv/VR/VR_FN_{0}.txt", FactoryNumber);
+
             Points = new List<SPointVR>();
         }
     }
@@ -46,6 +49,7 @@ namespace Charaterizator
                                     "Диапазон      |" +
                                     "Давление (з)  |" +
                                     "Давление (ф)  |" +
+                                    "Ток (р)       |" +
                                     "Ток (ф)       |";
 
         //конструктор класса
@@ -92,7 +96,7 @@ namespace Charaterizator
         }
 
 
-        public void AddPoint(int ch, double Temp, double npi, double vpi, double PressZ, double PressF, double CurF)
+        public void AddPoint(int ch, double Temp, double npi, double vpi, double PressZ, double PressF, double CurF, double CurR)
         {
             try
             {
@@ -105,6 +109,7 @@ namespace Charaterizator
                     PressureZ = PressZ,
                     PressureF = PressF,
                     CurrentF = CurF,
+                    CurrentR = CurR,
                 };
                 Channal[ch].Points.Add(point);
                 FileStream[ch].WriteLine(GetStringFromPoint(point));
@@ -126,6 +131,7 @@ namespace Charaterizator
                 point.VPI.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.PressureZ.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.PressureF.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
+                point.CurrentR.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
                 point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
         }
 
@@ -245,7 +251,7 @@ namespace Charaterizator
                             str = reader.ReadLine();
                             string[] strarr = str.Split('|');
                             SPointVR point;
-                            if (strarr.Length > 6)
+                            if (strarr.Length > 7)
                             {
                                 point.Datetime = Convert.ToDateTime(strarr[0]);
                                 point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
@@ -253,6 +259,7 @@ namespace Charaterizator
                                 point.VPI = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.PressureZ = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.PressureF = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                point.CurrentR = double.Parse(strarr[7].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.CurrentF = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
 
                                 ch.Points.Add(point);
