@@ -146,7 +146,7 @@ namespace Charaterizator
                 point.Diapazon.ToString("           00") + " |" +
                 point.Pressure.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.OutVoltage.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
-                point.Resistance.ToString("    00000.0000") + " |";
+                point.Resistance.ToString("   00000.0000") + " |";
         }
 
         //создаем файл  архива на диске

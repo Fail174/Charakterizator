@@ -573,9 +573,9 @@ namespace Charaterizator
                     }
                 }
 
-                eni100.EnterServis();
+                eni100.С245EnterServis();
                 //eni100.WriteSerialNumberC49();//серийный номер
-                eni100.UpDownWriteC249();//дипазон 
+                eni100.C249UpDownWrite();//дипазон 
                 eni100.C241WritePressureModel();//модель ПД
 
                 MessageBox.Show("Запись индивидуальных параметров в датчик успешно закончена. ", "Завершение операции", MessageBoxButtons.OK, MessageBoxIcon.Information);

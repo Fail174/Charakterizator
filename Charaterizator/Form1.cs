@@ -96,8 +96,7 @@ namespace Charaterizator
         private bool isSensorRead = false;
         //        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
-        private int SelectedLevel = 1;//выбранный номер уровеня характеризации
-
+        private int SelectedLevel = 1;//выбранный номер уровня характеризации
 
 
         //Инициализация переменных основной программы
@@ -511,7 +510,7 @@ namespace Charaterizator
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
-                                sensors.EnterServis();
+                                sensors.С245EnterServis();  //перевод в сервесный режим
                                 sensors.TegRead();          //читаем инфомацию о датчике
                                 sensors.SensorRead();       //чтение данных с датчика
                                 sensors.C140ReadPressureModel();//читаем модель ПД
@@ -1063,7 +1062,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1);
                     }
 
 
@@ -1337,7 +1336,7 @@ namespace Charaterizator
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
-                                sensors.EnterServis();
+                                sensors.С245EnterServis();
                                 sensors.TegRead();          //читаем информацию о датчике
                                 sensors.SensorRead();       //чтение данных с датчика
                                 sensors.C140ReadPressureModel();//читаем модель ПД
@@ -1714,10 +1713,11 @@ namespace Charaterizator
 
 
             //if (e.ColumnIndex <= 2)//выбор датчика     - было
-            //            if (e.ColumnIndex == 0)//выбор датчика         
-            //            {
-            UpdateSensorInfoPanel(e.RowIndex);
-//            }
+
+            if (e.ColumnIndex != 1)//выбор датчика         
+            {
+                UpdateSensorInfoPanel(e.RowIndex);
+            }
 
            /* if (e.ColumnIndex == 4)//Состояние датчика - подключение
             {
@@ -4028,7 +4028,6 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
                 }
             }
-
         }
 
         private void btnVR_SetZero_Click(object sender, EventArgs e)
@@ -4043,7 +4042,7 @@ namespace Charaterizator
                 }
                 if (i >= MaxChannalCount)
                 {
-                    Program.txtlog.WriteLineLog("Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("Не выбраны датчики для установки нуля. Операция прервана.", 0);
                     return;
                 }
 
@@ -4055,13 +4054,13 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    btnVR_SetZero.Text = "Обнулить";
+                    btnVR_SetZero.Text = "Установка нуля";
                     UpdateItemState(0);
                 }
             }
             else
             {
-                if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Отменить обнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);

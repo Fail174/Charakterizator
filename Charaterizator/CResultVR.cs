@@ -46,7 +46,8 @@ namespace Charaterizator
         public List<SChanalVR> Channal = new List<SChanalVR>();//список обнаруженных датчиков
         private string HeaderString = "Дата и время       |" +
                                     "Температура   |" +
-                                    "Диапазон      |" +
+                                    "НПИ           |" +
+                                    "ВПИ           |" +
                                     "Давление (з)  |" +
                                     "Давление (ф)  |" +
                                     "Ток (р)       |" +
@@ -66,9 +67,9 @@ namespace Charaterizator
                 string filename = string.Format("VR/VR_Result{0}.txt", ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 fs.WriteLine(string.Format("Результаты верификации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
-                fs.WriteLine("-----------------------------------------------------------------------------------------------");
+                fs.WriteLine("-----------------------------------------------------------------------------------------------------------------------------");
                 fs.WriteLine(HeaderString);
-                fs.WriteLine("-----------------------------------------------------------------------------------------------");
+                fs.WriteLine("-----------------------------------------------------------------------------------------------------------------------------");
                 fs.Flush();
                 FileStream.Add(fs);
             }
