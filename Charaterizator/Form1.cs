@@ -10,16 +10,29 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
-//using ENI100;
+using System.Runtime.InteropServices;
+
 
 
 
 namespace Charaterizator
 {
-
     public partial class MainForm : Form
     {
-        
+        [DllImport("PCalcCoefAGAT.dll")]
+//        public extern static int CalcCoefP(int , double*, double*, double*, double*, double &, double &, double &, double &);
+        public extern static int CalcCoefP(
+			int _countRec, //Количество переданных точек для расчета
+			double [] _ut,   //Значения по каналу температуры
+			double [] _up,   //Значения по каналу давления
+			double []_upInParts, //Значения по каналу давления в долях от текущего ВПИ
+			double [] _resP,      //Расчитанные коэффициенты (выходные данные)
+			double [] _upmin,     //Минимальная величина по каналу давления
+			double [] _upmn,      //Диапазон изменения сигнала по каналу давления
+			double [] _utmin,     //Минимальная величина по каналу температуры
+            double [] _utmn     //Диапазон изменения сигнала по каналу температуры
+		);
+
         // Занесены в настройку
         public int MAIN_TIMER = 1000;        
         private int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
@@ -934,6 +947,58 @@ namespace Charaterizator
             }
             Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2);
         }
+
+        //расчет коэффициентов и запись в датчики
+        private void СaclSensorCoef()
+        {
+            int seli = 0;
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+
+            Program.txtlog.WriteLineLog("CH: Старт расчета коэффициентов для выбранных датчиков ... ", 2);
+
+            pbCHProcess.Maximum = FinishNumber - StartNumber;
+            pbCHProcess.Minimum = 0;
+            pbCHProcess.Value = 0;
+
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем поиск 
+
+                pbCHProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    /*                    for (int j=0; i<ResultCH.Channal[i].Points.Count;j++)
+                                        {
+                                            Temperature[j] = ResultCH.Channal[i].Points[j].Temperature;
+                                            Pressure[j] = ResultCH.Channal[i].Points[j].Pressure;
+                                            PressureF =  ResultCH.Channal[i].Points[j].OutVoltage/ResultCH.Channal[i].Points[j].Resistance;
+                                        }*/
+                    //                    CalcCoeff(ResultCH.Channal[i].Points.Count);
+                    if (sensors.С15ReadVPI_NPI())
+                    {
+
+                    }
+                    if (!sensors.C250SensorCoefficientWrite())
+                    {
+                        Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
+                seli++;
+            }
+            Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты успешно записаны в датчик!", 2);
+        }
+
 
         //верификация датчиков
         //чтение всех измеренных параметров с текущего датчика давления
@@ -3883,6 +3948,47 @@ namespace Charaterizator
 
         private void btnCalculateCoeff_Click(object sender, EventArgs e)
         {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("Не выбраны датчики для расчета коэффициентов. Операция прервана.", 0);
+                    return;
+                }
+
+                //                if (TemperatureReady && PressureReady)
+                //                {
+                try
+                {
+                    btnCHStart.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
+                    UpdateItemState(9);
+                    СaclSensorCoef();
+                }
+                finally
+                {
+                    btnCHStart.Text = "Расчет коэффициентов";
+                    UpdateItemState(0);
+                }
+                /*                }
+                                else
+                                {
+                                    Program.txtlog.WriteLineLog("Не заданны параметры для характеризации.", 1);
+                                }*/
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
+                }
+            }
 
         }
 
