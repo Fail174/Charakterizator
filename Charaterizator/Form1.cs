@@ -12,6 +12,11 @@ using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.LinearAlgebra;
+
+
 
 
 
@@ -75,6 +80,7 @@ namespace Charaterizator
         private FormMensor Mensor = new FormMensor();
         public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
+        private CCalculation CalculationMtx = new CCalculation();
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
 
@@ -973,13 +979,19 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
+
+
                     /*                    for (int j=0; i<ResultCH.Channal[i].Points.Count;j++)
                                         {
                                             Temperature[j] = ResultCH.Channal[i].Points[j].Temperature;
-                                            Pressure[j] = ResultCH.Channal[i].Points[j].Pressure;
-                                            PressureF =  ResultCH.Channal[i].Points[j].OutVoltage/ResultCH.Channal[i].Points[j].Resistance;
+                                            ResultCH.Channal[i].Points[j].Pressure;
+                                            ResultCH.Channal[i].Points[j].OutVoltage/ResultCH.Channal[i].Points[j].Resistance;
+                                            ResultCH.Channal[i].Points[j].OutVoltage
                                         }*/
                     //                    CalcCoeff(ResultCH.Channal[i].Points.Count);
+
+
+
                     if (sensors.С15ReadVPI_NPI())
                     {
 
@@ -1695,7 +1707,7 @@ namespace Charaterizator
 
             if (e.ColumnIndex == sel)
             {
-                if (Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+                if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
                 {
                     for (int i = e.RowIndex; i >= 0; i--)
                     {
@@ -3948,6 +3960,61 @@ namespace Charaterizator
 
         private void btnCalculateCoeff_Click(object sender, EventArgs e)
         {
+            // Временно- потом убрать !!!!!
+            // вызов функции по расчету коэффициентов, сразу по нажатию кнопи
+            Matrix<double> Rmtx = DenseMatrix.OfArray(new double[,]
+            {
+            { 3911.9, 4100.3, 4302.2, 4691.2 },
+            { 3911.6, 4100.2, 4301.9, 4690.7 },
+            { 3912.3, 4100.5, 4301.8, 4690   },
+            { 3913.9, 4101.7, 4302.7, 4690.5 },
+            { 3916.4, 4103.7, 4304.3, 4691.6 },
+            { 3919.9, 4106.6, 4306.7, 4693.4 },
+            { 3919.9, 4106.6, 4306.7, 4693.4 },
+            { 3916.4, 4103.7, 4304.3, 4691.6 },
+            { 3913.9, 4101.7, 4302.7, 4690.5 },
+            { 3912.3, 4100.5, 4301.8, 4690   },
+            { 3911.6, 4100.2, 4301.9, 4690.7 },
+            { 3911.9, 4100.3, 4302.2, 4691.2 }});
+         
+            // Формируем матрицу напряжений 
+            // Umtx
+            Matrix<double> Umtx = DenseMatrix.OfArray(new double[,]
+            {
+            {  4.746,   5.318,   5.187,   3.296 },
+            { 47.212,  48.612,  49.122,  47.978 },
+            {174.478, 178.379, 180.842, 181.993 },
+            {259.235, 264.819, 268.604, 271.318 },
+            {343.995, 351.254, 356.373, 360.669 },
+            {428.824, 437.720, 444.165, 450.056 },
+            {428.824, 437.720, 444.165, 450.056 },
+            {343.996, 351.254, 356.373, 360.669 },
+            {259.235, 264.819, 268.604, 271.318 },
+            {174.478, 178.379, 180.842, 181.993 },
+            { 47.212,  48.612,  49.122,  47.977 },
+            {  4.746,   5.318,   5.187,   3.296 }});
+           
+            // Формируем матрицу давлений
+            // Pmtx
+            Matrix<double> Pmtx = DenseMatrix.OfArray(new double[,]
+            {
+            {   0,   0,   0,   0 },
+            { 0.1, 0.1, 0.1, 0.1 },
+            { 0.4, 0.4, 0.4, 0.4 },
+            { 0.6, 0.6, 0.6, 0.6 },
+            { 0.8, 0.8, 0.8, 0.8 },
+            { 1.0, 1.0, 1.0, 1.0 },
+            { 1.0, 1.0, 1.0, 1.0 },
+            { 0.8, 0.8, 0.8, 0.8 },
+            { 0.6, 0.6, 0.6, 0.6 },
+            { 0.4, 0.4, 0.4, 0.4 },
+            { 0.1, 0.1, 0.1, 0.1 },
+            {   0,   0,   0,   0 }});
+            
+            Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx);
+            
+
+
             if (!SensorBusy)
             {
                 int i;
