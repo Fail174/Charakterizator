@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
-
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra;
@@ -519,7 +518,7 @@ namespace Charaterizator
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                                 sensors.EnterServis();
                                 sensors.TegRead();          //читаем инфомацию о датчике
-                                sensors.SensorRead();       //чтение данных с датчика
+                                sensors.C14SensorRead();       //чтение данных с датчика
                                 sensors.C140ReadPressureModel();//читаем модель ПД
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                                 UpdateSensorInfoPanel(i);
@@ -979,24 +978,64 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
+                    double Diapazon = sensors.sensor.UpLevel - sensors.sensor.DownLevel;
 
+                    // Из списка List формируем промежуточные матрицы Сопротивления, Напряжения и Давления
+                    // размером 100х100
+                    Matrix<double> mtxR = DenseMatrix.Create(30, 30, 0);
+                    Matrix<double> mtxU = DenseMatrix.Create(30, 30, 0);
+                    Matrix<double> mtxP = DenseMatrix.Create(30, 30, 0);
 
-                    /*                    for (int j=0; i<ResultCH.Channal[i].Points.Count;j++)
-                                        {
-                                            Temperature[j] = ResultCH.Channal[i].Points[j].Temperature;
-                                            ResultCH.Channal[i].Points[j].Pressure;
-                                            ResultCH.Channal[i].Points[j].OutVoltage/ResultCH.Channal[i].Points[j].Resistance;
-                                            ResultCH.Channal[i].Points[j].OutVoltage
-                                        }*/
-                    //                    CalcCoeff(ResultCH.Channal[i].Points.Count);
+                    double val = -1000;
+                    int c_row = 0;
+                    int c_cols = 0;
 
-
-
-                    if (sensors.С15ReadVPI_NPI())
+                    for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)
                     {
-
+                        if ((val != ResultCH.Channal[i].Points[j].Temperature) && (j != 0))
+                        {
+                            c_cols = c_cols + 1;
+                            c_row = 0;
+                        }
+                        val = ResultCH.Channal[i].Points[j].Temperature;
+                        mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure/Diapazon;
+                        mtxR[c_row, c_cols] = ResultCH.Channal[i].Points[j].Resistance;
+                        mtxU[c_row, c_cols] = ResultCH.Channal[i].Points[j].OutVoltage;
+                        c_row = c_row + 1;
                     }
-                    if (!sensors.C250SensorCoefficientWrite())
+                    c_cols = c_cols + 1;
+
+
+                    // Создаем матрицы нужного размера и копируем в них 
+                    // ненулевые данные из промежуочных матриц 
+                    Matrix<double> Pnew = DenseMatrix.Create(c_row, c_cols, 0);
+                    Matrix<double> Rnew = DenseMatrix.Create(c_row, c_cols, 0);
+                    Matrix<double> Unew = DenseMatrix.Create(c_row, c_cols, 0);
+
+                    for (int ii = 0; ii < c_row; ii++)
+                    {
+                        for (int jj = 0; jj < c_cols; jj++)
+                        {
+                            Rnew[ii, jj] = mtxR.At(ii, jj);
+                            Pnew[ii, jj] = mtxP.At(ii, jj);
+                            Unew[ii, jj] = mtxU.At(ii, jj);
+                        }
+                    }
+
+                    Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Pnew, Unew);
+                    Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
+                    for (int j = 0; j < ResulCoefmtx.RowCount; j++)
+                    {
+                        Program.txtlog.WriteLineLog((j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
+                        if (j<24)
+                            sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
+                    }
+
+                    if (!sensors.С15ReadVPI_NPI())
+                    {
+                        Program.txtlog.WriteLineLog("CH: Ошибка чтения НПИ и ВПИ датчик в канале " + (i + 1).ToString(), 1);
+                    }
+                    if ((ResulCoefmtx.RowCount != 24)||(!sensors.C250SensorCoefficientWrite()))
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
                     }
@@ -1351,8 +1390,12 @@ namespace Charaterizator
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
                                 sensors.EnterServis();
                                 sensors.TegRead();          //читаем информацию о датчике
-                                sensors.SensorRead();       //чтение данных с датчика
-                                sensors.C140ReadPressureModel();//читаем модель ПД
+                                if(!sensors.C14SensorRead())       //чтение данных с датчика
+                                    Program.txtlog.WriteLineLog(string.Format("Параметры ПД датчика на линии {0} не прочитаны!", i + 1), 1);
+                               // Program.txtlog.WriteLineLog(string.Format("ВПИ ПД датчика {0}", sensors.sensor.UpLevel), 0);
+                                if (!sensors.C140ReadPressureModel())//читаем модель ПД
+                                    Program.txtlog.WriteLineLog(string.Format("Модель ПД датчика на линии {0} не прочитана!", i + 1), 1);
+
                                 Thread.Sleep(500);          
                                 sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
@@ -1726,10 +1769,10 @@ namespace Charaterizator
 
 
             //if (e.ColumnIndex <= 2)//выбор датчика     - было
-            //            if (e.ColumnIndex == 0)//выбор датчика         
-            //            {
+            if (e.ColumnIndex != 1)//выбор датчика         
+            {
             UpdateSensorInfoPanel(e.RowIndex);
-//            }
+            }
 
            /* if (e.ColumnIndex == 4)//Состояние датчика - подключение
             {
@@ -3955,64 +3998,38 @@ namespace Charaterizator
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
+                case 9://расчет коэффициентов
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.LightGreen;
+                    btnCalculateCoeff.Enabled =true;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
             }
         }
 
         private void btnCalculateCoeff_Click(object sender, EventArgs e)
         {
-            // Временно- потом убрать !!!!!
-            // вызов функции по расчету коэффициентов, сразу по нажатию кнопи
-            Matrix<double> Rmtx = DenseMatrix.OfArray(new double[,]
-            {
-            { 3911.9, 4100.3, 4302.2, 4691.2 },
-            { 3911.6, 4100.2, 4301.9, 4690.7 },
-            { 3912.3, 4100.5, 4301.8, 4690   },
-            { 3913.9, 4101.7, 4302.7, 4690.5 },
-            { 3916.4, 4103.7, 4304.3, 4691.6 },
-            { 3919.9, 4106.6, 4306.7, 4693.4 },
-            { 3919.9, 4106.6, 4306.7, 4693.4 },
-            { 3916.4, 4103.7, 4304.3, 4691.6 },
-            { 3913.9, 4101.7, 4302.7, 4690.5 },
-            { 3912.3, 4100.5, 4301.8, 4690   },
-            { 3911.6, 4100.2, 4301.9, 4690.7 },
-            { 3911.9, 4100.3, 4302.2, 4691.2 }});
-         
-            // Формируем матрицу напряжений 
-            // Umtx
-            Matrix<double> Umtx = DenseMatrix.OfArray(new double[,]
-            {
-            {  4.746,   5.318,   5.187,   3.296 },
-            { 47.212,  48.612,  49.122,  47.978 },
-            {174.478, 178.379, 180.842, 181.993 },
-            {259.235, 264.819, 268.604, 271.318 },
-            {343.995, 351.254, 356.373, 360.669 },
-            {428.824, 437.720, 444.165, 450.056 },
-            {428.824, 437.720, 444.165, 450.056 },
-            {343.996, 351.254, 356.373, 360.669 },
-            {259.235, 264.819, 268.604, 271.318 },
-            {174.478, 178.379, 180.842, 181.993 },
-            { 47.212,  48.612,  49.122,  47.977 },
-            {  4.746,   5.318,   5.187,   3.296 }});
-           
-            // Формируем матрицу давлений
-            // Pmtx
-            Matrix<double> Pmtx = DenseMatrix.OfArray(new double[,]
-            {
-            {   0,   0,   0,   0 },
-            { 0.1, 0.1, 0.1, 0.1 },
-            { 0.4, 0.4, 0.4, 0.4 },
-            { 0.6, 0.6, 0.6, 0.6 },
-            { 0.8, 0.8, 0.8, 0.8 },
-            { 1.0, 1.0, 1.0, 1.0 },
-            { 1.0, 1.0, 1.0, 1.0 },
-            { 0.8, 0.8, 0.8, 0.8 },
-            { 0.6, 0.6, 0.6, 0.6 },
-            { 0.4, 0.4, 0.4, 0.4 },
-            { 0.1, 0.1, 0.1, 0.1 },
-            {   0,   0,   0,   0 }});
-            
-            Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx);
-            
 
 
             if (!SensorBusy)
@@ -4033,13 +4050,17 @@ namespace Charaterizator
                 //                {
                 try
                 {
-                    btnCHStart.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
+                    btnCalculateCoeff.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
                     UpdateItemState(9);
                     СaclSensorCoef();
                 }
+                catch
+                {
+                    Program.txtlog.WriteLineLog("Расчет коэффициентов не выполнен. Неверные входные данные.", 1);
+                }
                 finally
                 {
-                    btnCHStart.Text = "Расчет коэффициентов";
+                    btnCalculateCoeff.Text = "Расчет коэффициентов";
                     UpdateItemState(0);
                 }
                 /*                }

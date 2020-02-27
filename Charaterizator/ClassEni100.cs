@@ -211,7 +211,8 @@ namespace Charaterizator
         static bool SensorConnect = false;
         public List<SensorID> sensorList = new List<SensorID>();//список обнаруженных датчиков
         public SensorID sensor;//текущий обслуживаемый датчик
-        public int SelSensorChannal = 0;
+        public int SelSensorChannal = 0;//номер текущего канала
+        public int SelSensorIndex = 0;//номер выбранного датчика в списке
         //        public SensorTeg steg = new SensorTeg(6, 12);
         private Thread ReadThread;
         private bool PreambulFinded=false;
@@ -292,6 +293,7 @@ namespace Charaterizator
                 {//датчик в канале найден
                     sensor = sensorList[i];
                     SelSensorChannal = index;
+                    SelSensorIndex = i;
                     return true;
                 }
             }
@@ -355,7 +357,7 @@ namespace Charaterizator
         }
 
         //Чтение выбранного датчика
-        public bool SensorRead()
+        public bool C14SensorRead()
         {
             if ((port != null) && (SensorConnect))
             {
@@ -503,7 +505,8 @@ namespace Charaterizator
                 i = sensor.pre;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
-                data[i + 2] = 0x23;//код команды
+                //data[i + 2] = 0x23;//код команды
+                data[i + 2] = 0xF;//код команды
                 data[i + 3] = 0x00;//количество байт
                 data[i + 4] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
@@ -526,26 +529,27 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
-                byte[] data = new byte[sensor.pre + 13];
+                byte[] data = new byte[sensor.pre + 14];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 i = sensor.pre;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0x23;//код команды
-                data[i + 3] = 0x08;//количество байт
+                data[i + 3] = 0x09;//количество байт
+                data[i + 4] = 0x0C;//
 
                 UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(VPI), 0);
-                data[i + 4] = (byte)((tmp >> 24) & 0xFF);
-                data[i + 5] = (byte)((tmp >> 16) & 0xFF);
-                data[i + 6] = (byte)((tmp >> 8) & 0xFF);
-                data[i + 7] = (byte)(tmp & 0xFF);
+                data[i + 5] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 7] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 8] = (byte)(tmp & 0xFF);
                 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(NPI), 0);
-                data[i + 8] = (byte)((tmp >> 24) & 0xFF);
-                data[i + 9] = (byte)((tmp >> 16) & 0xFF);
-                data[i + 10] = (byte)((tmp >> 8) & 0xFF);
-                data[i + 11] = (byte)(tmp & 0xFF);
+                data[i + 9] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 10] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 11] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 12] = (byte)(tmp & 0xFF);
 
-                data[i + 12] = GetCRC(data, sensor.pre);//CRC
+                data[i + 13] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
@@ -599,18 +603,19 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
-                byte[] data = new byte[sensor.pre + 4];
+                byte[] data = new byte[sensor.pre + 5];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 i = sensor.pre;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0x2B;
-                data[i + 3] = GetCRC(data, sensor.pre);//CRC
+                data[i + 3] = 0x00;
+                data[i + 4] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(5, WAIT_TIMEOUT);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -771,6 +776,8 @@ namespace Charaterizator
             return false;
         }
 
+
+
         //Запись калибровочных коэффициентов для датчика давления (команда 250)
         public bool C250SensorCoefficientWrite()
         {
@@ -779,7 +786,7 @@ namespace Charaterizator
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 UInt32 tmp;
                 int i;
-                byte[] data = new byte[sensor.pre + 30];
+                byte[] data = new byte[sensor.pre + 22];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 i = sensor.pre;
                 data[i] = 0x02;
@@ -787,35 +794,35 @@ namespace Charaterizator
                 data[i + 2] = 0xFA;//код команды
                 data[i + 3] = 0x25;//количество байт
 
-                for (int ci = 0; ci <= 5; ci++)
+                for (int ci = 0; ci < 5; ci++)
                 {
                     data[i+4] = (byte)ci;
 
-                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6*ci]), 0);
+                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4*ci]), 0);
                     data[i + 5] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 6] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 7] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 8] = (byte)(tmp & 0xFF);
 
-                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 1]), 0);
+                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4 * ci + 1]), 0);
                     data[i + 9] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 10] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 11] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 12] = (byte)(tmp & 0xFF);
 
-                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 2]), 0);
+                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4 * ci + 2]), 0);
                     data[i + 13] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 14] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 15] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 16] = (byte)(tmp & 0xFF);
 
-                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 3]), 0);
+                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4 * ci + 3]), 0);
                     data[i + 17] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 18] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 19] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 20] = (byte)(tmp & 0xFF);
 
-                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 4]), 0);
+ /*                   tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 4]), 0);
                     data[i + 21] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 22] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 23] = (byte)((tmp >> 8) & 0xFF);
@@ -825,9 +832,9 @@ namespace Charaterizator
                     data[i + 25] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 26] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 27] = (byte)((tmp >> 8) & 0xFF);
-                    data[i + 28] = (byte)(tmp & 0xFF);
+                    data[i + 28] = (byte)(tmp & 0xFF);*/
 
-                    data[i + 29] = GetCRC(data, sensor.pre);//CRC
+                    data[i + 21] = GetCRC(data, sensor.pre);//CRC
 
                     for (int j = 0; j < WRITE_COUNT; j++)
                     {
@@ -990,10 +997,18 @@ namespace Charaterizator
                                     ReadCommand13(Adress, indata);
                                     break;
                                 case 0x0E://Чтение серийного номера и параметров приемника давления (команда 14)
-                                    ReadCommand14(Adress, indata);
+                                    if (!ReadCommand14(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x0F://Чтение ВПИ, НПИ (команда 15)
-                                    ReadCommand15(Adress, indata);
+                                    if (!ReadCommand15(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x16://Прочитать Final Assembly number (команда 16)
                                     break;
@@ -1058,7 +1073,12 @@ namespace Charaterizator
                                 case 0x8A://Записать параметры критической ошибки (уровни аварийной сигнализации) (команда 138)
                                     break;
                                 case 0x8C://Считать данные о модели приемника давления и типа давления (команда 140)
-                                    ReadCommand140(Adress, indata);
+                                    if (!ReadCommand140(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
+
                                     break;
                                 case 0x8D://Запись данных о языке вывода названий меню – только для исполнения ЖК-2 (команда 141)
                                     break;
@@ -1303,6 +1323,8 @@ namespace Charaterizator
             sensor.TemperatureUnit = indata[21];
             tmp = (indata[22] << 24) | (indata[23] << 16) | (indata[24] << 8) | indata[25];
             sensor.Temperature = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+            sensorList[SelSensorIndex] = sensor;
         }
 
 
@@ -1318,6 +1340,8 @@ namespace Charaterizator
                 j++;
             }
             Array.Reverse(sensor.message);//инвертируем порядок 
+            sensorList[SelSensorIndex] = sensor;
+
         }
 
         //Считать тэг, дескриптор, дату (команда 13)
@@ -1339,13 +1363,18 @@ namespace Charaterizator
             Array.Reverse(sensor.desc);//инвертируем порядок 
 
             sensor.data = (UInt32)((indata[j] << 16) | (indata[j+1] << 8) | indata[j+2]);
+
+            sensorList[SelSensorIndex] = sensor;
+
         }
 
         //Чтение серийного номера и параметров приемника давления (команда 14)
-        private void ReadCommand14(int addr, byte[] indata)
+        private bool ReadCommand14(int addr, byte[] indata)
         {
             int tmp;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
+
             sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
             sensor.MesUnit = indata[5];
             tmp = (indata[6] << 24) | (indata[7] << 16) | (indata[8] << 8) | indata[9];
@@ -1356,29 +1385,38 @@ namespace Charaterizator
 
             tmp = (indata[14] << 24) | (indata[15] << 16) | (indata[16] << 8) | indata[17];
             sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+            sensorList[SelSensorIndex] = sensor;
+
+            return true;
         }
 
         //Чтение ВПИ, НПИ (команда 15)
-        private void ReadCommand15(int addr, byte[] indata)
+        private bool ReadCommand15(int addr, byte[] indata)
         {
             int tmp;
 
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
 
             int yy = indata[2];//alarm select code
             int bb = indata[3];//Transfer function code
+            int edMes = indata[4];//Transfer function code
 
 
-            tmp = (indata[4] << 24) | (indata[5] << 16) | (indata[6] << 8) | indata[7];
+            tmp = (indata[5] << 24) | (indata[6] << 16) | (indata[7] << 8) | indata[8];
             sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-            tmp = (indata[8] << 24) | (indata[9] << 16) | (indata[10] << 8) | indata[11];
+            tmp = (indata[9] << 24) | (indata[10] << 16) | (indata[11] << 8) | indata[12];
             sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-            tmp = (indata[12] << 24) | (indata[13] << 16) | (indata[14] << 8) | indata[15];
+            tmp = (indata[13] << 24) | (indata[14] << 16) | (indata[15] << 8) | indata[16];
             sensor.dtime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);//время демпфирования
 
-            int cc = indata[16];//Write protect code
-            int dd = indata[17];//private label distributor code
+            int cc = indata[17];//Write protect code
+            int dd = indata[18];//private label distributor code
 
+            sensorList[SelSensorIndex] = sensor;
+
+            return true;
         }
 
         //Запись ВПИ НПИ(команда 35)
@@ -1386,10 +1424,15 @@ namespace Charaterizator
         {
             int tmp;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return;
+
             tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
             sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
             tmp = (indata[6] << 24) | (indata[7] << 16) | (indata[8] << 8) | indata[9];
             sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+            sensorList[SelSensorIndex] = sensor;
+
         }
 
         //Режим фиксированного тока (команда 40)
@@ -1434,6 +1477,8 @@ namespace Charaterizator
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
             sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
+            sensorList[SelSensorIndex] = sensor;
+
         }
 
         //Ответ на команду чтение токового выхода (команда 128)
@@ -1447,17 +1492,22 @@ namespace Charaterizator
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
             sensor.CurrentExit = indata[2];
+            sensorList[SelSensorIndex] = sensor;
         }
 
         //Ответ на команду чтение модели приемника давления (команда 140)
-        private void ReadCommand140(int addr, byte[] indata)
+        private bool ReadCommand140(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
             sensor.PressureType = indata[2];
             for (int i = 0; i < 5; i++)//5 символов
             {
                 sensor.PressureModel[i] = (char)indata[i+3];
             }
+            sensorList[SelSensorIndex] = sensor;
+
+            return true;
         }
 
         //Ответ на команду запись модели приемника давления (команда 241)
@@ -1476,6 +1526,8 @@ namespace Charaterizator
                     sensor.PressureModel[i] = ' ';
                 }
             }
+            sensorList[SelSensorIndex] = sensor;
+
         }
 
         //ответ на запись верхнего и нижнего пределов ПД, минимального диапазона (команда 249)
@@ -1499,7 +1551,11 @@ namespace Charaterizator
 
                 tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
                 sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+                sensorList[SelSensorIndex] = sensor;
+
             }
+
         }
 
         //Запись калибровочных коэффициентов для датчика давления (команда 250)
@@ -1522,6 +1578,9 @@ namespace Charaterizator
 
                 tmp = (indata[15] << 24) | (indata[16] << 16) | (indata[17] << 8) | indata[18];
                 sensor.Coefficient[4 * Number + 3] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+                sensorList[SelSensorIndex] = sensor;
+
                 return true;
             }
             else
@@ -1551,6 +1610,9 @@ namespace Charaterizator
 
                 tmp = (indata[15] << 24) | (indata[16] << 16) | (indata[17] << 8) | indata[18];
                 sensor.Coefficient[4 * Number + 3] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+                sensorList[SelSensorIndex] = sensor;
+
                 return true;
             }
             else
