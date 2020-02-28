@@ -483,8 +483,9 @@ namespace Charaterizator
                 tbInfoSerialNumber.Text = sensors.sensor.SerialNumber.ToString();
                 tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f6");
                 tbInfoMesUnit.Text = sensors.sensor.GetUnit();
-                //                DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
-                //                dtpInfoDate.Value = dt;
+
+                DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
+                dtpInfoDate.Value = dt;
 
                 tbInfoDeviceAdress.Text = sensors.sensor.Addr.ToString("D2");
                 tbInfoFactoryNumber.Text = sensors.sensor.uni.ToString();
@@ -502,8 +503,7 @@ namespace Charaterizator
                         "Датчик на выбранной линии не обнаружен!",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBoxDefaultButton.Button1);
                 if (result == DialogResult.Yes)
                 {
                     // коммутируем
@@ -539,7 +539,7 @@ namespace Charaterizator
                         Program.txtlog.WriteLineLog("Нет подключение к датчикам!", 1);
                     }
 
-                    Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                    //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                 }
             }
         }
@@ -634,7 +634,7 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CAP: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
                 sensors.С40WriteFixCurrent(0);
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i           
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i           
                 seli++;
             }
             Program.txtlog.WriteLineLog("Чтение ЦАП завершено!", 2);
@@ -697,8 +697,7 @@ namespace Charaterizator
                                     "Превышено максимальное отклонение тока ЦАП (4мА)!",
                                     MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Information,
-                                    MessageBoxDefaultButton.Button1,
-                                    MessageBoxOptions.DefaultDesktopOnly);
+                                    MessageBoxDefaultButton.Button1);
                             if (result == DialogResult.No)
                             {
                                 cc++;
@@ -725,8 +724,7 @@ namespace Charaterizator
                                     "Превышено максимальное отклонение тока ЦАП (20мА)!",
                                     MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Information,
-                                    MessageBoxDefaultButton.Button1,
-                                    MessageBoxOptions.DefaultDesktopOnly);
+                                    MessageBoxDefaultButton.Button1);
                             if (result == DialogResult.No)
                             {
                                 cc++;
@@ -775,7 +773,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog(string.Format("CL: Датчик не обнаружен в канале {0}", i + 1), 1);
                 }
-                Commutator.SetConnectors(i, 1);
+                //Commutator.SetConnectors(i, 1);
                 seli++;
             }
             Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 2);
@@ -947,7 +945,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 seli++;
             }
             Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2);
@@ -1044,7 +1042,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 seli++;
             }
             Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты успешно записаны в датчик!", 2);
@@ -1151,7 +1149,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                 seli++;
             }
             Program.txtlog.WriteLineLog("VR: Операция верификации завершена ... ", 2);
@@ -1196,7 +1194,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
             Program.txtlog.WriteLineLog("VR: Операция записи НПИ ВПИ завершена", 2);
@@ -1240,7 +1238,7 @@ namespace Charaterizator
                 {
                     Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
                 }
-                Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
             Program.txtlog.WriteLineLog("VR: Операция установки нуля завершена", 2);
@@ -1258,13 +1256,13 @@ namespace Charaterizator
             }
             for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
-                dataGridView2.Rows.Add("", "", "", "", "", "");
-                 dataGridView2.Rows[j].Cells[0].Value = ResultCH.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");                 //
-                dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
-                dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Diapazon.ToString();
-                dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
-                dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
-                dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
+                dataGridView2.Rows.Add(j + 1, "", "", "", "", "", "");
+                dataGridView2.Rows[j].Cells[1].Value = ResultCH.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");                 //
+                dataGridView2.Rows[j].Cells[2].Value = ResultCH.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView2.Rows[j].Cells[3].Value = ResultCH.Channal[i].Points[j].Diapazon.ToString();
+                dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
+                dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
+                dataGridView2.Rows[j].Cells[6].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
             }
             dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
             dataGridView2.ClearSelection();
@@ -1286,15 +1284,15 @@ namespace Charaterizator
 
             for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
-                dataGridView3.Rows.Add("", "", "", "", "", "", "", "");
-                dataGridView3.Rows[j].Cells[0].Value = ResultVR.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
-                dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
-                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].NPI.ToString();   //
-                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].VPI.ToString();   //
-                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
-                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
-                dataGridView3.Rows[j].Cells[6].Value = ResultVR.Channal[i].Points[j].CurrentR.ToString("f4");
-                dataGridView3.Rows[j].Cells[7].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
+                dataGridView3.Rows.Add(j+1, "", "", "", "", "", "", "", "");
+                dataGridView3.Rows[j].Cells[1].Value = ResultVR.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
+                dataGridView3.Rows[j].Cells[2].Value = ResultVR.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView3.Rows[j].Cells[3].Value = ResultVR.Channal[i].Points[j].NPI.ToString();   //
+                dataGridView3.Rows[j].Cells[4].Value = ResultVR.Channal[i].Points[j].VPI.ToString();   //
+                dataGridView3.Rows[j].Cells[5].Value = ResultVR.Channal[i].Points[j].PressureZ.ToString("f3");
+                dataGridView3.Rows[j].Cells[6].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
+                dataGridView3.Rows[j].Cells[7].Value = ResultVR.Channal[i].Points[j].CurrentR.ToString("f4");
+                dataGridView3.Rows[j].Cells[8].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
             }
             dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
             dataGridView3.ClearSelection();
@@ -1412,7 +1410,7 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
                         }
 
-                        Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                        //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
                     }
                     Program.txtlog.WriteLineLog("Поиск датчиков завершен!", 2);
@@ -1838,8 +1836,8 @@ namespace Charaterizator
                 case 0:
                     {
                         pUpStatusBar.Visible = false;
-                        label1.Visible = false;
-                        tbNumCH.Visible = false;
+//                        label1.Visible = false;
+//                        tbNumCH.Visible = false;
                         splitter1.Visible = false;
 
                         return;
@@ -1849,8 +1847,8 @@ namespace Charaterizator
                 case 1:  
                     {
                         pUpStatusBar.Visible = true;
-                        label1.Visible = true;
-                        tbNumCH.Visible = true;
+//                        label1.Visible = true;
+//                        tbNumCH.Visible = true;
                         splitter1.Visible = true;
                         UpDateSelectedChannal();
 
@@ -2133,8 +2131,8 @@ namespace Charaterizator
                 case 2:
                     {
                         pUpStatusBar.Visible = true;
-                        label1.Visible = true;
-                        tbNumCH.Visible = true;
+                        //label1.Visible = true;
+                        //tbNumCH.Visible = true;
                         splitter1.Visible = false;
                         UpDateSelectedChannal();
 
@@ -3689,8 +3687,7 @@ namespace Charaterizator
                         "Подтверждение операции",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBoxDefaultButton.Button1);
                 if (result == DialogResult.Yes)
                 {
                     dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Ascending);
@@ -3721,8 +3718,7 @@ namespace Charaterizator
                         "Подтверждение операции",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBoxDefaultButton.Button1);
                 if (result == DialogResult.Yes)
                 {
                     dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Ascending);
