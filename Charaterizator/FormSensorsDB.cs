@@ -515,7 +515,7 @@ namespace Charaterizator
 
         public string GetDataSensors(string strModel, string strField)
         {
-            string strValue = "";
+            string strValue = "-1";
 
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
@@ -544,6 +544,7 @@ namespace Charaterizator
                     reader.Close();
                 }        
             }
+            if (strValue == "") strValue = "-1";
             return strValue;
         }
                 

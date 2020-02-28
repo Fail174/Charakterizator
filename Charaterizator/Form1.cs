@@ -11,6 +11,10 @@ using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.LinearAlgebra;
+
 
 
 
@@ -75,6 +79,7 @@ namespace Charaterizator
         private FormMensor Mensor = new FormMensor();
         public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
+        private CCalculation CalculationMtx = new CCalculation();
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
 
@@ -96,7 +101,8 @@ namespace Charaterizator
         private bool isSensorRead = false;
         //        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
-        private int SelectedLevel = 1;//выбранный номер уровня характеризации
+        private int SelectedLevel = 1;//выбранный номер уровеня характеризации
+
 
 
         //Инициализация переменных основной программы
@@ -510,9 +516,9 @@ namespace Charaterizator
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
-                                sensors.С245EnterServis();  //перевод в сервесный режим
+                                sensors.EnterServis();
                                 sensors.TegRead();          //читаем инфомацию о датчике
-                                sensors.SensorRead();       //чтение данных с датчика
+                                sensors.C14SensorRead();       //чтение данных с датчика
                                 sensors.C140ReadPressureModel();//читаем модель ПД
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                                 UpdateSensorInfoPanel(i);
@@ -972,18 +978,64 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    /*                    for (int j=0; i<ResultCH.Channal[i].Points.Count;j++)
-                                        {
-                                            Temperature[j] = ResultCH.Channal[i].Points[j].Temperature;
-                                            Pressure[j] = ResultCH.Channal[i].Points[j].Pressure;
-                                            PressureF =  ResultCH.Channal[i].Points[j].OutVoltage/ResultCH.Channal[i].Points[j].Resistance;
-                                        }*/
-                    //                    CalcCoeff(ResultCH.Channal[i].Points.Count);
-                    if (sensors.С15ReadVPI_NPI())
-                    {
+                    double Diapazon = sensors.sensor.UpLevel - sensors.sensor.DownLevel;
 
+                    // Из списка List формируем промежуточные матрицы Сопротивления, Напряжения и Давления
+                    // размером 100х100
+                    Matrix<double> mtxR = DenseMatrix.Create(30, 30, 0);
+                    Matrix<double> mtxU = DenseMatrix.Create(30, 30, 0);
+                    Matrix<double> mtxP = DenseMatrix.Create(30, 30, 0);
+
+                    double val = -1000;
+                    int c_row = 0;
+                    int c_cols = 0;
+
+                    for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)
+                    {
+                        if ((val != ResultCH.Channal[i].Points[j].Temperature) && (j != 0))
+                        {
+                            c_cols = c_cols + 1;
+                            c_row = 0;
+                        }
+                        val = ResultCH.Channal[i].Points[j].Temperature;
+                        mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure/Diapazon;
+                        mtxR[c_row, c_cols] = ResultCH.Channal[i].Points[j].Resistance;
+                        mtxU[c_row, c_cols] = ResultCH.Channal[i].Points[j].OutVoltage;
+                        c_row = c_row + 1;
                     }
-                    if (!sensors.C250SensorCoefficientWrite())
+                    c_cols = c_cols + 1;
+
+
+                    // Создаем матрицы нужного размера и копируем в них 
+                    // ненулевые данные из промежуочных матриц 
+                    Matrix<double> Pnew = DenseMatrix.Create(c_row, c_cols, 0);
+                    Matrix<double> Rnew = DenseMatrix.Create(c_row, c_cols, 0);
+                    Matrix<double> Unew = DenseMatrix.Create(c_row, c_cols, 0);
+
+                    for (int ii = 0; ii < c_row; ii++)
+                    {
+                        for (int jj = 0; jj < c_cols; jj++)
+                        {
+                            Rnew[ii, jj] = mtxR.At(ii, jj);
+                            Pnew[ii, jj] = mtxP.At(ii, jj);
+                            Unew[ii, jj] = mtxU.At(ii, jj);
+                        }
+                    }
+
+                    Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Pnew, Unew);
+                    Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
+                    for (int j = 0; j < ResulCoefmtx.RowCount; j++)
+                    {
+                        Program.txtlog.WriteLineLog((j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
+                        if (j<24)
+                            sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
+                    }
+
+                    if (!sensors.С15ReadVPI_NPI())
+                    {
+                        Program.txtlog.WriteLineLog("CH: Ошибка чтения НПИ и ВПИ датчик в канале " + (i + 1).ToString(), 1);
+                    }
+                    if ((ResulCoefmtx.RowCount != 24)||(!sensors.C250SensorCoefficientWrite()))
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
                     }
@@ -1062,7 +1114,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
                     }
 
 
@@ -1336,10 +1388,14 @@ namespace Charaterizator
                             if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                             {//датчик найден, обновляем таблицу
                                 Program.txtlog.WriteLineLog("Датчик обнаружен! Выполняем чтение параметров датчика по HART.", 0);
-                                sensors.С245EnterServis();
+                                sensors.EnterServis();
                                 sensors.TegRead();          //читаем информацию о датчике
-                                sensors.SensorRead();       //чтение данных с датчика
-                                sensors.C140ReadPressureModel();//читаем модель ПД
+                                if(!sensors.C14SensorRead())       //чтение данных с датчика
+                                    Program.txtlog.WriteLineLog(string.Format("Параметры ПД датчика на линии {0} не прочитаны!", i + 1), 1);
+                               // Program.txtlog.WriteLineLog(string.Format("ВПИ ПД датчика {0}", sensors.sensor.UpLevel), 0);
+                                if (!sensors.C140ReadPressureModel())//читаем модель ПД
+                                    Program.txtlog.WriteLineLog(string.Format("Модель ПД датчика на линии {0} не прочитана!", i + 1), 1);
+
                                 Thread.Sleep(500);          
                                 sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
@@ -1694,7 +1750,7 @@ namespace Charaterizator
 
             if (e.ColumnIndex == sel)
             {
-                if (Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+                if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
                 {
                     for (int i = e.RowIndex; i >= 0; i--)
                     {
@@ -1713,10 +1769,9 @@ namespace Charaterizator
 
 
             //if (e.ColumnIndex <= 2)//выбор датчика     - было
-
             if (e.ColumnIndex != 1)//выбор датчика         
             {
-                UpdateSensorInfoPanel(e.RowIndex);
+            UpdateSensorInfoPanel(e.RowIndex);
             }
 
            /* if (e.ColumnIndex == 4)//Состояние датчика - подключение
@@ -3943,11 +3998,40 @@ namespace Charaterizator
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
+                case 9://расчет коэффициентов
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.LightGreen;
+                    btnCalculateCoeff.Enabled =true;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
             }
         }
 
         private void btnCalculateCoeff_Click(object sender, EventArgs e)
         {
+
+
             if (!SensorBusy)
             {
                 int i;
@@ -3966,13 +4050,17 @@ namespace Charaterizator
                 //                {
                 try
                 {
-                    btnCHStart.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
+                    btnCalculateCoeff.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
                     UpdateItemState(9);
                     СaclSensorCoef();
                 }
+                catch
+                {
+                    Program.txtlog.WriteLineLog("Расчет коэффициентов не выполнен. Неверные входные данные.", 1);
+                }
                 finally
                 {
-                    btnCHStart.Text = "Расчет коэффициентов";
+                    btnCalculateCoeff.Text = "Расчет коэффициентов";
                     UpdateItemState(0);
                 }
                 /*                }
@@ -4028,6 +4116,7 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
                 }
             }
+
         }
 
         private void btnVR_SetZero_Click(object sender, EventArgs e)
@@ -4042,7 +4131,7 @@ namespace Charaterizator
                 }
                 if (i >= MaxChannalCount)
                 {
-                    Program.txtlog.WriteLineLog("Не выбраны датчики для установки нуля. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
                     return;
                 }
 
@@ -4054,13 +4143,13 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    btnVR_SetZero.Text = "Установка нуля";
+                    btnVR_SetZero.Text = "Обнулить";
                     UpdateItemState(0);
                 }
             }
             else
             {
-                if (MessageBox.Show("Отменить обнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
