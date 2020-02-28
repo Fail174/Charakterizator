@@ -1114,7 +1114,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1);
                     }
 
 
