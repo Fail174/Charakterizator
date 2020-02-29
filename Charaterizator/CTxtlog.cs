@@ -31,13 +31,6 @@ namespace Charaterizator
         {
             try
             {
-                str = DateTime.Now + ": " + str;
-                if (writer != null)
-                {
-                    writer.WriteLine(str);
-                    writer.Flush();
-                }
-                //Thread.Sleep(10);
                 if (rtbConsole != null)
                 {
 
@@ -56,8 +49,15 @@ namespace Charaterizator
                             rtbConsole.SelectionColor = Color.Black;
                             break;
                     }
+                    str = DateTime.Now + ": " + str;
                     rtbConsole.AppendText(str + Environment.NewLine);
                     rtbConsole.ScrollToCaret();
+
+                    if (writer != null)
+                    {
+                        writer.WriteLine(str);
+                        writer.Flush();
+                    }
                 }
             }
             catch

@@ -977,7 +977,11 @@ namespace Charaterizator
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
                     double Diapazon = sensors.sensor.UpLevel - sensors.sensor.DownLevel;
-
+                    if ((Diapazon <= 0) || (Diapazon > 1000000))
+                    {
+                        Program.txtlog.WriteLineLog("CH: Не верные НПИ и ВПИ датчика в канале:" + (i + 1).ToString(), 1);
+                        continue;
+                    }
                     // Из списка List формируем промежуточные матрицы Сопротивления, Напряжения и Давления
                     // размером 100х100
                     Matrix<double> mtxR = DenseMatrix.Create(30, 30, 0);
@@ -1020,20 +1024,32 @@ namespace Charaterizator
                         }
                     }
 
-                    Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Pnew, Unew);
-                    Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
-                    for (int j = 0; j < ResulCoefmtx.RowCount; j++)
+                    try
                     {
-                        Program.txtlog.WriteLineLog((j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
-                        if (j<24)
-                            sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
+                        Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Pnew, Unew);
+                        if (ResulCoefmtx.RowCount != 24)
+                        {
+                            Program.txtlog.WriteLineLog("CH: Количество точек при характеризация не равно 24.", 1);
+                            continue;
+                        }
+                        Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
+                        for (int j = 0; j < ResulCoefmtx.RowCount; j++)
+                        {
+                            Program.txtlog.WriteLineLog((j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
+                            if (j < 24)
+                                sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
+                        }
+                    }
+                    catch
+                    {
+                        Program.txtlog.WriteLineLog("CH: Ошибка расчета коэффициентов для датчика в канале " + (i + 1).ToString(), 1);
                     }
 
                     if (!sensors.С15ReadVPI_NPI())
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка чтения НПИ и ВПИ датчик в канале " + (i + 1).ToString(), 1);
                     }
-                    if ((ResulCoefmtx.RowCount != 24)||(!sensors.C250SensorCoefficientWrite()))
+                    if (!sensors.C250SensorCoefficientWrite())
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
                     }
@@ -1045,7 +1061,7 @@ namespace Charaterizator
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 seli++;
             }
-            Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты успешно записаны в датчик!", 2);
+            Program.txtlog.WriteLineLog("CH: Операция вычисления коэффициентов завершена!", 2);
         }
 
 
@@ -3699,7 +3715,6 @@ namespace Charaterizator
                     ResultCH.SaveToArhiv(ii);
                 }
             }
-
         }
 
         private void tsMenuVerificationDetele_Click(object sender, EventArgs e)
@@ -4052,7 +4067,7 @@ namespace Charaterizator
                 }
                 catch
                 {
-                    Program.txtlog.WriteLineLog("Расчет коэффициентов не выполнен. Неверные входные данные.", 1);
+                    Program.txtlog.WriteLineLog("Расчет коэффициентов не выполнен.", 1);
                 }
                 finally
                 {
@@ -4152,6 +4167,38 @@ namespace Charaterizator
                 }
             }
 
+
+        }
+
+        private void tsmCurrentDelete_Click(object sender, EventArgs e)
+        {
+            if (ResultCI != null)
+            {
+                if (cbChannalCharakterizator.Text == "") return;
+
+                string str = cbChannalCharakterizator.Text.Remove(0, 6);
+                int ii = Convert.ToInt32(str) - 1;
+
+                DataGridViewSelectedRowCollection s = dataGridView4.SelectedRows;
+                if (s.Count <= 0) return;
+
+                DialogResult result = MessageBox.Show(
+                        "Выбранные записи будут удалены из таблицы и архива данных ЦАП. Продолжить?",
+                        "Подтверждение операции",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information,
+                        MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes)
+                {
+                    dataGridView2.Sort(dataGridView4.Columns[0], ListSortDirection.Ascending);
+                    for (int i = 0; i < s.Count; i++)
+                    {
+                        ResultCI.DeletePoint(ii, s[i].Index);
+                    }
+                    UpdateCurrentGrid(ii);
+                    ResultCI.SaveToArhiv(ii);
+                }
+            }
 
         }
     }

@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,9 +100,29 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.сVRRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cNPI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cVPI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPressureZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сCurrentR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.contextMenuStripCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.сCHRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDiapazon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -261,28 +281,11 @@
             this.label46 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.contextMenuStripVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsMenuVerificationDetele = new System.Windows.Forms.ToolStripMenuItem();
-            this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сITemperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cICurrent4mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cICurrent20mA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сVRRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTempreture = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cNPI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cVPI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPressureZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сCurrentR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сCHRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDiapazon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuVerificationDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitter2 = new System.Windows.Forms.Splitter();
+            this.cmsCurentTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmCurrentDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.сSensor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -302,7 +305,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.contextMenuStripCharacterizationTable.SuspendLayout();
+            this.cmsCharacterizationTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -324,12 +327,13 @@
             this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.pUpStatusBar.SuspendLayout();
-            this.contextMenuStripVerificationTable.SuspendLayout();
+            this.cmsVerificationTable.SuspendLayout();
+            this.cmsCurentTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 886);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 991);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1751, 22);
             this.statusStrip1.TabIndex = 3;
@@ -562,7 +566,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(1442, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 862);
+            this.panel1.Size = new System.Drawing.Size(309, 967);
             this.panel1.TabIndex = 6;
             // 
             // tbDateTime
@@ -570,7 +574,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 814);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 919);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -980,9 +984,9 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 706);
+            this.panel2.Location = new System.Drawing.Point(0, 769);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1442, 180);
+            this.panel2.Size = new System.Drawing.Size(1442, 222);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -992,9 +996,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(576, 5);
+            this.richTextBox1.Location = new System.Drawing.Point(527, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(859, 168);
+            this.richTextBox1.Size = new System.Drawing.Size(451, 210);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.Visible = false;
@@ -1007,7 +1011,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(1030, 167);
+            this.rtbConsole.Size = new System.Drawing.Size(975, 209);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -1022,14 +1026,14 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1442, 682);
+            this.panel3.Size = new System.Drawing.Size(1442, 745);
             this.panel3.TabIndex = 8;
             // 
             // splitter1
             // 
             this.splitter1.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter1.Location = new System.Drawing.Point(277, 494);
+            this.splitter1.Location = new System.Drawing.Point(277, 557);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(1165, 5);
             this.splitter1.TabIndex = 8;
@@ -1046,14 +1050,47 @@
             this.сITemperature,
             this.cICurrent4mA,
             this.cICurrent20mA});
+            this.dataGridView4.ContextMenuStrip = this.cmsCurentTable;
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView4.Location = new System.Drawing.Point(277, 499);
+            this.dataGridView4.Location = new System.Drawing.Point(277, 562);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.Size = new System.Drawing.Size(1165, 183);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
+            // 
+            // сIDataTime
+            // 
+            this.сIDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.сIDataTime.HeaderText = "Дата и Время";
+            this.сIDataTime.MinimumWidth = 200;
+            this.сIDataTime.Name = "сIDataTime";
+            this.сIDataTime.ReadOnly = true;
+            // 
+            // сITemperature
+            // 
+            this.сITemperature.HeaderText = "Температура (°C)";
+            this.сITemperature.MinimumWidth = 200;
+            this.сITemperature.Name = "сITemperature";
+            this.сITemperature.ReadOnly = true;
+            this.сITemperature.Width = 200;
+            // 
+            // cICurrent4mA
+            // 
+            this.cICurrent4mA.HeaderText = "Ток 4мА (мА)";
+            this.cICurrent4mA.MinimumWidth = 200;
+            this.cICurrent4mA.Name = "cICurrent4mA";
+            this.cICurrent4mA.ReadOnly = true;
+            this.cICurrent4mA.Width = 200;
+            // 
+            // cICurrent20mA
+            // 
+            this.cICurrent20mA.HeaderText = "Ток 20мА (мА)";
+            this.cICurrent20mA.MinimumWidth = 200;
+            this.cICurrent20mA.Name = "cICurrent20mA";
+            this.cICurrent20mA.ReadOnly = true;
+            this.cICurrent20mA.Width = 200;
             // 
             // dataGridView3
             // 
@@ -1070,15 +1107,87 @@
             this.cPressureF,
             this.сCurrentR,
             this.сCurrentF});
+            this.dataGridView3.ContextMenuStrip = this.cmsVerificationTable;
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView3.Location = new System.Drawing.Point(277, 0);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
-            this.dataGridView3.Size = new System.Drawing.Size(1165, 682);
+            this.dataGridView3.Size = new System.Drawing.Size(1165, 745);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
+            // 
+            // сVRRecordNum
+            // 
+            this.сVRRecordNum.Frozen = true;
+            this.сVRRecordNum.HeaderText = "№";
+            this.сVRRecordNum.MinimumWidth = 25;
+            this.сVRRecordNum.Name = "сVRRecordNum";
+            this.сVRRecordNum.ReadOnly = true;
+            this.сVRRecordNum.Width = 25;
+            // 
+            // cDataTime
+            // 
+            this.cDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cDataTime.HeaderText = "Дата и Время";
+            this.cDataTime.MinimumWidth = 200;
+            this.cDataTime.Name = "cDataTime";
+            this.cDataTime.ReadOnly = true;
+            // 
+            // cTempreture
+            // 
+            this.cTempreture.HeaderText = "Температура (°С)";
+            this.cTempreture.MinimumWidth = 200;
+            this.cTempreture.Name = "cTempreture";
+            this.cTempreture.ReadOnly = true;
+            this.cTempreture.Width = 200;
+            // 
+            // cNPI
+            // 
+            this.cNPI.HeaderText = "НПИ";
+            this.cNPI.MinimumWidth = 100;
+            this.cNPI.Name = "cNPI";
+            this.cNPI.ReadOnly = true;
+            // 
+            // cVPI
+            // 
+            this.cVPI.HeaderText = "ВПИ";
+            this.cVPI.MinimumWidth = 100;
+            this.cVPI.Name = "cVPI";
+            this.cVPI.ReadOnly = true;
+            // 
+            // cPressureZ
+            // 
+            this.cPressureZ.HeaderText = "Pз (кПа)";
+            this.cPressureZ.MinimumWidth = 200;
+            this.cPressureZ.Name = "cPressureZ";
+            this.cPressureZ.ReadOnly = true;
+            this.cPressureZ.Width = 200;
+            // 
+            // cPressureF
+            // 
+            this.cPressureF.HeaderText = "Pф (кПа)";
+            this.cPressureF.MinimumWidth = 200;
+            this.cPressureF.Name = "cPressureF";
+            this.cPressureF.ReadOnly = true;
+            this.cPressureF.Width = 200;
+            // 
+            // сCurrentR
+            // 
+            this.сCurrentR.HeaderText = "Iр (мА)";
+            this.сCurrentR.MinimumWidth = 150;
+            this.сCurrentR.Name = "сCurrentR";
+            this.сCurrentR.ReadOnly = true;
+            this.сCurrentR.Width = 150;
+            // 
+            // сCurrentF
+            // 
+            this.сCurrentF.HeaderText = "Iф (мА)";
+            this.сCurrentF.MinimumWidth = 150;
+            this.сCurrentF.Name = "сCurrentF";
+            this.сCurrentF.ReadOnly = true;
+            this.сCurrentF.Width = 150;
             // 
             // dataGridView2
             // 
@@ -1093,29 +1202,86 @@
             this.сPressure2,
             this.cUTemp2,
             this.cUPress2});
-            this.dataGridView2.ContextMenuStrip = this.contextMenuStripCharacterizationTable;
+            this.dataGridView2.ContextMenuStrip = this.cmsCharacterizationTable;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.Location = new System.Drawing.Point(277, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.Size = new System.Drawing.Size(1165, 682);
+            this.dataGridView2.Size = new System.Drawing.Size(1165, 745);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
             // 
-            // contextMenuStripCharacterizationTable
+            // сCHRecordNum
             // 
-            this.contextMenuStripCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.сCHRecordNum.Frozen = true;
+            this.сCHRecordNum.HeaderText = "№";
+            this.сCHRecordNum.MinimumWidth = 25;
+            this.сCHRecordNum.Name = "сCHRecordNum";
+            this.сCHRecordNum.ReadOnly = true;
+            this.сCHRecordNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сCHRecordNum.Width = 25;
+            // 
+            // cDataTime2
+            // 
+            this.cDataTime2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cDataTime2.HeaderText = "Дата и Время";
+            this.cDataTime2.MinimumWidth = 200;
+            this.cDataTime2.Name = "cDataTime2";
+            this.cDataTime2.ReadOnly = true;
+            // 
+            // cTempreture2
+            // 
+            this.cTempreture2.HeaderText = "Температура (°C)";
+            this.cTempreture2.MinimumWidth = 200;
+            this.cTempreture2.Name = "cTempreture2";
+            this.cTempreture2.ReadOnly = true;
+            this.cTempreture2.Width = 200;
+            // 
+            // cDiapazon
+            // 
+            this.cDiapazon.HeaderText = "Диапазон";
+            this.cDiapazon.MinimumWidth = 100;
+            this.cDiapazon.Name = "cDiapazon";
+            this.cDiapazon.ReadOnly = true;
+            // 
+            // сPressure2
+            // 
+            this.сPressure2.HeaderText = "Давление (кПа)";
+            this.сPressure2.MinimumWidth = 200;
+            this.сPressure2.Name = "сPressure2";
+            this.сPressure2.ReadOnly = true;
+            this.сPressure2.Width = 200;
+            // 
+            // cUTemp2
+            // 
+            this.cUTemp2.HeaderText = "Напряжение (мВ)";
+            this.cUTemp2.MinimumWidth = 200;
+            this.cUTemp2.Name = "cUTemp2";
+            this.cUTemp2.ReadOnly = true;
+            this.cUTemp2.Width = 200;
+            // 
+            // cUPress2
+            // 
+            this.cUPress2.HeaderText = "Сопротивление (Ом)";
+            this.cUPress2.MinimumWidth = 200;
+            this.cUPress2.Name = "cUPress2";
+            this.cUPress2.ReadOnly = true;
+            this.cUPress2.Width = 200;
+            // 
+            // cmsCharacterizationTable
+            // 
+            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuDeleteResult});
-            this.contextMenuStripCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
-            this.contextMenuStripCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
+            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
             // 
             // ToolStripMenuDeleteResult
             // 
             this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
             this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
-            this.ToolStripMenuDeleteResult.Text = "Удаление записи";
+            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
             this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
             // 
             // dataGridView1
@@ -1137,7 +1303,7 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(1165, 682);
+            this.dataGridView1.Size = new System.Drawing.Size(1165, 745);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1150,7 +1316,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 682);
+            this.panel4.Size = new System.Drawing.Size(277, 745);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1162,7 +1328,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 682);
+            this.tabControl1.Size = new System.Drawing.Size(277, 745);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1176,7 +1342,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 656);
+            this.tabPage1.Size = new System.Drawing.Size(269, 719);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1249,7 +1415,7 @@
             this.groupBox9.Controls.Add(this.label30);
             this.groupBox9.Location = new System.Drawing.Point(6, 133);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(257, 577);
+            this.groupBox9.Size = new System.Drawing.Size(257, 556);
             this.groupBox9.TabIndex = 3;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Параметры выбранного датчика";
@@ -1619,7 +1785,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(269, 656);
+            this.tabPage2.Size = new System.Drawing.Size(269, 719);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2157,7 +2323,7 @@
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(269, 656);
+            this.tabPage3.Size = new System.Drawing.Size(269, 719);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
@@ -2906,190 +3072,53 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "   |   Текущий канал: ";
             // 
-            // contextMenuStripVerificationTable
+            // cmsVerificationTable
             // 
-            this.contextMenuStripVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsMenuVerificationDetele});
-            this.contextMenuStripVerificationTable.Name = "contextMenuStripVerificationTable";
-            this.contextMenuStripVerificationTable.Size = new System.Drawing.Size(127, 26);
+            this.cmsVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuVerificationDelete});
+            this.cmsVerificationTable.Name = "contextMenuStripVerificationTable";
+            this.cmsVerificationTable.Size = new System.Drawing.Size(168, 26);
             // 
-            // tsMenuVerificationDetele
+            // tsMenuVerificationDelete
             // 
-            this.tsMenuVerificationDetele.Name = "tsMenuVerificationDetele";
-            this.tsMenuVerificationDetele.Size = new System.Drawing.Size(126, 22);
-            this.tsMenuVerificationDetele.Text = "Удаление";
-            this.tsMenuVerificationDetele.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
+            this.tsMenuVerificationDelete.Name = "tsMenuVerificationDelete";
+            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(167, 22);
+            this.tsMenuVerificationDelete.Text = "Удаление строки";
+            this.tsMenuVerificationDelete.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
             // 
-            // сIDataTime
+            // splitter2
             // 
-            this.сIDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.сIDataTime.HeaderText = "Дата и Время";
-            this.сIDataTime.MinimumWidth = 200;
-            this.сIDataTime.Name = "сIDataTime";
-            this.сIDataTime.ReadOnly = true;
+            this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitter2.Location = new System.Drawing.Point(0, 764);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(1442, 5);
+            this.splitter2.TabIndex = 10;
+            this.splitter2.TabStop = false;
             // 
-            // сITemperature
+            // cmsCurentTable
             // 
-            this.сITemperature.HeaderText = "Температура (°C)";
-            this.сITemperature.MinimumWidth = 200;
-            this.сITemperature.Name = "сITemperature";
-            this.сITemperature.ReadOnly = true;
-            this.сITemperature.Width = 200;
+            this.cmsCurentTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmCurrentDelete});
+            this.cmsCurentTable.Name = "contextMenuStripVerificationTable";
+            this.cmsCurentTable.Size = new System.Drawing.Size(168, 26);
             // 
-            // cICurrent4mA
+            // tsmCurrentDelete
             // 
-            this.cICurrent4mA.HeaderText = "Ток 4мА (мА)";
-            this.cICurrent4mA.MinimumWidth = 200;
-            this.cICurrent4mA.Name = "cICurrent4mA";
-            this.cICurrent4mA.ReadOnly = true;
-            this.cICurrent4mA.Width = 200;
-            // 
-            // cICurrent20mA
-            // 
-            this.cICurrent20mA.HeaderText = "Ток 20мА (мА)";
-            this.cICurrent20mA.MinimumWidth = 200;
-            this.cICurrent20mA.Name = "cICurrent20mA";
-            this.cICurrent20mA.ReadOnly = true;
-            this.cICurrent20mA.Width = 200;
-            // 
-            // сVRRecordNum
-            // 
-            this.сVRRecordNum.Frozen = true;
-            this.сVRRecordNum.HeaderText = "№";
-            this.сVRRecordNum.MinimumWidth = 25;
-            this.сVRRecordNum.Name = "сVRRecordNum";
-            this.сVRRecordNum.ReadOnly = true;
-            this.сVRRecordNum.Width = 25;
-            // 
-            // cDataTime
-            // 
-            this.cDataTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cDataTime.HeaderText = "Дата и Время";
-            this.cDataTime.MinimumWidth = 200;
-            this.cDataTime.Name = "cDataTime";
-            this.cDataTime.ReadOnly = true;
-            // 
-            // cTempreture
-            // 
-            this.cTempreture.HeaderText = "Температура (°С)";
-            this.cTempreture.MinimumWidth = 200;
-            this.cTempreture.Name = "cTempreture";
-            this.cTempreture.ReadOnly = true;
-            this.cTempreture.Width = 200;
-            // 
-            // cNPI
-            // 
-            this.cNPI.HeaderText = "НПИ";
-            this.cNPI.MinimumWidth = 100;
-            this.cNPI.Name = "cNPI";
-            this.cNPI.ReadOnly = true;
-            // 
-            // cVPI
-            // 
-            this.cVPI.HeaderText = "ВПИ";
-            this.cVPI.MinimumWidth = 100;
-            this.cVPI.Name = "cVPI";
-            this.cVPI.ReadOnly = true;
-            // 
-            // cPressureZ
-            // 
-            this.cPressureZ.HeaderText = "Pз (кПа)";
-            this.cPressureZ.MinimumWidth = 200;
-            this.cPressureZ.Name = "cPressureZ";
-            this.cPressureZ.ReadOnly = true;
-            this.cPressureZ.Width = 200;
-            // 
-            // cPressureF
-            // 
-            this.cPressureF.HeaderText = "Pф (кПа)";
-            this.cPressureF.MinimumWidth = 200;
-            this.cPressureF.Name = "cPressureF";
-            this.cPressureF.ReadOnly = true;
-            this.cPressureF.Width = 200;
-            // 
-            // сCurrentR
-            // 
-            this.сCurrentR.HeaderText = "Iр (мА)";
-            this.сCurrentR.MinimumWidth = 150;
-            this.сCurrentR.Name = "сCurrentR";
-            this.сCurrentR.ReadOnly = true;
-            this.сCurrentR.Width = 150;
-            // 
-            // сCurrentF
-            // 
-            this.сCurrentF.HeaderText = "Iф (мА)";
-            this.сCurrentF.MinimumWidth = 150;
-            this.сCurrentF.Name = "сCurrentF";
-            this.сCurrentF.ReadOnly = true;
-            this.сCurrentF.Width = 150;
-            // 
-            // сCHRecordNum
-            // 
-            this.сCHRecordNum.Frozen = true;
-            this.сCHRecordNum.HeaderText = "№";
-            this.сCHRecordNum.MinimumWidth = 25;
-            this.сCHRecordNum.Name = "сCHRecordNum";
-            this.сCHRecordNum.ReadOnly = true;
-            this.сCHRecordNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сCHRecordNum.Width = 25;
-            // 
-            // cDataTime2
-            // 
-            this.cDataTime2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cDataTime2.HeaderText = "Дата и Время";
-            this.cDataTime2.MinimumWidth = 200;
-            this.cDataTime2.Name = "cDataTime2";
-            this.cDataTime2.ReadOnly = true;
-            // 
-            // cTempreture2
-            // 
-            this.cTempreture2.HeaderText = "Температура (°C)";
-            this.cTempreture2.MinimumWidth = 200;
-            this.cTempreture2.Name = "cTempreture2";
-            this.cTempreture2.ReadOnly = true;
-            this.cTempreture2.Width = 200;
-            // 
-            // cDiapazon
-            // 
-            this.cDiapazon.HeaderText = "Диапазон";
-            this.cDiapazon.MinimumWidth = 100;
-            this.cDiapazon.Name = "cDiapazon";
-            this.cDiapazon.ReadOnly = true;
-            // 
-            // сPressure2
-            // 
-            this.сPressure2.HeaderText = "Давление (кПа)";
-            this.сPressure2.MinimumWidth = 200;
-            this.сPressure2.Name = "сPressure2";
-            this.сPressure2.ReadOnly = true;
-            this.сPressure2.Width = 200;
-            // 
-            // cUTemp2
-            // 
-            this.cUTemp2.HeaderText = "Напряжение (мВ)";
-            this.cUTemp2.MinimumWidth = 200;
-            this.cUTemp2.Name = "cUTemp2";
-            this.cUTemp2.ReadOnly = true;
-            this.cUTemp2.Width = 200;
-            // 
-            // cUPress2
-            // 
-            this.cUPress2.HeaderText = "Сопротивление (Ом)";
-            this.cUPress2.MinimumWidth = 200;
-            this.cUPress2.Name = "cUPress2";
-            this.cUPress2.ReadOnly = true;
-            this.cUPress2.Width = 200;
+            this.tsmCurrentDelete.Name = "tsmCurrentDelete";
+            this.tsmCurrentDelete.Size = new System.Drawing.Size(167, 22);
+            this.tsmCurrentDelete.Text = "Удаление строки";
+            this.tsmCurrentDelete.Click += new System.EventHandler(this.tsmCurrentDelete_Click);
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
             this.сChannalNum.Name = "сChannalNum";
-            this.сChannalNum.ReadOnly = true;
             this.сChannalNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сChannalNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.сChannalNum.Width = 25;
             // 
             // сSelect
@@ -3098,7 +3127,6 @@
             this.сSelect.MinimumWidth = 50;
             this.сSelect.Name = "сSelect";
             this.сSelect.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.сSelect.Width = 50;
             // 
             // сSensor
@@ -3107,14 +3135,14 @@
             this.сSensor.HeaderText = "Датчик";
             this.сSensor.MinimumWidth = 200;
             this.сSensor.Name = "сSensor";
-            this.сSensor.ReadOnly = true;
+            this.сSensor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // сFactoryNumber
             // 
             this.сFactoryNumber.HeaderText = "Заводской номер";
             this.сFactoryNumber.MinimumWidth = 200;
             this.сFactoryNumber.Name = "сFactoryNumber";
-            this.сFactoryNumber.ReadOnly = true;
+            this.сFactoryNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.сFactoryNumber.Width = 200;
             // 
             // сPower
@@ -3122,21 +3150,19 @@
             this.сPower.HeaderText = "Питание";
             this.сPower.MinimumWidth = 100;
             this.сPower.Name = "сPower";
-            this.сPower.ReadOnly = true;
             this.сPower.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // сWork
             // 
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle20.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
             this.сWork.MinimumWidth = 100;
             this.сWork.Name = "сWork";
-            this.сWork.ReadOnly = true;
             this.сWork.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.сWork.TrueValue = "true";
             // 
@@ -3144,7 +3170,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1751, 908);
+            this.ClientSize = new System.Drawing.Size(1751, 1013);
+            this.Controls.Add(this.splitter2);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -3176,7 +3203,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.contextMenuStripCharacterizationTable.ResumeLayout(false);
+            this.cmsCharacterizationTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -3210,7 +3237,8 @@
             this.groupBox11.ResumeLayout(false);
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
-            this.contextMenuStripVerificationTable.ResumeLayout(false);
+            this.cmsVerificationTable.ResumeLayout(false);
+            this.cmsCurentTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3428,11 +3456,11 @@
         private System.Windows.Forms.Label UpStSerial;
         public System.Windows.Forms.Label UpStModel;
         private System.Windows.Forms.Button bMensorMeas;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripCharacterizationTable;
+        private System.Windows.Forms.ContextMenuStrip cmsCharacterizationTable;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuDeleteResult;
         private System.Windows.Forms.CheckBox cbChannalFix;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripVerificationTable;
-        private System.Windows.Forms.ToolStripMenuItem tsMenuVerificationDetele;
+        private System.Windows.Forms.ContextMenuStrip cmsVerificationTable;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuVerificationDelete;
         private System.Windows.Forms.CheckBox cbSensorPeriodRead;
         private System.Windows.Forms.CheckBox cbChannalFixVR;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -3468,6 +3496,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn сPressure2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cUTemp2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cUPress2;
+        private System.Windows.Forms.Splitter splitter2;
+        private System.Windows.Forms.ContextMenuStrip cmsCurentTable;
+        private System.Windows.Forms.ToolStripMenuItem tsmCurrentDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn сChannalNum;
         private System.Windows.Forms.DataGridViewCheckBoxColumn сSelect;
         private System.Windows.Forms.DataGridViewTextBoxColumn сSensor;
