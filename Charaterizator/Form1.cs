@@ -1003,6 +1003,10 @@ namespace Charaterizator
                         mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure/Diapazon;
                         mtxR[c_row, c_cols] = ResultCH.Channal[i].Points[j].Resistance;
                         mtxU[c_row, c_cols] = ResultCH.Channal[i].Points[j].OutVoltage;
+                        //mtxP[c_cols, c_row] = ResultCH.Channal[i].Points[j].Pressure / Diapazon;
+                        //mtxR[c_cols, c_row] = ResultCH.Channal[i].Points[j].Resistance;
+                        //mtxU[c_cols, c_row] = ResultCH.Channal[i].Points[j].OutVoltage;
+
                         c_row = c_row + 1;
                     }
                     c_cols = c_cols + 1;
@@ -1026,7 +1030,8 @@ namespace Charaterizator
 
                     try
                     {
-                        Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Pnew, Unew);
+                        
+                        Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Unew, Pnew);
                         if (ResulCoefmtx.RowCount != 24)
                         {
                             Program.txtlog.WriteLineLog("CH: Количество точек при характеризация не равно 24.", 1);
@@ -1035,7 +1040,7 @@ namespace Charaterizator
                         Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
                         for (int j = 0; j < ResulCoefmtx.RowCount; j++)
                         {
-                            Program.txtlog.WriteLineLog((j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
+                            Program.txtlog.WriteLineLog("Коэффициент "+ (j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
                             if (j < 24)
                                 sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
                         }
@@ -3741,7 +3746,7 @@ namespace Charaterizator
                     {
                         ResultVR.DeletePoint(ii, s[i].Index);
                     }
-                    UpDateCharakterizatorGrid(ii);
+                    UpDateVerificationGrid(ii);
                     ResultVR.SaveToArhiv(ii);
                 }
             }
@@ -4061,13 +4066,17 @@ namespace Charaterizator
                 //                {
                 try
                 {
+                    Program.txtlog.WriteLineLog("CH: Тест 1... ", 2);
                     btnCalculateCoeff.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
+                    Program.txtlog.WriteLineLog("CH: Тест 2... ", 2);
                     UpdateItemState(9);
+                    Program.txtlog.WriteLineLog("CH: Тест 3... ", 2);
                     СaclSensorCoef();
+                    Program.txtlog.WriteLineLog("CH: Тест 4... ", 2);
                 }
                 catch
                 {
-                    Program.txtlog.WriteLineLog("Расчет коэффициентов не выполнен.", 1);
+                    Program.txtlog.WriteLineLog("CH:Расчет коэффициентов не выполнен.", 1);
                 }
                 finally
                 {
