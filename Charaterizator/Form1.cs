@@ -952,8 +952,10 @@ namespace Charaterizator
         }
 
         //расчет коэффициентов и запись в датчики
-        private void СaclSensorCoef()
+        private void СaclSensorCoeff()
         {
+            Program.txtlog.WriteLineLog("CH: Тест 4... ", 2);
+
             int seli = 0;
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
@@ -963,6 +965,7 @@ namespace Charaterizator
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
+            Program.txtlog.WriteLineLog("CH: Тест 5... ", 2);
 
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
@@ -4071,8 +4074,8 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CH: Тест 2... ", 2);
                     UpdateItemState(9);
                     Program.txtlog.WriteLineLog("CH: Тест 3... ", 2);
-                    СaclSensorCoef();
-                    Program.txtlog.WriteLineLog("CH: Тест 4... ", 2);
+                    СaclSensorCoeff();
+                    Program.txtlog.WriteLineLog("CH: Тест 6... ", 2);
                 }
                 catch
                 {
