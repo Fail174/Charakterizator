@@ -954,8 +954,6 @@ namespace Charaterizator
         //расчет коэффициентов и запись в датчики
         private void СaclSensorCoeff()
         {
-            Program.txtlog.WriteLineLog("CH: Тест 4... ", 2);
-
             int seli = 0;
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
@@ -965,7 +963,6 @@ namespace Charaterizator
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
-            Program.txtlog.WriteLineLog("CH: Тест 5... ", 2);
 
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
@@ -1031,9 +1028,8 @@ namespace Charaterizator
                         }
                     }
 
-                    try
-                    {
-                        
+                    //try
+                    //{
                         Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Unew, Pnew);
                         if (ResulCoefmtx.RowCount != 24)
                         {
@@ -1047,19 +1043,33 @@ namespace Charaterizator
                             if (j < 24)
                                 sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
                         }
-                    }
+                    /*}
                     catch
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка расчета коэффициентов для датчика в канале " + (i + 1).ToString(), 1);
-                    }
+                    }*/
 
-                    if (!sensors.С15ReadVPI_NPI())
+                    /*if (!sensors.С15ReadVPI_NPI())
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка чтения НПИ и ВПИ датчик в канале " + (i + 1).ToString(), 1);
-                    }
+                    }*/
+                    Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
                     if (!sensors.C250SensorCoefficientWrite())
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
+                        for (int j = 0; j < 24; j++)
+                        {
+                            float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
+                            if (div != 0)
+                            {
+                                Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась!", j + 1), 2);
+                                Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
+                            }
+                        }
                     }
                 }
                 else
@@ -1069,7 +1079,7 @@ namespace Charaterizator
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 seli++;
             }
-            Program.txtlog.WriteLineLog("CH: Операция вычисления коэффициентов завершена!", 2);
+            Program.txtlog.WriteLineLog("CH: Операция вычисления и записи коэффициентов завершена!", 2);
         }
 
 
@@ -4069,13 +4079,9 @@ namespace Charaterizator
                 //                {
                 try
                 {
-                    Program.txtlog.WriteLineLog("CH: Тест 1... ", 2);
                     btnCalculateCoeff.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
-                    Program.txtlog.WriteLineLog("CH: Тест 2... ", 2);
                     UpdateItemState(9);
-                    Program.txtlog.WriteLineLog("CH: Тест 3... ", 2);
                     СaclSensorCoeff();
-                    Program.txtlog.WriteLineLog("CH: Тест 6... ", 2);
                 }
                 catch
                 {

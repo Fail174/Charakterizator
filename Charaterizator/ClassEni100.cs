@@ -792,31 +792,35 @@ namespace Charaterizator
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0xFA;//код команды
-                data[i + 3] = 0x25;//количество байт
+                data[i + 3] = 0x17;//количество байт
 
-                for (int ci = 0; ci < 5; ci++)
+                for (int ci = 0; ci < 6; ci++)
                 {
                     data[i+4] = (byte)ci;
 
                     tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4*ci]), 0);
+                    sensor.Coefficient[4 * ci] = 0;
                     data[i + 5] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 6] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 7] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 8] = (byte)(tmp & 0xFF);
 
                     tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4 * ci + 1]), 0);
+                    sensor.Coefficient[4 * ci+1] = 0;
                     data[i + 9] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 10] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 11] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 12] = (byte)(tmp & 0xFF);
 
                     tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4 * ci + 2]), 0);
+                    sensor.Coefficient[4 * ci + 2] = 0;
                     data[i + 13] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 14] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 15] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 16] = (byte)(tmp & 0xFF);
 
                     tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[4 * ci + 3]), 0);
+                    sensor.Coefficient[4 * ci + 3] = 0;
                     data[i + 17] = (byte)((tmp >> 24) & 0xFF);
                     data[i + 18] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 19] = (byte)((tmp >> 8) & 0xFF);
