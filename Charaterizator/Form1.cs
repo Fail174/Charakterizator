@@ -23,7 +23,7 @@ namespace Charaterizator
 {
     public partial class MainForm : Form
     {
-        [DllImport("PCalcCoefAGAT.dll")]
+        /*[DllImport("PCalcCoefAGAT.dll")]
 //        public extern static int CalcCoefP(int , double*, double*, double*, double*, double &, double &, double &, double &);
         public extern static int CalcCoefP(
 			int _countRec, //Количество переданных точек для расчета
@@ -35,7 +35,7 @@ namespace Charaterizator
 			double [] _upmn,      //Диапазон изменения сигнала по каналу давления
 			double [] _utmin,     //Минимальная величина по каналу температуры
             double [] _utmn     //Диапазон изменения сигнала по каналу температуры
-		);
+		);*/
 
         // Занесены в настройку
         public int MAIN_TIMER = 1000;        
@@ -94,7 +94,7 @@ namespace Charaterizator
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
         private bool SensorBusy = false;//Признак обмена данными с датчиками
-        private bool ProcessStop = false;//Флаг остановки операции
+        public bool ProcessStop = false;//Флаг остановки операции
 
         private bool TemperatureReady = false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
@@ -1346,12 +1346,11 @@ namespace Charaterizator
             dataGridView4.Rows.Clear();
             for (int j = 0; j < ResultCI.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
-                dataGridView4.Rows.Add("", "", "", "", "");
-                dataGridView4.Rows[j].Cells[0].Value = ResultCI.Channal[i].Points[j].Datetime.ToString();                 //
-                dataGridView4.Rows[j].Cells[1].Value = ResultCI.Channal[i].Points[j].Temperature.ToString("f2");   //
-//                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].Pressure.ToString("f");   //
-                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].I4.ToString("f4");
-                dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I20.ToString("f4");
+                dataGridView4.Rows.Add(j + 1, "", "", "", "", "");
+                dataGridView4.Rows[j].Cells[1].Value = ResultCI.Channal[i].Points[j].Datetime.ToString();                 //
+                dataGridView4.Rows[j].Cells[2].Value = ResultCI.Channal[i].Points[j].Temperature.ToString("f2");   //
+                dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I4.ToString("f4");
+                dataGridView4.Rows[j].Cells[4].Value = ResultCI.Channal[i].Points[j].I20.ToString("f4");
             }
         }
 
@@ -4208,7 +4207,7 @@ namespace Charaterizator
                         MessageBoxDefaultButton.Button1);
                 if (result == DialogResult.Yes)
                 {
-                    dataGridView2.Sort(dataGridView4.Columns[0], ListSortDirection.Ascending);
+                    dataGridView4.Sort(dataGridView4.Columns[0], ListSortDirection.Ascending);
                     for (int i = 0; i < s.Count; i++)
                     {
                         ResultCI.DeletePoint(ii, s[i].Index);

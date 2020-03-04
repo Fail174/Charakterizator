@@ -280,8 +280,9 @@ namespace Charaterizator
                 c++;
                 Thread.Sleep(1);
                 Application.DoEvents();
+                if (Program.mainwnd.ProcessStop) return false;
             }
-            return c >= timeout;
+            return c < timeout;
         }
 
         //поиск датчика в списке по номеру канала

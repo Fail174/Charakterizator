@@ -18,8 +18,11 @@ namespace Charaterizator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            mainwnd = new MainForm();
+            Application.Run(mainwnd);
+            //            Application.Run(new MainForm());
         }
         public static CTxtlog txtlog;
+        public static MainForm mainwnd;
     }
 }
