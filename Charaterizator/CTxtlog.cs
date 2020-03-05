@@ -41,6 +41,7 @@ namespace Charaterizator
                             break;
                         case 1:
                             rtbConsole.SelectionColor = Color.Red;
+                            Console.Beep();
                             break;
                         case 2:
                             rtbConsole.SelectionColor = Color.DarkGreen;

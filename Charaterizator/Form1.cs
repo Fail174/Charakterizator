@@ -89,7 +89,7 @@ namespace Charaterizator
         private CResultCI ResultCI = null;//результаты калибровки тока датчиков
         private CResultVR ResultVR = null;//результаты калибровки тока датчиков
 
-
+        private DateTime TimerValueSec;//таймер часов
         private int CommutatorReadError = 0;//число ошибко чтения данных с коммутатора 
         private int MultimetrReadError = 0;//число ошибко чтения данных с мультиметра
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
@@ -169,6 +169,7 @@ namespace Charaterizator
             tbTemperature.Font = DrawingFont;
             numMensorPoint.Font = DrawingFont;
             numTermoCameraPoint.Font = DrawingFont;
+            dtpClockTimer.Font = DrawingFont;
             //**********************************************************
             UpdateItems();//обновляем списки визуальных элементов
         }
@@ -1593,7 +1594,34 @@ namespace Charaterizator
                 cbSensorPeriodRead.Checked = false;
             }
 
-            tbDateTime.Text = DateTime.Now.ToString();
+            tbDateTime.Text = DateTime.Now.ToString();//часы
+
+            if (!dtpClockTimer.Enabled)//таймер часов
+            {
+                Console.Beep();
+                if (btnClockTimer.BackColor != Color.Yellow)
+                {
+                    btnClockTimer.BackColor = Color.Yellow;
+                }
+                else
+                {
+                    btnClockTimer.BackColor = Color.Transparent;
+                }
+
+                TimerValueSec = new DateTime(TimerValueSec.Ticks - MAIN_TIMER * 10000);//1 тик 10000мсек
+                if (((TimerValueSec.Hour==0)&&(TimerValueSec.Minute == 0) && (TimerValueSec.Second == 0))||(TimerValueSec.Hour>=23))//остановка таймера
+                {
+                    btnClockTimer.BackColor = Color.Green;
+                    dtpClockTimer.Enabled = true;
+                    dtpClockTimer.Value = new DateTime(TimerValueSec.Year, TimerValueSec.Month, TimerValueSec.Day, 0, 0, 0);//
+                    Console.Beep();
+                    Console.Beep();
+                }
+                else
+                {
+                    dtpClockTimer.Value = TimerValueSec;
+                }
+            }
         }
 
 
@@ -1607,6 +1635,7 @@ namespace Charaterizator
                 
                 if (SKO_PRESSURE > Math.Abs(Mensor._press - Mensor.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
                 {
+                    Console.Beep();
                     MensorCountPoint++;
                     if (MensorCountPoint >= MAX_COUNT_POINT)
                     {
@@ -1619,6 +1648,12 @@ namespace Charaterizator
                 }
                 else
                 {
+                    if (MensorCountPoint != 0)
+                    {
+                        Console.Beep();
+                        Console.Beep();
+                        Console.Beep();
+                    }
                     tbMensorData.BackColor = Color.White;
                     MensorCountPoint = 0;
                 }
@@ -2516,17 +2551,17 @@ namespace Charaterizator
         // Отработка выбора на гл.форме ТИПА ПРЕОБРАЗОВАТЕЛЯ МЕНСОРА из списка
         private void cbMensorTypeR_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (!Mensor._serialPort_M.IsOpen)
-            {
-                if (cbMensorTypeR.SelectedIndex != -1)
+                if (!Mensor._serialPort_M.IsOpen)
                 {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                    cbMensorTypeR.SelectedIndex = -1;
+                    if (cbMensorTypeR.SelectedIndex != -1)
+                    {
+                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        cbMensorTypeR.SelectedIndex = -1;
+                    }
+                    MainTimer.Enabled = true;
+                    MainTimer.Start();
+                    return;
                 }
-                return;
-            }
-
             try
             {
                 MainTimer.Stop();
@@ -2551,7 +2586,6 @@ namespace Charaterizator
                 }
 
             }
-
             finally
             {
                 MainTimer.Enabled = true;
@@ -3073,11 +3107,11 @@ namespace Charaterizator
         {
             try
             {
-                // Общие настройки программы
-                MAIN_TIMER = Properties.Settings.Default.set_MainTimer;                     // Общий интервал опроса
-
                 MainTimer.Stop();
                 MainTimer.Enabled = false;
+
+                // Общие настройки программы
+                MAIN_TIMER = Properties.Settings.Default.set_MainTimer;                     // Общий интервал опроса
                 MainTimer.Interval = MAIN_TIMER;
 
                 MAX_ERROR_COUNT = Properties.Settings.Default.set_MaxErrorCount;            //Количество ошибок чтения данных с устройств перед отключением
@@ -3107,12 +3141,15 @@ namespace Charaterizator
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;       //период выдачи команд
 
-                MainTimer.Enabled = true;
-                MainTimer.Start();
             }
             catch
             {
                 Program.txtlog.WriteLineLog("Не удалось задать настройки программы", 1);
+            }
+            finally
+            {
+                MainTimer.Enabled = true;
+                MainTimer.Start();
             }
         }
 
@@ -3809,6 +3846,10 @@ namespace Charaterizator
 
                     SensorBusy = false;
                     ProcessStop = true;
+
+                    pbVRProcess.Value = 0;
+                    pbCHProcess.Value = 0;
+
                     break;
                 case 1://поиск датчиков
                     btnSensorSeach.Enabled = true;
@@ -4217,6 +4258,20 @@ namespace Charaterizator
                 }
             }
 
+        }
+
+        private void btnClockTimer_Click(object sender, EventArgs e)
+        {
+            if (dtpClockTimer.Enabled)
+            {
+                TimerValueSec = dtpClockTimer.Value;
+                dtpClockTimer.Enabled = false;
+            }
+            else
+            {
+                dtpClockTimer.Enabled = true;
+                btnClockTimer.BackColor = Color.Green;
+            }
         }
     }
 }
