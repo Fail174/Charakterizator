@@ -13,6 +13,8 @@ namespace Charaterizator
 {
     class CCalculation
     {
+        public static bool flag_ObrHod;
+       
 
         public Matrix<double> CalculationCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx)
         {
@@ -28,6 +30,8 @@ namespace Charaterizator
             int rowPmtx = Pmtx.RowCount;            // Количество строк матрицы Pmtx
             int colsPmtx = Pmtx.ColumnCount;        // Количество столбцов матрицы Pmtx
 
+            int D; // D = 2 прямой и обратный ход, D = 1 только прямой ход
+
 
             //-----------------------------------------------------------------------------------------------
             // ШАГ-1 - ПРОВЕРКА
@@ -35,36 +39,85 @@ namespace Charaterizator
             if ((rowRmtx != rowUmtx) || (rowRmtx != rowPmtx) || (colsRmtx != colsUmtx) || (colsRmtx != colsPmtx))
             {
                 resultBmtx = DenseMatrix.Create(1, 1, -1);       // если размерности не совпадают возвращаем -1
-                return resultBmtx;
+                return resultBmtx;               
             }
-            
 
+            // Проверяем установлен или нет флаг не учитывать обратный ход
+            if (flag_ObrHod) // если да 
+            {
+                rowRmtx = 6;
+                rowUmtx = 6;
+                rowPmtx = 6;
+                D = 1;
+            }
+            else // если нет
+            {
+                if (rowRmtx == 6)
+                {
+                    D = 1;
+                }
+                else
+                {
+                    D = 2;
+                }
+               
+            }
 
             //-----------------------------------------------------------------------------------------------
             // ШАГ-2 - УСРЕДНЕНИЕ (ПОДГОТОВКА ДАННЫХ)
             // Усредняем матрицу R           
-            Matrix<double> MeanRmtx = Rmtx.ColumnAbsoluteSums().Divide(Rmtx.RowCount).ToRowMatrix();           
+            Matrix<double> MeanRmtx = DenseMatrix.Create(1, colsRmtx, 0);
+            double res;
+            for (int j = 0; j < colsRmtx; j++)
+            {
+                res = 0;
+                for (int i = 0; i < Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowRmtx))); i++)
+                {
+                  res = res + Rmtx.At(i, j);
+                }
+                res = res / rowRmtx;
+                MeanRmtx[0, j] = res;
+            }
+
+
+
 
             // Усредняем матрицу U               
-            Matrix<double> MeanUmtx = DenseMatrix.Create(rowUmtx / 2, colsUmtx, 0);
-            for (int j = 0; j < colsUmtx; j++)
+            Matrix<double> MeanUmtx = DenseMatrix.Create(Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowUmtx) / D)), colsUmtx, 0);
+            if (D == 1)
             {
-                for (int i = 0; i < rowUmtx / 2; i++)
+                for (int j = 0; j < colsUmtx; j++)
                 {
-                    MeanUmtx[i, j] = (Umtx.At(i, j) + Umtx.At(rowUmtx - 1 - i, j)) / 2;
+                    for (int i = 0; i < Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowUmtx) / D)); i++)
+                    {
+                        MeanUmtx[i, j] = Umtx.At(i, j);
+                    }
                 }
             }
-           
+            else if (D == 2)
+            {
+                for (int j = 0; j < colsUmtx; j++)
+                {
+                    for (int i = 0; i < Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowUmtx) / D)); i++)
+                    {
+                        MeanUmtx[i, j] = (Umtx.At(i, j) + Umtx.At(rowUmtx - 1 - i, j)) / 2;
+                    }
+                }
+            }
+            
+
             // Формируем матрицу P             
-            Matrix<double> MeanPmtx = DenseMatrix.Create(rowPmtx / 2, colsPmtx, 0);
+            Matrix<double> MeanPmtx = DenseMatrix.Create(Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowPmtx) / D)), colsPmtx, 0);
             for (int j = 0; j < colsPmtx; ++j)
             {
-                for (int i = 0; i < rowPmtx / 2; ++i)
+                for (int i = 0; i < Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowPmtx) / D)); ++i)
                 {
                     MeanPmtx[i, j] = Pmtx.At(i, j);
                 }
             }
-            
+
+
+
 
 
             //-----------------------------------------------------------------------------------------------
@@ -96,7 +149,7 @@ namespace Charaterizator
             int rowMP = MeanPmtx.RowCount;
             int colsMP = MeanPmtx.ColumnCount;
             int ci = 0;
-            int N = Amtx.RowCount/ rowMP;
+            int N = Amtx.RowCount/rowMP;
             Matrix<double> Сmtx = DenseMatrix.Create(row * N, 1, 0);
             for (int i = 0; i < rowMP; i++)
             {
