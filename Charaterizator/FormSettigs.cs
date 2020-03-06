@@ -11,8 +11,9 @@ using System.Windows.Forms;
 namespace Charaterizator
 {
     public partial class FormSettings : Form
-    {
-        public FormSettings()
+    {       
+
+    public FormSettings()
         {
             InitializeComponent();           
             tab_FormSettings.SelectedIndex = MainForm.SettingsSelIndex;
@@ -67,7 +68,8 @@ namespace Charaterizator
                 Properties.Settings.Default.set_SKOCurrent = Convert.ToDouble(tbSKOCurrent.Value);
                 Properties.Settings.Default.set_SKOCalibrationCurrent = Convert.ToDouble(tb_SKOCalibrationCurrent.Value);
                 Properties.Settings.Default.set_Rezistor = Convert.ToInt32(tbRezistor.Value);
-                
+                Properties.Settings.Default.set_flagObrHod = cb_FlagObrHod.Checked;
+
                 // 1 - Коммутатор
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
                 Properties.Settings.Default.set_CommMaxSetCH = Convert.ToInt32(tbCommMaxSetCH.Value);                   //
@@ -155,7 +157,8 @@ namespace Charaterizator
             tbSKOCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCurrent);
             tb_SKOCalibrationCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCalibrationCurrent);
             tbRezistor.Value = Properties.Settings.Default.set_Rezistor;
-            
+            cb_FlagObrHod.Checked = Properties.Settings.Default.set_flagObrHod;
+
             // 1 - Коммутатор                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
             tbCommMaxSetCH.Value = Properties.Settings.Default.set_CommMaxSetCH;
@@ -226,10 +229,9 @@ namespace Charaterizator
             }
         }
 
+        private void cb_FlagObrHod_CheckedChanged(object sender, EventArgs e)
+        {
 
-
-
-
-
+        }
     }
 }
