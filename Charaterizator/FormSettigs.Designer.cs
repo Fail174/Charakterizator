@@ -36,6 +36,7 @@
             this.ofdDataBase = new System.Windows.Forms.OpenFileDialog();
             this.tab_FormSettings = new System.Windows.Forms.TabControl();
             this.tp_ProgramSettings = new System.Windows.Forms.TabPage();
+            this.cb_FlagObrHod = new System.Windows.Forms.CheckBox();
             this.tbRezistor = new System.Windows.Forms.NumericUpDown();
             this.textBox28 = new System.Windows.Forms.TextBox();
             this.tb_SKOCalibrationCurrent = new System.Windows.Forms.NumericUpDown();
@@ -130,7 +131,6 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.cb_FlagObrHod = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -210,7 +210,7 @@
             // bSetSettings
             // 
             this.bSetSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSetSettings.Location = new System.Drawing.Point(613, 462);
+            this.bSetSettings.Location = new System.Drawing.Point(441, 462);
             this.bSetSettings.Name = "bSetSettings";
             this.bSetSettings.Size = new System.Drawing.Size(150, 35);
             this.bSetSettings.TabIndex = 4;
@@ -272,6 +272,17 @@
             this.tp_ProgramSettings.TabIndex = 0;
             this.tp_ProgramSettings.Text = "Настройки программы";
             this.tp_ProgramSettings.UseVisualStyleBackColor = true;
+            // 
+            // cb_FlagObrHod
+            // 
+            this.cb_FlagObrHod.AutoSize = true;
+            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 222);
+            this.cb_FlagObrHod.Name = "cb_FlagObrHod";
+            this.cb_FlagObrHod.Size = new System.Drawing.Size(446, 19);
+            this.cb_FlagObrHod.TabIndex = 98;
+            this.cb_FlagObrHod.Text = "Не учитывать обратный ход по давлению при расчете коэффициентов ";
+            this.cb_FlagObrHod.UseVisualStyleBackColor = true;
+            this.cb_FlagObrHod.CheckedChanged += new System.EventHandler(this.cb_FlagObrHod_CheckedChanged);
             // 
             // tbRezistor
             // 
@@ -1530,23 +1541,12 @@
             // bCancelSettings
             // 
             this.bCancelSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bCancelSettings.Location = new System.Drawing.Point(446, 462);
+            this.bCancelSettings.Location = new System.Drawing.Point(612, 462);
             this.bCancelSettings.Name = "bCancelSettings";
             this.bCancelSettings.Size = new System.Drawing.Size(150, 35);
             this.bCancelSettings.TabIndex = 33;
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
-            // 
-            // cb_FlagObrHod
-            // 
-            this.cb_FlagObrHod.AutoSize = true;
-            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 222);
-            this.cb_FlagObrHod.Name = "cb_FlagObrHod";
-            this.cb_FlagObrHod.Size = new System.Drawing.Size(446, 19);
-            this.cb_FlagObrHod.TabIndex = 98;
-            this.cb_FlagObrHod.Text = "Не учитывать обратный ход по давлению при расчете коэффициентов ";
-            this.cb_FlagObrHod.UseVisualStyleBackColor = true;
-            this.cb_FlagObrHod.CheckedChanged += new System.EventHandler(this.cb_FlagObrHod_CheckedChanged);
             // 
             // FormSettings
             // 
@@ -1560,6 +1560,7 @@
             this.Name = "FormSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки программы";
+            this.TopMost = true;
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tab_FormSettings.ResumeLayout(false);

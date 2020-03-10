@@ -112,7 +112,7 @@ namespace Charaterizator
             Thread t = new Thread(new ThreadStart(LoadScreen));
             t.Start();
 //            Focus();
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
 
 
             Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Charaterizator")]
+[assembly: AssemblyTitle("Характеризатор")]
 [assembly: AssemblyDescription("Программы характеризации датчиков давления")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ИТэК ББМВ")]
-[assembly: AssemblyProduct("Charaterizator")]
+[assembly: AssemblyProduct("Charakterizator")]
 [assembly: AssemblyCopyright("Copyright ©  2019 Абдуллин Ф.Х., Пискорский Д.С.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

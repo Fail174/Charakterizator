@@ -800,6 +800,7 @@
             this.Name = "FormMensor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Mensor";
+            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMensor_FormClosed);
             this.pCHA.ResumeLayout(false);
             this.pCHA.PerformLayout();

@@ -105,6 +105,7 @@
             this.Name = "FormAddNewSensorsDB";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление нового датчика";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
