@@ -102,19 +102,24 @@ namespace Charaterizator
         //        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
-
-
+        //private bool FormLoaded = false;
 
         //Инициализация переменных основной программы
         public MainForm()
         {
+            //            FormLoad fm = new FormLoad();
             InitializeComponent();
+            Thread t = new Thread(new ThreadStart(LoadScreen));
+            t.Start();
+//            Focus();
+            Thread.Sleep(3000);
+
+
             Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл
                                                                             //                        btmMultimetr_Click(null, null);           
                                                                             //                        btnCommutator_Click(null, null);
                                                                             //                        btnMensor_Click(null, null);
                                                                             // Properties.Settings.Default.Reset();
-
             try
             {
                 // ЗАГРУЗКА настроек из файла settings - в переменные, 
@@ -153,6 +158,10 @@ namespace Charaterizator
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;       //период выдачи команд
 
+
+                string strFileNameDB = Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
+                SensorsDB.SetConnectionDB(strFileNameDB);                                       // устанавливаем соединение с БД           
+
             }
             // нужно ли вычислять MaxSensorOnLevel = 8;//количество датиков на уровне
             catch
@@ -160,38 +169,47 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("Не удалось загрузить настройки из файла", 1);
             }
 
-
-
-
             //********************  Цифровой шрифт *********************
             tbDateTime.Font = DrawingFont;
             tbMensorData.Font = DrawingFont;
             tbNumCH.Font = DrawingFont;
             tbMultimetrData.Font = DrawingFont;
-            //tbMensorRate.Font = DrawingFont;
             tbTemperature.Font = DrawingFont;
             numMensorPoint.Font = DrawingFont;
             numTermoCameraPoint.Font = DrawingFont;
             dtpClockTimer.Font = DrawingFont;
             //**********************************************************
+
             UpdateItems();//обновляем списки визуальных элементов
+            btmMultimetr_Click(null, null);
+            btnCommutator_Click(null, null);
+            btnMensor_Click(null, null);
+            btnThermalCamera_Click(null, null);
+
+            t.Abort();
         }
+
+
+        public void LoadScreen()
+        {
+            FormLoad fm = new FormLoad();
+//            fm.Show();
+//            while (!FormLoaded)
+//                Application.DoEvents();
+            Application.Run(fm);
+        }
+
 
 
         //Обновление визуальных элементов согласно установленным параметрам
         private void UpdateItems()
         {
-//            cbChannalCharakterizator.Items.Clear();
-//            cbChannalVerification.Items.Clear();
             dataGridView1.Rows.Clear();
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 dataGridView1.Rows.Add(i + 1, false, "Нет данных", "Нет данных", false, false);
                 dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
                 dataGridView1[ok, i].Style.BackColor = Color.IndianRed;
-
-//                cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
-//                cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
             }
         }
 
@@ -212,15 +230,12 @@ namespace Charaterizator
         {
             try
             {
-                //                Visible = false;
-                string strFileNameDB = Charaterizator.Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
-                SensorsDB.SetConnectionDB(strFileNameDB);                                       // устанавливаем соединение с БД           
-                // устанавливаем связь с БД
-                btnMultimetr.PerformClick();
-                btnCommutator.PerformClick();
-                btnMensor.PerformClick();
-                btnThermalCamera.PerformClick();
-                Application.DoEvents();
+                //Visible = false;
+                /*                btnMultimetr.PerformClick();
+                                                                btnCommutator.PerformClick();
+                                                                btnMensor.PerformClick();
+                                                                btnThermalCamera.PerformClick();
+                Application.DoEvents();*/
 
                 MainTimer.Interval = MAIN_TIMER;
                 MainTimer.Enabled = true;
@@ -228,7 +243,9 @@ namespace Charaterizator
             }
             finally
             {
-                //                Visible = true;
+//                Visible = true;
+//                FormLoaded = true;
+//                Focus();
             }
         }
 
@@ -1667,8 +1684,6 @@ namespace Charaterizator
 
                 // Получаем тек. значение уставки  и обновляем гл. форму
                 //numMensorPoint.Text = Mensor._point.ToString("f2");
-                // Получаем тек. значение скорости  и обновляем гл. форму
-                //tbMensorRate.Text = Mensor._rate.ToString("f2");
 
                 // Получаем тип преобразователя (удерживаемый диапазон)
                 int typeR = Mensor._typeR;  // 0-Д1П1,  1-Д2П1,  2-AutoRange 
@@ -1707,7 +1722,6 @@ namespace Charaterizator
             else
             {
                 tbMensorData.Text = "-1";
-                //tbMensorRate.Text = "-1";
                 numMensorPoint.Text = "-1";
                 cbMensorTypeR.SelectedIndex = -1;               
                 MensorReadError++;
@@ -4276,6 +4290,12 @@ namespace Charaterizator
                 dtpClockTimer.Enabled = true;
                 btnClockTimer.BackColor = Color.Green;
             }
+        }
+
+        private void tsMenuItemAbout_Click(object sender, EventArgs e)
+        {
+            FormAbout fa = new FormAbout();
+            fa.ShowDialog();
         }
     }
 }
