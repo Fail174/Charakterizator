@@ -597,6 +597,33 @@ namespace Charaterizator
             return false;
         }
 
+        //Перезагрузка датчика (команда 42).
+        public bool С42SensorReset()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 5];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x2A;
+                data[i + 3] = 0x00;
+                data[i + 4] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         //Установить ноль первичной переменной (коррекция нуля от монтажного положения) (команда 43).
         public bool С43SetZero()
         {
@@ -882,6 +909,32 @@ namespace Charaterizator
             return false;
         }
 
+        //Запись коэффициентов в EEPROM (команда 152).
+        public bool C252EEPROMCoefficientWrite()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[10];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0xFC;
+                data[i + 3] = 0x00;
+                data[9] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         //запись параметра токового выхода
         public bool C129WriteCurrenExit()
         {
@@ -980,26 +1033,47 @@ namespace Charaterizator
                             switch (CommandCod)
                             {
                                 case 0x0://Запрос уникального идентификатора (команда 0)
-                                    ReadCommand0(Adress, indata);
+                                    if (!ReadCommand0(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x1://Считать первичную переменную (команда 1)
                                     break;
                                 case 0x2://Считать ток и процент диапазона (команда 2)
                                     break;
                                 case 0x3://Чтение измеренных значений (4 переменных) (команда 3)
-                                    ReadCommand3(Adress, indata);
+                                    if (!ReadCommand3(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x6://Записать адрес устройства (команда 6)
+                                    if (!ReadCommand6(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     sensor.state = (ushort)((indata[0] << 8) | indata[1]);//состояние по команде перехода в сервесный режим
                                     sensor.Addr = indata[2];
                                     break;
                                 case 0x0B://Считать уникальный идентификатор, связанный с тэгом(команда 11)
                                     break;
                                 case 0x0C://Считать сообщение (команда 12)
-                                    ReadCommand12(Adress, indata);
+                                    if (!ReadCommand12(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x0D://Считать тэг, дескриптор, дату (команда 13)
-                                    ReadCommand13(Adress, indata);
+                                    if (!ReadCommand13(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x0E://Чтение серийного номера и параметров приемника давления (команда 14)
                                     if (!ReadCommand14(Adress, indata))
@@ -1026,42 +1100,79 @@ namespace Charaterizator
                                 case 0x22://Записать время демпфирования (команда 34)
                                     break;
                                 case 0x23://Запись ВПИ и НПИ (команда 35)
-                                    ReadCommand35(Adress, indata);
+                                    if (!ReadCommand35(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x26://Сброс флага изменения конфигурации (команда 38)
                                     break;
                                 case 0x28://Вход/выход в режим фиксированного тока (команда 40)
-                                    ReadCommand40(Adress, indata);
+                                    if (!ReadCommand40(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x29://Запрос на выполнение самодиагностики (команда 41)
                                     break;
                                 case 0x2A://Перезагрузка датчика (команда 42)
+                                    if (!ReadCommand42(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x2B://Установить ноль первичной переменной (коррекция нуля от монтажного положения) (команда 43)
-                                    ReadCommand43(Adress, indata);
+                                    if (!ReadCommand43(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x2C://Установить единицы измерения первичной переменной  (команда 44)
                                     break;
                                 case 0x2D://Коррекция нуля ЦАП (команда 45)
-                                    ReadCommand45(Adress, indata);
+                                    if (!ReadCommand45(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x2E://Коррекция коэффициента усиления ЦАП (команда 46)
-                                    ReadCommand46(Adress, indata);
+                                    if (!ReadCommand46(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x2F://Установка функции преобразования первичной переменной (команда 47)
                                     break;
                                 case 0x30://Чтение дополнительного статуса (команда 48)
                                     break;
                                 case 0x31://Запись серийного номера ПД (команда 49)
-                                    ReadCommand49(Adress, indata);
+                                    if (!ReadCommand49(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x3B://Записать кол-во преамбул (команда 59)
                                     break;
                                 case 0x80:// Считать параметры токового выхода(команда 128).
-                                    ReadCommand128(Adress, indata);
+                                    if (!ReadCommand128(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x81://Записать параметры токового выхода (команда 129)
-                                    ReadCommand129(Adress, indata);
+                                    if (!ReadCommand129(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x82://Считать параметры защиты работы магнитной кнопки (команда 130)
                                     break;
@@ -1102,10 +1213,19 @@ namespace Charaterizator
                                 case 0x94://Сохранение текущей конфигурации прибора(команда 148)
                                     break;
                                 case 0xF1://Запись данных о модели приемника давления, тип давления (команда 241)
-                                    ReadCommand241(Adress, indata);
+                                    if (!ReadCommand241(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
                                     break;
                                 case 0xF5://Перевод датчика в сервисный режим ( команда 245)
                                     sensor.state = (ushort)((indata[0] << 8) | indata[1]);//состояние по команде перехода в сервесный режим
+                                    if (sensor.state != 0)
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;
+                                    }
                                     break;
                                 case 0xF6://Чтение EEPROM (команда 246)
                                     break;
@@ -1114,7 +1234,11 @@ namespace Charaterizator
                                 case 0xF8://Запись серийного номера ДД (команда 248)
                                     break;
                                 case 0xF9://Запись верхнего и нижнего пределов ПД, минимального диапазона (команда 249)
-                                    ReadCommand249(Adress, indata);
+                                    if (!ReadCommand249(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
                                     break;
                                 case 0xFA://Запись калибровочных коэффициентов для датчика давления (команда 250)
                                     if (!ReadCommand250(Adress, indata))
@@ -1131,6 +1255,11 @@ namespace Charaterizator
                                     }
                                     break;
                                 case 0xFC://Запись калибровочных коэффициентов из RAM в EEPROM (команда 252)
+                                    if (!ReadCommand252(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
                                     break;
                                 case 0xFD://Переключение набора калибровочных коэффициентов для записи в EEPROM ( команда 253)
                                     break;
@@ -1285,15 +1414,14 @@ namespace Charaterizator
 
 
         //Ответ на комманду Запрос уникального идентификатора (команда 0)
-        private void ReadCommand0(byte addr, byte[] indata)
+        private bool ReadCommand0(byte addr, byte[] indata)
         {
             SensorID id = new SensorID(addr);
-            //            byte crc = GetCRC(indata, 0);
-            //            if (crc != indata[indata.Length-1])
-            //                return;
             id.Channal = SelSensorChannal;
             id.Group = (int)(SelSensorChannal/MaxSensorOnLevel) +1;
             id.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (id.state != 0) return false;
+
             id.devCode = indata[3];
             id.devType = indata[4];
             id.pre = indata[5];
@@ -1304,12 +1432,15 @@ namespace Charaterizator
             id.flag = indata[10];
             id.uni = (UInt32)((indata[11] << 16) | (indata[12] << 8) | indata[13]);
             sensorList.Add(id);
+            return true;
         }
         //Ответ на комманду Чтение измеренных значений (4 переменных) (команда 3)
-        private void ReadCommand3(int addr, byte[] indata)
+        private bool ReadCommand3(int addr, byte[] indata)
         {
             int tmp;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
+
             tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
             sensor.OutCurrent = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
@@ -1330,14 +1461,26 @@ namespace Charaterizator
             sensor.Temperature = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
             sensorList[SelSensorIndex] = sensor;
+            return true;
+        }
+
+        //Считать сообщение (команда 6)
+        private bool ReadCommand6(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
+            sensor.Addr = indata[2];
+            sensorList[SelSensorIndex] = sensor;
+            return true;
         }
 
 
         //Считать сообщение (команда 12)
-        private void ReadCommand12(int addr, byte[] indata)
+        private bool ReadCommand12(int addr, byte[] indata)
         {
 //            sensor.message = new byte[24];
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
             int j = 2;
             for (int i = 0; i < 24; i++)
             {
@@ -1346,13 +1489,14 @@ namespace Charaterizator
             }
             Array.Reverse(sensor.message);//инвертируем порядок 
             sensorList[SelSensorIndex] = sensor;
-
+            return true;
         }
 
         //Считать тэг, дескриптор, дату (команда 13)
-        private void ReadCommand13(int addr, byte[] indata)
+        private bool ReadCommand13(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
             int j = 2;
             for (int i = 0; i < 6; i++)
             {
@@ -1370,7 +1514,7 @@ namespace Charaterizator
             sensor.data = (UInt32)((indata[j] << 16) | (indata[j+1] << 8) | indata[j+2]);
 
             sensorList[SelSensorIndex] = sensor;
-
+            return true;
         }
 
         //Чтение серийного номера и параметров приемника давления (команда 14)
@@ -1425,11 +1569,11 @@ namespace Charaterizator
         }
 
         //Запись ВПИ НПИ(команда 35)
-        private void ReadCommand35(int addr, byte[] indata)
+        private bool ReadCommand35(int addr, byte[] indata)
         {
             int tmp;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return;
+            if (sensor.state != 0) return false;
 
             tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
             sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
@@ -1437,67 +1581,136 @@ namespace Charaterizator
             sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
             sensorList[SelSensorIndex] = sensor;
-
+            return true;
         }
 
         //Режим фиксированного тока (команда 40)
-        private void ReadCommand40(int addr, byte[] indata)
+        private bool ReadCommand40(int addr, byte[] indata)
         {
             int tmp;
             float Current;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-            Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                return true;
+            }
         }
+
+        //Перезагрузка датчика (команда 42).
+        private bool ReadCommand42(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
 
         //Установить ноль первичной переменной(коррекция нуля от монтажного положения) (команда 43).
-        private void ReadCommand43(int addr, byte[] indata)
+        private bool ReadCommand43(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
-
 
         //Коррекция нуля ЦАП (команда 45)
-        private void ReadCommand45(int addr, byte[] indata)
+        private bool ReadCommand45(int addr, byte[] indata)
         {
             int tmp;
             float Current;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-            Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                return true;
+            }
         }
-
         //Коррекция коэффициента усиления ЦАП (команда 46)
-        private void ReadCommand46(int addr, byte[] indata)
+        private bool ReadCommand46(int addr, byte[] indata)
         {
             int tmp;
             float Current;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-            Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                return true;
+            }
         }
 
         //Ответ на команду запись серийного номера ПД (команда 49)
-        private void ReadCommand49(int addr, byte[] indata)
+        private bool ReadCommand49(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
-            sensorList[SelSensorIndex] = sensor;
-
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
         }
 
         //Ответ на команду чтение токового выхода (команда 128)
-        private void ReadCommand128(int addr, byte[] indata)
+        private bool ReadCommand128(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            sensor.CurrentExit = indata[2];
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                sensor.CurrentExit = indata[2];
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
         }
         //Ответ на команду запись токового выхода (команда 129)
-        private void ReadCommand129(int addr, byte[] indata)
+        private bool ReadCommand129(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            sensor.CurrentExit = indata[2];
-            sensorList[SelSensorIndex] = sensor;
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                sensor.CurrentExit = indata[2];
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
         }
 
         //Ответ на команду чтение модели приемника давления (команда 140)
@@ -1516,9 +1729,10 @@ namespace Charaterizator
         }
 
         //Ответ на команду запись модели приемника давления (команда 241)
-        private void ReadCommand241(int addr, byte[] indata)
+        private bool ReadCommand241(int addr, byte[] indata)
         {
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
             sensor.PressureType = indata[2];
             for (int i = 0; i < 5; i++)//5 символов
             {
@@ -1532,7 +1746,7 @@ namespace Charaterizator
                 }
             }
             sensorList[SelSensorIndex] = sensor;
-
+            return true;
         }
 
         //ответ на запись верхнего и нижнего пределов ПД, минимального диапазона (команда 249)
@@ -1541,13 +1755,14 @@ namespace Charaterizator
         //4 байта – верхняя граница диапазона ПД, тип float
         //4 байта – нижняя граница диапазона ПД, тип float
         //4 байта – минимальный диапазон ПД, тип float
-        private void ReadCommand249(int addr, byte[] indata)
+        private bool ReadCommand249(int addr, byte[] indata)
         {
             int tmp;
             sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            sensor.MesUnit = indata[2];
+            if (sensor.state != 0) return false;
             if (indata.Length > 14)
             {
+                sensor.MesUnit = indata[2];
                 tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
                 sensor.UpLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
@@ -1558,7 +1773,11 @@ namespace Charaterizator
                 sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
                 sensorList[SelSensorIndex] = sensor;
-
+                return true;
+            }
+            else
+            {
+                return false;
             }
 
         }
@@ -1624,6 +1843,20 @@ namespace Charaterizator
             {
                 //ошибка (Неверные данные)
                 return false;
+            }
+        }
+
+        //Ответ на команду запись коэффициентов в EEPROM (команда 252)
+        private bool ReadCommand252(int addr, byte[] indata)
+        {
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

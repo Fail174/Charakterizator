@@ -52,16 +52,21 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(616, 309);
+            this.panel1.Size = new System.Drawing.Size(581, 269);
             this.panel1.TabIndex = 2;
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.Color.LightBlue;
             this.pictureBox1.BackgroundImage = global::Charaterizator.Properties.Resources.logo;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(10, 10);
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(10, 11);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(592, 241);
+            this.pictureBox1.Size = new System.Drawing.Size(558, 210);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -69,11 +74,11 @@
             // 
             this.progressBar1.BackColor = System.Drawing.Color.LightBlue;
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 267);
+            this.progressBar1.Location = new System.Drawing.Point(0, 227);
             this.progressBar1.MarqueeAnimationSpeed = 50;
             this.progressBar1.Maximum = 50;
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(614, 40);
+            this.progressBar1.Size = new System.Drawing.Size(579, 40);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 2;
             // 
@@ -82,7 +87,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(616, 309);
+            this.ClientSize = new System.Drawing.Size(581, 269);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;

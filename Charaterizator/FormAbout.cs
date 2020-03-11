@@ -26,8 +26,9 @@ namespace Charaterizator
             lAboutVersion.Text = Application.ProductVersion;
             lAboutAsmVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             lAboutCopyright.Text = AssemblyCopyright();
-
-            lAboutDateTime.Text = File.GetCreationTime(GetType().Assembly.Location).ToString("F");
+            lAboutDateTime.Text = GetType().Assembly.Location;
+            //File.GetLastWriteTime
+            lAboutDateTime.Text = File.GetLastWriteTime(GetType().Assembly.Location).ToString("F");
         }
     }
 }

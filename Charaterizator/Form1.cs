@@ -243,9 +243,10 @@ namespace Charaterizator
             }
             finally
             {
-//                Visible = true;
-//                FormLoaded = true;
-//                Focus();
+                //                Visible = true;
+                //                FormLoaded = true;
+                //                Focus();
+                TopMost = false;
             }
         }
 
@@ -832,7 +833,9 @@ namespace Charaterizator
 
                 if ((i < 0) || !CheckChannalEnable(i)) return;//Если канал не выбран пропускаем обработку
 
-                Commutator.SetConnectors(i, 0);
+                if (Commutator.ActivCH != i+1)
+                    Commutator.SetConnectors(i, 0);
+
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
 
@@ -844,9 +847,9 @@ namespace Charaterizator
                         }
                         else
                         {
-                             UpdateUpStatus(i);
-//                            ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
-//                            UpDateCharakterizatorGrid(i);
+                            UpdateUpStatus(i);
+                            //                            ResultCH.Update(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                            //                            UpDateCharakterizatorGrid(i);
                         }
                     }
                     else
@@ -1075,13 +1078,12 @@ namespace Charaterizator
                         Program.txtlog.WriteLineLog("CH: Ошибка чтения НПИ и ВПИ датчик в канале " + (i + 1).ToString(), 1);
                     }*/
                     Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
-                    if (!sensors.C250SensorCoefficientWrite())
+                    if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика
                     {
                         Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
                         for (int j = 0; j < 24; j++)
                         {
                             float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
@@ -1091,6 +1093,18 @@ namespace Charaterizator
                                 Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
                             }
                         }
+                    }
+                    if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
+                    {
+                        Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
+                    }
+                    if (!sensors.С42SensorReset())//запись в коэффициентов EEPROM
+                    {
+                        Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
                     }
                 }
                 else

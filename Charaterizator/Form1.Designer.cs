@@ -336,9 +336,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1000);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 979);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1612, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1280, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -350,7 +350,7 @@
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1612, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1280, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -570,9 +570,9 @@
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1303, 24);
+            this.panel1.Location = new System.Drawing.Point(971, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 976);
+            this.panel1.Size = new System.Drawing.Size(309, 955);
             this.panel1.TabIndex = 6;
             // 
             // dtpClockTimer
@@ -603,7 +603,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 928);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 907);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -1013,9 +1013,9 @@
             this.panel2.Controls.Add(this.richTextBox1);
             this.panel2.Controls.Add(this.rtbConsole);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 778);
+            this.panel2.Location = new System.Drawing.Point(0, 757);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1303, 222);
+            this.panel2.Size = new System.Drawing.Size(971, 222);
             this.panel2.TabIndex = 7;
             // 
             // richTextBox1
@@ -1027,7 +1027,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(527, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(328, 210);
+            this.richTextBox1.Size = new System.Drawing.Size(0, 210);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.Visible = false;
@@ -1040,7 +1040,7 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(836, 209);
+            this.rtbConsole.Size = new System.Drawing.Size(504, 209);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
@@ -1055,7 +1055,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1303, 754);
+            this.panel3.Size = new System.Drawing.Size(971, 733);
             this.panel3.TabIndex = 8;
             // 
             // splitter1
@@ -1063,9 +1063,9 @@
             this.splitter1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.splitter1.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter1.Location = new System.Drawing.Point(277, 568);
+            this.splitter1.Location = new System.Drawing.Point(277, 547);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(1026, 3);
+            this.splitter1.Size = new System.Drawing.Size(694, 3);
             this.splitter1.TabIndex = 8;
             this.splitter1.TabStop = false;
             this.splitter1.Visible = false;
@@ -1090,7 +1090,7 @@
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(1026, 571);
+            this.dataGridView2.Size = new System.Drawing.Size(694, 550);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
@@ -1179,12 +1179,12 @@
             this.cICurrent20mA});
             this.dataGridView4.ContextMenuStrip = this.cmsCurentTable;
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView4.Location = new System.Drawing.Point(277, 571);
+            this.dataGridView4.Location = new System.Drawing.Point(277, 550);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView4.Size = new System.Drawing.Size(1026, 183);
+            this.dataGridView4.Size = new System.Drawing.Size(694, 183);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1265,7 +1265,7 @@
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView3.Size = new System.Drawing.Size(1026, 754);
+            this.dataGridView3.Size = new System.Drawing.Size(694, 733);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
@@ -1375,7 +1375,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1026, 754);
+            this.dataGridView1.Size = new System.Drawing.Size(694, 733);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1445,7 +1445,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 754);
+            this.panel4.Size = new System.Drawing.Size(277, 733);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1457,7 +1457,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(277, 754);
+            this.tabControl1.Size = new System.Drawing.Size(277, 733);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1471,7 +1471,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(269, 728);
+            this.tabPage1.Size = new System.Drawing.Size(269, 707);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск датчиков";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3067,7 +3067,7 @@
             this.pUpStatusBar.Controls.Add(this.label5);
             this.pUpStatusBar.Location = new System.Drawing.Point(277, 1);
             this.pUpStatusBar.Name = "pUpStatusBar";
-            this.pUpStatusBar.Size = new System.Drawing.Size(1331, 22);
+            this.pUpStatusBar.Size = new System.Drawing.Size(999, 22);
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
             // 
@@ -3206,9 +3206,9 @@
             // 
             this.splitter2.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter2.Location = new System.Drawing.Point(0, 775);
+            this.splitter2.Location = new System.Drawing.Point(0, 754);
             this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(1303, 3);
+            this.splitter2.Size = new System.Drawing.Size(971, 3);
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
@@ -3216,7 +3216,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1612, 1022);
+            this.ClientSize = new System.Drawing.Size(1280, 1001);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
