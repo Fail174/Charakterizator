@@ -94,7 +94,7 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(17, 29);
+            this.label5.Location = new System.Drawing.Point(3, 29);
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label5.Size = new System.Drawing.Size(141, 29);
@@ -127,7 +127,7 @@
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(17, 58);
+            this.label4.Location = new System.Drawing.Point(3, 58);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label4.Size = new System.Drawing.Size(62, 29);
@@ -138,7 +138,7 @@
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(17, 0);
+            this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label3.Size = new System.Drawing.Size(141, 29);
@@ -150,13 +150,13 @@
             // 
             this.lAboutCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lAboutCopyright.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lAboutCopyright.Location = new System.Drawing.Point(17, 81);
+            this.lAboutCopyright.Location = new System.Drawing.Point(6, 81);
             this.lAboutCopyright.Name = "lAboutCopyright";
             this.lAboutCopyright.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lAboutCopyright.Size = new System.Drawing.Size(318, 28);
+            this.lAboutCopyright.Size = new System.Drawing.Size(329, 28);
             this.lAboutCopyright.TabIndex = 3;
             this.lAboutCopyright.Text = "Разработчики: Абдуллин Ф.Х., Пискорский Д.С.";
-            this.lAboutCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lAboutCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // pictureBox1
             // 

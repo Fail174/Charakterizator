@@ -4311,6 +4311,15 @@ namespace Charaterizator
             FormAbout fa = new FormAbout();
             fa.ShowDialog();
         }
+
+        private void tsmiPanelVisible_Click(object sender, EventArgs e)
+        {
+            gbCommutator.Visible = tsmiPanelCommutator.Checked;
+            gbMultimetr.Visible = tsmiPanelMultimetr.Checked;
+            gbMensor.Visible = tsmiPanelMensor.Checked;
+            gbTermoCamera.Visible = tsmiPanelTermocamera.Checked;
+            panelLog.Visible = tsmiPanelLog.Checked;
+        }
     }
 }
 

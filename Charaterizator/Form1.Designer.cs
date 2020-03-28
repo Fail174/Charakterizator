@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,14 +58,18 @@
             this.параметрыToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemMainSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.окнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPanelCommutator = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPanelMultimetr = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPanelMensor = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPanelTermocamera = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiPanelLog = new System.Windows.Forms.ToolStripMenuItem();
             this.инфоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dtpClockTimer = new System.Windows.Forms.DateTimePicker();
-            this.btnClockTimer = new System.Windows.Forms.Button();
-            this.tbDateTime = new System.Windows.Forms.TextBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.gbTermoCamera = new System.Windows.Forms.GroupBox();
             this.bThermalCameraSet = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -73,7 +77,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tbTemperature = new System.Windows.Forms.TextBox();
             this.btnThermalCamera = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.splitter5 = new System.Windows.Forms.Splitter();
+            this.gbMensor = new System.Windows.Forms.GroupBox();
             this.bMensorMeas = new System.Windows.Forms.Button();
             this.bMensorSet = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -87,16 +92,21 @@
             this.btnFormMensor = new System.Windows.Forms.Button();
             this.tbMensorData = new System.Windows.Forms.TextBox();
             this.btnMensor = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.splitter4 = new System.Windows.Forms.Splitter();
+            this.gbMultimetr = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tbMultimetrData = new System.Windows.Forms.TextBox();
             this.btnMultimetr = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.splitter3 = new System.Windows.Forms.Splitter();
+            this.dtpClockTimer = new System.Windows.Forms.DateTimePicker();
+            this.btnClockTimer = new System.Windows.Forms.Button();
+            this.tbDateTime = new System.Windows.Forms.TextBox();
+            this.gbCommutator = new System.Windows.Forms.GroupBox();
             this.tbNumCH = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelLog = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -297,13 +307,13 @@
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.gbTermoCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).BeginInit();
-            this.groupBox3.SuspendLayout();
+            this.gbMensor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.gbMultimetr.SuspendLayout();
+            this.gbCommutator.SuspendLayout();
+            this.panelLog.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.cmsCharacterizationTable.SuspendLayout();
@@ -347,6 +357,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.настройкиToolStripMenuItem,
+            this.окнаToolStripMenuItem,
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -537,6 +548,76 @@
             this.MenuItemMainSettings.Text = "Основные параметры";
             this.MenuItemMainSettings.Click += new System.EventHandler(this.MenuItemMainSettings_Click);
             // 
+            // окнаToolStripMenuItem
+            // 
+            this.окнаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiPanelCommutator,
+            this.tsmiPanelMultimetr,
+            this.tsmiPanelMensor,
+            this.tsmiPanelTermocamera,
+            this.toolStripMenuItem3,
+            this.tsmiPanelLog});
+            this.окнаToolStripMenuItem.Name = "окнаToolStripMenuItem";
+            this.окнаToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.окнаToolStripMenuItem.Text = "Окна";
+            // 
+            // tsmiPanelCommutator
+            // 
+            this.tsmiPanelCommutator.Checked = true;
+            this.tsmiPanelCommutator.CheckOnClick = true;
+            this.tsmiPanelCommutator.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiPanelCommutator.Name = "tsmiPanelCommutator";
+            this.tsmiPanelCommutator.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelCommutator.Tag = "0";
+            this.tsmiPanelCommutator.Text = "Панель коммутатора";
+            this.tsmiPanelCommutator.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
+            // 
+            // tsmiPanelMultimetr
+            // 
+            this.tsmiPanelMultimetr.Checked = true;
+            this.tsmiPanelMultimetr.CheckOnClick = true;
+            this.tsmiPanelMultimetr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiPanelMultimetr.Name = "tsmiPanelMultimetr";
+            this.tsmiPanelMultimetr.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelMultimetr.Tag = "1";
+            this.tsmiPanelMultimetr.Text = "Панель мультиметра";
+            this.tsmiPanelMultimetr.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
+            // 
+            // tsmiPanelMensor
+            // 
+            this.tsmiPanelMensor.Checked = true;
+            this.tsmiPanelMensor.CheckOnClick = true;
+            this.tsmiPanelMensor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiPanelMensor.Name = "tsmiPanelMensor";
+            this.tsmiPanelMensor.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelMensor.Tag = "2";
+            this.tsmiPanelMensor.Text = "Панель задатчика давления";
+            this.tsmiPanelMensor.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
+            // 
+            // tsmiPanelTermocamera
+            // 
+            this.tsmiPanelTermocamera.CheckOnClick = true;
+            this.tsmiPanelTermocamera.Name = "tsmiPanelTermocamera";
+            this.tsmiPanelTermocamera.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelTermocamera.Tag = "3";
+            this.tsmiPanelTermocamera.Text = "Панель термокамеры";
+            this.tsmiPanelTermocamera.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(223, 6);
+            // 
+            // tsmiPanelLog
+            // 
+            this.tsmiPanelLog.Checked = true;
+            this.tsmiPanelLog.CheckOnClick = true;
+            this.tsmiPanelLog.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiPanelLog.Name = "tsmiPanelLog";
+            this.tsmiPanelLog.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelLog.Text = "Панель журнала действий";
+            this.tsmiPanelLog.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
+            // 
             // инфоToolStripMenuItem
             // 
             this.инфоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -562,71 +643,41 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.gbTermoCamera);
+            this.panel1.Controls.Add(this.splitter5);
+            this.panel1.Controls.Add(this.gbMensor);
+            this.panel1.Controls.Add(this.splitter4);
+            this.panel1.Controls.Add(this.gbMultimetr);
+            this.panel1.Controls.Add(this.splitter3);
             this.panel1.Controls.Add(this.dtpClockTimer);
             this.panel1.Controls.Add(this.btnClockTimer);
             this.panel1.Controls.Add(this.tbDateTime);
-            this.panel1.Controls.Add(this.groupBox4);
-            this.panel1.Controls.Add(this.groupBox3);
-            this.panel1.Controls.Add(this.groupBox2);
-            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.gbCommutator);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(971, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(309, 955);
             this.panel1.TabIndex = 6;
             // 
-            // dtpClockTimer
+            // gbTermoCamera
             // 
-            this.dtpClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dtpClockTimer.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpClockTimer.Location = new System.Drawing.Point(5, 873);
-            this.dtpClockTimer.Name = "dtpClockTimer";
-            this.dtpClockTimer.ShowUpDown = true;
-            this.dtpClockTimer.Size = new System.Drawing.Size(160, 47);
-            this.dtpClockTimer.TabIndex = 16;
-            this.dtpClockTimer.Value = new System.DateTime(2020, 3, 5, 0, 1, 0, 0);
-            // 
-            // btnClockTimer
-            // 
-            this.btnClockTimer.BackColor = System.Drawing.Color.Green;
-            this.btnClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnClockTimer.Location = new System.Drawing.Point(171, 873);
-            this.btnClockTimer.Name = "btnClockTimer";
-            this.btnClockTimer.Size = new System.Drawing.Size(131, 49);
-            this.btnClockTimer.TabIndex = 15;
-            this.btnClockTimer.Text = "Старт таймера";
-            this.btnClockTimer.UseVisualStyleBackColor = false;
-            this.btnClockTimer.Click += new System.EventHandler(this.btnClockTimer_Click);
-            // 
-            // tbDateTime
-            // 
-            this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 907);
-            this.tbDateTime.Name = "tbDateTime";
-            this.tbDateTime.ReadOnly = true;
-            this.tbDateTime.Size = new System.Drawing.Size(299, 40);
-            this.tbDateTime.TabIndex = 10;
-            this.tbDateTime.Text = "00:00:00";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.groupBox4.Controls.Add(this.bThermalCameraSet);
-            this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Controls.Add(this.numTermoCameraPoint);
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.tbTemperature);
-            this.groupBox4.Controls.Add(this.btnThermalCamera);
-            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox4.Location = new System.Drawing.Point(5, 663);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(299, 204);
-            this.groupBox4.TabIndex = 6;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Термокамера";
+            this.gbTermoCamera.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbTermoCamera.Controls.Add(this.bThermalCameraSet);
+            this.gbTermoCamera.Controls.Add(this.label10);
+            this.gbTermoCamera.Controls.Add(this.label7);
+            this.gbTermoCamera.Controls.Add(this.numTermoCameraPoint);
+            this.gbTermoCamera.Controls.Add(this.label6);
+            this.gbTermoCamera.Controls.Add(this.tbTemperature);
+            this.gbTermoCamera.Controls.Add(this.btnThermalCamera);
+            this.gbTermoCamera.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbTermoCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gbTermoCamera.Location = new System.Drawing.Point(0, 659);
+            this.gbTermoCamera.Name = "gbTermoCamera";
+            this.gbTermoCamera.Size = new System.Drawing.Size(307, 198);
+            this.gbTermoCamera.TabIndex = 6;
+            this.gbTermoCamera.TabStop = false;
+            this.gbTermoCamera.Text = "Термокамера";
+            this.gbTermoCamera.Visible = false;
             // 
             // bThermalCameraSet
             // 
@@ -718,29 +769,39 @@
             this.btnThermalCamera.UseVisualStyleBackColor = false;
             this.btnThermalCamera.Click += new System.EventHandler(this.btnThermalCamera_Click);
             // 
-            // groupBox3
+            // splitter5
             // 
-            this.groupBox3.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.groupBox3.Controls.Add(this.bMensorMeas);
-            this.groupBox3.Controls.Add(this.bMensorSet);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.numMensorPoint);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.bMensorControl);
-            this.groupBox3.Controls.Add(this.bMensorVent);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.cbMensorTypeR);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.btnFormMensor);
-            this.groupBox3.Controls.Add(this.tbMensorData);
-            this.groupBox3.Controls.Add(this.btnMensor);
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(5, 286);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(299, 371);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Задатчик давления";
+            this.splitter5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter5.Location = new System.Drawing.Point(0, 656);
+            this.splitter5.Name = "splitter5";
+            this.splitter5.Size = new System.Drawing.Size(307, 3);
+            this.splitter5.TabIndex = 19;
+            this.splitter5.TabStop = false;
+            // 
+            // gbMensor
+            // 
+            this.gbMensor.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbMensor.Controls.Add(this.bMensorMeas);
+            this.gbMensor.Controls.Add(this.bMensorSet);
+            this.gbMensor.Controls.Add(this.label9);
+            this.gbMensor.Controls.Add(this.numMensorPoint);
+            this.gbMensor.Controls.Add(this.label4);
+            this.gbMensor.Controls.Add(this.bMensorControl);
+            this.gbMensor.Controls.Add(this.bMensorVent);
+            this.gbMensor.Controls.Add(this.label3);
+            this.gbMensor.Controls.Add(this.cbMensorTypeR);
+            this.gbMensor.Controls.Add(this.label2);
+            this.gbMensor.Controls.Add(this.btnFormMensor);
+            this.gbMensor.Controls.Add(this.tbMensorData);
+            this.gbMensor.Controls.Add(this.btnMensor);
+            this.gbMensor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gbMensor.Location = new System.Drawing.Point(0, 285);
+            this.gbMensor.Name = "gbMensor";
+            this.gbMensor.Size = new System.Drawing.Size(307, 371);
+            this.gbMensor.TabIndex = 3;
+            this.gbMensor.TabStop = false;
+            this.gbMensor.Text = "Задатчик давления";
             // 
             // bMensorMeas
             // 
@@ -797,11 +858,6 @@
             this.numMensorPoint.Name = "numMensorPoint";
             this.numMensorPoint.Size = new System.Drawing.Size(189, 49);
             this.numMensorPoint.TabIndex = 5;
-            this.numMensorPoint.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // label4
             // 
@@ -905,19 +961,30 @@
             this.btnMensor.UseVisualStyleBackColor = false;
             this.btnMensor.Click += new System.EventHandler(this.btnMensor_Click);
             // 
-            // groupBox2
+            // splitter4
             // 
-            this.groupBox2.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.tbMultimetrData);
-            this.groupBox2.Controls.Add(this.btnMultimetr);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(5, 144);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(299, 136);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Мультиметр";
+            this.splitter4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter4.Location = new System.Drawing.Point(0, 282);
+            this.splitter4.Name = "splitter4";
+            this.splitter4.Size = new System.Drawing.Size(307, 3);
+            this.splitter4.TabIndex = 18;
+            this.splitter4.TabStop = false;
+            // 
+            // gbMultimetr
+            // 
+            this.gbMultimetr.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbMultimetr.Controls.Add(this.label8);
+            this.gbMultimetr.Controls.Add(this.tbMultimetrData);
+            this.gbMultimetr.Controls.Add(this.btnMultimetr);
+            this.gbMultimetr.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbMultimetr.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.gbMultimetr.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gbMultimetr.Location = new System.Drawing.Point(0, 146);
+            this.gbMultimetr.Name = "gbMultimetr";
+            this.gbMultimetr.Size = new System.Drawing.Size(307, 136);
+            this.gbMultimetr.TabIndex = 2;
+            this.gbMultimetr.TabStop = false;
+            this.gbMultimetr.Text = "Мультиметр";
             // 
             // label8
             // 
@@ -950,20 +1017,69 @@
             this.btnMultimetr.UseVisualStyleBackColor = false;
             this.btnMultimetr.Click += new System.EventHandler(this.btmMultimetr_Click);
             // 
-            // groupBox1
+            // splitter3
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.groupBox1.Controls.Add(this.tbNumCH);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.btnFormCommutator);
-            this.groupBox1.Controls.Add(this.btnCommutator);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(5, 4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(299, 134);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Коммутатор";
+            this.splitter3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter3.Location = new System.Drawing.Point(0, 143);
+            this.splitter3.Name = "splitter3";
+            this.splitter3.Size = new System.Drawing.Size(307, 3);
+            this.splitter3.TabIndex = 17;
+            this.splitter3.TabStop = false;
+            // 
+            // dtpClockTimer
+            // 
+            this.dtpClockTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dtpClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dtpClockTimer.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpClockTimer.Location = new System.Drawing.Point(5, 854);
+            this.dtpClockTimer.Name = "dtpClockTimer";
+            this.dtpClockTimer.ShowUpDown = true;
+            this.dtpClockTimer.Size = new System.Drawing.Size(160, 47);
+            this.dtpClockTimer.TabIndex = 16;
+            this.dtpClockTimer.Value = new System.DateTime(2020, 3, 5, 0, 1, 0, 0);
+            // 
+            // btnClockTimer
+            // 
+            this.btnClockTimer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClockTimer.BackColor = System.Drawing.Color.Green;
+            this.btnClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnClockTimer.Location = new System.Drawing.Point(173, 852);
+            this.btnClockTimer.Name = "btnClockTimer";
+            this.btnClockTimer.Size = new System.Drawing.Size(131, 49);
+            this.btnClockTimer.TabIndex = 15;
+            this.btnClockTimer.Text = "Таймер";
+            this.btnClockTimer.UseVisualStyleBackColor = false;
+            this.btnClockTimer.Click += new System.EventHandler(this.btnClockTimer_Click);
+            // 
+            // tbDateTime
+            // 
+            this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbDateTime.Location = new System.Drawing.Point(5, 907);
+            this.tbDateTime.Name = "tbDateTime";
+            this.tbDateTime.ReadOnly = true;
+            this.tbDateTime.Size = new System.Drawing.Size(299, 40);
+            this.tbDateTime.TabIndex = 10;
+            this.tbDateTime.Text = "00:00:00";
+            // 
+            // gbCommutator
+            // 
+            this.gbCommutator.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbCommutator.Controls.Add(this.tbNumCH);
+            this.gbCommutator.Controls.Add(this.label1);
+            this.gbCommutator.Controls.Add(this.btnFormCommutator);
+            this.gbCommutator.Controls.Add(this.btnCommutator);
+            this.gbCommutator.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbCommutator.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.gbCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gbCommutator.Location = new System.Drawing.Point(0, 0);
+            this.gbCommutator.Name = "gbCommutator";
+            this.gbCommutator.Size = new System.Drawing.Size(307, 143);
+            this.gbCommutator.TabIndex = 1;
+            this.gbCommutator.TabStop = false;
+            this.gbCommutator.Text = "Коммутатор";
             // 
             // tbNumCH
             // 
@@ -1007,16 +1123,16 @@
             this.btnCommutator.UseVisualStyleBackColor = false;
             this.btnCommutator.Click += new System.EventHandler(this.btnCommutator_Click);
             // 
-            // panel2
+            // panelLog
             // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.richTextBox1);
-            this.panel2.Controls.Add(this.rtbConsole);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 757);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(971, 222);
-            this.panel2.TabIndex = 7;
+            this.panelLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLog.Controls.Add(this.richTextBox1);
+            this.panelLog.Controls.Add(this.rtbConsole);
+            this.panelLog.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelLog.Location = new System.Drawing.Point(0, 757);
+            this.panelLog.Name = "panelLog";
+            this.panelLog.Size = new System.Drawing.Size(971, 222);
+            this.panelLog.TabIndex = 7;
             // 
             // richTextBox1
             // 
@@ -1074,6 +1190,7 @@
             // 
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сCHRecordNum,
@@ -1170,6 +1287,7 @@
             // 
             this.dataGridView4.AllowUserToAddRows = false;
             this.dataGridView4.AllowUserToDeleteRows = false;
+            this.dataGridView4.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сCIRecordNum,
@@ -1247,6 +1365,7 @@
             // 
             this.dataGridView3.AllowUserToAddRows = false;
             this.dataGridView3.AllowUserToDeleteRows = false;
+            this.dataGridView3.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сVRRecordNum,
@@ -1360,6 +1479,7 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.сChannalNum,
@@ -1384,8 +1504,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle7;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1427,10 +1547,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle8.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle8;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -1914,7 +2034,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(269, 728);
+            this.tabPage2.Size = new System.Drawing.Size(269, 707);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2452,7 +2572,7 @@
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(269, 728);
+            this.tabPage3.Size = new System.Drawing.Size(269, 707);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
@@ -3067,7 +3187,7 @@
             this.pUpStatusBar.Controls.Add(this.label5);
             this.pUpStatusBar.Location = new System.Drawing.Point(277, 1);
             this.pUpStatusBar.Name = "pUpStatusBar";
-            this.pUpStatusBar.Size = new System.Drawing.Size(999, 22);
+            this.pUpStatusBar.Size = new System.Drawing.Size(1002, 22);
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
             // 
@@ -3220,7 +3340,7 @@
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelLog);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -3237,17 +3357,17 @@
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.gbTermoCamera.ResumeLayout(false);
+            this.gbTermoCamera.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.gbMensor.ResumeLayout(false);
+            this.gbMensor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.panel2.ResumeLayout(false);
+            this.gbMultimetr.ResumeLayout(false);
+            this.gbMultimetr.PerformLayout();
+            this.gbCommutator.ResumeLayout(false);
+            this.gbCommutator.PerformLayout();
+            this.panelLog.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.cmsCharacterizationTable.ResumeLayout(false);
@@ -3313,13 +3433,13 @@
         private System.Windows.Forms.ToolStripMenuItem инфоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsMenuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbMultimetr;
         private System.Windows.Forms.TextBox tbMultimetrData;
         private System.Windows.Forms.Button btnMultimetr;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbCommutator;
         private System.Windows.Forms.Button btnFormCommutator;
         private System.Windows.Forms.Button btnCommutator;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gbMensor;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbMensorTypeR;
         private System.Windows.Forms.Label label2;
@@ -3328,7 +3448,7 @@
         private System.Windows.Forms.Button btnMensor;
         private System.Windows.Forms.Button bMensorVent;
         private System.Windows.Forms.Button bMensorControl;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox gbTermoCamera;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown numTermoCameraPoint;
         private System.Windows.Forms.Label label6;
@@ -3345,7 +3465,7 @@
         private System.Windows.Forms.ToolStripMenuItem MI_ColdCameraSetings;
         private System.Windows.Forms.ToolStripMenuItem датчикиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MI_SensorSetings;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panelLog;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel4;
@@ -3557,6 +3677,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cICurrent20mA;
         private System.Windows.Forms.Button btnClockTimer;
         private System.Windows.Forms.DateTimePicker dtpClockTimer;
+        private System.Windows.Forms.Splitter splitter5;
+        private System.Windows.Forms.Splitter splitter4;
+        private System.Windows.Forms.Splitter splitter3;
+        private System.Windows.Forms.ToolStripMenuItem окнаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPanelCommutator;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPanelMultimetr;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPanelMensor;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPanelTermocamera;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPanelLog;
     }
 }
 
