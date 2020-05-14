@@ -338,10 +338,11 @@ namespace Charaterizator
             return;
 
 
-            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
+            string strModel = lvwModels.SelectedItems[0].SubItems[1].Text;
+            string strType = lvwModels.SelectedItems[0].SubItems[0].Text;
 
             // текст запроса
-            string query = "DELETE FROM TSensors WHERE Model = '" + str + "'";
+            string query = "DELETE FROM TSensors WHERE Model = '" + strModel + "' AND Type = '" + strType + "'";
 
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
             OleDbCommand command = new OleDbCommand(query, _сonnection);
@@ -523,7 +524,7 @@ namespace Charaterizator
                 {
                   
                     // текст запроса
-                    string query = "SELECT " + strField + " FROM TSensors WHERE Model = " + "'" + strModel + "'";
+                    string query = "SELECT '" + strField + "' FROM TSensors WHERE Model = '" + strModel + "'";
                     // создаем объект OleDbCommand для выполнения запроса к БД MS Access
                     command = new OleDbCommand(query, _сonnection);
                     // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
@@ -547,7 +548,49 @@ namespace Charaterizator
             if (strValue == "") strValue = "-1";
             return strValue;
         }
-                
+
+        // Доработанный вариант функции GetDataSensors 
+        // при ее вызове необходимо кроме номера модели датчика и названия запрашиваемого параметра, передавать тип датчика
+        public string GetDataSensors(string strType, string strModel, string strField)
+        {
+            string strValue = "-1";
+
+            if (_сonnection.State == System.Data.ConnectionState.Open)
+            {
+                try
+                {
+
+                    // текст запроса
+                    // string query = "SELECT " + strField + " FROM TSensors WHERE Model = " + "'" + strModel + "'" ;
+                    string query = "SELECT '" + strField + "' FROM TSensors WHERE Model = '" + strModel + "' AND  Type = '" + strType + "'";
+
+                    // создаем объект OleDbCommand для выполнения запроса к БД MS Access
+                    command = new OleDbCommand(query, _сonnection);
+                    // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
+                    reader = command.ExecuteReader();
+                    reader.Read();
+                    strValue = reader[0].ToString();
+                }
+
+                catch
+                {
+                    //MessageBox.Show(ex.Message);
+                    //MessageBox.Show("Не удалось считать данные из БД", MessageBoxButtons.OK);
+                }
+                finally
+                {
+                    // закрываем OleDbDataReader
+                    if (reader != null)
+                        reader.Close();
+                }
+            }
+            if (strValue == "") strValue = "-1";
+            return strValue;
+        }
+
+
+
+
 
         //-----------------------------------------------------------------------------------------------
 
