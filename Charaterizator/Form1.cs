@@ -1372,13 +1372,13 @@ namespace Charaterizator
         //обновляем грид калибровки тока для датчика в канале i
         private void UpdateCurrentGrid(int i)
         {
+            dataGridView4.Rows.Clear();
             if ((ResultCI == null) || (ResultCI.Channal.Count <= i))
             {
                 Program.txtlog.WriteLineLog("Result CL: Результаты чтения ЦАП не сформированы!", 1);
                 return;
             }
 
-            dataGridView4.Rows.Clear();
             for (int j = 0; j < ResultCI.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView4.Rows.Add(j + 1, "", "", "", "", "");
@@ -1387,6 +1387,9 @@ namespace Charaterizator
                 dataGridView4.Rows[j].Cells[3].Value = ResultCI.Channal[i].Points[j].I4.ToString("f4");
                 dataGridView4.Rows[j].Cells[4].Value = ResultCI.Channal[i].Points[j].I20.ToString("f4");
             }
+            dataGridView4.Sort(dataGridView4.Columns[0], ListSortDirection.Descending);
+            dataGridView4.ClearSelection();
+            dataGridView4.Rows[0].Selected = true;
         }
 
         //Поиск подключенных датчиков
@@ -2722,9 +2725,9 @@ namespace Charaterizator
                     UpStSerial.Text = sensors.sensor.uni.ToString();
                     UpStCh.Text = (sensors.sensor.Channal + 1).ToString();
 
-                    label_UpStVoltage.Text = sensors.sensor.OutVoltage.ToString();
-                    label_UpStResistance.Text = sensors.sensor.Resistance.ToString();
-                    label_UpStPressure.Text = sensors.sensor.Pressure.ToString();
+                    label_UpStVoltage.Text = sensors.sensor.OutVoltage.ToString("f4");//4 знака
+                    label_UpStResistance.Text = sensors.sensor.Resistance.ToString("f2");//2 знака
+                    label_UpStPressure.Text = sensors.sensor.Pressure.ToString("f4");
 
                     //UpdateCHnumber(sensors.sensorList[i].Channal + 1);
                 }
