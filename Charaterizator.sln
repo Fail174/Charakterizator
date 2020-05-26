@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charaterizator", "Charaterizator\Charaterizator.csproj", "{45FEE9A0-93A7-4630-98C8-2DEDE935C118}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorProgrammer", "SensorProgrammer\SensorProgrammer.csproj", "{DBF53EB4-3F48-4CDD-AB34-9C15612A81A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{45FEE9A0-93A7-4630-98C8-2DEDE935C118}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45FEE9A0-93A7-4630-98C8-2DEDE935C118}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45FEE9A0-93A7-4630-98C8-2DEDE935C118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBF53EB4-3F48-4CDD-AB34-9C15612A81A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF53EB4-3F48-4CDD-AB34-9C15612A81A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF53EB4-3F48-4CDD-AB34-9C15612A81A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF53EB4-3F48-4CDD-AB34-9C15612A81A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

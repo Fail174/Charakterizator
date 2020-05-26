@@ -165,6 +165,50 @@ namespace Charaterizator
 
 
 
+
+        // Функция подключения коммутатора по COM порту - используется проектом SensorProgrammer
+        public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity, int st)
+        {
+            if (Connected)
+            {
+                return 1;
+            }
+            try
+            {
+                serialPort1.PortName = PortName;
+                serialPort1.BaudRate = BaudRate;
+                serialPort1.DataBits = DataBits;
+                serialPort1.StopBits = (StopBits)StopBits;
+                serialPort1.Parity = (Parity)Parity;
+                serialPort1.ReadTimeout = 1000;
+                serialPort1.WriteTimeout = 1000;
+                serialPort1.DtrEnable = true;
+                serialPort1.RtsEnable = true;
+                serialPort1.Open();
+
+                if (ReadCommutatorID())
+                {
+                    Connected = true;
+                    return 0;
+                }
+                else
+                {
+                    Connected = false;
+                    serialPort1.Close();
+                    return -1;
+                }
+            }
+            catch
+            {
+                Connected = false;
+                return -1;
+            }
+        }
+
+
+
+
+
         public void CommStartTimer()
 
         {
@@ -900,7 +944,7 @@ namespace Charaterizator
 
             // Проверяем количество подключенных выходов
             NumOfConnectInputs = CalcNumOfConnectInputs(StateCH);
-            lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
+            //lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
 
             // Получаем номер активного канала
             ActivCH = CalcActCH(StateCH);
