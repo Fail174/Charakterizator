@@ -1926,7 +1926,7 @@ namespace Charaterizator
             dataGridView2.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView4.Visible = (tabControl1.SelectedIndex == 1);
             dataGridView3.Visible = (tabControl1.SelectedIndex == 2);
-
+            dataGridView5.Visible = (tabControl1.SelectedIndex == 3);
 
             // При переключении  tabControl1 необходимо получить модель выбранного датчика
             // для обновления cmbox и др элементов
@@ -2506,7 +2506,15 @@ namespace Charaterizator
 
 
                     }
-
+                    // ОКНО - Сдача Метрологу
+                case 3:
+                    {
+                        pUpStatusBar.Visible = true;
+                        splitter1.Visible = false;
+                        cb_MET_Unit.SelectedIndex = 0;
+                        UpDateSelectedChannal();
+                        return;
+                    }
             }       
         }
 
@@ -3879,6 +3887,9 @@ namespace Charaterizator
                     btnVR_SetZero.BackColor = Color.LightGreen;
                     btnVR_SetZero.Enabled = true;
 
+                    btn_MET_NPI_VPI.BackColor = Color.LightGreen;
+                    btn_MET_NPI_VPI.Enabled = true;
+
                     SensorBusy = false;
                     ProcessStop = true;
 
@@ -3910,6 +3921,9 @@ namespace Charaterizator
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
 
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -3936,6 +3950,9 @@ namespace Charaterizator
 
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
+
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -3964,6 +3981,9 @@ namespace Charaterizator
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
 
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -3990,6 +4010,9 @@ namespace Charaterizator
 
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
+
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4018,6 +4041,9 @@ namespace Charaterizator
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
 
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -4044,6 +4070,9 @@ namespace Charaterizator
 
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
+
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4072,6 +4101,9 @@ namespace Charaterizator
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
 
+                    btn_MET_NPI_VPI.BackColor = Color.LightGreen;
+                    btn_MET_NPI_VPI.Enabled = true;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -4099,6 +4131,9 @@ namespace Charaterizator
                     btnVR_SetZero.BackColor = Color.LightGreen;
                     btnVR_SetZero.Enabled = true;
 
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
@@ -4125,6 +4160,9 @@ namespace Charaterizator
 
                     btnVR_SetZero.BackColor = Color.IndianRed;
                     btnVR_SetZero.Enabled = false;
+
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4323,6 +4361,173 @@ namespace Charaterizator
             gbTermoCamera.Visible = tsmiPanelTermocamera.Checked;
             panelLog.Visible = tsmiPanelLog.Checked;
         }
+
+        private void btn_MET_NPI_VPI_Click(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для записи ВПИ НПИ датчиков. Операция прервана.", 0);
+                    return;
+                }
+
+                try
+                {
+                    btn_MET_NPI_VPI.Text = "Отменить";
+                    UpdateItemState(7);
+                    WriteSensor_MET_VPI_NPI();
+                }
+                finally
+                {
+                    btn_MET_NPI_VPI.Text = "Задать";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить запись ВПИ НПИ датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                }
+            }
+
+        }
+
+        //Запись НПИ и ВПИ в выбранные датчики (метролог)
+        private void WriteSensor_MET_VPI_NPI()
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            float VPI, NPI;
+            VPI = Convert.ToSingle(nud_MET_VPI.Value);
+            NPI = Convert.ToSingle(nud_MET_NPI.Value);
+
+            Program.txtlog.WriteLineLog("MET: Старт записи НПИ ВПИ для выбранных датчиков ... ", 2);
+            pbMETProcess.Maximum = FinishNumber - StartNumber;
+            pbMETProcess.Minimum = 0;
+            pbMETProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbMETProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С35WriteVPI_NPI(VPI, NPI))
+                    {
+                        Program.txtlog.WriteLineLog("MET: Выполнена запись НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+
+            }
+            Program.txtlog.WriteLineLog("MET: Операция записи НПИ ВПИ завершена", 2);
+
+        }
+
+        private void btn_MET_SetZero_Click(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("MET:Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
+                    return;
+                }
+
+                try
+                {
+                    btn_MET_SetZero.Text = "Отменить";
+                    UpdateItemState(8);
+                    MET_SetZero();
+                }
+                finally
+                {
+                    btn_MET_SetZero.Text = "Обнулить";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                }
+            }
+        }
+        //Установка нуля для датчиков (метролог)
+        private void MET_SetZero()
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+
+            Program.txtlog.WriteLineLog("MET: Установка нуля для выбранных датчиков ... ", 2);
+            pbMETProcess.Maximum = FinishNumber - StartNumber;
+            pbMETProcess.Minimum = 0;
+            pbMETProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbMETProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С43SetZero())
+                    {
+
+                        Program.txtlog.WriteLineLog("MET: Выполнена установка нуля датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("MET: Установка нуля датчика не выполнена!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+
+            }
+            Program.txtlog.WriteLineLog("MET: Операция установки нуля завершена", 2);
+        }
+
+
     }
 }
 
