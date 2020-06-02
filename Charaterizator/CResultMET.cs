@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Charaterizator
 {
-    //Структура точки верификации датчика
-    struct SPointVR
+    //Структура точки измерения датчика
+    struct SPointMET
     {
         public DateTime Datetime;
         public double Temperature;
@@ -22,28 +22,28 @@ namespace Charaterizator
     }
 
     //структура канала с датчиком, включает множество точек измерения
-    struct SChanalVR
+    struct SChanalMET
     {
         public int ChannalNummber;//номер канала
         public int FactoryNumber;//заводской номер датчика
         public string FileNameArchiv;
-        public List<SPointVR> Points;
-        public SChanalVR(int ChNum, int FN)
+        public List<SPointMET> Points;
+        public SChanalMET(int ChNum, int FN)
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
-//            FileNameArchiv = string.Format("Archiv/VR/VR_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
-            FileNameArchiv = string.Format("Archiv/VR/VR_FN_{0}.txt", FactoryNumber);
+            //            FileNameArchiv = string.Format("Archiv/MET/MET_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            FileNameArchiv = string.Format("Archiv/MET/MET_FN_{0}.txt", FactoryNumber);
 
-            Points = new List<SPointVR>();
+            Points = new List<SPointMET>();
         }
     }
 
-    class CResultVR
+    class CResultMET
     {
         //StreamWriter[] FileStream;//поток записи
         public List<StreamWriter> FileStream = new List<StreamWriter>();
-        public List<SChanalVR> Channal = new List<SChanalVR>();//список обнаруженных датчиков
+        public List<SChanalMET> Channal = new List<SChanalMET>();//список обнаруженных датчиков
         private string HeaderString = "Дата и время       |" +
                                     "Температура   |" +
                                     "НПИ           |" +
@@ -55,18 +55,18 @@ namespace Charaterizator
 
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
-        public CResultVR(int ChannalCount, int[] FN)
+        public CResultMET(int ChannalCount, int[] FN)
         {
             StreamWriter fs;
             for (int i = 0; i < ChannalCount; i++)
             {
-                SChanalVR ch = new SChanalVR(i + 1, FN[i]);
+                SChanalMET ch = new SChanalMET(i + 1, FN[i]);
                 Channal.Add(ch);
-                Directory.CreateDirectory("VR");
-                Directory.CreateDirectory("Archiv/VR");
-                string filename = string.Format("VR/VR_Result{0}.txt", ch.ChannalNummber);
+                Directory.CreateDirectory("MET");
+                Directory.CreateDirectory("Archiv/MET");
+                string filename = string.Format("MET/MET_Result{0}.txt", ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
-                fs.WriteLine(string.Format("Результаты верификации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
+                fs.WriteLine(string.Format("Результаты измерений датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
                 fs.WriteLine("-----------------------------------------------------------------------------------------------------------------------------");
                 fs.WriteLine(HeaderString);
                 fs.WriteLine("-----------------------------------------------------------------------------------------------------------------------------");
@@ -92,7 +92,7 @@ namespace Charaterizator
             }
             else
             {
-                Program.txtlog.WriteLineLog("VR: Ошибка удаления записи в таблице верификации", 1);
+                Program.txtlog.WriteLineLog("MET: Ошибка удаления записи в таблице ", 1);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Charaterizator
         {
             try
             {
-                SPointVR point = new SPointVR
+                SPointMET point = new SPointMET
                 {
                     Datetime = DateTime.Now,
                     Temperature = Temp,
@@ -115,18 +115,18 @@ namespace Charaterizator
                 Channal[ch].Points.Add(point);
                 FileStream[ch].WriteLine(GetStringFromPoint(point));
                 FileStream[ch].Flush();
-                WriteToArhiv(Channal[ch],point);
+                WriteToArhiv(Channal[ch], point);
             }
             catch
             {
-                Program.txtlog.WriteLineLog(string.Format("VR:Ошибка записи в файл результатов верификации (канал {0})", ch), 1);
+                Program.txtlog.WriteLineLog(string.Format("MET:Ошибка записи в файл результатов (канал {0})", ch), 1);
             }
         }
 
         //возвращает строку результатов характеризации в точке
-        private string GetStringFromPoint(SPointVR point)
+        private string GetStringFromPoint(SPointMET point)
         {
-            return  point.Datetime.ToString() + "|" +
+            return point.Datetime.ToString() + "|" +
                 point.Temperature.ToString("       +000.0;       -000.0;          0.0") + " |" +
                 point.NPI.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.VPI.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
@@ -137,13 +137,13 @@ namespace Charaterizator
         }
 
         //создаем файл  архива на диске
-        private StreamWriter CreateFileArhiv(SChanalVR ch)
+        private StreamWriter CreateFileArhiv(SChanalMET ch)
         {
             StreamWriter writer = null;
             writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
             if (writer != null)
             {
-                writer.WriteLine(string.Format("Архив данных верификации датчика"));
+                writer.WriteLine(string.Format("Архив данных датчика"));
                 writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");
                 writer.WriteLine(HeaderString);
@@ -153,7 +153,7 @@ namespace Charaterizator
         }
 
         //Добавление записи текущего измерения в архив для датчика в канале ch
-        public void WriteToArhiv(SChanalVR ch, SPointVR point)
+        public void WriteToArhiv(SChanalMET ch, SPointMET point)
         {
             StreamWriter writer = null;
             if (!File.Exists(ch.FileNameArchiv))
@@ -175,7 +175,7 @@ namespace Charaterizator
             }
             else
             {
-                Program.txtlog.WriteLineLog("VR:Ошибка записи в архив верификации: " + ch.FileNameArchiv, 1);
+                Program.txtlog.WriteLineLog("MET:Ошибка записи в архив: " + ch.FileNameArchiv, 1);
             }
 
         }
@@ -185,10 +185,10 @@ namespace Charaterizator
         {
             if ((Channal.Count <= 0) || (i >= Channal.Count))
             {
-                Program.txtlog.WriteLineLog("VR:Отсутсвуют данные верификации для датчика в канале: " + i, 1);
+                Program.txtlog.WriteLineLog("MET:Отсутсвуют данные для датчика в канале: " + i, 1);
                 return;
             }
-            SChanalVR ch = Channal[i];
+            SChanalMET ch = Channal[i];
             StreamWriter writer = CreateFileArhiv(ch);
             if (writer != null)
             {
@@ -198,11 +198,11 @@ namespace Charaterizator
                 }
                 writer.Close();
                 writer = null;
-                Program.txtlog.WriteLineLog("VR:Данные верификации успешно перезаписаны.", 0);
+                Program.txtlog.WriteLineLog("MET:Данные успешно перезаписаны.", 0);
             }
             else
             {
-                Program.txtlog.WriteLineLog("VR:Ошибка записи в файл данных верификации: " + ch.FileNameArchiv, 1);
+                Program.txtlog.WriteLineLog("MET:Ошибка записи в файл данных: " + ch.FileNameArchiv, 1);
             }
         }
 
@@ -218,7 +218,7 @@ namespace Charaterizator
             }
             catch
             {
-                Program.txtlog.WriteLineLog("VR:Критическая ошибка записи в архив верификации!", 1);
+                Program.txtlog.WriteLineLog("MET:Критическая ошибка записи в архив!", 1);
             }
         }
 
@@ -231,7 +231,7 @@ namespace Charaterizator
             {
                 for (int i = 0; i < Channal.Count; i++)//перебор каналов
                 {
-                    SChanalVR ch = Channal[i];
+                    SChanalMET ch = Channal[i];
                     if (!File.Exists(ch.FileNameArchiv))
                     {
                         continue;
@@ -251,7 +251,7 @@ namespace Charaterizator
                         {
                             str = reader.ReadLine();
                             string[] strarr = str.Split('|');
-                            SPointVR point;
+                            SPointMET point;
                             if (strarr.Length > 7)
                             {
                                 point.Datetime = Convert.ToDateTime(strarr[0]);
@@ -266,20 +266,20 @@ namespace Charaterizator
                                 ch.Points.Add(point);
                             }
                         } while (!reader.EndOfStream);
-                        Program.txtlog.WriteLineLog("VR:Архив данных верификации загружен из файла: " + ch.FileNameArchiv, 0);
+                        Program.txtlog.WriteLineLog("MET:Архив данных загружен из файла: " + ch.FileNameArchiv, 0);
                         reader.Close();
                         reader = null;
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR:Ошибка доступа к файлу архива верификации: " + ch.FileNameArchiv, 1);
+                        Program.txtlog.WriteLineLog("MET:Ошибка доступа к файлу архива: " + ch.FileNameArchiv, 1);
                         continue;
                     }
                 }
             }
             catch
             {
-                Program.txtlog.WriteLineLog("VR:Критическая ошибка чтения архива верификации!", 1);
+                Program.txtlog.WriteLineLog("MET:Критическая ошибка чтения архива!", 1);
             }
         }
 

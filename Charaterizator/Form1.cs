@@ -87,7 +87,8 @@ namespace Charaterizator
         //        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
         private СResultCH ResultCH = null;//результаты характеризации датчиков
         private CResultCI ResultCI = null;//результаты калибровки тока датчиков
-        private CResultVR ResultVR = null;//результаты калибровки тока датчиков
+        private CResultVR ResultVR = null;//результаты верификации датчиков
+        private CResultMET ResultMET = null;//результаты сдачи метрологу датчиков
 
         private DateTime TimerValueSec;//таймер часов
         private int CommutatorReadError = 0;//число ошибко чтения данных с коммутатора 
@@ -217,11 +218,13 @@ namespace Charaterizator
         {
             cbChannalCharakterizator.Items.Clear();
             cbChannalVerification.Items.Clear();
+            cbChannalMetrolog.Items.Clear();
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем 
                 cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
                 cbChannalVerification.Items.Add(string.Format("Канал {0}", i + 1));
+                cbChannalMetrolog.Items.Add(string.Format("Канал {0}", i + 1));
             }
         }
 
@@ -1369,6 +1372,34 @@ namespace Charaterizator
 //            dataGridView3.Rows[0].Cells[0].Selected = true;
         }
 
+        //обновляем грид результатов верификации для датчика в канале i
+        private void UpDateMetrologGrid(int i)
+        {
+            dataGridView5.Rows.Clear();
+
+            if ((ResultMET == null) || (ResultMET.Channal.Count <= i) || (i < 0) || (ResultMET.Channal[i].Points.Count <= 0))
+            {
+                Program.txtlog.WriteLineLog("Result MET: Результаты не сформированы!", 1);
+                return;
+            }
+
+            for (int j = 0; j < ResultVR.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
+            {
+                dataGridView5.Rows.Add(j + 1, "", "", "", "", "", "", "", "");
+                dataGridView5.Rows[j].Cells[1].Value = ResultMET.Channal[i].Points[j].Datetime.ToString("dd.MM.yyyy HH:mm:ss");      //
+                dataGridView5.Rows[j].Cells[2].Value = ResultMET.Channal[i].Points[j].Temperature.ToString();   //
+                dataGridView5.Rows[j].Cells[3].Value = ResultMET.Channal[i].Points[j].NPI.ToString();   //
+                dataGridView5.Rows[j].Cells[4].Value = ResultMET.Channal[i].Points[j].VPI.ToString();   //
+                dataGridView5.Rows[j].Cells[5].Value = ResultMET.Channal[i].Points[j].PressureZ.ToString("f3");
+                dataGridView5.Rows[j].Cells[6].Value = ResultMET.Channal[i].Points[j].PressureF.ToString("f3");
+                dataGridView5.Rows[j].Cells[7].Value = ResultMET.Channal[i].Points[j].CurrentR.ToString("f4");
+                dataGridView5.Rows[j].Cells[8].Value = ResultMET.Channal[i].Points[j].CurrentF.ToString("f4");
+            }
+            dataGridView5.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
+            dataGridView5.ClearSelection();
+            dataGridView5.Rows[0].Selected = true;
+            //            dataGridView3.Rows[0].Cells[0].Selected = true;
+        }
         //обновляем грид калибровки тока для датчика в канале i
         private void UpdateCurrentGrid(int i)
         {
@@ -4527,6 +4558,263 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("MET: Операция установки нуля завершена", 2);
         }
 
+        
+        //Установка времени демпфирования для датчиков (метролог)
+        private void MET_SetDTime()
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            float DTime = Convert.ToSingle(nud_MET_DTime.Value);
+
+            Program.txtlog.WriteLineLog("MET: Установка времени демпфирования для выбранных датчиков ... ", 2);
+            pbMETProcess.Maximum = FinishNumber - StartNumber;
+            pbMETProcess.Minimum = 0;
+            pbMETProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbMETProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С34WriteDTime(DTime))
+                    {
+
+                        Program.txtlog.WriteLineLog("MET: Выполнена установка времени демпфирования в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("MET: Установка времени демпфирования датчика не выполнена!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+
+            }
+            Program.txtlog.WriteLineLog("MET: Операция установки времени демпфирования завершена", 2);
+        }
+        private void btn_MET_Add_Click(object sender, EventArgs e)
+        {
+            FormInput forminput = new FormInput();
+            if (forminput.ShowDialog() == DialogResult.OK)
+            {
+                lb_MET_PressValue.Items.Add(forminput.Pressuer);
+            }
+        }
+
+        private void btn_MET_Del_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удалить выбранное значение из списка?","Подтверждение операции", MessageBoxButtons.YesNo)==DialogResult.Yes)
+            {
+                int index = lb_MET_PressValue.SelectedIndex;
+                lb_MET_PressValue.Items.RemoveAt(index);
+            }
+        }
+
+        private void btn_MET_Up_Click(object sender, EventArgs e)
+        {
+            int index = lb_MET_PressValue.SelectedIndex;
+            if ((index>0) && (index< lb_MET_PressValue.Items.Count))
+            {
+                int index2 = index - 1;
+
+                string str = lb_MET_PressValue.Items[index].ToString();
+                string str2 = lb_MET_PressValue.Items[index2].ToString();
+
+                lb_MET_PressValue.Items.RemoveAt(index);
+                lb_MET_PressValue.Items.Insert(index, str2);
+
+                lb_MET_PressValue.Items.RemoveAt(index2);
+                lb_MET_PressValue.Items.Insert(index2, str);
+                lb_MET_PressValue.SelectedIndex = index2;
+            }
+        }
+
+        private void btn_MET_Down_Click(object sender, EventArgs e)
+        {
+            int index = lb_MET_PressValue.SelectedIndex;
+            if ((index >= 0) && (index < lb_MET_PressValue.Items.Count-1))
+            {
+                int index2 = index + 1;
+
+                string str = lb_MET_PressValue.Items[index].ToString();
+                string str2 = lb_MET_PressValue.Items[index2].ToString();
+
+                lb_MET_PressValue.Items.RemoveAt(index);
+                lb_MET_PressValue.Items.Insert(index, str2);
+
+                lb_MET_PressValue.Items.RemoveAt(index2);
+                lb_MET_PressValue.Items.Insert(index2, str);
+
+                lb_MET_PressValue.SelectedIndex = index2;
+            }
+        }
+
+        private void btn_MET_DTime_Click(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("MET:Не выбраны каналы для установки времени демпфирования. Операция прервана.", 0);
+                    return;
+                }
+
+                try
+                {
+                    btn_MET_SetZero.Text = "Остановить";
+                   //UpdateItemState(8);
+                    MET_SetDTime();
+                }
+                finally
+                {
+                    btn_MET_SetZero.Text = "Задать";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Остановить установку времени демпфирования датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                }
+            }
+        }
+
+        private void btn_MET_Start_Click(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("MET:Не выбраны каналы с датчиками. Операция прервана.", 0);
+                    return;
+                }
+
+                //                if (TemperatureReady && PressureReady)
+                //                {
+                try
+                {
+                    btnCHStart.Text = "Выполняется опрос датчиков ... Отменить?";
+                    //UpdateItemState(2);
+                    MET_ReadSensorParametrs();
+                }
+                finally
+                {
+                    btnCHStart.Text = "Старт";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                }
+            }
+        }
+
+        //Сдача метрологу
+        //чтение всех измеренных параметров с текущего датчика давления
+        private void MET_ReadSensorParametrs()
+        {
+            int seli = 0;
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            float VPI, NPI;
+            VPI = Convert.ToSingle(nud_MET_VPI.Value);
+            NPI = Convert.ToSingle(nud_MET_NPI.Value);
+
+            Program.txtlog.WriteLineLog("MET: Старт операции для выбранных датчиков ... ", 2);
+
+            pbVRProcess.Maximum = FinishNumber - StartNumber;
+            pbVRProcess.Minimum = 0;
+            pbVRProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbVRProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С15ReadVPI_NPI())
+                    {
+                        Program.txtlog.WriteLineLog("MET: Выполнено чтение НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("MET: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1);
+                    }
+
+
+                    if (sensors.SensorValueReadC03())
+                    {
+                        Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
+
+                        float Ir = 4 + (16 / (sensors.sensor.VPI - sensors.sensor.NPI)) * ((float)numMensorPoint.Value - sensors.sensor.NPI);//расчетный ток
+                        ResultMET.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current, Ir);
+
+                        if (!cbChannalFixMET.Checked)
+                        {//если стоит фиксация канал не меняем
+                            cbChannalMetrolog.SelectedIndex = seli;
+                            UpDateMetrologGrid(i);
+                            UpdateUpStatus(i);
+                        }
+                        else
+                        {
+                            if (cbChannalMetrolog.SelectedIndex == seli)
+                            {
+                                UpDateMetrologGrid(i);
+                            }
+                        }
+
+                        //                        UpDateVerificationGrid(i);
+                        Program.txtlog.WriteLineLog("MET: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("MET: Параметры датчика не прочитаны!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+                seli++;
+            }
+            Program.txtlog.WriteLineLog("MET: Операция завершена ... ", 2);
+        }
 
     }
 }

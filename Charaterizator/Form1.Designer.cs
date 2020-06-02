@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,6 +110,8 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.сCHRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -119,8 +121,6 @@
             this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.сCIRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -289,15 +289,16 @@
             this.cbChannalVerification = new System.Windows.Forms.ComboBox();
             this.pbVRProcess = new System.Windows.Forms.ProgressBar();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.pbMETProcess = new System.Windows.Forms.ProgressBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.btn_MET_DTime = new System.Windows.Forms.Button();
+            this.nud_MET_DTime = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.btn_MET_Down = new System.Windows.Forms.Button();
+            this.btn_MET_Up = new System.Windows.Forms.Button();
+            this.btn_MET_Del = new System.Windows.Forms.Button();
+            this.btn_MET_Add = new System.Windows.Forms.Button();
+            this.lb_MET_PressValue = new System.Windows.Forms.ListBox();
             this.label62 = new System.Windows.Forms.Label();
             this.cb_MET_Unit = new System.Windows.Forms.ComboBox();
             this.btn_MET_SetZero = new System.Windows.Forms.Button();
@@ -324,7 +325,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.pbMETProcess = new System.Windows.Forms.ProgressBar();
+            this.btn_MET_Start = new System.Windows.Forms.Button();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -333,6 +334,11 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbChannalFixMET = new System.Windows.Forms.CheckBox();
+            this.cbChannalMetrolog = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -343,8 +349,8 @@
             this.gbCommutator.SuspendLayout();
             this.panelLog.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.cmsCharacterizationTable.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.cmsCurentTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -371,13 +377,14 @@
             this.groupBox11.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_MET_DTime)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_VPI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).BeginInit();
             this.pUpStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -1213,6 +1220,21 @@
             this.panel3.Size = new System.Drawing.Size(1104, 586);
             this.panel3.TabIndex = 8;
             // 
+            // cmsCharacterizationTable
+            // 
+            this.cmsCharacterizationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuDeleteResult});
+            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
+            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            // 
+            // ToolStripMenuDeleteResult
+            // 
+            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
+            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
+            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
+            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
+            // 
             // splitter1
             // 
             this.splitter1.BackColor = System.Drawing.SystemColors.ActiveBorder;
@@ -1307,21 +1329,6 @@
             this.cUPress2.Name = "cUPress2";
             this.cUPress2.ReadOnly = true;
             this.cUPress2.Width = 200;
-            // 
-            // cmsCharacterizationTable
-            // 
-            this.cmsCharacterizationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuDeleteResult});
-            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
-            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
-            // 
-            // ToolStripMenuDeleteResult
-            // 
-            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
-            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
-            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
-            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
             // 
             // dataGridView4
             // 
@@ -1546,8 +1553,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle5;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1589,10 +1596,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle6.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -3205,6 +3212,9 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.AutoScroll = true;
+            this.tabPage4.Controls.Add(this.groupBox4);
+            this.tabPage4.Controls.Add(this.btn_MET_Start);
             this.tabPage4.Controls.Add(this.pbMETProcess);
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.groupBox2);
@@ -3217,122 +3227,134 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Сдача метрологу";
             // 
+            // pbMETProcess
+            // 
+            this.pbMETProcess.Location = new System.Drawing.Point(6, 541);
+            this.pbMETProcess.Name = "pbMETProcess";
+            this.pbMETProcess.Size = new System.Drawing.Size(255, 23);
+            this.pbMETProcess.TabIndex = 21;
+            // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button7);
-            this.groupBox3.Controls.Add(this.numericUpDown3);
-            this.groupBox3.Location = new System.Drawing.Point(8, 422);
+            this.groupBox3.Controls.Add(this.btn_MET_DTime);
+            this.groupBox3.Controls.Add(this.nud_MET_DTime);
+            this.groupBox3.Location = new System.Drawing.Point(6, 429);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(255, 70);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Время демпфирования";
+            this.groupBox3.Text = "Время демпфирования (сек)";
             // 
-            // button7
+            // btn_MET_DTime
             // 
-            this.button7.BackColor = System.Drawing.Color.LightGreen;
-            this.button7.Location = new System.Drawing.Point(174, 14);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 46);
-            this.button7.TabIndex = 4;
-            this.button7.Text = "Задать";
-            this.button7.UseVisualStyleBackColor = false;
+            this.btn_MET_DTime.BackColor = System.Drawing.Color.LightGreen;
+            this.btn_MET_DTime.Location = new System.Drawing.Point(174, 14);
+            this.btn_MET_DTime.Name = "btn_MET_DTime";
+            this.btn_MET_DTime.Size = new System.Drawing.Size(75, 46);
+            this.btn_MET_DTime.TabIndex = 4;
+            this.btn_MET_DTime.Text = "Задать";
+            this.btn_MET_DTime.UseVisualStyleBackColor = false;
+            this.btn_MET_DTime.Click += new System.EventHandler(this.btn_MET_DTime_Click);
             // 
-            // numericUpDown3
+            // nud_MET_DTime
             // 
-            this.numericUpDown3.DecimalPlaces = 1;
-            this.numericUpDown3.Increment = new decimal(new int[] {
+            this.nud_MET_DTime.DecimalPlaces = 1;
+            this.nud_MET_DTime.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown3.Location = new System.Drawing.Point(10, 29);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.nud_MET_DTime.Location = new System.Drawing.Point(10, 29);
+            this.nud_MET_DTime.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.nud_MET_DTime.Minimum = new decimal(new int[] {
             100000,
             0,
             0,
             -2147483648});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(151, 20);
-            this.numericUpDown3.TabIndex = 2;
+            this.nud_MET_DTime.Name = "nud_MET_DTime";
+            this.nud_MET_DTime.Size = new System.Drawing.Size(151, 20);
+            this.nud_MET_DTime.TabIndex = 2;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button6);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.listBox1);
+            this.groupBox2.Controls.Add(this.btn_MET_Down);
+            this.groupBox2.Controls.Add(this.btn_MET_Up);
+            this.groupBox2.Controls.Add(this.btn_MET_Del);
+            this.groupBox2.Controls.Add(this.btn_MET_Add);
+            this.groupBox2.Controls.Add(this.lb_MET_PressValue);
             this.groupBox2.Controls.Add(this.label62);
             this.groupBox2.Controls.Add(this.cb_MET_Unit);
-            this.groupBox2.Location = new System.Drawing.Point(8, 125);
+            this.groupBox2.Location = new System.Drawing.Point(6, 132);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(255, 291);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Установка ряда давлений";
             // 
-            // button6
+            // btn_MET_Down
             // 
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(200, 224);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(48, 48);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "<";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btn_MET_Down.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_MET_Down.Location = new System.Drawing.Point(200, 224);
+            this.btn_MET_Down.Name = "btn_MET_Down";
+            this.btn_MET_Down.Size = new System.Drawing.Size(48, 48);
+            this.btn_MET_Down.TabIndex = 6;
+            this.btn_MET_Down.Text = "<";
+            this.btn_MET_Down.UseVisualStyleBackColor = true;
+            this.btn_MET_Down.Click += new System.EventHandler(this.btn_MET_Down_Click);
             // 
-            // button5
+            // btn_MET_Up
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(200, 170);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(48, 48);
-            this.button5.TabIndex = 5;
-            this.button5.Text = ">";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btn_MET_Up.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_MET_Up.Location = new System.Drawing.Point(200, 170);
+            this.btn_MET_Up.Name = "btn_MET_Up";
+            this.btn_MET_Up.Size = new System.Drawing.Size(48, 48);
+            this.btn_MET_Up.TabIndex = 5;
+            this.btn_MET_Up.Text = ">";
+            this.btn_MET_Up.UseVisualStyleBackColor = true;
+            this.btn_MET_Up.Click += new System.EventHandler(this.btn_MET_Up_Click);
             // 
-            // button4
+            // btn_MET_Del
             // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(200, 116);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(48, 48);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "-";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btn_MET_Del.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_MET_Del.Location = new System.Drawing.Point(200, 116);
+            this.btn_MET_Del.Name = "btn_MET_Del";
+            this.btn_MET_Del.Size = new System.Drawing.Size(48, 48);
+            this.btn_MET_Del.TabIndex = 4;
+            this.btn_MET_Del.Text = "-";
+            this.btn_MET_Del.UseVisualStyleBackColor = true;
+            this.btn_MET_Del.Click += new System.EventHandler(this.btn_MET_Del_Click);
             // 
-            // button3
+            // btn_MET_Add
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(200, 62);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(48, 48);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "+";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_MET_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_MET_Add.Location = new System.Drawing.Point(200, 62);
+            this.btn_MET_Add.Name = "btn_MET_Add";
+            this.btn_MET_Add.Size = new System.Drawing.Size(48, 48);
+            this.btn_MET_Add.TabIndex = 3;
+            this.btn_MET_Add.Text = "+";
+            this.btn_MET_Add.UseVisualStyleBackColor = true;
+            this.btn_MET_Add.Click += new System.EventHandler(this.btn_MET_Add_Click);
             // 
-            // listBox1
+            // lb_MET_PressValue
             // 
-            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 24;
-            this.listBox1.Items.AddRange(new object[] {
+            this.lb_MET_PressValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_MET_PressValue.FormattingEnabled = true;
+            this.lb_MET_PressValue.ItemHeight = 24;
+            this.lb_MET_PressValue.Items.AddRange(new object[] {
             "-100",
             "0",
             "50",
             "100",
             "150",
             "200"});
-            this.listBox1.Location = new System.Drawing.Point(10, 62);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(184, 220);
-            this.listBox1.TabIndex = 2;
+            this.lb_MET_PressValue.Location = new System.Drawing.Point(10, 62);
+            this.lb_MET_PressValue.Name = "lb_MET_PressValue";
+            this.lb_MET_PressValue.Size = new System.Drawing.Size(184, 220);
+            this.lb_MET_PressValue.TabIndex = 2;
             // 
             // label62
             // 
@@ -3361,7 +3383,7 @@
             // btn_MET_SetZero
             // 
             this.btn_MET_SetZero.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_SetZero.Location = new System.Drawing.Point(8, 87);
+            this.btn_MET_SetZero.Location = new System.Drawing.Point(6, 505);
             this.btn_MET_SetZero.Name = "btn_MET_SetZero";
             this.btn_MET_SetZero.Size = new System.Drawing.Size(255, 30);
             this.btn_MET_SetZero.TabIndex = 18;
@@ -3377,7 +3399,7 @@
             this.groupBox1.Controls.Add(this.nud_MET_VPI);
             this.groupBox1.Controls.Add(this.label60);
             this.groupBox1.Controls.Add(this.nud_MET_NPI);
-            this.groupBox1.Location = new System.Drawing.Point(8, 11);
+            this.groupBox1.Location = new System.Drawing.Point(6, 56);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(255, 70);
             this.groupBox1.TabIndex = 17;
@@ -3629,12 +3651,16 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
-            // pbMETProcess
+            // btn_MET_Start
             // 
-            this.pbMETProcess.Location = new System.Drawing.Point(8, 498);
-            this.pbMETProcess.Name = "pbMETProcess";
-            this.pbMETProcess.Size = new System.Drawing.Size(255, 23);
-            this.pbMETProcess.TabIndex = 21;
+            this.btn_MET_Start.BackColor = System.Drawing.Color.LightGreen;
+            this.btn_MET_Start.Location = new System.Drawing.Point(6, 570);
+            this.btn_MET_Start.Name = "btn_MET_Start";
+            this.btn_MET_Start.Size = new System.Drawing.Size(255, 46);
+            this.btn_MET_Start.TabIndex = 22;
+            this.btn_MET_Start.Text = "Старт";
+            this.btn_MET_Start.UseVisualStyleBackColor = false;
+            this.btn_MET_Start.Click += new System.EventHandler(this.btn_MET_Start_Click);
             // 
             // dataGridView5
             // 
@@ -3649,8 +3675,10 @@
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7});
-            this.dataGridView5.ContextMenuStrip = this.cmsCharacterizationTable;
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9});
+            this.dataGridView5.ContextMenuStrip = this.cmsVerificationTable;
             this.dataGridView5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView5.Location = new System.Drawing.Point(277, 0);
             this.dataGridView5.Name = "dataGridView5";
@@ -3668,7 +3696,6 @@
             this.dataGridViewTextBoxColumn1.MinimumWidth = 25;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn1.Width = 25;
             // 
             // dataGridViewTextBoxColumn2
@@ -3681,7 +3708,7 @@
             // 
             // dataGridViewTextBoxColumn3
             // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Температура (°C)";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Температура (°С)";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 200;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
@@ -3689,22 +3716,21 @@
             // 
             // dataGridViewTextBoxColumn4
             // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Диапазон";
+            this.dataGridViewTextBoxColumn4.HeaderText = "НПИ";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 100;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn5
             // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Давление (кПа)";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 200;
+            this.dataGridViewTextBoxColumn5.HeaderText = "ВПИ";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 100;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 200;
             // 
             // dataGridViewTextBoxColumn6
             // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Напряжение (мВ)";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Pз (кПа)";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 200;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
@@ -3712,11 +3738,58 @@
             // 
             // dataGridViewTextBoxColumn7
             // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Сопротивление (Ом)";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Pф (кПа)";
             this.dataGridViewTextBoxColumn7.MinimumWidth = 200;
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.ReadOnly = true;
             this.dataGridViewTextBoxColumn7.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Iр (мА)";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 150;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "Iф (мА)";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 150;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 150;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.cbChannalFixMET);
+            this.groupBox4.Controls.Add(this.cbChannalMetrolog);
+            this.groupBox4.Location = new System.Drawing.Point(6, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(255, 47);
+            this.groupBox4.TabIndex = 23;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Текущий канал";
+            // 
+            // cbChannalFixMET
+            // 
+            this.cbChannalFixMET.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbChannalFixMET.Location = new System.Drawing.Point(223, 18);
+            this.cbChannalFixMET.MaximumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixMET.MinimumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixMET.Name = "cbChannalFixMET";
+            this.cbChannalFixMET.Size = new System.Drawing.Size(20, 20);
+            this.cbChannalFixMET.TabIndex = 11;
+            this.cbChannalFixMET.UseVisualStyleBackColor = true;
+            // 
+            // cbChannalMetrolog
+            // 
+            this.cbChannalMetrolog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChannalMetrolog.FormattingEnabled = true;
+            this.cbChannalMetrolog.Location = new System.Drawing.Point(6, 18);
+            this.cbChannalMetrolog.Name = "cbChannalMetrolog";
+            this.cbChannalMetrolog.Size = new System.Drawing.Size(211, 21);
+            this.cbChannalMetrolog.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -3755,8 +3828,8 @@
             this.gbCommutator.PerformLayout();
             this.panelLog.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.cmsCharacterizationTable.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.cmsCurentTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
@@ -3794,7 +3867,7 @@
             this.groupBox11.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_MET_DTime)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -3804,6 +3877,7 @@
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4094,15 +4168,16 @@
         private System.Windows.Forms.NumericUpDown nud_MET_VPI;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.NumericUpDown nud_MET_NPI;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button btn_MET_Down;
+        private System.Windows.Forms.Button btn_MET_Up;
+        private System.Windows.Forms.Button btn_MET_Del;
+        private System.Windows.Forms.Button btn_MET_Add;
+        private System.Windows.Forms.ListBox lb_MET_PressValue;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.Button btn_MET_DTime;
+        private System.Windows.Forms.NumericUpDown nud_MET_DTime;
         private System.Windows.Forms.ProgressBar pbMETProcess;
+        private System.Windows.Forms.Button btn_MET_Start;
         private System.Windows.Forms.DataGridView dataGridView5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -4111,6 +4186,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox cbChannalFixMET;
+        private System.Windows.Forms.ComboBox cbChannalMetrolog;
     }
 }
 

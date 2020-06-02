@@ -55,7 +55,7 @@ namespace Charaterizator
 
         public float VPI;   //ВПИ
         public float NPI;   //НПИ
-        public float dtime; //время демпфирования
+        public float DempfTime; //время демпфирования
 
 
         public byte CurrentExit;//токовый выход (0 - 4мА, 1 - 20мА)
@@ -111,7 +111,7 @@ namespace Charaterizator
 
             VPI = 0;
             NPI = 0;
-            dtime = 0;
+            DempfTime = 0;
     }
     public string GetdevType()
         {
@@ -522,6 +522,41 @@ namespace Charaterizator
             return false;
         }
 
+
+        //Запись времени демпфирования (команда 34)
+        public bool С34WriteDTime(float DTime)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 10];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x23;//код команды
+                data[i + 3] = 0x09;//количество байт
+                data[i + 4] = 0x0C;//
+
+                UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(DTime), 0);
+                data[i + 5] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 7] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 8] = (byte)(tmp & 0xFF);
+
+                data[i + 9] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
 
         //Запись ВПИ и НПИ (команда 35)
         public bool С35WriteVPI_NPI(float VPI, float NPI)
@@ -1098,6 +1133,11 @@ namespace Charaterizator
                                 case 0x13://Записать Final Assembly Number (команда 19)
                                     break;
                                 case 0x22://Записать время демпфирования (команда 34)
+                                    if (!ReadCommand34(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x23://Запись ВПИ и НПИ (команда 35)
                                     if (!ReadCommand35(Adress, indata))
@@ -1558,13 +1598,27 @@ namespace Charaterizator
             tmp = (indata[9] << 24) | (indata[10] << 16) | (indata[11] << 8) | indata[12];
             sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
             tmp = (indata[13] << 24) | (indata[14] << 16) | (indata[15] << 8) | indata[16];
-            sensor.dtime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);//время демпфирования
+            sensor.DempfTime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);//время демпфирования
 
             int cc = indata[17];//Write protect code
             int dd = indata[18];//private label distributor code
 
             sensorList[SelSensorIndex] = sensor;
 
+            return true;
+        }
+
+        //Запись времени демпфирования (команда 34)
+        private bool ReadCommand34(int addr, byte[] indata)
+        {
+            int tmp;
+            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            if (sensor.state != 0) return false;
+
+            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+            sensor.DempfTime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+
+            sensorList[SelSensorIndex] = sensor;
             return true;
         }
 

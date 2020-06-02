@@ -100,6 +100,7 @@
     <Compile Include="CMultimetr.cs" />
     <Compile Include="CResultCH.cs" />
     <Compile Include="CResultCI.cs" />
+    <Compile Include="CResultMET.cs" />
     <Compile Include="CResultVR.cs" />
     <Compile Include="CThermalCamera.cs" />
     <Compile Include="CTxtlog.cs" />
@@ -126,6 +127,12 @@
     </Compile>
     <Compile Include="FormCommutator.designer.cs">
       <DependentUpon>FormCommutator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInput.Designer.cs">
+      <DependentUpon>FormInput.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLoad.cs">
       <SubType>Form</SubType>
@@ -177,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCommutator.resx">
       <DependentUpon>FormCommutator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInput.resx">
+      <DependentUpon>FormInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLoad.resx">
       <DependentUpon>FormLoad.cs</DependentUpon>
