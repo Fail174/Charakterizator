@@ -12,9 +12,9 @@ using System.Windows.Forms;
 //namespace ENI100
 namespace Charaterizator
 {
+    
     public struct SensorID
     {
-        //        const int COEFF_COUNT = 24;//число коэффициентов
         public int Channal;    //Номер канала коммутатора
         public int Group;      //Номер группы (1, 2, 3, 4)
 
@@ -64,12 +64,12 @@ namespace Charaterizator
         public char[] PressureModel;
 
         public float[] Coefficient;
-        public SensorID(byte a)
+        public SensorID(byte a, int CoeffCount)
         {
             message = new byte[24];
             desc = new byte[12];
             teg = new byte[6];
-            Coefficient = new float[24];
+            Coefficient = new float[CoeffCount];
             PressureModel = new char[5];
 
             Addr = a;
@@ -201,6 +201,8 @@ namespace Charaterizator
  
     public class ClassEni100
     {
+        public int COEFF_COUNT = 24;//число коэффициентов
+
         public int WRITE_PERIOD = 100;  //период выдачи команд
         public int WRITE_COUNT = 3;     //число попыток записи команд в датчик
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от датчика
@@ -1456,7 +1458,7 @@ namespace Charaterizator
         //Ответ на комманду Запрос уникального идентификатора (команда 0)
         private bool ReadCommand0(byte addr, byte[] indata)
         {
-            SensorID id = new SensorID(addr);
+            SensorID id = new SensorID(addr, COEFF_COUNT);
             id.Channal = SelSensorChannal;
             id.Group = (int)(SelSensorChannal/MaxSensorOnLevel) +1;
             id.state = (ushort)((indata[0] << 8) | indata[1]);

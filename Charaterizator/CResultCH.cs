@@ -26,8 +26,12 @@ namespace Charaterizator
         public int FactoryNumber;//заводской номер датчика
         public string FileNameArchiv;
         public List<SPoint> Points;
-        public SChanal(int ChNum, int FN)
+        public int CCount;
+        public float[] Coefficient;//коэффициенты датчика
+        public SChanal(int ChNum, int FN, int CoefCount)
         {
+            CCount = CoefCount;
+            Coefficient = new float[CoefCount];
             ChannalNummber = ChNum;
             FactoryNumber = FN;
             //            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
@@ -50,12 +54,12 @@ namespace Charaterizator
                                         "Сопротивление |";
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
-        public СResultCH(int ChannalCount, int[] FN)
+        public СResultCH(int ChannalCount, int[] FN, int CoefCount)
         {
             StreamWriter fs;
             for (int i = 0; i < ChannalCount; i++)
             {
-                SChanal ch = new SChanal(i+1, FN[i]);
+                SChanal ch = new SChanal(i+1, FN[i], CoefCount);
                 Channal.Add(ch);
                 Directory.CreateDirectory("CH");
                 Directory.CreateDirectory("Archiv");
@@ -112,6 +116,15 @@ namespace Charaterizator
                 Channal[ch].Points.RemoveAt(Channal[ch].Points.Count - 1);
                 Channal[ch].Points.Add(point);
             }
+        }
+
+        public void AddCoeff(int ch, float [] Coeff)
+        {
+            for (int i = 0; i < Channal[ch].CCount; i++)
+            {
+                Channal[ch].Coefficient[i] = Coeff[i];
+            }
+            SaveToArhiv(ch);
         }
 
         public void AddPoint(int ch, double Temp, int D, double Press, double U, double R)
@@ -198,7 +211,7 @@ namespace Charaterizator
         {
             if ((Channal.Count <= 0) || (i >= Channal.Count))
             {
-                Program.txtlog.WriteLineLog("CH:Отсутсвуют данные характеризации для датчика в канале: " + i, 1);
+                Program.txtlog.WriteLineLog("CH: Отсутсвуют данные характеризации для датчика в канале: " + i, 1);
                 return;
             }
             SChanal ch = Channal[i];
@@ -209,13 +222,20 @@ namespace Charaterizator
                 {
                     writer.WriteLine(GetStringFromPoint(ch.Points[j]));
                 }
+                writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                writer.WriteLine("Коэффициенты датчика");
+                writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
+                for (int c = 0; c < ch.CCount-1; c++)
+                {
+                    writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString());
+                }
                 writer.Close();
                 writer = null;
-                Program.txtlog.WriteLineLog("CH:Данные характеризации успешно перезаписаны.", 0);
+                Program.txtlog.WriteLineLog("CH: Данные характеризации успешно перезаписаны.", 0);
             }
             else
             {
-                Program.txtlog.WriteLineLog("CH:Ошибка записи в архив  характеризации: " + ch.FileNameArchiv, 1);
+                Program.txtlog.WriteLineLog("CH: Ошибка записи в архив  характеризации: " + ch.FileNameArchiv, 1);
             }
         }
 
@@ -262,6 +282,8 @@ namespace Charaterizator
                         str = reader.ReadLine();
                         do {
                             str = reader.ReadLine();
+                            if (str == "-----------------------------------------------------------------------------------------------") break;//конец раздела
+
                             string[] strarr = str.Split('|');
                             SPoint point;
                             if (strarr.Length > 5)

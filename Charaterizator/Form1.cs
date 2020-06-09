@@ -1104,8 +1104,9 @@ namespace Charaterizator
                     else
                     {
                         Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
+                        ResultCH.AddCoeff(i, sensors.sensor.Coefficient);
                     }
-                    if (!sensors.С42SensorReset())//запись в коэффициентов EEPROM
+                    if (!sensors.С42SensorReset())//перезагрузка датчика
                     {
                         Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
                     }
@@ -2575,7 +2576,7 @@ namespace Charaterizator
             }
 
             //***************** создаем файлы результатов характеризации ***********************************
-            ResultCH = new СResultCH(MaxChannalCount, FN);//результаты характеризации датчиков
+            ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT);//результаты характеризации датчиков
             ResultCH.LoadFromFile();
 
             //***************** создаем файлы результатов калибровки ***************************************
@@ -3920,6 +3921,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.LightGreen;
                     btn_MET_NPI_VPI.Enabled = true;
+                    btn_MET_Start.BackColor = Color.LightGreen;
+                    btn_MET_Start.Enabled = true;
+                    btn_MET_DTime.BackColor = Color.LightGreen;
+                    btn_MET_DTime.Enabled = true;
 
                     SensorBusy = false;
                     ProcessStop = true;
@@ -3954,6 +3959,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -3984,6 +3993,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4014,6 +4027,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4044,6 +4061,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4074,6 +4095,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4104,6 +4129,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4134,6 +4163,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.LightGreen;
                     btn_MET_NPI_VPI.Enabled = true;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4164,6 +4197,10 @@ namespace Charaterizator
 
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
 
                     SensorBusy = true;
                     ProcessStop = false;
@@ -4195,9 +4232,87 @@ namespace Charaterizator
                     btn_MET_NPI_VPI.BackColor = Color.IndianRed;
                     btn_MET_NPI_VPI.Enabled = false;
 
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
+
                     SensorBusy = true;
                     ProcessStop = false;
                     break;
+                case 10://Сдача метрологу
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
+
+                    btn_MET_Start.BackColor = Color.LightGreen;
+                    btn_MET_Start.Enabled = true;
+                    btn_MET_DTime.BackColor = Color.IndianRed;
+                    btn_MET_DTime.Enabled = false;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+                case 11://Установка времени демпфирования
+                    btnSensorSeach.Enabled = false;
+                    btnSensorSeach.BackColor = Color.IndianRed;
+
+                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.Enabled = false;
+                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.Enabled = false;
+                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.Enabled = false;
+                    btnCalculateCoeff.BackColor = Color.IndianRed;
+                    btnCalculateCoeff.Enabled = false;
+                    cbChannalCharakterizator.Enabled = false;
+
+                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.Enabled = false;
+                    cbChannalVerification.Enabled = false;
+
+                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                    btnVR_VPI_NPI.Enabled = false;
+
+                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.Enabled = false;
+
+                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                    btn_MET_NPI_VPI.Enabled = false;
+
+                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.Enabled = false;
+
+                    btn_MET_DTime.BackColor = Color.LightGreen;
+                    btn_MET_DTime.Enabled = true;
+
+                    SensorBusy = true;
+                    ProcessStop = false;
+                    break;
+
+
             }
         }
 
@@ -4405,7 +4520,7 @@ namespace Charaterizator
                 }
                 if (i >= MaxChannalCount)
                 {
-                    Program.txtlog.WriteLineLog("Не выбраны каналы для записи ВПИ НПИ датчиков. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("MET: Не выбраны каналы для записи ВПИ НПИ датчиков. Операция прервана.", 0);
                     return;
                 }
 
@@ -4502,7 +4617,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    btn_MET_SetZero.Text = "Обнулить";
+                    btn_MET_SetZero.Text = "Установка нуля";
                     UpdateItemState(0);
                 }
             }
@@ -4677,13 +4792,13 @@ namespace Charaterizator
 
                 try
                 {
-                    btn_MET_SetZero.Text = "Остановить";
-                   //UpdateItemState(8);
+                    btn_MET_DTime.Text = "Остановить";
+                    UpdateItemState(11);
                     MET_SetDTime();
                 }
                 finally
                 {
-                    btn_MET_SetZero.Text = "Задать";
+                    btn_MET_DTime.Text = "Задать";
                     UpdateItemState(0);
                 }
             }
@@ -4709,21 +4824,24 @@ namespace Charaterizator
                 }
                 if (i >= MaxChannalCount)
                 {
-                    Program.txtlog.WriteLineLog("MET:Не выбраны каналы с датчиками. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("MET: Не выбраны каналы с датчиками. Операция прервана.", 0);
                     return;
                 }
 
-                //                if (TemperatureReady && PressureReady)
-                //                {
                 try
                 {
-                    btnCHStart.Text = "Выполняется опрос датчиков ... Отменить?";
-                    //UpdateItemState(2);
-                    MET_ReadSensorParametrs();
+                    btn_MET_Start.Text = "Выполняется опрос датчиков ... Отменить?";
+                    UpdateItemState(10);
+                    for (int l = 0; l < lb_MET_PressValue.Items.Count; l++)
+                    {
+                        if (ProcessStop) break;
+                        if (MensorSetPressuer(lb_MET_PressValue.Items[l].ToString())==0)
+                            MET_ReadSensorParametrs();
+                    }
                 }
                 finally
                 {
-                    btnCHStart.Text = "Старт";
+                    btn_MET_Start.Text = "Старт";
                     UpdateItemState(0);
                 }
             }
@@ -4732,13 +4850,13 @@ namespace Charaterizator
                 if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
-                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                    Program.txtlog.WriteLineLog("MET: Операция прекращена пользователем", 0);
                 }
             }
         }
 
         //Сдача метрологу
-        //чтение всех измеренных параметров с текущего датчика давления
+        //чтение всех измеренных параметров с выбранных датчиков давления
         private void MET_ReadSensorParametrs()
         {
             int seli = 0;
@@ -4816,6 +4934,68 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("MET: Операция завершена ... ", 2);
         }
 
+
+        //Установка давления в Менсоре с ожиданием
+        //Вход: строка со значением давления
+        private int MensorSetPressuer(string strValue)
+        {
+            if (strValue == "")
+            {
+                Program.txtlog.WriteLineLog("Не задано значение давления", 1);
+                return -1;
+            }
+            if (Mensor.Connected)
+            {
+                double Point = 0;
+                double shift = 0;
+
+                Program.txtlog.WriteLineLog("Устанавливаем давление в датчиках: " + strValue, 0);
+
+                Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    numMensorPoint.Text = strValue;
+                    bMensorSet.PerformClick();      //выставляем давление
+                    bMensorControl.PerformClick();  //запускаем задачу
+                    int i = 0;
+                    do//ожидаем установления давления
+                    {
+                        Application.DoEvents();
+                        i++;
+                        Thread.Sleep(1000);
+                        shift = Math.Abs(Mensor._press - Point);
+                    } while ((shift > SKO_PRESSURE) && (i < MENSOR_PRESSUER_WAIT));
+                    if (i >= MENSOR_PRESSUER_WAIT)
+                    {//давление не установлено
+                        Program.txtlog.WriteLineLog("Истекло время установки давления в датчиках", 1);
+                        return -2;
+                    }
+                    else
+                    {//давление установлено
+                        Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
+                        PressureReady = true;
+                        Program.txtlog.WriteLineLog("Давление в датчиках установлено.", 0);
+                        return 0;
+                    }
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Нет cвязи c задатчиком давления.", 1);
+                return -3;
+            }
+        }
+
+        private void cbChannalMetrolog_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                if (cbChannalMetrolog.Text == "") return;
+
+                string str = cbChannalMetrolog.Text.Remove(0, 6);
+                int ii = Convert.ToInt32(str) - 1;
+
+                UpDateMetrologGrid(ii);
+                UpdateUpStatus(ii);
+            }
+        }
     }
 }
 

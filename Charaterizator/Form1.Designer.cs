@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,8 +110,18 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuVerificationDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.сCHRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -121,6 +131,8 @@
             this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.сCIRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сIDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -139,8 +151,6 @@
             this.cPressureF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сCurrentR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmsVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsMenuVerificationDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -289,6 +299,10 @@
             this.cbChannalVerification = new System.Windows.Forms.ComboBox();
             this.pbVRProcess = new System.Windows.Forms.ProgressBar();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbChannalFixMET = new System.Windows.Forms.CheckBox();
+            this.cbChannalMetrolog = new System.Windows.Forms.ComboBox();
+            this.btn_MET_Start = new System.Windows.Forms.Button();
             this.pbMETProcess = new System.Windows.Forms.ProgressBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_MET_DTime = new System.Windows.Forms.Button();
@@ -325,20 +339,6 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.btn_MET_Start = new System.Windows.Forms.Button();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.cbChannalFixMET = new System.Windows.Forms.CheckBox();
-            this.cbChannalMetrolog = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -349,12 +349,13 @@
             this.gbCommutator.SuspendLayout();
             this.panelLog.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.cmsCharacterizationTable.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            this.cmsVerificationTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.cmsCharacterizationTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.cmsCurentTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            this.cmsVerificationTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -376,6 +377,7 @@
             this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_DTime)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -383,8 +385,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_VPI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).BeginInit();
             this.pUpStatusBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -392,7 +392,7 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Location = new System.Drawing.Point(0, 832);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1413, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1447, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -406,7 +406,7 @@
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1413, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1447, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -699,7 +699,7 @@
             this.panel1.Controls.Add(this.tbDateTime);
             this.panel1.Controls.Add(this.gbCommutator);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1104, 24);
+            this.panel1.Location = new System.Drawing.Point(1138, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(309, 808);
             this.panel1.TabIndex = 6;
@@ -1176,7 +1176,7 @@
             this.panelLog.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelLog.Location = new System.Drawing.Point(0, 610);
             this.panelLog.Name = "panelLog";
-            this.panelLog.Size = new System.Drawing.Size(1104, 222);
+            this.panelLog.Size = new System.Drawing.Size(1138, 222);
             this.panelLog.TabIndex = 7;
             // 
             // richTextBox1
@@ -1188,7 +1188,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(527, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(134, 210);
+            this.richTextBox1.Size = new System.Drawing.Size(604, 210);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.Visible = false;
@@ -1201,39 +1201,137 @@
             this.rtbConsole.Location = new System.Drawing.Point(3, 5);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(638, 209);
+            this.rtbConsole.Size = new System.Drawing.Size(672, 209);
             this.rtbConsole.TabIndex = 2;
             this.rtbConsole.Text = "";
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.dataGridView5);
             this.panel3.Controls.Add(this.splitter1);
             this.panel3.Controls.Add(this.dataGridView2);
             this.panel3.Controls.Add(this.dataGridView4);
             this.panel3.Controls.Add(this.dataGridView3);
             this.panel3.Controls.Add(this.dataGridView1);
             this.panel3.Controls.Add(this.panel4);
+            this.panel3.Controls.Add(this.dataGridView5);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1104, 586);
+            this.panel3.Size = new System.Drawing.Size(1138, 586);
             this.panel3.TabIndex = 8;
             // 
-            // cmsCharacterizationTable
+            // dataGridView5
             // 
-            this.cmsCharacterizationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuDeleteResult});
-            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
-            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            this.dataGridView5.AllowUserToAddRows = false;
+            this.dataGridView5.AllowUserToDeleteRows = false;
+            this.dataGridView5.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView5.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9});
+            this.dataGridView5.ContextMenuStrip = this.cmsVerificationTable;
+            this.dataGridView5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView5.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.ReadOnly = true;
+            this.dataGridView5.RowHeadersVisible = false;
+            this.dataGridView5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView5.Size = new System.Drawing.Size(1138, 586);
+            this.dataGridView5.TabIndex = 9;
+            this.dataGridView5.Visible = false;
             // 
-            // ToolStripMenuDeleteResult
+            // dataGridViewTextBoxColumn1
             // 
-            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
-            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
-            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
-            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
+            this.dataGridViewTextBoxColumn1.Frozen = true;
+            this.dataGridViewTextBoxColumn1.HeaderText = "№";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 25;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 25;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Дата и Время";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 200;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Температура (°С)";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 200;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "НПИ";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 100;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "ВПИ";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 100;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Pз (кПа)";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 200;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Pф (кПа)";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 200;
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Iр (мА)";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 150;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "Iф (мА)";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 150;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 150;
+            // 
+            // cmsVerificationTable
+            // 
+            this.cmsVerificationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuVerificationDelete});
+            this.cmsVerificationTable.Name = "contextMenuStripVerificationTable";
+            this.cmsVerificationTable.Size = new System.Drawing.Size(168, 26);
+            // 
+            // tsMenuVerificationDelete
+            // 
+            this.tsMenuVerificationDelete.Name = "tsMenuVerificationDelete";
+            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(167, 22);
+            this.tsMenuVerificationDelete.Text = "Удаление строки";
+            this.tsMenuVerificationDelete.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
             // 
             // splitter1
             // 
@@ -1242,7 +1340,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.splitter1.Location = new System.Drawing.Point(277, 400);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(827, 3);
+            this.splitter1.Size = new System.Drawing.Size(861, 3);
             this.splitter1.TabIndex = 8;
             this.splitter1.TabStop = false;
             this.splitter1.Visible = false;
@@ -1268,7 +1366,7 @@
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(827, 403);
+            this.dataGridView2.Size = new System.Drawing.Size(861, 403);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
@@ -1330,6 +1428,21 @@
             this.cUPress2.ReadOnly = true;
             this.cUPress2.Width = 200;
             // 
+            // cmsCharacterizationTable
+            // 
+            this.cmsCharacterizationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuDeleteResult});
+            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
+            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            // 
+            // ToolStripMenuDeleteResult
+            // 
+            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
+            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
+            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
+            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
+            // 
             // dataGridView4
             // 
             this.dataGridView4.AllowUserToAddRows = false;
@@ -1349,7 +1462,7 @@
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView4.Size = new System.Drawing.Size(827, 183);
+            this.dataGridView4.Size = new System.Drawing.Size(861, 183);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
             // 
@@ -1432,7 +1545,7 @@
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView3.Size = new System.Drawing.Size(827, 586);
+            this.dataGridView3.Size = new System.Drawing.Size(861, 586);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
@@ -1508,21 +1621,6 @@
             this.сCurrentF.ReadOnly = true;
             this.сCurrentF.Width = 150;
             // 
-            // cmsVerificationTable
-            // 
-            this.cmsVerificationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsMenuVerificationDelete});
-            this.cmsVerificationTable.Name = "contextMenuStripVerificationTable";
-            this.cmsVerificationTable.Size = new System.Drawing.Size(168, 26);
-            // 
-            // tsMenuVerificationDelete
-            // 
-            this.tsMenuVerificationDelete.Name = "tsMenuVerificationDelete";
-            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(167, 22);
-            this.tsMenuVerificationDelete.Text = "Удаление строки";
-            this.tsMenuVerificationDelete.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -1544,7 +1642,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(827, 586);
+            this.dataGridView1.Size = new System.Drawing.Size(861, 586);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1553,8 +1651,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle3;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1596,10 +1694,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle4;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -3227,6 +3325,49 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Сдача метрологу";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.cbChannalFixMET);
+            this.groupBox4.Controls.Add(this.cbChannalMetrolog);
+            this.groupBox4.Location = new System.Drawing.Point(6, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(255, 47);
+            this.groupBox4.TabIndex = 23;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Текущий канал";
+            // 
+            // cbChannalFixMET
+            // 
+            this.cbChannalFixMET.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbChannalFixMET.Location = new System.Drawing.Point(223, 18);
+            this.cbChannalFixMET.MaximumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixMET.MinimumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixMET.Name = "cbChannalFixMET";
+            this.cbChannalFixMET.Size = new System.Drawing.Size(20, 20);
+            this.cbChannalFixMET.TabIndex = 11;
+            this.cbChannalFixMET.UseVisualStyleBackColor = true;
+            // 
+            // cbChannalMetrolog
+            // 
+            this.cbChannalMetrolog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChannalMetrolog.FormattingEnabled = true;
+            this.cbChannalMetrolog.Location = new System.Drawing.Point(6, 18);
+            this.cbChannalMetrolog.Name = "cbChannalMetrolog";
+            this.cbChannalMetrolog.Size = new System.Drawing.Size(211, 21);
+            this.cbChannalMetrolog.TabIndex = 0;
+            this.cbChannalMetrolog.SelectedIndexChanged += new System.EventHandler(this.cbChannalMetrolog_SelectedIndexChanged);
+            // 
+            // btn_MET_Start
+            // 
+            this.btn_MET_Start.BackColor = System.Drawing.Color.LightGreen;
+            this.btn_MET_Start.Location = new System.Drawing.Point(6, 570);
+            this.btn_MET_Start.Name = "btn_MET_Start";
+            this.btn_MET_Start.Size = new System.Drawing.Size(255, 46);
+            this.btn_MET_Start.TabIndex = 22;
+            this.btn_MET_Start.Text = "Старт";
+            this.btn_MET_Start.UseVisualStyleBackColor = false;
+            this.btn_MET_Start.Click += new System.EventHandler(this.btn_MET_Start_Click);
+            // 
             // pbMETProcess
             // 
             this.pbMETProcess.Location = new System.Drawing.Point(6, 541);
@@ -3505,7 +3646,7 @@
             this.pUpStatusBar.Controls.Add(this.label5);
             this.pUpStatusBar.Location = new System.Drawing.Point(277, 1);
             this.pUpStatusBar.Name = "pUpStatusBar";
-            this.pUpStatusBar.Size = new System.Drawing.Size(1135, 22);
+            this.pUpStatusBar.Size = new System.Drawing.Size(1169, 22);
             this.pUpStatusBar.TabIndex = 9;
             this.pUpStatusBar.Visible = false;
             // 
@@ -3647,155 +3788,15 @@
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.splitter2.Location = new System.Drawing.Point(0, 607);
             this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(1104, 3);
+            this.splitter2.Size = new System.Drawing.Size(1138, 3);
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
-            // 
-            // btn_MET_Start
-            // 
-            this.btn_MET_Start.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_Start.Location = new System.Drawing.Point(6, 570);
-            this.btn_MET_Start.Name = "btn_MET_Start";
-            this.btn_MET_Start.Size = new System.Drawing.Size(255, 46);
-            this.btn_MET_Start.TabIndex = 22;
-            this.btn_MET_Start.Text = "Старт";
-            this.btn_MET_Start.UseVisualStyleBackColor = false;
-            this.btn_MET_Start.Click += new System.EventHandler(this.btn_MET_Start_Click);
-            // 
-            // dataGridView5
-            // 
-            this.dataGridView5.AllowUserToAddRows = false;
-            this.dataGridView5.AllowUserToDeleteRows = false;
-            this.dataGridView5.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7,
-            this.dataGridViewTextBoxColumn8,
-            this.dataGridViewTextBoxColumn9});
-            this.dataGridView5.ContextMenuStrip = this.cmsVerificationTable;
-            this.dataGridView5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView5.Location = new System.Drawing.Point(277, 0);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.ReadOnly = true;
-            this.dataGridView5.RowHeadersVisible = false;
-            this.dataGridView5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView5.Size = new System.Drawing.Size(827, 400);
-            this.dataGridView5.TabIndex = 9;
-            this.dataGridView5.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.Frozen = true;
-            this.dataGridViewTextBoxColumn1.HeaderText = "№";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 25;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 25;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Дата и Время";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 200;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Температура (°С)";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 200;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "НПИ";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 100;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "ВПИ";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 100;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Pз (кПа)";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 200;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Pф (кПа)";
-            this.dataGridViewTextBoxColumn7.MinimumWidth = 200;
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            this.dataGridViewTextBoxColumn7.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "Iр (мА)";
-            this.dataGridViewTextBoxColumn8.MinimumWidth = 150;
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            this.dataGridViewTextBoxColumn8.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.HeaderText = "Iф (мА)";
-            this.dataGridViewTextBoxColumn9.MinimumWidth = 150;
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Width = 150;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.cbChannalFixMET);
-            this.groupBox4.Controls.Add(this.cbChannalMetrolog);
-            this.groupBox4.Location = new System.Drawing.Point(6, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(255, 47);
-            this.groupBox4.TabIndex = 23;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Текущий канал";
-            // 
-            // cbChannalFixMET
-            // 
-            this.cbChannalFixMET.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbChannalFixMET.Location = new System.Drawing.Point(223, 18);
-            this.cbChannalFixMET.MaximumSize = new System.Drawing.Size(20, 20);
-            this.cbChannalFixMET.MinimumSize = new System.Drawing.Size(20, 20);
-            this.cbChannalFixMET.Name = "cbChannalFixMET";
-            this.cbChannalFixMET.Size = new System.Drawing.Size(20, 20);
-            this.cbChannalFixMET.TabIndex = 11;
-            this.cbChannalFixMET.UseVisualStyleBackColor = true;
-            // 
-            // cbChannalMetrolog
-            // 
-            this.cbChannalMetrolog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbChannalMetrolog.FormattingEnabled = true;
-            this.cbChannalMetrolog.Location = new System.Drawing.Point(6, 18);
-            this.cbChannalMetrolog.Name = "cbChannalMetrolog";
-            this.cbChannalMetrolog.Size = new System.Drawing.Size(211, 21);
-            this.cbChannalMetrolog.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1413, 854);
+            this.ClientSize = new System.Drawing.Size(1447, 854);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
@@ -3828,12 +3829,13 @@
             this.gbCommutator.PerformLayout();
             this.panelLog.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.cmsCharacterizationTable.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            this.cmsVerificationTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.cmsCharacterizationTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.cmsCurentTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            this.cmsVerificationTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -3866,6 +3868,7 @@
             this.gbVRLevel1.PerformLayout();
             this.groupBox11.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_DTime)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -3876,8 +3879,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).EndInit();
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
