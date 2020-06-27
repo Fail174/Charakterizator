@@ -88,8 +88,10 @@ namespace Charaterizator
                 Properties.Settings.Default.set_MensorReadPause = Convert.ToInt32(tbMensorReadPause.Value);             //
                 Properties.Settings.Default.set_MensorSKOPressure = Convert.ToDouble(tbMensorSKOPressure.Value);        // допуск по давлению
                 Properties.Settings.Default.set_MensorMaxCountPoint = Convert.ToInt32(tbMensorMaxCountPoint.Value);     // время стабилизации давления
+                Properties.Settings.Default.set_UseMensor = rb_useMensor.Checked;
 
-                //4 - ТЕРМОКАМЕРА
+
+               //4 - ТЕРМОКАМЕРА
                 Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToInt32(tbTCameraReadPeriod.Value);         //
 
                 //5 - Датчики
@@ -177,9 +179,21 @@ namespace Charaterizator
              tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
              tbMensorSKOPressure.Value = Convert.ToDecimal(Properties.Settings.Default.set_MensorSKOPressure);
              tbMensorMaxCountPoint.Value = Properties.Settings.Default.set_MensorMaxCountPoint;
+
+            if (Properties.Settings.Default.set_UseMensor)
+            {
+                rb_useMensor.Checked = true;
+                rb_usePascal.Checked = false;
+            }
+            else
+            {
+                rb_useMensor.Checked = false;
+                rb_usePascal.Checked = true;
+            }
             
+
              // 4 - Термокамера
-             tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;                     
+            tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;                     
        
                    
              // 5 - Датчики                   

@@ -11,13 +11,14 @@ using System.Globalization;
 
 namespace Charaterizator
 {
-    class Pascal
+    class CPascal
     {
         public bool Connected;              // флаг соединения с прибором по COM (true - есть соединение / false - нет)
-        private SerialPort Port;            // переменная для работы по COM-порту
+        private SerialPort Port = new SerialPort();            // переменная для работы по COM-порту
         private Thread ReadThreadPascal;    // поток
-        string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора   
-        private int READ_PAUSE = 100;       // задержка между передачей команд и чтением по COM порту, мс 
+        string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
+        public int READ_PAUSE = 50;            // задержка между приемом и передачей команд по COM порту, мс      
+
 
         public bool Error = false;
         public double press{ get; set; }    // текущее давление
@@ -80,8 +81,8 @@ namespace Charaterizator
         public int DisConnect()
         {
             Connected = false;
-           // if (ReadThread != null)
-           //     ReadThread.Abort(0);
+            if (ReadThreadPascal != null)
+                ReadThreadPascal.Abort(0);
 
             if (Port.IsOpen)
             {
@@ -129,7 +130,7 @@ namespace Charaterizator
        
         // Задает уставку давления 
         // возвращаемые значения:   нет          
-        public void SetPress(double num, int )
+        public void SetPress(double num)
         {
             if (Port.IsOpen)
             {

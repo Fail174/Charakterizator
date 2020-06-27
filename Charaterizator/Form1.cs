@@ -51,7 +51,7 @@ namespace Charaterizator
         private int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
         private double SKO_PRESSURE = 0.2;  //(СКО) допуск по давлению, кПа
 
-
+        private bool UseMensor;     // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
 
         //Не занесены в настройку
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП        
@@ -80,6 +80,8 @@ namespace Charaterizator
         public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
         private CCalculation CalculationMtx = new CCalculation();
+        private CPascal Pascal = new CPascal();
+
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
 
@@ -148,7 +150,10 @@ namespace Charaterizator
                 MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
 
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
-                Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
+                Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - МЕНСОР
+                Pascal.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - ПАСКАЛЬ
+                UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
+
 
                 MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint/MAIN_TIMER+1;      //ожидание стабилизации давления в датчике, в циклах таймера
 
@@ -161,7 +166,7 @@ namespace Charaterizator
 
 
                 string strFileNameDB = Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
-                SensorsDB.SetConnectionDB(strFileNameDB);                                       // устанавливаем соединение с БД           
+                SensorsDB.SetConnectionDB(strFileNameDB);                        // устанавливаем соединение с БД           
 
             }
             // нужно ли вычислять MaxSensorOnLevel = 8;//количество датиков на уровне
@@ -421,28 +426,54 @@ namespace Charaterizator
 
 
 
-        // Подключение МЕНСОРА
+        // Подключение задатчика МЕНСОРА или ПАСКАЛЯ
         private void btnMensor_Click(object sender, EventArgs e)
         {
             MensorReadError = 0;
-            if (Mensor.Connect(Properties.Settings.Default.COMMensor,
-              Properties.Settings.Default.COMMensor_Speed,
-              Properties.Settings.Default.COMMensor_DataBits,
-              Properties.Settings.Default.COMMensor_StopBits,
-              Properties.Settings.Default.COMMensor_Parity) >= 0)
+
+            if (UseMensor)
             {
-                btnMensor.BackColor = Color.Green;
-                btnMensor.Text = "Подключен";
-                Program.txtlog.WriteLineLog("Задатчик давления подключен", 0);
+                if (Mensor.Connect(Properties.Settings.Default.COMMensor,
+                    Properties.Settings.Default.COMMensor_Speed,
+                    Properties.Settings.Default.COMMensor_DataBits,
+                    Properties.Settings.Default.COMMensor_StopBits,
+                    Properties.Settings.Default.COMMensor_Parity) >= 0)
+                {
+                    btnMensor.BackColor = Color.Green;
+                    btnMensor.Text = "Подключен";
+                    Program.txtlog.WriteLineLog("Задатчик давления Mensor подключен", 0);
+                }
+                else
+                {
+                    btnMensor.BackColor = Color.IndianRed;
+                    btnMensor.Text = "Не подключен";
+                    Program.txtlog.WriteLineLog("Задатчик давления  Mensor не подключен", 1);
+                }
+
             }
             else
             {
-                btnMensor.BackColor = Color.IndianRed;
-                btnMensor.Text = "Не подключен";
-                Program.txtlog.WriteLineLog("Задатчик давления не подключен", 1);
+                if (Pascal.Connect(Properties.Settings.Default.COMMensor,
+                    Properties.Settings.Default.COMMensor_Speed,
+                    Properties.Settings.Default.COMMensor_DataBits,
+                    Properties.Settings.Default.COMMensor_StopBits,
+                    Properties.Settings.Default.COMMensor_Parity) >= 0)
+                {
+                    btnMensor.BackColor = Color.Green;
+                    btnMensor.Text = "Подключен";
+                    Program.txtlog.WriteLineLog("Задатчик давления Паскаль подключен", 0);
+                }
+                else
+                {
+                    btnMensor.BackColor = Color.IndianRed;
+                    btnMensor.Text = "Не подключен";
+                    Program.txtlog.WriteLineLog("Задатчик давления Паскаль не подключен", 1);
+                }
             }
+
         }
 
+      
 
 
         // Обработка нажатия кнопки управления КОММУТАТОРОМ
@@ -466,18 +497,18 @@ namespace Charaterizator
         // Открываем окно с интерфейсом МЕНСОРА
         private void btnFormMensor_Click(object sender, EventArgs e)
         {
-            if (Mensor != null)
+            if ((Mensor != null)&&(UseMensor))
             {
 
                 Mensor.MenStartTimer();
                 Mensor.ShowDialog();
 
             }
-            else
-            {
-                Mensor = new FormMensor();
-                btnMensor.PerformClick();
-            }
+            //else
+            //{
+            //    Mensor = new FormMensor();
+            //    btnMensor.PerformClick();
+            //}
         }
 
         private void UpdateDataGrids(int i)
@@ -1581,6 +1612,7 @@ namespace Charaterizator
             MainTimer.Enabled = false;
             sensors.DisConnect();
             Mensor.DisConnect();
+            Pascal.DisConnect();
             Multimetr.DisConnect();
             Commutator.DisConnect();
         }
@@ -3211,6 +3243,7 @@ namespace Charaterizator
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
                 MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint / MAIN_TIMER + 1;        //ожидание стабилизации давления в датчике, в циклах таймера
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
+                UseMensor = Properties.Settings.Default.set_UseMensor;
 
                 sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;     //таймаут ожидания ответа от датчика
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик

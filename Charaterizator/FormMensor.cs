@@ -107,7 +107,10 @@ namespace Charaterizator
                 timer1.Stop();
                 timer1.Enabled = false;
 
-                _serialPort_M.Close();
+                if (_serialPort_M.IsOpen)
+                {
+                    _serialPort_M.Close();                    
+                }
                 Connected = false;
 
                 return 0;

@@ -131,6 +131,9 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rb_useMensor = new System.Windows.Forms.RadioButton();
+            this.rb_usePascal = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -165,6 +168,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -1047,6 +1051,7 @@
             // 
             // tp_MensorSettings
             // 
+            this.tp_MensorSettings.Controls.Add(this.groupBox2);
             this.tp_MensorSettings.Controls.Add(this.tbMensorMaxCountPoint);
             this.tp_MensorSettings.Controls.Add(this.tbMensorSKOPressure);
             this.tp_MensorSettings.Controls.Add(this.textBox19);
@@ -1548,6 +1553,39 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rb_usePascal);
+            this.groupBox2.Controls.Add(this.rb_useMensor);
+            this.groupBox2.Location = new System.Drawing.Point(52, 177);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(643, 64);
+            this.groupBox2.TabIndex = 104;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = " Выбор типа используемого задатчика давления: ";
+            // 
+            // rb_useMensor
+            // 
+            this.rb_useMensor.AutoSize = true;
+            this.rb_useMensor.Location = new System.Drawing.Point(8, 17);
+            this.rb_useMensor.Name = "rb_useMensor";
+            this.rb_useMensor.Size = new System.Drawing.Size(70, 19);
+            this.rb_useMensor.TabIndex = 0;
+            this.rb_useMensor.TabStop = true;
+            this.rb_useMensor.Text = "Менсор";
+            this.rb_useMensor.UseVisualStyleBackColor = true;
+            // 
+            // rb_usePascal
+            // 
+            this.rb_usePascal.AutoSize = true;
+            this.rb_usePascal.Location = new System.Drawing.Point(8, 38);
+            this.rb_usePascal.Name = "rb_usePascal";
+            this.rb_usePascal.Size = new System.Drawing.Size(137, 19);
+            this.rb_usePascal.TabIndex = 1;
+            this.rb_usePascal.TabStop = true;
+            this.rb_usePascal.Text = "Паскаль (Элметро)";
+            this.rb_usePascal.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1602,6 +1640,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1711,5 +1751,8 @@
         private System.Windows.Forms.NumericUpDown tbRezistor;
         private System.Windows.Forms.TextBox textBox28;
         internal System.Windows.Forms.CheckBox cb_FlagObrHod;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton rb_usePascal;
+        private System.Windows.Forms.RadioButton rb_useMensor;
     }
 }
