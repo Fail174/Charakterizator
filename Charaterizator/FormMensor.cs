@@ -86,6 +86,7 @@ namespace Charaterizator
             set { }        }
 
 
+        public List<string> ListMod = new List<string>();       // список подключенных модулей внутренныих и внешних
         //---------------------------------------------------------------------------
 
 
@@ -112,7 +113,7 @@ namespace Charaterizator
                     _serialPort_M.Close();                    
                 }
                 Connected = false;
-
+                ListMod.Clear();
                 return 0;
             }
             else
@@ -146,8 +147,10 @@ namespace Charaterizator
                 int ReadMensorID = ChannelRead();
 
                 if ((ReadMensorID==0) || (ReadMensorID == 1))
-                {                    
+                {
                     //timer1_Tick(null, null);// Вызываем функцию для начального обновления формы
+                    ListMod.AddRange(new string[] { "[канал А] ДП-1", "[канал А] ДП-2", "[канал А] AutoRange", "[канал B] ДП-1", "[канал B] ДП-2", "[канал B] AutoRange", });        // список подключенных модулей
+
                     // Запускаем поток
                     ReadThread = new Thread(MensorReadThread);
                     ReadThread.Priority = ThreadPriority.AboveNormal;

@@ -14,17 +14,47 @@ namespace Charaterizator
     class CPascal
     {
         public bool Connected;              // флаг соединения с прибором по COM (true - есть соединение / false - нет)
-        private SerialPort Port = new SerialPort();            // переменная для работы по COM-порту
+        public SerialPort Port;            // переменная для работы по COM-порту
         private Thread ReadThreadPascal;    // поток
         string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
         public int READ_PAUSE = 50;            // задержка между приемом и передачей команд по COM порту, мс      
+        public double UserPoint = 0;
 
+        public string strData;
+        string[] Data;
 
         public bool Error = false;
-        public double press{ get; set; }    // текущее давление
+
+        public double press { get; set; }    // текущее давление
+        public int[] rangeModule { get; set; }    // текущий используемый модуль (n, m) n-внутр 1, внеш 2, m - номер модуля с единицы
+
+        public bool target { get; set; }        // уставка задана true /не задана false
         public bool modeStart { get; set; } // текущий режим установки и регулирования давление СТАРТ(true)/СТОП(false)
         public bool modeVent { get; set; }  //  ВКЛ(true)/ОТКЛ(false) вентиляции
-        public bool modeClearP { get; set; }// Обнулении показаний давления УСПЕШНО(true)/НЕ УСПЕШНО(false) вентиляции
+        public bool modeClearP { get; set; }// Обнулении показаний давления УСПЕШНО(true)/НЕ УСПЕШНО(false) 
+        public bool SetModuleOK { get; set; }// Установлен заданный модуль или нет
+
+        public List<string> ListMod = new List<string>();       // список подключенных модулей внутренныих и внешних
+        public int M1num;                                       // количество внутренних модулей
+        public int M2num;                                       // количество внешних модулей
+
+
+
+        public CPascal()
+        {
+            rangeModule = new int[2];
+            rangeModule[0] = 1;
+            rangeModule[1] = 1;
+            press = 0;
+            modeStart = false;
+            modeVent = false;
+            modeClearP = false;
+            target = false;
+            SetModuleOK = false;
+
+           Port = new SerialPort();
+        }
+
 
 
 
@@ -40,6 +70,14 @@ namespace Charaterizator
 
             try
             {
+                              
+              /* УБРАТЬ
+                strData = "M: 1 SR: 3 LRL: -100.0 URL: 700";
+                Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                               
+                rangeModule[0] = Convert.ToInt16(Data[1]);
+                rangeModule[1] = Convert.ToInt16(Data[3]);*/
+                       
                 Port.PortName = PortName;
                 Port.BaudRate = BaudRate;
                 Port.DataBits = DataBits;
@@ -81,6 +119,7 @@ namespace Charaterizator
         public int DisConnect()
         {
             Connected = false;
+            ListMod.Clear();
             if (ReadThreadPascal != null)
                 ReadThreadPascal.Abort(0);
 
@@ -103,46 +142,130 @@ namespace Charaterizator
         // возвращает: true - при успешном завершении теста / false - в обратном случае
         private bool InitDevice()
         {
+        string str;
         bool res = false;
 
             try
             {
                 Port.WriteLine("R");               // переводим прибор в режим удаленного управления
                 Thread.Sleep(READ_PAUSE);
-                string str = Port.ReadLine();
+                str = Port.ReadLine();
                 if (str == "REMOTE")
                 {
                     //Port.WriteLine("DIAGNOSTIC");  // выполняем диагностику прибора
                     //if (str == diagnostic)
                     //{
                     //}
+                    // запрашиваем список подключенных модулей
+                    Port.WriteLine("SEEK_MODUL");
+                    Thread.Sleep(READ_PAUSE);
+                    str = Port.ReadLine();
+
+                    // ожидаем три секунды для сбора информации
+                    Thread.Sleep(3000);
+
+                    // запрашиваем информацию о внутренних модулях
+                    Port.WriteLine("READ_M1?");
+                    Thread.Sleep(READ_PAUSE);
+                    str = Port.ReadLine();
+                                      
+                    str = str.Substring(2); //
+                    str = str.Replace(" [", "Внутр.модуль: ");
+                    string[] M1 = str.Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
+                    M1num = M1.Length;
+                    ListMod.AddRange(M1);
+
+                    // запрашиваем информацию о внешних модулях
+                    Port.WriteLine("READ_M2?");
+                    Thread.Sleep(READ_PAUSE);
+                    str = Port.ReadLine();
+
+                    str = str.Substring(2); //
+                    str = str.Replace(" [", "Внеш.модуль: ");
+                    string[] M2 = str.Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
+                    M2num = M2.Length;
+                    ListMod.AddRange(M2);
+                                       
                     res = true;
                 }
             }
             catch
             {
+                M1num = -1;
+                M2num = -1;
+                ListMod.Clear();
             }          
 
         return res;
         }
 
 
-       
-        // Задает уставку давления 
-        // возвращаемые значения:   нет          
-        public void SetPress(double num)
+
+        // Устанавливает текущий модуль
+        // входныет данные (n, m)
+        // n - 1 внутр, 2 - внешний модуль
+        // m - порядковый номер модуля по списку
+        public void SetModule(int n, int m)
         {
             if (Port.IsOpen)
             {
                 try
                 {
-                    // устанавливаем значение давления
-                    Port.WriteLine("TARGET<" + num + ">");
-                    Thread.Sleep(READ_PAUSE);  
+                  
+                    Port.WriteLine("RANGE " + n.ToString() + "," + m.ToString());
+                    Thread.Sleep(READ_PAUSE);
                     string str = Port.ReadLine();
+
+                    if (str == "OK")
+                    {
+                        SetModuleOK = true;
+                    }
+                    else
+                    {
+                        SetModuleOK = false;
+                    }
+
                 }
                 catch
                 {
+                    SetModuleOK = false;
+                }
+
+            }
+
+        }
+
+
+
+
+
+        // Задает уставку давления 
+        // возвращаемые значения:   нет          
+        public void SetPress(double Val)
+        {
+            if (Port.IsOpen)
+            {
+                try
+                {
+                    UserPoint = Val;
+                    // устанавливаем значение давления
+                    Port.WriteLine("TARGET<" + Val.ToString() + ">");
+                    Thread.Sleep(READ_PAUSE);  
+                    string str = Port.ReadLine();
+
+                    if (str == "OK")
+                    {
+                        target = true;
+                    }
+                    else
+                    {
+                        target = false;
+                    }
+
+                }
+                catch
+                {
+                    target = false;
                 }
 
             }         
@@ -168,16 +291,19 @@ namespace Charaterizator
                     {
                         modeStart = true;
                     }
-                    else if (str == "START_REGULATION")
+                    else if (str == "STOP_REGULATION")
                     {
                         modeStart = false;
                     }
                     else
-                    { }
+                    {
+                        modeStart = false;
+                    }
                     
                 }
                 catch
                 {
+                    modeStart = false;
                 }
 
             }
@@ -207,11 +333,14 @@ namespace Charaterizator
                         modeVent = false;
                     }
                     else
-                    { }
+                    {
+                        modeVent = false;
+                    }
 
                 }
                 catch
                 {
+                    modeVent = false;
                 }
 
             }
@@ -219,8 +348,7 @@ namespace Charaterizator
 
 
 
-        // Обнуление показаний давления в текущем модуле/диапазоне
-              
+        // Обнуление показаний давления в текущем модуле/диапазоне              
         public void SetClearP()
         {
             if (Port.IsOpen)
@@ -244,6 +372,7 @@ namespace Charaterizator
                 }
                 catch
                 {
+                    modeClearP = false;
                 }
 
             }
@@ -270,13 +399,27 @@ namespace Charaterizator
                     // считываем текущее давление
                     Port.WriteLine("PRES?");
                     Thread.Sleep(READ_PAUSE);
-                    string str = Port.ReadLine();
-                    press = float.Parse(str.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    strData = Port.ReadLine();
+                    press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+
+                    // считываем текущий используемый модуль
+                    Port.WriteLine("RANGE?");
+                    Thread.Sleep(READ_PAUSE);
+                    strData = Port.ReadLine();
+                                        
+                    Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    rangeModule[0] = Convert.ToInt16(Data[1]);
+                    rangeModule[1] = Convert.ToInt16(Data[3]);
+
 
                 }
                 catch
                 {
-                   
+                    rangeModule[0] = -1;
+                    rangeModule[1] = -1;
+                    press = -1;
+
                     Program.txtlog.WriteLineLog("Pascal: Ошибка чтения в потоке", 1);
                     Error = true;
                 }
