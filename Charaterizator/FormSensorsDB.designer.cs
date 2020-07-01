@@ -187,7 +187,7 @@
             this.Range2_Pmax.DecimalPlaces = 1;
             this.Range2_Pmax.Location = new System.Drawing.Point(365, 222);
             this.Range2_Pmax.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -206,7 +206,7 @@
             this.Range2_Pmin.DecimalPlaces = 1;
             this.Range2_Pmin.Location = new System.Drawing.Point(365, 202);
             this.Range2_Pmin.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -225,7 +225,7 @@
             this.Gain2.DecimalPlaces = 1;
             this.Gain2.Location = new System.Drawing.Point(365, 182);
             this.Gain2.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -244,7 +244,7 @@
             this.Range1_Pmax.DecimalPlaces = 1;
             this.Range1_Pmax.Location = new System.Drawing.Point(365, 162);
             this.Range1_Pmax.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -263,7 +263,7 @@
             this.Range1_Pmin.DecimalPlaces = 1;
             this.Range1_Pmin.Location = new System.Drawing.Point(365, 142);
             this.Range1_Pmin.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -282,7 +282,7 @@
             this.Gain1.DecimalPlaces = 1;
             this.Gain1.Location = new System.Drawing.Point(365, 122);
             this.Gain1.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -301,7 +301,7 @@
             this.DeltaRangeMin.DecimalPlaces = 1;
             this.DeltaRangeMin.Location = new System.Drawing.Point(365, 82);
             this.DeltaRangeMin.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -320,7 +320,7 @@
             this.Pmax.DecimalPlaces = 1;
             this.Pmax.Location = new System.Drawing.Point(365, 62);
             this.Pmax.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -339,7 +339,7 @@
             this.Pmin.DecimalPlaces = 1;
             this.Pmin.Location = new System.Drawing.Point(365, 42);
             this.Pmin.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});

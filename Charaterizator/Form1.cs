@@ -134,7 +134,8 @@ namespace Charaterizator
                 SKO_CURRENT = Properties.Settings.Default.set_SKOCurrent;                   //допуск по току ЦАП датчика до калибровки, мА
                 SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SKOCalibrationCurrent; //допуск по току ЦАП после калибровки, мА            
                 Multimetr.REZISTOR = Properties.Settings.Default.set_Rezistor;              // сопротивление резистора
-                CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;      // Не учитывать обратный ход по давлению
+                CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;      // Не учитывать обратный ход по давлени
+                CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
 
 
 
@@ -3523,6 +3524,8 @@ namespace Charaterizator
                 SKO_CALIBRATION_CURRENT = Properties.Settings.Default.set_SKOCalibrationCurrent; //допуск по току ЦАП после калибровки, мА            
                 Multimetr.REZISTOR = Properties.Settings.Default.set_Rezistor;              // сопротивление резистора
                 CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;
+                CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
+
 
                 Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
                 Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout; //таймаут ожидания ответа от мультиметра, мсек

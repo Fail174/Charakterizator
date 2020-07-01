@@ -14,7 +14,8 @@ namespace Charaterizator
     class CCalculation
     {
         public static bool flag_ObrHod;
-       
+        public static bool flag_MeanR;   // true - усреднять матрицу сопротивлений false - не усреднять
+
 
         public Matrix<double> CalculationCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx)
         {
@@ -65,19 +66,23 @@ namespace Charaterizator
 
             //-----------------------------------------------------------------------------------------------
             // ШАГ-2 - УСРЕДНЕНИЕ (ПОДГОТОВКА ДАННЫХ)
-            // Усредняем матрицу R           
+            // Если флаг true - Усредняем матрицу R        
             Matrix<double> MeanRmtx = DenseMatrix.Create(1, colsRmtx, 0);
-            double res;
-            for (int j = 0; j < colsRmtx; j++)
+            if (flag_MeanR)
             {
-                res = 0;
-                for (int i = 0; i < Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowRmtx))); i++)
+               
+                double res;
+                for (int j = 0; j < colsRmtx; j++)
                 {
-                  res = res + Rmtx.At(i, j);
+                    res = 0;
+                    for (int i = 0; i < Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(rowRmtx))); i++)
+                    {
+                        res = res + Rmtx.At(i, j);
+                    }
+                    res = res / rowRmtx;
+                    MeanRmtx[0, j] = res;
                 }
-                res = res / rowRmtx;
-                MeanRmtx[0, j] = res;
-            }
+            }         
 
 
 
@@ -128,23 +133,52 @@ namespace Charaterizator
             Matrix<double> Amtx = DenseMatrix.Create(row * cols, row * cols, 0);
             int ai = 0;
             int aj = 0;
-            for (int n = 0; n < row; n++)
+
+            if (flag_MeanR)
             {
-                for (int k = 0; k < cols; k++)
+                for (int n = 0; n < row; n++)
                 {
-                    aj = 0;
-                    for (int i = 0; i < row; i++)
+                    for (int k = 0; k < cols; k++)
                     {
-                        for (int j = 0; j < cols; j++)
-                        {                            
-                            Amtx[ai, aj] = (Math.Pow(MeanUmtx.At(n, k), i)* Math.Pow(MeanRmtx.At(0, k), j));
-                            aj = aj + 1;
+                        aj = 0;
+                        for (int i = 0; i < row; i++)
+                        {
+                            for (int j = 0; j < cols; j++)
+                            {
+                                Amtx[ai, aj] = (Math.Pow(MeanUmtx.At(n, k), i) * Math.Pow(MeanRmtx.At(0, k), j));
+                                aj = aj + 1;
+                            }
                         }
+                        ai = ai + 1;
                     }
-                    ai = ai + 1;
+                }
+
+            }
+
+            else
+            {
+                for (int n = 0; n < row; n++)
+                {
+                    for (int k = 0; k < cols; k++)
+                    {
+                        aj = 0;
+                        for (int i = 0; i < row; i++)
+                        {
+                            for (int j = 0; j < cols; j++)
+                            {
+                                Amtx[ai, aj] = (Math.Pow(MeanUmtx.At(n, k), i) * Math.Pow(Rmtx.At(n, k), j));
+                                aj = aj + 1;
+                            }
+                        }
+                        ai = ai + 1;
+                    }
                 }
             }
+
+
+             
            
+
             // Формируем матрицу C 
             int rowMP = MeanPmtx.RowCount;
             int colsMP = MeanPmtx.ColumnCount;

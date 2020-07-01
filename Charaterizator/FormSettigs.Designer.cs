@@ -603,7 +603,7 @@
             this.cbHandleMultimetr.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 289);
+            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 286);
             this.cbHandleMultimetr.Name = "cbHandleMultimetr";
             this.cbHandleMultimetr.Size = new System.Drawing.Size(101, 21);
             this.cbHandleMultimetr.TabIndex = 78;
@@ -618,7 +618,7 @@
             this.cbHandlePress.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandlePress.Location = new System.Drawing.Point(594, 269);
+            this.cbHandlePress.Location = new System.Drawing.Point(594, 266);
             this.cbHandlePress.Name = "cbHandlePress";
             this.cbHandlePress.Size = new System.Drawing.Size(101, 21);
             this.cbHandlePress.TabIndex = 77;
@@ -635,7 +635,7 @@
             // 
             // textBox36
             // 
-            this.textBox36.Location = new System.Drawing.Point(52, 289);
+            this.textBox36.Location = new System.Drawing.Point(52, 286);
             this.textBox36.Name = "textBox36";
             this.textBox36.Size = new System.Drawing.Size(544, 21);
             this.textBox36.TabIndex = 71;
@@ -644,7 +644,7 @@
             // 
             // textBox38
             // 
-            this.textBox38.Location = new System.Drawing.Point(52, 269);
+            this.textBox38.Location = new System.Drawing.Point(52, 266);
             this.textBox38.Name = "textBox38";
             this.textBox38.Size = new System.Drawing.Size(544, 21);
             this.textBox38.TabIndex = 70;
