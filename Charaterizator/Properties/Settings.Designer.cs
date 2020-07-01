@@ -755,5 +755,17 @@ namespace Charaterizator.Properties {
                 this["set_UseMensor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_MeanR {
+            get {
+                return ((bool)(this["set_MeanR"]));
+            }
+            set {
+                this["set_MeanR"] = value;
+            }
+        }
     }
 }

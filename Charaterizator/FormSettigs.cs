@@ -69,6 +69,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_SKOCalibrationCurrent = Convert.ToDouble(tb_SKOCalibrationCurrent.Value);
                 Properties.Settings.Default.set_Rezistor = Convert.ToInt32(tbRezistor.Value);
                 Properties.Settings.Default.set_flagObrHod = cb_FlagObrHod.Checked;
+                Properties.Settings.Default.set_MeanR = cb_meanR.Checked;
 
                 // 1 - Коммутатор
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
@@ -160,6 +161,7 @@ namespace Charaterizator
             tb_SKOCalibrationCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCalibrationCurrent);
             tbRezistor.Value = Properties.Settings.Default.set_Rezistor;
             cb_FlagObrHod.Checked = Properties.Settings.Default.set_flagObrHod;
+            cb_meanR.Checked = Properties.Settings.Default.set_MeanR; 
 
             // 1 - Коммутатор                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
@@ -247,5 +249,6 @@ namespace Charaterizator
         {
 
         }
+
     }
 }

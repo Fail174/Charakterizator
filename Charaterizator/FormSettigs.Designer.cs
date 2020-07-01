@@ -36,6 +36,7 @@
             this.ofdDataBase = new System.Windows.Forms.OpenFileDialog();
             this.tab_FormSettings = new System.Windows.Forms.TabControl();
             this.tp_ProgramSettings = new System.Windows.Forms.TabPage();
+            this.cb_meanR = new System.Windows.Forms.CheckBox();
             this.cb_FlagObrHod = new System.Windows.Forms.CheckBox();
             this.tbRezistor = new System.Windows.Forms.NumericUpDown();
             this.textBox28 = new System.Windows.Forms.TextBox();
@@ -90,6 +91,9 @@
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.tp_MensorSettings = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rb_usePascal = new System.Windows.Forms.RadioButton();
+            this.rb_useMensor = new System.Windows.Forms.RadioButton();
             this.tbMensorMaxCountPoint = new System.Windows.Forms.NumericUpDown();
             this.tbMensorSKOPressure = new System.Windows.Forms.NumericUpDown();
             this.textBox19 = new System.Windows.Forms.TextBox();
@@ -131,9 +135,6 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rb_useMensor = new System.Windows.Forms.RadioButton();
-            this.rb_usePascal = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -158,6 +159,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadPeriod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadCount)).BeginInit();
             this.tp_MensorSettings.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorMaxCountPoint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorSKOPressure)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorReadPause)).BeginInit();
@@ -168,7 +170,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -176,7 +177,7 @@
             this.groupBox1.Controls.Add(this.btnOpenFile);
             this.groupBox1.Controls.Add(this.tbPathFile);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(23, 293);
+            this.groupBox1.Location = new System.Drawing.Point(23, 302);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(703, 78);
             this.groupBox1.TabIndex = 3;
@@ -244,6 +245,7 @@
             // 
             // tp_ProgramSettings
             // 
+            this.tp_ProgramSettings.Controls.Add(this.cb_meanR);
             this.tp_ProgramSettings.Controls.Add(this.cb_FlagObrHod);
             this.tp_ProgramSettings.Controls.Add(this.tbRezistor);
             this.tp_ProgramSettings.Controls.Add(this.textBox28);
@@ -277,10 +279,20 @@
             this.tp_ProgramSettings.Text = "Настройки программы";
             this.tp_ProgramSettings.UseVisualStyleBackColor = true;
             // 
+            // cb_meanR
+            // 
+            this.cb_meanR.AutoSize = true;
+            this.cb_meanR.Location = new System.Drawing.Point(52, 247);
+            this.cb_meanR.Name = "cb_meanR";
+            this.cb_meanR.Size = new System.Drawing.Size(432, 19);
+            this.cb_meanR.TabIndex = 99;
+            this.cb_meanR.Text = "Усреднять измеренные сопротивления при расчете коэффициентов";
+            this.cb_meanR.UseVisualStyleBackColor = true;
+            // 
             // cb_FlagObrHod
             // 
             this.cb_FlagObrHod.AutoSize = true;
-            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 222);
+            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 225);
             this.cb_FlagObrHod.Name = "cb_FlagObrHod";
             this.cb_FlagObrHod.Size = new System.Drawing.Size(446, 19);
             this.cb_FlagObrHod.TabIndex = 98;
@@ -591,7 +603,7 @@
             this.cbHandleMultimetr.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 261);
+            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 289);
             this.cbHandleMultimetr.Name = "cbHandleMultimetr";
             this.cbHandleMultimetr.Size = new System.Drawing.Size(101, 21);
             this.cbHandleMultimetr.TabIndex = 78;
@@ -606,7 +618,7 @@
             this.cbHandlePress.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandlePress.Location = new System.Drawing.Point(594, 241);
+            this.cbHandlePress.Location = new System.Drawing.Point(594, 269);
             this.cbHandlePress.Name = "cbHandlePress";
             this.cbHandlePress.Size = new System.Drawing.Size(101, 21);
             this.cbHandlePress.TabIndex = 77;
@@ -623,7 +635,7 @@
             // 
             // textBox36
             // 
-            this.textBox36.Location = new System.Drawing.Point(52, 261);
+            this.textBox36.Location = new System.Drawing.Point(52, 289);
             this.textBox36.Name = "textBox36";
             this.textBox36.Size = new System.Drawing.Size(544, 21);
             this.textBox36.TabIndex = 71;
@@ -632,7 +644,7 @@
             // 
             // textBox38
             // 
-            this.textBox38.Location = new System.Drawing.Point(52, 241);
+            this.textBox38.Location = new System.Drawing.Point(52, 269);
             this.textBox38.Name = "textBox38";
             this.textBox38.Size = new System.Drawing.Size(544, 21);
             this.textBox38.TabIndex = 70;
@@ -1071,6 +1083,39 @@
             this.tp_MensorSettings.TabIndex = 3;
             this.tp_MensorSettings.Text = "Задатчик давления";
             this.tp_MensorSettings.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rb_usePascal);
+            this.groupBox2.Controls.Add(this.rb_useMensor);
+            this.groupBox2.Location = new System.Drawing.Point(52, 177);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(643, 64);
+            this.groupBox2.TabIndex = 104;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = " Выбор типа используемого задатчика давления: ";
+            // 
+            // rb_usePascal
+            // 
+            this.rb_usePascal.AutoSize = true;
+            this.rb_usePascal.Location = new System.Drawing.Point(8, 38);
+            this.rb_usePascal.Name = "rb_usePascal";
+            this.rb_usePascal.Size = new System.Drawing.Size(137, 19);
+            this.rb_usePascal.TabIndex = 1;
+            this.rb_usePascal.TabStop = true;
+            this.rb_usePascal.Text = "Паскаль (Элметро)";
+            this.rb_usePascal.UseVisualStyleBackColor = true;
+            // 
+            // rb_useMensor
+            // 
+            this.rb_useMensor.AutoSize = true;
+            this.rb_useMensor.Location = new System.Drawing.Point(8, 17);
+            this.rb_useMensor.Name = "rb_useMensor";
+            this.rb_useMensor.Size = new System.Drawing.Size(70, 19);
+            this.rb_useMensor.TabIndex = 0;
+            this.rb_useMensor.TabStop = true;
+            this.rb_useMensor.Text = "Менсор";
+            this.rb_useMensor.UseVisualStyleBackColor = true;
             // 
             // tbMensorMaxCountPoint
             // 
@@ -1553,39 +1598,6 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rb_usePascal);
-            this.groupBox2.Controls.Add(this.rb_useMensor);
-            this.groupBox2.Location = new System.Drawing.Point(52, 177);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(643, 64);
-            this.groupBox2.TabIndex = 104;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = " Выбор типа используемого задатчика давления: ";
-            // 
-            // rb_useMensor
-            // 
-            this.rb_useMensor.AutoSize = true;
-            this.rb_useMensor.Location = new System.Drawing.Point(8, 17);
-            this.rb_useMensor.Name = "rb_useMensor";
-            this.rb_useMensor.Size = new System.Drawing.Size(70, 19);
-            this.rb_useMensor.TabIndex = 0;
-            this.rb_useMensor.TabStop = true;
-            this.rb_useMensor.Text = "Менсор";
-            this.rb_useMensor.UseVisualStyleBackColor = true;
-            // 
-            // rb_usePascal
-            // 
-            this.rb_usePascal.AutoSize = true;
-            this.rb_usePascal.Location = new System.Drawing.Point(8, 38);
-            this.rb_usePascal.Name = "rb_usePascal";
-            this.rb_usePascal.Size = new System.Drawing.Size(137, 19);
-            this.rb_usePascal.TabIndex = 1;
-            this.rb_usePascal.TabStop = true;
-            this.rb_usePascal.Text = "Паскаль (Элметро)";
-            this.rb_usePascal.UseVisualStyleBackColor = true;
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1628,6 +1640,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadCount)).EndInit();
             this.tp_MensorSettings.ResumeLayout(false);
             this.tp_MensorSettings.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorMaxCountPoint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorSKOPressure)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMensorReadPause)).EndInit();
@@ -1640,8 +1654,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensWaitPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1754,5 +1766,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton rb_usePascal;
         private System.Windows.Forms.RadioButton rb_useMensor;
+        private System.Windows.Forms.CheckBox cb_meanR;
     }
 }
