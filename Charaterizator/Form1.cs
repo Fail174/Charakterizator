@@ -38,7 +38,7 @@ namespace Charaterizator
 		);*/
 
         // Занесены в настройку
-        public int MAIN_TIMER = 1000;        
+        public int MAIN_TIMER = 1000;
         private int MAX_ERROR_COUNT = 3; //Количество ошибок чтения данных с устройств перед отключением
         private double MIN_SENSOR_CURRENT = 1.5;//минимльный ток датчика для обнаружения, мА
         private int MAX_COUNT_CAP_READ = 3;//максимальное количество циклов чтения тока ЦАП
@@ -47,7 +47,7 @@ namespace Charaterizator
 
         private static int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
         private static int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
-       
+
         private int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
         private double SKO_PRESSURE = 0.2;  //(СКО) допуск по давлению, кПа
 
@@ -68,7 +68,7 @@ namespace Charaterizator
         byte ok = 5;        // исправность
 
         private int MensorCountPoint = 0;// счетчик для уставки (выдержки) давления в датчиках - для установки зелены цветом 
-        
+
         public static int SettingsSelIndex { set; get; }
 
 
@@ -114,7 +114,7 @@ namespace Charaterizator
             InitializeComponent();
             Thread t = new Thread(new ThreadStart(LoadScreen));
             t.Start();
-//            Focus();
+            //            Focus();
             Thread.Sleep(2000);
 
 
@@ -156,7 +156,7 @@ namespace Charaterizator
                 UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
 
 
-                MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint/MAIN_TIMER+1;      //ожидание стабилизации давления в датчике, в циклах таймера
+                MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint / MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
 
 
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
@@ -200,9 +200,9 @@ namespace Charaterizator
         public void LoadScreen()
         {
             FormLoad fm = new FormLoad();
-//            fm.Show();
-//            while (!FormLoaded)
-//                Application.DoEvents();
+            //            fm.Show();
+            //            while (!FormLoaded)
+            //                Application.DoEvents();
             Application.Run(fm);
         }
 
@@ -470,7 +470,7 @@ namespace Charaterizator
                     Properties.Settings.Default.COMMensor_Speed,
                     Properties.Settings.Default.COMMensor_DataBits,
                     Properties.Settings.Default.COMMensor_StopBits,
-                    Properties.Settings.Default.COMMensor_Parity) >= 0)                   
+                    Properties.Settings.Default.COMMensor_Parity) >= 0)
                 {
                     btnMensor.BackColor = Color.Green;
                     btnMensor.Text = "Подключен";
@@ -493,7 +493,7 @@ namespace Charaterizator
 
         }
 
-      
+
 
 
         // Обработка нажатия кнопки управления КОММУТАТОРОМ
@@ -517,7 +517,7 @@ namespace Charaterizator
         // Открываем окно с интерфейсом МЕНСОРА
         private void btnFormMensor_Click(object sender, EventArgs e)
         {
-            if ((Mensor != null)&&(UseMensor))
+            if ((Mensor != null) && (UseMensor))
             {
 
                 Mensor.MenStartTimer();
@@ -666,7 +666,7 @@ namespace Charaterizator
                         ci++;
                         Application.DoEvents();
 
-                    } while ((Math.Abs(I4-4.0) > SKO_CURRENT) && (ci< MAX_COUNT_CAP_READ));
+                    } while ((Math.Abs(I4 - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
                     ci = 0;
                     do
@@ -727,7 +727,7 @@ namespace Charaterizator
             int ci = 0;
             int cc = 0;
             float I4 = 0;
-            float I20=0;
+            float I20 = 0;
 
             Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 2);
             for (int i = 0; i < MaxChannalCount; i++)
@@ -810,7 +810,7 @@ namespace Charaterizator
 
                         sensors.С46WriteCurrent20mA(I20);//Калибруем...
                         Program.txtlog.WriteLineLog("CL:Выполняем калибровку ЦАП 20мА...", 0);
-                        
+
                         ci = 0;
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
@@ -835,7 +835,7 @@ namespace Charaterizator
 
                     } while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (cc < MAX_CALIBRATION_COUNT));
 
-                    if ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT)&& (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT))
+                    if ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT))
                     {
                         Program.txtlog.WriteLineLog("CL: Значение тока ЦАП вне допуска. Калибровка не выполнена!", 1);
                     }
@@ -881,13 +881,13 @@ namespace Charaterizator
                 isSensorRead = true;
 
                 string str = cbChannalCharakterizator.Text.Remove(0, 6);
-                int i = Convert.ToInt32(str)-1;
+                int i = Convert.ToInt32(str) - 1;
 
                 //                int i = cbChannalCharakterizator.SelectedIndex;
 
                 if ((i < 0) || !CheckChannalEnable(i)) return;//Если канал не выбран пропускаем обработку
 
-                if (Commutator.ActivCH != i+1)
+                if (Commutator.ActivCH != i + 1)
                     Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
@@ -923,7 +923,7 @@ namespace Charaterizator
         {
             int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount-1;   //конечный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
             int Diapazon;
             if (cbDiapazon1.Text != "")
             {
@@ -937,30 +937,30 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
-/*            int step = MaxChannalCount / MaxLevelCount;
-            switch (SelectedLevel)
-            {
-                case 1:
-                    StartNumber = 0;
-                    FinishNumber = step - 1;
-                    Diapazon = Convert.ToInt32(cbDiapazon1.Text);
-                    break;
-                case 2:
-                    StartNumber = step;
-                    FinishNumber = step * 2 - 1;
-                    Diapazon = Convert.ToInt32(cbDiapazon2.Text);
-                    break;
-                case 3:
-                    StartNumber = step * 2;
-                    FinishNumber = step * 3 - 1;
-                    Diapazon = Convert.ToInt32(cbDiapazon3.Text);
-                    break;
-                case 4:
-                    StartNumber = step * 3;
-                    FinishNumber = step * 4 - 1;
-                    Diapazon = Convert.ToInt32(cbDiapazon4.Text);
-                    break;
-            }*/
+            /*            int step = MaxChannalCount / MaxLevelCount;
+                        switch (SelectedLevel)
+                        {
+                            case 1:
+                                StartNumber = 0;
+                                FinishNumber = step - 1;
+                                Diapazon = Convert.ToInt32(cbDiapazon1.Text);
+                                break;
+                            case 2:
+                                StartNumber = step;
+                                FinishNumber = step * 2 - 1;
+                                Diapazon = Convert.ToInt32(cbDiapazon2.Text);
+                                break;
+                            case 3:
+                                StartNumber = step * 2;
+                                FinishNumber = step * 3 - 1;
+                                Diapazon = Convert.ToInt32(cbDiapazon3.Text);
+                                break;
+                            case 4:
+                                StartNumber = step * 3;
+                                FinishNumber = step * 4 - 1;
+                                Diapazon = Convert.ToInt32(cbDiapazon4.Text);
+                                break;
+                        }*/
             //************************************************************************************************
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
@@ -983,7 +983,7 @@ namespace Charaterizator
                     int ch = 0;
                     do
                     {
-                        readresult =  sensors.SensorValueReadC03();
+                        readresult = sensors.SensorValueReadC03();
                         Application.DoEvents();
                         ch++;
                     } while ((!sensors.ValidateSensorParam()) && (ch < sensors.WRITE_COUNT));
@@ -1078,7 +1078,7 @@ namespace Charaterizator
                             c_row = 0;
                         }
                         val = ResultCH.Channal[i].Points[j].Temperature;
-                        mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure/Diapazon;
+                        mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure / Diapazon;
                         mtxR[c_row, c_cols] = ResultCH.Channal[i].Points[j].Resistance;
                         mtxU[c_row, c_cols] = ResultCH.Channal[i].Points[j].OutVoltage;
                         //mtxP[c_cols, c_row] = ResultCH.Channal[i].Points[j].Pressure / Diapazon;
@@ -1108,19 +1108,19 @@ namespace Charaterizator
 
                     //try
                     //{
-                        Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Unew, Pnew);
-                        if (ResulCoefmtx.RowCount != 24)
-                        {
-                            Program.txtlog.WriteLineLog("CH: Количество точек при характеризация не равно 24.", 1);
-                            continue;
-                        }
-                        Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
-                        for (int j = 0; j < ResulCoefmtx.RowCount; j++)
-                        {
-                            Program.txtlog.WriteLineLog("Коэффициент "+ (j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
-                            if (j < 24)
-                                sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
-                        }
+                    Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Unew, Pnew);
+                    if (ResulCoefmtx.RowCount != 24)
+                    {
+                        Program.txtlog.WriteLineLog("CH: Количество точек при характеризация не равно 24.", 1);
+                        continue;
+                    }
+                    Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
+                    for (int j = 0; j < ResulCoefmtx.RowCount; j++)
+                    {
+                        Program.txtlog.WriteLineLog("Коэффициент " + (j + 1).ToString() + ": " + ResulCoefmtx.At(j, 0), 0);
+                        if (j < 24)
+                            sensors.sensor.Coefficient[j] = Convert.ToSingle(ResulCoefmtx.At(j, 0));
+                    }
                     /*}
                     catch
                     {
@@ -1179,7 +1179,7 @@ namespace Charaterizator
         {
             int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount-1;   //конечный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
             float VPI, NPI;
             VPI = Convert.ToSingle(nud_VR_VPI.Value);
             NPI = Convert.ToSingle(nud_VR_NPI.Value);
@@ -1187,30 +1187,30 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранных датчиков ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
- /*           int step = MaxChannalCount / MaxLevelCount;
-            switch (SelectedLevel)
-            {
-                case 1:
-                    StartNumber = 0;
-                    FinishNumber = step - 1;
-                    Diapazon = Convert.ToInt32(cbVRDiapazon1.Text);
-                    break;
-                case 2:
-                    StartNumber = step;
-                    FinishNumber = step * 2 - 1;
-                    Diapazon = Convert.ToInt32(cbVRDiapazon2.Text);
-                    break;
-                case 3:
-                    StartNumber = step * 2;
-                    FinishNumber = step * 3 - 1;
-                    Diapazon = Convert.ToInt32(cbVRDiapazon3.Text);
-                    break;
-                case 4:
-                    StartNumber = step * 3;
-                    FinishNumber = step * 4 - 1;
-                    Diapazon = Convert.ToInt32(cbVRDiapazon4.Text);
-                    break;
-            }*/
+            /*           int step = MaxChannalCount / MaxLevelCount;
+                       switch (SelectedLevel)
+                       {
+                           case 1:
+                               StartNumber = 0;
+                               FinishNumber = step - 1;
+                               Diapazon = Convert.ToInt32(cbVRDiapazon1.Text);
+                               break;
+                           case 2:
+                               StartNumber = step;
+                               FinishNumber = step * 2 - 1;
+                               Diapazon = Convert.ToInt32(cbVRDiapazon2.Text);
+                               break;
+                           case 3:
+                               StartNumber = step * 2;
+                               FinishNumber = step * 3 - 1;
+                               Diapazon = Convert.ToInt32(cbVRDiapazon3.Text);
+                               break;
+                           case 4:
+                               StartNumber = step * 3;
+                               FinishNumber = step * 4 - 1;
+                               Diapazon = Convert.ToInt32(cbVRDiapazon4.Text);
+                               break;
+                       }*/
             //************************************************************************************************
 
             pbVRProcess.Maximum = FinishNumber - StartNumber;
@@ -1261,7 +1261,7 @@ namespace Charaterizator
                             }
                         }
 
-//                        UpDateVerificationGrid(i);
+                        //                        UpDateVerificationGrid(i);
                         Program.txtlog.WriteLineLog("VR: Выполнено чтение параметров датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
@@ -1305,7 +1305,7 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    if (sensors.С35WriteVPI_NPI(VPI,NPI))
+                    if (sensors.С35WriteVPI_NPI(VPI, NPI))
                     {
                         Program.txtlog.WriteLineLog("VR: Выполнена запись НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
                     }
@@ -1373,11 +1373,21 @@ namespace Charaterizator
         private void UpDateCharakterizatorGrid(int i)
         {
             dataGridView2.Rows.Clear();
-            if ((ResultCH == null) || (ResultCH.Channal.Count <= i) || (i<0) || (ResultCH.Channal[i].Points.Count <= 0))
+            if ((ResultCH == null) || (ResultCH.Channal.Count <= i) || (i < 0) || (ResultCH.Channal[i].Points.Count <= 0))
             {
                 Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1);
                 return;
             }
+            double P, Pmax=0, V, Vmax=0, V0=0;
+            for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
+            {
+                P = ResultCH.Channal[i].Points[j].Pressure;
+                if (P > Pmax) Pmax = P;
+                V = ResultCH.Channal[i].Points[j].OutVoltage;
+                if (V > Vmax) Vmax = V;
+                if (P <= 0.1) V0 = V;
+            }
+
             for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
                 dataGridView2.Rows.Add(j + 1, "", "", "", "", "", "");
@@ -1387,12 +1397,30 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[6].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
+                dataGridView2.Rows[j].Cells[7].Value = CalcPressDeviation(ResultCH.Channal[i].Points[j].Pressure, ResultCH.Channal[i].Points[j].OutVoltage, Vmax, V0, Pmax);
             }
+
             dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
             dataGridView2.ClearSelection();
             dataGridView2.Rows[0].Selected = true;
-//            dataGridView2.Rows[0].Cells[0].Selected = true;
+            //            dataGridView2.Rows[0].Cells[0].Selected = true;
             //dataGridView2.FirstDisplayedCell = dataGridView2.Rows[0].Cells[0];
+        }
+
+
+        private double CalcPressDeviation(double Press, double V, double Vmax, double V0, double Pmax)
+        {
+            double Vd = Vmax - V0;
+            double Vr = V0+Vd*Press/Pmax;
+            if (Vd != 0)
+            {
+                return (V - Vr) * 100 / Vd;
+            }
+            else
+            {
+                return 0;
+            }
+
         }
 
         //обновляем грид результатов верификации для датчика в канале i

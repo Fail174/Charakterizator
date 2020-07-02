@@ -1126,7 +1126,7 @@
             0});
             this.tbMensorMaxCountPoint.Location = new System.Drawing.Point(595, 95);
             this.tbMensorMaxCountPoint.Maximum = new decimal(new int[] {
-            20000,
+            2000000,
             0,
             0,
             0});
