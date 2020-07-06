@@ -94,5 +94,65 @@ namespace SensorProgrammer.Properties {
                 this["DBfileName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
+        public int COMSensor_Speed {
+            get {
+                return ((int)(this["COMSensor_Speed"]));
+            }
+            set {
+                this["COMSensor_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM2")]
+        public string COMSensor {
+            get {
+                return ((string)(this["COMSensor"]));
+            }
+            set {
+                this["COMSensor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMSensor_DataBits {
+            get {
+                return ((int)(this["COMSensor_DataBits"]));
+            }
+            set {
+                this["COMSensor_DataBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMSensor_StopBits {
+            get {
+                return ((int)(this["COMSensor_StopBits"]));
+            }
+            set {
+                this["COMSensor_StopBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMSensor_Parity {
+            get {
+                return ((int)(this["COMSensor_Parity"]));
+            }
+            set {
+                this["COMSensor_Parity"] = value;
+            }
+        }
     }
 }

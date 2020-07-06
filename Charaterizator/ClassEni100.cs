@@ -118,13 +118,13 @@ namespace Charaterizator
             switch (devType)
             { 
                 case 0xCC:
-                    return "ЭнИ - 100";
+                    return "ЭНИ-100";
                 case 0xCD:
-                    return "ЭнИ-12";
+                    return "ЭНИ-12";
                 case 0xCE:
-                    return "ЭнИ-100-ЖК2";
+                    return "ЭНИ-100-ЖК2";
                 case 0xCF:
-                    return "ЭнИ-12М";
+                    return "ЭНИ-12М";
                 default:
                     return "не определено";
             }
@@ -1349,7 +1349,6 @@ namespace Charaterizator
                 }
                 catch (TimeoutException)
                 {
-//                    Console.WriteLine("Превышен таймаут на чтение данных с датчиков!\n");
                     Program.txtlog.WriteLineLog("HART: Ошибка чтения порта датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
                 }
             }

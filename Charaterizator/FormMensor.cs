@@ -938,10 +938,12 @@ namespace Charaterizator
             try
             {
                 UserPoint = Val;
-                _serialPort_M.WriteLine("SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val).Replace(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, "."));
+                string str = "SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val).Replace(",", ".");
+                _serialPort_M.WriteLine(str);
+                //_serialPort_M.WriteLine("SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val).Replace(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, "."));
                 //toolStripStatusLabel1.Text = ("SEND: " + "SOUR:PRES:LEV:IMM:AMPL " + Convert.ToString(Val));
 
-               
+
             }
             catch
             {

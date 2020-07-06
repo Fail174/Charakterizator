@@ -514,7 +514,7 @@ namespace Charaterizator
         //    VerPressPoint2    - Массив точек по давл. 2-го диапазона - для верификации
 
 
-        public string GetDataSensors(string strModel, string strField)
+        public string GetDataSensors(string strModel, int iField)
         {
             string strValue = "-1";
 
@@ -522,15 +522,18 @@ namespace Charaterizator
             {
                 try
                 {
-                  
+                    //string query = "SELECT * FROM TSensors WHERE Type = '" + type + "' AND Model = '" + model + "'";
+
+
                     // текст запроса
-                    string query = "SELECT '" + strField + "' FROM TSensors WHERE Model = '" + strModel + "'";
+                    //string query = "SELECT '" + strField + "' FROM TSensors WHERE Model = '" + strModel + "'";
+                    string query = "SELECT * FROM TSensors WHERE Model = " + "'" + strModel + "'";
                     // создаем объект OleDbCommand для выполнения запроса к БД MS Access
                     command = new OleDbCommand(query, _сonnection);
                     // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
                     reader = command.ExecuteReader();
                     reader.Read();
-                    strValue = reader[0].ToString();                   
+                    strValue = reader[iField].ToString();                   
                 }
 
                 catch
@@ -553,7 +556,7 @@ namespace Charaterizator
         // при ее вызове необходимо кроме номера модели датчика и названия запрашиваемого параметра, передавать тип датчика
         public string GetDataSensors(string strType, string strModel, string strField)
         {
-            string strValue = "-1";
+            string strValue = "-2";
 
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
@@ -584,7 +587,7 @@ namespace Charaterizator
                         reader.Close();
                 }
             }
-            if (strValue == "") strValue = "-1";
+            if (strValue == "") strValue = "-3";
             return strValue;
         }
 

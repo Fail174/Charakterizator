@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bCommutator = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbModel = new System.Windows.Forms.ComboBox();
@@ -48,9 +48,11 @@
             this.sensParamName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sensParamValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
+            this.rtbCons = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwMainWindow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSensParam)).BeginInit();
@@ -62,9 +64,9 @@
             // 
             this.bCommutator.BackColor = System.Drawing.Color.ForestGreen;
             this.bCommutator.ForeColor = System.Drawing.SystemColors.Window;
-            this.bCommutator.Location = new System.Drawing.Point(218, 19);
+            this.bCommutator.Location = new System.Drawing.Point(164, 19);
             this.bCommutator.Name = "bCommutator";
-            this.bCommutator.Size = new System.Drawing.Size(192, 30);
+            this.bCommutator.Size = new System.Drawing.Size(113, 43);
             this.bCommutator.TabIndex = 0;
             this.bCommutator.Text = "Коммутатор: ПОДКЛЮЧЕН";
             this.bCommutator.UseVisualStyleBackColor = false;
@@ -134,8 +136,8 @@
             // 
             // dgwChannal
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgwChannal.HeaderText = "Канал";
             this.dgwChannal.Name = "dgwChannal";
             this.dgwChannal.ReadOnly = true;
@@ -180,7 +182,7 @@
             this.bDataBase.ForeColor = System.Drawing.SystemColors.Window;
             this.bDataBase.Location = new System.Drawing.Point(11, 19);
             this.bDataBase.Name = "bDataBase";
-            this.bDataBase.Size = new System.Drawing.Size(192, 30);
+            this.bDataBase.Size = new System.Drawing.Size(138, 43);
             this.bDataBase.TabIndex = 2;
             this.bDataBase.Text = "База Данных: ПОДКЛЮЧЕНА";
             this.bDataBase.UseVisualStyleBackColor = false;
@@ -191,7 +193,7 @@
             this.bBurn.BackColor = System.Drawing.Color.LightCoral;
             this.bBurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bBurn.ForeColor = System.Drawing.SystemColors.Window;
-            this.bBurn.Location = new System.Drawing.Point(10, 276);
+            this.bBurn.Location = new System.Drawing.Point(10, 269);
             this.bBurn.Name = "bBurn";
             this.bBurn.Size = new System.Drawing.Size(403, 40);
             this.bBurn.TabIndex = 5;
@@ -203,7 +205,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 57);
+            this.label1.Location = new System.Drawing.Point(12, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 6;
@@ -217,16 +219,16 @@
             this.dgwSensParam.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sensParamName,
             this.sensParamValue});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgwSensParam.Enabled = false;
-            this.dgwSensParam.Location = new System.Drawing.Point(10, 24);
+            this.dgwSensParam.Location = new System.Drawing.Point(10, 21);
             this.dgwSensParam.Name = "dgwSensParam";
             this.dgwSensParam.ReadOnly = true;
             this.dgwSensParam.RowHeadersVisible = false;
@@ -244,8 +246,8 @@
             // 
             // sensParamValue
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle5;
             this.sensParamValue.HeaderText = "Значение";
             this.sensParamValue.Name = "sensParamValue";
             this.sensParamValue.ReadOnly = true;
@@ -255,23 +257,37 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rtbCons);
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.bDataBase);
             this.groupBox1.Controls.Add(this.bCommutator);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(467, 10);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(421, 79);
+            this.groupBox1.Size = new System.Drawing.Size(421, 94);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Управление подключением ";
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.button1.ForeColor = System.Drawing.SystemColors.Window;
+            this.button1.Location = new System.Drawing.Point(295, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(118, 43);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Датчики: ПОДКЛЮЧЕНЫ";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgwSensParam);
             this.groupBox2.Controls.Add(this.bBurn);
-            this.groupBox2.Location = new System.Drawing.Point(467, 98);
+            this.groupBox2.Location = new System.Drawing.Point(467, 110);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(423, 329);
+            this.groupBox2.Size = new System.Drawing.Size(423, 317);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Индивидуальные параметры датчика ";
@@ -292,6 +308,15 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "Не дышите, датчики прошиваются...";
             this.label2.Visible = false;
+            // 
+            // rtbCons
+            // 
+            this.rtbCons.Location = new System.Drawing.Point(351, 72);
+            this.rtbCons.Name = "rtbCons";
+            this.rtbCons.Size = new System.Drawing.Size(64, 16);
+            this.rtbCons.TabIndex = 8;
+            this.rtbCons.Text = "";
+            this.rtbCons.Visible = false;
             // 
             // FormSensorProgrammer
             // 
@@ -340,6 +365,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn sensParamName;
         private System.Windows.Forms.DataGridViewTextBoxColumn sensParamValue;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox rtbCons;
     }
 }
 

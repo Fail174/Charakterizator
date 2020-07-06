@@ -26,7 +26,7 @@ namespace SensorProgrammer
         // Объекты классов из characterizator 
         private FormSwitch Commutator = new FormSwitch();
         private ClassEni100 sensors = new ClassEni100(30 / 1);
-        public ClassEni100 eni100 = null;
+        //public ClassEni100 eni100 = null;
 
         // Структура с параметрами датчика из БД
         struct SensParam
@@ -56,7 +56,6 @@ namespace SensorProgrammer
             public FormSensorProgrammer()
         {
             InitializeComponent();
-            eni100 = sensors;
         }
 
 
@@ -80,6 +79,8 @@ namespace SensorProgrammer
                 SetdgwMainWindow(); // первоначальное заполенение dgwMainWindow
                 FilldwgSensParam(); // отображение окна с параметрами датчиков
             }
+
+            
         }
 
 
@@ -248,6 +249,8 @@ namespace SensorProgrammer
                     Properties.Settings.Default.COMdataBits,
                     Properties.Settings.Default.COMstopBits,
                     Properties.Settings.Default.COMparity);
+
+
             if (newForm.ShowDialog() == DialogResult.OK)
             {
                 Properties.Settings.Default.COMname = newForm.GetPortName();
@@ -392,7 +395,7 @@ namespace SensorProgrammer
                 try
                 {
                     Int64 serial = Convert.ToInt64(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-                    if ((e.RowIndex == 0) && (serial != 0))  // если задали сер.номер в первой ячейки прописываем его инкрементацией во все остальные строки
+                    if (serial != 0)  // если задали сер.номер в первой ячейки прописываем его инкрементацией во все остальные строки
                     {
                         for (i = 1; i < 30; i++)
                         {
@@ -605,19 +608,26 @@ namespace SensorProgrammer
                     Commutator.SetConnectors(i, 0);
 
                     //(BurnSensors(string Serial, string Pmin, string Pmax, string DeltaRangeMin, string Model)
-                    string Serial = dgwMainWindow.Rows[i].Cells[4].Value.ToString();                  
+                    string Serial = dgwMainWindow.Rows[i].Cells[4].Value.ToString();
 
-                    if (BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model) == 1)
+                    if (sensors.SeachSensor(i))//поиск датчиков по HART
                     {
+                        if (sensors.SelectSensor(i))//выбор обнаруженного датчика
+                        {//датчик найден, обновляем таблицу
 
+                            if (BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model) == 1)
+                            {
+
+                            }
+                            else
+                            {
+                                label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
+                                MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                resBurn = false;
+                                break;
+                            }
+                        }
                     }
-                    else
-                    {
-                        label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + i;
-                        MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + i, "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        resBurn = false;
-                        break;
-                    }                  
                     progressBar.PerformStep();
                 }
                 
@@ -643,29 +653,29 @@ namespace SensorProgrammer
         {
             try
             {
-                if ((eni100 != null) && (eni100.IsConnect()))
+                if ((sensors != null) && (sensors.IsConnect()))
                 {
-                    eni100.sensor.SerialNumber = Convert.ToUInt32(Serial);
-                    eni100.sensor.DownLevel = Convert.ToSingle(Pmin);
-                    eni100.sensor.UpLevel = Convert.ToSingle(Pmax);
-                    eni100.sensor.MinLevel = Convert.ToSingle(DeltaRangeMin);
+                    sensors.sensor.SerialNumber = Convert.ToUInt32(Serial);
+                    sensors.sensor.DownLevel = Convert.ToSingle(Pmin);
+                    sensors.sensor.UpLevel = Convert.ToSingle(Pmax);
+                    sensors.sensor.MinLevel = Convert.ToSingle(DeltaRangeMin);
 
-                    char[] str = Model.ToCharArray(); ;
-                    for (int i = 0; i < eni100.sensor.PressureModel.Length; i++)
+                    char[] str = Model.ToCharArray();
+                    for (int i = 0; i < sensors.sensor.PressureModel.Length; i++)
                     {
                         if (str.Length > i)
                         {
-                            eni100.sensor.PressureModel[i] = str[i];
+                            sensors.sensor.PressureModel[i] = str[i];
                         }
                         else
                         {
-                            eni100.sensor.PressureModel[i] = ' ';
+                            sensors.sensor.PressureModel[i] = ' ';
                         }
                     }
-                    eni100.EnterServis();
-                    eni100.WriteSerialNumberC49();      //серийный номер
-                    eni100.UpDownWriteC249();           //дипазон 
-                    eni100.C241WritePressureModel();    //модель ПД
+                    sensors.EnterServis();
+                    sensors.WriteSerialNumberC49();      //серийный номер
+                    sensors.UpDownWriteC249();           //дипазон 
+                    sensors.C241WritePressureModel();    //модель ПД
 
                     return 1;
                 }
@@ -699,5 +709,47 @@ namespace SensorProgrammer
             }
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
+            {
+                FormPortSettings newForm = new FormPortSettings();
+                newForm.InitPortsettings(Properties.Settings.Default.COMSensor,
+                    Properties.Settings.Default.COMSensor_Speed,
+                    Properties.Settings.Default.COMSensor_DataBits,
+                    Properties.Settings.Default.COMSensor_StopBits,
+                    Properties.Settings.Default.COMSensor_Parity);
+
+                if (newForm.ShowDialog() == DialogResult.OK)
+                {
+                    Properties.Settings.Default.COMSensor = newForm.GetPortName();
+                    Properties.Settings.Default.COMSensor_Speed = newForm.GetPortSpeed();
+                    Properties.Settings.Default.COMSensor_DataBits = newForm.GetPortDataBits();
+                    Properties.Settings.Default.COMSensor_StopBits = newForm.GetPortStopBits();
+                    Properties.Settings.Default.COMSensor_Parity = newForm.GetPortParity();
+                    Properties.Settings.Default.Save();  // Сохраняем переменные.
+                }
+            }
+
+            if (sensors.Connect(Properties.Settings.Default.COMSensor,
+                  Properties.Settings.Default.COMSensor_Speed,
+                  Properties.Settings.Default.COMSensor_DataBits,
+                  Properties.Settings.Default.COMSensor_StopBits,
+                  Properties.Settings.Default.COMSensor_Parity) >= 0)
+            {
+                button1.BackColor = Color.Green;
+            }
+
+            else
+            {
+                button1.BackColor = Color.Red;
+            }
+
+
+
+        }
+
+
     }      
 }

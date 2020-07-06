@@ -20,5 +20,20 @@
     <Setting Name="DBfileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\\Work\\Charakterizator_SP\\Charaterizator\\SensorsDB\\Sensors.mdb</Value>
     </Setting>
+    <Setting Name="COMSensor_Speed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1200</Value>
+    </Setting>
+    <Setting Name="COMSensor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM2</Value>
+    </Setting>
+    <Setting Name="COMSensor_DataBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="COMSensor_StopBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="COMSensor_Parity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
