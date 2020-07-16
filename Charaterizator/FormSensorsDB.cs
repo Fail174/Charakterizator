@@ -137,10 +137,10 @@ namespace Charaterizator
 
         // Функция обновления параметров датчика по названию модели
         // вх. данные - имя модели
-        private void SetSensorsData(string model)
+        private void SetSensorsData(string type, string model)
         {
             // текст запроса
-            string query = "SELECT * FROM TSensors WHERE Model = " + "'" + model + "'";
+            string query = "SELECT * FROM TSensors WHERE Model = '" + model + "' AND Type = '" + type + "'";
             //Тип + Модель string query = "SELECT Type, Model FROM TSensors  ORDER BY Type";
 
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
@@ -418,6 +418,7 @@ namespace Charaterizator
             {
                 // выполняем запрос к MS Access
                 command.ExecuteNonQuery();
+
             }
             catch
             {
@@ -481,8 +482,10 @@ namespace Charaterizator
         {
             if (lvwModels.SelectedItems.Count <= 0) return;
           
-            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
-            SetSensorsData(str);
+            string strModel = lvwModels.SelectedItems[0].SubItems[1].Text;
+            string strType = lvwModels.SelectedItems[0].SubItems[0].Text;
+
+            SetSensorsData(strType, strModel);
         }
 
 
@@ -514,7 +517,7 @@ namespace Charaterizator
         //    VerPressPoint2    - Массив точек по давл. 2-го диапазона - для верификации
 
 
-        public string GetDataSensors(string strModel, int iField)
+        public string GetDataSensors(string strType, string strModel, int iField)
         {
             string strValue = "-1";
 
@@ -522,12 +525,9 @@ namespace Charaterizator
             {
                 try
                 {
-                    //string query = "SELECT * FROM TSensors WHERE Type = '" + type + "' AND Model = '" + model + "'";
-
-
-                    // текст запроса
-                    //string query = "SELECT '" + strField + "' FROM TSensors WHERE Model = '" + strModel + "'";
-                    string query = "SELECT * FROM TSensors WHERE Model = " + "'" + strModel + "'";
+                  
+                    // текст запроса                  
+                    string query = "SELECT * FROM TSensors WHERE Type = '" + strType + "' AND Model = '" + strModel + "'";
                     // создаем объект OleDbCommand для выполнения запроса к БД MS Access
                     command = new OleDbCommand(query, _сonnection);
                     // получаем объект OleDbDataReader для чтения табличного результата запроса SELECT
@@ -563,9 +563,8 @@ namespace Charaterizator
                 try
                 {
 
-                    // текст запроса
-                    // string query = "SELECT " + strField + " FROM TSensors WHERE Model = " + "'" + strModel + "'" ;
-                    string query = "SELECT '" + strField + "' FROM TSensors WHERE Model = '" + strModel + "' AND  Type = '" + strType + "'";
+                    // текст запроса                   
+                    string query = "SELECT " + strField + " FROM TSensors WHERE Type = '" + strType + "' AND Model = '" + strModel + "'";
 
                     // создаем объект OleDbCommand для выполнения запроса к БД MS Access
                     command = new OleDbCommand(query, _сonnection);
