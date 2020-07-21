@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,17 +95,6 @@
             this.splitter4 = new System.Windows.Forms.Splitter();
             this.gbMultimetr = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.сCHRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDiapazon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDeviation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.tbMultimetrData = new System.Windows.Forms.TextBox();
             this.btnMultimetr = new System.Windows.Forms.Button();
             this.splitter3 = new System.Windows.Forms.Splitter();
@@ -117,6 +106,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.сCHRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDataTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTempreture2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDiapazon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.сPressure2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUTemp2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cUPress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDeviation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsCharacterizationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuDeleteResult = new System.Windows.Forms.ToolStripMenuItem();
             this.panelLog = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
@@ -342,6 +342,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
+            this.btnCalculateDeviation = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -349,9 +350,9 @@
             this.gbMensor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).BeginInit();
             this.gbMultimetr.SuspendLayout();
+            this.gbCommutator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.cmsCharacterizationTable.SuspendLayout();
-            this.gbCommutator.SuspendLayout();
             this.panelLog.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
@@ -1044,111 +1045,6 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "мA";
             // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.сCHRecordNum,
-            this.cDataTime2,
-            this.cTempreture2,
-            this.cDiapazon,
-            this.сPressure2,
-            this.cUTemp2,
-            this.cUPress2,
-            this.cDeviation});
-            this.dataGridView2.ContextMenuStrip = this.cmsCharacterizationTable;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(277, 0);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(861, 542);
-            this.dataGridView2.TabIndex = 5;
-            this.dataGridView2.Visible = false;
-            this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
-            // 
-            // сCHRecordNum
-            // 
-            this.сCHRecordNum.Frozen = true;
-            this.сCHRecordNum.HeaderText = "№";
-            this.сCHRecordNum.MinimumWidth = 25;
-            this.сCHRecordNum.Name = "сCHRecordNum";
-            this.сCHRecordNum.ReadOnly = true;
-            this.сCHRecordNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.сCHRecordNum.Width = 25;
-            // 
-            // cDataTime2
-            // 
-            this.cDataTime2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cDataTime2.HeaderText = "Дата и Время";
-            this.cDataTime2.MinimumWidth = 200;
-            this.cDataTime2.Name = "cDataTime2";
-            this.cDataTime2.ReadOnly = true;
-            // 
-            // cTempreture2
-            // 
-            this.cTempreture2.HeaderText = "Температура (°C)";
-            this.cTempreture2.MinimumWidth = 200;
-            this.cTempreture2.Name = "cTempreture2";
-            this.cTempreture2.ReadOnly = true;
-            this.cTempreture2.Width = 200;
-            // 
-            // cDiapazon
-            // 
-            this.cDiapazon.HeaderText = "Диапазон";
-            this.cDiapazon.MinimumWidth = 100;
-            this.cDiapazon.Name = "cDiapazon";
-            this.cDiapazon.ReadOnly = true;
-            // 
-            // сPressure2
-            // 
-            this.сPressure2.HeaderText = "Давление (кПа)";
-            this.сPressure2.MinimumWidth = 200;
-            this.сPressure2.Name = "сPressure2";
-            this.сPressure2.ReadOnly = true;
-            this.сPressure2.Width = 200;
-            // 
-            // cUTemp2
-            // 
-            this.cUTemp2.HeaderText = "Напряжение (мВ)";
-            this.cUTemp2.MinimumWidth = 200;
-            this.cUTemp2.Name = "cUTemp2";
-            this.cUTemp2.ReadOnly = true;
-            this.cUTemp2.Width = 200;
-            // 
-            // cUPress2
-            // 
-            this.cUPress2.HeaderText = "Сопротивление (Ом)";
-            this.cUPress2.MinimumWidth = 200;
-            this.cUPress2.Name = "cUPress2";
-            this.cUPress2.ReadOnly = true;
-            this.cUPress2.Width = 200;
-            // 
-            // cDeviation
-            // 
-            this.cDeviation.HeaderText = "Отклонение";
-            this.cDeviation.Name = "cDeviation";
-            this.cDeviation.ReadOnly = true;
-            // 
-            // cmsCharacterizationTable
-            // 
-            this.cmsCharacterizationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuDeleteResult});
-            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
-            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
-            // 
-            // ToolStripMenuDeleteResult
-            // 
-            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
-            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
-            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
-            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
-            // 
             // tbMultimetrData
             // 
             this.tbMultimetrData.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1275,6 +1171,111 @@
             this.btnCommutator.Text = "Подключен";
             this.btnCommutator.UseVisualStyleBackColor = false;
             this.btnCommutator.Click += new System.EventHandler(this.btnCommutator_Click);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.сCHRecordNum,
+            this.cDataTime2,
+            this.cTempreture2,
+            this.cDiapazon,
+            this.сPressure2,
+            this.cUTemp2,
+            this.cUPress2,
+            this.cDeviation});
+            this.dataGridView2.ContextMenuStrip = this.cmsCharacterizationTable;
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView2.Location = new System.Drawing.Point(277, 0);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView2.Size = new System.Drawing.Size(861, 542);
+            this.dataGridView2.TabIndex = 5;
+            this.dataGridView2.Visible = false;
+            this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
+            // 
+            // сCHRecordNum
+            // 
+            this.сCHRecordNum.Frozen = true;
+            this.сCHRecordNum.HeaderText = "№";
+            this.сCHRecordNum.MinimumWidth = 25;
+            this.сCHRecordNum.Name = "сCHRecordNum";
+            this.сCHRecordNum.ReadOnly = true;
+            this.сCHRecordNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.сCHRecordNum.Width = 25;
+            // 
+            // cDataTime2
+            // 
+            this.cDataTime2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cDataTime2.HeaderText = "Дата и Время";
+            this.cDataTime2.MinimumWidth = 200;
+            this.cDataTime2.Name = "cDataTime2";
+            this.cDataTime2.ReadOnly = true;
+            // 
+            // cTempreture2
+            // 
+            this.cTempreture2.HeaderText = "Температура (°C)";
+            this.cTempreture2.MinimumWidth = 200;
+            this.cTempreture2.Name = "cTempreture2";
+            this.cTempreture2.ReadOnly = true;
+            this.cTempreture2.Width = 200;
+            // 
+            // cDiapazon
+            // 
+            this.cDiapazon.HeaderText = "Диапазон";
+            this.cDiapazon.MinimumWidth = 100;
+            this.cDiapazon.Name = "cDiapazon";
+            this.cDiapazon.ReadOnly = true;
+            // 
+            // сPressure2
+            // 
+            this.сPressure2.HeaderText = "Давление (кПа)";
+            this.сPressure2.MinimumWidth = 200;
+            this.сPressure2.Name = "сPressure2";
+            this.сPressure2.ReadOnly = true;
+            this.сPressure2.Width = 200;
+            // 
+            // cUTemp2
+            // 
+            this.cUTemp2.HeaderText = "Напряжение (мВ)";
+            this.cUTemp2.MinimumWidth = 200;
+            this.cUTemp2.Name = "cUTemp2";
+            this.cUTemp2.ReadOnly = true;
+            this.cUTemp2.Width = 200;
+            // 
+            // cUPress2
+            // 
+            this.cUPress2.HeaderText = "Сопротивление (Ом)";
+            this.cUPress2.MinimumWidth = 200;
+            this.cUPress2.Name = "cUPress2";
+            this.cUPress2.ReadOnly = true;
+            this.cUPress2.Width = 200;
+            // 
+            // cDeviation
+            // 
+            this.cDeviation.HeaderText = "Отклонение";
+            this.cDeviation.Name = "cDeviation";
+            this.cDeviation.ReadOnly = true;
+            // 
+            // cmsCharacterizationTable
+            // 
+            this.cmsCharacterizationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuDeleteResult});
+            this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
+            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            // 
+            // ToolStripMenuDeleteResult
+            // 
+            this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
+            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
+            this.ToolStripMenuDeleteResult.Text = "Удаление строки";
+            this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
             // 
             // panelLog
             // 
@@ -1677,8 +1678,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1720,10 +1721,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle10.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -2194,6 +2195,7 @@
             // tabPage2
             // 
             this.tabPage2.AutoScroll = true;
+            this.tabPage2.Controls.Add(this.btnCalculateDeviation);
             this.tabPage2.Controls.Add(this.gbCHLevel4);
             this.tabPage2.Controls.Add(this.gbCHLevel3);
             this.tabPage2.Controls.Add(this.gbCHLevel2);
@@ -2554,7 +2556,7 @@
             this.btnCalculateCoeff.BackColor = System.Drawing.Color.IndianRed;
             this.btnCalculateCoeff.Location = new System.Drawing.Point(8, 656);
             this.btnCalculateCoeff.Name = "btnCalculateCoeff";
-            this.btnCalculateCoeff.Size = new System.Drawing.Size(255, 53);
+            this.btnCalculateCoeff.Size = new System.Drawing.Size(124, 53);
             this.btnCalculateCoeff.TabIndex = 12;
             this.btnCalculateCoeff.Text = "Расчет коэффициентов";
             this.btnCalculateCoeff.UseVisualStyleBackColor = false;
@@ -3816,6 +3818,17 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
+            // btnCalculateDeviation
+            // 
+            this.btnCalculateDeviation.BackColor = System.Drawing.Color.IndianRed;
+            this.btnCalculateDeviation.Location = new System.Drawing.Point(144, 656);
+            this.btnCalculateDeviation.Name = "btnCalculateDeviation";
+            this.btnCalculateDeviation.Size = new System.Drawing.Size(124, 53);
+            this.btnCalculateDeviation.TabIndex = 17;
+            this.btnCalculateDeviation.Text = "Расчет отклонений";
+            this.btnCalculateDeviation.UseVisualStyleBackColor = false;
+            this.btnCalculateDeviation.Click += new System.EventHandler(this.btnCalculateDeviation_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3849,10 +3862,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).EndInit();
             this.gbMultimetr.ResumeLayout(false);
             this.gbMultimetr.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.cmsCharacterizationTable.ResumeLayout(false);
             this.gbCommutator.ResumeLayout(false);
             this.gbCommutator.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.cmsCharacterizationTable.ResumeLayout(false);
             this.panelLog.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
@@ -4219,6 +4232,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.Button btnCalculateDeviation;
     }
 }
 

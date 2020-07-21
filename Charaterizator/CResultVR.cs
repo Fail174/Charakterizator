@@ -19,6 +19,8 @@ namespace Charaterizator
         public double PressureF;
         public double CurrentR;
         public double CurrentF;
+        public double OutVoltage;
+        public double Resistance;
     }
 
     //структура канала с датчиком, включает множество точек измерения
@@ -51,7 +53,9 @@ namespace Charaterizator
                                     "Давление (з)  |" +
                                     "Давление (ф)  |" +
                                     "Ток (р)       |" +
-                                    "Ток (ф)       |";
+                                    "Ток (ф)       |" +
+                                    "Напряжение    |" +
+                                    "Сопротивление |" ;
 
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
@@ -97,7 +101,7 @@ namespace Charaterizator
         }
 
 
-        public void AddPoint(int ch, double Temp, double npi, double vpi, double PressZ, double PressF, double CurF, double CurR)
+        public void AddPoint(int ch, double Temp, double npi, double vpi, double PressZ, double PressF, double CurF, double CurR, double Volt, double Resist)
         {
             try
             {
@@ -111,6 +115,8 @@ namespace Charaterizator
                     PressureF = PressF,
                     CurrentF = CurF,
                     CurrentR = CurR,
+                    OutVoltage = Volt,
+                    Resistance = Resist,
                 };
                 Channal[ch].Points.Add(point);
                 FileStream[ch].WriteLine(GetStringFromPoint(point));
@@ -133,7 +139,9 @@ namespace Charaterizator
                 point.PressureZ.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.PressureF.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.CurrentR.ToString("  +00000.0000;  -00000.0000;          0.0") + " |" +
-                point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
+                point.CurrentF.ToString("  +00000.0000;  -00000.0000;          0.0") + " |"+
+                point.OutVoltage.ToString("  +00000.0000;  -00000.0000;          0.0") + " |"+
+                point.Resistance.ToString("  +00000.0000;  -00000.0000;          0.0") + " |";
         }
 
         //создаем файл  архива на диске
@@ -262,9 +270,19 @@ namespace Charaterizator
                                 point.PressureF = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.CurrentR = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.CurrentF = double.Parse(strarr[7].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-
+                                if (strarr.Length > 9)
+                                {
+                                    point.OutVoltage = double.Parse(strarr[8].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                    point.Resistance = double.Parse(strarr[9].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                }
+                                else
+                                {
+                                    point.OutVoltage = 0;
+                                    point.Resistance = 0;
+                                }
                                 ch.Points.Add(point);
                             }
+                            
                         } while (!reader.EndOfStream);
                         Program.txtlog.WriteLineLog("VR:Архив данных верификации загружен из файла: " + ch.FileNameArchiv, 0);
                         reader.Close();

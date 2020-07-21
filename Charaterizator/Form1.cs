@@ -45,7 +45,7 @@ namespace Charaterizator
         private double SKO_CURRENT = 0.5;//допуск по току ЦАП датчика до калибровки, мА
         private double SKO_CALIBRATION_CURRENT = 0.003;//допуск по току ЦАП после калибровки, мА
 
-        private static int MaxChannalCount = 32;//максимальное количество каналов коммутаторы
+        private static int MaxChannalCount = 60;//максимальное количество каналов коммутаторы
         private static int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
 
         private int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
@@ -1247,7 +1247,7 @@ namespace Charaterizator
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
 
                         float Ir = 4 + (16 / (sensors.sensor.VPI - sensors.sensor.NPI)) * ((float)numMensorPoint.Value - sensors.sensor.NPI);//расчетный ток
-                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current, Ir);
+                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current, Ir,sensors.sensor.OutVoltage,sensors.sensor.Resistance);
 
                         if (!cbChannalFixVR.Checked)
                         {//если стоит фиксация канал не меняем
@@ -1380,15 +1380,7 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1);
                 return;
             }
-            double P, Pmax=0, V, Vmax=0, V0=0;
-            for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
-            {
-                P = ResultCH.Channal[i].Points[j].Pressure;
-                if (P > Pmax) Pmax = P;
-                V = ResultCH.Channal[i].Points[j].OutVoltage;
-                if (V > Vmax) Vmax = V;
-                if (P <= 0.1) V0 = V;
-            }
+
 
             for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)//заполняем грид данными текущего датчика
             {
@@ -1399,7 +1391,7 @@ namespace Charaterizator
                 dataGridView2.Rows[j].Cells[4].Value = ResultCH.Channal[i].Points[j].Pressure.ToString("f");   //
                 dataGridView2.Rows[j].Cells[5].Value = ResultCH.Channal[i].Points[j].OutVoltage.ToString("f");
                 dataGridView2.Rows[j].Cells[6].Value = ResultCH.Channal[i].Points[j].Resistance.ToString("f");
-                dataGridView2.Rows[j].Cells[7].Value = CalcPressDeviation(ResultCH.Channal[i].Points[j].Pressure, ResultCH.Channal[i].Points[j].OutVoltage, Vmax, V0, Pmax);
+                dataGridView2.Rows[j].Cells[7].Value = ResultCH.Channal[i].Points[j].Deviation.ToString("f");
             }
 
             dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
@@ -1409,21 +1401,6 @@ namespace Charaterizator
             //dataGridView2.FirstDisplayedCell = dataGridView2.Rows[0].Cells[0];
         }
 
-
-        private double CalcPressDeviation(double Press, double V, double Vmax, double V0, double Pmax)
-        {
-            double Vd = Vmax - V0;
-            double Vr = V0+Vd*Press/Pmax;
-            if (Vd != 0)
-            {
-                return (V - Vr) * 100 / Vd;
-            }
-            else
-            {
-                return 0;
-            }
-
-        }
 
         //обновляем грид результатов верификации для датчика в канале i
         private void UpDateVerificationGrid(int i)
@@ -1447,6 +1424,8 @@ namespace Charaterizator
                 dataGridView3.Rows[j].Cells[6].Value = ResultVR.Channal[i].Points[j].PressureF.ToString("f3");
                 dataGridView3.Rows[j].Cells[7].Value = ResultVR.Channal[i].Points[j].CurrentR.ToString("f4");
                 dataGridView3.Rows[j].Cells[8].Value = ResultVR.Channal[i].Points[j].CurrentF.ToString("f4");
+                dataGridView3.Rows[j].Cells[9].Value = ResultVR.Channal[i].Points[j].OutVoltage.ToString("f4");
+                dataGridView3.Rows[j].Cells[10].Value = ResultVR.Channal[i].Points[j].Resistance.ToString("f4");
             }
             dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Descending);
             dataGridView3.ClearSelection();
@@ -2053,7 +2032,7 @@ namespace Charaterizator
 
 
         // Обновление на главной форме состояния питания коммутатора (checkbox)
-        private void PowerComutators(Int32 data32)
+        private void PowerComutators(Int64 data32)
         {
             if (data32 >= 0)
             {
@@ -4707,7 +4686,7 @@ namespace Charaterizator
                 }
                 if (i >= MaxChannalCount)
                 {
-                    Program.txtlog.WriteLineLog("Не выбраны датчики для расчета коэффициентов. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("CH: Не выбраны датчики для расчета коэффициентов. Операция прервана.", 0);
                     return;
                 }
 
@@ -4739,7 +4718,7 @@ namespace Charaterizator
                 if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
-                    Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
+                    Program.txtlog.WriteLineLog("CH: Операция прекращена пользователем", 0);
                 }
             }
 
@@ -5372,6 +5351,34 @@ namespace Charaterizator
                 UpDateMetrologGrid(ii);
                 UpdateUpStatus(ii);
             }
+        }
+
+
+        //Расчет отклонений по давлению при характеризации датчиков
+        private void btnCalculateDeviation_Click(object sender, EventArgs e)
+        {
+            if (ResultCH == null)
+            {
+                Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
+                return;
+            }
+
+
+            for (int i = 0; i < ResultCH.Channal.Count; i++)//
+            {
+                if ((ResultCH.Channal.Count <= i) || (ResultCH.Channal[i].Points.Count <= 0))
+                {
+                    Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
+                    return;
+                }
+                else
+                {
+                    ResultCH.CalcDeviation(i);
+                    ResultCH.SaveToArhiv(i);
+                    UpDateCharakterizatorGrid(i);
+                }
+            }
+            
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Charaterizator
         public double Pressure;
         public double OutVoltage;
         public double Resistance;
+        public double Deviation;
     }
 
     //структура канала с датчиком, включает множество точек измерения
@@ -51,7 +52,8 @@ namespace Charaterizator
                                         "Диапазон      |" +
                                         "Давление      |" +
                                         "Напряжение    |" +
-                                        "Сопротивление |";
+                                        "Сопротивление |" +
+                                        "Отклонение    |";
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
         public СResultCH(int ChannalCount, int[] FN, int CoefCount)
@@ -159,7 +161,8 @@ namespace Charaterizator
                 point.Diapazon.ToString("           00") + " |" +
                 point.Pressure.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.OutVoltage.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
-                point.Resistance.ToString("   00000.0000") + " |";
+                point.Resistance.ToString("   00000.0000") + " |"+
+                point.Deviation.ToString("   00000.0000") + " |" ;
         }
 
         //создаем файл  архива на диске
@@ -294,6 +297,14 @@ namespace Charaterizator
                                 point.Pressure = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.OutVoltage = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                if (strarr.Length > 6)
+                                { 
+                                    point.Deviation = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                }
+                                else
+                                {
+                                    point.Deviation = 0;
+                                }
                                 ch.Points.Add(point);
                             }
                         } while (!reader.EndOfStream);
@@ -313,6 +324,71 @@ namespace Charaterizator
             {
                 Program.txtlog.WriteLineLog("CH:Критическая ошибка чтения архива характеризации!", 1);
             }
+        }
+
+        //Расчет отклонения
+        public void CalcDeviation(int i)
+        {
+            double P, Pmax = 0, V, Vmax = 0, V0 = 0, Temp = -10000;
+            for (int j = 0; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp)>1)//новая температура
+                {
+                    if(j>0)
+                    {
+                        for (int jj = j; jj >= 0; jj--)//расчитываем отклонения для всех точек с данной температурой
+                        {
+                            if (Math.Abs(Channal[i].Points[jj].Temperature - Temp) > 1)//перебераем точки с данной температурой
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                SPoint point = new SPoint
+                                {
+                                    Datetime = Channal[i].Points[jj].Datetime,
+                                    Temperature = Channal[i].Points[jj].Temperature,
+                                    Diapazon = Channal[i].Points[jj].Diapazon,
+                                    Pressure = Channal[i].Points[jj].Pressure,
+                                    OutVoltage = Channal[i].Points[jj].OutVoltage,
+                                    Resistance = Channal[i].Points[jj].Resistance,
+                                    Deviation = CalcPressDeviation(Channal[i].Points[jj].Pressure, Channal[i].Points[jj].OutVoltage, Vmax, V0, Pmax),
+                                };
+                                Channal[i].Points.RemoveAt(jj);
+                                Channal[i].Points.Insert(jj, point);
+                            }
+                        
+                        }
+                    }
+                    Temp = Channal[i].Points[j].Temperature;
+                    Pmax = 0;
+                    Vmax = 0;
+                    V0 = 0;
+                }
+
+                P = Channal[i].Points[j].Pressure;
+                V = Channal[i].Points[j].OutVoltage;
+                if (P > Pmax)
+                {
+                    Pmax = P;
+                    Vmax = V;
+                }
+                if (P <= 0.1) V0 = V;
+            }
+        }
+        private double CalcPressDeviation(double Press, double V, double Vmax, double V0, double Pmax)
+        {
+            double Vd = Vmax - V0;
+            double Vr = V0 + Vd * Press / Pmax;
+            if (Vd != 0)
+            {
+                return (V - Vr) * 100 / Vd;
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 }

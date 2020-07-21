@@ -1059,14 +1059,14 @@ namespace Charaterizator
                         break;
                     case 4://читаем количество байт в комманде
                         indata = readbuf.Pop(1);
-                        CountByteToRead = indata[0];
+                        CountByteToRead = indata[0]+1;//+CRC
                         ReadAvtState = 5;
                         rt = 0;
                         break;
                     case 5:
-                        if (readbuf.Count >= CountByteToRead+1)
+                        if (readbuf.Count >= CountByteToRead)
                         {//+CRC 1байт
-                            indata = readbuf.Pop(CountByteToRead + 1);//читаем комманду + CRC
+                            indata = readbuf.Pop(CountByteToRead);//читаем комманду + CRC
                             switch (CommandCod)
                             {
                                 case 0x0://Запрос уникального идентификатора (команда 0)
@@ -1318,7 +1318,7 @@ namespace Charaterizator
                             rt++;
                             if (rt>ReadTimeout)//превышен таймаут ожидания
                             {
-                                Program.txtlog.WriteLineLog("HART:Таймаут чтения команды ЭНИ100! Байт в буфере:" + readbuf.Count + " Ожидание: " + CountByteToRead, 1);
+                                Program.txtlog.WriteLineLog("HART:Таймаут чтения команды ЭНИ100! Байт в буфере:" + readbuf.Count + " Ожидание:" + CountByteToRead, 1);
                                 ReadAvtState = 1;
                                 readbuf.Clear();
                                 return -4;
@@ -1349,7 +1349,7 @@ namespace Charaterizator
                 }
                 catch (TimeoutException)
                 {
-                    Program.txtlog.WriteLineLog("HART: Ошибка чтения порта датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
+                    Program.txtlog.WriteLineLog("HART: Критическая ошибка чтения порта датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
                 }
             }
         }

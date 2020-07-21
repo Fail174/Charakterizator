@@ -777,7 +777,6 @@
             // 
             // tbCommReadCH
             // 
-            this.tbCommReadCH.Enabled = false;
             this.tbCommReadCH.Location = new System.Drawing.Point(595, 35);
             this.tbCommReadCH.Minimum = new decimal(new int[] {
             1,
@@ -795,7 +794,6 @@
             // 
             // textBox49
             // 
-            this.textBox49.Enabled = false;
             this.textBox49.Location = new System.Drawing.Point(52, 35);
             this.textBox49.Name = "textBox49";
             this.textBox49.Size = new System.Drawing.Size(544, 21);
