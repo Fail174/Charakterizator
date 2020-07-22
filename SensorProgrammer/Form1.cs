@@ -25,7 +25,7 @@ namespace SensorProgrammer
 
         // Объекты классов из characterizator 
         private FormSwitch Commutator = new FormSwitch();
-        private ClassEni100 sensors = new ClassEni100(30 / 1);
+        private ClassEni100 sensors = new ClassEni100(15);
         //public ClassEni100 eni100 = null;
 
         // Структура с параметрами датчика из БД
@@ -372,12 +372,13 @@ namespace SensorProgrammer
 
 
 
-        // Функция - Автозаполнение dgwMainWindow при ыборе в combobox ТИПА и МОДЕЛИ датчика
+        // Функция - Автозаполнение dgwMainWindow при выборе в combobox ТИПА и МОДЕЛИ датчика
         void FilldgwMainWindow(int NumId, string Data)
         {
             for (int i = 0; i < 30; i++)
             {
-                dgwMainWindow.Rows[i].Cells[NumId].Value = Convert.ToString(Data);
+                if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                    dgwMainWindow.Rows[i].Cells[NumId].Value = Convert.ToString(Data);
             }
             dgwMainWindow.ClearSelection();
         }
@@ -421,16 +422,36 @@ namespace SensorProgrammer
         private void dgwMainWindow_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {           
             // редактирование НОМЕРА КАНАЛА
-            if ((e.ColumnIndex == 1) && (e.RowIndex >= 0) && (e.ColumnIndex >= 0))
+            if ((e.ColumnIndex == 1) && (e.RowIndex >= 0))  //&& (e.ColumnIndex >= 0)
             {
                 if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == true)
                 {
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
+
+
+                    // подключаем соответствующий канал коммутатора
+
+                    Commutator.SetConnectors(e.RowIndex, 0);
+
+                    if (sensors.SeachSensor(e.RowIndex))//поиск датчиков по HART
+                    {
+                        dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+                    }
+                    else
+                    {
+                        dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.IndianRed;
+                    }
                 }
                 else
                 {
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
+
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
+                    dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 }
             }
         }
@@ -506,12 +527,12 @@ namespace SensorProgrammer
 
             // Проверка готовности к прошивке
             // проверка связи с коммутатором
-            if (Commutator.Connected != true)
+           /* if (Commutator.Connected != true)
             {
                 label2.Visible = true;
                 label2.Text = "Операция не может быть выполнена. Нет связи с коммутатором!";
                 return;
-            }
+            }*/
             // проверка связи с БД
             if (_сonnection.State != System.Data.ConnectionState.Open)
             {
@@ -599,7 +620,7 @@ namespace SensorProgrammer
 
           
             // Опрос подключенных к коммутатору датчиков и запись индивидуальных параметров
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < dgwMainWindow.RowCount; i++)
             {
                 label2.Text = "Выполняется запись индивидуальных параметров. Не выключайте компьютер и коммутатор!";
                 if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
@@ -614,19 +635,60 @@ namespace SensorProgrammer
                     {
                         if (sensors.SelectSensor(i))//выбор обнаруженного датчика
                         {//датчик найден, обновляем таблицу
-
-                            if (BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model) == 1)
+                            BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                            int res = BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                            switch(res)
                             {
+                                case 1:
+                                    if (sensors.C14SensorRead())       //чтение данных с датчика
+                                    {
+                                        if (Convert.ToUInt32(Serial) != sensors.sensor.SerialNumber)
+                                        {
+                                            resBurn = false;
+                                            label2.Text = "Не удалось записать серийный номер датчика в канале: " + (i + 1);
+                                            break;
 
-                            }
-                            else
-                            {
-                                label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
-                                MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                resBurn = false;
-                                break;
+                                        }
+                                    }
+                                    if (!sensors.C140ReadPressureModel())
+                                    {//читаем модель ПД
+                                        MessageBox.Show("Модель ПД датчика не считана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    else
+                                    {
+                                        for (int j = 0; j < sensParam.Model.Length; j++)
+                                        {
+                                            if (sensParam.Model[j] != sensors.sensor.PressureModel[j])
+                                            {
+                                                MessageBox.Show("Модель ПД датчика не записана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                break;
+                                            }
+
+                                        }
+                                    }
+ 
+                                    break;
+                                case 0:
+                                    label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
+                                    MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    resBurn = false;
+                                    break;
+                                case -1:
+                                case -2:
+                                case -3:
+                                case -4:
+                                    label2.Text = "Команды записи в датчик не выполнены: " + res;
+                                    MessageBox.Show("Команды записи в датчик не выполнены в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    resBurn = false;
+                                    break;
                             }
                         }
+                    }
+                    else
+                    {
+                        label2.Text = "Датчик не обнаружен в канале: " + (i + 1);
+                        MessageBox.Show("Датчик не обнаружен в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        resBurn = false;
                     }
                     progressBar.PerformStep();
                 }
@@ -635,7 +697,7 @@ namespace SensorProgrammer
             dgwMainWindow.Enabled = true;
             if (resBurn == true)
             {
-                label2.Text = "Индивидуальные параметры успешно записаны!";
+                    label2.Text = "Индивидуальные параметры успешно записаны!";
             }
             else
             {
@@ -651,10 +713,21 @@ namespace SensorProgrammer
         // Функция записи параметров в датчик
         int BurnSensors(string Serial, string Pmin, string Pmax, string DeltaRangeMin, string Model)
         {
+            int result=1;
             try
             {
                 if ((sensors != null) && (sensors.IsConnect()))
                 {
+                    sensors.EnterServis();
+                    //sensors.TegRead();          //читаем информацию о датчике
+                    if (!sensors.C14SensorRead())       //чтение данных с датчика
+                        MessageBox.Show("Датчик не прочитан: ", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!sensors.C140ReadPressureModel())//читаем модель ПД
+                        MessageBox.Show("Модель ПД датчика не считана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    Thread.Sleep(500);
+                    sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
+
                     sensors.sensor.SerialNumber = Convert.ToUInt32(Serial);
                     sensors.sensor.DownLevel = Convert.ToSingle(Pmin);
                     sensors.sensor.UpLevel = Convert.ToSingle(Pmax);
@@ -672,21 +745,27 @@ namespace SensorProgrammer
                             sensors.sensor.PressureModel[i] = ' ';
                         }
                     }
-                    sensors.EnterServis();
-                    sensors.WriteSerialNumberC49();      //серийный номер
-                    sensors.UpDownWriteC249();           //дипазон 
-                    sensors.C241WritePressureModel();    //модель ПД
-
-                    return 1;
+                    if (!sensors.EnterServis())
+                        result = -1;
+                    Thread.Sleep(100);
+                    if (!sensors.WriteSerialNumberC49())
+                        result = -2;
+                    Thread.Sleep(100);
+                    if (!sensors.UpDownWriteC249())
+                        result = -3;
+                    Thread.Sleep(100);
+                    if (!sensors.C241WritePressureModel())
+                        result = -4;
+                    return result;
                 }
                 else
                 {
-                    return -1;
+                    return 0;
                 }
             }
             catch
             {
-                return -1;
+                return 0;
             }
 
         }

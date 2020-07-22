@@ -203,8 +203,8 @@ namespace Charaterizator
     {
         public int COEFF_COUNT = 24;//число коэффициентов
 
-        public int WRITE_PERIOD = 100;  //период выдачи команд
-        public int WRITE_COUNT = 3;     //число попыток записи команд в датчик
+        public int WRITE_PERIOD = 300;  //период выдачи команд
+        public int WRITE_COUNT = 1;     //число попыток записи команд в датчик
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от датчика
         public int MaxSensorOnLevel = 8;//количество датиков на уровне
 

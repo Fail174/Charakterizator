@@ -225,12 +225,15 @@ namespace Charaterizator
                 {
                     writer.WriteLine(GetStringFromPoint(ch.Points[j]));
                 }
-                writer.WriteLine("-----------------------------------------------------------------------------------------------");
-                writer.WriteLine("Коэффициенты датчика");
-                writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
-                for (int c = 0; c < ch.CCount-1; c++)
+                if (ch.Coefficient[0] != 0)//если коэффициенты подсчитаны
                 {
-                    writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString());
+                    writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                    writer.WriteLine("Коэффициенты датчика");
+                    writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
+                    for (int c = 0; c < ch.CCount - 1; c++)
+                    {
+                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString());
+                    }
                 }
                 writer.Close();
                 writer = null;

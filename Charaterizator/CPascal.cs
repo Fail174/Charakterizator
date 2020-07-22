@@ -17,7 +17,7 @@ namespace Charaterizator
         public SerialPort Port;            // переменная для работы по COM-порту
         private Thread ReadThreadPascal;    // поток
         string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
-        public int READ_PAUSE = 50;            // задержка между приемом и передачей команд по COM порту, мс      
+        public int READ_PAUSE = 200;            // задержка между приемом и передачей команд по COM порту, мс      
         public double UserPoint = 0;
 
         public string strData;
@@ -37,7 +37,7 @@ namespace Charaterizator
         public List<string> ListMod = new List<string>();       // список подключенных модулей внутренныих и внешних
         public int M1num;                                       // количество внутренних модулей
         public int M2num;                                       // количество внешних модулей
-
+        private bool ReadPascal = false;
 
 
         public CPascal()
@@ -87,6 +87,7 @@ namespace Charaterizator
                 Port.WriteTimeout = 2000;
                 Port.DtrEnable = true;
                 Port.RtsEnable = true;
+                Port.NewLine = "\r\n";
                 Port.Open();        // открываем порт
                 Connected = true;             
 
@@ -147,8 +148,13 @@ namespace Charaterizator
 
             try
             {
+                ///Port.Write("RESET\r\n");
                 Port.WriteLine("R");               // переводим прибор в режим удаленного управления
+                //Port.Write("R\r\n");
                 Thread.Sleep(READ_PAUSE);
+                if (Port.BytesToRead > 0)
+                    ;
+                //Port.Read();
                 str = Port.ReadLine();
                 if (str == "REMOTE")
                 {
@@ -170,7 +176,7 @@ namespace Charaterizator
                     str = Port.ReadLine();
                                       
                     str = str.Substring(2); //
-                    str = str.Replace(" [", "Внутр.модуль: ");
+                    str = str.Replace("[", "Внутр.модуль: ");
                     string[] M1 = str.Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
                     M1num = M1.Length;
                     ListMod.AddRange(M1);
@@ -182,6 +188,8 @@ namespace Charaterizator
 
                     str = str.Substring(2); //
                     str = str.Replace(" [", "Внеш.модуль: ");
+                    str = str.Remove(str.Length - 1, 1);
+                    //str = str.Substring(str.Length-1); //
                     string[] M2 = str.Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
                     M2num = M2.Length;
                     ListMod.AddRange(M2);
@@ -211,9 +219,21 @@ namespace Charaterizator
             {
                 try
                 {
-                  
+                    int i = 0;
+                    while ((ReadPascal) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadPascal = true;
+                    
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }
+
                     Port.WriteLine("RANGE " + n.ToString() + "," + m.ToString());
-                    Thread.Sleep(READ_PAUSE);
+                    //Thread.Sleep(READ_PAUSE);
                     string str = Port.ReadLine();
 
                     if (str == "OK")
@@ -229,6 +249,10 @@ namespace Charaterizator
                 catch
                 {
                     SetModuleOK = false;
+                }
+                finally
+                {
+                    ReadPascal = false;
                 }
 
             }
@@ -247,9 +271,20 @@ namespace Charaterizator
             {
                 try
                 {
+                    int i = 0;
+                    while ((ReadPascal) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadPascal = true;
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }
                     UserPoint = Val;
                     // устанавливаем значение давления
-                    Port.WriteLine("TARGET<" + Val.ToString() + ">");
+                    Port.WriteLine("TARGET " + Val.ToString());
                     Thread.Sleep(READ_PAUSE);  
                     string str = Port.ReadLine();
 
@@ -267,6 +302,10 @@ namespace Charaterizator
                 {
                     target = false;
                 }
+                finally
+                {
+                    ReadPascal = false;
+                }
 
             }         
 
@@ -282,6 +321,17 @@ namespace Charaterizator
             {
                 try
                 {
+                    int i = 0;
+                    while ((ReadPascal) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadPascal = true;
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }
                     // запускаем установку и поддержания давления прибором                    
                     Port.WriteLine("ON_KEY_START");
                     Thread.Sleep(READ_PAUSE);
@@ -305,7 +355,10 @@ namespace Charaterizator
                 {
                     modeStart = false;
                 }
-
+                finally
+                {
+                    ReadPascal = false;
+                }
             }
         }
 
@@ -319,6 +372,17 @@ namespace Charaterizator
             {
                 try
                 {
+                    int i = 0;
+                    while ((ReadPascal) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadPascal = true;
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }
                     // запускаем вентиляцию прибора
                     Port.WriteLine("ON_KEY_VENT");
                     Thread.Sleep(READ_PAUSE);
@@ -341,6 +405,11 @@ namespace Charaterizator
                 catch
                 {
                     modeVent = false;
+                    
+                }
+                finally
+                {
+                    ReadPascal = false;
                 }
 
             }
@@ -355,6 +424,18 @@ namespace Charaterizator
             {
                 try
                 {
+                    int i = 0;
+                    while ((ReadPascal) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadPascal = true;
+
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }
                     // запускаем вентиляцию прибора
                     Port.WriteLine("CLEAR_P");
                     Thread.Sleep(READ_PAUSE);
@@ -374,6 +455,10 @@ namespace Charaterizator
                 {
                     modeClearP = false;
                 }
+                finally
+                {
+                    ReadPascal = false;
+                }
 
             }
         }
@@ -387,24 +472,48 @@ namespace Charaterizator
         // Функция периодического чтения параметров прибора в потоке
         void PascalReadThread()
         {
+            int i;
             while (Port.IsOpen)
             {
                 try
                 {
+                    i = 0;
+                    while ((ReadPascal) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadPascal = true;
+                   
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadLine();
+                       
                     }
 
+                    i = 0;
                     // считываем текущее давление
-                    Port.WriteLine("PRES?");
                     Thread.Sleep(READ_PAUSE);
+                    Port.WriteLine("PRES?");
+                    //Thread.Sleep(READ_PAUSE);
+                    while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
+                    {
+                        i++;
+                        Thread.Sleep(1);
+                    }
                     strData = Port.ReadLine();
                     press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
 
                     // считываем текущий используемый модуль
-                    Port.WriteLine("RANGE?");
                     Thread.Sleep(READ_PAUSE);
+                    Port.WriteLine("RANGE?");
+                    //Thread.Sleep(READ_PAUSE);
+                    i = 0;
+                    while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
+                    {
+                        i++;
+                        Thread.Sleep(1);
+                    }
                     strData = Port.ReadLine();
                                         
                     Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -412,6 +521,8 @@ namespace Charaterizator
                     rangeModule[0] = Convert.ToInt16(Data[1]);
                     rangeModule[1] = Convert.ToInt16(Data[3]);
 
+                    ReadPascal = false;
+                    Thread.Sleep(500);
 
                 }
                 catch
