@@ -372,12 +372,13 @@ namespace SensorProgrammer
 
 
 
-        // Функция - Автозаполнение dgwMainWindow при ыборе в combobox ТИПА и МОДЕЛИ датчика
+        // Функция - Автозаполнение dgwMainWindow при выборе в combobox ТИПА и МОДЕЛИ датчика
         void FilldgwMainWindow(int NumId, string Data)
         {
             for (int i = 0; i < 30; i++)
             {
-                dgwMainWindow.Rows[i].Cells[NumId].Value = Convert.ToString(Data);
+                if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                    dgwMainWindow.Rows[i].Cells[NumId].Value = Convert.ToString(Data);
             }
             dgwMainWindow.ClearSelection();
         }
@@ -421,15 +422,22 @@ namespace SensorProgrammer
         private void dgwMainWindow_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {           
             // редактирование НОМЕРА КАНАЛА
-            if ((e.ColumnIndex == 1) && (e.RowIndex >= 0) && (e.ColumnIndex >= 0))
+            if ((e.ColumnIndex == 1) && (e.RowIndex >= 0))  //&& (e.ColumnIndex >= 0)
             {
                 if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == true)
                 {
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
+
+
                 }
                 else
                 {
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
+
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
                 }
             }
