@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +79,8 @@
             this.btnThermalCamera = new System.Windows.Forms.Button();
             this.splitter5 = new System.Windows.Forms.Splitter();
             this.gbMensor = new System.Windows.Forms.GroupBox();
+            this.btnFormMensor = new System.Windows.Forms.Button();
+            this.cb_ManualMode = new System.Windows.Forms.CheckBox();
             this.bMensorMeas = new System.Windows.Forms.Button();
             this.bMensorSet = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -89,7 +91,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbMensorTypeR = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnFormMensor = new System.Windows.Forms.Button();
             this.tbMensorData = new System.Windows.Forms.TextBox();
             this.btnMensor = new System.Windows.Forms.Button();
             this.splitter4 = new System.Windows.Forms.Splitter();
@@ -208,6 +209,7 @@
             this.label30 = new System.Windows.Forms.Label();
             this.btnSensorSeach = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnCalculateDeviation = new System.Windows.Forms.Button();
             this.gbCHLevel4 = new System.Windows.Forms.GroupBox();
             this.cbDiapazon4 = new System.Windows.Forms.ComboBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -342,7 +344,6 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.btnCalculateDeviation = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -830,6 +831,8 @@
             // gbMensor
             // 
             this.gbMensor.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbMensor.Controls.Add(this.btnFormMensor);
+            this.gbMensor.Controls.Add(this.cb_ManualMode);
             this.gbMensor.Controls.Add(this.bMensorMeas);
             this.gbMensor.Controls.Add(this.bMensorSet);
             this.gbMensor.Controls.Add(this.label9);
@@ -840,7 +843,6 @@
             this.gbMensor.Controls.Add(this.label3);
             this.gbMensor.Controls.Add(this.cbMensorTypeR);
             this.gbMensor.Controls.Add(this.label2);
-            this.gbMensor.Controls.Add(this.btnFormMensor);
             this.gbMensor.Controls.Add(this.tbMensorData);
             this.gbMensor.Controls.Add(this.btnMensor);
             this.gbMensor.Dock = System.Windows.Forms.DockStyle.Top;
@@ -851,6 +853,29 @@
             this.gbMensor.TabIndex = 3;
             this.gbMensor.TabStop = false;
             this.gbMensor.Text = "Задатчик давления";
+            // 
+            // btnFormMensor
+            // 
+            this.btnFormMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnFormMensor.Location = new System.Drawing.Point(125, 30);
+            this.btnFormMensor.Name = "btnFormMensor";
+            this.btnFormMensor.Size = new System.Drawing.Size(166, 27);
+            this.btnFormMensor.TabIndex = 4;
+            this.btnFormMensor.Text = "Управление";
+            this.btnFormMensor.UseVisualStyleBackColor = true;
+            this.btnFormMensor.Click += new System.EventHandler(this.btnFormMensor_Click);
+            // 
+            // cb_ManualMode
+            // 
+            this.cb_ManualMode.AutoSize = true;
+            this.cb_ManualMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cb_ManualMode.Location = new System.Drawing.Point(127, 57);
+            this.cb_ManualMode.Name = "cb_ManualMode";
+            this.cb_ManualMode.Size = new System.Drawing.Size(121, 20);
+            this.cb_ManualMode.TabIndex = 13;
+            this.cb_ManualMode.Text = "Ручной режим";
+            this.cb_ManualMode.UseVisualStyleBackColor = true;
+            this.cb_ManualMode.CheckedChanged += new System.EventHandler(this.cb_ManualMode_CheckedChanged);
             // 
             // bMensorMeas
             // 
@@ -976,17 +1001,6 @@
             this.label2.Size = new System.Drawing.Size(156, 20);
             this.label2.TabIndex = 5;
             this.label2.Text = "Текущее давление:";
-            // 
-            // btnFormMensor
-            // 
-            this.btnFormMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnFormMensor.Location = new System.Drawing.Point(125, 30);
-            this.btnFormMensor.Name = "btnFormMensor";
-            this.btnFormMensor.Size = new System.Drawing.Size(166, 46);
-            this.btnFormMensor.TabIndex = 4;
-            this.btnFormMensor.Text = "Управление";
-            this.btnFormMensor.UseVisualStyleBackColor = true;
-            this.btnFormMensor.Click += new System.EventHandler(this.btnFormMensor_Click);
             // 
             // tbMensorData
             // 
@@ -1678,8 +1692,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle5;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1721,10 +1735,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle6.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -2212,6 +2226,17 @@
             this.tabPage2.Size = new System.Drawing.Size(269, 702);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
+            // 
+            // btnCalculateDeviation
+            // 
+            this.btnCalculateDeviation.BackColor = System.Drawing.Color.IndianRed;
+            this.btnCalculateDeviation.Location = new System.Drawing.Point(144, 656);
+            this.btnCalculateDeviation.Name = "btnCalculateDeviation";
+            this.btnCalculateDeviation.Size = new System.Drawing.Size(124, 53);
+            this.btnCalculateDeviation.TabIndex = 17;
+            this.btnCalculateDeviation.Text = "Расчет отклонений";
+            this.btnCalculateDeviation.UseVisualStyleBackColor = false;
+            this.btnCalculateDeviation.Click += new System.EventHandler(this.btnCalculateDeviation_Click);
             // 
             // gbCHLevel4
             // 
@@ -3818,17 +3843,6 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
-            // btnCalculateDeviation
-            // 
-            this.btnCalculateDeviation.BackColor = System.Drawing.Color.IndianRed;
-            this.btnCalculateDeviation.Location = new System.Drawing.Point(144, 656);
-            this.btnCalculateDeviation.Name = "btnCalculateDeviation";
-            this.btnCalculateDeviation.Size = new System.Drawing.Size(124, 53);
-            this.btnCalculateDeviation.TabIndex = 17;
-            this.btnCalculateDeviation.Text = "Расчет отклонений";
-            this.btnCalculateDeviation.UseVisualStyleBackColor = false;
-            this.btnCalculateDeviation.Click += new System.EventHandler(this.btnCalculateDeviation_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4233,6 +4247,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.Button btnCalculateDeviation;
+        private System.Windows.Forms.CheckBox cb_ManualMode;
     }
 }
 

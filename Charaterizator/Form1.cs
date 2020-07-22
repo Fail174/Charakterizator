@@ -481,6 +481,7 @@ namespace Charaterizator
                     btnMensor.BackColor = Color.Green;
                     btnMensor.Text = "Подключен";
                     Program.txtlog.WriteLineLog("Задатчик давления Паскаль подключен", 0);
+
                     //cbMensorTypeR.Items.Clear();
                     cbMensorTypeR.DataSource = Pascal.ListMod;
                     bMensorMeas.Name = "Обнуление";
@@ -1701,47 +1702,53 @@ namespace Charaterizator
                 }
             }
 
-            // Чтение показаний задатчика давления
-            // Определяем какой из задатчиков используется
-            if (UseMensor) // используется Менсор
+
+
+            if (!cb_ManualMode.Checked) // если НЕ выбран ручной режим
             {
-                if (Mensor.Connected)
+                // Чтение показаний задатчика давления
+                // Определяем какой из задатчиков используется
+                if (UseMensor) // используется Менсор
                 {
-                    ReadMensor(); //обновляем данные с Менсора
-                }
-                else
-                {
-                    if (btnMensor.BackColor != Color.IndianRed)
+                    if (Mensor.Connected)
                     {
-                        btnMensor.BackColor = Color.IndianRed;
+                        ReadMensor(); //обновляем данные с Менсора
                     }
                     else
                     {
-                        btnMensor.BackColor = Color.Transparent;
+                        if (btnMensor.BackColor != Color.IndianRed)
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.Transparent;
+                        }
                     }
                 }
-            }
-            else  // используется Паскаль
-            {
-                if (Pascal.Connected)
+                else  // используется Паскаль
                 {
-                    ReadPascal(); //обновляем данные с Паскаля
-                }
-                else
-                {
-                    if (btnMensor.BackColor != Color.IndianRed)
+                    if (Pascal.Connected)
                     {
-                        btnMensor.BackColor = Color.IndianRed;
+                        ReadPascal(); //обновляем данные с Паскаля
                     }
                     else
                     {
-                        btnMensor.BackColor = Color.Transparent;
+                        if (btnMensor.BackColor != Color.IndianRed)
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.Transparent;
+                        }
                     }
                 }
+
             }
 
 
-          
+
 
             // Четние данных с датчика
             if (!SensorBusy && sensors.IsConnect()) 
@@ -2769,6 +2776,10 @@ namespace Charaterizator
         // Отработка выбора на гл.форме ТИПА ПРЕОБРАЗОВАТЕЛЯ МЕНСОРА из списка
         private void cbMensorTypeR_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            if (cb_ManualMode.Checked)
+                return;
+
             if (UseMensor)
             {
 
@@ -2867,27 +2878,37 @@ namespace Charaterizator
         // Отработка нажания по заданию уставки OK
         private void button6_Click(object sender, EventArgs e)
         {
-            if (UseMensor)
-            {
-                if (!Mensor._serialPort_M.IsOpen)
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                    return;
-                }
 
-                double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
-                Mensor.SetPoint(Point);
+            if (cb_ManualMode.Checked)
+            {
+                tbMensorData.Text = Convert.ToString(numMensorPoint.Value);
             }
             else
             {
-                if (!Pascal.Port.IsOpen)
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                    return;
-                }
 
-                double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
-                Pascal.SetPress(Point);             
+
+                if (UseMensor)
+                {
+                    if (!Mensor._serialPort_M.IsOpen)
+                    {
+                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        return;
+                    }
+
+                    double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+                    Mensor.SetPoint(Point);
+                }
+                else
+                {
+                    if (!Pascal.Port.IsOpen)
+                    {
+                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        return;
+                    }
+
+                    double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+                    Pascal.SetPress(Point);
+                }
             }
             
         }
@@ -5264,6 +5285,50 @@ namespace Charaterizator
                 }
             }
             
+        }
+
+        private void cb_ManualMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_ManualMode.Checked)
+            {
+                // Отключаем если были подключены задатчики 
+                // Менсор
+                Mensor.DisConnect();
+                // Паскаль
+                Pascal.DisConnect();
+
+                // Блокируем кнопки управления на форме
+                btnMensor.Text = "Режим включен";
+                btnMensor.BackColor = Color.Green;
+                btnMensor.Enabled = false;
+                btnFormMensor.Enabled = false;
+
+                List<string> listManual = new List<string>() { "Ручной режим" };
+                cbMensorTypeR.DataSource = listManual;
+                cbMensorTypeR.SelectedIndex = 0;
+                cbMensorTypeR.Enabled = false;
+
+                bMensorMeas.Enabled = false;
+                bMensorControl.Enabled = false;
+                bMensorVent.Enabled = false;
+
+                tbMensorData.Text = Convert.ToString(numMensorPoint.Value);
+            }
+            else
+            {
+                // Блокируем кнопки управления на форме
+                btnMensor.Text = "Не подключен";
+                btnMensor.BackColor = Color.IndianRed;
+                btnFormMensor.Enabled = true;
+
+                cbMensorTypeR.SelectedIndex = -1;
+                cbMensorTypeR.Enabled = true;
+
+                bMensorMeas.Enabled = true;
+                bMensorControl.Enabled = true;
+                bMensorVent.Enabled = true;
+            }
+
         }
     }
 }
