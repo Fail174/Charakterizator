@@ -142,6 +142,21 @@ namespace Charaterizator
             }
         }
 
+        public void SetUnit(string u)  // 
+        {
+            switch (u)
+            {
+                case "кПа":
+                    MesUnit=0x0C;
+                    break;
+                case "МПа":
+                    MesUnit = 0xED;
+                    break;
+                default:
+                    MesUnit = 0x0C;
+                    break;
+            }
+        }
         public string GetTeg()
         {
             BitArray bits = new BitArray(teg);
@@ -687,7 +702,34 @@ namespace Charaterizator
             }
             return false;
         }
-
+        //Установить единицу измерения первичной переменной
+        public bool С44WriteMesUnit(string unit)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                sensor.SetUnit(unit);
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 6];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x2A;
+                data[i + 3] = 0x01;
+                data[i+4] = sensor.MesUnit;
+                data[i + 5] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
         //Коррекция нуля ЦАП (команда 45).
         public bool С45WriteCurrent4mA(float Current)
         {

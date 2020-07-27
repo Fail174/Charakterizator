@@ -28,16 +28,36 @@ namespace Charaterizator
         public string FileNameArchiv;
         public List<SPoint> Points;
         public int CCount;
+        public byte SensorType;
+        public char[] PressureModel;
         public float[] Coefficient;//коэффициенты датчика
-        public SChanal(int ChNum, int FN, int CoefCount)
+        public SChanal(int ChNum, int FN, int CoefCount, byte Type, string Model)
         {
             CCount = CoefCount;
+            SensorType = Type;
+            PressureModel = Model.ToCharArray();
             Coefficient = new float[CoefCount];
             ChannalNummber = ChNum;
             FactoryNumber = FN;
             //            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
             FileNameArchiv = string.Format("Archiv/CH/CH_FN_{0}.txt",  FactoryNumber);
             Points = new List<SPoint>();
+        }
+        public string GetSensorType()
+        {
+            switch (SensorType)
+            {
+                case 0xCC:
+                    return "ЭНИ-100";
+                case 0xCD:
+                    return "ЭНИ-12";
+                case 0xCE:
+                    return "ЭНИ-100-ЖК2";
+                case 0xCF:
+                    return "ЭНИ-12М";
+                default:
+                    return "не определено";
+            }
         }
     }
 
@@ -56,19 +76,20 @@ namespace Charaterizator
                                         "Отклонение    |";
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
-        public СResultCH(int ChannalCount, int[] FN, int CoefCount)
+        public СResultCH(int ChannalCount, int[] FN, int CoefCount, byte[] Type, string[] Model)
         {
             StreamWriter fs;
             for (int i = 0; i < ChannalCount; i++)
             {
-                SChanal ch = new SChanal(i+1, FN[i], CoefCount);
+                SChanal ch = new SChanal(i+1, FN[i], CoefCount, Type[i], Model[i]);
                 Channal.Add(ch);
                 Directory.CreateDirectory("CH");
                 Directory.CreateDirectory("Archiv");
                 Directory.CreateDirectory("Archiv/CH");
                 string filename = string.Format("CH/CH_Result{0}.txt",ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
-                fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
+                //fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
+                fs.WriteLine(string.Format("Результаты характеризации датчика в канале:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.PressureModel));
                 fs.WriteLine(HeaderString);
                 fs.Flush();
                 FileStream.Add(fs);
@@ -129,6 +150,13 @@ namespace Charaterizator
             SaveToArhiv(ch);
         }
 
+        public void SetSensorInfo(int ch, char[] Model)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Channal[ch].PressureModel[i] = Model[i];
+            }
+        }
         public void AddPoint(int ch, double Temp, int D, double Press, double U, double R)
         {
             try
@@ -173,7 +201,7 @@ namespace Charaterizator
             if (writer != null)
             {
                 writer.WriteLine(string.Format("Архив данных характеризации датчика"));
-                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.PressureModel));
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");
                 writer.WriteLine(HeaderString);
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");

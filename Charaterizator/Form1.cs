@@ -2653,20 +2653,27 @@ namespace Charaterizator
 
             //Подготавливаем заводские номера по каналам
             int[] FN = new int[MaxChannalCount];
+            byte[] Type = new byte[MaxChannalCount];
+            string[] Model = new string[5];
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 if (sensors.SelectSensor(i))
                 {
                     FN[i] = (int)sensors.sensor.uni;
+                    Type[i] = sensors.sensor.devType;
+                    Model[i] = new string(sensors.sensor.PressureModel);
                 }
                 else
                 {
                     FN[i] = 0;
+                    Type[i] = 0;
+                    Model[i] = "";
                 }
             }
 
             //***************** создаем файлы результатов характеризации *******************************
-            ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT);//результаты характеризации датчиков
+            ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT, Type, Model);//результаты характеризации датчиков
+           // ResultCH.SetSensorInfo();
             ResultCH.LoadFromFile();
 
             //***************** создаем файлы результатов калибровки ***********************************
@@ -4827,6 +4834,50 @@ namespace Charaterizator
 
         }
 
+
+
+        private void WriteSensor_MET_MesUnit()
+        {
+            int StartNumber = 0;    //начальный канал
+            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            string unitstr = cb_MET_Unit.Text;
+
+            Program.txtlog.WriteLineLog("MET: Старт записи единиы измерения для выбранных датчиков ... ", 2);
+            pbMETProcess.Maximum = FinishNumber - StartNumber;
+            pbMETProcess.Minimum = 0;
+            pbMETProcess.Value = 0;
+            for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
+            {
+                if (ProcessStop) return;//прекращаем верификацию 
+
+                pbMETProcess.Value = i - StartNumber;
+                Application.DoEvents();
+                if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+
+                Commutator.SetConnectors(i, 0);
+                Thread.Sleep(Commutator.READ_PERIOD);//ждем переключения
+
+                if (sensors.SelectSensor(i))//выбор датчика на канале i
+                {
+                    if (sensors.С44WriteMesUnit(unitstr))
+                    {
+                        Program.txtlog.WriteLineLog("MET: Выполнена запись единицы измерения датчика в канале " + (i + 1).ToString(), 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена!", 1);
+                    }
+                }
+                else
+                {
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                }
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
+
+            }
+            Program.txtlog.WriteLineLog("MET: Операция записи единицы измерения завершена", 2);
+        }
+
         //Запись НПИ и ВПИ в выбранные датчики (метролог)
         private void WriteSensor_MET_VPI_NPI()
         {
@@ -5457,6 +5508,44 @@ namespace Charaterizator
 
 
     
+        }
+
+        private void cb_MET_Unit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!SensorBusy)
+            {
+                int i;
+                for (i = 0; i < MaxChannalCount; i++)
+                {
+                    if (CheckChannalEnable(i)) //Есть выбранные каналы?
+                        break;
+                }
+                if (i >= MaxChannalCount)
+                {
+                    Program.txtlog.WriteLineLog("MET: Не выбраны каналы для установки ед измерения датчиков. Операция прервана.", 0);
+                    return;
+                }
+
+                try
+                {
+                    //btn_MET_NPI_VPI.Text = "Отменить";
+                    UpdateItemState(7);
+                    WriteSensor_MET_MesUnit();
+                }
+                finally
+                {
+                    //btn_MET_NPI_VPI.Text = "Задать";
+                    UpdateItemState(0);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Отменить установку единицы измерения датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                }
+            }
         }
     }
 }
