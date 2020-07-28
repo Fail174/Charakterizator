@@ -2763,8 +2763,19 @@ namespace Charaterizator
             {
                 if (Mensor._serialPort_M.IsOpen)
                 {
-                    bMensorControl.BackColor = Color.LightGreen;
-                    Mensor.SetMode(1);
+                    // если уставка равна нулю сбрсываем давление, если нет то выполняем команду задача
+                    if (numMensorPoint.Value == 0)
+                    {
+                        Mensor.SetMode(2);
+                        bMensorControl.BackColor = Color.LightGreen;
+                    }
+                    else
+                    {
+                        
+                        Mensor.SetMode(1);
+                        bMensorControl.BackColor = Color.LightGreen;
+                    }
+
                 }
                 else
                 {
@@ -2972,6 +2983,14 @@ namespace Charaterizator
 
                     double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
                     Mensor.SetPoint(Point);
+
+                    // если включена задача и уставка равна 0, то включаем режим вентиляции
+                    if ((Point == 0) && (Mensor._mode == 1))
+                    {
+                        Mensor.SetMode(2);
+                        bMensorControl.BackColor = Color.LightGreen;
+                    }
+
                 }
                 else
                 {
