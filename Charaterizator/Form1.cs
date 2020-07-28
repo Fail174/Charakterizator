@@ -2703,8 +2703,18 @@ namespace Charaterizator
             {
                 if (Mensor._serialPort_M.IsOpen)
                 {
-                    bMensorControl.BackColor = Color.LightGreen;
-                    Mensor.SetMode(1);
+                    // если уставка равна нулю сбрсываем давление, если нет то выполняем команду задача
+                    if (numMensorPoint.Value == 0)
+                    {
+                        Mensor.SetMode(2);
+                        bMensorControl.BackColor = Color.LightGreen;
+                    }
+                    else
+                    {
+                        bMensorControl.BackColor = Color.LightGreen;
+                        Mensor.SetMode(1);
+                    }
+
                 }
                 else
                 {
