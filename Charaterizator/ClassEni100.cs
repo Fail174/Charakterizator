@@ -272,7 +272,7 @@ namespace Charaterizator
         //проверка сопротивления и выходного напряжения датчика на корректность
         public bool ValidateSensorParam()
         {
-            if ((Math.Abs(sensor.Resistance) < 0.001) || (Math.Abs(sensor.OutVoltage) < 0.001))
+            if ((Math.Abs(sensor.Resistance) < 0.0) || (Math.Abs(sensor.OutVoltage) < 0.0))
             {
                 return false;//проверка не пройдена
             }
@@ -1088,7 +1088,7 @@ namespace Charaterizator
                             }
                             else
                             {
-                                Program.txtlog.WriteLineLog("HART:Не обработанные данные: " + indata[0], 1);
+                                Program.txtlog.WriteLineLog("HART:Не обнаружены преамбула 0xFF. Cчитанные данные: " + indata[0], 1);
                             }
                         }
                         break;
@@ -1125,6 +1125,7 @@ namespace Charaterizator
                             if ((sensor.state & 0xFF00) != 0) //команда не принята или не выполнена
                             {
                                 ReadAvtState = 1;
+                                Program.txtlog.WriteLineLog(string.Format("HART: Команда {0} не выполнена. Статус {1}", CommandCod, sensor.state), 0);
                                 return -6;
                             }
                             switch (CommandCod)
@@ -1367,6 +1368,7 @@ namespace Charaterizator
                                     break;
                                 default:
                                     ReadAvtState = 1;
+                                    Program.txtlog.WriteLineLog("HART: Ответная команда не идентифицирована " + CommandCod.ToString(), 1);
                                     return -3;//неизвестная комманда
                             }
                             ReadAvtState = 1;
@@ -1378,7 +1380,7 @@ namespace Charaterizator
                             rt++;
                             if (rt>ReadTimeout)//превышен таймаут ожидания
                             {
-                                Program.txtlog.WriteLineLog("HART:Таймаут чтения команды ЭНИ100! Байт в буфере:" + readbuf.Count + " Ожидание:" + CountByteToRead, 1);
+                                Program.txtlog.WriteLineLog("HART:Таймаут чтения команды! Байт в буфере:" + readbuf.Count + " Ожидание:" + CountByteToRead, 1);
                                 ReadAvtState = 1;
                                 readbuf.Clear();
                                 return -4;
