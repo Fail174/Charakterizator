@@ -59,6 +59,13 @@ namespace Charaterizator
                     return "не определено";
             }
         }
+
+        public string GetSensorModel()
+        {
+
+            string str = new string(PressureModel);
+            return str;
+        }
     }
 
     //Класс результатов измерения параметров датчика при характеризации
@@ -89,7 +96,7 @@ namespace Charaterizator
                 string filename = string.Format("CH/CH_Result{0}.txt",ch.ChannalNummber);
                 fs = File.CreateText(filename);//создаем файл канала
                 //fs.WriteLine(string.Format("Результаты характеризации датчика в канале {0}, заводской номер {1}", ch.ChannalNummber, ch.FactoryNumber));
-                fs.WriteLine(string.Format("Результаты характеризации датчика в канале:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.PressureModel));
+                fs.WriteLine(string.Format("Результаты характеризации датчика в канале:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.GetSensorModel()));
                 fs.WriteLine(HeaderString);
                 fs.Flush();
                 FileStream.Add(fs);
@@ -201,7 +208,7 @@ namespace Charaterizator
             if (writer != null)
             {
                 writer.WriteLine(string.Format("Архив данных характеризации датчика"));
-                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.PressureModel));
+                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.GetSensorModel()));
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");
                 writer.WriteLine(HeaderString);
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");

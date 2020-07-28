@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bCommutator = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbModel = new System.Windows.Forms.ComboBox();
@@ -52,7 +52,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
-            this.rtbCons = new System.Windows.Forms.RichTextBox();
+            this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwMainWindow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSensParam)).BeginInit();
@@ -136,8 +136,8 @@
             // 
             // dgwChannal
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle25;
             this.dgwChannal.HeaderText = "Канал";
             this.dgwChannal.Name = "dgwChannal";
             this.dgwChannal.ReadOnly = true;
@@ -219,14 +219,14 @@
             this.dgwSensParam.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sensParamName,
             this.sensParamValue});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle27;
             this.dgwSensParam.Enabled = false;
             this.dgwSensParam.Location = new System.Drawing.Point(10, 21);
             this.dgwSensParam.Name = "dgwSensParam";
@@ -246,8 +246,8 @@
             // 
             // sensParamValue
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle26;
             this.sensParamValue.HeaderText = "Значение";
             this.sensParamValue.Name = "sensParamValue";
             this.sensParamValue.ReadOnly = true;
@@ -257,7 +257,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.rtbCons);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.bDataBase);
             this.groupBox1.Controls.Add(this.bCommutator);
@@ -309,25 +308,29 @@
             this.label2.Text = "Не дышите, датчики прошиваются...";
             this.label2.Visible = false;
             // 
-            // rtbCons
+            // rtbConsole
             // 
-            this.rtbCons.Location = new System.Drawing.Point(351, 72);
-            this.rtbCons.Name = "rtbCons";
-            this.rtbCons.Size = new System.Drawing.Size(64, 16);
-            this.rtbCons.TabIndex = 8;
-            this.rtbCons.Text = "";
-            this.rtbCons.Visible = false;
+            this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbConsole.Location = new System.Drawing.Point(12, 483);
+            this.rtbConsole.Name = "rtbConsole";
+            this.rtbConsole.ReadOnly = true;
+            this.rtbConsole.Size = new System.Drawing.Size(878, 45);
+            this.rtbConsole.TabIndex = 13;
+            this.rtbConsole.Text = "";
             // 
             // FormSensorProgrammer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 490);
+            this.ClientSize = new System.Drawing.Size(900, 540);
+            this.Controls.Add(this.rtbConsole);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FormSensorProgrammer";
             this.Text = "Программа для записи индивидуальных параметров датчиков";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSensorProgrammer_FormClosed);
@@ -366,7 +369,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn sensParamName;
         private System.Windows.Forms.DataGridViewTextBoxColumn sensParamValue;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.RichTextBox rtbCons;
+        private System.Windows.Forms.RichTextBox rtbConsole;
     }
 }
 

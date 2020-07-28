@@ -401,6 +401,8 @@ namespace Charaterizator
         //Чтение измеренных параметров выбранного датчика
         public bool SensorValueReadC03()
         {
+            int res = 0;
+            int j;
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
@@ -408,12 +410,13 @@ namespace Charaterizator
                 byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x03, 0x00, 0x00 };
                 data[sensor.pre+1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
-                for (int j = 0; j < WRITE_COUNT; j++)
+                for (j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
                     WaitSensorAnswer(20, WAIT_TIMEOUT);
-                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                    res = ParseReadBuffer(WAIT_TIMEOUT);
+                    if (res >= 0)
                         return true;
                 }
             }
@@ -576,8 +579,9 @@ namespace Charaterizator
         }
 
         //Запись ВПИ и НПИ (команда 35)
-        public bool С35WriteVPI_NPI(float VPI, float NPI)
+        public int С35WriteVPI_NPI(float VPI, float NPI)
         {
+            int result=-1;
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
@@ -608,11 +612,12 @@ namespace Charaterizator
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
                     WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
-                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
-                        return true;
+                    result = ParseReadBuffer(WAIT_TIMEOUT);
+                    if (result >= 0)
+                        return result;
                 }
             }
-            return false;
+            return result;
         }
 
 
@@ -1052,7 +1057,7 @@ namespace Charaterizator
         //-4 таймаут чтения даных в принятой команде
         public int ParseReadBuffer(int ReadTimeout)
         {
-            byte[] indata = new byte[30];
+            byte[] indata = new byte[60];
             int rt = 0;
 
             while (readbuf.Count > 0)
@@ -1077,8 +1082,13 @@ namespace Charaterizator
                                 }
                                 else
                                 {
+                                    Program.txtlog.WriteLineLog("HART:Не верный заголовок ответной команды: " + indata[0], 1);
                                     return -2;//неверный заголовок ответной команды
                                 }
+                            }
+                            else
+                            {
+                                Program.txtlog.WriteLineLog("HART:Не обработанные данные: " + indata[0], 1);
                             }
                         }
                         break;
@@ -1109,6 +1119,14 @@ namespace Charaterizator
                         if (readbuf.Count >= CountByteToRead)
                         {//+CRC 1байт
                             indata = readbuf.Pop(CountByteToRead);//читаем комманду + CRC
+                            //indata = readbuf.Pop(readbuf.Count);//читаем комманду + CRC
+                            
+                            sensor.state = (ushort)((indata[0] << 8) | indata[1]);//читаем состояние исполнения команды
+                            if ((sensor.state & 0xFF00) != 0) //команда не принята или не выполнена
+                            {
+                                ReadAvtState = 1;
+                                return -6;
+                            }
                             switch (CommandCod)
                             {
                                 case 0x0://Запрос уникального идентификатора (команда 0)
@@ -1365,7 +1383,7 @@ namespace Charaterizator
                                 readbuf.Clear();
                                 return -4;
                             }
-                            Thread.Sleep(1);
+                            Thread.Sleep(5);
                         }
                         break;
                 }
@@ -1499,217 +1517,299 @@ namespace Charaterizator
         //Ответ на комманду Запрос уникального идентификатора (команда 0)
         private bool ReadCommand0(byte addr, byte[] indata)
         {
-            SensorID id = new SensorID(addr, COEFF_COUNT);
-            id.Channal = SelSensorChannal;
-            id.Group = (int)(SelSensorChannal/MaxSensorOnLevel) +1;
-            id.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (id.state != 0) return false;
+            try
+            {
+                SensorID id = new SensorID(addr, COEFF_COUNT);
+                id.Channal = SelSensorChannal;
+                id.Group = (int)(SelSensorChannal / MaxSensorOnLevel) + 1;
+                id.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (id.state != 0) return false;
 
-            id.devCode = indata[3];
-            id.devType = indata[4];
-            id.pre = indata[5];
-            id.v1 = indata[6];
-            id.v2 = indata[7];
-            id.v3 = indata[8];
-            id.v4 = indata[9];
-            id.flag = indata[10];
-            id.uni = (UInt32)((indata[11] << 16) | (indata[12] << 8) | indata[13]);
-            sensorList.Add(id);
-            return true;
+                id.devCode = indata[3];
+                id.devType = indata[4];
+                id.pre = indata[5];
+                id.v1 = indata[6];
+                id.v2 = indata[7];
+                id.v3 = indata[8];
+                id.v4 = indata[9];
+                id.flag = indata[10];
+                id.uni = (UInt32)((indata[11] << 16) | (indata[12] << 8) | indata[13]);
+                sensorList.Add(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         //Ответ на комманду Чтение измеренных значений (4 переменных) (команда 3)
         private bool ReadCommand3(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
+            try
+            {
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                    return false;
 
-            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-            sensor.OutCurrent = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                sensor.OutCurrent = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensor.PressueUnit = indata[6];
-            tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
-            sensor.Pressure = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensor.PressueUnit = indata[6];
+                tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
+                sensor.Pressure = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensor.VoltageUnit = indata[11];
-            tmp = (indata[12] << 24) | (indata[13] << 16) | (indata[14] << 8) | indata[15];
-            sensor.OutVoltage = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensor.VoltageUnit = indata[11];
+                tmp = (indata[12] << 24) | (indata[13] << 16) | (indata[14] << 8) | indata[15];
+                sensor.OutVoltage = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensor.ResistanceUnit = indata[16];
-            tmp = (indata[17] << 24) | (indata[18] << 16) | (indata[19] << 8) | indata[20];
-            sensor.Resistance = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensor.ResistanceUnit = indata[16];
+                tmp = (indata[17] << 24) | (indata[18] << 16) | (indata[19] << 8) | indata[20];
+                sensor.Resistance = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensor.TemperatureUnit = indata[21];
-            tmp = (indata[22] << 24) | (indata[23] << 16) | (indata[24] << 8) | indata[25];
-            sensor.Temperature = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensor.TemperatureUnit = indata[21];
+                tmp = (indata[22] << 24) | (indata[23] << 16) | (indata[24] << 8) | indata[25];
+                sensor.Temperature = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensorList[SelSensorIndex] = sensor;
-            return true;
+                //sensorList[SelSensorIndex] = sensor;
+                sensorList.RemoveAt(SelSensorIndex);
+                sensorList.Insert(SelSensorIndex, sensor);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Считать сообщение (команда 6)
         private bool ReadCommand6(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-            sensor.Addr = indata[2];
-            sensorList[SelSensorIndex] = sensor;
-            return true;
+            try
+            {
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
+                sensor.Addr = indata[2];
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 
         //Считать сообщение (команда 12)
         private bool ReadCommand12(int addr, byte[] indata)
         {
-//            sensor.message = new byte[24];
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-            int j = 2;
-            for (int i = 0; i < 24; i++)
+            try
             {
-                sensor.message[i] = indata[j];
-                j++;
+                //            sensor.message = new byte[24];
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
+                int j = 2;
+                for (int i = 0; i < 24; i++)
+                {
+                    sensor.message[i] = indata[j];
+                    j++;
+                }
+                Array.Reverse(sensor.message);//инвертируем порядок 
+                sensorList[SelSensorIndex] = sensor;
+                return true;
             }
-            Array.Reverse(sensor.message);//инвертируем порядок 
-            sensorList[SelSensorIndex] = sensor;
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
         //Считать тэг, дескриптор, дату (команда 13)
         private bool ReadCommand13(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-            int j = 2;
-            for (int i = 0; i < 6; i++)
+            try
             {
-                sensor.teg[i] = indata[j];
-                j++;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0) return false;
+                int j = 2;
+                for (int i = 0; i < 6; i++)
+                {
+                    sensor.teg[i] = indata[j];
+                    j++;
+                }
+                for (int i = 0; i < 12; i++)
+                {
+                    sensor.desc[i] = indata[j];
+                    j++;
+                }
+                Array.Reverse(sensor.teg);//инвертируем порядок 
+                Array.Reverse(sensor.desc);//инвертируем порядок 
+
+                sensor.data = (UInt32)((indata[j] << 16) | (indata[j + 1] << 8) | indata[j + 2]);
+
+                sensorList[SelSensorIndex] = sensor;
+                return true;
             }
-            for (int i = 0; i < 12; i++)
+            catch
             {
-                sensor.desc[i] = indata[j];
-                j++;
+                return false;
             }
-            Array.Reverse(sensor.teg);//инвертируем порядок 
-            Array.Reverse(sensor.desc);//инвертируем порядок 
-
-            sensor.data = (UInt32)((indata[j] << 16) | (indata[j+1] << 8) | indata[j+2]);
-
-            sensorList[SelSensorIndex] = sensor;
-            return true;
         }
 
         //Чтение серийного номера и параметров приемника давления (команда 14)
         private bool ReadCommand14(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
+            try
+            {
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
 
-            sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
-            sensor.MesUnit = indata[5];
-            tmp = (indata[6] << 24) | (indata[7] << 16) | (indata[8] << 8) | indata[9];
-            sensor.UpLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
+                sensor.MesUnit = indata[5];
+                tmp = (indata[6] << 24) | (indata[7] << 16) | (indata[8] << 8) | indata[9];
+                sensor.UpLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            tmp = (indata[10] << 24) | (indata[11] << 16) | (indata[12] << 8) | indata[13];
-            sensor.DownLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[10] << 24) | (indata[11] << 16) | (indata[12] << 8) | indata[13];
+                sensor.DownLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            tmp = (indata[14] << 24) | (indata[15] << 16) | (indata[16] << 8) | indata[17];
-            sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[14] << 24) | (indata[15] << 16) | (indata[16] << 8) | indata[17];
+                sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensorList[SelSensorIndex] = sensor;
+                sensorList[SelSensorIndex] = sensor;
 
-            return true;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Чтение ВПИ, НПИ (команда 15)
         private bool ReadCommand15(int addr, byte[] indata)
         {
-            int tmp;
-
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-
-            int yy = indata[2];//alarm select code
-            int bb = indata[3];//Transfer function code
-            int edMes = indata[4];//Transfer function code
+            try
+            {
 
 
-            tmp = (indata[5] << 24) | (indata[6] << 16) | (indata[7] << 8) | indata[8];
-            sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-            tmp = (indata[9] << 24) | (indata[10] << 16) | (indata[11] << 8) | indata[12];
-            sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-            tmp = (indata[13] << 24) | (indata[14] << 16) | (indata[15] << 8) | indata[16];
-            sensor.DempfTime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);//время демпфирования
+                int tmp;
 
-            int cc = indata[17];//Write protect code
-            int dd = indata[18];//private label distributor code
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
 
-            sensorList[SelSensorIndex] = sensor;
+                int yy = indata[2];//alarm select code
+                int bb = indata[3];//Transfer function code
+                int edMes = indata[4];//Transfer function code
 
-            return true;
+
+                tmp = (indata[5] << 24) | (indata[6] << 16) | (indata[7] << 8) | indata[8];
+                sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[9] << 24) | (indata[10] << 16) | (indata[11] << 8) | indata[12];
+                sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[13] << 24) | (indata[14] << 16) | (indata[15] << 8) | indata[16];
+                sensor.DempfTime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);//время демпфирования
+
+                int cc = indata[17];//Write protect code
+                int dd = indata[18];//private label distributor code
+
+                sensorList[SelSensorIndex] = sensor;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Запись времени демпфирования (команда 34)
         private bool ReadCommand34(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
+            try
+            {
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
 
-            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-            sensor.DempfTime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                sensor.DempfTime = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensorList[SelSensorIndex] = sensor;
-            return true;
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }   
+            catch
+            {
+                return false;
+            }
         }
 
         //Запись ВПИ НПИ(команда 35)
         private bool ReadCommand35(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
+            try
+            {
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
 
-            tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-            sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-            tmp = (indata[6] << 24) | (indata[7] << 16) | (indata[8] << 8) | indata[9];
-            sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                sensor.VPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                tmp = (indata[6] << 24) | (indata[7] << 16) | (indata[8] << 8) | indata[9];
+                sensor.NPI = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-            sensorList[SelSensorIndex] = sensor;
-            return true;
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Режим фиксированного тока (команда 40)
         private bool ReadCommand40(int addr, byte[] indata)
         {
-            int tmp;
-            float Current;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                int tmp;
+                float Current;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                    Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-                Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-                return true;
             }
         }
 
         //Перезагрузка датчика (команда 42).
         private bool ReadCommand42(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                return true;
             }
         }
 
@@ -1717,7 +1817,7 @@ namespace Charaterizator
         //Установить ноль первичной переменной(коррекция нуля от монтажного положения) (команда 43).
         private bool ReadCommand43(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+            //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
             if (sensor.state != 0)
             {
                 return false;
@@ -1731,119 +1831,168 @@ namespace Charaterizator
         //Коррекция нуля ЦАП (команда 45)
         private bool ReadCommand45(int addr, byte[] indata)
         {
-            int tmp;
-            float Current;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                int tmp;
+                float Current;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                    Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-                Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-                return true;
             }
         }
         //Коррекция коэффициента усиления ЦАП (команда 46)
         private bool ReadCommand46(int addr, byte[] indata)
         {
-            int tmp;
-            float Current;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                int tmp;
+                float Current;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
+                    Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                tmp = (indata[2] << 24) | (indata[3] << 16) | (indata[4] << 8) | indata[5];
-                Current = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
-                return true;
             }
         }
 
         //Ответ на команду запись серийного номера ПД (команда 49)
         private bool ReadCommand49(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
+                    sensorList[SelSensorIndex] = sensor;
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                sensor.SerialNumber = (UInt32)((indata[2] << 16) | (indata[3] << 8) | indata[4]);
-                sensorList[SelSensorIndex] = sensor;
-                return true;
             }
         }
 
         //Ответ на команду чтение токового выхода (команда 128)
         private bool ReadCommand128(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    sensor.CurrentExit = indata[2];
+                    sensorList[SelSensorIndex] = sensor;
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                sensor.CurrentExit = indata[2];
-                sensorList[SelSensorIndex] = sensor;
-                return true;
             }
         }
         //Ответ на команду запись токового выхода (команда 129)
         private bool ReadCommand129(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    sensor.CurrentExit = indata[2];
+                    sensorList[SelSensorIndex] = sensor;
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                sensor.CurrentExit = indata[2];
-                sensorList[SelSensorIndex] = sensor;
-                return true;
             }
         }
 
         //Ответ на команду чтение модели приемника давления (команда 140)
         private bool ReadCommand140(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-            sensor.PressureType = indata[2];
-            for (int i = 0; i < 5; i++)//5 символов
+            try
             {
-                sensor.PressureModel[i] = (char)indata[i+3];
-            }
-            sensorList[SelSensorIndex] = sensor;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+               // if (sensor.state != 0) return false;
+                sensor.PressureType = indata[2];
+                for (int i = 0; i < 5; i++)//5 символов
+                {
+                    sensor.PressureModel[i] = (char)indata[i + 3];
+                }
+                sensorList[SelSensorIndex] = sensor;
 
-            return true;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Ответ на команду запись модели приемника давления (команда 241)
         private bool ReadCommand241(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-            sensor.PressureType = indata[2];
-            for (int i = 0; i < 5; i++)//5 символов
+            try
             {
-                if (indata.Length > (i + 3))
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
+                sensor.PressureType = indata[2];
+                for (int i = 0; i < 5; i++)//5 символов
                 {
-                    sensor.PressureModel[i] = (char)indata[i + 3];
+                    if (indata.Length > (i + 3))
+                    {
+                        sensor.PressureModel[i] = (char)indata[i + 3];
+                    }
+                    else
+                    {
+                        sensor.PressureModel[i] = ' ';
+                    }
                 }
-                else
-                {
-                    sensor.PressureModel[i] = ' ';
-                }
+                sensorList[SelSensorIndex] = sensor;
+                return true;
             }
-            sensorList[SelSensorIndex] = sensor;
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
         //ответ на запись верхнего и нижнего пределов ПД, минимального диапазона (команда 249)
@@ -1854,25 +2003,32 @@ namespace Charaterizator
         //4 байта – минимальный диапазон ПД, тип float
         private bool ReadCommand249(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0) return false;
-            if (indata.Length > 14)
+            try
             {
-                sensor.MesUnit = indata[2];
-                tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
-                sensor.UpLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                //if (sensor.state != 0) return false;
+                if (indata.Length > 14)
+                {
+                    sensor.MesUnit = indata[2];
+                    tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
+                    sensor.UpLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
-                sensor.DownLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
+                    sensor.DownLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
-                sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
+                    sensor.MinLevel = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                sensorList[SelSensorIndex] = sensor;
-                return true;
+                    sensorList[SelSensorIndex] = sensor;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch
             {
                 return false;
             }
@@ -1882,31 +2038,38 @@ namespace Charaterizator
         //Запись калибровочных коэффициентов для датчика давления (команда 250)
         private bool ReadCommand250(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-
-            int Number = indata[2];
-            if ((Number >= 0) && (Number <= 5))
+            try
             {
-                tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
-                sensor.Coefficient[4 * Number] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
 
-                tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
-                sensor.Coefficient[4 * Number + 1] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                int Number = indata[2];
+                if ((Number >= 0) && (Number <= 5))
+                {
+                    tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
+                    sensor.Coefficient[4 * Number] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
-                sensor.Coefficient[4 * Number + 2] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
+                    sensor.Coefficient[4 * Number + 1] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                tmp = (indata[15] << 24) | (indata[16] << 16) | (indata[17] << 8) | indata[18];
-                sensor.Coefficient[4 * Number + 3] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
+                    sensor.Coefficient[4 * Number + 2] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                sensorList[SelSensorIndex] = sensor;
+                    tmp = (indata[15] << 24) | (indata[16] << 16) | (indata[17] << 8) | indata[18];
+                    sensor.Coefficient[4 * Number + 3] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                return true;
+                    sensorList[SelSensorIndex] = sensor;
+
+                    return true;
+                }
+                else
+                {
+                    //ошибка (Неверные данные)
+                    return false;
+                }
             }
-            else
+            catch
             {
-                //ошибка (Неверные данные)
                 return false;
             }
         }
@@ -1914,31 +2077,38 @@ namespace Charaterizator
         //Чтение калибровочных коэффициентов(команда 251).
         private bool ReadCommand251(int addr, byte[] indata)
         {
-            int tmp;
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-
-            int Number = indata[2];
-            if ((Number >= 0) && (Number <= 5))
+            try
             {
-                tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
-                sensor.Coefficient[4 * Number] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                int tmp;
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
 
-                tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
-                sensor.Coefficient[4 * Number + 1] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                int Number = indata[2];
+                if ((Number >= 0) && (Number <= 5))
+                {
+                    tmp = (indata[3] << 24) | (indata[4] << 16) | (indata[5] << 8) | indata[6];
+                    sensor.Coefficient[4 * Number] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
-                sensor.Coefficient[4 * Number + 2] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    tmp = (indata[7] << 24) | (indata[8] << 16) | (indata[9] << 8) | indata[10];
+                    sensor.Coefficient[4 * Number + 1] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                tmp = (indata[15] << 24) | (indata[16] << 16) | (indata[17] << 8) | indata[18];
-                sensor.Coefficient[4 * Number + 3] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                    tmp = (indata[11] << 24) | (indata[12] << 16) | (indata[13] << 8) | indata[14];
+                    sensor.Coefficient[4 * Number + 2] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                sensorList[SelSensorIndex] = sensor;
+                    tmp = (indata[15] << 24) | (indata[16] << 16) | (indata[17] << 8) | indata[18];
+                    sensor.Coefficient[4 * Number + 3] = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
 
-                return true;
+                    sensorList[SelSensorIndex] = sensor;
+
+                    return true;
+                }
+                else
+                {
+                    //ошибка (Неверные данные)
+                    return false;
+                }
             }
-            else
+            catch
             {
-                //ошибка (Неверные данные)
                 return false;
             }
         }
@@ -1946,14 +2116,21 @@ namespace Charaterizator
         //Ответ на команду запись коэффициентов в EEPROM (команда 252)
         private bool ReadCommand252(int addr, byte[] indata)
         {
-            sensor.state = (ushort)((indata[0] << 8) | indata[1]);
-            if (sensor.state != 0)
+            try
+            {
+                //sensor.state = (ushort)((indata[0] << 8) | indata[1]);
+                if (sensor.state != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch
             {
                 return false;
-            }
-            else
-            {
-                return true;
             }
         }
     }

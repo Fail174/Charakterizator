@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Threading;
-
+using TxtLog;
 using Charaterizator;
 
 
@@ -55,6 +55,7 @@ namespace SensorProgrammer
 
             public FormSensorProgrammer()
         {
+            Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл
             InitializeComponent();
         }
 

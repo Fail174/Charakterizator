@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra;
-
+using TxtLog;
 
 
 
@@ -105,6 +105,7 @@ namespace Charaterizator
         //        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
+        private bool SensorAbsPressuer = false;//датчик абсолютного давления
         //private bool FormLoaded = false;
 
         //Инициализация переменных основной программы
@@ -565,27 +566,34 @@ namespace Charaterizator
 
             if (sensors.SelectSensor(i))
             {
-                tbSelChannalNumber.Text = string.Format("Канал {0}", i + 1);
-                tbInfoDesc.Text = sensors.sensor.GetDesc();
-                tbInfoTeg.Text = sensors.sensor.GetTeg();
-                tbInfoPressureModel.Text = new String(sensors.sensor.PressureModel);
-                tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f6");
-                tbInfoDown.Text = sensors.sensor.DownLevel.ToString("f6");
-                tbInfoSerialNumber.Text = sensors.sensor.SerialNumber.ToString();
-                tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f6");
-                tbInfoMesUnit.Text = sensors.sensor.GetUnit();
+                try
+                {
+                    tbSelChannalNumber.Text = string.Format("Канал {0}", i + 1);
+                    tbInfoDesc.Text = sensors.sensor.GetDesc();
+                    tbInfoTeg.Text = sensors.sensor.GetTeg();
+                    tbInfoPressureModel.Text = new String(sensors.sensor.PressureModel);
+                    tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f6");
+                    tbInfoDown.Text = sensors.sensor.DownLevel.ToString("f6");
+                    tbInfoSerialNumber.Text = sensors.sensor.SerialNumber.ToString();
+                    tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f6");
+                    tbInfoMesUnit.Text = sensors.sensor.GetUnit();
 
-                DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
-                dtpInfoDate.Value = dt;
+                    DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
+                    dtpInfoDate.Value = dt;
 
-                tbInfoDeviceAdress.Text = sensors.sensor.Addr.ToString("D2");
-                tbInfoFactoryNumber.Text = sensors.sensor.uni.ToString();
-                tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
-                cbInfoPreambul.Text = sensors.sensor.pre.ToString();
-                tbInfoSensorType.Text = sensors.sensor.GetdevType();
-                /*            string SelectedSensor = sensors.sensor.Addr.ToString("D2") + " | " + sensors.sensor.GetdevType() + " | " + sensors.sensor.uni;
-                            tbCharact.Text = SelectedSensor;
-                            tbCoef.Text = SelectedSensor;*/
+                    tbInfoDeviceAdress.Text = sensors.sensor.Addr.ToString("D2");
+                    tbInfoFactoryNumber.Text = sensors.sensor.uni.ToString();
+                    tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
+                    cbInfoPreambul.Text = sensors.sensor.pre.ToString();
+                    tbInfoSensorType.Text = sensors.sensor.GetdevType();
+                    /*            string SelectedSensor = sensors.sensor.Addr.ToString("D2") + " | " + sensors.sensor.GetdevType() + " | " + sensors.sensor.uni;
+                                tbCharact.Text = SelectedSensor;
+                                tbCoef.Text = SelectedSensor;*/
+                }
+                catch
+                {
+                    Program.txtlog.WriteLineLog(string.Format("Ошибка заполнения панели информации с датчикаи (Дата: {0}) ", sensors.sensor.data), 1);
+                }
             }
             else
             {
@@ -1320,13 +1328,20 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    if (sensors.С35WriteVPI_NPI(VPI, NPI))
+                    int res = sensors.С35WriteVPI_NPI(VPI, NPI);
+                    if (res>=0)
                     {
                         Program.txtlog.WriteLineLog("VR: Выполнена запись НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Запись НПИ ВПИ датчика не выполнена!", 1);
+                        if (res == -6)
+                        {
+                            Program.txtlog.WriteLineLog("VR: Неверные знаения НПИ ВПИ датчика. Команда не выполнена!", 1);
+                        }
+                        else {
+                            Program.txtlog.WriteLineLog("VR: Запись НПИ ВПИ датчика не выполнена!", 1);
+                        }
                     }
                 }
                 else
@@ -1343,6 +1358,14 @@ namespace Charaterizator
         //Установка нуля для датчиков
         private void SetZero()
         {
+            if ((!SensorAbsPressuer) && (Math.Abs(Convert.ToDouble(tbMensorData.Text)) > 0.5))
+            {
+                if (MessageBox.Show("Текущее давление не равно нулю. Продолжить установку нуля?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    Program.txtlog.WriteLineLog("Операция прекращена.", 0);
+                    return;
+                }
+            }
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
 
@@ -1350,6 +1373,7 @@ namespace Charaterizator
             pbVRProcess.Maximum = FinishNumber - StartNumber;
             pbVRProcess.Minimum = 0;
             pbVRProcess.Value = 0;
+
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
@@ -1784,19 +1808,25 @@ namespace Charaterizator
                 {
                     btnClockTimer.BackColor = Color.Transparent;
                 }
-
-                TimerValueSec = new DateTime(TimerValueSec.Ticks - MAIN_TIMER * 10000);//1 тик 10000мсек
-                if (((TimerValueSec.Hour==0)&&(TimerValueSec.Minute == 0) && (TimerValueSec.Second == 0))||(TimerValueSec.Hour>=23))//остановка таймера
+                try
                 {
-                    btnClockTimer.BackColor = Color.Green;
-                    dtpClockTimer.Enabled = true;
-                    dtpClockTimer.Value = new DateTime(TimerValueSec.Year, TimerValueSec.Month, TimerValueSec.Day, 0, 0, 0);//
-                    Console.Beep();
-                    Console.Beep();
+                    TimerValueSec = new DateTime(TimerValueSec.Ticks - MAIN_TIMER * 10000);//1 тик 10000мсек
+                    if (((TimerValueSec.Hour == 0) && (TimerValueSec.Minute == 0) && (TimerValueSec.Second == 0)) || (TimerValueSec.Hour >= 23))//остановка таймера
+                    {
+                        btnClockTimer.BackColor = Color.Green;
+                        dtpClockTimer.Enabled = true;
+                        dtpClockTimer.Value = new DateTime(TimerValueSec.Year, TimerValueSec.Month, TimerValueSec.Day, 0, 0, 0);//
+                        Console.Beep();
+                        Console.Beep();
+                    }
+                    else
+                    {
+                        dtpClockTimer.Value = TimerValueSec;
+                    }
                 }
-                else
+                catch
                 {
-                    dtpClockTimer.Value = TimerValueSec;
+                    Program.txtlog.WriteLineLog("Ошибка временной структуры: " + MAIN_TIMER.ToString(), 1);
                 }
             }
         }
@@ -2110,7 +2140,21 @@ namespace Charaterizator
                         }
                     }
                 }
-//                UpDateSelectedChannal();
+                if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Shift)
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[sel].Value) == false)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dataGridView1.Rows[i].Cells[sel].Value = false;
+                        }
+                    }
+                }
+                //                UpDateSelectedChannal();
             }
 
 
@@ -2222,7 +2266,8 @@ namespace Charaterizator
                             si = sensors.FindSensorGroup(1);
                             if (si >= 0)
                             {
-                                SelectModel = new String(sensors.sensorList[si].PressureModel);  
+                                SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
@@ -2269,6 +2314,7 @@ namespace Charaterizator
                             if (si>=0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
@@ -2316,6 +2362,7 @@ namespace Charaterizator
                             if (si >= 0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
@@ -2363,6 +2410,7 @@ namespace Charaterizator
                             if (si >= 0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
@@ -2430,6 +2478,7 @@ namespace Charaterizator
                             if (si >= 0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
@@ -2479,6 +2528,7 @@ namespace Charaterizator
                             if (si >= 0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
@@ -2528,6 +2578,7 @@ namespace Charaterizator
                             if (si >= 0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
@@ -2577,6 +2628,7 @@ namespace Charaterizator
                             if (si >= 0)
                             {
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
@@ -2629,6 +2681,14 @@ namespace Charaterizator
                     // ОКНО - Сдача Метрологу
                 case 3:
                     {
+                        si = sensors.FindSensorGroup(1);
+                        if (si >= 0)
+                        {
+                            SelectModel = new String(sensors.sensorList[si].PressureModel);
+                            SensorAbsPressuer = (SelectModel[1] == '0');
+                            SelectType = sensors.sensorList[si].GetdevType();
+                        }
+
                         pUpStatusBar.Visible = true;
                         splitter1.Visible = false;
                         cb_MET_Unit.SelectedIndex = 0;
@@ -2654,7 +2714,7 @@ namespace Charaterizator
             //Подготавливаем заводские номера по каналам
             int[] FN = new int[MaxChannalCount];
             byte[] Type = new byte[MaxChannalCount];
-            string[] Model = new string[5];
+            string[] Model = new string[MaxChannalCount];
             for (int i = 0; i < MaxChannalCount; i++)
             {
                 if (sensors.SelectSensor(i))
@@ -3150,11 +3210,13 @@ namespace Charaterizator
         //Установка давления для характеризации группы 
         private void btnCHPressureSet1_Click(object sender, EventArgs e)
         {
+           // bool SenorAbsPressuer = false;
             string strValue="";
             switch ((sender as Button).Tag)
             {
                 case "1":
                     strValue = cbCHPressureSet1.Text;
+
                     break;
                 case "2":
                     strValue = cbCHPressureSet2.Text;
@@ -3187,8 +3249,15 @@ namespace Charaterizator
                     Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture); 
                     //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
                     numMensorPoint.Text = strValue;
-                    bMensorSet.PerformClick();      //выставляем давление
-                    bMensorControl.PerformClick();  //запускаем задачу
+                    if ((Point == 0) && !SensorAbsPressuer)
+                    {
+                        bMensorVent.PerformClick();
+                    }
+                    else
+                    {
+                        bMensorSet.PerformClick();      //выставляем давление
+                        bMensorControl.PerformClick();  //запускаем задачу
+                    }
                     int i = 0;
                     do//ожидаем установления давления
                     {
@@ -3797,9 +3866,17 @@ namespace Charaterizator
                     btnVRPressureSet4.Enabled = false;
                     Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
+
                     numMensorPoint.Text = strValue;
-                    bMensorSet.PerformClick();      //выставляем давление
-                    bMensorControl.PerformClick();  //запускаем задачу
+                    if ((Point == 0) && !SensorAbsPressuer)
+                    {
+                        bMensorVent.PerformClick();
+                    }
+                    else
+                    {
+                        bMensorSet.PerformClick();      //выставляем давление
+                        bMensorControl.PerformClick();  //запускаем задачу
+                    }
                     int i = 0;
                     do//ожидаем установления давления
                     {
@@ -4904,12 +4981,17 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    if (sensors.С35WriteVPI_NPI(VPI, NPI))
+                    int res = sensors.С35WriteVPI_NPI(VPI, NPI);
+                    if (res>=0)
                     {
                         Program.txtlog.WriteLineLog("MET: Выполнена запись НПИ ВПИ датчика в канале " + (i + 1).ToString(), 0);
                     }
                     else
                     {
+                        if (res == -6)
+                        {
+                            Program.txtlog.WriteLineLog("MET: Неверные знаения НПИ ВПИ датчика. Команда не выполнена!", 1);
+                        }
                         Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена!", 1);
                     }
                 }
@@ -4964,6 +5046,14 @@ namespace Charaterizator
         //Установка нуля для датчиков (метролог)
         private void MET_SetZero()
         {
+            if ((!SensorAbsPressuer) && (Math.Abs(Convert.ToDouble(tbMensorData.Text)) > 0.5))
+            {
+                if (MessageBox.Show("Текущее давление не равно нулю. Продолжить установку нуля?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    Program.txtlog.WriteLineLog("Операция прекращена.", 0);
+                    return;
+                }
+            }
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
 
@@ -5283,9 +5373,16 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("Устанавливаем давление в датчиках: " + strValue, 0);
 
                 Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                    numMensorPoint.Text = strValue;
+                numMensorPoint.Text = strValue;
+                if ((Point == 0) && !SensorAbsPressuer)
+                {
+                    bMensorVent.PerformClick();
+                }
+                else
+                {
                     bMensorSet.PerformClick();      //выставляем давление
                     bMensorControl.PerformClick();  //запускаем задачу
+                }
                     int i = 0;
                     do//ожидаем установления давления
                     {
