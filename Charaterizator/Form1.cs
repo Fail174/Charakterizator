@@ -2711,8 +2711,9 @@ namespace Charaterizator
                     }
                     else
                     {
-                        bMensorControl.BackColor = Color.LightGreen;
+                        
                         Mensor.SetMode(1);
+                        bMensorControl.BackColor = Color.LightGreen;
                     }
 
                 }
@@ -2922,6 +2923,14 @@ namespace Charaterizator
 
                     double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
                     Mensor.SetPoint(Point);
+
+                    // если включена задача и уставка равна 0, то включаем режим вентиляции
+                    if ((Point == 0) && (Mensor._mode == 1))
+                    {
+                        Mensor.SetMode(2);
+                        bMensorControl.BackColor = Color.LightGreen;
+                    }
+
                 }
                 else
                 {
