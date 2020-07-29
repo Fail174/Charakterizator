@@ -125,6 +125,7 @@ namespace Charaterizator
                     {
                         Port.ReadLine();
                     }
+                    //Thread.Sleep(1);
 
                     if (ReadData())
                     {

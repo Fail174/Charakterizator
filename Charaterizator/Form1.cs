@@ -5663,6 +5663,27 @@ namespace Charaterizator
                 }
             }
         }
+
+        private void lb_MET_PressValue_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == System.Windows.Forms.Keys.Delete)
+            {
+                btn_MET_Del.PerformClick();
+            }
+            if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+            {
+                if (e.KeyCode == System.Windows.Forms.Keys.Up)
+                {
+                    btn_MET_Up.PerformClick();
+                    lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex + 1;
+                }
+                if (e.KeyCode == System.Windows.Forms.Keys.Down)
+                {
+                    btn_MET_Down.PerformClick();
+                    lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex - 1;
+                }
+            }
+        }
     }
 }
 
