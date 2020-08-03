@@ -165,7 +165,7 @@ namespace Charaterizator
                 UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
 
 
-                MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint / MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
+                MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint*1000)/MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
 
 
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
@@ -2764,17 +2764,17 @@ namespace Charaterizator
                 if (Mensor._serialPort_M.IsOpen)
                 {
                     // если уставка равна нулю сбрсываем давление, если нет то выполняем команду задача
-                    if (numMensorPoint.Value == 0)
-                    {
-                        Mensor.SetMode(2);
-                        bMensorControl.BackColor = Color.LightGreen;
-                    }
-                    else
-                    {
+                    //if (numMensorPoint.Value == 0)
+                    //{
+                    //    Mensor.SetMode(2);
+                    //    bMensorControl.BackColor = Color.LightGreen;
+                    //}
+                    //else
+                    //{
                         
                         Mensor.SetMode(1);
                         bMensorControl.BackColor = Color.LightGreen;
-                    }
+                    //}
 
                 }
                 else
@@ -2985,11 +2985,11 @@ namespace Charaterizator
                     Mensor.SetPoint(Point);
 
                     // если включена задача и уставка равна 0, то включаем режим вентиляции
-                    if ((Point == 0) && (Mensor._mode == 1))
-                    {
-                        Mensor.SetMode(2);
-                        bMensorControl.BackColor = Color.LightGreen;
-                    }
+                    //if ((Point == 0) && (Mensor._mode == 1))
+                    //{
+                    //    Mensor.SetMode(2);
+                    //    bMensorControl.BackColor = Color.LightGreen;
+                    //}
 
                 }
                 else
@@ -3570,7 +3570,7 @@ namespace Charaterizator
 
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
-                MAX_COUNT_POINT = Properties.Settings.Default.set_MensorMaxCountPoint / MAIN_TIMER + 1;        //ожидание стабилизации давления в датчике, в циклах таймера
+                MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint*1000)/MAIN_TIMER + 1;        //ожидание стабилизации давления в датчике, в циклах таймера
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
               
 
@@ -5590,7 +5590,7 @@ namespace Charaterizator
                     MainTimer.Stop();
                     MainTimer.Enabled = false;
 
-
+                    // сброс давления ВКЛ
                     Pascal.SetModeVent();
 
                     while (Pascal.press > 1)
@@ -5598,8 +5598,9 @@ namespace Charaterizator
                         Thread.Sleep(500);
 
                     }
+                    // сброс давления ВЫКЛ
                     Pascal.SetModeVent();
-
+                    Thread.Sleep(50);
 
                     // Получаем индекс выбранного преобразователя
                     int ind = cbMensorTypeR.SelectedIndex + 1;
@@ -5622,10 +5623,10 @@ namespace Charaterizator
                 }
 
             }
-
-
-    
+   
         }
+
+
 
         private void cb_MET_Unit_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -156,7 +156,7 @@
       <Value Profile="(Default)">0.2</Value>
     </Setting>
     <Setting Name="set_MensorMaxCountPoint" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="set_CommMaxLevelCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>

@@ -1117,19 +1117,10 @@
             // 
             // tbMensorMaxCountPoint
             // 
-            this.tbMensorMaxCountPoint.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.tbMensorMaxCountPoint.DecimalPlaces = 1;
             this.tbMensorMaxCountPoint.Location = new System.Drawing.Point(595, 95);
             this.tbMensorMaxCountPoint.Maximum = new decimal(new int[] {
-            2000000,
-            0,
-            0,
-            0});
-            this.tbMensorMaxCountPoint.Minimum = new decimal(new int[] {
-            1000,
+            36000,
             0,
             0,
             0});
@@ -1137,7 +1128,7 @@
             this.tbMensorMaxCountPoint.Size = new System.Drawing.Size(100, 21);
             this.tbMensorMaxCountPoint.TabIndex = 102;
             this.tbMensorMaxCountPoint.Value = new decimal(new int[] {
-            4000,
+            4,
             0,
             0,
             0});
@@ -1275,7 +1266,7 @@
             this.textBox79.Name = "textBox79";
             this.textBox79.Size = new System.Drawing.Size(544, 21);
             this.textBox79.TabIndex = 87;
-            this.textBox79.Text = "Время ожидания стабилизации давления в датчиках, [мс]";
+            this.textBox79.Text = "Время ожидания стабилизации давления в датчиках, [сек]";
             // 
             // textBox83
             // 
