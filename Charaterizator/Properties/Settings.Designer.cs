@@ -638,7 +638,7 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int set_MensorMaxCountPoint {
             get {
                 return ((int)(this["set_MensorMaxCountPoint"]));
