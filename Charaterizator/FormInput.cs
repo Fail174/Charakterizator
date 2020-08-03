@@ -12,7 +12,16 @@ namespace Charaterizator
 {
     public partial class FormInput : Form
     {
-        public string Pressuer;
+        private string _Pressuer;
+        public string Pressuer//ток в мА
+        {
+            get { return _Pressuer; }
+            set
+            {
+                _Pressuer = value;
+                nud_Pressuer.Value = Convert.ToInt32(_Pressuer);
+            }
+        }
         public FormInput()
         {
             InitializeComponent();
@@ -20,7 +29,7 @@ namespace Charaterizator
 
         private void button1_Click(object sender, EventArgs e)
         {
-           Pressuer = nud_Pressuer.Value.ToString();
+           _Pressuer = nud_Pressuer.Value.ToString();
         }
     }
 }

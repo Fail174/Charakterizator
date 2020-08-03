@@ -130,7 +130,7 @@ namespace Charaterizator
         }
 
 
-        public void Update(int ch, double Temp, int D, double Press, double U, double R)
+        public void Update(int ch, double Temp, int D, double Press, double U, double R, double Dev)
         {
             if ((Channal.Count>ch) && (Channal[ch].Points.Count>0))
             {
@@ -142,6 +142,7 @@ namespace Charaterizator
                     Pressure = Press,
                     OutVoltage = U,
                     Resistance = R,
+                    Deviation = Dev
                 };
                 Channal[ch].Points.RemoveAt(Channal[ch].Points.Count - 1);
                 Channal[ch].Points.Add(point);
@@ -164,7 +165,7 @@ namespace Charaterizator
                 Channal[ch].PressureModel[i] = Model[i];
             }
         }
-        public void AddPoint(int ch, double Temp, int D, double Press, double U, double R)
+        public void AddPoint(int ch, double Temp, int D, double Press, double U, double R, double Dev)
         {
             try
             {
@@ -176,6 +177,7 @@ namespace Charaterizator
                     Pressure = Press,
                     OutVoltage = U,
                     Resistance = R,
+                    Deviation = Dev
                 };
                 Channal[ch].Points.Add(point);
                 FileStream[ch].WriteLine(GetStringFromPoint(point));
@@ -374,7 +376,7 @@ namespace Charaterizator
                 {
                     if(j>0)
                     {
-                        for (int jj = j; jj >= 0; jj--)//расчитываем отклонения для всех точек с данной температурой
+                        for (int jj = j-1; jj >= 0; jj--)//расчитываем отклонения для всех точек с данной температурой
                         {
                             if (Math.Abs(Channal[i].Points[jj].Temperature - Temp) > 1)//перебераем точки с данной температурой
                             {

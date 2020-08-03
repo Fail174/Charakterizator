@@ -1019,7 +1019,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                            ResultCH.AddPoint(i, (double)numTermoCameraPoint.Value, Diapazon, (double)numMensorPoint.Value, sensors.sensor.OutVoltage, sensors.sensor.Resistance, 0);
                             if (!cbChannalFix.Checked)
                             {//если стоит фиксация канал не меняем
                                 cbChannalCharakterizator.SelectedIndex = seli;
@@ -5168,6 +5168,7 @@ namespace Charaterizator
 
         private void btn_MET_Del_Click(object sender, EventArgs e)
         {
+            
             if (MessageBox.Show("Удалить выбранное значение из списка?","Подтверждение операции", MessageBoxButtons.YesNo)==DialogResult.Yes)
             {
                 int index = lb_MET_PressValue.SelectedIndex;
@@ -5682,6 +5683,19 @@ namespace Charaterizator
                     btn_MET_Down.PerformClick();
                     lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex - 1;
                 }
+            }
+        }
+
+        private void lb_MET_PressValue_DoubleClick(object sender, EventArgs e)
+        {
+            FormInput forminput = new FormInput();
+            //int index = lb_MET_PressValue.SelectedIndex;
+            forminput.Pressuer = lb_MET_PressValue.SelectedItem.ToString();
+            if (forminput.ShowDialog() == DialogResult.OK)
+            {
+                int index = lb_MET_PressValue.SelectedIndex;
+                lb_MET_PressValue.Items.RemoveAt(index);
+                lb_MET_PressValue.Items.Insert(index, forminput.Pressuer);
             }
         }
     }

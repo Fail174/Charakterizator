@@ -39,7 +39,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(108, 68);
+            this.button1.Location = new System.Drawing.Point(107, 78);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -50,7 +50,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(202, 68);
+            this.button2.Location = new System.Drawing.Point(202, 78);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -62,13 +62,14 @@
             this.groupBox1.Controls.Add(this.nud_Pressuer);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(272, 50);
+            this.groupBox1.Size = new System.Drawing.Size(272, 60);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Давление";
             // 
             // nud_Pressuer
             // 
+            this.nud_Pressuer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nud_Pressuer.Increment = new decimal(new int[] {
             10,
             0,
@@ -86,20 +87,21 @@
             0,
             -2147483648});
             this.nud_Pressuer.Name = "nud_Pressuer";
-            this.nud_Pressuer.Size = new System.Drawing.Size(236, 20);
+            this.nud_Pressuer.Size = new System.Drawing.Size(236, 29);
             this.nud_Pressuer.TabIndex = 0;
             // 
             // FormInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 101);
+            this.ClientSize = new System.Drawing.Size(289, 113);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Location = new System.Drawing.Point(100, 300);
             this.Name = "FormInput";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Ввод значения точки давления";
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nud_Pressuer)).EndInit();
