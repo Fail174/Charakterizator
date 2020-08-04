@@ -206,6 +206,7 @@ namespace Charaterizator
             }
             catch
             {
+                serialPort1.Close();
                 Connected = false;
                 return -1;
             }
@@ -388,6 +389,7 @@ namespace Charaterizator
         public void SetConnectors(Int32 CH, int mode)
         {
             if (!serialPort1.IsOpen) return;
+
             bool hi_addr = false;
            // Int32 StateCHPower, StateCH;
             if (CH >= 30)

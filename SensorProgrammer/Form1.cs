@@ -25,8 +25,7 @@ namespace SensorProgrammer
 
         // Объекты классов из characterizator 
         private FormSwitch Commutator = new FormSwitch();
-        private ClassEni100 sensors = new ClassEni100(15);
-        //public ClassEni100 eni100 = null;
+        private ClassEni100 sensors = new ClassEni100(15);       
 
         // Структура с параметрами датчика из БД
         struct SensParam
@@ -34,22 +33,17 @@ namespace SensorProgrammer
             public string Type;
             public string Model;
             public string Serial;
-
             public string Pmin;
             public string Pmax;
-
             public string NumOfRange;
             public string DeltaRange;
-
             public string Gain1;
             public string Range1Pmin;
             public string Range1Pmax;
-
             public string Gain2;
             public string Range2Pmin;
             public string Range2Pmax;                       
         }
-
         SensParam sensParam;
 
 
@@ -66,6 +60,7 @@ namespace SensorProgrammer
         // Операции выполняемые при загрузке формы...
         // устанавливаем соединение с коммутатором (с параметрами из настроек settings)
         // устанавливаем связь с БД (путь файла к БД из настроек settings)
+        // учтанавливаем связь с датчиками
         private void FormSensorProgrammer_Load(object sender, EventArgs e)
         {
             // Подключение коммутатора
@@ -80,13 +75,12 @@ namespace SensorProgrammer
                 SetdgwMainWindow(); // первоначальное заполенение dgwMainWindow
                 FilldwgSensParam(); // отображение окна с параметрами датчиков
             }
-
+            // Подключаем датчики
+            SetSensorsConnect();
             
         }
 
-
-
-
+        
 
         //********************************* РАБОТА С БД ******************************************
 
@@ -157,7 +151,7 @@ namespace SensorProgrammer
 
 
         // Получение списка всех моделей из БД
-        void GetModelDB()
+        void GetTypeDB()
         {
             // текст запроса              
             string query = "SELECT DISTINCT Type FROM TSensors ORDER BY Type";
@@ -304,6 +298,77 @@ namespace SensorProgrammer
 
 
 
+
+        //**************************** РАБОТА С ДАТЧИКАМИ ****************************************
+        // Установка соединения с датчиками
+        private void SetSensorsConnect()
+        {
+            // Подключение датчиков
+            if (sensors.Connect(Properties.Settings.Default.COMSensor,
+                   Properties.Settings.Default.COMSensor_Speed,
+                   Properties.Settings.Default.COMSensor_DataBits,
+                   Properties.Settings.Default.COMSensor_StopBits,
+                   Properties.Settings.Default.COMSensor_Parity) >= 0)
+            {
+                bSensors.BackColor = Color.Green;
+                bSensors.Text = "Датчики: ПОДКЛЮЧЕНЫ";
+            }
+
+            else
+            {
+                bSensors.BackColor = Color.IndianRed;
+                bSensors.Text = "Датчики: НЕ ПОДКЛЮЧЕНЫ";
+            }
+
+        }
+
+
+        //Подключение датчиков
+        private void bSensors_Click(object sender, EventArgs e)
+        {
+            {
+                FormPortSettings newForm = new FormPortSettings();
+                newForm.InitPortsettings(Properties.Settings.Default.COMSensor,
+                    Properties.Settings.Default.COMSensor_Speed,
+                    Properties.Settings.Default.COMSensor_DataBits,
+                    Properties.Settings.Default.COMSensor_StopBits,
+                    Properties.Settings.Default.COMSensor_Parity);
+
+                if (newForm.ShowDialog() == DialogResult.OK)
+                {
+                    Properties.Settings.Default.COMSensor = newForm.GetPortName();
+                    Properties.Settings.Default.COMSensor_Speed = newForm.GetPortSpeed();
+                    Properties.Settings.Default.COMSensor_DataBits = newForm.GetPortDataBits();
+                    Properties.Settings.Default.COMSensor_StopBits = newForm.GetPortStopBits();
+                    Properties.Settings.Default.COMSensor_Parity = newForm.GetPortParity();
+                    Properties.Settings.Default.Save();  // Сохраняем переменные.
+                }
+            }
+
+            if (sensors.Connect(Properties.Settings.Default.COMSensor,
+                  Properties.Settings.Default.COMSensor_Speed,
+                  Properties.Settings.Default.COMSensor_DataBits,
+                  Properties.Settings.Default.COMSensor_StopBits,
+                  Properties.Settings.Default.COMSensor_Parity) >= 0)
+            {
+                bSensors.BackColor = Color.Green;
+                bSensors.Text = "Датчики: ПОДКЛЮЧЕНЫ";
+            }
+
+            else
+            {
+                bSensors.BackColor = Color.IndianRed;
+                bSensors.Text = "Датчики: НЕ ПОДКЛЮЧЕНЫ";
+            }
+
+        }
+
+
+
+
+
+
+
         //**************************** РАБОТА С ФОРМОЙ ****************************************
 
         // Первоначальное заполенеие dgwMainWindow
@@ -318,7 +383,7 @@ namespace SensorProgrammer
             }
             dgwMainWindow.ClearSelection();
             // Получаем список типов и датчиков из БД
-            GetModelDB();
+            GetTypeDB();
         }
         
                 
@@ -350,8 +415,7 @@ namespace SensorProgrammer
             {
                 reader.Close();   
                 FilldgwMainWindow(2, SelectType);  // заполняем столбец ТИП до конца таблицы
-                FilldgwMainWindow(3, null);        // обнуляем столбец МОДЕЛЬ до конца таблицы    
-                dgwSensParam.Rows.Clear();
+                FilldgwMainWindow(3, null);        // обнуляем столбец МОДЕЛЬ до конца таблицы                   
                 FilldwgSensParam();
 
             }           
@@ -390,7 +454,7 @@ namespace SensorProgrammer
         private void dgwMainWindow_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             // редактирование СЕРИЙНОГО НОМЕРА
-            if (e.ColumnIndex == 4)
+            if ((e.ColumnIndex == 4)&&(cbAutoNumSerial.Checked))
             {
                 int i;
                 // Проверка введенного значения на то что это число
@@ -399,11 +463,11 @@ namespace SensorProgrammer
                     Int64 serial = Convert.ToInt64(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                     if (serial != 0)  // если задали сер.номер в первой ячейки прописываем его инкрементацией во все остальные строки
                     {
-                        for (i = 1; i < 30; i++)
+                        for (i = e.RowIndex; i < 30; i++)
                         {
                             if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
                             {
-                                dgwMainWindow.Rows[i].Cells[4].Value = Convert.ToString(++serial);
+                                dgwMainWindow.Rows[i].Cells[4].Value = Convert.ToString(serial++);
                             }
                         }
                         dgwMainWindow.ClearSelection();
@@ -413,7 +477,10 @@ namespace SensorProgrammer
                 {
                     MessageBox.Show("Данные в этой ячейке не являются числом.", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
-                }          
+                }
+
+             
+
             }
         }
 
@@ -422,6 +489,8 @@ namespace SensorProgrammer
         // Разрешаем/Запрещаем редактирование серийного номера датчика - при установке checkBox - выбор канала коммутатора 
         private void dgwMainWindow_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {           
+           /*
+            
             // редактирование НОМЕРА КАНАЛА
             if ((e.ColumnIndex == 1) && (e.RowIndex >= 0))  //&& (e.ColumnIndex >= 0)
             {
@@ -430,10 +499,9 @@ namespace SensorProgrammer
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
                     dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
                     dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
-
-
+                    
+                   /*
                     // подключаем соответствующий канал коммутатора
-
                     Commutator.SetConnectors(e.RowIndex, 0);
 
                     if (sensors.SeachSensor(e.RowIndex))//поиск датчиков по HART
@@ -444,7 +512,8 @@ namespace SensorProgrammer
                     {
                         dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.IndianRed;
                     }
-                }
+                    */
+       /*         }
                 else
                 {
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
@@ -454,7 +523,8 @@ namespace SensorProgrammer
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
                     dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 }
-            }
+            }           
+*/
         }
 
 
@@ -464,7 +534,7 @@ namespace SensorProgrammer
         {
             if (e.ColumnIndex == 1)
             {
-                if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+                /*if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == false))
                 {
                     for (int i = e.RowIndex; i >= 0; i--)
                     {
@@ -476,14 +546,59 @@ namespace SensorProgrammer
                         {
                             dgwMainWindow.Rows[i].Cells[1].Value = true;
                             dgwMainWindow.Rows[i].Cells[4].ReadOnly = false;
+                            dgwMainWindow.Rows[i].Cells[2].Value = cbType.SelectedItem;
+                            dgwMainWindow.Rows[i].Cells[3].Value = cbModel.SelectedItem;
 
                         }
                     }
                 }
+                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == true))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == false)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow.Rows[i].Cells[1].Value = false;
+                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = true;
+                            dgwMainWindow.Rows[i].Cells[4].Value = null;
+                            dgwMainWindow.Rows[i].Cells[2].Value = null;
+                            dgwMainWindow.Rows[i].Cells[3].Value = null;
+
+                        }
+                    }
+                }
+                */
+
+                if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == false)
+                {
+                    dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+
+                    dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
+                  
+                }
+                else
+                {
+                    dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+
+                    dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
+                    dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
+                    dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                }
             }
+
+           
+
         }
 
-        
+
 
         private void FilldwgSensParam()
         {
@@ -612,7 +727,7 @@ namespace SensorProgrammer
                 if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
                     progressMax++;
             }
-             progressBar.Minimum = 0;
+            progressBar.Minimum = 0;
             progressBar.Maximum = progressMax;       
             progressBar.Value = 0;
             progressBar.Step = 1;
@@ -704,9 +819,7 @@ namespace SensorProgrammer
             {
                 progressBar.Value = 0;
                 label2.Text = "";
-            }
-            
-
+            }           
         }
 
 
@@ -774,7 +887,10 @@ namespace SensorProgrammer
 
 
 
-        // При закрытии формы отключаем соединения с БД и коммутатором
+
+
+
+        // При закрытии формы отключаем соединения с БД, коммутатором и датчиками
         private void FormSensorProgrammer_FormClosed(object sender, FormClosedEventArgs e)
         {
            
@@ -788,48 +904,90 @@ namespace SensorProgrammer
                 _сonnection.Close();
             }
 
+            if (sensors.IsConnect())
+            {
+                sensors.DisConnect();
+            }
+
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        // Поиск датчиков в выделенных каналах
+        private void bRead_Click(object sender, EventArgs e)
         {
-           
-            {
-                FormPortSettings newForm = new FormPortSettings();
-                newForm.InitPortsettings(Properties.Settings.Default.COMSensor,
-                    Properties.Settings.Default.COMSensor_Speed,
-                    Properties.Settings.Default.COMSensor_DataBits,
-                    Properties.Settings.Default.COMSensor_StopBits,
-                    Properties.Settings.Default.COMSensor_Parity);
+            bool flag_select_CH = false;
 
-                if (newForm.ShowDialog() == DialogResult.OK)
+            if ((Commutator.Connected == true) && (sensors.IsConnect()))
+            {
+
+                // Настраиваем прогрессБар
+                int progressMax = 0;
+                for (int i = 0; i < 30; i++)
                 {
-                    Properties.Settings.Default.COMSensor = newForm.GetPortName();
-                    Properties.Settings.Default.COMSensor_Speed = newForm.GetPortSpeed();
-                    Properties.Settings.Default.COMSensor_DataBits = newForm.GetPortDataBits();
-                    Properties.Settings.Default.COMSensor_StopBits = newForm.GetPortStopBits();
-                    Properties.Settings.Default.COMSensor_Parity = newForm.GetPortParity();
-                    Properties.Settings.Default.Save();  // Сохраняем переменные.
+                    if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                        progressMax++;
                 }
-            }
+                progressBar.Minimum = 0;
+                progressBar.Maximum = progressMax;
+                progressBar.Value = 0;
+                progressBar.Step = 1;             
+                progressBar.PerformStep();
 
-            if (sensors.Connect(Properties.Settings.Default.COMSensor,
-                  Properties.Settings.Default.COMSensor_Speed,
-                  Properties.Settings.Default.COMSensor_DataBits,
-                  Properties.Settings.Default.COMSensor_StopBits,
-                  Properties.Settings.Default.COMSensor_Parity) >= 0)
-            {
-                button1.BackColor = Color.Green;
-            }
 
+
+
+                for (int i = 0; i < 30; i++)
+                {
+                    if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                    {
+                        flag_select_CH = true;
+
+                        try
+                        {
+                            // подключаем соответствующий канал коммутатора
+                            Commutator.SetConnectors(i, 0);
+
+                            if (sensors.SeachSensor(i))//поиск датчиков по HART
+                            {
+                                dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.Green;
+                            }
+                            else
+                            {
+                                dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                            }
+                            progressBar.PerformStep();
+                        }
+
+                        catch
+                        {
+                            MessageBox.Show("Не удалось связаться с датчиками: ", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            progressBar.Value = 0;
+                            break;
+                        }
+
+
+
+
+                      
+                    }                     
+                }
+                if (!flag_select_CH)
+                {
+                    //label2.Text = "Не выбран ни один канал";
+                    MessageBox.Show("Не выбран ни один канал", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                    
+
+            }
             else
             {
-                button1.BackColor = Color.Red;
+                //label2.Text = "Не подключен коммутатор или нет связи с датчиками";
+                MessageBox.Show("Не подключен коммутатор или нет связи с датчиками", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
 
         }
-
-
     }      
 }
