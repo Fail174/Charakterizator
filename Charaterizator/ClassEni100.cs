@@ -273,6 +273,7 @@ namespace Charaterizator
             port = new SerialPort();
             readbuf.Clear();
         }
+
         ~ClassEni100()
         {
             DisConnect();
@@ -284,6 +285,7 @@ namespace Charaterizator
         {
             return SensorConnect;
         }
+
         public byte GetCRC(byte[] data,int start)
         {
             byte res = 0;
