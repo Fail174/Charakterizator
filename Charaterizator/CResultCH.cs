@@ -13,7 +13,7 @@ namespace Charaterizator
     {
         public DateTime Datetime;
         public double Temperature;
-        public int Diapazon;
+        public Int32 Diapazon;
         public double Pressure;
         public double OutVoltage;
         public double Resistance;
@@ -23,11 +23,11 @@ namespace Charaterizator
     //структура канала с датчиком, включает множество точек измерения
     struct SChanal
     {
-        public int ChannalNummber;//номер канала
-        public int FactoryNumber;//заводской номер датчика
+        public Int32 ChannalNummber;//номер канала
+        public Int32 FactoryNumber;//заводской номер датчика
         public string FileNameArchiv;
         public List<SPoint> Points;
-        public int CCount;
+        public Int32 CCount;
         public byte SensorType;
         public char[] PressureModel;
         public float[] Coefficient;//коэффициенты датчика
@@ -246,6 +246,17 @@ namespace Charaterizator
 
         }
 
+        //создаем файл  архива на диске
+        private BinaryWriter CreateFileBinary(SChanal ch)
+        {
+            BinaryWriter writer = new BinaryWriter(File.Open(ch.FileNameArchiv, FileMode.OpenOrCreate));//создаем файл БД
+            if (writer != null)
+            {
+                writer.Write(ch.FactoryNumber);
+                writer.Write(ch.ChannalNummber);
+            }
+            return writer;
+        }
         //пересоздаем архив для датчика в канале i
         public void SaveToArhiv(int i)
         {
@@ -279,6 +290,99 @@ namespace Charaterizator
             else
             {
                 Program.txtlog.WriteLineLog("CH: Ошибка записи в архив  характеризации: " + ch.FileNameArchiv, 1);
+            }
+        }
+
+        //пересоздаем архив для датчика в канале i
+        public void SaveToBinary(int i)
+        {
+            if ((Channal.Count <= 0) || (i >= Channal.Count))
+            {
+                Program.txtlog.WriteLineLog("CH: Отсутсвуют данные характеризации для датчика в канале: " + i, 1);
+                return;
+            }
+            SChanal ch = Channal[i];
+            BinaryWriter writer = CreateFileBinary(ch);
+            if (writer != null)
+            {
+                writer.Write(ch.Points.Count);
+                for (int j = 0; j < ch.Points.Count; j++)//перебор точек измерения для датчика
+                {
+                    writer.Write(ch.Points[j].Datetime.ToBinary());
+                    writer.Write(ch.Points[j].Temperature);
+                    writer.Write(ch.Points[j].Diapazon);
+                    writer.Write(ch.Points[j].Pressure);
+                    writer.Write(ch.Points[j].OutVoltage);
+                    writer.Write(ch.Points[j].Resistance);
+                    writer.Write(ch.Points[j].Deviation);
+                }
+                if (ch.Coefficient[0] != 0)//если коэффициенты подсчитаны
+                {
+                    writer.Write(ch.CCount);
+                    for (int c = 0; c < ch.CCount - 1; c++)
+                    {
+                        writer.Write(ch.Coefficient[c]);
+                    }
+                }
+                writer.Close();
+                writer = null;
+                Program.txtlog.WriteLineLog("CH: Данные характеризации успешно перезаписаны.", 0);
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH: Ошибка записи в архив  характеризации: " + ch.FileNameArchiv, 1);
+            }
+        }
+
+
+        public void LoadFromBinary()
+        {
+            try
+            {
+                for (int i = 0; i < Channal.Count; i++)//перебор каналов
+                {
+                    SChanal ch = Channal[i];
+                    if (!File.Exists(ch.FileNameArchiv))
+                    {
+                        continue;
+                    }
+                    BinaryReader reader = new BinaryReader(File.Open(ch.FileNameArchiv, FileMode.Open));
+                    if (reader != null)
+                    {
+                        ch.FactoryNumber = reader.ReadInt32();
+                        ch.ChannalNummber = reader.ReadInt32();
+                        int Count = reader.ReadInt32();
+                        for (int j = 0; j < Count; j++)//перебор точек измерения для датчика
+                        {
+                            SPoint point;
+                            point.Datetime = DateTime.FromBinary(reader.ReadInt64());
+                            point.Temperature = reader.ReadDouble();
+                            point.Diapazon = reader.ReadInt32();
+                            point.Pressure = reader.ReadDouble();
+                            point.OutVoltage = reader.ReadDouble();
+                            point.OutVoltage = reader.ReadDouble();
+                            point.Resistance = reader.ReadDouble();
+                            point.Deviation = reader.ReadDouble();
+                            ch.Points.Add(point);
+                        }
+                        Count = reader.ReadInt32();
+                        for (int c = 0; c < Count - 1; c++)
+                        {
+                            ch.Coefficient[c] = reader.ReadSingle();
+                        }
+
+                        reader.Close();
+                        Program.txtlog.WriteLineLog("CH:Архив данных характеризации загружен из файла: " + ch.FileNameArchiv, 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("CH:Ошибка доступа к архиву данных характеризации: " + ch.FileNameArchiv, 1);
+                    }
+                }
+            }
+            catch
+            {
+                Program.txtlog.WriteLineLog("CH:Критическая ошибка чтения архива характеризации!", 1);
             }
         }
 

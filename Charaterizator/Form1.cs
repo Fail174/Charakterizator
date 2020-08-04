@@ -2687,11 +2687,12 @@ namespace Charaterizator
                             SelectModel = new String(sensors.sensorList[si].PressureModel);
                             SensorAbsPressuer = (SelectModel[1] == '0');
                             SelectType = sensors.sensorList[si].GetdevType();
-                        }
+                            cb_MET_Unit.Text = sensors.sensorList[si].GetUnit();
+                        } else cb_MET_Unit.Text = "кПа";
 
                         pUpStatusBar.Visible = true;
                         splitter1.Visible = false;
-                        cb_MET_Unit.SelectedIndex = 0;
+                        //cb_MET_Unit.SelectedIndex = 0;
                         UpDateSelectedChannal();
                         return;
                     }
@@ -4931,7 +4932,7 @@ namespace Charaterizator
         }
 
 
-
+        //Установка единц измерения
         private void WriteSensor_MET_MesUnit()
         {
             int StartNumber = 0;    //начальный канал
@@ -4944,7 +4945,7 @@ namespace Charaterizator
             pbMETProcess.Value = 0;
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                if (ProcessStop) return;//прекращаем верификацию 
+                if (ProcessStop) return;//прекращаем  
 
                 pbMETProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -5628,7 +5629,41 @@ namespace Charaterizator
 
 
 
-        private void cb_MET_Unit_SelectedIndexChanged(object sender, EventArgs e)
+        private void lb_MET_PressValue_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == System.Windows.Forms.Keys.Delete)
+            {
+                btn_MET_Del.PerformClick();
+            }
+            if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+            {
+                if (e.KeyCode == System.Windows.Forms.Keys.Up)
+                {
+                    btn_MET_Up.PerformClick();
+                    lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex + 1;
+                }
+                if (e.KeyCode == System.Windows.Forms.Keys.Down)
+                {
+                    btn_MET_Down.PerformClick();
+                    lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex - 1;
+                }
+            }
+        }
+
+        private void lb_MET_PressValue_DoubleClick(object sender, EventArgs e)
+        {
+            FormInput forminput = new FormInput();
+            //int index = lb_MET_PressValue.SelectedIndex;
+            forminput.Pressuer = lb_MET_PressValue.SelectedItem.ToString();
+            if (forminput.ShowDialog() == DialogResult.OK)
+            {
+                int index = lb_MET_PressValue.SelectedIndex;
+                lb_MET_PressValue.Items.RemoveAt(index);
+                lb_MET_PressValue.Items.Insert(index, forminput.Pressuer);
+            }
+        }
+
+        private void btn_MET_Unit_Click(object sender, EventArgs e)
         {
             if (!SensorBusy)
             {
@@ -5663,40 +5698,6 @@ namespace Charaterizator
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
                 }
-            }
-        }
-
-        private void lb_MET_PressValue_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == System.Windows.Forms.Keys.Delete)
-            {
-                btn_MET_Del.PerformClick();
-            }
-            if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
-            {
-                if (e.KeyCode == System.Windows.Forms.Keys.Up)
-                {
-                    btn_MET_Up.PerformClick();
-                    lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex + 1;
-                }
-                if (e.KeyCode == System.Windows.Forms.Keys.Down)
-                {
-                    btn_MET_Down.PerformClick();
-                    lb_MET_PressValue.SelectedIndex = lb_MET_PressValue.SelectedIndex - 1;
-                }
-            }
-        }
-
-        private void lb_MET_PressValue_DoubleClick(object sender, EventArgs e)
-        {
-            FormInput forminput = new FormInput();
-            //int index = lb_MET_PressValue.SelectedIndex;
-            forminput.Pressuer = lb_MET_PressValue.SelectedItem.ToString();
-            if (forminput.ShowDialog() == DialogResult.OK)
-            {
-                int index = lb_MET_PressValue.SelectedIndex;
-                lb_MET_PressValue.Items.RemoveAt(index);
-                lb_MET_PressValue.Items.Insert(index, forminput.Pressuer);
             }
         }
     }

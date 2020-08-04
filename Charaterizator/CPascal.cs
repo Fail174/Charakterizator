@@ -152,8 +152,8 @@ namespace Charaterizator
                 Port.WriteLine("R");               // переводим прибор в режим удаленного управления
                 //Port.Write("R\r\n");
                 Thread.Sleep(READ_PAUSE);
-                if (Port.BytesToRead > 0)
-                    ;
+                //if (Port.BytesToRead > 0)
+                //    ;
                 //Port.Read();
                 str = Port.ReadLine();
                 if (str == "REMOTE")

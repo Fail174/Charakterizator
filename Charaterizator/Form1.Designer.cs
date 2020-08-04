@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -344,6 +344,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
+            this.btn_MET_Unit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -1693,8 +1694,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle7;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1736,10 +1737,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle8.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle8;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -3476,6 +3477,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_MET_Unit);
             this.groupBox2.Controls.Add(this.btn_MET_Down);
             this.groupBox2.Controls.Add(this.btn_MET_Up);
             this.groupBox2.Controls.Add(this.btn_MET_Del);
@@ -3572,12 +3574,13 @@
             "кПа",
             "МПа",
             "бар",
-            "psi"});
+            "мбар",
+            "мм рт.ст.",
+            "Па"});
             this.cb_MET_Unit.Location = new System.Drawing.Point(127, 25);
             this.cb_MET_Unit.Name = "cb_MET_Unit";
-            this.cb_MET_Unit.Size = new System.Drawing.Size(121, 21);
+            this.cb_MET_Unit.Size = new System.Drawing.Size(67, 21);
             this.cb_MET_Unit.TabIndex = 0;
-            this.cb_MET_Unit.SelectedIndexChanged += new System.EventHandler(this.cb_MET_Unit_SelectedIndexChanged);
             // 
             // btn_MET_SetZero
             // 
@@ -3848,6 +3851,18 @@
             this.splitter2.Size = new System.Drawing.Size(1138, 3);
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
+            // 
+            // btn_MET_Unit
+            // 
+            this.btn_MET_Unit.BackColor = System.Drawing.Color.LightGreen;
+            this.btn_MET_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_MET_Unit.Location = new System.Drawing.Point(195, 23);
+            this.btn_MET_Unit.Name = "btn_MET_Unit";
+            this.btn_MET_Unit.Size = new System.Drawing.Size(54, 25);
+            this.btn_MET_Unit.TabIndex = 7;
+            this.btn_MET_Unit.Text = "Задать";
+            this.btn_MET_Unit.UseVisualStyleBackColor = false;
+            this.btn_MET_Unit.Click += new System.EventHandler(this.btn_MET_Unit_Click);
             // 
             // MainForm
             // 
@@ -4254,6 +4269,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.Button btnCalculateDeviation;
         private System.Windows.Forms.CheckBox cb_ManualMode;
+        private System.Windows.Forms.Button btn_MET_Unit;
     }
 }
 

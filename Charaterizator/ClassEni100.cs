@@ -133,6 +133,16 @@ namespace Charaterizator
         {
             switch (MesUnit)
             {
+                case 0x05:
+                    return "мм рт.ст.";
+                case 0x07:
+                    return "бар";
+                case 0x08:
+                    return "мбар";
+                case 0x0B:
+                    return "Па";
+                case 0x0D:
+                    return "атм";
                 case 0x0C:
                     return "кПа";
                 case 0xED:
@@ -146,8 +156,23 @@ namespace Charaterizator
         {
             switch (u)
             {
+                case "мм рт.ст.":
+                    MesUnit = 0x05;
+                    break;
+                case "бар":
+                    MesUnit = 0x07;
+                    break;
+                case "мбар":
+                    MesUnit = 0x08;
+                    break;
+                case "Па":
+                    MesUnit = 0x0B;
+                    break;
                 case "кПа":
                     MesUnit=0x0C;
+                    break;
+                case "атм":
+                    MesUnit = 0x0D;
                     break;
                 case "МПа":
                     MesUnit = 0xED;
@@ -315,18 +340,9 @@ namespace Charaterizator
                     return true;
                 }
             }
+            //SelSensorChannal = -1;
+            //SelSensorIndex = -1;
             return false;
-
-/*            if (sensorList.Count > index)
-            {
-                sensor = sensorList[index];
-                SelSensorChannal = index;
-                return true;
-            }
-            else
-            {
-                return false;
-            }*/
         }
         //поиск подключенных датчиков в заданном канале
         public bool SeachSensor(int ch)
