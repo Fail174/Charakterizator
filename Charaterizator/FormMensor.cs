@@ -156,6 +156,7 @@ namespace Charaterizator
                     ReadThread = new Thread(MensorReadThread);
                     ReadThread.Priority = ThreadPriority.AboveNormal;
                     ReadThread.Start();
+                    Thread.Sleep(1000);
 
                     Connected = true;
                     return 0;
@@ -531,8 +532,9 @@ namespace Charaterizator
                 {
                     // если считать не удалось (ошибка по TimeOut или другая... перезапускаем COM-порт)
                     //Program.txtlog.WriteLineLog("Mensor: Ошибка чтения данных", 1);
-                    Console.WriteLine("Mensor: Ошибка чтения данных");
-                    activCH = -1;
+                    Console.WriteLine("Mensor: Ошибка чтения данных в потоке");
+                    //activCH = -1;
+
                     //_serialPort_M.Close();
                     //Connected = false;
                     //Thread.Sleep(20);

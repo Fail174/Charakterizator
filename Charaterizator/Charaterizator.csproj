@@ -257,5 +257,11 @@
   <ItemGroup>
     <None Include="Resources\120.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eni-12h-hs_m1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eni-100_m1.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

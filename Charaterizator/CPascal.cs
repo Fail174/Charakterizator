@@ -477,36 +477,42 @@ namespace Charaterizator
         void PascalReadThread()
         {
             int i;
+
             while (Port.IsOpen)
             {
+                i = 0;
+                while ((ReadPascal) && (i < READ_PAUSE))
+                {
+                    Thread.Sleep(1);
+                    i++;
+                }
                 try
                 {
-                    i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE))
-                    {
-                        Thread.Sleep(1);
-                        i++;
-                    }
                     ReadPascal = true;
                    
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadLine();
-                       
                     }
 
                     i = 0;
                     // считываем текущее давление
                     Thread.Sleep(READ_PAUSE);
                     Port.WriteLine("PRES?");
-                    //Thread.Sleep(READ_PAUSE);
                     while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
                     {
                         i++;
                         Thread.Sleep(1);
                     }
-                    strData = Port.ReadLine();
-                    press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    if (Port.BytesToRead <= 0)
+                    {
+                        strData = Port.ReadLine();
+                        press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        continue;
+                    }
 
                     // считываем текущий используемый модуль
                     Thread.Sleep(READ_PAUSE);
@@ -518,25 +524,27 @@ namespace Charaterizator
                         i++;
                         Thread.Sleep(1);
                     }
-                    strData = Port.ReadLine();
-                                        
-                    Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    rangeModule[0] = Convert.ToInt16(Data[1]);
-                    rangeModule[1] = Convert.ToInt16(Data[3]);
-
-                    ReadPascal = false;
-                    Thread.Sleep(500);
-
+                    if (Port.BytesToRead <= 0)
+                    {
+                        strData = Port.ReadLine();
+                        Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        rangeModule[0] = Convert.ToInt16(Data[1]);
+                        rangeModule[1] = Convert.ToInt16(Data[3]);
+                    }
                 }
                 catch
                 {
-                    rangeModule[0] = -1;
+                    /*rangeModule[0] = -1;
                     rangeModule[1] = -1;
-                    press = -1;
-
+                    press = -1;*/
+                    //Port.Close();
                     Program.txtlog.WriteLineLog("Pascal: Ошибка чтения в потоке", 1);
                     Error = true;
+                }
+                finally
+                {
+                    ReadPascal = false;
+                    Thread.Sleep(500);
                 }
             }
         }

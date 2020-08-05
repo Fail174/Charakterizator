@@ -574,12 +574,20 @@ namespace Charaterizator
                     tbSelChannalNumber.Text = string.Format("Канал {0}", i + 1);
                     tbInfoDesc.Text = sensors.sensor.GetDesc();
                     tbInfoTeg.Text = sensors.sensor.GetTeg();
+                    tbInfoMessage.Text = sensors.sensor.GetMes();
+                    
                     tbInfoPressureModel.Text = new String(sensors.sensor.PressureModel);
                     tbInfoUp.Text = sensors.sensor.UpLevel.ToString("f6");
                     tbInfoDown.Text = sensors.sensor.DownLevel.ToString("f6");
                     tbInfoSerialNumber.Text = sensors.sensor.SerialNumber.ToString();
                     tbInfoMin.Text = sensors.sensor.MinLevel.ToString("f6");
                     tbInfoMesUnit.Text = sensors.sensor.GetUnit();
+
+
+                    tbInfoHartVersion.Text = sensors.sensor.v1.ToString();
+                    tbInfoSensorVersion.Text = sensors.sensor.v2.ToString();
+                    tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
+                    tbInfoHardVersion.Text = sensors.sensor.v4.ToString();
 
                     DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
                     dtpInfoDate.Value = dt;
@@ -592,6 +600,15 @@ namespace Charaterizator
                     /*            string SelectedSensor = sensors.sensor.Addr.ToString("D2") + " | " + sensors.sensor.GetdevType() + " | " + sensors.sensor.uni;
                                 tbCharact.Text = SelectedSensor;
                                 tbCoef.Text = SelectedSensor;*/
+                    if (tbInfoSensorType.Text == "ЭНИ-12")
+                    {
+                        pbSensorImage.BackgroundImage = Properties.Resources.eni_12h_hs_m;
+                    }
+                    else
+                    {
+                        pbSensorImage.BackgroundImage = Properties.Resources.eni_100_m;
+                    }
+
                 }
                 catch
                 {
@@ -1931,13 +1948,14 @@ namespace Charaterizator
 
             if (MensorReadError >= MAX_ERROR_COUNT)
             {
-                tbMensorData.Text = "-1";
+                /*tbMensorData.Text = "-1";
                 numMensorPoint.Text = "-1";
-                cbMensorTypeR.SelectedIndex = -1;
+                cbMensorTypeR.SelectedIndex = -1;*/
                 Mensor.DisConnect();
                 btnMensor.BackColor = Color.IndianRed;
                 btnMensor.Text = "Не подключен";
                 Program.txtlog.WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
+                btnMensor.PerformClick();
             }
         }
 
@@ -2036,13 +2054,14 @@ namespace Charaterizator
 
             if (MensorReadError >= MAX_ERROR_COUNT)
             {
-                tbMensorData.Text = "-1";
+                /*tbMensorData.Text = "-1";
                 numMensorPoint.Text = "-1";
-                cbMensorTypeR.SelectedIndex = -1;
+                cbMensorTypeR.SelectedIndex = -1;*/
                 Pascal.DisConnect();
                 btnMensor.BackColor = Color.IndianRed;
                 btnMensor.Text = "Не подключен";
                 Program.txtlog.WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);
+                btnMensor.PerformClick();
             }
         }
 
@@ -2177,7 +2196,7 @@ namespace Charaterizator
             //if (e.ColumnIndex <= 2)//выбор датчика     - было
             if (e.ColumnIndex != 1)//выбор датчика         
             {
-            UpdateSensorInfoPanel(e.RowIndex);
+                UpdateSensorInfoPanel(e.RowIndex);
             }
 
            /* if (e.ColumnIndex == 4)//Состояние датчика - подключение
@@ -2697,6 +2716,9 @@ namespace Charaterizator
                     // ОКНО - Сдача Метрологу
                 case 3:
                     {
+                        // УРОВЕНЬ - 1
+                        int NumOfRange = -1;
+                        string SensParam;
                         si = sensors.FindSensorGroup(1);
                         if (si >= 0)
                         {
@@ -2704,11 +2726,35 @@ namespace Charaterizator
                             SensorAbsPressuer = (SelectModel[1] == '0');
                             SelectType = sensors.sensorList[si].GetdevType();
                             cb_MET_Unit.Text = sensors.sensorList[si].GetUnit();
-                        } else cb_MET_Unit.Text = "кПа";
+
+                            // Определяем количество диапазонов у датчика                               
+                            NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
+
+                            if ((NumOfRange != 1) && (NumOfRange != 2))
+                            {
+                                cbVRDiapazon1.SelectedIndex = -1;
+                                cbVRDiapazon1.Enabled = false;
+                            }
+                            else
+                            {
+                                // Занесение данных о диапазоне температур и давлений из БД в listbobox
+                                SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerPressPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                                if (SensParam != "")
+                                {
+                                    string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                    lb_MET_PressValue.Items.Clear();
+                                    lb_MET_PressValue.Items.AddRange(SPcmbox);
+                                    lb_MET_PressValue.SelectedIndex = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cb_MET_Unit.Text = "кПа";
+                        }
 
                         pUpStatusBar.Visible = true;
                         splitter1.Visible = false;
-                        //cb_MET_Unit.SelectedIndex = 0;
                         UpDateSelectedChannal();
                         return;
                     }
@@ -3058,15 +3104,33 @@ namespace Charaterizator
                 //                {
                 try
                 {
-                        btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
-                        UpdateItemState(2);
-                        ReadSensorParametrs();
-                    }
-                    finally
+
+                    btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
+                    UpdateItemState(2);
+                    if (cbCHPressureSet1.Items.Count <= 0)
                     {
+                        if (MessageBox.Show("Отсутсвуют точки давления. Продолжить характеризацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            ReadSensorParametrs();
+                        }
+                    }
+                    else
+                    {
+                        for (i = 0; i < cbCHPressureSet1.Items.Count; i++)
+                        {
+                            cbCHPressureSet1.SelectedIndex = i;
+                            btnCHPressureSet1.PerformClick();
+                            ReadSensorParametrs();
+                        }
+                    }
+
+                }
+
+                finally
+                {
                         btnCHStart.Text = "Старт характеризации";
                         UpdateItemState(0);
-                    }
+                }
                 /*                }
                                 else
                                 {
@@ -3252,7 +3316,6 @@ namespace Charaterizator
             {
                 case "1":
                     strValue = cbCHPressureSet1.Text;
-
                     break;
                 case "2":
                     strValue = cbCHPressureSet2.Text;
@@ -3332,7 +3395,7 @@ namespace Charaterizator
             else
             {
                 Program.txtlog.WriteLineLog("CH: Нет cвязи c задатчиком давления.", 1);
-                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с Менсором", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с задатчиком давления", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     numMensorPoint.Text = strValue;
                     PressureReady = true;
@@ -3987,13 +4050,33 @@ namespace Charaterizator
                 {
                         btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
                         UpdateItemState(6);
-                        ReadSensorPressure();
-                    }
-                    finally
+                        //ReadSensorPressure();
+
+
+                    if (cbVRPressureSet1.Items.Count <= 0)
                     {
+                        if (MessageBox.Show("Отсутсвуют точки давления. Продолжить верификацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            ReadSensorPressure();
+                        }
+                    }
+                    else
+                    {
+                        for (i = 0; i < cbVRPressureSet1.Items.Count; i++)
+                        {
+                            cbVRPressureSet1.SelectedIndex = i;
+                            btnVRPressureSet1.PerformClick();
+                            ReadSensorPressure();
+                        }
+                    }
+
+                }
+
+                finally
+                {
                         btnVRParamRead.Text = "Старт верификации";
                         UpdateItemState(0);
-                    }
+                }
                 /*                }
                                 else
                                 {
@@ -5193,7 +5276,6 @@ namespace Charaterizator
 
         private void btn_MET_Del_Click(object sender, EventArgs e)
         {
-            
             if (MessageBox.Show("Удалить выбранное значение из списка?","Подтверждение операции", MessageBoxButtons.YesNo)==DialogResult.Yes)
             {
                 int index = lb_MET_PressValue.SelectedIndex;

@@ -867,7 +867,7 @@ namespace Charaterizator
                 data[i + 4] = sensor.PressureType;
                 for (int j=0;j<5;j++)
                 {
-                    data[i + 5 + j] = (byte)sensor.PressureModel[j];
+                    data[i + 5 + j] = Convert.ToByte(sensor.PressureModel[j]);
                 }
 
                 data[15] = GetCRC(data, sensor.pre);//CRC
@@ -1930,7 +1930,7 @@ namespace Charaterizator
                 sensor.PressureType = indata[2];
                 for (int i = 0; i < 5; i++)//5 символов
                 {
-                    sensor.PressureModel[i] = (char)indata[i + 3];
+                    sensor.PressureModel[i] = Convert.ToChar(indata[i + 3]);
                 }
                 sensorList[SelSensorIndex] = sensor;
 
@@ -1952,7 +1952,7 @@ namespace Charaterizator
                 {
                     if (indata.Length > (i + 3))
                     {
-                        sensor.PressureModel[i] = (char)indata[i + 3];
+                        sensor.PressureModel[i] = Convert.ToChar(indata[i + 3]); //(char)indata[i + 3];
                     }
                     else
                     {
