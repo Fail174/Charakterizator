@@ -519,19 +519,40 @@ namespace Charaterizator
                 }
                 if (P <= 0.1) V0 = V;
             }
+
+            for (int jj = Channal[i].Points.Count - 1; jj >= 0; jj--)//расчитываем отклонения для всех точек с данной температурой
+            {
+                if (Math.Abs(Channal[i].Points[jj].Temperature - Temp) > 1)//перебераем точки с данной температурой
+                {
+                    break;
+                }
+                else
+                {
+                    SPoint point = new SPoint
+                    {
+                        Datetime = Channal[i].Points[jj].Datetime,
+                        Temperature = Channal[i].Points[jj].Temperature,
+                        Diapazon = Channal[i].Points[jj].Diapazon,
+                        Pressure = Channal[i].Points[jj].Pressure,
+                        OutVoltage = Channal[i].Points[jj].OutVoltage,
+                        Resistance = Channal[i].Points[jj].Resistance,
+                        Deviation = CalcPressDeviation(Channal[i].Points[jj].Pressure, Channal[i].Points[jj].OutVoltage, Vmax, V0, Pmax),
+                    };
+                    Channal[i].Points.RemoveAt(jj);
+                    Channal[i].Points.Insert(jj, point);
+                }
+
+            }
         }
         private double CalcPressDeviation(double Press, double V, double Vmax, double V0, double Pmax)
         {
             double Vd = Vmax - V0;
+            if ((Pmax == 0)|| (Vd==0)) return 0;
+
             double Vr = V0 + Vd * Press / Pmax;
-            if (Vd != 0)
-            {
-                return (V - Vr) * 100 / Vd;
-            }
-            else
-            {
-                return 0;
-            }
+
+            return (V - Vr) * 100 / Vd;
+
 
         }
     }

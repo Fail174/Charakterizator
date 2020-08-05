@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -313,6 +313,7 @@
             this.btn_MET_DTime = new System.Windows.Forms.Button();
             this.nud_MET_DTime = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_MET_Unit = new System.Windows.Forms.Button();
             this.btn_MET_Down = new System.Windows.Forms.Button();
             this.btn_MET_Up = new System.Windows.Forms.Button();
             this.btn_MET_Del = new System.Windows.Forms.Button();
@@ -344,7 +345,6 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.btn_MET_Unit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -647,7 +647,9 @@
             // 
             // tsmiPanelTermocamera
             // 
+            this.tsmiPanelTermocamera.Checked = true;
             this.tsmiPanelTermocamera.CheckOnClick = true;
+            this.tsmiPanelTermocamera.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPanelTermocamera.Name = "tsmiPanelTermocamera";
             this.tsmiPanelTermocamera.Size = new System.Drawing.Size(226, 22);
             this.tsmiPanelTermocamera.Tag = "3";
@@ -728,7 +730,6 @@
             this.gbTermoCamera.TabIndex = 6;
             this.gbTermoCamera.TabStop = false;
             this.gbTermoCamera.Text = "Термокамера";
-            this.gbTermoCamera.Visible = false;
             // 
             // bThermalCameraSet
             // 
@@ -1694,8 +1695,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle3;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1737,10 +1738,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle8.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle4;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -3492,6 +3493,18 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Установка ряда давлений";
             // 
+            // btn_MET_Unit
+            // 
+            this.btn_MET_Unit.BackColor = System.Drawing.Color.LightGreen;
+            this.btn_MET_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_MET_Unit.Location = new System.Drawing.Point(195, 23);
+            this.btn_MET_Unit.Name = "btn_MET_Unit";
+            this.btn_MET_Unit.Size = new System.Drawing.Size(54, 25);
+            this.btn_MET_Unit.TabIndex = 7;
+            this.btn_MET_Unit.Text = "Задать";
+            this.btn_MET_Unit.UseVisualStyleBackColor = false;
+            this.btn_MET_Unit.Click += new System.EventHandler(this.btn_MET_Unit_Click);
+            // 
             // btn_MET_Down
             // 
             this.btn_MET_Down.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -3851,18 +3864,6 @@
             this.splitter2.Size = new System.Drawing.Size(1138, 3);
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
-            // 
-            // btn_MET_Unit
-            // 
-            this.btn_MET_Unit.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_MET_Unit.Location = new System.Drawing.Point(195, 23);
-            this.btn_MET_Unit.Name = "btn_MET_Unit";
-            this.btn_MET_Unit.Size = new System.Drawing.Size(54, 25);
-            this.btn_MET_Unit.TabIndex = 7;
-            this.btn_MET_Unit.Text = "Задать";
-            this.btn_MET_Unit.UseVisualStyleBackColor = false;
-            this.btn_MET_Unit.Click += new System.EventHandler(this.btn_MET_Unit_Click);
             // 
             // MainForm
             // 

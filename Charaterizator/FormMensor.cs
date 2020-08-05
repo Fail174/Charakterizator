@@ -149,8 +149,8 @@ namespace Charaterizator
                 if ((ReadMensorID==0) || (ReadMensorID == 1))
                 {
                     //timer1_Tick(null, null);// Вызываем функцию для начального обновления формы
-                    //ListMod.AddRange(new string[] { "[канал А] ДП-1", "[канал А] ДП-2", "[канал А] AutoRange", "[канал B] ДП-1", "[канал B] ДП-2", "[канал B] AutoRange", });        // список подключенных модулей
-                    ListMod.AddRange(new string[] { "[канал А] AutoRange", "[канал B] AutoRange"});        // список подключенных модулей
+                    ListMod.AddRange(new string[] { "[канал А] ДП-1", "[канал А] ДП-2", "[канал А] AutoRange", "[канал B] ДП-1", "[канал B] ДП-2", "[канал B] AutoRange", });        // список подключенных модулей
+                    //ListMod.AddRange(new string[] { "[канал А] AutoRange", "[канал B] AutoRange"});        // список подключенных модулей
 
                     // Запускаем поток
                     ReadThread = new Thread(MensorReadThread);
@@ -746,7 +746,9 @@ namespace Charaterizator
             int res = -1;
             try
             {
-                _serialPort_M.WriteLine("OUTP:CHAN?");  // запрашиваем номер активного канала                                                      
+                _serialPort_M.WriteLine("OUTP:CHAN?");  // запрашиваем номер активного канала
+                //_serialPort_M.WriteLine("*IDN?");
+            
                 Thread.Sleep(READ_PAUSE);
                 str = _serialPort_M.ReadLine();         // считываем                                                  
 

@@ -89,7 +89,6 @@ namespace Charaterizator
                 Port.RtsEnable = true;
                 Port.NewLine = "\r\n";
                 Port.Open();        // открываем порт
-                Connected = true;             
 
                 if (InitDevice())   // идентифицируем подключенный прибор
                 {
@@ -97,6 +96,8 @@ namespace Charaterizator
                     ReadThreadPascal = new Thread(PascalReadThread);
                     ReadThreadPascal.Priority = ThreadPriority.AboveNormal;
                     ReadThreadPascal.Start();
+                    Thread.Sleep(1000);
+                    Connected = true;
                     return 0;
                 }
                 else
@@ -193,7 +194,10 @@ namespace Charaterizator
                     string[] M2 = str.Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
                     M2num = M2.Length;
                     ListMod.AddRange(M2);
-                                       
+
+                    rangeModule[0] = 1;
+                    rangeModule[1] = 1;
+
                     res = true;
                 }
             }

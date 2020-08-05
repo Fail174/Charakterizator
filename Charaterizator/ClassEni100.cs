@@ -7,7 +7,7 @@ using System.IO.Ports;
 using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
-
+using TxtLog;
 
 //namespace ENI100
 namespace Charaterizator
@@ -264,9 +264,12 @@ namespace Charaterizator
         private int CountByteToRead = 0;    //количество байт в команде
         private byte Adress = 0;               //адрес устройства
 
+        //public CTxtlog txtlog;
+
         public ClassEni100(int sl)
         {
             MaxSensorOnLevel = sl;//количество датиков на уровне
+            
 
             SelSensorChannal = 0;
             sensorList.Clear();
@@ -324,7 +327,8 @@ namespace Charaterizator
                 c++;
                 Thread.Sleep(1);
                 Application.DoEvents();
-                if (Program.mainwnd.ProcessStop) return false;
+                if (Program.mainwnd != null)
+                    if (Program.mainwnd.ProcessStop) return false;
             }
             return c < timeout;
         }
@@ -1100,13 +1104,15 @@ namespace Charaterizator
                                 }
                                 else
                                 {
-                                    Program.txtlog.WriteLineLog("HART:Не верный заголовок ответной команды: " + indata[0], 1);
+                                    if (Program.txtlog != null)
+                                        Program.txtlog.WriteLineLog("HART:Не верный заголовок ответной команды: " + indata[0], 1);
                                     return -2;//неверный заголовок ответной команды
                                 }
                             }
                             else
                             {
-                                Program.txtlog.WriteLineLog("HART:Не обнаружены преамбула 0xFF. Cчитанные данные: " + indata[0], 1);
+                                if (Program.txtlog != null)
+                                    Program.txtlog.WriteLineLog("HART:Не обнаружены преамбула 0xFF. Cчитанные данные: " + indata[0], 1);
                             }
                         }
                         break;
@@ -1149,6 +1155,7 @@ namespace Charaterizator
                             if( crc != incrc)//
                             {
                                 ReadAvtState = 1;
+                                if (Program.txtlog!= null)
                                 Program.txtlog.WriteLineLog(string.Format("HART: Неверная контрольная сумма ответной команды {0}: (расчет {1} , ответ {2})", CommandCod, crc, incrc), 1);
                                 return -6;
                             }*/
@@ -1157,13 +1164,15 @@ namespace Charaterizator
                             if ((sensor.state & 0x00FF) != 0) //команда не выполнена
                             {
                                 ReadAvtState = 1;
-                                Program.txtlog.WriteLineLog(string.Format("HART: Не корректный параметр команды {0}. Статус {1}", CommandCod, sensor.state), 1);
+                                if (Program.txtlog!= null)
+                                    Program.txtlog.WriteLineLog(string.Format("HART: Не корректный параметр команды {0}. Статус {1}", CommandCod, sensor.state), 1);
                                 return -7;
                             }
                             if ((sensor.state & 0xFF00) != 0) //коммуникационная ошибка
                             {
                                 ReadAvtState = 1;
-                                Program.txtlog.WriteLineLog(string.Format("HART: Коммуникационная ошибка. Команда {0} не выполнена. Статус {1}", CommandCod, sensor.state), 1);
+                                if (Program.txtlog != null)
+                                    Program.txtlog.WriteLineLog(string.Format("HART: Коммуникационная ошибка. Команда {0} не выполнена. Статус {1}", CommandCod, sensor.state), 1);
                                 return -8;
                             }
                             switch (CommandCod)
@@ -1406,11 +1415,13 @@ namespace Charaterizator
                                     break;
                                 default:
                                     ReadAvtState = 1;
-                                    Program.txtlog.WriteLineLog("HART: Ответная команда не идентифицирована " + CommandCod.ToString(), 1);
+                                    if (Program.txtlog != null)
+                                        Program.txtlog.WriteLineLog("HART: Ответная команда не идентифицирована " + CommandCod.ToString(), 1);
                                     return -3;//неизвестная комманда
                             }
                             ReadAvtState = 1;
-                            Program.txtlog.WriteLineLog("HART:Выполнено чтение ответного слова на команду " + CommandCod.ToString(), 0);
+                            if (Program.txtlog != null)
+                                Program.txtlog.WriteLineLog("HART:Выполнено чтение ответного слова на команду " + CommandCod.ToString(), 0);
                             return CommandCod;
                         }
                         else
@@ -1418,7 +1429,8 @@ namespace Charaterizator
                             rt++;
                             if (rt>ReadTimeout)//превышен таймаут ожидания
                             {
-                                Program.txtlog.WriteLineLog("HART:Таймаут чтения команды! Байт в буфере:" + readbuf.Count + " Ожидание:" + CountByteToRead, 1);
+                                if (Program.txtlog != null)
+                                    Program.txtlog.WriteLineLog("HART:Таймаут чтения команды! Байт в буфере:" + readbuf.Count + " Ожидание:" + CountByteToRead, 1);
                                 ReadAvtState = 1;
                                 readbuf.Clear();
                                 return -4;
@@ -1450,7 +1462,8 @@ namespace Charaterizator
                 }
                 catch (TimeoutException)
                 {
-                    Program.txtlog.WriteLineLog("HART: Критическая ошибка чтения порта датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
+                    if (Program.txtlog != null)
+                        Program.txtlog.WriteLineLog("HART: Критическая ошибка чтения порта датчика! Не прочитано байт: " + port.BytesToRead.ToString(), 1);
                 }
             }
         }
@@ -1562,7 +1575,7 @@ namespace Charaterizator
             {
                 SensorID id = new SensorID(addr, COEFF_COUNT);
                 id.Channal = SelSensorChannal;
-                id.Group = (int)(SelSensorChannal / MaxSensorOnLevel) + 1;
+                id.Group = 1;// (int)(SelSensorChannal / MaxSensorOnLevel) + 1;
                 id.state = (ushort)((indata[0] << 8) | indata[1]);
                 //if (id.state != 0) return false;
 

@@ -55,8 +55,8 @@ namespace Charaterizator
 
         //Не занесены в настройку
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП        
-        private int MENSOR_PRESSUER_WAIT = 60;//время установления давления в менсоре, сек
-        private int SENSOR_PRESSUER_WAIT = 5;//ожидание стабилизации давления в датчике, сек        
+        private int MENSOR_PRESSUER_WAIT = 60000;//время установления давления в менсоре, мсек
+        private int SENSOR_PRESSUER_WAIT = 5000;//ожидание стабилизации давления в датчике, мсек        
         const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
         // Номера столбцов в dataGrid1 - начальное окно с выбором датчиков
@@ -106,6 +106,8 @@ namespace Charaterizator
 
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
         private bool SensorAbsPressuer = false;//датчик абсолютного давления
+
+        private int TimerTickCount = 0;
         //private bool FormLoaded = false;
 
         //Инициализация переменных основной программы
@@ -166,6 +168,7 @@ namespace Charaterizator
 
 
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint*1000)/MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
+                SENSOR_PRESSUER_WAIT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000);
 
 
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
@@ -206,7 +209,7 @@ namespace Charaterizator
 
 
 
-            string s = SensorsDB.GetDataSensors("ЭНИ-100","2450","NumOfRange");
+            //string s = SensorsDB.GetDataSensors("ЭНИ-100","2450","NumOfRange");
 
             t.Abort();
         }
@@ -910,14 +913,25 @@ namespace Charaterizator
 
                 if ((i < 0) || !CheckChannalEnable(i)) return;//Если канал не выбран пропускаем обработку
 
-                if (Commutator.ActivCH != i + 1)
+                //if (Commutator.ActivCH != i + 1)
                     Commutator.SetConnectors(i, 0);
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-
-                    if (sensors.SensorValueReadC03())
+                    bool readresult = false;
+                    int ch = 0;
+                    do
                     {
+                        readresult = sensors.SensorValueReadC03();
+                        Application.DoEvents();
+                        ch++;
+                    } while ((!sensors.ValidateSensorParam()) && (ch < sensors.WRITE_COUNT));
+
+                    if (readresult)
+                    {
+
+                        /*if (sensors.SensorValueReadC03())
+                    {*/
                         if (!sensors.ValidateSensorParam())
                         {
                             Program.txtlog.WriteLineLog("Считаны недопустимые параметры датчика в канале " + (i + 1).ToString(), 1);
@@ -1506,7 +1520,7 @@ namespace Charaterizator
 
             if ((ResultCI == null) || (ResultCI.Channal.Count <= i) || (i < 0) || (ResultCI.Channal[i].Points.Count <= 0))
             {
-                Program.txtlog.WriteLineLog("Result CL: Результаты чтения ЦАП не сформированы!", 1);
+                //Program.txtlog.WriteLineLog("Result CL: Результаты чтения ЦАП не сформированы!", 1);// 05.08.2020 
                 return;
             }
 
@@ -1610,6 +1624,7 @@ namespace Charaterizator
                         {
 //                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
                             Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
+                            dataGridView1.Rows[i].Cells[sel].Value = false;
                         }
 
                         //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
@@ -1697,6 +1712,7 @@ namespace Charaterizator
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
+            TimerTickCount++;
             // Опрос состояния коммутатора
             if (Commutator.Connected)
             {
@@ -1843,7 +1859,7 @@ namespace Charaterizator
                 
                 if (SKO_PRESSURE > Math.Abs(Mensor._press - Mensor.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
                 {
-                    Console.Beep();
+                    //Console.Beep();
                     MensorCountPoint++;
                     if (MensorCountPoint >= MAX_COUNT_POINT)
                     {
@@ -1909,15 +1925,15 @@ namespace Charaterizator
             }
             else
             {
-                tbMensorData.Text = "-1";
-                numMensorPoint.Text = "-1";
-                cbMensorTypeR.SelectedIndex = -1;               
                 MensorReadError++;
                 Program.txtlog.WriteLineLog("Ошибка чтения данных с Менсора. Количество ошибок: " + MensorReadError.ToString(), 1);
             }
 
             if (MensorReadError >= MAX_ERROR_COUNT)
             {
+                tbMensorData.Text = "-1";
+                numMensorPoint.Text = "-1";
+                cbMensorTypeR.SelectedIndex = -1;
                 Mensor.DisConnect();
                 btnMensor.BackColor = Color.IndianRed;
                 btnMensor.Text = "Не подключен";
@@ -1937,7 +1953,7 @@ namespace Charaterizator
 
                 if (SKO_PRESSURE > Math.Abs(Pascal.press - Pascal.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
                 {
-                    Console.Beep();
+                    //Console.Beep();
                     MensorCountPoint++;
                     if (MensorCountPoint >= MAX_COUNT_POINT)
                     {
@@ -2014,15 +2030,15 @@ namespace Charaterizator
             }
             else
             {
-                tbMensorData.Text = "-1";
-                numMensorPoint.Text = "-1";
-                cbMensorTypeR.SelectedIndex = -1;
                 MensorReadError++;
                 Program.txtlog.WriteLineLog("Ошибка чтения данных с Паскаля. Количество ошибок: " + MensorReadError.ToString(), 1);
             }
 
             if (MensorReadError >= MAX_ERROR_COUNT)
             {
+                tbMensorData.Text = "-1";
+                numMensorPoint.Text = "-1";
+                cbMensorTypeR.SelectedIndex = -1;
                 Pascal.DisConnect();
                 btnMensor.BackColor = Color.IndianRed;
                 btnMensor.Text = "Не подключен";
@@ -2271,9 +2287,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbDiapazon1.SelectedIndex = -1;
                                     cbDiapazon1.Enabled = false;
@@ -2318,9 +2334,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbDiapazon2.SelectedIndex = -1;
                                     cbDiapazon2.Enabled = false;
@@ -2366,9 +2382,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbDiapazon3.SelectedIndex = -1;
                                     cbDiapazon3.Enabled = false;
@@ -2414,9 +2430,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                          
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbDiapazon4.SelectedIndex = -1;
                                     cbDiapazon4.Enabled = false;
@@ -2482,9 +2498,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbVRDiapazon1.SelectedIndex = -1;
                                     cbVRDiapazon1.Enabled = false;
@@ -2532,9 +2548,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbVRDiapazon2.SelectedIndex = -1;
                                     cbVRDiapazon2.Enabled = false;
@@ -2582,9 +2598,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbVRDiapazon3.SelectedIndex = -1;
                                     cbVRDiapazon3.Enabled = false;
@@ -2632,9 +2648,9 @@ namespace Charaterizator
                                 SelectType = sensors.sensorList[si].GetdevType();
 
                                 // Определяем количество диапазонов у датчика                               
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, NumOfRange));
+                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
 
-                                if ((NumOfRange != 1) || (NumOfRange != 2))
+                                if ((NumOfRange != 1) && (NumOfRange != 2))
                                 {
                                     cbVRDiapazon4.SelectedIndex = -1;
                                     cbVRDiapazon4.Enabled = false;
@@ -3254,7 +3270,7 @@ namespace Charaterizator
                 return;
             }
 
-            if (Mensor.Connected)
+            if ((Mensor.Connected)||(Pascal.Connected))
             {
                 double Point=0;
                 double shift=0;
@@ -3278,22 +3294,26 @@ namespace Charaterizator
                         bMensorSet.PerformClick();      //выставляем давление
                         bMensorControl.PerformClick();  //запускаем задачу
                     }
-                    int i = 0;
+
+                    TimerTickCount = 0;
                     do//ожидаем установления давления
                     {
                         Application.DoEvents();
-                        i++;
-                        Thread.Sleep(1000);
-                        shift = Math.Abs(Mensor._press - Point);
-                    } while ((shift > SKO_PRESSURE) && (i < MENSOR_PRESSUER_WAIT));
-                    if (i >= MENSOR_PRESSUER_WAIT)
+                        Thread.Sleep(100);
+                        shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Point);
+                    } while ((shift > SKO_PRESSURE) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
+                    if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                     {//давление не установлено
                         Program.txtlog.WriteLineLog("CH: Истекло время установки давления в датчиках", 1);
-                        //MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
                     }
                     else
                     {//давление установлено
-                        Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
+                        TimerTickCount = 0;
+                        do//ожидаем установления давления
+                        {
+                            Application.DoEvents();
+                            Thread.Sleep(100);
+                        } while (TimerTickCount < SENSOR_PRESSUER_WAIT / MainTimer.Interval);
                         PressureReady = true;
 //                        btnCHStart.BackColor = Color.LightGreen;
 //                        btnCalculateCoeff.BackColor = Color.IndianRed;
@@ -3572,6 +3592,7 @@ namespace Charaterizator
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint*1000)/MAIN_TIMER + 1;        //ожидание стабилизации давления в датчике, в циклах таймера
+                SENSOR_PRESSUER_WAIT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000);
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
               
 
@@ -3874,7 +3895,7 @@ namespace Charaterizator
                 MessageBox.Show("Введите значение давления в кПа", "Не задано давление в задатчике");
                 return;
             }
-            if (Mensor.Connected)
+            if ((Mensor.Connected)||(Pascal.Connected))
             {
                 double Point;
                 double shift;
@@ -3897,23 +3918,26 @@ namespace Charaterizator
                         bMensorSet.PerformClick();      //выставляем давление
                         bMensorControl.PerformClick();  //запускаем задачу
                     }
-                    int i = 0;
+
+                    TimerTickCount = 0;
                     do//ожидаем установления давления
                     {
                         Application.DoEvents();
-                        i++;
-                        Thread.Sleep(1000);
-                        double realpoint = Mensor._press;
-                        shift = Math.Abs(realpoint - Point);
-                    } while ((shift > SKO_PRESSURE) && (i < MENSOR_PRESSUER_WAIT));
-                    if (i >= MENSOR_PRESSUER_WAIT)
+                        Thread.Sleep(100);
+                        shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Point);
+                    } while ((shift > SKO_PRESSURE) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
+                    if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                     {//давление не установлено
-                        Program.txtlog.WriteLineLog("VR: Истекло время установки давления в датчиках", 1);
-//                        MessageBox.Show("Повторите установку давления.", "Истекло время установки давления в датчиках");
+                        Program.txtlog.WriteLineLog("VR:Истекло время установки давления в датчиках", 1);
                     }
                     else
                     {//давление установлено
-                        Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
+                        TimerTickCount = 0;
+                        do//ожидаем установления давления
+                        {
+                            Application.DoEvents();
+                            Thread.Sleep(100);
+                        } while (TimerTickCount < SENSOR_PRESSUER_WAIT / MainTimer.Interval);
                         PressureReady = true;
 //                        btnVRParamRead.BackColor = Color.LightGreen;
 //                        MessageBox.Show("Давление установлено.", "Успешное завершение операции");
@@ -4031,7 +4055,7 @@ namespace Charaterizator
                 if (sensors.sensorList.Count > 0)
                 {
                     string SelectModel = new String(sensors.sensorList[0].PressureModel);
-                    string SelectType = sensors.sensorList[8].GetdevType();
+                    string SelectType = sensors.sensorList[0].GetdevType();
 
                     if (cbVRDiapazon1.SelectedIndex == 0)
                     {
@@ -4073,7 +4097,7 @@ namespace Charaterizator
                 if (sensors.sensorList.Count > 0)
                 {
                     string SelectModel = new String(sensors.sensorList[0].PressureModel);
-                    string SelectType = sensors.sensorList[8].GetdevType();
+                    string SelectType = sensors.sensorList[0].GetdevType();
 
                     if (cbVRDiapazon2.SelectedIndex == 0)
                     {
@@ -4115,7 +4139,7 @@ namespace Charaterizator
                 if (sensors.sensorList.Count > 0)
                 {
                     string SelectModel = new String(sensors.sensorList[0].PressureModel);
-                    string SelectType = sensors.sensorList[8].GetdevType();
+                    string SelectType = sensors.sensorList[0].GetdevType();
 
                     if (cbVRDiapazon3.SelectedIndex == 0)
                     {
@@ -4158,7 +4182,7 @@ namespace Charaterizator
                 if (sensors.sensorList.Count > 0)
                 {
                     string SelectModel = new String(sensors.sensorList[0].PressureModel);
-                    string SelectType = sensors.sensorList[8].GetdevType();
+                    string SelectType = sensors.sensorList[0].GetdevType();
 
                     if (cbVRDiapazon4.SelectedIndex == 0)
                     {
@@ -5277,9 +5301,12 @@ namespace Charaterizator
                     for (int l = 0; l < lb_MET_PressValue.Items.Count; l++)
                     {
                         if (ProcessStop) break;
-                        if (MensorSetPressuer(lb_MET_PressValue.Items[l].ToString())==0)
+                        if (MensorSetPressuer(lb_MET_PressValue.Items[l].ToString(), l==0)==0)
                             MET_ReadSensorParametrs();
                     }
+                    numMensorPoint.Text = "0";
+                    bMensorControl.PerformClick();
+                    bMensorVent.PerformClick();
                 }
                 finally
                 {
@@ -5379,14 +5406,14 @@ namespace Charaterizator
 
         //Установка давления в Менсоре с ожиданием
         //Вход: строка со значением давления
-        private int MensorSetPressuer(string strValue)
+        private int MensorSetPressuer(string strValue, bool task)
         {
             if (strValue == "")
             {
                 Program.txtlog.WriteLineLog("Не задано значение давления", 1);
                 return -1;
             }
-            if (Mensor.Connected)
+            if ((Mensor.Connected)||(Pascal.Connected))
             {
                 double Point = 0;
                 double shift = 0;
@@ -5402,24 +5429,33 @@ namespace Charaterizator
                 else
                 {
                     bMensorSet.PerformClick();      //выставляем давление
-                    bMensorControl.PerformClick();  //запускаем задачу
+                    if (task)
+                    {
+                        bMensorControl.PerformClick();  //запускаем задачу
+                    }
                 }
-                    int i = 0;
+                    TimerTickCount = 0;
                     do//ожидаем установления давления
                     {
                         Application.DoEvents();
-                        i++;
-                        Thread.Sleep(1000);
-                        shift = Math.Abs(Mensor._press - Point);
-                    } while ((shift > SKO_PRESSURE) && (i < MENSOR_PRESSUER_WAIT));
-                    if (i >= MENSOR_PRESSUER_WAIT)
+                        Thread.Sleep(100);
+                        shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Point);
+                    } while ((shift > SKO_PRESSURE) && (TimerTickCount < MENSOR_PRESSUER_WAIT/MainTimer.Interval));
+                    if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                     {//давление не установлено
                         Program.txtlog.WriteLineLog("Истекло время установки давления в датчиках", 1);
                         return -2;
                     }
                     else
                     {//давление установлено
-                        Thread.Sleep(SENSOR_PRESSUER_WAIT * 1000);//ожидаем стабилизации
+                        TimerTickCount = 0;
+                        do//ожидаем установления давления
+                        {
+                            Application.DoEvents();
+                            Thread.Sleep(100);
+                        } while (TimerTickCount < SENSOR_PRESSUER_WAIT/MainTimer.Interval);
+
+//                    Thread.Sleep(SENSOR_PRESSUER_WAIT);//ожидаем стабилизации
                         PressureReady = true;
                         Program.txtlog.WriteLineLog("Давление в датчиках установлено.", 0);
                         return 0;
@@ -5459,10 +5495,11 @@ namespace Charaterizator
 
             for (int i = 0; i < ResultCH.Channal.Count; i++)//
             {
-                if ((ResultCH.Channal.Count <= i) || (ResultCH.Channal[i].Points.Count <= 0))
+                if (ResultCH.Channal[i].Points.Count <= 0)
                 {
-                    Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
-                    return;
+                    //Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
+                    continue;
+                    //return;
                 }
                 else
                 {

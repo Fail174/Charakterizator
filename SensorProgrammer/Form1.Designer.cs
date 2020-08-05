@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bCommutator = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgwMainWindow = new System.Windows.Forms.DataGridView();
@@ -109,7 +110,8 @@
             this.dgwMainWindow.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgwMainWindow.Size = new System.Drawing.Size(440, 463);
             this.dgwMainWindow.TabIndex = 0;
-            this.dgwMainWindow.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellClick);
+            this.dgwMainWindow.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellContentClick);
+            this.dgwMainWindow.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellContentClick);
             this.dgwMainWindow.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellEndEdit);
             this.dgwMainWindow.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellValueChanged);
             this.dgwMainWindow.SelectionChanged += new System.EventHandler(this.dgwMainWindow_SelectionChanged);
@@ -181,14 +183,14 @@
             this.dgwSensParam.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sensParamName,
             this.sensParamValue});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgwSensParam.Enabled = false;
             this.dgwSensParam.Location = new System.Drawing.Point(10, 27);
             this.dgwSensParam.Name = "dgwSensParam";
@@ -208,8 +210,8 @@
             // 
             // sensParamValue
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle3;
             this.sensParamValue.HeaderText = "Значение";
             this.sensParamValue.Name = "sensParamValue";
             this.sensParamValue.ReadOnly = true;
@@ -343,8 +345,8 @@
             // 
             // dgwChannal
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgwChannal.HeaderText = "Канал";
             this.dgwChannal.Name = "dgwChannal";
             this.dgwChannal.ReadOnly = true;
@@ -377,6 +379,9 @@
             // 
             // dgwSerial
             // 
+            dataGridViewCellStyle2.Format = "0000000";
+            dataGridViewCellStyle2.NullValue = null;
+            this.dgwSerial.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgwSerial.HeaderText = "Серийный номер";
             this.dgwSerial.Name = "dgwSerial";
             this.dgwSerial.ReadOnly = true;

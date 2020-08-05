@@ -49,7 +49,7 @@ namespace SensorProgrammer
 
             public FormSensorProgrammer()
         {
-            Program.txtlog = new CTxtlog(rtbConsole, "Charakterizator.log");//создаем класс лог, с выводов в richtextbox и в файл
+            Program.txtlog = new CTxtlog(rtbConsole, "DB.log");//создаем класс лог, с выводов в richtextbox и в файл
             InitializeComponent();
         }
 
@@ -467,7 +467,8 @@ namespace SensorProgrammer
                         {
                             if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
                             {
-                                dgwMainWindow.Rows[i].Cells[4].Value = Convert.ToString(serial++);
+                                //dgwMainWindow.Rows[i].Cells[4].Value = Convert.ToString(serial++);
+                                dgwMainWindow.Rows[i].Cells[4].Value = (serial++).ToString("0000000");
                             }
                         }
                         dgwMainWindow.ClearSelection();
@@ -532,69 +533,7 @@ namespace SensorProgrammer
         // Функция для группового выбора/установки каналов (в checkbox) 
         private void dgwMainWindow_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 1)
-            {
-                /*if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == false))
-                {
-                    for (int i = e.RowIndex; i >= 0; i--)
-                    {
-                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            dgwMainWindow.Rows[i].Cells[1].Value = true;
-                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = false;
-                            dgwMainWindow.Rows[i].Cells[2].Value = cbType.SelectedItem;
-                            dgwMainWindow.Rows[i].Cells[3].Value = cbModel.SelectedItem;
-
-                        }
-                    }
-                }
-                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == true))
-                {
-                    for (int i = e.RowIndex; i >= 0; i--)
-                    {
-                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == false)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            dgwMainWindow.Rows[i].Cells[1].Value = false;
-                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = true;
-                            dgwMainWindow.Rows[i].Cells[4].Value = null;
-                            dgwMainWindow.Rows[i].Cells[2].Value = null;
-                            dgwMainWindow.Rows[i].Cells[3].Value = null;
-
-                        }
-                    }
-                }
-                */
-
-                if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == false)
-                {
-                    dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
-
-                    dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
-                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
-                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
-                  
-                }
-                else
-                {
-                    dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
-
-                    dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
-                    dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
-                    dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
-                    dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
-                    dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-                }
-            }
-
-           
+         
 
         }
 
@@ -732,7 +671,7 @@ namespace SensorProgrammer
             progressBar.Value = 0;
             progressBar.Step = 1;
             Boolean resBurn = true;
-            progressBar.PerformStep();
+            //progressBar.PerformStep();
 
           
             // Опрос подключенных к коммутатору датчиков и запись индивидуальных параметров
@@ -955,6 +894,7 @@ namespace SensorProgrammer
                             else
                             {
                                 dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                                dgwMainWindow.Rows[i].Cells[1].Value = false;
                             }
                             progressBar.PerformStep();
                         }
@@ -988,6 +928,73 @@ namespace SensorProgrammer
 
 
 
+        }
+
+        private void dgwMainWindow_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == false))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow.Rows[i].Cells[1].Value = true;
+                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = false;
+                            dgwMainWindow.Rows[i].Cells[2].Value = cbType.SelectedItem;
+                            dgwMainWindow.Rows[i].Cells[3].Value = cbModel.SelectedItem;
+
+                        }
+                    }
+                }
+                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == true))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == false)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow.Rows[i].Cells[1].Value = false;
+                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = true;
+                            dgwMainWindow.Rows[i].Cells[4].Value = null;
+                            dgwMainWindow.Rows[i].Cells[2].Value = null;
+                            dgwMainWindow.Rows[i].Cells[3].Value = null;
+
+                        }
+                    }
+                }
+
+                if (System.Windows.Forms.Control.ModifierKeys != System.Windows.Forms.Keys.Control)
+                {
+
+                    if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == false)
+                    {
+                        dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
+
+                    }
+                    else
+                    {
+                        dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+
+                        dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
+                        dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    }
+                }
+            }
         }
     }      
 }
