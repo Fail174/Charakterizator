@@ -492,19 +492,20 @@ namespace Charaterizator
                    
                     while (Port.BytesToRead > 0)
                     {
-                        Port.ReadLine();
+                        Port.ReadByte();
+                        //Port.ReadLine();
                     }
 
                     i = 0;
                     // считываем текущее давление
-                    Thread.Sleep(READ_PAUSE);
+                    //Thread.Sleep(READ_PAUSE);
                     Port.WriteLine("PRES?");
                     while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
                     {
                         i++;
                         Thread.Sleep(1);
                     }
-                    if (Port.BytesToRead <= 0)
+                    if (Port.BytesToRead > 0)
                     {
                         strData = Port.ReadLine();
                         press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
@@ -524,7 +525,7 @@ namespace Charaterizator
                         i++;
                         Thread.Sleep(1);
                     }
-                    if (Port.BytesToRead <= 0)
+                    if (Port.BytesToRead > 0)
                     {
                         strData = Port.ReadLine();
                         Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

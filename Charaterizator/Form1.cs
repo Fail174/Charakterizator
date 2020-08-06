@@ -104,6 +104,8 @@ namespace Charaterizator
         private bool isSensorRead = false;
         //        private bool SensorPeriodRead = false;//Переодиское чтение параметров датчика
 
+        private bool AutoRegim = false;//автоматический режим
+
         private int SelectedLevel = 1;//выбранный номер уровеня характеризации
         private bool SensorAbsPressuer = false;//датчик абсолютного давления
 
@@ -139,6 +141,8 @@ namespace Charaterizator
                 Multimetr.REZISTOR = Properties.Settings.Default.set_Rezistor;              // сопротивление резистора
                 CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;      // Не учитывать обратный ход по давлени
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
+                AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
+
 
 
 
@@ -559,6 +563,7 @@ namespace Charaterizator
             dataGridView1.Rows[i].Cells[ok].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[ok].Value = true;                            //исправность датчика                            
         }
+
         private void UpdateSensorInfoPanel(int i)
         {
             if (SensorBusy)
@@ -600,7 +605,7 @@ namespace Charaterizator
                     /*            string SelectedSensor = sensors.sensor.Addr.ToString("D2") + " | " + sensors.sensor.GetdevType() + " | " + sensors.sensor.uni;
                                 tbCharact.Text = SelectedSensor;
                                 tbCoef.Text = SelectedSensor;*/
-                    if (tbInfoSensorType.Text == "ЭНИ-12")
+                    if ((tbInfoSensorType.Text == "ЭНИ-12")||(tbInfoSensorType.Text == "ЭНИ-12М"))
                     {
                         pbSensorImage.BackgroundImage = Properties.Resources.eni_12h_hs_m;
                     }
@@ -1576,9 +1581,16 @@ namespace Charaterizator
                 {
                     for (int i = 0; i < MaxChannalCount; i++)
                     {
+
                         if (ProcessStop) break;//прекращаем поиск 
 
-                        if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
+                        dataGridView1.Rows[i].Cells[sen].Value = "Нет данных";      //тип датчика
+                        dataGridView1.Rows[i].Cells[zn].Value = "Нет данных";       //заводской номер
+
+                        if (!CheckChannalEnable(i))
+                        {
+                            continue;//Если канал не выбран пропускаем обработку
+                        }
 
                         dataGridView1.Rows[i].Selected = true;
                         dataGridView1.Rows[i].Cells[ch].Selected = true;
@@ -1684,6 +1696,7 @@ namespace Charaterizator
                     if (i < MaxChannalCount)
                     {
                         btnSensorSeach.Text = "Идет поиск датчиков... Остановить! ";
+                        
                         UpdateItemState(1);
                         SeachConnectedSensor();
                     }
@@ -3083,7 +3096,7 @@ namespace Charaterizator
 
 
 
-
+        //Старт характеризации
         private void button10_Click(object sender, EventArgs e)
         {
             if (!SensorBusy)
@@ -3107,21 +3120,28 @@ namespace Charaterizator
 
                     btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
                     UpdateItemState(2);
-                    if (cbCHPressureSet1.Items.Count <= 0)
+                    if (AutoRegim)
                     {
-                        if (MessageBox.Show("Отсутсвуют точки давления. Продолжить характеризацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (cbCHPressureSet1.Items.Count <= 0)
                         {
-                            ReadSensorParametrs();
+                            if (MessageBox.Show("Отсутсвуют точки давления. Продолжить характеризацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            {
+                                ReadSensorParametrs();
+                            }
+                        }
+                        else
+                        {
+                            for (i = 0; i < cbCHPressureSet1.Items.Count; i++)
+                            {
+                                cbCHPressureSet1.SelectedIndex = i;
+                                btnCHPressureSet1.PerformClick();
+                                ReadSensorParametrs();
+                            }
                         }
                     }
                     else
                     {
-                        for (i = 0; i < cbCHPressureSet1.Items.Count; i++)
-                        {
-                            cbCHPressureSet1.SelectedIndex = i;
-                            btnCHPressureSet1.PerformClick();
-                            ReadSensorParametrs();
-                        }
+                        ReadSensorParametrs();
                     }
 
                 }
@@ -3629,7 +3649,7 @@ namespace Charaterizator
                 Multimetr.REZISTOR = Properties.Settings.Default.set_Rezistor;              // сопротивление резистора
                 CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
-
+                AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
 
                 Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
                 Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout; //таймаут ожидания ответа от мультиметра, мсек
@@ -4050,24 +4070,30 @@ namespace Charaterizator
                 {
                         btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
                         UpdateItemState(6);
-                        //ReadSensorPressure();
+                    //ReadSensorPressure();
 
-
-                    if (cbVRPressureSet1.Items.Count <= 0)
+                    if (AutoRegim)
                     {
-                        if (MessageBox.Show("Отсутсвуют точки давления. Продолжить верификацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (cbVRPressureSet1.Items.Count <= 0)
                         {
-                            ReadSensorPressure();
+                            if (MessageBox.Show("Отсутсвуют точки давления. Продолжить верификацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            {
+                                ReadSensorPressure();
+                            }
+                        }
+                        else
+                        {
+                            for (i = 0; i < cbVRPressureSet1.Items.Count; i++)
+                            {
+                                cbVRPressureSet1.SelectedIndex = i;
+                                btnVRPressureSet1.PerformClick();
+                                ReadSensorPressure();
+                            }
                         }
                     }
                     else
                     {
-                        for (i = 0; i < cbVRPressureSet1.Items.Count; i++)
-                        {
-                            cbVRPressureSet1.SelectedIndex = i;
-                            btnVRPressureSet1.PerformClick();
-                            ReadSensorPressure();
-                        }
+                        ReadSensorPressure();
                     }
 
                 }

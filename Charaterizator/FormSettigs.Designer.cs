@@ -135,6 +135,7 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.cb_AutoRegim = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -245,6 +246,7 @@
             // 
             // tp_ProgramSettings
             // 
+            this.tp_ProgramSettings.Controls.Add(this.cb_AutoRegim);
             this.tp_ProgramSettings.Controls.Add(this.cb_meanR);
             this.tp_ProgramSettings.Controls.Add(this.cb_FlagObrHod);
             this.tp_ProgramSettings.Controls.Add(this.tbRezistor);
@@ -298,7 +300,6 @@
             this.cb_FlagObrHod.TabIndex = 98;
             this.cb_FlagObrHod.Text = "Не учитывать обратный ход по давлению при расчете коэффициентов ";
             this.cb_FlagObrHod.UseVisualStyleBackColor = true;
-            this.cb_FlagObrHod.CheckedChanged += new System.EventHandler(this.cb_FlagObrHod_CheckedChanged);
             // 
             // tbRezistor
             // 
@@ -1587,6 +1588,16 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
+            // cb_AutoRegim
+            // 
+            this.cb_AutoRegim.AutoSize = true;
+            this.cb_AutoRegim.Location = new System.Drawing.Point(52, 268);
+            this.cb_AutoRegim.Name = "cb_AutoRegim";
+            this.cb_AutoRegim.Size = new System.Drawing.Size(165, 19);
+            this.cb_AutoRegim.TabIndex = 100;
+            this.cb_AutoRegim.Text = "Автоматический режим";
+            this.cb_AutoRegim.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1756,5 +1767,6 @@
         private System.Windows.Forms.RadioButton rb_usePascal;
         private System.Windows.Forms.RadioButton rb_useMensor;
         private System.Windows.Forms.CheckBox cb_meanR;
+        private System.Windows.Forms.CheckBox cb_AutoRegim;
     }
 }

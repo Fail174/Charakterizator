@@ -70,6 +70,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_Rezistor = Convert.ToInt32(tbRezistor.Value);
                 Properties.Settings.Default.set_flagObrHod = cb_FlagObrHod.Checked;
                 Properties.Settings.Default.set_MeanR = cb_meanR.Checked;
+                Properties.Settings.Default.set_AutoRegim = cb_AutoRegim.Checked;
 
                 // 1 - Коммутатор
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
@@ -161,7 +162,8 @@ namespace Charaterizator
             tb_SKOCalibrationCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCalibrationCurrent);
             tbRezistor.Value = Properties.Settings.Default.set_Rezistor;
             cb_FlagObrHod.Checked = Properties.Settings.Default.set_flagObrHod;
-            cb_meanR.Checked = Properties.Settings.Default.set_MeanR; 
+            cb_meanR.Checked = Properties.Settings.Default.set_MeanR;
+            cb_AutoRegim.Checked = Properties.Settings.Default.set_AutoRegim;
 
             // 1 - Коммутатор                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
@@ -243,11 +245,6 @@ namespace Charaterizator
                     MessageBox.Show("Не удалось открыть файл с базой данных!", "Открытие файла БД. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-        }
-
-        private void cb_FlagObrHod_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
     }

@@ -767,5 +767,17 @@ namespace Charaterizator.Properties {
                 this["set_MeanR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool set_AutoRegim {
+            get {
+                return ((bool)(this["set_AutoRegim"]));
+            }
+            set {
+                this["set_AutoRegim"] = value;
+            }
+        }
     }
 }
