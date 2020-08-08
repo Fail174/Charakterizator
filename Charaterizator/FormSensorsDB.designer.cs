@@ -77,6 +77,7 @@
             this.lvwModels = new System.Windows.Forms.ListView();
             this.lvwType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bCopyLines = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).BeginInit();
@@ -108,7 +109,7 @@
             // bAddLines
             // 
             this.bAddLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bAddLines.Location = new System.Drawing.Point(28, 363);
+            this.bAddLines.Location = new System.Drawing.Point(28, 368);
             this.bAddLines.Name = "bAddLines";
             this.bAddLines.Size = new System.Drawing.Size(210, 28);
             this.bAddLines.TabIndex = 1;
@@ -120,18 +121,19 @@
             // 
             this.bFlashSensor.BackColor = System.Drawing.Color.RosyBrown;
             this.bFlashSensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bFlashSensor.Location = new System.Drawing.Point(28, 487);
+            this.bFlashSensor.Location = new System.Drawing.Point(28, 348);
             this.bFlashSensor.Name = "bFlashSensor";
-            this.bFlashSensor.Size = new System.Drawing.Size(210, 32);
+            this.bFlashSensor.Size = new System.Drawing.Size(210, 26);
             this.bFlashSensor.TabIndex = 2;
             this.bFlashSensor.Text = "Записать данные в датчик";
             this.bFlashSensor.UseVisualStyleBackColor = false;
+            this.bFlashSensor.Visible = false;
             this.bFlashSensor.Click += new System.EventHandler(this.bFlashSensor_Click);
             // 
             // bDeleteLines
             // 
             this.bDeleteLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bDeleteLines.Location = new System.Drawing.Point(28, 403);
+            this.bDeleteLines.Location = new System.Drawing.Point(28, 493);
             this.bDeleteLines.Name = "bDeleteLines";
             this.bDeleteLines.Size = new System.Drawing.Size(210, 28);
             this.bDeleteLines.TabIndex = 3;
@@ -365,6 +367,7 @@
             this.Serial.Size = new System.Drawing.Size(217, 21);
             this.Serial.TabIndex = 1;
             this.Serial.Tag = "2";
+            this.Serial.Visible = false;
             // 
             // textBox16
             // 
@@ -466,6 +469,7 @@
             this.textBox1.Size = new System.Drawing.Size(347, 21);
             this.textBox1.TabIndex = 19;
             this.textBox1.Text = "Заводской номер";
+            this.textBox1.Visible = false;
             // 
             // groupBox4
             // 
@@ -668,7 +672,7 @@
             this.lvwModels.Location = new System.Drawing.Point(28, 64);
             this.lvwModels.MultiSelect = false;
             this.lvwModels.Name = "lvwModels";
-            this.lvwModels.Size = new System.Drawing.Size(210, 279);
+            this.lvwModels.Size = new System.Drawing.Size(210, 282);
             this.lvwModels.TabIndex = 25;
             this.lvwModels.UseCompatibleStateImageBehavior = false;
             this.lvwModels.View = System.Windows.Forms.View.Details;
@@ -684,11 +688,23 @@
             this.lvwModel.Text = "Модель";
             this.lvwModel.Width = 90;
             // 
+            // bCopyLines
+            // 
+            this.bCopyLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bCopyLines.Location = new System.Drawing.Point(28, 406);
+            this.bCopyLines.Name = "bCopyLines";
+            this.bCopyLines.Size = new System.Drawing.Size(210, 28);
+            this.bCopyLines.TabIndex = 26;
+            this.bCopyLines.Text = "Скопировать запись";
+            this.bCopyLines.UseVisualStyleBackColor = true;
+            this.bCopyLines.Click += new System.EventHandler(this.bCopyLines_Click);
+            // 
             // FormSensorsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(895, 578);
+            this.Controls.Add(this.bCopyLines);
             this.Controls.Add(this.bSaveLines);
             this.Controls.Add(this.bDeleteLines);
             this.Controls.Add(this.bAddLines);
@@ -768,7 +784,6 @@
         private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ListView lvwModels;
         private System.Windows.Forms.ColumnHeader lvwType;
         private System.Windows.Forms.ColumnHeader lvwModel;
         private System.Windows.Forms.NumericUpDown Serial;
@@ -781,6 +796,8 @@
         private System.Windows.Forms.NumericUpDown DeltaRangeMin;
         private System.Windows.Forms.NumericUpDown Pmax;
         private System.Windows.Forms.NumericUpDown Pmin;
+        private System.Windows.Forms.Button bCopyLines;
+        public System.Windows.Forms.ListView lvwModels;
     }
 }
 

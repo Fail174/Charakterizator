@@ -25,6 +25,16 @@ namespace Charaterizator
         public ClassEni100 eni100=null;
         public int SelectInd = -1;
 
+        public string selType
+        {
+            get { return lvwModels.FocusedItem.SubItems[0].Text.ToString(); }
+            set { }
+        }
+          
+
+
+
+
         public FormSensorsDB()
         {
             InitializeComponent();               
@@ -279,7 +289,7 @@ namespace Charaterizator
             if (newForm.ShowDialog() == DialogResult.OK)
             {
                 // Добавлем заданную модель в список моделей ListBox
-                if (newForm.newModelSens != "")
+                if ((newForm.newModelSens != "")&&(newForm.newTypeSens != ""))
                 {
                     // текст запроса
                     string query = "INSERT INTO Tsensors (Type, Model, NumOfRange) VALUES ('" + newForm.newTypeSens + "', '" + newForm.newModelSens + "', 2)";
@@ -321,7 +331,9 @@ namespace Charaterizator
 
                 }
             else
-            {                
+            {
+                    newForm.Close();
+                    MessageBox.Show("Не заданы тип или модель датчика", "Добавление записи. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
                
@@ -336,6 +348,15 @@ namespace Charaterizator
         {
             if (lvwModels.SelectedItems.Count <= 0)
             return;
+
+            //var curIndex = lvwModels.SelectedIndices;
+            var curIndex = lvwModels.FocusedItem.Index;
+
+            DialogResult result = MessageBox.Show("Вы действительно хотите удалить выбранную запись", "Удаление записи.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+                return;
+
 
 
             string strModel = lvwModels.SelectedItems[0].SubItems[1].Text;
@@ -353,6 +374,15 @@ namespace Charaterizator
                 command.ExecuteNonQuery();
                 // обновляем данные listbox
                 GetData();
+
+                if(curIndex >=1 )
+                {
+                    lvwModels.Focus();
+                    lvwModels.Select();
+                    lvwModels.Items[curIndex - 1].Focused = true;
+                    lvwModels.Items[curIndex - 1].Selected = true;
+                }
+               
             }
             catch
             {
@@ -368,8 +398,8 @@ namespace Charaterizator
         {
             if (lvwModels.SelectedItems.Count <= 0)
                 return;
-            string str = lvwModels.SelectedItems[0].SubItems[1].Text;
-
+            string strModel = lvwModels.SelectedItems[0].SubItems[1].Text;
+            string strType = lvwModels.SelectedItems[0].SubItems[0].Text;
 
 
             string partQuery = "";
@@ -408,7 +438,10 @@ namespace Charaterizator
             string query = "UPDATE Tsensors SET " +
                             partQuery +
                             ", NumOfRange = " + (Convert.ToInt16(rbRange2.Checked) + 1) +
-                            " WHERE Model = '" + str + "'";
+                            " WHERE Type = '" + strType + "' AND Model = '" + strModel + "'";
+                     
+
+
 
 
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
@@ -418,6 +451,7 @@ namespace Charaterizator
             {
                 // выполняем запрос к MS Access
                 command.ExecuteNonQuery();
+                MessageBox.Show("Данные успешно сохранены!", "Сохранение данных.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch
@@ -641,6 +675,123 @@ namespace Charaterizator
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && number != 8 && number != 44 && number != 45 && number != 59 && number != 127 && number != 32) 
             {
                 e.Handled = true;
+            }
+        }
+
+
+        // Скопировать запись
+        private void bCopyLines_Click(object sender, EventArgs e)
+        {
+            // получаем названия датчиков из БД
+            SensNameList = FormSensNameList(null, null);
+
+            FormAddNewSensorsDB newForm = new FormAddNewSensorsDB();
+            //newForm.ShowDialog();
+            selType = lvwModels.FocusedItem.SubItems[0].Text.ToString();
+
+
+
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                // Добавлем заданную модель в список моделей ListBox
+                if ((newForm.newModelSens != "") && (newForm.newTypeSens != ""))
+                {
+                    // текст запроса
+                    string query = "INSERT INTO Tsensors (Type, Model, NumOfRange) VALUES ('" + newForm.newTypeSens + "', '" + newForm.newModelSens + "', 2)";
+                    // создаем объект OleDbCommand для выполнения запроса к БД MS Access
+                    OleDbCommand command = new OleDbCommand(query, _сonnection);
+
+                    try
+                    {
+                        // выполняем запрос к MS Access
+                        command.ExecuteNonQuery();
+                    }
+
+
+                    catch
+                    {
+                        MessageBox.Show("Не удалось добавить заданную модель датчика БД. Возможно, такая модель уже есть в БД", "Добавление записи. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    finally
+                    {
+                        //_сonnection.Close();
+                    }
+
+
+
+
+                    string strModel = newForm.newModelSens;
+                    string strType = newForm.newTypeSens;
+
+                    string partQuery = "";
+
+                    foreach (var gb in this.Controls.OfType<GroupBox>())
+                    {
+                        foreach (var tb in gb.Controls.OfType<NumericUpDown>())
+                        {
+                            if ((tb is NumericUpDown) && (tb.Tag != null))
+                            {
+                                partQuery = partQuery + tb.Name + "=" + "'" + tb.Text + "'" + ",";
+                            }
+                        }
+                    }
+
+                    foreach (var gb in this.Controls.OfType<GroupBox>())
+                    {
+                        foreach (var tb in gb.Controls.OfType<TextBox>())
+                        {
+                            if ((tb is TextBox) && (tb.Tag != null))
+                            {
+                                partQuery = partQuery + tb.Name + "=" + "'" + tb.Text + "'" + ",";
+                            }
+                        }
+                    }
+
+
+                    partQuery = partQuery.TrimEnd(new char[] { ',' });
+                    // текст запроса
+                    /*    string query = "UPDATE Tsensors SET " +
+                                        "Serial = " + Serial.Text + 
+                                        ", Pmin = " + tbPmin.Text +
+                                        ", NumOfRange = " + (Convert.ToInt16(rbRange2.Checked) + 1) +
+                                        " WHERE Model = '" + str + "'";*/
+
+                    query = "UPDATE Tsensors SET " +
+                                    partQuery +
+                                    ", NumOfRange = " + (Convert.ToInt16(rbRange2.Checked) + 1) +
+                                    " WHERE Type = '" + strType + "' AND Model = '" + strModel + "'";
+
+
+                    // создаем объект OleDbCommand для выполнения запроса к БД MS Access
+                    command = new OleDbCommand(query, _сonnection);
+
+                    try
+                    {
+                        // выполняем запрос к MS Access
+                        command.ExecuteNonQuery();
+                        lvwModels.Items.Add(newForm.newTypeSens);
+                        lvwModels.Items[lvwModels.Items.Count - 1].SubItems.Add(newForm.newModelSens);
+
+                        lvwModels.Focus();
+                        lvwModels.Select();
+                        lvwModels.Items[lvwModels.Items.Count - 1].Focused = true;
+                        lvwModels.Items[lvwModels.Items.Count - 1].Selected = true;
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Не удалось сохранить данные в файл с БД", "Сохранение данных. Операция прервана.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }                                      
+
+                }
+                else
+                {
+                    newForm.Close();
+                    MessageBox.Show("Не заданы тип или модель датчика", "Добавление записи. Операция прервана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
             }
         }
     }

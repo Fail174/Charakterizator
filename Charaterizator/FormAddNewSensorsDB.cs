@@ -23,7 +23,7 @@ namespace Charaterizator
             }
             if (cbSetSensName.Items.Count > 0)
             {
-                cbSetSensName.SelectedIndex = 0;
+                cbSetSensName.SelectedIndex = cbSetSensName.FindString(Charaterizator.MainForm.SensorsDB.selType);          
             }
 
         }
