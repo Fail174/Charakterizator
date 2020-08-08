@@ -1093,7 +1093,7 @@ namespace Charaterizator
         // принимаемые значения:    0 - Абсолютное (Absolute)
         //                          1 - Избыточное (Gauge)
         // возвращаемые значения:   нет                         
-        void SetTypePress(int num)
+        public void SetTypePress(int num)
         {
             try
             {

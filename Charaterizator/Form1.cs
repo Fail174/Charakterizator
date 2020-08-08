@@ -1915,6 +1915,22 @@ namespace Charaterizator
                 // Получаем текущее значение давления и обновляем гл. форму 
                 tbMensorData.Text = Mensor._press.ToString("f3");
 
+                // Получаем тип давления | 0 - АБС, 1 - ИЗБ
+                if (Mensor._tpress == 0)
+                {
+                    rbPressABS.Checked = true;
+                    rbPressIZB.Checked = false;
+                }
+                else if (Mensor._tpress == 1)
+                {
+                    rbPressABS.Checked = false;
+                    rbPressIZB.Checked = true;
+                }
+                else if (Mensor._tpress == -1)
+                {
+                    rbPressABS.Checked = false;
+                    rbPressIZB.Checked = false;
+                }
 
                 // Получаем тек. значение уставки  и обновляем гл. форму
                 //numMensorPoint.Text = Mensor._point.ToString("f2");
@@ -3077,7 +3093,16 @@ namespace Charaterizator
                     }
 
                     double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+
+                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                    // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                    if (rbPressABS.Checked)
+                    {
+                        Point = Point - Convert.ToDouble(numATMpress.Value/10);
+                    }
+                                                          
                     Pascal.SetPress(Point);
+
                 }
             }
             
@@ -3368,6 +3393,18 @@ namespace Charaterizator
                     Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture); 
                     //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
                     numMensorPoint.Text = strValue;
+
+                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                    // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                    if ((!UseMensor) && (rbPressABS.Checked))
+                    {
+                        Point = Point - Convert.ToDouble(numATMpress.Value / 10);
+                    }
+
+
+
+
+
                     if ((Point == 0) && !SensorAbsPressuer)
                     {
                         bMensorVent.PerformClick();
@@ -3988,10 +4025,21 @@ namespace Charaterizator
                     btnVRPressureSet2.Enabled = false;
                     btnVRPressureSet3.Enabled = false;
                     btnVRPressureSet4.Enabled = false;
+
+
                     Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
-
                     numMensorPoint.Text = strValue;
+
+                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                    // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                    if ((!UseMensor) && (rbPressABS.Checked))
+                    {
+                        Point = Point - Convert.ToDouble(numATMpress.Value/10);
+                    }
+
+
+
                     if ((Point == 0) && !SensorAbsPressuer)
                     {
                         bMensorVent.PerformClick();
@@ -5528,8 +5576,19 @@ namespace Charaterizator
 
                 Program.txtlog.WriteLineLog("Устанавливаем давление в датчиках: " + strValue, 0);
 
+
+
                 Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                 numMensorPoint.Text = strValue;
+
+                // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                if ((!UseMensor)&&(rbPressABS.Checked))
+                {
+                    Point = Point - Convert.ToDouble(numATMpress.Value / 10);
+                }
+
+
                 if ((Point == 0) && !SensorAbsPressuer)
                 {
                     bMensorVent.PerformClick();
@@ -5842,6 +5901,51 @@ namespace Charaterizator
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                }
+            }
+        }
+
+
+
+
+
+        // Установка типа давления ИЗБЫТОЧНОЕ или АБСОЛЮТНОЕ в МЕНСОРЕ
+        private void rbPressIZB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!cb_ManualMode.Checked) // если НЕ выбран ручной режим
+            {               
+                // Определяем какой из задатчиков используется
+                if (UseMensor) // используется Менсор
+                {
+                    if (Mensor.Connected)
+                    {
+                        if (rbPressIZB.Checked)  //выбрано ИЗБЫТОЧНОЕ давление
+                        {
+                            // отправляем команду уcтановить тип давления ИЗБЫТОЧНОЕ
+                            Mensor.SetTypePress(1);
+                        }
+
+                        else
+                        {
+                            // отправляем команду уcтановить тип давления АБСОЛЮТНОЕ
+                            Mensor.SetTypePress(0);
+                        }                        
+                    }
+                    else
+                    {
+                        if (btnMensor.BackColor != Color.IndianRed)
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.Transparent;
+                        }
+                    }
+                }
+                else  // используется Паскаль
+                {
+
                 }
             }
         }
