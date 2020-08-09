@@ -74,13 +74,13 @@ namespace Charaterizator
         {   get { return mode; }
             set { }        }
 
-        double rate;                       // Режим 0-ИЗМ.  1-ЗАДАЧА  2-СБРОС
+        double rate;                       // 
         public double _rate
         {   get { return rate; }
             set { }
         }
 
-        double barometr;                   // Режим 0-ИЗМ.  1-ЗАДАЧА  2-СБРОС
+        double barometr;                   // 
         public double _barometr
         {   get { return barometr; }
             set { }        }

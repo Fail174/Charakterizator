@@ -2190,7 +2190,7 @@ namespace Charaterizator
 
             if (e.ColumnIndex == sel)
             {
-                if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+                if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)&&(Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[sel].Value) == false))
                 {
                     for (int i = e.RowIndex; i >= 0; i--)
                     {
@@ -2204,7 +2204,7 @@ namespace Charaterizator
                         }
                     }
                 }
-                if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Shift)
+                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[sel].Value) == true))
                 {
                     for (int i = e.RowIndex; i >= 0; i--)
                     {
@@ -2878,8 +2878,9 @@ namespace Charaterizator
             {
                 if (Pascal.Port.IsOpen)
                 {
-                    bMensorControl.BackColor = Color.LightGreen;                    
+                                  
                     Pascal.SetModeKeyStart();
+                    bMensorControl.BackColor = Color.LightGreen;
                 }
                 else
                 {
@@ -3412,7 +3413,20 @@ namespace Charaterizator
                     else
                     {
                         bMensorSet.PerformClick();      //выставляем давление
-                        bMensorControl.PerformClick();  //запускаем задачу
+
+                        // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
+                        // если задача давления включена, то повторно ее не включаем 
+                        // UseMensor = true - используем Менсор
+                        // UseMensor = false - используем Паскаль
+                        // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
+                        // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
+
+                        if ((!UseMensor && !Pascal.modeStart)||(UseMensor && Mensor._mode != 1))
+                        {
+                            bMensorControl.PerformClick();  //запускаем задачу
+                        }
+
+                       
                     }
 
                     TimerTickCount = 0;
@@ -4047,7 +4061,18 @@ namespace Charaterizator
                     else
                     {
                         bMensorSet.PerformClick();      //выставляем давление
-                        bMensorControl.PerformClick();  //запускаем задачу
+
+                        // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
+                        // если задача давления включена, то повторно ее не включаем 
+                        // UseMensor = true - используем Менсор
+                        // UseMensor = false - используем Паскаль
+                        // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
+                        // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
+                        if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                        {
+                            bMensorControl.PerformClick();  //запускаем задачу
+                        }
+                                               
                     }
 
                     TimerTickCount = 0;
