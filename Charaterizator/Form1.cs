@@ -143,7 +143,16 @@ namespace Charaterizator
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
                 AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
 
-
+                tsmiPanelCommutator.Checked = Properties.Settings.Default.set_CommutatorVisible;
+                tsmiPanelMultimetr.Checked = Properties.Settings.Default.set_MultimetrVisible;
+                tsmiPanelMensor.Checked = Properties.Settings.Default.set_MensorVisible;
+                tsmiPanelTermocamera.Checked = Properties.Settings.Default.set_TermocameraVisible;
+                tsmiPanelLog.Checked = Properties.Settings.Default.set_PanelLogVisible;
+                gbCommutator.Visible = tsmiPanelCommutator.Checked;
+                gbMultimetr.Visible = tsmiPanelMultimetr.Checked;
+                gbMensor.Visible = tsmiPanelMensor.Checked;
+                gbTermoCamera.Visible = tsmiPanelTermocamera.Checked;
+                panelLog.Visible = tsmiPanelLog.Checked;
 
 
                 Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
@@ -1841,7 +1850,7 @@ namespace Charaterizator
                 cbSensorPeriodRead.Checked = false;
             }
 
-            tbDateTime.Text = DateTime.Now.ToString();//часы
+            tbDateTime.Text = DateTime.Now.ToString("dd.MM.yyyy   HH:mm:ss");//часы
 
             if (!dtpClockTimer.Enabled)//таймер часов
             {
@@ -5096,6 +5105,14 @@ namespace Charaterizator
             gbMensor.Visible = tsmiPanelMensor.Checked;
             gbTermoCamera.Visible = tsmiPanelTermocamera.Checked;
             panelLog.Visible = tsmiPanelLog.Checked;
+
+            Properties.Settings.Default.set_CommutatorVisible = gbCommutator.Visible;
+            Properties.Settings.Default.set_MultimetrVisible = gbMultimetr.Visible;
+            Properties.Settings.Default.set_MensorVisible = gbMensor.Visible;
+            Properties.Settings.Default.set_TermocameraVisible = gbTermoCamera.Visible;
+            Properties.Settings.Default.set_PanelLogVisible = panelLog.Visible;
+
+            Properties.Settings.Default.Save();  // Сохраняем переменные.*/
         }
 
         private void btn_MET_NPI_VPI_Click(object sender, EventArgs e)
@@ -5973,6 +5990,12 @@ namespace Charaterizator
 
                 }
             }
+        }
+
+        private void cbMensorTypeR_DropDownClosed(object sender, EventArgs e)
+        {
+            MainTimer.Enabled = true;
+            MainTimer.Start();
         }
     }
 }

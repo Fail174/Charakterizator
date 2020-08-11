@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,32 +70,38 @@
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbTermoCamera = new System.Windows.Forms.GroupBox();
+            this.tbTemperature = new System.Windows.Forms.TextBox();
             this.bThermalCameraSet = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.numTermoCameraPoint = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
-            this.tbTemperature = new System.Windows.Forms.TextBox();
             this.btnThermalCamera = new System.Windows.Forms.Button();
             this.splitter5 = new System.Windows.Forms.Splitter();
             this.gbMensor = new System.Windows.Forms.GroupBox();
+            this.label63 = new System.Windows.Forms.Label();
+            this.tbMensorData = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.rbPressABS = new System.Windows.Forms.RadioButton();
+            this.rbPressIZB = new System.Windows.Forms.RadioButton();
+            this.numATMpress = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
             this.btnFormMensor = new System.Windows.Forms.Button();
             this.cb_ManualMode = new System.Windows.Forms.CheckBox();
             this.bMensorMeas = new System.Windows.Forms.Button();
             this.bMensorSet = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
             this.numMensorPoint = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.bMensorControl = new System.Windows.Forms.Button();
             this.bMensorVent = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cbMensorTypeR = new System.Windows.Forms.ComboBox();
-            this.tbMensorData = new System.Windows.Forms.TextBox();
             this.btnMensor = new System.Windows.Forms.Button();
             this.splitter4 = new System.Windows.Forms.Splitter();
             this.gbMultimetr = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.tbMultimetrData = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.btnMultimetr = new System.Windows.Forms.Button();
             this.splitter3 = new System.Windows.Forms.Splitter();
             this.dtpClockTimer = new System.Windows.Forms.DateTimePicker();
@@ -345,17 +351,13 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.rbPressIZB = new System.Windows.Forms.RadioButton();
-            this.rbPressABS = new System.Windows.Forms.RadioButton();
-            this.numATMpress = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label63 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).BeginInit();
             this.gbMensor.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).BeginInit();
             this.gbMultimetr.SuspendLayout();
             this.gbCommutator.SuspendLayout();
@@ -398,8 +400,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_VPI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).BeginInit();
             this.pUpStatusBar.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -740,6 +740,15 @@
             this.gbTermoCamera.TabStop = false;
             this.gbTermoCamera.Text = "Термокамера";
             // 
+            // tbTemperature
+            // 
+            this.tbTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbTemperature.Location = new System.Drawing.Point(179, 64);
+            this.tbTemperature.Name = "tbTemperature";
+            this.tbTemperature.Size = new System.Drawing.Size(82, 44);
+            this.tbTemperature.TabIndex = 3;
+            this.tbTemperature.Text = "23";
+            // 
             // bThermalCameraSet
             // 
             this.bThermalCameraSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -794,7 +803,7 @@
             this.numTermoCameraPoint.Size = new System.Drawing.Size(154, 44);
             this.numTermoCameraPoint.TabIndex = 7;
             this.numTermoCameraPoint.Value = new decimal(new int[] {
-            90,
+            23,
             0,
             0,
             0});
@@ -808,15 +817,6 @@
             this.label6.Size = new System.Drawing.Size(75, 20);
             this.label6.TabIndex = 6;
             this.label6.Text = "Уставка:";
-            // 
-            // tbTemperature
-            // 
-            this.tbTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbTemperature.Location = new System.Drawing.Point(179, 64);
-            this.tbTemperature.Name = "tbTemperature";
-            this.tbTemperature.Size = new System.Drawing.Size(82, 44);
-            this.tbTemperature.TabIndex = 3;
-            this.tbTemperature.Text = "80,0";
             // 
             // btnThermalCamera
             // 
@@ -866,6 +866,109 @@
             this.gbMensor.TabStop = false;
             this.gbMensor.Text = "Задатчик давления";
             // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label63.Location = new System.Drawing.Point(12, 221);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(156, 20);
+            this.label63.TabIndex = 15;
+            this.label63.Text = "Текущее давление:";
+            // 
+            // tbMensorData
+            // 
+            this.tbMensorData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbMensorData.Location = new System.Drawing.Point(14, 242);
+            this.tbMensorData.Name = "tbMensorData";
+            this.tbMensorData.ReadOnly = true;
+            this.tbMensorData.Size = new System.Drawing.Size(184, 44);
+            this.tbMensorData.TabIndex = 3;
+            this.tbMensorData.Text = "0,000";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label2);
+            this.groupBox6.Controls.Add(this.rbPressABS);
+            this.groupBox6.Controls.Add(this.rbPressIZB);
+            this.groupBox6.Controls.Add(this.numATMpress);
+            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox6.Location = new System.Drawing.Point(11, 131);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(283, 85);
+            this.groupBox6.TabIndex = 14;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Давление";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(8, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(142, 18);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Атмосферное, ГПа";
+            // 
+            // rbPressABS
+            // 
+            this.rbPressABS.AutoSize = true;
+            this.rbPressABS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rbPressABS.Location = new System.Drawing.Point(160, 21);
+            this.rbPressABS.Name = "rbPressABS";
+            this.rbPressABS.Size = new System.Drawing.Size(113, 22);
+            this.rbPressABS.TabIndex = 1;
+            this.rbPressABS.Text = "Абсолютное";
+            this.rbPressABS.UseVisualStyleBackColor = true;
+            // 
+            // rbPressIZB
+            // 
+            this.rbPressIZB.AutoSize = true;
+            this.rbPressIZB.Checked = true;
+            this.rbPressIZB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rbPressIZB.Location = new System.Drawing.Point(8, 21);
+            this.rbPressIZB.Name = "rbPressIZB";
+            this.rbPressIZB.Size = new System.Drawing.Size(114, 22);
+            this.rbPressIZB.TabIndex = 0;
+            this.rbPressIZB.TabStop = true;
+            this.rbPressIZB.Text = "Избыточное";
+            this.rbPressIZB.UseVisualStyleBackColor = true;
+            this.rbPressIZB.CheckedChanged += new System.EventHandler(this.rbPressIZB_CheckedChanged);
+            // 
+            // numATMpress
+            // 
+            this.numATMpress.DecimalPlaces = 2;
+            this.numATMpress.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numATMpress.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numATMpress.Location = new System.Drawing.Point(161, 45);
+            this.numATMpress.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numATMpress.Name = "numATMpress";
+            this.numATMpress.Size = new System.Drawing.Size(108, 29);
+            this.numATMpress.TabIndex = 11;
+            this.numATMpress.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.Location = new System.Drawing.Point(199, 250);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(73, 37);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "кПа";
+            // 
             // btnFormMensor
             // 
             this.btnFormMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -910,16 +1013,6 @@
             this.bMensorSet.Text = "ОК";
             this.bMensorSet.UseVisualStyleBackColor = true;
             this.bMensorSet.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(199, 250);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(73, 37);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "кПа";
             // 
             // numMensorPoint
             // 
@@ -989,6 +1082,7 @@
             // 
             // cbMensorTypeR
             // 
+            this.cbMensorTypeR.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMensorTypeR.FormattingEnabled = true;
             this.cbMensorTypeR.Items.AddRange(new object[] {
             "[канал A]  ДП-1",
@@ -1003,17 +1097,8 @@
             this.cbMensorTypeR.TabIndex = 6;
             this.cbMensorTypeR.DropDown += new System.EventHandler(this.cbMensorTypeR_DropDown);
             this.cbMensorTypeR.SelectedIndexChanged += new System.EventHandler(this.cbMensorTypeR_SelectedIndexChanged);
+            this.cbMensorTypeR.DropDownClosed += new System.EventHandler(this.cbMensorTypeR_DropDownClosed);
             this.cbMensorTypeR.SelectedValueChanged += new System.EventHandler(this.cbMensorTypeR_SelectedValueChanged);
-            // 
-            // tbMensorData
-            // 
-            this.tbMensorData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbMensorData.Location = new System.Drawing.Point(14, 242);
-            this.tbMensorData.Name = "tbMensorData";
-            this.tbMensorData.ReadOnly = true;
-            this.tbMensorData.Size = new System.Drawing.Size(184, 44);
-            this.tbMensorData.TabIndex = 3;
-            this.tbMensorData.Text = "0,000";
             // 
             // btnMensor
             // 
@@ -1052,6 +1137,15 @@
             this.gbMultimetr.TabStop = false;
             this.gbMultimetr.Text = "Мультиметр";
             // 
+            // tbMultimetrData
+            // 
+            this.tbMultimetrData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbMultimetrData.Location = new System.Drawing.Point(14, 71);
+            this.tbMultimetrData.Name = "tbMultimetrData";
+            this.tbMultimetrData.Size = new System.Drawing.Size(136, 44);
+            this.tbMultimetrData.TabIndex = 2;
+            this.tbMultimetrData.Text = "0,0000";
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -1061,15 +1155,6 @@
             this.label8.Size = new System.Drawing.Size(61, 37);
             this.label8.TabIndex = 3;
             this.label8.Text = "мA";
-            // 
-            // tbMultimetrData
-            // 
-            this.tbMultimetrData.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbMultimetrData.Location = new System.Drawing.Point(14, 71);
-            this.tbMultimetrData.Name = "tbMultimetrData";
-            this.tbMultimetrData.Size = new System.Drawing.Size(136, 44);
-            this.tbMultimetrData.TabIndex = 2;
-            this.tbMultimetrData.Text = "0,0000";
             // 
             // btnMultimetr
             // 
@@ -1695,8 +1780,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle17;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1738,10 +1823,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle8.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle18.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle18;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -3885,89 +3970,6 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.label2);
-            this.groupBox6.Controls.Add(this.rbPressABS);
-            this.groupBox6.Controls.Add(this.rbPressIZB);
-            this.groupBox6.Controls.Add(this.numATMpress);
-            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox6.Location = new System.Drawing.Point(11, 131);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(283, 85);
-            this.groupBox6.TabIndex = 14;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Давление";
-            // 
-            // rbPressIZB
-            // 
-            this.rbPressIZB.AutoSize = true;
-            this.rbPressIZB.Checked = true;
-            this.rbPressIZB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbPressIZB.Location = new System.Drawing.Point(8, 21);
-            this.rbPressIZB.Name = "rbPressIZB";
-            this.rbPressIZB.Size = new System.Drawing.Size(114, 22);
-            this.rbPressIZB.TabIndex = 0;
-            this.rbPressIZB.TabStop = true;
-            this.rbPressIZB.Text = "Избыточное";
-            this.rbPressIZB.UseVisualStyleBackColor = true;
-            this.rbPressIZB.CheckedChanged += new System.EventHandler(this.rbPressIZB_CheckedChanged);
-            // 
-            // rbPressABS
-            // 
-            this.rbPressABS.AutoSize = true;
-            this.rbPressABS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbPressABS.Location = new System.Drawing.Point(160, 21);
-            this.rbPressABS.Name = "rbPressABS";
-            this.rbPressABS.Size = new System.Drawing.Size(113, 22);
-            this.rbPressABS.TabIndex = 1;
-            this.rbPressABS.Text = "Абсолютное";
-            this.rbPressABS.UseVisualStyleBackColor = true;
-            // 
-            // numATMpress
-            // 
-            this.numATMpress.DecimalPlaces = 2;
-            this.numATMpress.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numATMpress.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numATMpress.Location = new System.Drawing.Point(161, 45);
-            this.numATMpress.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numATMpress.Name = "numATMpress";
-            this.numATMpress.Size = new System.Drawing.Size(108, 29);
-            this.numATMpress.TabIndex = 11;
-            this.numATMpress.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(8, 54);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(142, 18);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Атмосферное, ГПа";
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label63.Location = new System.Drawing.Point(12, 221);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(156, 20);
-            this.label63.TabIndex = 15;
-            this.label63.Text = "Текущее давление:";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3998,6 +4000,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).EndInit();
             this.gbMensor.ResumeLayout(false);
             this.gbMensor.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).EndInit();
             this.gbMultimetr.ResumeLayout(false);
             this.gbMultimetr.PerformLayout();
@@ -4056,9 +4061,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).EndInit();
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

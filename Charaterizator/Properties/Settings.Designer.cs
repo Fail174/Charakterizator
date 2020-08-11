@@ -779,5 +779,65 @@ namespace Charaterizator.Properties {
                 this["set_AutoRegim"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_MensorVisible {
+            get {
+                return ((bool)(this["set_MensorVisible"]));
+            }
+            set {
+                this["set_MensorVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_CommutatorVisible {
+            get {
+                return ((bool)(this["set_CommutatorVisible"]));
+            }
+            set {
+                this["set_CommutatorVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_MultimetrVisible {
+            get {
+                return ((bool)(this["set_MultimetrVisible"]));
+            }
+            set {
+                this["set_MultimetrVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_TermocameraVisible {
+            get {
+                return ((bool)(this["set_TermocameraVisible"]));
+            }
+            set {
+                this["set_TermocameraVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_PanelLogVisible {
+            get {
+                return ((bool)(this["set_PanelLogVisible"]));
+            }
+            set {
+                this["set_PanelLogVisible"] = value;
+            }
+        }
     }
 }
