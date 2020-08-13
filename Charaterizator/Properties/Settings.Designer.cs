@@ -839,5 +839,65 @@ namespace Charaterizator.Properties {
                 this["set_PanelLogVisible"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM10")]
+        public string COMbarometr {
+            get {
+                return ((string)(this["COMbarometr"]));
+            }
+            set {
+                this["COMbarometr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
+        public int COMbarometr_Speed {
+            get {
+                return ((int)(this["COMbarometr_Speed"]));
+            }
+            set {
+                this["COMbarometr_Speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMbarometr_Parity {
+            get {
+                return ((int)(this["COMbarometr_Parity"]));
+            }
+            set {
+                this["COMbarometr_Parity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMbarometr_DataBits {
+            get {
+                return ((int)(this["COMbarometr_DataBits"]));
+            }
+            set {
+                this["COMbarometr_DataBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int COMbarometr_StopBits {
+            get {
+                return ((int)(this["COMbarometr_StopBits"]));
+            }
+            set {
+                this["COMbarometr_StopBits"] = value;
+            }
+        }
     }
 }

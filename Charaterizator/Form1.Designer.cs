@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +58,8 @@
             this.параметрыToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemMainSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_Barometr = new System.Windows.Forms.ToolStripMenuItem();
+            this.setComBarometr = new System.Windows.Forms.ToolStripTextBox();
             this.окнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPanelCommutator = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPanelMultimetr = new System.Windows.Forms.ToolStripMenuItem();
@@ -351,6 +353,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
+            this.bBarometr = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -475,6 +478,7 @@
             this.коммутаторToolStripMenuItem,
             this.холодильнаяКамераToolStripMenuItem,
             this.датчикиToolStripMenuItem,
+            this.mi_Barometr,
             this.toolStripMenuItem2,
             this.MenuItemMainSettings});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
@@ -607,6 +611,22 @@
             this.MenuItemMainSettings.Size = new System.Drawing.Size(196, 22);
             this.MenuItemMainSettings.Text = "Основные параметры";
             this.MenuItemMainSettings.Click += new System.EventHandler(this.MenuItemMainSettings_Click);
+            // 
+            // mi_Barometr
+            // 
+            this.mi_Barometr.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setComBarometr});
+            this.mi_Barometr.Name = "mi_Barometr";
+            this.mi_Barometr.Size = new System.Drawing.Size(196, 22);
+            this.mi_Barometr.Text = "Барометр";
+            this.mi_Barometr.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // setComBarometr
+            // 
+            this.setComBarometr.Name = "setComBarometr";
+            this.setComBarometr.Size = new System.Drawing.Size(154, 23);
+            this.setComBarometr.Text = "Настройки подключения";
+            this.setComBarometr.Click += new System.EventHandler(this.setComBarometr_Click);
             // 
             // окнаToolStripMenuItem
             // 
@@ -1124,6 +1144,7 @@
             // gbMultimetr
             // 
             this.gbMultimetr.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbMultimetr.Controls.Add(this.bBarometr);
             this.gbMultimetr.Controls.Add(this.tbMultimetrData);
             this.gbMultimetr.Controls.Add(this.label8);
             this.gbMultimetr.Controls.Add(this.btnMultimetr);
@@ -1780,8 +1801,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1823,10 +1844,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle18.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -3970,6 +3991,18 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
+            // bBarometr
+            // 
+            this.bBarometr.BackColor = System.Drawing.Color.Green;
+            this.bBarometr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bBarometr.Location = new System.Drawing.Point(161, 25);
+            this.bBarometr.Name = "bBarometr";
+            this.bBarometr.Size = new System.Drawing.Size(140, 40);
+            this.bBarometr.TabIndex = 4;
+            this.bBarometr.Text = "Подключен";
+            this.bBarometr.UseVisualStyleBackColor = false;
+            this.bBarometr.Click += new System.EventHandler(this.bBarometr_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4386,6 +4419,9 @@
         private System.Windows.Forms.NumericUpDown numATMpress;
         private System.Windows.Forms.Label label63;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem mi_Barometr;
+        private System.Windows.Forms.ToolStripTextBox setComBarometr;
+        private System.Windows.Forms.Button bBarometr;
     }
 }
 

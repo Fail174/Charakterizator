@@ -81,6 +81,7 @@ namespace Charaterizator
         private CThermalCamera ThermalCamera = new CThermalCamera();
         private CCalculation CalculationMtx = new CCalculation();
         private CPascal Pascal = new CPascal();
+        private CBarometr Barometr = new CBarometr();
 
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
@@ -388,6 +389,32 @@ namespace Charaterizator
             }
         }
 
+
+        // Настройки СОМ-порта барометра
+        private void setComBarometr_Click(object sender, EventArgs e)
+        {
+            FormPortSettings newForm = new FormPortSettings();
+            newForm.InitPortsettings(Properties.Settings.Default.COMbarometr,
+                Properties.Settings.Default.COMbarometr_Speed,
+                Properties.Settings.Default.COMbarometr_DataBits,
+                Properties.Settings.Default.COMbarometr_StopBits,
+                Properties.Settings.Default.COMbarometr_Parity);
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.COMbarometr = newForm.GetPortName();
+                Properties.Settings.Default.COMbarometr_Speed = newForm.GetPortSpeed();
+                Properties.Settings.Default.COMbarometr_DataBits = newForm.GetPortDataBits();
+                Properties.Settings.Default.COMbarometr_StopBits = newForm.GetPortStopBits();
+                Properties.Settings.Default.COMbarometr_Parity = newForm.GetPortParity();
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
+        }
+
+
+
+
+
+
         //подключение термокамеры
         private void btnThermalCamera_Click(object sender, EventArgs e)
         {
@@ -523,6 +550,28 @@ namespace Charaterizator
                 }
             }
 
+        }
+
+
+        // подключение Барометра
+        private void bBarometr_Click(object sender, EventArgs e)
+        {
+            if (Barometr.Connect(Properties.Settings.Default.COMbarometr,
+             Properties.Settings.Default.COMbarometr_Speed,
+             Properties.Settings.Default.COMbarometr_DataBits,
+             Properties.Settings.Default.COMbarometr_StopBits,
+             Properties.Settings.Default.COMbarometr_Parity) >= 0)
+            {
+                bBarometr.BackColor = Color.Green;
+                bBarometr.Text = "Подключен";
+                Program.txtlog.WriteLineLog("Барометр подключен", 0);
+            }
+            else
+            {
+                bBarometr.BackColor = Color.IndianRed;
+                bBarometr.Text = "Не подключен";
+                Program.txtlog.WriteLineLog("Барометр не подключен", 1);
+            }
         }
 
 
@@ -1752,6 +1801,7 @@ namespace Charaterizator
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             TimerTickCount++;
+
             // Опрос состояния коммутатора
             if (Commutator.Connected)
             {
@@ -1788,6 +1838,25 @@ namespace Charaterizator
                     btnMultimetr.BackColor = Color.Transparent;
                 }
             }
+
+            // Чтение аатм. давления с барометра
+            if (Barometr.Connected)
+            {
+                numATMpress.Value = Convert.ToDecimal(Barometr.amtPress); //обновляем данные
+            }
+            else
+            {
+                if (bBarometr.BackColor != Color.IndianRed)
+                {
+                    bBarometr.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    bBarometr.BackColor = Color.Transparent;
+                }
+            }
+
+
 
 
 
@@ -5997,6 +6066,7 @@ namespace Charaterizator
             MainTimer.Enabled = true;
             MainTimer.Start();
         }
+
     }
 }
 
