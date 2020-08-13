@@ -112,6 +112,10 @@ namespace Charaterizator
 
         private int TimerTickCount = 0;
         //private bool FormLoaded = false;
+        private string strPascaleModule;
+        private int numPascaleModule;
+
+
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -2622,17 +2626,35 @@ namespace Charaterizator
                                 SelectModel = new String(sensors.sensorList[si].PressureModel);
                                 SensorAbsPressuer = (SelectModel[1] == '0');
                                 SelectType = sensors.sensorList[si].GetdevType();
+                                cbVRDiapazon1.Items.Clear();
+
 
                                 // Определяем количество диапазонов у датчика                               
-                                NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
+                                //NumOfRange = Convert.ToInt16(SensorsDB.GetDataSensors(SelectType, SelectModel, "NumOfRange"));
+                                // Считываем НПИ/ВПИ для трех диапазонов верификации и формируем данные для combobox 
+                                string NPI_VPI_diap1 = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerNPIPoint1") + ".." + SensorsDB.GetDataSensors(SelectType, SelectModel, "VerVPIPoint1");
+                                if (NPI_VPI_diap1.Length > 3)
+                                    cbVRDiapazon1.Items.Add(NPI_VPI_diap1);
 
-                                if ((NumOfRange != 1) && (NumOfRange != 2))
+                                string NPI_VPI_diap2 = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerNPIPoint2") + ".." + SensorsDB.GetDataSensors(SelectType, SelectModel, "VerVPIPoint2");
+                                if (NPI_VPI_diap2.Length > 3)
+                                    cbVRDiapazon1.Items.Add(NPI_VPI_diap2);
+
+                                string NPI_VPI_diap3 = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerNPIPoint3") + ".." + SensorsDB.GetDataSensors(SelectType, SelectModel, "VerVPIPoint3");
+                                if (NPI_VPI_diap3.Length > 3)
+                                    cbVRDiapazon1.Items.Add(NPI_VPI_diap3);
+
+
+                                if (cbVRDiapazon1.Items.Count <= 0)
                                 {
                                     cbVRDiapazon1.SelectedIndex = -1;
                                     cbVRDiapazon1.Enabled = false;
                                 }
+
                                 else
                                 {
+                                    cbVRDiapazon1.SelectedIndex = 0;
+
                                     // Занесение данных о диапазоне температур и давлений из БД в combobox
                                     SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerTempPoint1");  // функция запроса данных из БД по номеру модели и параметру
                                     if (SensParam != "")
@@ -2649,16 +2671,9 @@ namespace Charaterizator
                                         string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                         cbVRPressureSet1.Items.Clear();
                                         cbVRPressureSet1.Items.AddRange(SPcmbox);
-                                        cbVRPressureSet1.SelectedIndex = 0;
-                                    }
+                                        cbVRPressureSet1.SelectedIndex = 0;                                                                             
 
-
-                                    cbVRDiapazon1.SelectedIndex = 0;
-
-                                    if (NumOfRange == 1)
-                                        cbVRDiapazon1.Enabled = false;
-                                    else
-                                        cbVRDiapazon1.Enabled = true;
+                                    }                                                                      
 
                                 }
                                 
@@ -4250,6 +4265,12 @@ namespace Charaterizator
                         {
                             for (i = 0; i < cbVRPressureSet1.Items.Count; i++)
                             {
+                                // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
+                                if ((!UseMensor)&&(cbVRDiapazon1.Items.Count > 0))
+                                {
+                                    cbMensorTypeR.SelectedItem = numPascaleModule;                                    
+                                }
+
                                 cbVRPressureSet1.SelectedIndex = i;
                                 btnVRPressureSet1.PerformClick();
                                 ReadSensorPressure();
@@ -4341,6 +4362,10 @@ namespace Charaterizator
                             cbVRPressureSet1.Items.Clear();
                             cbVRPressureSet1.Items.AddRange(SPcmbox);
                             cbVRPressureSet1.SelectedIndex = 0;
+
+                            strPascaleModule = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerModulePoint1"); // функция запроса данных из БД по номеру модели и параметру
+                            numPascaleModule = Convert.ToInt32(strPascaleModule[0]) - 1;
+
                         }
                     }
                     else if (cbVRDiapazon1.SelectedIndex == 1)
@@ -4352,9 +4377,30 @@ namespace Charaterizator
                             cbVRPressureSet1.Items.Clear();
                             cbVRPressureSet1.Items.AddRange(SPcmbox);
                             cbVRPressureSet1.SelectedIndex = 0;
+
+                            strPascaleModule = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerModulePoint2"); // функция запроса данных из БД по номеру модели и параметру
+                            numPascaleModule = Convert.ToInt32(strPascaleModule[0]) - 1;
                         }
 
                     }
+                    else if (cbVRDiapazon1.SelectedIndex == 2)
+                    {
+                        SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerPressPoint3"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            cbVRPressureSet1.Items.Clear();
+                            cbVRPressureSet1.Items.AddRange(SPcmbox);
+                            cbVRPressureSet1.SelectedIndex = 0;
+
+                            strPascaleModule = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerModulePoint3"); // функция запроса данных из БД по номеру модели и параметру
+                            numPascaleModule = Convert.ToInt32(strPascaleModule[0]) - 1;
+                        }
+
+                    }
+
+
+
                     else
                     {
                     }

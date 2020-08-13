@@ -32,7 +32,7 @@ namespace SensorProgrammer
         {
             public string Type;
             public string Model;
-            public string Serial;
+            //public string Serial;
             public string Pmin;
             public string Pmax;
             public string NumOfRange;
@@ -54,8 +54,7 @@ namespace SensorProgrammer
         }
 
 
-
-
+        
 
         // Операции выполняемые при загрузке формы...
         // устанавливаем соединение с коммутатором (с параметрами из настроек settings)
@@ -374,6 +373,7 @@ namespace SensorProgrammer
         // Первоначальное заполенеие dgwMainWindow
         void SetdgwMainWindow()
         {
+            // поле 1
             // Заполняем DataGrid - dgwMainWindow
             dgwMainWindow.Rows.Clear();
             for (int i = 0; i < 30; i++)
@@ -382,6 +382,17 @@ namespace SensorProgrammer
                 dgwMainWindow.Rows[i].Cells[0].Value = Convert.ToString(i + 1);
             }
             dgwMainWindow.ClearSelection();
+
+            // поле 2
+            // Заполняем DataGrid - dgwMainWindow2
+            dgwMainWindow2.Rows.Clear();
+            for (int i = 0; i < 30; i++)
+            {
+                dgwMainWindow2.Rows.Add();
+                dgwMainWindow2.Rows[i].Cells[0].Value = Convert.ToString(i + 31);
+            }
+            dgwMainWindow2.ClearSelection();
+            
             // Получаем список типов и датчиков из БД
             GetTypeDB();
         }
@@ -446,6 +457,17 @@ namespace SensorProgrammer
                     dgwMainWindow.Rows[i].Cells[NumId].Value = Convert.ToString(Data);
             }
             dgwMainWindow.ClearSelection();
+
+            for (int i = 0; i < 30; i++)
+            {
+                if (Convert.ToBoolean(dgwMainWindow2.Rows[i].Cells[1].Value) == true)
+                    dgwMainWindow2.Rows[i].Cells[NumId].Value = Convert.ToString(Data);
+            }
+            dgwMainWindow2.ClearSelection();
+
+
+
+
         }
 
 
@@ -453,6 +475,7 @@ namespace SensorProgrammer
         // Обработчик события завершения редактирования ячейки  dgwMainWindow
         private void dgwMainWindow_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            /* ИСКЛЮЧЕНО серийные номера читаются с датчиков как заводские
             // редактирование СЕРИЙНОГО НОМЕРА
             if ((e.ColumnIndex == 4)&&(cbAutoNumSerial.Checked))
             {
@@ -478,11 +501,9 @@ namespace SensorProgrammer
                 {
                     MessageBox.Show("Данные в этой ячейке не являются числом.", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
-                }
-
-             
-
+                }          
             }
+            */
         }
 
 
@@ -490,7 +511,7 @@ namespace SensorProgrammer
         // Разрешаем/Запрещаем редактирование серийного номера датчика - при установке checkBox - выбор канала коммутатора 
         private void dgwMainWindow_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {           
-           /*
+           /* ИСКЛЮЧЕНО
             
             // редактирование НОМЕРА КАНАЛА
             if ((e.ColumnIndex == 1) && (e.RowIndex >= 0))  //&& (e.ColumnIndex >= 0)
@@ -527,15 +548,8 @@ namespace SensorProgrammer
             }           
 */
         }
-
-
         
-        // Функция для группового выбора/установки каналов (в checkbox) 
-        private void dgwMainWindow_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-         
-
-        }
+              
 
 
 
@@ -568,6 +582,151 @@ namespace SensorProgrammer
             dgwMainWindow.ClearSelection();
         }
 
+        private void dgwMainWindow2_SelectionChanged(object sender, EventArgs e)
+        {
+            dgwMainWindow2.ClearSelection();
+        }
+
+
+
+        // Поле1
+        private void dgwMainWindow_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == false))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow.Rows[i].Cells[1].Value = true;
+                            //dgwMainWindow.Rows[i].Cells[4].ReadOnly = false;
+                            dgwMainWindow.Rows[i].Cells[2].Value = cbType.SelectedItem;
+                            dgwMainWindow.Rows[i].Cells[3].Value = cbModel.SelectedItem;
+
+                        }
+                    }
+                }
+                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == true))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == false)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow.Rows[i].Cells[1].Value = false;
+                            //dgwMainWindow.Rows[i].Cells[4].ReadOnly = true;
+                            dgwMainWindow.Rows[i].Cells[4].Value = null;
+                            dgwMainWindow.Rows[i].Cells[2].Value = null;
+                            dgwMainWindow.Rows[i].Cells[3].Value = null;
+
+                        }
+                    }
+                }
+
+                if (System.Windows.Forms.Control.ModifierKeys != System.Windows.Forms.Keys.Control)
+                {
+
+                    if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == false)
+                    {
+                        dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                       // dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
+
+                    }
+                    else
+                    {
+                        dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+
+                        dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
+                        dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
+                        //dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
+                        dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    }
+                }
+            }
+        }
+
+
+
+        // Поле2
+        private void dgwMainWindow2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow2.Rows[e.RowIndex].Cells[1].Value) == false))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow2.Rows[i].Cells[1].Value) == true)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow2.Rows[i].Cells[1].Value = true;
+                            //dgwMainWindow2.Rows[i].Cells[4].ReadOnly = false;
+                            dgwMainWindow2.Rows[i].Cells[2].Value = cbType.SelectedItem;
+                            dgwMainWindow2.Rows[i].Cells[3].Value = cbModel.SelectedItem;
+
+                        }
+                    }
+                }
+                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow2.Rows[e.RowIndex].Cells[1].Value) == true))
+                {
+                    for (int i = e.RowIndex; i >= 0; i--)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow2.Rows[i].Cells[1].Value) == false)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            dgwMainWindow2.Rows[i].Cells[1].Value = false;
+                            //dgwMainWindow2.Rows[i].Cells[4].ReadOnly = true;
+                            dgwMainWindow2.Rows[i].Cells[4].Value = null;
+                            dgwMainWindow2.Rows[i].Cells[2].Value = null;
+                            dgwMainWindow2.Rows[i].Cells[3].Value = null;
+
+                        }
+                    }
+                }
+
+                if (System.Windows.Forms.Control.ModifierKeys != System.Windows.Forms.Keys.Control)
+                {
+
+                    if (Convert.ToBoolean(dgwMainWindow2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == false)
+                    {
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                        //dgwMainWindow2.Rows[e.RowIndex].Cells[4].ReadOnly = false;
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
+
+                    }
+                    else
+                    {
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[4].Value = null;
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[2].Value = null;
+                        dgwMainWindow2.Rows[e.RowIndex].Cells[3].Value = null;
+                        //dgwMainWindow2.Rows[e.RowIndex].Cells[4].ReadOnly = true;
+                        dgwMainWindow2.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    }
+                }
+            }
+        }
+
 
 
 
@@ -578,16 +737,21 @@ namespace SensorProgrammer
         private void bBurn_Click(object sender, EventArgs e)
         {
             bool checkCH = false;
-            bool checkSerial = true;         
+            bool checkSerial = true;
+            int res;
+
+            label2.Visible = true;
+            label2.Text = "";
+
 
             // Проверка готовности к прошивке
             // проверка связи с коммутатором
-           /* if (Commutator.Connected != true)
+            if (Commutator.Connected != true)
             {
                 label2.Visible = true;
                 label2.Text = "Операция не может быть выполнена. Нет связи с коммутатором!";
                 return;
-            }*/
+            }
             // проверка связи с БД
             if (_сonnection.State != System.Data.ConnectionState.Open)
             {
@@ -621,7 +785,19 @@ namespace SensorProgrammer
                     }
                 }
             }
-            if(checkCH == false)
+            for (int i = 0; i < 30; i++)
+            {
+                if (Convert.ToBoolean(dgwMainWindow2.Rows[i].Cells[1].Value) == true)
+                {
+                    checkCH = true;
+                    if (Convert.ToInt64(dgwMainWindow2.Rows[i].Cells[4].Value) <= 0)
+                    {
+                        checkSerial = false;
+                    }
+                }
+            }
+
+            if (checkCH == false)
             {
                 label2.Visible = true;
                 label2.Text = "Операция не может быть выполнена. Не выбраны каналы коммутатора!";
@@ -634,11 +810,8 @@ namespace SensorProgrammer
                 return;
             }
 
-
-
-            // Если все проверки пройденны
-            label2.Visible = true;
-            label2.Text = "";
+            
+            // Если все проверки пройденны         
                         
             // Запрос на подтверждение
             DialogResult result = MessageBox.Show(
@@ -656,8 +829,8 @@ namespace SensorProgrammer
 
 
             Application.OpenForms[0].Activate(); // восстанавливаем фокус главного окна
-            dgwMainWindow.Enabled = false;       // делаем недоступным для редактирования главное окно
-
+            dgwMainWindow.Enabled = false;       // делаем недоступным для редактирования главное окно поле1
+            dgwMainWindow2.Enabled = false;       // делаем недоступным для редактирования главное окно поле2
 
             // Настраиваем прогрессБар
             int progressMax = 0;            
@@ -666,6 +839,12 @@ namespace SensorProgrammer
                 if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
                     progressMax++;
             }
+            for (int i = 0; i < 30; i++)
+            {
+                if (Convert.ToBoolean(dgwMainWindow2.Rows[i].Cells[1].Value) == true)
+                    progressMax++;
+            }
+            
             progressBar.Minimum = 0;
             progressBar.Maximum = progressMax;       
             progressBar.Value = 0;
@@ -675,81 +854,166 @@ namespace SensorProgrammer
 
           
             // Опрос подключенных к коммутатору датчиков и запись индивидуальных параметров
-            for (int i = 0; i < dgwMainWindow.RowCount; i++)
+            for (int i = 0; i < 60; i++)
             {
-                label2.Text = "Выполняется запись индивидуальных параметров. Не выключайте компьютер и коммутатор!";
-                if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                label2.Text = "Выполняется запись индивидуальных параметров...";
+
+                if (i < 30)
                 {
-                    // подключаем соответствующий канал коммутатора
-                    Commutator.SetConnectors(i, 0);
 
-                    //(BurnSensors(string Serial, string Pmin, string Pmax, string DeltaRangeMin, string Model)
-                    string Serial = dgwMainWindow.Rows[i].Cells[4].Value.ToString();
-
-                    if (sensors.SeachSensor(i))//поиск датчиков по HART
+                    if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
                     {
-                        if (sensors.SelectSensor(i))//выбор обнаруженного датчика
-                        {//датчик найден, обновляем таблицу
-                            BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
-                            int res = BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
-                            switch(res)
-                            {
-                                case 1:
-                                    if (sensors.C14SensorRead())       //чтение данных с датчика
-                                    {
-                                        if (Convert.ToUInt32(Serial) != sensors.sensor.SerialNumber)
-                                        {
-                                            resBurn = false;
-                                            label2.Text = "Не удалось записать серийный номер датчика в канале: " + (i + 1);
-                                            break;
+                        // подключаем соответствующий канал коммутатора
+                        Commutator.SetConnectors(i, 0);
 
-                                        }
-                                    }
-                                    if (!sensors.C140ReadPressureModel())
-                                    {//читаем модель ПД
-                                        MessageBox.Show("Модель ПД датчика не считана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    }
-                                    else
-                                    {
-                                        for (int j = 0; j < sensParam.Model.Length; j++)
+                        string Serial = dgwMainWindow.Rows[i].Cells[4].Value.ToString();
+
+                        if (sensors.SeachSensor(i))//поиск датчиков по HART
+                        {
+                            if (sensors.SelectSensor(i))//выбор обнаруженного датчика
+                            {//датчик найден, обновляем таблицу
+
+                                labelCH.Text = "Запись данных в датчик в канале " + Convert.ToString(i + 1);
+                                BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                                res = BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                                switch (res)
+                                {
+                                    case 1:
+                                        if (sensors.C14SensorRead())       //чтение данных с датчика
                                         {
-                                            if (sensParam.Model[j] != sensors.sensor.PressureModel[j])
+                                            if (Convert.ToUInt32(Serial) != sensors.sensor.SerialNumber)
                                             {
-                                                MessageBox.Show("Модель ПД датчика не записана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                resBurn = false;
+                                                label2.Text = "Не удалось записать серийный номер датчика в канале: " + (i + 1);
                                                 break;
-                                            }
 
+                                            }
                                         }
-                                    }
- 
-                                    break;
-                                case 0:
-                                    label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
-                                    MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    resBurn = false;
-                                    break;
-                                case -1:
-                                case -2:
-                                case -3:
-                                case -4:
-                                    label2.Text = "Команды записи в датчик не выполнены: " + res;
-                                    MessageBox.Show("Команды записи в датчик не выполнены в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    resBurn = false;
-                                    break;
+                                        if (!sensors.C140ReadPressureModel())
+                                        {//читаем модель ПД
+                                            MessageBox.Show("Модель ПД датчика не считана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+                                        else
+                                        {
+                                            for (int j = 0; j < sensParam.Model.Length; j++)
+                                            {
+                                                if (sensParam.Model[j] != sensors.sensor.PressureModel[j])
+                                                {
+                                                    MessageBox.Show("Модель ПД датчика не записана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                    break;
+                                                }
+
+                                            }
+                                        }
+
+                                        break;
+                                    case 0:
+                                        label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
+                                        MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        resBurn = false;
+                                        break;
+                                    case -1:
+                                    case -2:
+                                    case -3:
+                                    case -4:
+                                        label2.Text = "Команды записи в датчик не выполнены: " + res;
+                                        MessageBox.Show("Команды записи в датчик не выполнены в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        resBurn = false;
+                                        break;
+                                }
                             }
                         }
+                        else
+                        {
+                            label2.Text = "Датчик не обнаружен в канале: " + (i + 1);
+                            MessageBox.Show("Датчик не обнаружен в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            resBurn = false;
+                        }
+                        progressBar.PerformStep();
                     }
-                    else
-                    {
-                        label2.Text = "Датчик не обнаружен в канале: " + (i + 1);
-                        MessageBox.Show("Датчик не обнаружен в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        resBurn = false;
-                    }
-                    progressBar.PerformStep();
+
                 }
-                
+                else
+                {
+
+                    if (Convert.ToBoolean(dgwMainWindow2.Rows[i-30].Cells[1].Value) == true)
+                    {
+                        // подключаем соответствующий канал коммутатора
+                        Commutator.SetConnectors(i, 0);
+
+                        string Serial = dgwMainWindow2.Rows[i-30].Cells[4].Value.ToString();
+
+                        if (sensors.SeachSensor(i))//поиск датчиков по HART
+                        {
+                            if (sensors.SelectSensor(i))//выбор обнаруженного датчика
+                            {//датчик найден, обновляем таблицу
+
+                                labelCH.Text = "Запись данных в датчик в канале " + Convert.ToString(i + 1);
+                                BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                                res = BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                                switch (res)
+                                {
+                                    case 1:
+                                        if (sensors.C14SensorRead())       //чтение данных с датчика
+                                        {
+                                            if (Convert.ToUInt32(Serial) != sensors.sensor.SerialNumber)
+                                            {
+                                                resBurn = false;
+                                                label2.Text = "Не удалось записать серийный номер датчика в канале: " + (i + 1);
+                                                break;
+
+                                            }
+                                        }
+                                        if (!sensors.C140ReadPressureModel())
+                                        {//читаем модель ПД
+                                            MessageBox.Show("Модель ПД датчика не считана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+                                        else
+                                        {
+                                            for (int j = 0; j < sensParam.Model.Length; j++)
+                                            {
+                                                if (sensParam.Model[j] != sensors.sensor.PressureModel[j])
+                                                {
+                                                    MessageBox.Show("Модель ПД датчика не записана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                    break;
+                                                }
+
+                                            }
+                                        }
+
+                                        break;
+                                    case 0:
+                                        label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
+                                        MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        resBurn = false;
+                                        break;
+                                    case -1:
+                                    case -2:
+                                    case -3:
+                                    case -4:
+                                        label2.Text = "Команды записи в датчик не выполнены: " + res;
+                                        MessageBox.Show("Команды записи в датчик не выполнены в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        resBurn = false;
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            label2.Text = "Датчик не обнаружен в канале: " + (i + 1);
+                            MessageBox.Show("Датчик не обнаружен в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            resBurn = false;
+                        }
+                        progressBar.PerformStep();
+                    }
+
+
+                }                               
             }
             dgwMainWindow.Enabled = true;
+            dgwMainWindow2.Enabled = true;
+            labelCH.Text = "";
+
             if (resBurn == true)
             {
                     label2.Text = "Индивидуальные параметры успешно записаны!";
@@ -825,14 +1089,136 @@ namespace SensorProgrammer
 
 
 
+        // Поиск датчиков в выделенных каналах
+        private void bRead_Click(object sender, EventArgs e)
+        {
+            bool flag_select_CH = false;
+
+            if ((Commutator.Connected == true) && (sensors.IsConnect()))
+            {
+                
+                label2.Text = "Выполняется чтение данных с датчиков...";
+
+                // Настраиваем прогрессБар
+                int progressMax = 0;
+                for (int i = 0; i < 30; i++)
+                {
+                    if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                        progressMax++;
+                }
+                for (int i = 0; i < 30; i++)
+                {
+                    if (Convert.ToBoolean(dgwMainWindow2.Rows[i].Cells[1].Value) == true)
+                        progressMax++;
+                }
+
+                progressBar.Minimum = 0;
+                progressBar.Maximum = progressMax;
+                progressBar.Value = 0;
+                progressBar.Step = 1;
+                //progressBar.PerformStep();
+
+
+                for (int i = 0; i < 60; i++)
+                {
+
+                    if (i < 30)
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
+                        {
+                            flag_select_CH = true;
+
+                            try
+                            {
+                                // подключаем соответствующий канал коммутатора
+                                Commutator.SetConnectors(i, 0);
+                                labelCH.Text = "Чтение данных датчика в канале " + Convert.ToString(i + 1);                                
+
+
+                                if (sensors.SeachSensor(i))//поиск датчиков по HART
+                                {                                    
+                                    sensors.SelectSensor(i);
+                                    dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.Green;
+                                    dgwMainWindow.Rows[i].Cells[4].Value = sensors.sensor.uni;
+                                }
+                                else
+                                {
+                                    dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                                    dgwMainWindow.Rows[i].Cells[1].Value = false;
+                                }
+                                progressBar.PerformStep();
+                            }
+
+                            catch
+                            {
+                                MessageBox.Show("Не удалось связаться с датчиками: ", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                progressBar.Value = 0;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Convert.ToBoolean(dgwMainWindow2.Rows[i-30].Cells[1].Value) == true)
+                        {
+                            flag_select_CH = true;
+
+                            try
+                            {
+                                // подключаем соответствующий канал коммутатора
+                                Commutator.SetConnectors(i, 0);
+                                labelCH.Text = "Чтение данных датчика в канале " + Convert.ToString(i + 1);
+
+                                if (sensors.SeachSensor(i))//поиск датчиков по HART
+                                {
+                                    sensors.SelectSensor(i);
+                                    dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.Green;
+                                    dgwMainWindow2.Rows[i-30].Cells[4].Value = sensors.sensor.uni;
+                                }
+                                else
+                                {
+                                    dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;
+                                    dgwMainWindow2.Rows[i-30].Cells[1].Value = false;
+                                }
+                                progressBar.PerformStep();
+                            }
+
+                            catch
+                            {
+                                MessageBox.Show("Не удалось связаться с датчиками: ", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                progressBar.Value = 0;
+                                break;
+                            }
+                        }
+                    }                                                           
+                   
+                }
+                if (!flag_select_CH)
+                {
+                    //label2.Text = "Не выбран ни один канал";
+                    MessageBox.Show("Не выбран ни один канал", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                //label2.Text = "Не подключен коммутатор или нет связи с датчиками";
+                MessageBox.Show("Не подключен коммутатор или нет связи с датчиками", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            labelCH.Text = "";
+            label2.Text = "";
+        }
+
+
+
+
+
 
 
 
 
         // При закрытии формы отключаем соединения с БД, коммутатором и датчиками
         private void FormSensorProgrammer_FormClosed(object sender, FormClosedEventArgs e)
-        {
-           
+        {           
             if (Commutator.Connected == true)
             {
                 Commutator.DisConnect();
@@ -847,156 +1233,12 @@ namespace SensorProgrammer
             {
                 sensors.DisConnect();
             }
-
-
         }
 
-
-        // Поиск датчиков в выделенных каналах
-        private void bRead_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            bool flag_select_CH = false;
-
-            if ((Commutator.Connected == true) && (sensors.IsConnect()))
-            {
-
-                // Настраиваем прогрессБар
-                int progressMax = 0;
-                for (int i = 0; i < 30; i++)
-                {
-                    if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
-                        progressMax++;
-                }
-                progressBar.Minimum = 0;
-                progressBar.Maximum = progressMax;
-                progressBar.Value = 0;
-                progressBar.Step = 1;             
-                progressBar.PerformStep();
-
-
-
-
-                for (int i = 0; i < 30; i++)
-                {
-                    if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
-                    {
-                        flag_select_CH = true;
-
-                        try
-                        {
-                            // подключаем соответствующий канал коммутатора
-                            Commutator.SetConnectors(i, 0);
-
-                            if (sensors.SeachSensor(i))//поиск датчиков по HART
-                            {
-                                sensors.SelectSensor(i);
-                                dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.Green;
-                                dgwMainWindow.Rows[i].Cells[4].Value =  sensors.sensor.uni;
-                            }
-                            else
-                            {
-                                dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
-                                dgwMainWindow.Rows[i].Cells[1].Value = false;
-                            }
-                            progressBar.PerformStep();
-                        }
-
-                        catch
-                        {
-                            MessageBox.Show("Не удалось связаться с датчиками: ", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            progressBar.Value = 0;
-                            break;
-                        }
-
-
-
-
-                      
-                    }                     
-                }
-                if (!flag_select_CH)
-                {
-                    //label2.Text = "Не выбран ни один канал";
-                    MessageBox.Show("Не выбран ни один канал", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                    
-
-            }
-            else
-            {
-                //label2.Text = "Не подключен коммутатор или нет связи с датчиками";
-                MessageBox.Show("Не подключен коммутатор или нет связи с датчиками", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-
-        }
-
-        private void dgwMainWindow_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 1)
-            {
-                if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == false))
-                {
-                    for (int i = e.RowIndex; i >= 0; i--)
-                    {
-                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == true)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            dgwMainWindow.Rows[i].Cells[1].Value = true;
-                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = false;
-                            dgwMainWindow.Rows[i].Cells[2].Value = cbType.SelectedItem;
-                            dgwMainWindow.Rows[i].Cells[3].Value = cbModel.SelectedItem;
-
-                        }
-                    }
-                }
-                else if ((System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control) && (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[1].Value) == true))
-                {
-                    for (int i = e.RowIndex; i >= 0; i--)
-                    {
-                        if (Convert.ToBoolean(dgwMainWindow.Rows[i].Cells[1].Value) == false)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            dgwMainWindow.Rows[i].Cells[1].Value = false;
-                            dgwMainWindow.Rows[i].Cells[4].ReadOnly = true;
-                            dgwMainWindow.Rows[i].Cells[4].Value = null;
-                            dgwMainWindow.Rows[i].Cells[2].Value = null;
-                            dgwMainWindow.Rows[i].Cells[3].Value = null;
-
-                        }
-                    }
-                }
-
-                if (System.Windows.Forms.Control.ModifierKeys != System.Windows.Forms.Keys.Control)
-                {
-
-                    if (Convert.ToBoolean(dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) == false)
-                    {
-                        dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
-                        dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = false;
-                        dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = cbType.SelectedItem;
-                        dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = cbModel.SelectedItem;
-
-                    }
-                    else
-                    {
-                        dgwMainWindow.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
-
-                        dgwMainWindow.Rows[e.RowIndex].Cells[4].Value = null;
-                        dgwMainWindow.Rows[e.RowIndex].Cells[2].Value = null;
-                        dgwMainWindow.Rows[e.RowIndex].Cells[3].Value = null;
-                        dgwMainWindow.Rows[e.RowIndex].Cells[4].ReadOnly = true;
-                        dgwMainWindow.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-                    }
-                }
-            }
+            SetdgwMainWindow(); // первоначальное заполенение dgwMainWindow
+            FilldwgSensParam(); // отображение окна с параметрами датчиков
         }
     }      
 }

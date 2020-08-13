@@ -37,7 +37,14 @@ namespace Charaterizator
 
         public FormSensorsDB()
         {
-            InitializeComponent();               
+            InitializeComponent();  
+            // формируем списки модулей Паскаля
+            VerModulePoint1.Items.AddRange(new string[] { "0:Не задан", "1:Внутренний 1", "2:Внутренний 2", "3:Внешний 1", "4:Внешний 2", "5:Внешний 3" });
+            VerModulePoint1.SelectedIndex = 0;
+            VerModulePoint2.Items.AddRange(new string[] { "0:Не задан", "1:Внутренний 1", "2:Внутренний 2", "3:Внешний 1", "4:Внешний 2", "5:Внешний 3" });
+            VerModulePoint2.SelectedIndex = 0;
+            VerModulePoint3.Items.AddRange(new string[] { "0:Не задан", "1:Внутренний 1", "2:Внутренний 2", "3:Внешний 1", "4:Внешний 2", "5:Внешний 3" });
+            VerModulePoint3.SelectedIndex = 0;
         }
 
         
@@ -163,9 +170,9 @@ namespace Charaterizator
                 reader = command.ExecuteReader();
                 reader.Read();
 
+                // чтение данных
                 int cnt = this.Controls.Count;
-                //foreach (TextBox tb in this.Controls.OfType<TextBox>())
-
+              
                 foreach (var gb in this.Controls.OfType<GroupBox>())
                 {
                     foreach (var tb in gb.Controls.OfType<NumericUpDown>())
@@ -184,12 +191,17 @@ namespace Charaterizator
                     {
                         if ((tb is TextBox) && (tb.Tag != null))
                         {
-                            tb.Text = reader[Convert.ToInt32(tb.Tag)].ToString();
+                             tb.Text = reader[Convert.ToInt32(tb.Tag)].ToString();
                         }
                     }
-                }                              
+                }
 
+                // Чтение модулей Паскаль
+                VerModulePoint1.SelectedIndex = VerModulePoint1.FindString(reader[Convert.ToInt32(26)].ToString());
+                VerModulePoint2.SelectedIndex = VerModulePoint2.FindString(reader[Convert.ToInt32(27)].ToString());
+                VerModulePoint3.SelectedIndex = VerModulePoint3.FindString(reader[Convert.ToInt32(28)].ToString());
 
+                // Чтение количества диапазонов
                 int numofrange = Convert.ToInt32(reader[5].ToString());
                 if (numofrange == 1)
                 {
@@ -230,7 +242,7 @@ namespace Charaterizator
                 Range2_Pmin.Enabled = false;
                 Range2_Pmax.Enabled = false;               
                 HarPressPoint2.Enabled = false;              
-                VerPressPoint2.Enabled = false;
+                //VerPressPoint2.Enabled = false;
             }
             else
             {               
@@ -238,7 +250,7 @@ namespace Charaterizator
                 Range2_Pmin.Enabled = true;
                 Range2_Pmax.Enabled = true;               
                 HarPressPoint2.Enabled = true;
-                VerPressPoint2.Enabled = true;
+                //VerPressPoint2.Enabled = true;
             }
         }
 
@@ -318,6 +330,10 @@ namespace Charaterizator
                                 }
                             }
                         }
+                        VerModulePoint1.SelectedIndex = -1;
+                        VerModulePoint2.SelectedIndex = -1;
+                        VerModulePoint3.SelectedIndex = -1;
+
                     }
                     catch
                     {
@@ -428,22 +444,17 @@ namespace Charaterizator
 
 
             partQuery = partQuery.TrimEnd(new char[] { ',' });
-            // текст запроса
-            /*    string query = "UPDATE Tsensors SET " +
-                                "Serial = " + Serial.Text + 
-                                ", Pmin = " + tbPmin.Text +
-                                ", NumOfRange = " + (Convert.ToInt16(rbRange2.Checked) + 1) +
-                                " WHERE Model = '" + str + "'";*/
+           
 
             string query = "UPDATE Tsensors SET " +
                             partQuery +
-                            ", NumOfRange = " + (Convert.ToInt16(rbRange2.Checked) + 1) +
+                            ", NumOfRange='" + (Convert.ToInt16(rbRange2.Checked) + 1) + "'" +
+                            ", VerModulePoint1='" + (VerModulePoint1.Text) + "'" +
+                            ", VerModulePoint2='" + (VerModulePoint2.Text) + "'" +
+                            ", VerModulePoint3='" + (VerModulePoint3.Text) + "'" +
                             " WHERE Type = '" + strType + "' AND Model = '" + strModel + "'";
                      
-
-
-
-
+                                 
             // создаем объект OleDbCommand для выполнения запроса к БД MS Access
             OleDbCommand command = new OleDbCommand(query, _сonnection);
 
@@ -679,6 +690,8 @@ namespace Charaterizator
         }
 
 
+
+
         // Скопировать запись
         private void bCopyLines_Click(object sender, EventArgs e)
         {
@@ -717,9 +730,7 @@ namespace Charaterizator
                     {
                         //_сonnection.Close();
                     }
-
-
-
+                    
 
                     string strModel = newForm.newModelSens;
                     string strType = newForm.newTypeSens;
@@ -760,6 +771,9 @@ namespace Charaterizator
                     query = "UPDATE Tsensors SET " +
                                     partQuery +
                                     ", NumOfRange = " + (Convert.ToInt16(rbRange2.Checked) + 1) +
+                                    ", VerModulePoint1='" + (VerModulePoint1.Text) + "'" +
+                                    ", VerModulePoint2='" + (VerModulePoint2.Text) + "'" +
+                                    ", VerModulePoint3='" + (VerModulePoint3.Text) + "'" +
                                     " WHERE Type = '" + strType + "' AND Model = '" + strModel + "'";
 
 
