@@ -889,7 +889,9 @@ namespace SensorProgrammer
 
                             if (sensors.SeachSensor(i))//поиск датчиков по HART
                             {
+                                sensors.SelectSensor(i);
                                 dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.Green;
+                                dgwMainWindow.Rows[i].Cells[4].Value =  sensors.sensor.uni;
                             }
                             else
                             {

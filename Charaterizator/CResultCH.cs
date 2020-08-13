@@ -199,7 +199,7 @@ namespace Charaterizator
                 point.Pressure.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
                 point.OutVoltage.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
                 point.Resistance.ToString("   00000.0000") + " |"+
-                point.Deviation.ToString("   00000.0000") + " |" ;
+                point.Deviation.ToString("   +0000.0000;   -0000.0000;          0.0") + " |";
         }
 
         //создаем файл  архива на диске
@@ -443,7 +443,7 @@ namespace Charaterizator
                                 point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 if (strarr.Length > 6)
                                 { 
-                                    point.Deviation = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                    point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 }
                                 else
                                 {
