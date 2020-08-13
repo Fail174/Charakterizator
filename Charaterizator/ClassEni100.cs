@@ -1085,6 +1085,9 @@ namespace Charaterizator
             while (readbuf.Count > 0)
             {
                 Application.DoEvents();
+                if (Program.mainwnd != null)
+                    if (Program.mainwnd.ProcessStop) return -10;
+
                 switch (ReadAvtState)//автомат
                 {
                     case 1://поиск преамбулы

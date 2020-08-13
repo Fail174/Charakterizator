@@ -17,7 +17,7 @@ namespace Charaterizator
         public SerialPort Port;            // переменная для работы по COM-порту
         private Thread ReadThreadPascal;    // поток
         string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
-        public int READ_PAUSE = 200;            // задержка между приемом и передачей команд по COM порту, мс      
+        public int READ_PAUSE = 400;            // задержка между приемом и передачей команд по COM порту, мс      
         public double UserPoint = 0;
 
         public string strData;
@@ -287,21 +287,29 @@ namespace Charaterizator
                         Port.ReadLine();
                     }
                     UserPoint = Val;
-                    // устанавливаем значение давления
-                    Port.WriteLine("TARGET " + Val.ToString());
-                    Thread.Sleep(READ_PAUSE);  
-                    string str = Port.ReadLine();
-
-                    if (str == "OK")
+                    string str;
+                    i = 0;
+                    do
                     {
-                        target = true;
-                    }
-                    else
-                    {
-                        target = false;
-                    }
+                        // устанавливаем значение давления
+                        Port.WriteLine("TARGET " + Convert.ToString(Val).Replace(",", "."));// Val.ToString());
+                                                                                            //Port.WriteLine("TARGET 7.25");
+                                                                                            //Thread.Sleep(READ_PAUSE);  
+                        str = Port.ReadLine();
 
-                }
+                        if (str == "OK")
+                        {
+                            target = true;
+                            break;
+                        }
+                        else
+                        {
+                            target = false;
+                        }
+                        i++;
+                    } while (i < 3) ;
+
+            }
                 catch
                 {
                     target = false;
@@ -336,23 +344,35 @@ namespace Charaterizator
                     {
                         Port.ReadLine();
                     }
-                    // запускаем установку и поддержания давления прибором                    
-                    Port.WriteLine("ON_KEY_START");
-                    Thread.Sleep(READ_PAUSE);
-                    string str = Port.ReadLine();
 
-                    if (str == "START_REGULATION")
+                    string str;
+                    i = 0;
+                    do
                     {
-                        modeStart = true;
-                    }
-                    else if (str == "STOP_REGULATION")
-                    {
-                        modeStart = false;
-                    }
-                    else
-                    {
-                        modeStart = false;
-                    }
+                        // запускаем установку и поддержания давления прибором                    
+                        Port.WriteLine("ON_KEY_START");
+                        //Thread.Sleep(READ_PAUSE);
+                        str = Port.ReadLine();
+
+                        if (str == "START_REGULATION")
+                        {
+                            modeStart = true;
+                            break;
+                        }
+                        else
+                        {
+                            if (str == "STOP_REGULATION")
+                            {
+                                modeStart = false;
+                                break;
+                            }
+                            else
+                            {
+                                modeStart = false;
+                            }
+                        }
+                        i++;
+                    } while (i<3);
                     
                 }
                 catch
@@ -387,25 +407,33 @@ namespace Charaterizator
                     {
                         Port.ReadLine();
                     }
-                    // запускаем вентиляцию прибора
-                    Port.WriteLine("ON_KEY_VENT");
-                    Thread.Sleep(READ_PAUSE);
-                    string str = Port.ReadLine();
+                    string str;
+                    i = 0;
+                    do
+                    {
+                        // запускаем вентиляцию прибора
+                        Port.WriteLine("ON_KEY_VENT");
+                        //Thread.Sleep(READ_PAUSE);
+                        str = Port.ReadLine();
 
-                    if (str == "VENT_ON")
-                    {
-                        modeVent = true;
-                    }
-                    else if (str == "VENT_OFF")
-                    {
-                        modeVent = false;
-                    }
-                    else
-                    {
-                        modeVent = false;
-                    }
+                        if (str == "VENT_ON")
+                        {
+                            modeVent = true;
+                            break;
+                        }
+                        else if (str == "VENT_OFF")
+                        {
+                            modeVent = false;
+                            break;
+                        }
+                        else
+                        {
+                            modeVent = false;
+                        }
+                        i++;
+                    } while (i < 3);
 
-                }
+            }
                 catch
                 {
                     modeVent = false;
@@ -442,7 +470,7 @@ namespace Charaterizator
                     }
                     // запускаем вентиляцию прибора
                     Port.WriteLine("CLEAR_P");
-                    Thread.Sleep(READ_PAUSE);
+                    //Thread.Sleep(READ_PAUSE);
                     string str = Port.ReadLine();
 
                     if (str == "OK")
@@ -516,7 +544,7 @@ namespace Charaterizator
                     }
 
                     // считываем текущий используемый модуль
-                    Thread.Sleep(READ_PAUSE);
+                    //Thread.Sleep(READ_PAUSE);
                     Port.WriteLine("RANGE?");
                     //Thread.Sleep(READ_PAUSE);
                     i = 0;

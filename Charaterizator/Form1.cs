@@ -81,6 +81,7 @@ namespace Charaterizator
         private CThermalCamera ThermalCamera = new CThermalCamera();
         private CCalculation CalculationMtx = new CCalculation();
         private CPascal Pascal = new CPascal();
+        private CBarometr Barometr = new CBarometr();
 
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
@@ -388,6 +389,32 @@ namespace Charaterizator
             }
         }
 
+
+        // Настройки СОМ-порта барометра
+        private void setComBarometr_Click(object sender, EventArgs e)
+        {
+            FormPortSettings newForm = new FormPortSettings();
+            newForm.InitPortsettings(Properties.Settings.Default.COMbarometr,
+                Properties.Settings.Default.COMbarometr_Speed,
+                Properties.Settings.Default.COMbarometr_DataBits,
+                Properties.Settings.Default.COMbarometr_StopBits,
+                Properties.Settings.Default.COMbarometr_Parity);
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.COMbarometr = newForm.GetPortName();
+                Properties.Settings.Default.COMbarometr_Speed = newForm.GetPortSpeed();
+                Properties.Settings.Default.COMbarometr_DataBits = newForm.GetPortDataBits();
+                Properties.Settings.Default.COMbarometr_StopBits = newForm.GetPortStopBits();
+                Properties.Settings.Default.COMbarometr_Parity = newForm.GetPortParity();
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
+        }
+
+
+
+
+
+
         //подключение термокамеры
         private void btnThermalCamera_Click(object sender, EventArgs e)
         {
@@ -523,6 +550,28 @@ namespace Charaterizator
                 }
             }
 
+        }
+
+
+        // подключение Барометра
+        private void bBarometr_Click(object sender, EventArgs e)
+        {
+            if (Barometr.Connect(Properties.Settings.Default.COMbarometr,
+             Properties.Settings.Default.COMbarometr_Speed,
+             Properties.Settings.Default.COMbarometr_DataBits,
+             Properties.Settings.Default.COMbarometr_StopBits,
+             Properties.Settings.Default.COMbarometr_Parity) >= 0)
+            {
+                bBarometr.BackColor = Color.Green;
+                bBarometr.Text = "Подключен";
+                Program.txtlog.WriteLineLog("Барометр подключен", 0);
+            }
+            else
+            {
+                bBarometr.BackColor = Color.IndianRed;
+                bBarometr.Text = "Не подключен";
+                Program.txtlog.WriteLineLog("Барометр не подключен", 1);
+            }
         }
 
 
@@ -1002,7 +1051,7 @@ namespace Charaterizator
                 Diapazon = 1;
             }
 
-            Program.txtlog.WriteLineLog("CH: Старт операции характеризации для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("CH: Старт операции характеризации для заданного давления ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             /*            int step = MaxChannalCount / MaxLevelCount;
@@ -1094,7 +1143,7 @@ namespace Charaterizator
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 seli++;
             }
-            Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2);
+            Program.txtlog.WriteLineLog("CH: Операция характеризации для выбранного давления завершена!", 2);
         }
 
         //расчет коэффициентов и запись в датчики
@@ -1252,7 +1301,7 @@ namespace Charaterizator
             VPI = Convert.ToSingle(nud_VR_VPI.Value);
             NPI = Convert.ToSingle(nud_VR_NPI.Value);
 
-            Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранного давления ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             /*           int step = MaxChannalCount / MaxLevelCount;
@@ -1344,7 +1393,7 @@ namespace Charaterizator
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                 seli++;
             }
-            Program.txtlog.WriteLineLog("VR: Операция верификации завершена ... ", 2);
+            Program.txtlog.WriteLineLog("VR: Операция верификации для выбранного давления завершена ", 2);
         }
 
         //Запись НПИ и ВПИ в выбранные датчики
@@ -1752,6 +1801,7 @@ namespace Charaterizator
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             TimerTickCount++;
+
             // Опрос состояния коммутатора
             if (Commutator.Connected)
             {
@@ -1788,6 +1838,25 @@ namespace Charaterizator
                     btnMultimetr.BackColor = Color.Transparent;
                 }
             }
+
+            // Чтение аатм. давления с барометра
+            if (Barometr.Connected)
+            {
+                numATMpress.Value = Convert.ToDecimal(Barometr.amtPress); //обновляем данные
+            }
+            else
+            {
+                if (bBarometr.BackColor != Color.IndianRed)
+                {
+                    bBarometr.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    bBarometr.BackColor = Color.Transparent;
+                }
+            }
+
+
 
 
 
@@ -3108,7 +3177,7 @@ namespace Charaterizator
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
                     if (rbPressABS.Checked)
                     {
-                        Point = Point - Convert.ToDouble(numATMpress.Value/10);
+                        Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
                                                           
                     Pascal.SetPress(Point);
@@ -3154,6 +3223,7 @@ namespace Charaterizator
                 {
 
                     btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
+                    Program.txtlog.WriteLineLog("CH: Старт характеризации!", 2);
                     UpdateItemState(2);
                     if (AutoRegim)
                     {
@@ -3172,12 +3242,16 @@ namespace Charaterizator
                                 btnCHPressureSet1.PerformClick();
                                 ReadSensorParametrs();
                             }
+                            bMensorControl.PerformClick();
+                            bMensorVent.PerformClick();
                         }
                     }
                     else
                     {
                         ReadSensorParametrs();
                     }
+                   
+                    Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2);
 
                 }
 
@@ -3204,14 +3278,20 @@ namespace Charaterizator
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if ((e.ColumnIndex == sel)&&(dataGridView1.RowCount>0))//выбор датчиков
+            if ((e.ColumnIndex == sel) && (dataGridView1.RowCount > 0))//выбор датчиков
             {
                 bool CurentSet = Convert.ToBoolean(dataGridView1.Rows[0].Cells[sel].Value);
                 for (int i = 0; i <= (dataGridView1.RowCount - 1); i++)
                 {
                     dataGridView1.Rows[i].Cells[sel].Value = !CurentSet;
-//                    dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.White;
+                    //                    dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.White;
                 }
+            }
+            if ((e.ColumnIndex == sen) && (dataGridView1.RowCount > 0))//выбор датчиков
+            {
+                if(MessageBox.Show("Отчистить список обнаруженных датчиков?","Подтверждение операции", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    UpdateItems();
+
             }
         }
 
@@ -3400,7 +3480,8 @@ namespace Charaterizator
                     btnCHPressureSet4.Enabled = false;
 
 
-                    Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture); 
+                    Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    Program.txtlog.WriteLineLog("CH: Устанавливаем давление в датчиках " + Point.ToString() + "кПа", 0);
                     //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
                     numMensorPoint.Text = strValue;
 
@@ -3408,7 +3489,7 @@ namespace Charaterizator
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
                     if ((!UseMensor) && (rbPressABS.Checked))
                     {
-                        Point = Point - Convert.ToDouble(numATMpress.Value / 10);
+                        Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
 
 
@@ -4058,7 +4139,7 @@ namespace Charaterizator
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
                     if ((!UseMensor) && (rbPressABS.Checked))
                     {
-                        Point = Point - Convert.ToDouble(numATMpress.Value/10);
+                        Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
 
 
@@ -4150,8 +4231,10 @@ namespace Charaterizator
                 //                {
                 try
                 {
-                        btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
-                        UpdateItemState(6);
+
+                    btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
+                    Program.txtlog.WriteLineLog("VR: Старт верификации!", 2);
+                    UpdateItemState(6);
                     //ReadSensorPressure();
 
                     if (AutoRegim)
@@ -4177,6 +4260,7 @@ namespace Charaterizator
                     {
                         ReadSensorPressure();
                     }
+                    Program.txtlog.WriteLineLog("VR:Операция верификации завершена", 2);
 
                 }
 
@@ -4424,6 +4508,7 @@ namespace Charaterizator
                 int ii = Convert.ToInt32(str)-1;
 
                 DataGridViewSelectedRowCollection s = dataGridView2.SelectedRows;
+                
                 if (s.Count <= 0) return;
 
                 DialogResult result = MessageBox.Show(
@@ -4435,10 +4520,20 @@ namespace Charaterizator
                 if (result == DialogResult.Yes)
                 {
                     dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Ascending);
-                    for (int i = 0; i < s.Count; i++)
+                   
+                    for (int i = ResultCH.Channal[ii].Points.Count-1; i >=0 ; i--)
                     {
-                        ResultCH.DeletePoint(ii, s[i].Index);
+                        for (int j = 0; j < s.Count; j++)
+                        {
+                            if (i == s[j].Index)
+                            {
+                                ResultCH.DeletePoint(ii, i);
+                                break;
+                            }
+                        }
                     }
+                        
+                    dataGridView2.Sort(dataGridView2.Columns[0], ListSortDirection.Descending);
                     UpDateCharakterizatorGrid(ii);
                     ResultCH.SaveToArhiv(ii);
                 }
@@ -4465,10 +4560,22 @@ namespace Charaterizator
                 if (result == DialogResult.Yes)
                 {
                     dataGridView3.Sort(dataGridView3.Columns[0], ListSortDirection.Ascending);
-                    for (int i = 0; i < s.Count; i++)
+
+                    for (int i = ResultVR.Channal[ii].Points.Count - 1; i >= 0; i--)
+                    {
+                        for (int j = 0; j < s.Count; j++)
+                        {
+                            if (i == s[j].Index)
+                            {
+                                ResultVR.DeletePoint(ii, i);
+                                break;
+                            }
+                        }
+                    }
+                    /*for (int i = 0; i < s.Count; i++)
                     {
                         ResultVR.DeletePoint(ii, s[i].Index);
-                    }
+                    }*/
                     UpDateVerificationGrid(ii);
                     ResultVR.SaveToArhiv(ii);
                 }
@@ -5067,10 +5174,19 @@ namespace Charaterizator
                 if (result == DialogResult.Yes)
                 {
                     dataGridView4.Sort(dataGridView4.Columns[0], ListSortDirection.Ascending);
-                    for (int i = 0; i < s.Count; i++)
+
+                    for (int i = ResultCI.Channal[ii].Points.Count - 1; i >= 0; i--)
                     {
-                        ResultCI.DeletePoint(ii, s[i].Index);
+                        for (int j = 0; j < s.Count; j++)
+                        {
+                            if (i == s[j].Index)
+                            {
+                                ResultCI.DeletePoint(ii, i);
+                                break;
+                            }
+                        }
                     }
+
                     UpdateCurrentGrid(ii);
                     ResultCI.SaveToArhiv(ii);
                 }
@@ -5627,7 +5743,7 @@ namespace Charaterizator
                 // которое задано в ГПа для перевода его в кПА нужно разделить на 10
                 if ((!UseMensor)&&(rbPressABS.Checked))
                 {
-                    Point = Point - Convert.ToDouble(numATMpress.Value / 10);
+                    Point = Point - Convert.ToDouble(numATMpress.Value);
                 }
 
 
@@ -5637,11 +5753,23 @@ namespace Charaterizator
                 }
                 else
                 {
-                    bMensorSet.PerformClick();      //выставляем давление
-                    if (task)
+                        bMensorSet.PerformClick();      //выставляем давление
+
+                        // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
+                        // если задача давления включена, то повторно ее не включаем 
+                        // UseMensor = true - используем Менсор
+                        // UseMensor = false - используем Паскаль
+                        // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
+                        // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
+
+                        if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                        {
+                            bMensorControl.PerformClick();  //запускаем задачу
+                        }
+                   /*if (task)
                     {
                         bMensorControl.PerformClick();  //запускаем задачу
-                    }
+                    }*/
                 }
                     TimerTickCount = 0;
                     do//ожидаем установления давления
@@ -5996,6 +6124,11 @@ namespace Charaterizator
         {
             MainTimer.Enabled = true;
             MainTimer.Start();
+        }
+
+        private void dataGridView4_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+
         }
     }
 }

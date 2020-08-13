@@ -124,12 +124,16 @@ namespace Charaterizator
         {
           
 
-            if (Connected)
+            /*if (Connected)
             {
                 return 1;
-            }
+            }*/
             try
             {
+                if (serialPort1.IsOpen)
+                {
+                    serialPort1.Close();
+                }
                 serialPort1.PortName = PortName;
                 serialPort1.BaudRate = BaudRate;
                 serialPort1.DataBits = DataBits;
@@ -154,6 +158,8 @@ namespace Charaterizator
                 }
                 else
                 {
+                    timer1.Stop();
+                    timer1.Enabled = false;
                     Connected = false;
                     serialPort1.Close();
                     return -1;
@@ -175,12 +181,16 @@ namespace Charaterizator
         // Функция подключения коммутатора по COM порту - используется проектом SensorProgrammer
         public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity, int st)
         {
-            if (Connected)
+            /*if (Connected)
             {
-                return 1;
-            }
+                Connected = false;
+                serialPort1.Close();
+                return -1;
+            }*/
             try
             {
+                if (serialPort1.IsOpen) serialPort1.Close();
+
                 serialPort1.PortName = PortName;
                 serialPort1.BaudRate = BaudRate;
                 serialPort1.DataBits = DataBits;

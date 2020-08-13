@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CBarometr.cs" />
     <Compile Include="CCalculation.cs" />
     <Compile Include="ClassEni100.cs" />
     <Compile Include="CMultimetr.cs" />

@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bCommutator = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgwMainWindow = new System.Windows.Forms.DataGridView();
+            this.dgwChannal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgwSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgwType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgwModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgwSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbModel = new System.Windows.Forms.ComboBox();
             this.cbType = new System.Windows.Forms.ComboBox();
             this.bDataBase = new System.Windows.Forms.Button();
@@ -54,11 +59,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbAutoNumSerial = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dgwChannal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgwSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgwType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgwModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgwSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwMainWindow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSensParam)).BeginInit();
@@ -115,6 +115,51 @@
             this.dgwMainWindow.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellEndEdit);
             this.dgwMainWindow.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellValueChanged);
             this.dgwMainWindow.SelectionChanged += new System.EventHandler(this.dgwMainWindow_SelectionChanged);
+            // 
+            // dgwChannal
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgwChannal.HeaderText = "Канал";
+            this.dgwChannal.Name = "dgwChannal";
+            this.dgwChannal.ReadOnly = true;
+            this.dgwChannal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgwChannal.Width = 45;
+            // 
+            // dgwSelect
+            // 
+            this.dgwSelect.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.dgwSelect.HeaderText = "";
+            this.dgwSelect.Name = "dgwSelect";
+            this.dgwSelect.Width = 25;
+            // 
+            // dgwType
+            // 
+            this.dgwType.HeaderText = "Тип датчика";
+            this.dgwType.Name = "dgwType";
+            this.dgwType.ReadOnly = true;
+            this.dgwType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgwType.Width = 120;
+            // 
+            // dgwModel
+            // 
+            this.dgwModel.HeaderText = "Модель";
+            this.dgwModel.Name = "dgwModel";
+            this.dgwModel.ReadOnly = true;
+            this.dgwModel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwModel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dgwSerial
+            // 
+            dataGridViewCellStyle2.Format = "0000000";
+            dataGridViewCellStyle2.NullValue = null;
+            this.dgwSerial.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgwSerial.HeaderText = "Серийный номер";
+            this.dgwSerial.Name = "dgwSerial";
+            this.dgwSerial.ReadOnly = true;
+            this.dgwSerial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgwSerial.Width = 130;
             // 
             // cbModel
             // 
@@ -342,51 +387,6 @@
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Тип и модель датчика";
-            // 
-            // dgwChannal
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgwChannal.HeaderText = "Канал";
-            this.dgwChannal.Name = "dgwChannal";
-            this.dgwChannal.ReadOnly = true;
-            this.dgwChannal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dgwChannal.Width = 45;
-            // 
-            // dgwSelect
-            // 
-            this.dgwSelect.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.dgwSelect.HeaderText = "";
-            this.dgwSelect.Name = "dgwSelect";
-            this.dgwSelect.Width = 25;
-            // 
-            // dgwType
-            // 
-            this.dgwType.HeaderText = "Тип датчика";
-            this.dgwType.Name = "dgwType";
-            this.dgwType.ReadOnly = true;
-            this.dgwType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgwType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dgwType.Width = 120;
-            // 
-            // dgwModel
-            // 
-            this.dgwModel.HeaderText = "Модель";
-            this.dgwModel.Name = "dgwModel";
-            this.dgwModel.ReadOnly = true;
-            this.dgwModel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgwModel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dgwSerial
-            // 
-            dataGridViewCellStyle2.Format = "0000000";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dgwSerial.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgwSerial.HeaderText = "Серийный номер";
-            this.dgwSerial.Name = "dgwSerial";
-            this.dgwSerial.ReadOnly = true;
-            this.dgwSerial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dgwSerial.Width = 130;
             // 
             // FormSensorProgrammer
             // 
