@@ -183,7 +183,7 @@ namespace Charaterizator
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - МЕНСОР
                 Pascal.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - ПАСКАЛЬ
                 UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
-
+                gbBarometr.Visible = !UseMensor;
 
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint*1000)/MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
                 SENSOR_PRESSUER_WAIT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000);
@@ -866,6 +866,7 @@ namespace Charaterizator
                     cc = 0;
                     do//цикл калибровки (MAX_CALIBRATION_COUNT попыток)
                     {
+                        if (ProcessStop) return;//прекращаем
                         ci = 0;
                         sensors.С40WriteFixCurrent(4);
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
@@ -1790,6 +1791,7 @@ namespace Charaterizator
             Pascal.DisConnect();
             Multimetr.DisConnect();
             Commutator.DisConnect();
+            Barometr.DisConnect();
         }
 
 
@@ -2109,20 +2111,21 @@ namespace Charaterizator
                 // Получаем текущее значение давления и обновляем гл. форму 
                 tbMensorData.Text = Pascal.press.ToString("f3");
 
-                
 
-                // Получаем тип преобразователя (удерживаемый диапазон)
-                int typeR = Pascal.rangeModule[1]-1;  //  
-                // Обновляем тип преобзарователя
-                if (Pascal.rangeModule[0] == 1)
+                if (cbMensorTypeR.Items.Count > 0)
                 {
-                    cbMensorTypeR.SelectedIndex = typeR; //  по списку
+                    // Получаем тип преобразователя (удерживаемый диапазон)
+                    int typeR = Pascal.rangeModule[1] - 1;  //  
+                                                            // Обновляем тип преобзарователя
+                    if (Pascal.rangeModule[0] == 1)
+                    {
+                        cbMensorTypeR.SelectedIndex = typeR; //  по списку
+                    }
+                    else if (Pascal.rangeModule[0] == 2)
+                    {
+                        cbMensorTypeR.SelectedIndex = typeR + Pascal.M1num;
+                    }
                 }
-                else if (Pascal.rangeModule[0] == 2)
-                {
-                    cbMensorTypeR.SelectedIndex = typeR + Pascal.M1num; 
-                }
-
 
                 // Задача
                 if (Pascal.modeStart)
@@ -3537,6 +3540,7 @@ namespace Charaterizator
                     TimerTickCount = 0;
                     do//ожидаем установления давления
                     {
+                        if (ProcessStop) return;//прекращаем
                         Application.DoEvents();
                         Thread.Sleep(100);
                         shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Point);
@@ -3550,6 +3554,7 @@ namespace Charaterizator
                         TimerTickCount = 0;
                         do//ожидаем установления давления
                         {
+                            if (ProcessStop) return;//прекращаем
                             Application.DoEvents();
                             Thread.Sleep(100);
                         } while (TimerTickCount < SENSOR_PRESSUER_WAIT / MainTimer.Interval);
@@ -3845,7 +3850,7 @@ namespace Charaterizator
                 {                   
                     // если да
                     UseMensor = Properties.Settings.Default.set_UseMensor;
-
+                 
                     if (UseMensor) // если выбран Менсор
                     {
                         // отключаем от Паскаль
@@ -3861,6 +3866,7 @@ namespace Charaterizator
                     }                  
 
                 }
+                gbBarometr.Visible = !UseMensor;
 
             }
             catch
@@ -4183,6 +4189,7 @@ namespace Charaterizator
                     TimerTickCount = 0;
                     do//ожидаем установления давления
                     {
+                        if (ProcessStop) return;//прекращаем
                         Application.DoEvents();
                         Thread.Sleep(100);
                         shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Point);
@@ -4196,6 +4203,7 @@ namespace Charaterizator
                         TimerTickCount = 0;
                         do//ожидаем установления давления
                         {
+                            if (ProcessStop) return;//прекращаем
                             Application.DoEvents();
                             Thread.Sleep(100);
                         } while (TimerTickCount < SENSOR_PRESSUER_WAIT / MainTimer.Interval);
@@ -4263,18 +4271,32 @@ namespace Charaterizator
                         }
                         else
                         {
+                            try
+                            {
+                                MainTimer.Stop();
+                                MainTimer.Enabled = false;
+                                // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
+                                if ((!UseMensor) && (cbVRDiapazon1.Items.Count > 0))
+                                {
+                                    cbMensorTypeR.SelectedIndex = numPascaleModule;
+                                    //Pascal.rangeModule = numPascaleModule;
+                                    Application.DoEvents();
+                                }
+                            }
+                            finally
+                            {
+                                MainTimer.Enabled = true;
+                                MainTimer.Start();
+                            }
+
                             for (i = 0; i < cbVRPressureSet1.Items.Count; i++)
                             {
-                                // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
-                                if ((!UseMensor)&&(cbVRDiapazon1.Items.Count > 0))
-                                {
-                                    cbMensorTypeR.SelectedItem = numPascaleModule;                                    
-                                }
-
                                 cbVRPressureSet1.SelectedIndex = i;
                                 btnVRPressureSet1.PerformClick();
                                 ReadSensorPressure();
                             }
+                            bMensorControl.PerformClick();
+                            bMensorVent.PerformClick();
                         }
                     }
                     else
@@ -4364,7 +4386,14 @@ namespace Charaterizator
                             cbVRPressureSet1.SelectedIndex = 0;
 
                             strPascaleModule = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerModulePoint1"); // функция запроса данных из БД по номеру модели и параметру
-                            numPascaleModule = Convert.ToInt32(strPascaleModule[0]) - 1;
+                            string[] str = strPascaleModule.Split(':');
+                            if (str.Length > 0) {
+                                numPascaleModule = Convert.ToInt32(str[0]) - 1;
+                            }
+                            else
+                            {
+                                numPascaleModule = 0;
+                            }
 
                         }
                     }
@@ -4379,7 +4408,15 @@ namespace Charaterizator
                             cbVRPressureSet1.SelectedIndex = 0;
 
                             strPascaleModule = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerModulePoint2"); // функция запроса данных из БД по номеру модели и параметру
-                            numPascaleModule = Convert.ToInt32(strPascaleModule[0]) - 1;
+                            string[] str = strPascaleModule.Split(':');
+                            if (str.Length > 0)
+                            {
+                                numPascaleModule = Convert.ToInt32(str[0]) - 1;
+                            }
+                            else
+                            {
+                                numPascaleModule = 0;
+                            }
                         }
 
                     }
@@ -4394,7 +4431,15 @@ namespace Charaterizator
                             cbVRPressureSet1.SelectedIndex = 0;
 
                             strPascaleModule = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerModulePoint3"); // функция запроса данных из БД по номеру модели и параметру
-                            numPascaleModule = Convert.ToInt32(strPascaleModule[0]) - 1;
+                            string[] str = strPascaleModule.Split(':');
+                            if (str.Length > 0)
+                            {
+                                numPascaleModule = Convert.ToInt32(str[0]) - 1;
+                            }
+                            else
+                            {
+                                numPascaleModule = 0;
+                            }
                         }
 
                     }
@@ -5820,6 +5865,7 @@ namespace Charaterizator
                     TimerTickCount = 0;
                     do//ожидаем установления давления
                     {
+                        if (ProcessStop) return -1;//прекращаем
                         Application.DoEvents();
                         Thread.Sleep(100);
                         shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Point);
@@ -5834,6 +5880,7 @@ namespace Charaterizator
                         TimerTickCount = 0;
                         do//ожидаем установления давления
                         {
+                            if (ProcessStop) return -1;//прекращаем
                             Application.DoEvents();
                             Thread.Sleep(100);
                         } while (TimerTickCount < SENSOR_PRESSUER_WAIT/MainTimer.Interval);
@@ -6016,8 +6063,8 @@ namespace Charaterizator
 
                     while (Pascal.press > 1)
                     {
+                        if (ProcessStop) return;//прекращаем
                         Thread.Sleep(500);
-
                     }
                     // сброс давления ВЫКЛ
                     Pascal.SetModeVent();

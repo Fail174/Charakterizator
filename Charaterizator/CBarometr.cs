@@ -46,15 +46,34 @@ namespace Charaterizator
                 Port.Parity = (Parity)Parity;
                 Port.ReadTimeout = 2000;
                 Port.WriteTimeout = 2000;
-                Port.DtrEnable = true;
-                Port.RtsEnable = true;                
+                Port.DtrEnable = false;
+                Port.RtsEnable = false;                
                 //Port.NewLine = "\r\n";
 
                 Port.Open();        // открываем порт
 
-                //if (InitDevice())   // идентифицируем подключенный прибор
-                if (Port.IsOpen)   // идентифицируем подключенный прибор
+                //Port.WriteLine("$81");
+                byte[] Data= {0x81};
+                Port.Write(Data,0,1);
+                
+                Thread.Sleep(10);
+                int d =0;
+                while (Port.BytesToRead > 0)
                 {
+                    d = Port.ReadByte();
+                }
+                //Port.WriteLine("$81");
+                Port.Write(Data,0,1);
+                //Thread.Sleep(10);
+                d = Port.ReadByte();
+
+                //if (InitDevice())   // идентифицируем подключенный прибор
+                if (d == 0xAA)   // идентифицируем подключенный прибор
+                {
+                    while (Port.BytesToRead > 0)
+                    {
+                        d = Port.ReadByte();
+                    }
                     // Запускаем поток
                     ReadThreadBar = new Thread(BarReadThread);
                     ReadThreadBar.Priority = ThreadPriority.Normal;
@@ -109,10 +128,15 @@ namespace Charaterizator
             while (Port.IsOpen)
             {               
                 try
-                {                   
+                {
+                    Thread.Sleep(500);
 
                     i = 0;
-                    // считываем текущее атмосферное давление              
+                    // считываем текущее атмосферное давление           
+                    //Port.WriteLine("$81");
+                    byte[] Data = { 0x81 };
+                    Port.Write(Data, 0, 1);
+                    //string str = Port.ReadLine();
                     while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
                     {
                         i++;
@@ -120,15 +144,31 @@ namespace Charaterizator
                     }
                     if (Port.BytesToRead > 0)
                     {
-                        strData = Port.ReadLine();
-                        amtPress = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        //strData = Port.ReadLine();
+                        int AA = Port.ReadByte();
+                        strData = "";
+                        if (AA == 0xAA)
+                        {
+                            int data = Port.ReadByte();
+                            strData = strData + data.ToString();
+                            data = Port.ReadByte();
+                            strData = strData + data.ToString();
+                            data = Port.ReadByte();
+                            strData = strData + data.ToString();
+                            data = Port.ReadByte();
+                            strData = strData + data.ToString();
+                            data = Port.ReadByte();
+                            strData = strData + data.ToString();
+                            data = Port.ReadByte();
+                            strData = strData + data.ToString();
+                            amtPress = Convert.ToInt32(strData) / 1000.0;
+                        }
+                        else
+                        {
+                            amtPress = 0;
+                        }
+                        //amtPress = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     }
-                    else
-                    {
-                        continue;
-                    }
-
-                   
                 }
                 catch
                 {
