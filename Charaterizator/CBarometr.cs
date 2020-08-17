@@ -17,7 +17,7 @@ namespace Charaterizator
         public string strData;
         public double amtPress { get; set; }    // текущее амтосфероное давление
         private Thread ReadThreadBar;           // поток
-        private bool ReadBar = false;
+        //private bool ReadBar = false;
         public bool Error = false;
 
         public CBarometr()

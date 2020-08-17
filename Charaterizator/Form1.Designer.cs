@@ -30,8 +30,52 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("");
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,11 +115,26 @@
             this.tsMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.gbTermoCamera = new System.Windows.Forms.GroupBox();
+            this.tbTemperature = new System.Windows.Forms.TextBox();
+            this.bThermalCameraSet = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numTermoCameraPoint = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnThermalCamera = new System.Windows.Forms.Button();
+            this.splitter6 = new System.Windows.Forms.Splitter();
+            this.gbBarometr = new System.Windows.Forms.GroupBox();
+            this.bBarometr = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numATMpress = new System.Windows.Forms.NumericUpDown();
             this.splitter5 = new System.Windows.Forms.Splitter();
             this.gbMensor = new System.Windows.Forms.GroupBox();
             this.label63 = new System.Windows.Forms.Label();
             this.tbMensorData = new System.Windows.Forms.TextBox();
+            this.rbPressABS = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
+            this.rbPressIZB = new System.Windows.Forms.RadioButton();
             this.btnFormMensor = new System.Windows.Forms.Button();
             this.cb_ManualMode = new System.Windows.Forms.CheckBox();
             this.bMensorMeas = new System.Windows.Forms.Button();
@@ -204,34 +263,8 @@
             this.label30 = new System.Windows.Forms.Label();
             this.btnSensorSeach = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pbCHProcess = new System.Windows.Forms.ProgressBar();
             this.btnCalculateDeviation = new System.Windows.Forms.Button();
-            this.gbCHLevel4 = new System.Windows.Forms.GroupBox();
-            this.cbDiapazon4 = new System.Windows.Forms.ComboBox();
-            this.label42 = new System.Windows.Forms.Label();
-            this.btnCHPressureSet4 = new System.Windows.Forms.Button();
-            this.cbCHPressureSet4 = new System.Windows.Forms.ComboBox();
-            this.btnCHTemperatureSet4 = new System.Windows.Forms.Button();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.cbCHTermoCamera4 = new System.Windows.Forms.ComboBox();
-            this.gbCHLevel3 = new System.Windows.Forms.GroupBox();
-            this.cbDiapazon3 = new System.Windows.Forms.ComboBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.btnCHPressureSet3 = new System.Windows.Forms.Button();
-            this.cbCHPressureSet3 = new System.Windows.Forms.ComboBox();
-            this.btnCHTemperatureSet3 = new System.Windows.Forms.Button();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.cbCHTermoCamera3 = new System.Windows.Forms.ComboBox();
-            this.gbCHLevel2 = new System.Windows.Forms.GroupBox();
-            this.cbDiapazon2 = new System.Windows.Forms.ComboBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.btnCHPressureSet2 = new System.Windows.Forms.Button();
-            this.cbCHPressureSet2 = new System.Windows.Forms.ComboBox();
-            this.btnCHTemperatureSet2 = new System.Windows.Forms.Button();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.cbCHTermoCamera2 = new System.Windows.Forms.ComboBox();
             this.btnCalibrateCurrent = new System.Windows.Forms.Button();
             this.btnCalculateCoeff = new System.Windows.Forms.Button();
             this.btnReadCAP = new System.Windows.Forms.Button();
@@ -239,16 +272,23 @@
             this.cbChannalFix = new System.Windows.Forms.CheckBox();
             this.cbChannalCharakterizator = new System.Windows.Forms.ComboBox();
             this.btnCHStart = new System.Windows.Forms.Button();
-            this.pbCHProcess = new System.Windows.Forms.ProgressBar();
             this.gbCHLevel1 = new System.Windows.Forms.GroupBox();
+            this.cbCHlevel = new System.Windows.Forms.ComboBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.cbDiapazon1 = new System.Windows.Forms.ComboBox();
             this.label41 = new System.Windows.Forms.Label();
             this.btnCHPressureSet1 = new System.Windows.Forms.Button();
-            this.cbCHPressureSet1 = new System.Windows.Forms.ComboBox();
+            this.lvCHPressureSet = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmsCHPressuer = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmCHDeletePressItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCHAddPressItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lvCHTermoCamera = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmsCHTemperature = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmCHDeleteTemperItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmAddCHTemperItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCHTemperatureSet1 = new System.Windows.Forms.Button();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.cbCHTermoCamera1 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.btnVR_SetZero = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -258,42 +298,9 @@
             this.label56 = new System.Windows.Forms.Label();
             this.nud_VR_NPI = new System.Windows.Forms.NumericUpDown();
             this.btnVRParamRead = new System.Windows.Forms.Button();
-            this.gbVRLevel4 = new System.Windows.Forms.GroupBox();
-            this.cbVRDiapazon4 = new System.Windows.Forms.ComboBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.btnVRPressureSet4 = new System.Windows.Forms.Button();
-            this.cbVRPressureSet4 = new System.Windows.Forms.ComboBox();
-            this.btnVRTemperatureSet4 = new System.Windows.Forms.Button();
-            this.label54 = new System.Windows.Forms.Label();
-            this.label55 = new System.Windows.Forms.Label();
-            this.cbVRTermoCamera4 = new System.Windows.Forms.ComboBox();
-            this.gbVRLevel3 = new System.Windows.Forms.GroupBox();
-            this.cbVRDiapazon3 = new System.Windows.Forms.ComboBox();
-            this.label50 = new System.Windows.Forms.Label();
-            this.btnVRPressureSet3 = new System.Windows.Forms.Button();
-            this.cbVRPressureSet3 = new System.Windows.Forms.ComboBox();
-            this.btnVRTemperatureSet3 = new System.Windows.Forms.Button();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.cbVRTermoCamera3 = new System.Windows.Forms.ComboBox();
-            this.gbVRLevel2 = new System.Windows.Forms.GroupBox();
-            this.cbVRDiapazon2 = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.btnVRPressureSet2 = new System.Windows.Forms.Button();
-            this.cbVRPressureSet2 = new System.Windows.Forms.ComboBox();
-            this.btnVRTemperatureSet2 = new System.Windows.Forms.Button();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.cbVRTermoCamera2 = new System.Windows.Forms.ComboBox();
-            this.gbVRLevel1 = new System.Windows.Forms.GroupBox();
             this.cbVRDiapazon1 = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.btnVRPressureSet1 = new System.Windows.Forms.Button();
-            this.cbVRPressureSet1 = new System.Windows.Forms.ComboBox();
             this.btnVRTemperatureSet1 = new System.Windows.Forms.Button();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.cbVRTermoCamera1 = new System.Windows.Forms.ComboBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.cbChannalFixVR = new System.Windows.Forms.CheckBox();
             this.cbChannalVerification = new System.Windows.Forms.ComboBox();
@@ -340,23 +347,26 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.gbBarometr = new System.Windows.Forms.GroupBox();
-            this.bBarometr = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.rbPressABS = new System.Windows.Forms.RadioButton();
-            this.rbPressIZB = new System.Windows.Forms.RadioButton();
-            this.numATMpress = new System.Windows.Forms.NumericUpDown();
-            this.splitter6 = new System.Windows.Forms.Splitter();
-            this.gbTermoCamera = new System.Windows.Forms.GroupBox();
-            this.tbTemperature = new System.Windows.Forms.TextBox();
-            this.bThermalCameraSet = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numTermoCameraPoint = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnThermalCamera = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.cbVRlevel = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.lvVRPressureSet = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvVRTermoCamera = new System.Windows.Forms.ListView();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmsVRTemperature = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmVRDelTemperItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmVRAddTemperItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsVRPressuer = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmVRDelPressItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmVRAddPressItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.gbTermoCamera.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).BeginInit();
+            this.gbBarometr.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).BeginInit();
             this.gbMensor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).BeginInit();
             this.gbMultimetr.SuspendLayout();
@@ -377,19 +387,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbSensorImage)).BeginInit();
             this.groupBox9.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.gbCHLevel4.SuspendLayout();
-            this.gbCHLevel3.SuspendLayout();
-            this.gbCHLevel2.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.gbCHLevel1.SuspendLayout();
+            this.cmsCHPressuer.SuspendLayout();
+            this.cmsCHTemperature.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_VR_VPI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_VR_NPI)).BeginInit();
-            this.gbVRLevel4.SuspendLayout();
-            this.gbVRLevel3.SuspendLayout();
-            this.gbVRLevel2.SuspendLayout();
-            this.gbVRLevel1.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -400,16 +405,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_VPI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).BeginInit();
             this.pUpStatusBar.SuspendLayout();
-            this.gbBarometr.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).BeginInit();
-            this.gbTermoCamera.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            this.cmsVRTemperature.SuspendLayout();
+            this.cmsVRPressuer.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 974);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 992);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1447, 22);
             this.statusStrip1.TabIndex = 3;
@@ -741,8 +745,185 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(1138, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 950);
+            this.panel1.Size = new System.Drawing.Size(309, 968);
             this.panel1.TabIndex = 6;
+            // 
+            // gbTermoCamera
+            // 
+            this.gbTermoCamera.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbTermoCamera.Controls.Add(this.tbTemperature);
+            this.gbTermoCamera.Controls.Add(this.bThermalCameraSet);
+            this.gbTermoCamera.Controls.Add(this.label10);
+            this.gbTermoCamera.Controls.Add(this.label7);
+            this.gbTermoCamera.Controls.Add(this.numTermoCameraPoint);
+            this.gbTermoCamera.Controls.Add(this.label6);
+            this.gbTermoCamera.Controls.Add(this.btnThermalCamera);
+            this.gbTermoCamera.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbTermoCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gbTermoCamera.Location = new System.Drawing.Point(0, 668);
+            this.gbTermoCamera.Name = "gbTermoCamera";
+            this.gbTermoCamera.Size = new System.Drawing.Size(307, 169);
+            this.gbTermoCamera.TabIndex = 23;
+            this.gbTermoCamera.TabStop = false;
+            this.gbTermoCamera.Text = "Термокамера";
+            // 
+            // tbTemperature
+            // 
+            this.tbTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbTemperature.Location = new System.Drawing.Point(179, 64);
+            this.tbTemperature.Name = "tbTemperature";
+            this.tbTemperature.Size = new System.Drawing.Size(82, 44);
+            this.tbTemperature.TabIndex = 3;
+            this.tbTemperature.Text = "23";
+            // 
+            // bThermalCameraSet
+            // 
+            this.bThermalCameraSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bThermalCameraSet.Location = new System.Drawing.Point(178, 116);
+            this.bThermalCameraSet.Name = "bThermalCameraSet";
+            this.bThermalCameraSet.Size = new System.Drawing.Size(120, 45);
+            this.bThermalCameraSet.TabIndex = 12;
+            this.bThermalCameraSet.Text = "Задача";
+            this.bThermalCameraSet.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.Location = new System.Drawing.Point(255, 69);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(51, 37);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "°С";
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.Location = new System.Drawing.Point(10, 72);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(175, 31);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Текущая температура:";
+            // 
+            // numTermoCameraPoint
+            // 
+            this.numTermoCameraPoint.DecimalPlaces = 1;
+            this.numTermoCameraPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numTermoCameraPoint.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numTermoCameraPoint.Location = new System.Drawing.Point(11, 118);
+            this.numTermoCameraPoint.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numTermoCameraPoint.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numTermoCameraPoint.Name = "numTermoCameraPoint";
+            this.numTermoCameraPoint.Size = new System.Drawing.Size(154, 44);
+            this.numTermoCameraPoint.TabIndex = 7;
+            this.numTermoCameraPoint.Value = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(11, 99);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 20);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Уставка:";
+            // 
+            // btnThermalCamera
+            // 
+            this.btnThermalCamera.BackColor = System.Drawing.Color.Green;
+            this.btnThermalCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnThermalCamera.Location = new System.Drawing.Point(10, 26);
+            this.btnThermalCamera.Name = "btnThermalCamera";
+            this.btnThermalCamera.Size = new System.Drawing.Size(124, 40);
+            this.btnThermalCamera.TabIndex = 2;
+            this.btnThermalCamera.Text = "Подключен";
+            this.btnThermalCamera.UseVisualStyleBackColor = false;
+            // 
+            // splitter6
+            // 
+            this.splitter6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter6.Location = new System.Drawing.Point(0, 665);
+            this.splitter6.Name = "splitter6";
+            this.splitter6.Size = new System.Drawing.Size(307, 3);
+            this.splitter6.TabIndex = 22;
+            this.splitter6.TabStop = false;
+            // 
+            // gbBarometr
+            // 
+            this.gbBarometr.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbBarometr.Controls.Add(this.bBarometr);
+            this.gbBarometr.Controls.Add(this.label2);
+            this.gbBarometr.Controls.Add(this.numATMpress);
+            this.gbBarometr.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbBarometr.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gbBarometr.Location = new System.Drawing.Point(0, 554);
+            this.gbBarometr.Name = "gbBarometr";
+            this.gbBarometr.Size = new System.Drawing.Size(307, 111);
+            this.gbBarometr.TabIndex = 20;
+            this.gbBarometr.TabStop = false;
+            this.gbBarometr.Text = "Барометр";
+            // 
+            // bBarometr
+            // 
+            this.bBarometr.BackColor = System.Drawing.Color.Green;
+            this.bBarometr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bBarometr.Location = new System.Drawing.Point(10, 30);
+            this.bBarometr.Name = "bBarometr";
+            this.bBarometr.Size = new System.Drawing.Size(124, 40);
+            this.bBarometr.TabIndex = 4;
+            this.bBarometr.Text = "Подключен";
+            this.bBarometr.UseVisualStyleBackColor = false;
+            this.bBarometr.Click += new System.EventHandler(this.bBarometr_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(16, 84);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(141, 18);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Атмосферное, кПа";
+            // 
+            // numATMpress
+            // 
+            this.numATMpress.DecimalPlaces = 3;
+            this.numATMpress.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numATMpress.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numATMpress.Location = new System.Drawing.Point(178, 73);
+            this.numATMpress.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numATMpress.Name = "numATMpress";
+            this.numATMpress.Size = new System.Drawing.Size(108, 29);
+            this.numATMpress.TabIndex = 11;
+            this.numATMpress.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // splitter5
             // 
@@ -801,6 +982,17 @@
             this.tbMensorData.TabIndex = 3;
             this.tbMensorData.Text = "0,000";
             // 
+            // rbPressABS
+            // 
+            this.rbPressABS.AutoSize = true;
+            this.rbPressABS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rbPressABS.Location = new System.Drawing.Point(173, 133);
+            this.rbPressABS.Name = "rbPressABS";
+            this.rbPressABS.Size = new System.Drawing.Size(113, 22);
+            this.rbPressABS.TabIndex = 1;
+            this.rbPressABS.Text = "Абсолютное";
+            this.rbPressABS.UseVisualStyleBackColor = true;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -810,6 +1002,19 @@
             this.label9.Size = new System.Drawing.Size(73, 37);
             this.label9.TabIndex = 10;
             this.label9.Text = "кПа";
+            // 
+            // rbPressIZB
+            // 
+            this.rbPressIZB.AutoSize = true;
+            this.rbPressIZB.Checked = true;
+            this.rbPressIZB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rbPressIZB.Location = new System.Drawing.Point(13, 133);
+            this.rbPressIZB.Name = "rbPressIZB";
+            this.rbPressIZB.Size = new System.Drawing.Size(114, 22);
+            this.rbPressIZB.TabIndex = 0;
+            this.rbPressIZB.TabStop = true;
+            this.rbPressIZB.Text = "Избыточное";
+            this.rbPressIZB.UseVisualStyleBackColor = true;
             // 
             // btnFormMensor
             // 
@@ -948,7 +1153,7 @@
             this.btnMensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnMensor.Location = new System.Drawing.Point(11, 27);
             this.btnMensor.Name = "btnMensor";
-            this.btnMensor.Size = new System.Drawing.Size(140, 40);
+            this.btnMensor.Size = new System.Drawing.Size(123, 40);
             this.btnMensor.TabIndex = 1;
             this.btnMensor.Text = "Подключен";
             this.btnMensor.UseVisualStyleBackColor = false;
@@ -982,9 +1187,9 @@
             // tbMultimetrData
             // 
             this.tbMultimetrData.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbMultimetrData.Location = new System.Drawing.Point(157, 25);
+            this.tbMultimetrData.Location = new System.Drawing.Point(140, 25);
             this.tbMultimetrData.Name = "tbMultimetrData";
-            this.tbMultimetrData.Size = new System.Drawing.Size(83, 38);
+            this.tbMultimetrData.Size = new System.Drawing.Size(100, 38);
             this.tbMultimetrData.TabIndex = 2;
             this.tbMultimetrData.Text = "0,0000";
             // 
@@ -1004,7 +1209,7 @@
             this.btnMultimetr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnMultimetr.Location = new System.Drawing.Point(11, 25);
             this.btnMultimetr.Name = "btnMultimetr";
-            this.btnMultimetr.Size = new System.Drawing.Size(140, 40);
+            this.btnMultimetr.Size = new System.Drawing.Size(123, 40);
             this.btnMultimetr.TabIndex = 1;
             this.btnMultimetr.Text = "Подключен";
             this.btnMultimetr.UseVisualStyleBackColor = false;
@@ -1024,7 +1229,7 @@
             this.dtpClockTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dtpClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dtpClockTimer.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpClockTimer.Location = new System.Drawing.Point(5, 849);
+            this.dtpClockTimer.Location = new System.Drawing.Point(5, 867);
             this.dtpClockTimer.Name = "dtpClockTimer";
             this.dtpClockTimer.ShowUpDown = true;
             this.dtpClockTimer.Size = new System.Drawing.Size(160, 44);
@@ -1037,7 +1242,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClockTimer.BackColor = System.Drawing.Color.Green;
             this.btnClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnClockTimer.Location = new System.Drawing.Point(178, 847);
+            this.btnClockTimer.Location = new System.Drawing.Point(178, 865);
             this.btnClockTimer.Name = "btnClockTimer";
             this.btnClockTimer.Size = new System.Drawing.Size(120, 49);
             this.btnClockTimer.TabIndex = 15;
@@ -1050,7 +1255,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 901);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 919);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -1110,7 +1315,7 @@
             this.btnCommutator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnCommutator.Location = new System.Drawing.Point(11, 26);
             this.btnCommutator.Name = "btnCommutator";
-            this.btnCommutator.Size = new System.Drawing.Size(140, 40);
+            this.btnCommutator.Size = new System.Drawing.Size(123, 40);
             this.btnCommutator.TabIndex = 0;
             this.btnCommutator.Text = "Подключен";
             this.btnCommutator.UseVisualStyleBackColor = false;
@@ -1138,7 +1343,7 @@
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(851, 542);
+            this.dataGridView2.Size = new System.Drawing.Size(851, 560);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
@@ -1227,7 +1432,7 @@
             this.panelLog.Controls.Add(this.richTextBox1);
             this.panelLog.Controls.Add(this.rtbConsole);
             this.panelLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelLog.Location = new System.Drawing.Point(0, 752);
+            this.panelLog.Location = new System.Drawing.Point(0, 770);
             this.panelLog.Name = "panelLog";
             this.panelLog.Size = new System.Drawing.Size(1138, 222);
             this.panelLog.TabIndex = 7;
@@ -1270,7 +1475,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1138, 728);
+            this.panel3.Size = new System.Drawing.Size(1138, 746);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView5
@@ -1296,7 +1501,7 @@
             this.dataGridView5.ReadOnly = true;
             this.dataGridView5.RowHeadersVisible = false;
             this.dataGridView5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView5.Size = new System.Drawing.Size(851, 542);
+            this.dataGridView5.Size = new System.Drawing.Size(851, 560);
             this.dataGridView5.TabIndex = 10;
             this.dataGridView5.Visible = false;
             // 
@@ -1391,7 +1596,7 @@
             this.splitter1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.splitter1.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter1.Location = new System.Drawing.Point(287, 542);
+            this.splitter1.Location = new System.Drawing.Point(287, 560);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(851, 3);
             this.splitter1.TabIndex = 8;
@@ -1412,7 +1617,7 @@
             this.cICurrent20mA});
             this.dataGridView4.ContextMenuStrip = this.cmsCurentTable;
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView4.Location = new System.Drawing.Point(287, 545);
+            this.dataGridView4.Location = new System.Drawing.Point(287, 563);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersVisible = false;
@@ -1420,7 +1625,6 @@
             this.dataGridView4.Size = new System.Drawing.Size(851, 183);
             this.dataGridView4.TabIndex = 7;
             this.dataGridView4.Visible = false;
-            this.dataGridView4.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView4_RowsRemoved);
             // 
             // сCIRecordNum
             // 
@@ -1503,7 +1707,7 @@
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView3.Size = new System.Drawing.Size(851, 728);
+            this.dataGridView3.Size = new System.Drawing.Size(851, 746);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
@@ -1614,7 +1818,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(851, 728);
+            this.dataGridView1.Size = new System.Drawing.Size(851, 746);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1623,8 +1827,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1666,10 +1870,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle12.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -1684,7 +1888,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(287, 728);
+            this.panel4.Size = new System.Drawing.Size(287, 746);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1699,7 +1903,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(287, 728);
+            this.tabControl1.Size = new System.Drawing.Size(287, 746);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1714,7 +1918,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(279, 702);
+            this.tabPage1.Size = new System.Drawing.Size(279, 720);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск";
             // 
@@ -2160,368 +2364,46 @@
             // tabPage2
             // 
             this.tabPage2.AutoScroll = true;
+            this.tabPage2.Controls.Add(this.pbCHProcess);
             this.tabPage2.Controls.Add(this.btnCalculateDeviation);
-            this.tabPage2.Controls.Add(this.gbCHLevel4);
-            this.tabPage2.Controls.Add(this.gbCHLevel3);
-            this.tabPage2.Controls.Add(this.gbCHLevel2);
             this.tabPage2.Controls.Add(this.btnCalibrateCurrent);
             this.tabPage2.Controls.Add(this.btnCalculateCoeff);
             this.tabPage2.Controls.Add(this.btnReadCAP);
             this.tabPage2.Controls.Add(this.groupBox10);
             this.tabPage2.Controls.Add(this.btnCHStart);
-            this.tabPage2.Controls.Add(this.pbCHProcess);
             this.tabPage2.Controls.Add(this.gbCHLevel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(279, 702);
+            this.tabPage2.Size = new System.Drawing.Size(279, 720);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
+            // 
+            // pbCHProcess
+            // 
+            this.pbCHProcess.ForeColor = System.Drawing.Color.Transparent;
+            this.pbCHProcess.Location = new System.Drawing.Point(14, 665);
+            this.pbCHProcess.Name = "pbCHProcess";
+            this.pbCHProcess.Size = new System.Drawing.Size(247, 25);
+            this.pbCHProcess.TabIndex = 3;
             // 
             // btnCalculateDeviation
             // 
             this.btnCalculateDeviation.BackColor = System.Drawing.Color.LightGreen;
-            this.btnCalculateDeviation.Location = new System.Drawing.Point(144, 656);
+            this.btnCalculateDeviation.Location = new System.Drawing.Point(14, 600);
             this.btnCalculateDeviation.Name = "btnCalculateDeviation";
-            this.btnCalculateDeviation.Size = new System.Drawing.Size(124, 53);
+            this.btnCalculateDeviation.Size = new System.Drawing.Size(247, 53);
             this.btnCalculateDeviation.TabIndex = 17;
             this.btnCalculateDeviation.Text = "Расчет отклонений";
             this.btnCalculateDeviation.UseVisualStyleBackColor = false;
             this.btnCalculateDeviation.Click += new System.EventHandler(this.btnCalculateDeviation_Click);
             // 
-            // gbCHLevel4
-            // 
-            this.gbCHLevel4.BackColor = System.Drawing.Color.Transparent;
-            this.gbCHLevel4.Controls.Add(this.cbDiapazon4);
-            this.gbCHLevel4.Controls.Add(this.label42);
-            this.gbCHLevel4.Controls.Add(this.btnCHPressureSet4);
-            this.gbCHLevel4.Controls.Add(this.cbCHPressureSet4);
-            this.gbCHLevel4.Controls.Add(this.btnCHTemperatureSet4);
-            this.gbCHLevel4.Controls.Add(this.label43);
-            this.gbCHLevel4.Controls.Add(this.label44);
-            this.gbCHLevel4.Controls.Add(this.cbCHTermoCamera4);
-            this.gbCHLevel4.Enabled = false;
-            this.gbCHLevel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbCHLevel4.Location = new System.Drawing.Point(8, 401);
-            this.gbCHLevel4.Name = "gbCHLevel4";
-            this.gbCHLevel4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbCHLevel4.Size = new System.Drawing.Size(255, 105);
-            this.gbCHLevel4.TabIndex = 16;
-            this.gbCHLevel4.TabStop = false;
-            this.gbCHLevel4.Tag = "4";
-            this.gbCHLevel4.Text = "Уровень 4";
-            this.gbCHLevel4.Enter += new System.EventHandler(this.gbCHLevel1_Enter);
-            // 
-            // cbDiapazon4
-            // 
-            this.cbDiapazon4.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2"});
-            this.cbDiapazon4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDiapazon4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbDiapazon4.FormattingEnabled = true;
-            this.cbDiapazon4.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbDiapazon4.Location = new System.Drawing.Point(83, 17);
-            this.cbDiapazon4.Name = "cbDiapazon4";
-            this.cbDiapazon4.Size = new System.Drawing.Size(66, 24);
-            this.cbDiapazon4.TabIndex = 9;
-            this.cbDiapazon4.SelectedIndexChanged += new System.EventHandler(this.cbDiapazon4_SelectedIndexChanged);
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(3, 22);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(61, 13);
-            this.label42.TabIndex = 8;
-            this.label42.Text = "Диапазон:";
-            // 
-            // btnCHPressureSet4
-            // 
-            this.btnCHPressureSet4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHPressureSet4.Location = new System.Drawing.Point(151, 77);
-            this.btnCHPressureSet4.Name = "btnCHPressureSet4";
-            this.btnCHPressureSet4.Size = new System.Drawing.Size(98, 25);
-            this.btnCHPressureSet4.TabIndex = 7;
-            this.btnCHPressureSet4.Tag = "4";
-            this.btnCHPressureSet4.Text = "Установить";
-            this.btnCHPressureSet4.UseVisualStyleBackColor = true;
-            this.btnCHPressureSet4.Click += new System.EventHandler(this.btnCHPressureSet1_Click);
-            // 
-            // cbCHPressureSet4
-            // 
-            this.cbCHPressureSet4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHPressureSet4.FormattingEnabled = true;
-            this.cbCHPressureSet4.Location = new System.Drawing.Point(83, 77);
-            this.cbCHPressureSet4.Name = "cbCHPressureSet4";
-            this.cbCHPressureSet4.Size = new System.Drawing.Size(66, 24);
-            this.cbCHPressureSet4.TabIndex = 6;
-            // 
-            // btnCHTemperatureSet4
-            // 
-            this.btnCHTemperatureSet4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHTemperatureSet4.Location = new System.Drawing.Point(151, 47);
-            this.btnCHTemperatureSet4.Name = "btnCHTemperatureSet4";
-            this.btnCHTemperatureSet4.Size = new System.Drawing.Size(98, 25);
-            this.btnCHTemperatureSet4.TabIndex = 5;
-            this.btnCHTemperatureSet4.Tag = "4";
-            this.btnCHTemperatureSet4.Text = "Установить";
-            this.btnCHTemperatureSet4.UseVisualStyleBackColor = true;
-            this.btnCHTemperatureSet4.Click += new System.EventHandler(this.btnCHTemperatureSet1_Click);
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(3, 82);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(61, 13);
-            this.label43.TabIndex = 3;
-            this.label43.Text = "Давление:";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(3, 52);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(77, 13);
-            this.label44.TabIndex = 2;
-            this.label44.Text = "Температура:";
-            // 
-            // cbCHTermoCamera4
-            // 
-            this.cbCHTermoCamera4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHTermoCamera4.FormattingEnabled = true;
-            this.cbCHTermoCamera4.Location = new System.Drawing.Point(83, 47);
-            this.cbCHTermoCamera4.Name = "cbCHTermoCamera4";
-            this.cbCHTermoCamera4.Size = new System.Drawing.Size(66, 24);
-            this.cbCHTermoCamera4.TabIndex = 0;
-            // 
-            // gbCHLevel3
-            // 
-            this.gbCHLevel3.BackColor = System.Drawing.Color.Transparent;
-            this.gbCHLevel3.Controls.Add(this.cbDiapazon3);
-            this.gbCHLevel3.Controls.Add(this.label38);
-            this.gbCHLevel3.Controls.Add(this.btnCHPressureSet3);
-            this.gbCHLevel3.Controls.Add(this.cbCHPressureSet3);
-            this.gbCHLevel3.Controls.Add(this.btnCHTemperatureSet3);
-            this.gbCHLevel3.Controls.Add(this.label39);
-            this.gbCHLevel3.Controls.Add(this.label40);
-            this.gbCHLevel3.Controls.Add(this.cbCHTermoCamera3);
-            this.gbCHLevel3.Enabled = false;
-            this.gbCHLevel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbCHLevel3.Location = new System.Drawing.Point(8, 290);
-            this.gbCHLevel3.Name = "gbCHLevel3";
-            this.gbCHLevel3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbCHLevel3.Size = new System.Drawing.Size(255, 105);
-            this.gbCHLevel3.TabIndex = 15;
-            this.gbCHLevel3.TabStop = false;
-            this.gbCHLevel3.Tag = "3";
-            this.gbCHLevel3.Text = "Уровень 3";
-            this.gbCHLevel3.Enter += new System.EventHandler(this.gbCHLevel1_Enter);
-            // 
-            // cbDiapazon3
-            // 
-            this.cbDiapazon3.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2"});
-            this.cbDiapazon3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDiapazon3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbDiapazon3.FormattingEnabled = true;
-            this.cbDiapazon3.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbDiapazon3.Location = new System.Drawing.Point(83, 17);
-            this.cbDiapazon3.Name = "cbDiapazon3";
-            this.cbDiapazon3.Size = new System.Drawing.Size(66, 24);
-            this.cbDiapazon3.TabIndex = 9;
-            this.cbDiapazon3.SelectedIndexChanged += new System.EventHandler(this.cbDiapazon3_SelectedIndexChanged);
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(3, 22);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(61, 13);
-            this.label38.TabIndex = 8;
-            this.label38.Text = "Диапазон:";
-            // 
-            // btnCHPressureSet3
-            // 
-            this.btnCHPressureSet3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHPressureSet3.Location = new System.Drawing.Point(151, 77);
-            this.btnCHPressureSet3.Name = "btnCHPressureSet3";
-            this.btnCHPressureSet3.Size = new System.Drawing.Size(98, 25);
-            this.btnCHPressureSet3.TabIndex = 7;
-            this.btnCHPressureSet3.Tag = "3";
-            this.btnCHPressureSet3.Text = "Установить";
-            this.btnCHPressureSet3.UseVisualStyleBackColor = true;
-            this.btnCHPressureSet3.Click += new System.EventHandler(this.btnCHPressureSet1_Click);
-            // 
-            // cbCHPressureSet3
-            // 
-            this.cbCHPressureSet3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHPressureSet3.FormattingEnabled = true;
-            this.cbCHPressureSet3.Location = new System.Drawing.Point(83, 77);
-            this.cbCHPressureSet3.Name = "cbCHPressureSet3";
-            this.cbCHPressureSet3.Size = new System.Drawing.Size(66, 24);
-            this.cbCHPressureSet3.TabIndex = 6;
-            // 
-            // btnCHTemperatureSet3
-            // 
-            this.btnCHTemperatureSet3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHTemperatureSet3.Location = new System.Drawing.Point(151, 47);
-            this.btnCHTemperatureSet3.Name = "btnCHTemperatureSet3";
-            this.btnCHTemperatureSet3.Size = new System.Drawing.Size(98, 25);
-            this.btnCHTemperatureSet3.TabIndex = 5;
-            this.btnCHTemperatureSet3.Tag = "3";
-            this.btnCHTemperatureSet3.Text = "Установить";
-            this.btnCHTemperatureSet3.UseVisualStyleBackColor = true;
-            this.btnCHTemperatureSet3.Click += new System.EventHandler(this.btnCHTemperatureSet1_Click);
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(3, 82);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(61, 13);
-            this.label39.TabIndex = 3;
-            this.label39.Text = "Давление:";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(3, 52);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(77, 13);
-            this.label40.TabIndex = 2;
-            this.label40.Text = "Температура:";
-            // 
-            // cbCHTermoCamera3
-            // 
-            this.cbCHTermoCamera3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHTermoCamera3.FormattingEnabled = true;
-            this.cbCHTermoCamera3.Location = new System.Drawing.Point(83, 47);
-            this.cbCHTermoCamera3.Name = "cbCHTermoCamera3";
-            this.cbCHTermoCamera3.Size = new System.Drawing.Size(66, 24);
-            this.cbCHTermoCamera3.TabIndex = 0;
-            // 
-            // gbCHLevel2
-            // 
-            this.gbCHLevel2.BackColor = System.Drawing.Color.Transparent;
-            this.gbCHLevel2.Controls.Add(this.cbDiapazon2);
-            this.gbCHLevel2.Controls.Add(this.label34);
-            this.gbCHLevel2.Controls.Add(this.btnCHPressureSet2);
-            this.gbCHLevel2.Controls.Add(this.cbCHPressureSet2);
-            this.gbCHLevel2.Controls.Add(this.btnCHTemperatureSet2);
-            this.gbCHLevel2.Controls.Add(this.label35);
-            this.gbCHLevel2.Controls.Add(this.label37);
-            this.gbCHLevel2.Controls.Add(this.cbCHTermoCamera2);
-            this.gbCHLevel2.Enabled = false;
-            this.gbCHLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbCHLevel2.Location = new System.Drawing.Point(8, 179);
-            this.gbCHLevel2.Name = "gbCHLevel2";
-            this.gbCHLevel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbCHLevel2.Size = new System.Drawing.Size(255, 105);
-            this.gbCHLevel2.TabIndex = 14;
-            this.gbCHLevel2.TabStop = false;
-            this.gbCHLevel2.Tag = "2";
-            this.gbCHLevel2.Text = "Уровень 2";
-            this.gbCHLevel2.Enter += new System.EventHandler(this.gbCHLevel1_Enter);
-            // 
-            // cbDiapazon2
-            // 
-            this.cbDiapazon2.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2"});
-            this.cbDiapazon2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDiapazon2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbDiapazon2.FormattingEnabled = true;
-            this.cbDiapazon2.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbDiapazon2.Location = new System.Drawing.Point(83, 17);
-            this.cbDiapazon2.Name = "cbDiapazon2";
-            this.cbDiapazon2.Size = new System.Drawing.Size(66, 24);
-            this.cbDiapazon2.TabIndex = 9;
-            this.cbDiapazon2.SelectedIndexChanged += new System.EventHandler(this.cbDiapazon2_SelectedIndexChanged);
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(3, 22);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(61, 13);
-            this.label34.TabIndex = 8;
-            this.label34.Text = "Диапазон:";
-            // 
-            // btnCHPressureSet2
-            // 
-            this.btnCHPressureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHPressureSet2.Location = new System.Drawing.Point(151, 76);
-            this.btnCHPressureSet2.Name = "btnCHPressureSet2";
-            this.btnCHPressureSet2.Size = new System.Drawing.Size(98, 25);
-            this.btnCHPressureSet2.TabIndex = 7;
-            this.btnCHPressureSet2.Tag = "2";
-            this.btnCHPressureSet2.Text = "Установить";
-            this.btnCHPressureSet2.UseVisualStyleBackColor = true;
-            this.btnCHPressureSet2.Click += new System.EventHandler(this.btnCHPressureSet1_Click);
-            // 
-            // cbCHPressureSet2
-            // 
-            this.cbCHPressureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHPressureSet2.FormattingEnabled = true;
-            this.cbCHPressureSet2.Location = new System.Drawing.Point(83, 76);
-            this.cbCHPressureSet2.Name = "cbCHPressureSet2";
-            this.cbCHPressureSet2.Size = new System.Drawing.Size(66, 24);
-            this.cbCHPressureSet2.TabIndex = 6;
-            // 
-            // btnCHTemperatureSet2
-            // 
-            this.btnCHTemperatureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHTemperatureSet2.Location = new System.Drawing.Point(151, 47);
-            this.btnCHTemperatureSet2.Name = "btnCHTemperatureSet2";
-            this.btnCHTemperatureSet2.Size = new System.Drawing.Size(98, 25);
-            this.btnCHTemperatureSet2.TabIndex = 5;
-            this.btnCHTemperatureSet2.Tag = "2";
-            this.btnCHTemperatureSet2.Text = "Установить";
-            this.btnCHTemperatureSet2.UseVisualStyleBackColor = true;
-            this.btnCHTemperatureSet2.Click += new System.EventHandler(this.btnCHTemperatureSet1_Click);
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(3, 81);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(61, 13);
-            this.label35.TabIndex = 3;
-            this.label35.Text = "Давление:";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(3, 52);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(77, 13);
-            this.label37.TabIndex = 2;
-            this.label37.Text = "Температура:";
-            // 
-            // cbCHTermoCamera2
-            // 
-            this.cbCHTermoCamera2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHTermoCamera2.FormattingEnabled = true;
-            this.cbCHTermoCamera2.Location = new System.Drawing.Point(83, 47);
-            this.cbCHTermoCamera2.Name = "cbCHTermoCamera2";
-            this.cbCHTermoCamera2.Size = new System.Drawing.Size(66, 24);
-            this.cbCHTermoCamera2.TabIndex = 0;
-            // 
             // btnCalibrateCurrent
             // 
             this.btnCalibrateCurrent.BackColor = System.Drawing.Color.LightGreen;
-            this.btnCalibrateCurrent.Location = new System.Drawing.Point(144, 568);
+            this.btnCalibrateCurrent.Location = new System.Drawing.Point(14, 487);
             this.btnCalibrateCurrent.Name = "btnCalibrateCurrent";
-            this.btnCalibrateCurrent.Size = new System.Drawing.Size(119, 48);
+            this.btnCalibrateCurrent.Size = new System.Drawing.Size(247, 48);
             this.btnCalibrateCurrent.TabIndex = 13;
             this.btnCalibrateCurrent.Text = "Калибровка тока    (4 и 20 мА)";
             this.btnCalibrateCurrent.UseVisualStyleBackColor = false;
@@ -2530,9 +2412,9 @@
             // btnCalculateCoeff
             // 
             this.btnCalculateCoeff.BackColor = System.Drawing.Color.IndianRed;
-            this.btnCalculateCoeff.Location = new System.Drawing.Point(8, 656);
+            this.btnCalculateCoeff.Location = new System.Drawing.Point(14, 541);
             this.btnCalculateCoeff.Name = "btnCalculateCoeff";
-            this.btnCalculateCoeff.Size = new System.Drawing.Size(124, 53);
+            this.btnCalculateCoeff.Size = new System.Drawing.Size(247, 53);
             this.btnCalculateCoeff.TabIndex = 12;
             this.btnCalculateCoeff.Text = "Расчет коэффициентов";
             this.btnCalculateCoeff.UseVisualStyleBackColor = false;
@@ -2541,9 +2423,9 @@
             // btnReadCAP
             // 
             this.btnReadCAP.BackColor = System.Drawing.Color.LightGreen;
-            this.btnReadCAP.Location = new System.Drawing.Point(8, 568);
+            this.btnReadCAP.Location = new System.Drawing.Point(14, 429);
             this.btnReadCAP.Name = "btnReadCAP";
-            this.btnReadCAP.Size = new System.Drawing.Size(124, 48);
+            this.btnReadCAP.Size = new System.Drawing.Size(247, 48);
             this.btnReadCAP.TabIndex = 9;
             this.btnReadCAP.Text = "Чтение параметров ЦАП";
             this.btnReadCAP.UseVisualStyleBackColor = false;
@@ -2555,20 +2437,20 @@
             this.groupBox10.Controls.Add(this.cbChannalCharakterizator);
             this.groupBox10.Location = new System.Drawing.Point(8, 13);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(255, 47);
+            this.groupBox10.Size = new System.Drawing.Size(265, 47);
             this.groupBox10.TabIndex = 5;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Текущий канал";
             // 
             // cbChannalFix
             // 
+            this.cbChannalFix.AutoSize = true;
             this.cbChannalFix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbChannalFix.Location = new System.Drawing.Point(223, 18);
-            this.cbChannalFix.MaximumSize = new System.Drawing.Size(20, 20);
-            this.cbChannalFix.MinimumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFix.Location = new System.Drawing.Point(144, 20);
             this.cbChannalFix.Name = "cbChannalFix";
-            this.cbChannalFix.Size = new System.Drawing.Size(20, 20);
+            this.cbChannalFix.Size = new System.Drawing.Size(109, 17);
             this.cbChannalFix.TabIndex = 10;
+            this.cbChannalFix.Text = "Зафиксировать ";
             this.cbChannalFix.UseVisualStyleBackColor = true;
             // 
             // cbChannalCharakterizator
@@ -2577,49 +2459,67 @@
             this.cbChannalCharakterizator.FormattingEnabled = true;
             this.cbChannalCharakterizator.Location = new System.Drawing.Point(6, 18);
             this.cbChannalCharakterizator.Name = "cbChannalCharakterizator";
-            this.cbChannalCharakterizator.Size = new System.Drawing.Size(211, 21);
+            this.cbChannalCharakterizator.Size = new System.Drawing.Size(124, 21);
             this.cbChannalCharakterizator.TabIndex = 0;
             this.cbChannalCharakterizator.SelectedIndexChanged += new System.EventHandler(this.cbChannalCharakterizator_SelectedIndexChanged);
             // 
             // btnCHStart
             // 
             this.btnCHStart.BackColor = System.Drawing.Color.LightGreen;
-            this.btnCHStart.Location = new System.Drawing.Point(8, 515);
+            this.btnCHStart.Location = new System.Drawing.Point(14, 376);
             this.btnCHStart.Name = "btnCHStart";
-            this.btnCHStart.Size = new System.Drawing.Size(255, 47);
+            this.btnCHStart.Size = new System.Drawing.Size(247, 47);
             this.btnCHStart.TabIndex = 4;
             this.btnCHStart.Text = "Старт характеризации";
             this.btnCHStart.UseVisualStyleBackColor = false;
             this.btnCHStart.Click += new System.EventHandler(this.button10_Click);
             // 
-            // pbCHProcess
-            // 
-            this.pbCHProcess.Location = new System.Drawing.Point(8, 622);
-            this.pbCHProcess.Name = "pbCHProcess";
-            this.pbCHProcess.Size = new System.Drawing.Size(255, 23);
-            this.pbCHProcess.TabIndex = 3;
-            // 
             // gbCHLevel1
             // 
-            this.gbCHLevel1.BackColor = System.Drawing.Color.LightGreen;
+            this.gbCHLevel1.BackColor = System.Drawing.SystemColors.Control;
+            this.gbCHLevel1.Controls.Add(this.cbCHlevel);
+            this.gbCHLevel1.Controls.Add(this.label32);
             this.gbCHLevel1.Controls.Add(this.cbDiapazon1);
             this.gbCHLevel1.Controls.Add(this.label41);
             this.gbCHLevel1.Controls.Add(this.btnCHPressureSet1);
-            this.gbCHLevel1.Controls.Add(this.cbCHPressureSet1);
+            this.gbCHLevel1.Controls.Add(this.lvCHPressureSet);
+            this.gbCHLevel1.Controls.Add(this.lvCHTermoCamera);
             this.gbCHLevel1.Controls.Add(this.btnCHTemperatureSet1);
-            this.gbCHLevel1.Controls.Add(this.label33);
-            this.gbCHLevel1.Controls.Add(this.label32);
-            this.gbCHLevel1.Controls.Add(this.cbCHTermoCamera1);
             this.gbCHLevel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbCHLevel1.Location = new System.Drawing.Point(8, 68);
             this.gbCHLevel1.Name = "gbCHLevel1";
             this.gbCHLevel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbCHLevel1.Size = new System.Drawing.Size(255, 105);
+            this.gbCHLevel1.Size = new System.Drawing.Size(265, 300);
             this.gbCHLevel1.TabIndex = 0;
             this.gbCHLevel1.TabStop = false;
             this.gbCHLevel1.Tag = "1";
-            this.gbCHLevel1.Text = "Уровень 1";
+            this.gbCHLevel1.Text = "Настройка точек характеризации";
             this.gbCHLevel1.Enter += new System.EventHandler(this.gbCHLevel1_Enter);
+            // 
+            // cbCHlevel
+            // 
+            this.cbCHlevel.AutoCompleteCustomSource.AddRange(new string[] {
+            "1",
+            "2"});
+            this.cbCHlevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCHlevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbCHlevel.FormattingEnabled = true;
+            this.cbCHlevel.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbCHlevel.Location = new System.Drawing.Point(136, 24);
+            this.cbCHlevel.Name = "cbCHlevel";
+            this.cbCHlevel.Size = new System.Drawing.Size(117, 24);
+            this.cbCHlevel.TabIndex = 26;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(13, 29);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(54, 13);
+            this.label32.TabIndex = 25;
+            this.label32.Text = "Уровень:";
             // 
             // cbDiapazon1
             // 
@@ -2632,106 +2532,206 @@
             this.cbDiapazon1.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cbDiapazon1.Location = new System.Drawing.Point(83, 17);
+            this.cbDiapazon1.Location = new System.Drawing.Point(136, 61);
             this.cbDiapazon1.Name = "cbDiapazon1";
-            this.cbDiapazon1.Size = new System.Drawing.Size(66, 24);
-            this.cbDiapazon1.TabIndex = 9;
+            this.cbDiapazon1.Size = new System.Drawing.Size(117, 24);
+            this.cbDiapazon1.TabIndex = 24;
             this.cbDiapazon1.SelectedIndexChanged += new System.EventHandler(this.cbDiapazon1_SelectedIndexChanged);
             // 
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(3, 22);
+            this.label41.Location = new System.Drawing.Point(13, 66);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(61, 13);
-            this.label41.TabIndex = 8;
+            this.label41.TabIndex = 23;
             this.label41.Text = "Диапазон:";
             // 
             // btnCHPressureSet1
             // 
+            this.btnCHPressureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnCHPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHPressureSet1.Location = new System.Drawing.Point(151, 77);
+            this.btnCHPressureSet1.Location = new System.Drawing.Point(130, 261);
             this.btnCHPressureSet1.Name = "btnCHPressureSet1";
-            this.btnCHPressureSet1.Size = new System.Drawing.Size(98, 25);
+            this.btnCHPressureSet1.Size = new System.Drawing.Size(107, 25);
             this.btnCHPressureSet1.TabIndex = 7;
             this.btnCHPressureSet1.Tag = "1";
             this.btnCHPressureSet1.Text = "Установить";
-            this.btnCHPressureSet1.UseVisualStyleBackColor = true;
+            this.btnCHPressureSet1.UseVisualStyleBackColor = false;
             this.btnCHPressureSet1.Click += new System.EventHandler(this.btnCHPressureSet1_Click);
             // 
-            // cbCHPressureSet1
+            // lvCHPressureSet
             // 
-            this.cbCHPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHPressureSet1.FormattingEnabled = true;
-            this.cbCHPressureSet1.Location = new System.Drawing.Point(83, 77);
-            this.cbCHPressureSet1.Name = "cbCHPressureSet1";
-            this.cbCHPressureSet1.Size = new System.Drawing.Size(66, 24);
-            this.cbCHPressureSet1.TabIndex = 6;
+            this.lvCHPressureSet.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvCHPressureSet.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.lvCHPressureSet.ContextMenuStrip = this.cmsCHPressuer;
+            this.lvCHPressureSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lvCHPressureSet.FullRowSelect = true;
+            this.lvCHPressureSet.GridLines = true;
+            this.lvCHPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvCHPressureSet.HideSelection = false;
+            listViewItem1.Checked = true;
+            listViewItem1.StateImageIndex = 1;
+            listViewItem2.Checked = true;
+            listViewItem2.StateImageIndex = 1;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            this.lvCHPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7});
+            this.lvCHPressureSet.LabelEdit = true;
+            this.lvCHPressureSet.Location = new System.Drawing.Point(130, 106);
+            this.lvCHPressureSet.MultiSelect = false;
+            this.lvCHPressureSet.Name = "lvCHPressureSet";
+            this.lvCHPressureSet.ShowGroups = false;
+            this.lvCHPressureSet.Size = new System.Drawing.Size(123, 146);
+            this.lvCHPressureSet.TabIndex = 22;
+            this.lvCHPressureSet.UseCompatibleStateImageBehavior = false;
+            this.lvCHPressureSet.View = System.Windows.Forms.View.Details;
+            this.lvCHPressureSet.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvCHPressureSet_MouseDoubleClick);
+            this.lvCHPressureSet.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvCHPressureSet_MouseDown);
+            this.lvCHPressureSet.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lvCHPressureSet_MouseMove);
+            this.lvCHPressureSet.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvCHPressureSet_MouseUp);
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Давление:";
+            this.columnHeader2.Width = 100;
+            // 
+            // cmsCHPressuer
+            // 
+            this.cmsCHPressuer.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCHPressuer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmCHDeletePressItem,
+            this.tsmCHAddPressItem});
+            this.cmsCHPressuer.Name = "contextMenuStripCharacterizationTable";
+            this.cmsCHPressuer.Size = new System.Drawing.Size(127, 48);
+            // 
+            // tsmCHDeletePressItem
+            // 
+            this.tsmCHDeletePressItem.Name = "tsmCHDeletePressItem";
+            this.tsmCHDeletePressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmCHDeletePressItem.Text = "Удалить";
+            this.tsmCHDeletePressItem.Click += new System.EventHandler(this.tsmCHDeletePressItem_Click);
+            // 
+            // tsmCHAddPressItem
+            // 
+            this.tsmCHAddPressItem.Name = "tsmCHAddPressItem";
+            this.tsmCHAddPressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmCHAddPressItem.Text = "Добавить";
+            this.tsmCHAddPressItem.Click += new System.EventHandler(this.tsmCHAddPressItem_Click);
+            // 
+            // lvCHTermoCamera
+            // 
+            this.lvCHTermoCamera.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvCHTermoCamera.BackColor = System.Drawing.SystemColors.Window;
+            this.lvCHTermoCamera.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvCHTermoCamera.ContextMenuStrip = this.cmsCHTemperature;
+            this.lvCHTermoCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lvCHTermoCamera.FullRowSelect = true;
+            this.lvCHTermoCamera.GridLines = true;
+            this.lvCHTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvCHTermoCamera.HideSelection = false;
+            listViewItem8.Checked = true;
+            listViewItem8.StateImageIndex = 1;
+            listViewItem9.Checked = true;
+            listViewItem9.StateImageIndex = 1;
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 1;
+            listViewItem11.Checked = true;
+            listViewItem11.StateImageIndex = 1;
+            this.lvCHTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14});
+            this.lvCHTermoCamera.LabelEdit = true;
+            this.lvCHTermoCamera.Location = new System.Drawing.Point(6, 106);
+            this.lvCHTermoCamera.MultiSelect = false;
+            this.lvCHTermoCamera.Name = "lvCHTermoCamera";
+            this.lvCHTermoCamera.ShowGroups = false;
+            this.lvCHTermoCamera.Size = new System.Drawing.Size(124, 146);
+            this.lvCHTermoCamera.TabIndex = 21;
+            this.lvCHTermoCamera.UseCompatibleStateImageBehavior = false;
+            this.lvCHTermoCamera.View = System.Windows.Forms.View.Details;
+            this.lvCHTermoCamera.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvCHTermoCamera_MouseDoubleClick);
+            this.lvCHTermoCamera.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvCHTermoCamera_MouseDown);
+            this.lvCHTermoCamera.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lvCHTermoCamera_MouseMove);
+            this.lvCHTermoCamera.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvCHTermoCamera_MouseUp);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Температура:";
+            this.columnHeader1.Width = 100;
+            // 
+            // cmsCHTemperature
+            // 
+            this.cmsCHTemperature.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCHTemperature.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmCHDeleteTemperItem,
+            this.tsmAddCHTemperItem});
+            this.cmsCHTemperature.Name = "contextMenuStripCharacterizationTable";
+            this.cmsCHTemperature.Size = new System.Drawing.Size(127, 48);
+            // 
+            // tsmCHDeleteTemperItem
+            // 
+            this.tsmCHDeleteTemperItem.Name = "tsmCHDeleteTemperItem";
+            this.tsmCHDeleteTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmCHDeleteTemperItem.Text = "Удалить";
+            this.tsmCHDeleteTemperItem.Click += new System.EventHandler(this.tsmCHDeleteTemperItem_Click);
+            // 
+            // tsmAddCHTemperItem
+            // 
+            this.tsmAddCHTemperItem.Name = "tsmAddCHTemperItem";
+            this.tsmAddCHTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmAddCHTemperItem.Text = "Добавить";
+            this.tsmAddCHTemperItem.Click += new System.EventHandler(this.tsmAddCHTemperItem_Click);
             // 
             // btnCHTemperatureSet1
             // 
+            this.btnCHTemperatureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnCHTemperatureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHTemperatureSet1.Location = new System.Drawing.Point(151, 47);
+            this.btnCHTemperatureSet1.Location = new System.Drawing.Point(6, 261);
             this.btnCHTemperatureSet1.Name = "btnCHTemperatureSet1";
-            this.btnCHTemperatureSet1.Size = new System.Drawing.Size(98, 25);
+            this.btnCHTemperatureSet1.Size = new System.Drawing.Size(107, 25);
             this.btnCHTemperatureSet1.TabIndex = 5;
             this.btnCHTemperatureSet1.Tag = "1";
             this.btnCHTemperatureSet1.Text = "Установить";
-            this.btnCHTemperatureSet1.UseVisualStyleBackColor = true;
+            this.btnCHTemperatureSet1.UseVisualStyleBackColor = false;
             this.btnCHTemperatureSet1.Click += new System.EventHandler(this.btnCHTemperatureSet1_Click);
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(3, 82);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(61, 13);
-            this.label33.TabIndex = 3;
-            this.label33.Text = "Давление:";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(3, 52);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(77, 13);
-            this.label32.TabIndex = 2;
-            this.label32.Text = "Температура:";
-            // 
-            // cbCHTermoCamera1
-            // 
-            this.cbCHTermoCamera1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbCHTermoCamera1.FormattingEnabled = true;
-            this.cbCHTermoCamera1.Location = new System.Drawing.Point(83, 47);
-            this.cbCHTermoCamera1.Name = "cbCHTermoCamera1";
-            this.cbCHTermoCamera1.Size = new System.Drawing.Size(66, 24);
-            this.cbCHTermoCamera1.TabIndex = 0;
             // 
             // tabPage3
             // 
             this.tabPage3.AutoScroll = true;
             this.tabPage3.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage3.Controls.Add(this.groupBox6);
             this.tabPage3.Controls.Add(this.btnVR_SetZero);
             this.tabPage3.Controls.Add(this.groupBox5);
             this.tabPage3.Controls.Add(this.btnVRParamRead);
-            this.tabPage3.Controls.Add(this.gbVRLevel4);
-            this.tabPage3.Controls.Add(this.gbVRLevel3);
-            this.tabPage3.Controls.Add(this.gbVRLevel2);
-            this.tabPage3.Controls.Add(this.gbVRLevel1);
             this.tabPage3.Controls.Add(this.groupBox11);
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(279, 702);
+            this.tabPage3.Size = new System.Drawing.Size(279, 720);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
             // btnVR_SetZero
             // 
             this.btnVR_SetZero.BackColor = System.Drawing.Color.LightGreen;
-            this.btnVR_SetZero.Location = new System.Drawing.Point(8, 672);
+            this.btnVR_SetZero.Location = new System.Drawing.Point(8, 457);
             this.btnVR_SetZero.Name = "btnVR_SetZero";
-            this.btnVR_SetZero.Size = new System.Drawing.Size(255, 30);
+            this.btnVR_SetZero.Size = new System.Drawing.Size(265, 30);
             this.btnVR_SetZero.TabIndex = 16;
             this.btnVR_SetZero.Tag = "4";
             this.btnVR_SetZero.Text = "Установка нуля";
@@ -2745,9 +2745,9 @@
             this.groupBox5.Controls.Add(this.nud_VR_VPI);
             this.groupBox5.Controls.Add(this.label56);
             this.groupBox5.Controls.Add(this.nud_VR_NPI);
-            this.groupBox5.Location = new System.Drawing.Point(8, 596);
+            this.groupBox5.Location = new System.Drawing.Point(8, 372);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(255, 70);
+            this.groupBox5.Size = new System.Drawing.Size(265, 70);
             this.groupBox5.TabIndex = 15;
             this.groupBox5.TabStop = false;
             // 
@@ -2829,363 +2829,14 @@
             // btnVRParamRead
             // 
             this.btnVRParamRead.BackColor = System.Drawing.Color.LightGreen;
-            this.btnVRParamRead.Location = new System.Drawing.Point(8, 515);
+            this.btnVRParamRead.Location = new System.Drawing.Point(8, 495);
             this.btnVRParamRead.Name = "btnVRParamRead";
-            this.btnVRParamRead.Size = new System.Drawing.Size(255, 46);
+            this.btnVRParamRead.Size = new System.Drawing.Size(265, 46);
             this.btnVRParamRead.TabIndex = 13;
             this.btnVRParamRead.Tag = "4";
             this.btnVRParamRead.Text = "Старт верификации";
             this.btnVRParamRead.UseVisualStyleBackColor = false;
             this.btnVRParamRead.Click += new System.EventHandler(this.btnVRParamRead_Click);
-            // 
-            // gbVRLevel4
-            // 
-            this.gbVRLevel4.BackColor = System.Drawing.Color.Transparent;
-            this.gbVRLevel4.Controls.Add(this.cbVRDiapazon4);
-            this.gbVRLevel4.Controls.Add(this.label53);
-            this.gbVRLevel4.Controls.Add(this.btnVRPressureSet4);
-            this.gbVRLevel4.Controls.Add(this.cbVRPressureSet4);
-            this.gbVRLevel4.Controls.Add(this.btnVRTemperatureSet4);
-            this.gbVRLevel4.Controls.Add(this.label54);
-            this.gbVRLevel4.Controls.Add(this.label55);
-            this.gbVRLevel4.Controls.Add(this.cbVRTermoCamera4);
-            this.gbVRLevel4.Enabled = false;
-            this.gbVRLevel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel4.Location = new System.Drawing.Point(8, 401);
-            this.gbVRLevel4.Name = "gbVRLevel4";
-            this.gbVRLevel4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbVRLevel4.Size = new System.Drawing.Size(255, 105);
-            this.gbVRLevel4.TabIndex = 12;
-            this.gbVRLevel4.TabStop = false;
-            this.gbVRLevel4.Tag = "4";
-            this.gbVRLevel4.Text = "Уровень 4";
-            this.gbVRLevel4.Enter += new System.EventHandler(this.gbVRLevel1_Enter);
-            // 
-            // cbVRDiapazon4
-            // 
-            this.cbVRDiapazon4.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2"});
-            this.cbVRDiapazon4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVRDiapazon4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRDiapazon4.FormattingEnabled = true;
-            this.cbVRDiapazon4.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbVRDiapazon4.Location = new System.Drawing.Point(83, 17);
-            this.cbVRDiapazon4.Name = "cbVRDiapazon4";
-            this.cbVRDiapazon4.Size = new System.Drawing.Size(66, 24);
-            this.cbVRDiapazon4.TabIndex = 9;
-            this.cbVRDiapazon4.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon4_SelectedIndexChanged);
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(3, 22);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(61, 13);
-            this.label53.TabIndex = 8;
-            this.label53.Text = "Диапазон:";
-            // 
-            // btnVRPressureSet4
-            // 
-            this.btnVRPressureSet4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRPressureSet4.Location = new System.Drawing.Point(151, 77);
-            this.btnVRPressureSet4.Name = "btnVRPressureSet4";
-            this.btnVRPressureSet4.Size = new System.Drawing.Size(98, 25);
-            this.btnVRPressureSet4.TabIndex = 7;
-            this.btnVRPressureSet4.Tag = "4";
-            this.btnVRPressureSet4.Text = "Установить";
-            this.btnVRPressureSet4.UseVisualStyleBackColor = true;
-            this.btnVRPressureSet4.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
-            // 
-            // cbVRPressureSet4
-            // 
-            this.cbVRPressureSet4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRPressureSet4.FormattingEnabled = true;
-            this.cbVRPressureSet4.Location = new System.Drawing.Point(83, 77);
-            this.cbVRPressureSet4.Name = "cbVRPressureSet4";
-            this.cbVRPressureSet4.Size = new System.Drawing.Size(66, 24);
-            this.cbVRPressureSet4.TabIndex = 6;
-            // 
-            // btnVRTemperatureSet4
-            // 
-            this.btnVRTemperatureSet4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRTemperatureSet4.Location = new System.Drawing.Point(151, 47);
-            this.btnVRTemperatureSet4.Name = "btnVRTemperatureSet4";
-            this.btnVRTemperatureSet4.Size = new System.Drawing.Size(98, 25);
-            this.btnVRTemperatureSet4.TabIndex = 5;
-            this.btnVRTemperatureSet4.Tag = "4";
-            this.btnVRTemperatureSet4.Text = "Установить";
-            this.btnVRTemperatureSet4.UseVisualStyleBackColor = true;
-            this.btnVRTemperatureSet4.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(3, 82);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(61, 13);
-            this.label54.TabIndex = 3;
-            this.label54.Text = "Давление:";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(3, 52);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(77, 13);
-            this.label55.TabIndex = 2;
-            this.label55.Text = "Температура:";
-            // 
-            // cbVRTermoCamera4
-            // 
-            this.cbVRTermoCamera4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRTermoCamera4.FormattingEnabled = true;
-            this.cbVRTermoCamera4.Location = new System.Drawing.Point(83, 47);
-            this.cbVRTermoCamera4.Name = "cbVRTermoCamera4";
-            this.cbVRTermoCamera4.Size = new System.Drawing.Size(66, 24);
-            this.cbVRTermoCamera4.TabIndex = 0;
-            // 
-            // gbVRLevel3
-            // 
-            this.gbVRLevel3.BackColor = System.Drawing.Color.Transparent;
-            this.gbVRLevel3.Controls.Add(this.cbVRDiapazon3);
-            this.gbVRLevel3.Controls.Add(this.label50);
-            this.gbVRLevel3.Controls.Add(this.btnVRPressureSet3);
-            this.gbVRLevel3.Controls.Add(this.cbVRPressureSet3);
-            this.gbVRLevel3.Controls.Add(this.btnVRTemperatureSet3);
-            this.gbVRLevel3.Controls.Add(this.label51);
-            this.gbVRLevel3.Controls.Add(this.label52);
-            this.gbVRLevel3.Controls.Add(this.cbVRTermoCamera3);
-            this.gbVRLevel3.Enabled = false;
-            this.gbVRLevel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel3.Location = new System.Drawing.Point(8, 290);
-            this.gbVRLevel3.Name = "gbVRLevel3";
-            this.gbVRLevel3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbVRLevel3.Size = new System.Drawing.Size(255, 105);
-            this.gbVRLevel3.TabIndex = 11;
-            this.gbVRLevel3.TabStop = false;
-            this.gbVRLevel3.Tag = "3";
-            this.gbVRLevel3.Text = "Уровень 3";
-            this.gbVRLevel3.Enter += new System.EventHandler(this.gbVRLevel1_Enter);
-            // 
-            // cbVRDiapazon3
-            // 
-            this.cbVRDiapazon3.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2"});
-            this.cbVRDiapazon3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVRDiapazon3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRDiapazon3.FormattingEnabled = true;
-            this.cbVRDiapazon3.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbVRDiapazon3.Location = new System.Drawing.Point(83, 17);
-            this.cbVRDiapazon3.Name = "cbVRDiapazon3";
-            this.cbVRDiapazon3.Size = new System.Drawing.Size(66, 24);
-            this.cbVRDiapazon3.TabIndex = 9;
-            this.cbVRDiapazon3.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon3_SelectedIndexChanged);
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(3, 22);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(61, 13);
-            this.label50.TabIndex = 8;
-            this.label50.Text = "Диапазон:";
-            // 
-            // btnVRPressureSet3
-            // 
-            this.btnVRPressureSet3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRPressureSet3.Location = new System.Drawing.Point(151, 77);
-            this.btnVRPressureSet3.Name = "btnVRPressureSet3";
-            this.btnVRPressureSet3.Size = new System.Drawing.Size(98, 25);
-            this.btnVRPressureSet3.TabIndex = 7;
-            this.btnVRPressureSet3.Tag = "3";
-            this.btnVRPressureSet3.Text = "Установить";
-            this.btnVRPressureSet3.UseVisualStyleBackColor = true;
-            this.btnVRPressureSet3.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
-            // 
-            // cbVRPressureSet3
-            // 
-            this.cbVRPressureSet3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRPressureSet3.FormattingEnabled = true;
-            this.cbVRPressureSet3.Location = new System.Drawing.Point(83, 77);
-            this.cbVRPressureSet3.Name = "cbVRPressureSet3";
-            this.cbVRPressureSet3.Size = new System.Drawing.Size(66, 24);
-            this.cbVRPressureSet3.TabIndex = 6;
-            // 
-            // btnVRTemperatureSet3
-            // 
-            this.btnVRTemperatureSet3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRTemperatureSet3.Location = new System.Drawing.Point(151, 47);
-            this.btnVRTemperatureSet3.Name = "btnVRTemperatureSet3";
-            this.btnVRTemperatureSet3.Size = new System.Drawing.Size(98, 25);
-            this.btnVRTemperatureSet3.TabIndex = 5;
-            this.btnVRTemperatureSet3.Tag = "3";
-            this.btnVRTemperatureSet3.Text = "Установить";
-            this.btnVRTemperatureSet3.UseVisualStyleBackColor = true;
-            this.btnVRTemperatureSet3.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(3, 82);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(61, 13);
-            this.label51.TabIndex = 3;
-            this.label51.Text = "Давление:";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(3, 52);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(77, 13);
-            this.label52.TabIndex = 2;
-            this.label52.Text = "Температура:";
-            // 
-            // cbVRTermoCamera3
-            // 
-            this.cbVRTermoCamera3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRTermoCamera3.FormattingEnabled = true;
-            this.cbVRTermoCamera3.Location = new System.Drawing.Point(83, 47);
-            this.cbVRTermoCamera3.Name = "cbVRTermoCamera3";
-            this.cbVRTermoCamera3.Size = new System.Drawing.Size(66, 24);
-            this.cbVRTermoCamera3.TabIndex = 0;
-            // 
-            // gbVRLevel2
-            // 
-            this.gbVRLevel2.BackColor = System.Drawing.Color.Transparent;
-            this.gbVRLevel2.Controls.Add(this.cbVRDiapazon2);
-            this.gbVRLevel2.Controls.Add(this.label12);
-            this.gbVRLevel2.Controls.Add(this.btnVRPressureSet2);
-            this.gbVRLevel2.Controls.Add(this.cbVRPressureSet2);
-            this.gbVRLevel2.Controls.Add(this.btnVRTemperatureSet2);
-            this.gbVRLevel2.Controls.Add(this.label45);
-            this.gbVRLevel2.Controls.Add(this.label49);
-            this.gbVRLevel2.Controls.Add(this.cbVRTermoCamera2);
-            this.gbVRLevel2.Enabled = false;
-            this.gbVRLevel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel2.Location = new System.Drawing.Point(8, 179);
-            this.gbVRLevel2.Name = "gbVRLevel2";
-            this.gbVRLevel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbVRLevel2.Size = new System.Drawing.Size(255, 105);
-            this.gbVRLevel2.TabIndex = 10;
-            this.gbVRLevel2.TabStop = false;
-            this.gbVRLevel2.Tag = "2";
-            this.gbVRLevel2.Text = "Уровень 2";
-            this.gbVRLevel2.Enter += new System.EventHandler(this.gbVRLevel1_Enter);
-            // 
-            // cbVRDiapazon2
-            // 
-            this.cbVRDiapazon2.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2"});
-            this.cbVRDiapazon2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVRDiapazon2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRDiapazon2.FormattingEnabled = true;
-            this.cbVRDiapazon2.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbVRDiapazon2.Location = new System.Drawing.Point(83, 17);
-            this.cbVRDiapazon2.Name = "cbVRDiapazon2";
-            this.cbVRDiapazon2.Size = new System.Drawing.Size(66, 24);
-            this.cbVRDiapazon2.TabIndex = 9;
-            this.cbVRDiapazon2.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon2_SelectedIndexChanged);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 22);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(61, 13);
-            this.label12.TabIndex = 8;
-            this.label12.Text = "Диапазон:";
-            // 
-            // btnVRPressureSet2
-            // 
-            this.btnVRPressureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRPressureSet2.Location = new System.Drawing.Point(151, 77);
-            this.btnVRPressureSet2.Name = "btnVRPressureSet2";
-            this.btnVRPressureSet2.Size = new System.Drawing.Size(98, 25);
-            this.btnVRPressureSet2.TabIndex = 7;
-            this.btnVRPressureSet2.Tag = "2";
-            this.btnVRPressureSet2.Text = "Установить";
-            this.btnVRPressureSet2.UseVisualStyleBackColor = true;
-            this.btnVRPressureSet2.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
-            // 
-            // cbVRPressureSet2
-            // 
-            this.cbVRPressureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRPressureSet2.FormattingEnabled = true;
-            this.cbVRPressureSet2.Location = new System.Drawing.Point(83, 77);
-            this.cbVRPressureSet2.Name = "cbVRPressureSet2";
-            this.cbVRPressureSet2.Size = new System.Drawing.Size(66, 24);
-            this.cbVRPressureSet2.TabIndex = 6;
-            // 
-            // btnVRTemperatureSet2
-            // 
-            this.btnVRTemperatureSet2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRTemperatureSet2.Location = new System.Drawing.Point(151, 47);
-            this.btnVRTemperatureSet2.Name = "btnVRTemperatureSet2";
-            this.btnVRTemperatureSet2.Size = new System.Drawing.Size(98, 25);
-            this.btnVRTemperatureSet2.TabIndex = 5;
-            this.btnVRTemperatureSet2.Tag = "2";
-            this.btnVRTemperatureSet2.Text = "Установить";
-            this.btnVRTemperatureSet2.UseVisualStyleBackColor = true;
-            this.btnVRTemperatureSet2.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(3, 82);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(61, 13);
-            this.label45.TabIndex = 3;
-            this.label45.Text = "Давление:";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(3, 52);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(77, 13);
-            this.label49.TabIndex = 2;
-            this.label49.Text = "Температура:";
-            // 
-            // cbVRTermoCamera2
-            // 
-            this.cbVRTermoCamera2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRTermoCamera2.FormattingEnabled = true;
-            this.cbVRTermoCamera2.Location = new System.Drawing.Point(83, 47);
-            this.cbVRTermoCamera2.Name = "cbVRTermoCamera2";
-            this.cbVRTermoCamera2.Size = new System.Drawing.Size(66, 24);
-            this.cbVRTermoCamera2.TabIndex = 0;
-            // 
-            // gbVRLevel1
-            // 
-            this.gbVRLevel1.BackColor = System.Drawing.Color.LightGreen;
-            this.gbVRLevel1.Controls.Add(this.cbVRDiapazon1);
-            this.gbVRLevel1.Controls.Add(this.label11);
-            this.gbVRLevel1.Controls.Add(this.btnVRPressureSet1);
-            this.gbVRLevel1.Controls.Add(this.cbVRPressureSet1);
-            this.gbVRLevel1.Controls.Add(this.btnVRTemperatureSet1);
-            this.gbVRLevel1.Controls.Add(this.label47);
-            this.gbVRLevel1.Controls.Add(this.label48);
-            this.gbVRLevel1.Controls.Add(this.cbVRTermoCamera1);
-            this.gbVRLevel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbVRLevel1.Location = new System.Drawing.Point(8, 68);
-            this.gbVRLevel1.Name = "gbVRLevel1";
-            this.gbVRLevel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gbVRLevel1.Size = new System.Drawing.Size(255, 105);
-            this.gbVRLevel1.TabIndex = 9;
-            this.gbVRLevel1.TabStop = false;
-            this.gbVRLevel1.Tag = "1";
-            this.gbVRLevel1.Text = "Уровень 1";
-            this.gbVRLevel1.Enter += new System.EventHandler(this.gbVRLevel1_Enter);
             // 
             // cbVRDiapazon1
             // 
@@ -3195,80 +2846,37 @@
             this.cbVRDiapazon1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVRDiapazon1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbVRDiapazon1.FormattingEnabled = true;
-            this.cbVRDiapazon1.Location = new System.Drawing.Point(83, 17);
+            this.cbVRDiapazon1.Location = new System.Drawing.Point(136, 61);
             this.cbVRDiapazon1.Name = "cbVRDiapazon1";
-            this.cbVRDiapazon1.Size = new System.Drawing.Size(66, 24);
+            this.cbVRDiapazon1.Size = new System.Drawing.Size(117, 24);
             this.cbVRDiapazon1.TabIndex = 9;
             this.cbVRDiapazon1.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon1_SelectedIndexChanged);
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 22);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 13);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Диапазон:";
-            // 
             // btnVRPressureSet1
             // 
+            this.btnVRPressureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnVRPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRPressureSet1.Location = new System.Drawing.Point(151, 77);
+            this.btnVRPressureSet1.Location = new System.Drawing.Point(130, 265);
             this.btnVRPressureSet1.Name = "btnVRPressureSet1";
             this.btnVRPressureSet1.Size = new System.Drawing.Size(98, 25);
             this.btnVRPressureSet1.TabIndex = 7;
             this.btnVRPressureSet1.Tag = "1";
             this.btnVRPressureSet1.Text = "Установить";
-            this.btnVRPressureSet1.UseVisualStyleBackColor = true;
+            this.btnVRPressureSet1.UseVisualStyleBackColor = false;
             this.btnVRPressureSet1.Click += new System.EventHandler(this.btnVRPressureSet1_Click);
-            // 
-            // cbVRPressureSet1
-            // 
-            this.cbVRPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRPressureSet1.FormattingEnabled = true;
-            this.cbVRPressureSet1.Location = new System.Drawing.Point(83, 77);
-            this.cbVRPressureSet1.Name = "cbVRPressureSet1";
-            this.cbVRPressureSet1.Size = new System.Drawing.Size(66, 24);
-            this.cbVRPressureSet1.TabIndex = 6;
             // 
             // btnVRTemperatureSet1
             // 
+            this.btnVRTemperatureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnVRTemperatureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRTemperatureSet1.Location = new System.Drawing.Point(151, 47);
+            this.btnVRTemperatureSet1.Location = new System.Drawing.Point(6, 265);
             this.btnVRTemperatureSet1.Name = "btnVRTemperatureSet1";
             this.btnVRTemperatureSet1.Size = new System.Drawing.Size(98, 25);
             this.btnVRTemperatureSet1.TabIndex = 5;
             this.btnVRTemperatureSet1.Tag = "1";
             this.btnVRTemperatureSet1.Text = "Установить";
-            this.btnVRTemperatureSet1.UseVisualStyleBackColor = true;
+            this.btnVRTemperatureSet1.UseVisualStyleBackColor = false;
             this.btnVRTemperatureSet1.Click += new System.EventHandler(this.btnVRTemperatureSet1_Click);
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(3, 82);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(61, 13);
-            this.label47.TabIndex = 3;
-            this.label47.Text = "Давление:";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(3, 52);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(77, 13);
-            this.label48.TabIndex = 2;
-            this.label48.Text = "Температура:";
-            // 
-            // cbVRTermoCamera1
-            // 
-            this.cbVRTermoCamera1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbVRTermoCamera1.FormattingEnabled = true;
-            this.cbVRTermoCamera1.Location = new System.Drawing.Point(83, 47);
-            this.cbVRTermoCamera1.Name = "cbVRTermoCamera1";
-            this.cbVRTermoCamera1.Size = new System.Drawing.Size(66, 24);
-            this.cbVRTermoCamera1.TabIndex = 0;
             // 
             // groupBox11
             // 
@@ -3276,7 +2884,7 @@
             this.groupBox11.Controls.Add(this.cbChannalVerification);
             this.groupBox11.Location = new System.Drawing.Point(8, 13);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(255, 47);
+            this.groupBox11.Size = new System.Drawing.Size(265, 47);
             this.groupBox11.TabIndex = 6;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Текущий канал";
@@ -3284,12 +2892,11 @@
             // cbChannalFixVR
             // 
             this.cbChannalFixVR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbChannalFixVR.Location = new System.Drawing.Point(223, 18);
-            this.cbChannalFixVR.MaximumSize = new System.Drawing.Size(20, 20);
-            this.cbChannalFixVR.MinimumSize = new System.Drawing.Size(20, 20);
+            this.cbChannalFixVR.Location = new System.Drawing.Point(145, 19);
             this.cbChannalFixVR.Name = "cbChannalFixVR";
-            this.cbChannalFixVR.Size = new System.Drawing.Size(20, 20);
+            this.cbChannalFixVR.Size = new System.Drawing.Size(108, 20);
             this.cbChannalFixVR.TabIndex = 11;
+            this.cbChannalFixVR.Text = "Зафиксировать";
             this.cbChannalFixVR.UseVisualStyleBackColor = true;
             // 
             // cbChannalVerification
@@ -3298,15 +2905,15 @@
             this.cbChannalVerification.FormattingEnabled = true;
             this.cbChannalVerification.Location = new System.Drawing.Point(6, 18);
             this.cbChannalVerification.Name = "cbChannalVerification";
-            this.cbChannalVerification.Size = new System.Drawing.Size(211, 21);
+            this.cbChannalVerification.Size = new System.Drawing.Size(124, 21);
             this.cbChannalVerification.TabIndex = 0;
             this.cbChannalVerification.SelectedIndexChanged += new System.EventHandler(this.cbChannalVerification_SelectedIndexChanged);
             // 
             // pbVRProcess
             // 
-            this.pbVRProcess.Location = new System.Drawing.Point(8, 567);
+            this.pbVRProcess.Location = new System.Drawing.Point(8, 563);
             this.pbVRProcess.Name = "pbVRProcess";
-            this.pbVRProcess.Size = new System.Drawing.Size(255, 23);
+            this.pbVRProcess.Size = new System.Drawing.Size(265, 23);
             this.pbVRProcess.TabIndex = 4;
             // 
             // tabPage4
@@ -3322,7 +2929,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(279, 702);
+            this.tabPage4.Size = new System.Drawing.Size(279, 720);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Метролог";
             // 
@@ -3332,7 +2939,7 @@
             this.groupBox4.Controls.Add(this.cbChannalMetrolog);
             this.groupBox4.Location = new System.Drawing.Point(6, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(255, 47);
+            this.groupBox4.Size = new System.Drawing.Size(267, 47);
             this.groupBox4.TabIndex = 23;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Текущий канал";
@@ -3361,9 +2968,9 @@
             // btn_MET_Start
             // 
             this.btn_MET_Start.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_Start.Location = new System.Drawing.Point(6, 570);
+            this.btn_MET_Start.Location = new System.Drawing.Point(6, 557);
             this.btn_MET_Start.Name = "btn_MET_Start";
-            this.btn_MET_Start.Size = new System.Drawing.Size(255, 46);
+            this.btn_MET_Start.Size = new System.Drawing.Size(267, 46);
             this.btn_MET_Start.TabIndex = 22;
             this.btn_MET_Start.Text = "Старт";
             this.btn_MET_Start.UseVisualStyleBackColor = false;
@@ -3371,9 +2978,9 @@
             // 
             // pbMETProcess
             // 
-            this.pbMETProcess.Location = new System.Drawing.Point(6, 541);
+            this.pbMETProcess.Location = new System.Drawing.Point(6, 612);
             this.pbMETProcess.Name = "pbMETProcess";
-            this.pbMETProcess.Size = new System.Drawing.Size(255, 23);
+            this.pbMETProcess.Size = new System.Drawing.Size(267, 23);
             this.pbMETProcess.TabIndex = 21;
             // 
             // groupBox3
@@ -3382,7 +2989,7 @@
             this.groupBox3.Controls.Add(this.nud_MET_DTime);
             this.groupBox3.Location = new System.Drawing.Point(6, 429);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(255, 70);
+            this.groupBox3.Size = new System.Drawing.Size(267, 70);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Время демпфирования (сек)";
@@ -3390,7 +2997,7 @@
             // btn_MET_DTime
             // 
             this.btn_MET_DTime.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_DTime.Location = new System.Drawing.Point(174, 14);
+            this.btn_MET_DTime.Location = new System.Drawing.Point(186, 14);
             this.btn_MET_DTime.Name = "btn_MET_DTime";
             this.btn_MET_DTime.Size = new System.Drawing.Size(75, 46);
             this.btn_MET_DTime.TabIndex = 4;
@@ -3418,7 +3025,7 @@
             0,
             -2147483648});
             this.nud_MET_DTime.Name = "nud_MET_DTime";
-            this.nud_MET_DTime.Size = new System.Drawing.Size(151, 20);
+            this.nud_MET_DTime.Size = new System.Drawing.Size(170, 20);
             this.nud_MET_DTime.TabIndex = 2;
             // 
             // groupBox2
@@ -3433,7 +3040,7 @@
             this.groupBox2.Controls.Add(this.cb_MET_Unit);
             this.groupBox2.Location = new System.Drawing.Point(6, 132);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(255, 291);
+            this.groupBox2.Size = new System.Drawing.Size(267, 291);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Установка ряда давлений";
@@ -3442,9 +3049,9 @@
             // 
             this.btn_MET_Unit.BackColor = System.Drawing.Color.LightGreen;
             this.btn_MET_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_MET_Unit.Location = new System.Drawing.Point(195, 23);
+            this.btn_MET_Unit.Location = new System.Drawing.Point(186, 12);
             this.btn_MET_Unit.Name = "btn_MET_Unit";
-            this.btn_MET_Unit.Size = new System.Drawing.Size(54, 25);
+            this.btn_MET_Unit.Size = new System.Drawing.Size(75, 44);
             this.btn_MET_Unit.TabIndex = 7;
             this.btn_MET_Unit.Text = "Задать";
             this.btn_MET_Unit.UseVisualStyleBackColor = false;
@@ -3453,7 +3060,7 @@
             // btn_MET_Down
             // 
             this.btn_MET_Down.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_MET_Down.Location = new System.Drawing.Point(200, 224);
+            this.btn_MET_Down.Location = new System.Drawing.Point(213, 226);
             this.btn_MET_Down.Name = "btn_MET_Down";
             this.btn_MET_Down.Size = new System.Drawing.Size(48, 48);
             this.btn_MET_Down.TabIndex = 6;
@@ -3464,7 +3071,7 @@
             // btn_MET_Up
             // 
             this.btn_MET_Up.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_MET_Up.Location = new System.Drawing.Point(200, 170);
+            this.btn_MET_Up.Location = new System.Drawing.Point(213, 172);
             this.btn_MET_Up.Name = "btn_MET_Up";
             this.btn_MET_Up.Size = new System.Drawing.Size(48, 48);
             this.btn_MET_Up.TabIndex = 5;
@@ -3475,7 +3082,7 @@
             // btn_MET_Del
             // 
             this.btn_MET_Del.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_MET_Del.Location = new System.Drawing.Point(200, 116);
+            this.btn_MET_Del.Location = new System.Drawing.Point(213, 118);
             this.btn_MET_Del.Name = "btn_MET_Del";
             this.btn_MET_Del.Size = new System.Drawing.Size(48, 48);
             this.btn_MET_Del.TabIndex = 4;
@@ -3486,7 +3093,7 @@
             // btn_MET_Add
             // 
             this.btn_MET_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_MET_Add.Location = new System.Drawing.Point(200, 62);
+            this.btn_MET_Add.Location = new System.Drawing.Point(213, 62);
             this.btn_MET_Add.Name = "btn_MET_Add";
             this.btn_MET_Add.Size = new System.Drawing.Size(48, 48);
             this.btn_MET_Add.TabIndex = 3;
@@ -3509,7 +3116,7 @@
             "200"});
             this.lb_MET_PressValue.Location = new System.Drawing.Point(10, 62);
             this.lb_MET_PressValue.Name = "lb_MET_PressValue";
-            this.lb_MET_PressValue.Size = new System.Drawing.Size(184, 220);
+            this.lb_MET_PressValue.Size = new System.Drawing.Size(197, 220);
             this.lb_MET_PressValue.TabIndex = 2;
             this.lb_MET_PressValue.DoubleClick += new System.EventHandler(this.lb_MET_PressValue_DoubleClick);
             this.lb_MET_PressValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lb_MET_PressValue_KeyDown);
@@ -3519,9 +3126,9 @@
             this.label62.AutoSize = true;
             this.label62.Location = new System.Drawing.Point(7, 28);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(114, 13);
+            this.label62.Size = new System.Drawing.Size(85, 13);
             this.label62.TabIndex = 1;
-            this.label62.Text = "Единицы измерения:";
+            this.label62.Text = "Ед. измерения:";
             // 
             // cb_MET_Unit
             // 
@@ -3535,9 +3142,9 @@
             "мбар",
             "мм рт.ст.",
             "Па"});
-            this.cb_MET_Unit.Location = new System.Drawing.Point(127, 25);
+            this.cb_MET_Unit.Location = new System.Drawing.Point(98, 25);
             this.cb_MET_Unit.Name = "cb_MET_Unit";
-            this.cb_MET_Unit.Size = new System.Drawing.Size(67, 21);
+            this.cb_MET_Unit.Size = new System.Drawing.Size(82, 21);
             this.cb_MET_Unit.TabIndex = 0;
             // 
             // btn_MET_SetZero
@@ -3545,7 +3152,7 @@
             this.btn_MET_SetZero.BackColor = System.Drawing.Color.LightGreen;
             this.btn_MET_SetZero.Location = new System.Drawing.Point(6, 505);
             this.btn_MET_SetZero.Name = "btn_MET_SetZero";
-            this.btn_MET_SetZero.Size = new System.Drawing.Size(255, 30);
+            this.btn_MET_SetZero.Size = new System.Drawing.Size(267, 47);
             this.btn_MET_SetZero.TabIndex = 18;
             this.btn_MET_SetZero.Tag = "4";
             this.btn_MET_SetZero.Text = "Установка нуля";
@@ -3561,14 +3168,14 @@
             this.groupBox1.Controls.Add(this.nud_MET_NPI);
             this.groupBox1.Location = new System.Drawing.Point(6, 56);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(255, 70);
+            this.groupBox1.Size = new System.Drawing.Size(267, 70);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             // 
             // btn_MET_NPI_VPI
             // 
             this.btn_MET_NPI_VPI.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_NPI_VPI.Location = new System.Drawing.Point(174, 14);
+            this.btn_MET_NPI_VPI.Location = new System.Drawing.Point(186, 14);
             this.btn_MET_NPI_VPI.Name = "btn_MET_NPI_VPI";
             this.btn_MET_NPI_VPI.Size = new System.Drawing.Size(75, 46);
             this.btn_MET_NPI_VPI.TabIndex = 4;
@@ -3605,7 +3212,7 @@
             0,
             -2147483648});
             this.nud_MET_VPI.Name = "nud_MET_VPI";
-            this.nud_MET_VPI.Size = new System.Drawing.Size(115, 20);
+            this.nud_MET_VPI.Size = new System.Drawing.Size(134, 20);
             this.nud_MET_VPI.TabIndex = 2;
             // 
             // label60
@@ -3637,7 +3244,7 @@
             0,
             -2147483648});
             this.nud_MET_NPI.Name = "nud_MET_NPI";
-            this.nud_MET_NPI.Size = new System.Drawing.Size(115, 20);
+            this.nud_MET_NPI.Size = new System.Drawing.Size(134, 20);
             this.nud_MET_NPI.TabIndex = 0;
             // 
             // MainTimer
@@ -3804,218 +3411,209 @@
             // 
             this.splitter2.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter2.Location = new System.Drawing.Point(0, 749);
+            this.splitter2.Location = new System.Drawing.Point(0, 767);
             this.splitter2.Name = "splitter2";
             this.splitter2.Size = new System.Drawing.Size(1138, 3);
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
-            // gbBarometr
+            // groupBox6
             // 
-            this.gbBarometr.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.gbBarometr.Controls.Add(this.bBarometr);
-            this.gbBarometr.Controls.Add(this.label2);
-            this.gbBarometr.Controls.Add(this.numATMpress);
-            this.gbBarometr.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbBarometr.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gbBarometr.Location = new System.Drawing.Point(0, 554);
-            this.gbBarometr.Name = "gbBarometr";
-            this.gbBarometr.Size = new System.Drawing.Size(307, 111);
-            this.gbBarometr.TabIndex = 20;
-            this.gbBarometr.TabStop = false;
-            this.gbBarometr.Text = "Барометр";
+            this.groupBox6.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox6.Controls.Add(this.cbVRDiapazon1);
+            this.groupBox6.Controls.Add(this.btnVRPressureSet1);
+            this.groupBox6.Controls.Add(this.cbVRlevel);
+            this.groupBox6.Controls.Add(this.label12);
+            this.groupBox6.Controls.Add(this.btnVRTemperatureSet1);
+            this.groupBox6.Controls.Add(this.label33);
+            this.groupBox6.Controls.Add(this.lvVRPressureSet);
+            this.groupBox6.Controls.Add(this.lvVRTermoCamera);
+            this.groupBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox6.Location = new System.Drawing.Point(8, 66);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.groupBox6.Size = new System.Drawing.Size(265, 300);
+            this.groupBox6.TabIndex = 17;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Tag = "1";
+            this.groupBox6.Text = "Настройка точек верификации";
             // 
-            // bBarometr
+            // cbVRlevel
             // 
-            this.bBarometr.BackColor = System.Drawing.Color.Green;
-            this.bBarometr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bBarometr.Location = new System.Drawing.Point(10, 30);
-            this.bBarometr.Name = "bBarometr";
-            this.bBarometr.Size = new System.Drawing.Size(140, 40);
-            this.bBarometr.TabIndex = 4;
-            this.bBarometr.Text = "Подключен";
-            this.bBarometr.UseVisualStyleBackColor = false;
-            this.bBarometr.Click += new System.EventHandler(this.bBarometr_Click);
+            this.cbVRlevel.AutoCompleteCustomSource.AddRange(new string[] {
+            "1",
+            "2"});
+            this.cbVRlevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVRlevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbVRlevel.FormattingEnabled = true;
+            this.cbVRlevel.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbVRlevel.Location = new System.Drawing.Point(136, 24);
+            this.cbVRlevel.Name = "cbVRlevel";
+            this.cbVRlevel.Size = new System.Drawing.Size(117, 24);
+            this.cbVRlevel.TabIndex = 26;
             // 
-            // label2
+            // label12
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(16, 84);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 18);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Атмосферное, кПа";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(13, 29);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "Уровень:";
             // 
-            // rbPressABS
+            // label33
             // 
-            this.rbPressABS.AutoSize = true;
-            this.rbPressABS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbPressABS.Location = new System.Drawing.Point(173, 133);
-            this.rbPressABS.Name = "rbPressABS";
-            this.rbPressABS.Size = new System.Drawing.Size(113, 22);
-            this.rbPressABS.TabIndex = 1;
-            this.rbPressABS.Text = "Абсолютное";
-            this.rbPressABS.UseVisualStyleBackColor = true;
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(13, 66);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(61, 13);
+            this.label33.TabIndex = 23;
+            this.label33.Text = "Диапазон:";
             // 
-            // rbPressIZB
+            // lvVRPressureSet
             // 
-            this.rbPressIZB.AutoSize = true;
-            this.rbPressIZB.Checked = true;
-            this.rbPressIZB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbPressIZB.Location = new System.Drawing.Point(13, 133);
-            this.rbPressIZB.Name = "rbPressIZB";
-            this.rbPressIZB.Size = new System.Drawing.Size(114, 22);
-            this.rbPressIZB.TabIndex = 0;
-            this.rbPressIZB.TabStop = true;
-            this.rbPressIZB.Text = "Избыточное";
-            this.rbPressIZB.UseVisualStyleBackColor = true;
+            this.lvVRPressureSet.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvVRPressureSet.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3});
+            this.lvVRPressureSet.ContextMenuStrip = this.cmsVRPressuer;
+            this.lvVRPressureSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lvVRPressureSet.FullRowSelect = true;
+            this.lvVRPressureSet.GridLines = true;
+            this.lvVRPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvVRPressureSet.HideSelection = false;
+            listViewItem15.Checked = true;
+            listViewItem15.StateImageIndex = 1;
+            listViewItem16.Checked = true;
+            listViewItem16.StateImageIndex = 1;
+            listViewItem17.StateImageIndex = 0;
+            listViewItem18.StateImageIndex = 0;
+            this.lvVRPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20,
+            listViewItem21});
+            this.lvVRPressureSet.LabelEdit = true;
+            this.lvVRPressureSet.Location = new System.Drawing.Point(130, 106);
+            this.lvVRPressureSet.MultiSelect = false;
+            this.lvVRPressureSet.Name = "lvVRPressureSet";
+            this.lvVRPressureSet.ShowGroups = false;
+            this.lvVRPressureSet.Size = new System.Drawing.Size(123, 146);
+            this.lvVRPressureSet.TabIndex = 22;
+            this.lvVRPressureSet.UseCompatibleStateImageBehavior = false;
+            this.lvVRPressureSet.View = System.Windows.Forms.View.Details;
+            this.lvVRPressureSet.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvVRPressureSet_MouseDoubleClick);
+            this.lvVRPressureSet.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvVRPressureSet_MouseDown);
+            this.lvVRPressureSet.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lvVRPressureSet_MouseMove);
+            this.lvVRPressureSet.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvVRPressureSet_MouseUp);
             // 
-            // numATMpress
+            // columnHeader3
             // 
-            this.numATMpress.DecimalPlaces = 3;
-            this.numATMpress.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numATMpress.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numATMpress.Location = new System.Drawing.Point(178, 73);
-            this.numATMpress.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numATMpress.Name = "numATMpress";
-            this.numATMpress.Size = new System.Drawing.Size(108, 29);
-            this.numATMpress.TabIndex = 11;
-            this.numATMpress.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.columnHeader3.Text = "Давление:";
+            this.columnHeader3.Width = 100;
             // 
-            // splitter6
+            // lvVRTermoCamera
             // 
-            this.splitter6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter6.Location = new System.Drawing.Point(0, 665);
-            this.splitter6.Name = "splitter6";
-            this.splitter6.Size = new System.Drawing.Size(307, 3);
-            this.splitter6.TabIndex = 22;
-            this.splitter6.TabStop = false;
+            this.lvVRTermoCamera.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvVRTermoCamera.BackColor = System.Drawing.SystemColors.Window;
+            this.lvVRTermoCamera.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4});
+            this.lvVRTermoCamera.ContextMenuStrip = this.cmsVRTemperature;
+            this.lvVRTermoCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lvVRTermoCamera.FullRowSelect = true;
+            this.lvVRTermoCamera.GridLines = true;
+            this.lvVRTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvVRTermoCamera.HideSelection = false;
+            listViewItem22.Checked = true;
+            listViewItem22.StateImageIndex = 1;
+            listViewItem23.Checked = true;
+            listViewItem23.StateImageIndex = 1;
+            listViewItem24.Checked = true;
+            listViewItem24.StateImageIndex = 1;
+            listViewItem25.Checked = true;
+            listViewItem25.StateImageIndex = 1;
+            this.lvVRTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem22,
+            listViewItem23,
+            listViewItem24,
+            listViewItem25,
+            listViewItem26,
+            listViewItem27,
+            listViewItem28});
+            this.lvVRTermoCamera.LabelEdit = true;
+            this.lvVRTermoCamera.Location = new System.Drawing.Point(6, 106);
+            this.lvVRTermoCamera.MultiSelect = false;
+            this.lvVRTermoCamera.Name = "lvVRTermoCamera";
+            this.lvVRTermoCamera.ShowGroups = false;
+            this.lvVRTermoCamera.Size = new System.Drawing.Size(124, 146);
+            this.lvVRTermoCamera.TabIndex = 21;
+            this.lvVRTermoCamera.UseCompatibleStateImageBehavior = false;
+            this.lvVRTermoCamera.View = System.Windows.Forms.View.Details;
+            this.lvVRTermoCamera.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvVRTermoCamera_MouseDoubleClick);
+            this.lvVRTermoCamera.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvVRTermoCamera_MouseDown);
+            this.lvVRTermoCamera.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lvVRTermoCamera_MouseMove);
+            this.lvVRTermoCamera.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvVRTermoCamera_MouseUp);
             // 
-            // gbTermoCamera
+            // columnHeader4
             // 
-            this.gbTermoCamera.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.gbTermoCamera.Controls.Add(this.tbTemperature);
-            this.gbTermoCamera.Controls.Add(this.bThermalCameraSet);
-            this.gbTermoCamera.Controls.Add(this.label10);
-            this.gbTermoCamera.Controls.Add(this.label7);
-            this.gbTermoCamera.Controls.Add(this.numTermoCameraPoint);
-            this.gbTermoCamera.Controls.Add(this.label6);
-            this.gbTermoCamera.Controls.Add(this.btnThermalCamera);
-            this.gbTermoCamera.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbTermoCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gbTermoCamera.Location = new System.Drawing.Point(0, 668);
-            this.gbTermoCamera.Name = "gbTermoCamera";
-            this.gbTermoCamera.Size = new System.Drawing.Size(307, 169);
-            this.gbTermoCamera.TabIndex = 23;
-            this.gbTermoCamera.TabStop = false;
-            this.gbTermoCamera.Text = "Термокамера";
+            this.columnHeader4.Text = "Температура:";
+            this.columnHeader4.Width = 100;
             // 
-            // tbTemperature
+            // cmsVRTemperature
             // 
-            this.tbTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbTemperature.Location = new System.Drawing.Point(179, 64);
-            this.tbTemperature.Name = "tbTemperature";
-            this.tbTemperature.Size = new System.Drawing.Size(82, 44);
-            this.tbTemperature.TabIndex = 3;
-            this.tbTemperature.Text = "23";
+            this.cmsVRTemperature.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsVRTemperature.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmVRDelTemperItem,
+            this.tsmVRAddTemperItem});
+            this.cmsVRTemperature.Name = "contextMenuStripCharacterizationTable";
+            this.cmsVRTemperature.Size = new System.Drawing.Size(127, 48);
             // 
-            // bThermalCameraSet
+            // tsmVRDelTemperItem
             // 
-            this.bThermalCameraSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bThermalCameraSet.Location = new System.Drawing.Point(178, 116);
-            this.bThermalCameraSet.Name = "bThermalCameraSet";
-            this.bThermalCameraSet.Size = new System.Drawing.Size(120, 45);
-            this.bThermalCameraSet.TabIndex = 12;
-            this.bThermalCameraSet.Text = "Задача";
-            this.bThermalCameraSet.UseVisualStyleBackColor = true;
+            this.tsmVRDelTemperItem.Name = "tsmVRDelTemperItem";
+            this.tsmVRDelTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRDelTemperItem.Text = "Удалить";
+            this.tsmVRDelTemperItem.Click += new System.EventHandler(this.tsmVRDelTemperItem_Click);
             // 
-            // label10
+            // tsmVRAddTemperItem
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(255, 69);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(51, 37);
-            this.label10.TabIndex = 11;
-            this.label10.Text = "°С";
+            this.tsmVRAddTemperItem.Name = "tsmVRAddTemperItem";
+            this.tsmVRAddTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRAddTemperItem.Text = "Добавить";
+            this.tsmVRAddTemperItem.Click += new System.EventHandler(this.tsmVRAddTemperItem_Click);
             // 
-            // label7
+            // cmsVRPressuer
             // 
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(10, 72);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(175, 31);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Текущая температура:";
+            this.cmsVRPressuer.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsVRPressuer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmVRDelPressItem,
+            this.tsmVRAddPressItem});
+            this.cmsVRPressuer.Name = "contextMenuStripCharacterizationTable";
+            this.cmsVRPressuer.Size = new System.Drawing.Size(127, 48);
             // 
-            // numTermoCameraPoint
+            // tsmVRDelPressItem
             // 
-            this.numTermoCameraPoint.DecimalPlaces = 1;
-            this.numTermoCameraPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numTermoCameraPoint.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numTermoCameraPoint.Location = new System.Drawing.Point(11, 118);
-            this.numTermoCameraPoint.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numTermoCameraPoint.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.numTermoCameraPoint.Name = "numTermoCameraPoint";
-            this.numTermoCameraPoint.Size = new System.Drawing.Size(154, 44);
-            this.numTermoCameraPoint.TabIndex = 7;
-            this.numTermoCameraPoint.Value = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
+            this.tsmVRDelPressItem.Name = "tsmVRDelPressItem";
+            this.tsmVRDelPressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRDelPressItem.Text = "Удалить";
+            this.tsmVRDelPressItem.Click += new System.EventHandler(this.tsmVRDelPressItem_Click);
             // 
-            // label6
+            // tsmVRAddPressItem
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(11, 99);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 20);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Уставка:";
-            // 
-            // btnThermalCamera
-            // 
-            this.btnThermalCamera.BackColor = System.Drawing.Color.Green;
-            this.btnThermalCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnThermalCamera.Location = new System.Drawing.Point(10, 26);
-            this.btnThermalCamera.Name = "btnThermalCamera";
-            this.btnThermalCamera.Size = new System.Drawing.Size(140, 40);
-            this.btnThermalCamera.TabIndex = 2;
-            this.btnThermalCamera.Text = "Подключен";
-            this.btnThermalCamera.UseVisualStyleBackColor = false;
+            this.tsmVRAddPressItem.Name = "tsmVRAddPressItem";
+            this.tsmVRAddPressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRAddPressItem.Text = "Добавить";
+            this.tsmVRAddPressItem.Click += new System.EventHandler(this.tsmVRAddPressItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1447, 996);
+            this.ClientSize = new System.Drawing.Size(1447, 1014);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.pUpStatusBar);
             this.Controls.Add(this.panel3);
@@ -4036,6 +3634,12 @@
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.gbTermoCamera.ResumeLayout(false);
+            this.gbTermoCamera.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).EndInit();
+            this.gbBarometr.ResumeLayout(false);
+            this.gbBarometr.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).EndInit();
             this.gbMensor.ResumeLayout(false);
             this.gbMensor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMensorPoint)).EndInit();
@@ -4061,28 +3665,17 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.gbCHLevel4.ResumeLayout(false);
-            this.gbCHLevel4.PerformLayout();
-            this.gbCHLevel3.ResumeLayout(false);
-            this.gbCHLevel3.PerformLayout();
-            this.gbCHLevel2.ResumeLayout(false);
-            this.gbCHLevel2.PerformLayout();
             this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
             this.gbCHLevel1.ResumeLayout(false);
             this.gbCHLevel1.PerformLayout();
+            this.cmsCHPressuer.ResumeLayout(false);
+            this.cmsCHTemperature.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_VR_VPI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_VR_NPI)).EndInit();
-            this.gbVRLevel4.ResumeLayout(false);
-            this.gbVRLevel4.PerformLayout();
-            this.gbVRLevel3.ResumeLayout(false);
-            this.gbVRLevel3.PerformLayout();
-            this.gbVRLevel2.ResumeLayout(false);
-            this.gbVRLevel2.PerformLayout();
-            this.gbVRLevel1.ResumeLayout(false);
-            this.gbVRLevel1.PerformLayout();
             this.groupBox11.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
@@ -4096,12 +3689,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).EndInit();
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
-            this.gbBarometr.ResumeLayout(false);
-            this.gbBarometr.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numATMpress)).EndInit();
-            this.gbTermoCamera.ResumeLayout(false);
-            this.gbTermoCamera.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTermoCameraPoint)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.cmsVRTemperature.ResumeLayout(false);
+            this.cmsVRPressuer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4168,7 +3759,6 @@
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.GroupBox gbCHLevel1;
-        private System.Windows.Forms.ComboBox cbCHTermoCamera1;
         private System.Windows.Forms.ProgressBar pbCHProcess;
         private System.Windows.Forms.Button bMensorSet;
         private System.Windows.Forms.Button btnCHStart;
@@ -4214,10 +3804,7 @@
         private System.Windows.Forms.ProgressBar pbSensorSeach;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.ComboBox cbChannalCharakterizator;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Button btnCHPressureSet1;
-        private System.Windows.Forms.ComboBox cbCHPressureSet1;
         private System.Windows.Forms.Button btnCHTemperatureSet1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.DataGridView dataGridView4;
@@ -4232,75 +3819,13 @@
         private System.Windows.Forms.TextBox tbInfoDeviceAdress;
         private System.Windows.Forms.Button btnCalibrateCurrent;
         private System.Windows.Forms.Button btnCalculateCoeff;
-        private System.Windows.Forms.ComboBox cbDiapazon1;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.GroupBox gbCHLevel4;
-        private System.Windows.Forms.ComboBox cbDiapazon4;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.Button btnCHPressureSet4;
-        private System.Windows.Forms.ComboBox cbCHPressureSet4;
-        private System.Windows.Forms.Button btnCHTemperatureSet4;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.ComboBox cbCHTermoCamera4;
-        private System.Windows.Forms.GroupBox gbCHLevel3;
-        private System.Windows.Forms.ComboBox cbDiapazon3;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Button btnCHPressureSet3;
-        private System.Windows.Forms.ComboBox cbCHPressureSet3;
-        private System.Windows.Forms.Button btnCHTemperatureSet3;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.ComboBox cbCHTermoCamera3;
-        private System.Windows.Forms.GroupBox gbCHLevel2;
-        private System.Windows.Forms.ComboBox cbDiapazon2;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Button btnCHPressureSet2;
-        private System.Windows.Forms.ComboBox cbCHPressureSet2;
-        private System.Windows.Forms.Button btnCHTemperatureSet2;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.ComboBox cbCHTermoCamera2;
         private System.Windows.Forms.ProgressBar pbVRProcess;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.ComboBox cbChannalVerification;
-        private System.Windows.Forms.GroupBox gbVRLevel1;
         private System.Windows.Forms.ComboBox cbVRDiapazon1;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnVRPressureSet1;
-        private System.Windows.Forms.ComboBox cbVRPressureSet1;
         private System.Windows.Forms.Button btnVRTemperatureSet1;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.ComboBox cbVRTermoCamera1;
         private System.Windows.Forms.Button btnVRParamRead;
-        private System.Windows.Forms.GroupBox gbVRLevel4;
-        private System.Windows.Forms.ComboBox cbVRDiapazon4;
-        private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.Button btnVRPressureSet4;
-        private System.Windows.Forms.ComboBox cbVRPressureSet4;
-        private System.Windows.Forms.Button btnVRTemperatureSet4;
-        private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.ComboBox cbVRTermoCamera4;
-        private System.Windows.Forms.GroupBox gbVRLevel3;
-        private System.Windows.Forms.ComboBox cbVRDiapazon3;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.Button btnVRPressureSet3;
-        private System.Windows.Forms.ComboBox cbVRPressureSet3;
-        private System.Windows.Forms.Button btnVRTemperatureSet3;
-        private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.ComboBox cbVRTermoCamera3;
-        private System.Windows.Forms.GroupBox gbVRLevel2;
-        private System.Windows.Forms.ComboBox cbVRDiapazon2;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button btnVRPressureSet2;
-        private System.Windows.Forms.ComboBox cbVRPressureSet2;
-        private System.Windows.Forms.Button btnVRTemperatureSet2;
-        private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.ComboBox cbVRTermoCamera2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Panel pUpStatusBar;
         private System.Windows.Forms.Label label46;
@@ -4431,6 +3956,34 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnThermalCamera;
         private System.Windows.Forms.Splitter splitter6;
+        private System.Windows.Forms.ListView lvCHTermoCamera;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ListView lvCHPressureSet;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ContextMenuStrip cmsCHTemperature;
+        private System.Windows.Forms.ToolStripMenuItem tsmCHDeleteTemperItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmAddCHTemperItem;
+        private System.Windows.Forms.ComboBox cbCHlevel;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.ComboBox cbDiapazon1;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.ContextMenuStrip cmsCHPressuer;
+        private System.Windows.Forms.ToolStripMenuItem tsmCHDeletePressItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmCHAddPressItem;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.ComboBox cbVRlevel;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.ListView lvVRPressureSet;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ListView lvVRTermoCamera;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ContextMenuStrip cmsVRTemperature;
+        private System.Windows.Forms.ToolStripMenuItem tsmVRDelTemperItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmVRAddTemperItem;
+        private System.Windows.Forms.ContextMenuStrip cmsVRPressuer;
+        private System.Windows.Forms.ToolStripMenuItem tsmVRDelPressItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmVRAddPressItem;
     }
 }
 
