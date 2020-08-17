@@ -1778,8 +1778,11 @@ namespace Charaterizator
             }
             else
             {
-                ProcessStop = true;
-                Program.txtlog.WriteLineLog("Поиск прекращен по команде пользователя", 0);
+                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить поиск нажмите 'Нет'", "Поиск поставлен на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    ProcessStop = true;
+                    Program.txtlog.WriteLineLog("Поиск прекращен по команде пользователя", 0);
+                }
             }
         }
 
@@ -2879,7 +2882,7 @@ namespace Charaterizator
                 try
                 {
 
-                    btnCHStart.Text = "Выполняется процесс характеризации ... Отменить?";
+                    btnCHStart.Text = "Выполняется процесс характеризации ... Остановить?";
                     Program.txtlog.WriteLineLog("CH: Старт характеризации!", 2);
                     UpdateItemState(2);
                     if (AutoRegim)
@@ -2920,7 +2923,7 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить характеризацию нажмите 'Нет'", "Характеризация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
@@ -3688,7 +3691,7 @@ namespace Charaterizator
                 try
                 {
 
-                    btnVRParamRead.Text = "Выполняется процесс верификации ... Отменить?";
+                    btnVRParamRead.Text = "Выполняется процесс верификации ... Остановить?";
                     Program.txtlog.WriteLineLog("VR: Старт верификации!", 2);
                     UpdateItemState(6);
                     //ReadSensorPressure();
@@ -3753,7 +3756,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить верификацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                //                if (MessageBox.Show("Отменить верификацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                //                {
+
+                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить верификацию нажмите 'Нет'", "Верификация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
@@ -4952,7 +4958,7 @@ namespace Charaterizator
 
                 try
                 {
-                    btn_MET_Start.Text = "Выполняется опрос датчиков ... Отменить?";
+                    btn_MET_Start.Text = "Выполняется опрос датчиков ... Остановить?";
                     UpdateItemState(10);
                     for (int l = 0; l < lb_MET_PressValue.Items.Count; l++)
                     {
@@ -4972,7 +4978,7 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить операцию нажмите 'Нет'", "Операция поставлена на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET: Операция прекращена пользователем", 0);
