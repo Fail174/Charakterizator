@@ -201,6 +201,7 @@ namespace Charaterizator
                 string strFileNameDB = Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
                 SensorsDB.SetConnectionDB(strFileNameDB);                        // устанавливаем соединение с БД    
 
+                Application.Idle += IdleFunction;
  
 
             }
@@ -219,6 +220,7 @@ namespace Charaterizator
             numMensorPoint.Font = DrawingFont;
             numTermoCameraPoint.Font = DrawingFont;
             dtpClockTimer.Font = DrawingFont;
+            numATMpress.Font = DrawingFont;
             //**********************************************************
 
             UpdateItems();//обновляем списки визуальных элементов
@@ -234,6 +236,15 @@ namespace Charaterizator
             t.Abort();
         }
 
+        private void IdleFunction(Object sender, EventArgs e)
+        {
+            bool ProcessPause = false;
+            while (ProcessPause)
+            {
+                Application.DoEvents();
+
+            }
+        }
 
         public void LoadScreen()
         {
@@ -1930,7 +1941,7 @@ namespace Charaterizator
                 cbSensorPeriodRead.Checked = false;
             }
 
-            tbDateTime.Text = DateTime.Now.ToString("dd.MM.yyyy   HH:mm:ss");//часы
+            tbDateTime.Text = DateTime.Now.ToString("HH:mm:ss  dd.MM.yyyy");//часы
 
             if (!dtpClockTimer.Enabled)//таймер часов
             {
@@ -2076,6 +2087,9 @@ namespace Charaterizator
                 btnMensor.PerformClick();
             }
         }
+
+
+
 
 
 
@@ -3947,426 +3961,183 @@ namespace Charaterizator
 
         private void UpdateItemState(int state)
         {
+            if (state == 0)
+            {
+                gbCommutator.Enabled = true;
+                gbMensor.Enabled = true;
+                gbMultimetr.Enabled = true;
+                gbTermoCamera.Enabled = true;
+                gbBarometr.Enabled = true;
+
+                cbCHlevel.Enabled = true;
+                cbDiapazon1.Enabled = true;
+                cbVRlevel.Enabled = true;
+                cbVRDiapazon1.Enabled = true;
+
+                btnCHPressureSet1.Enabled = true;
+                btnCHTemperatureSet1.Enabled = true;
+                btnVRPressureSet1.Enabled = true;
+                btnVRTemperatureSet1.Enabled = true;
+
+                btnSensorSeach.Enabled = true;
+                btnSensorSeach.BackColor = Color.LightGreen;
+
+                btnCHStart.BackColor = Color.LightGreen;
+                btnCHStart.Enabled = true;
+                btnReadCAP.BackColor = Color.LightGreen;
+                btnReadCAP.Enabled = true;
+                btnCalibrateCurrent.BackColor = Color.LightGreen;
+                btnCalibrateCurrent.Enabled = true;
+                btnCalculateCoeff.BackColor = Color.LightGreen;
+                btnCalculateCoeff.Enabled = true;
+                cbChannalCharakterizator.Enabled = true;
+
+                btnVRParamRead.BackColor = Color.LightGreen;
+                btnVRParamRead.Enabled = true;
+                cbChannalVerification.Enabled = true;
+
+                btnVR_VPI_NPI.BackColor = Color.LightGreen;
+                btnVR_VPI_NPI.Enabled = true;
+
+                btnVR_SetZero.BackColor = Color.LightGreen;
+                btnVR_SetZero.Enabled = true;
+
+                btn_MET_NPI_VPI.BackColor = Color.LightGreen;
+                btn_MET_NPI_VPI.Enabled = true;
+                btn_MET_Start.BackColor = Color.LightGreen;
+                btn_MET_Start.Enabled = true;
+                btn_MET_DTime.BackColor = Color.LightGreen;
+                btn_MET_DTime.Enabled = true;
+                btn_MET_Unit.BackColor = Color.LightGreen;
+                btn_MET_Unit.Enabled = true;
+                btn_MET_SetZero.BackColor = Color.LightGreen;
+                btn_MET_SetZero.Enabled = true;
+
+                btnCalculateDeviation.BackColor = Color.LightGreen;
+                btnCalculateDeviation.Enabled = true;
+
+                SensorBusy = false;
+                ProcessStop = true;
+
+                pbVRProcess.Value = 0;
+                pbCHProcess.Value = 0;
+            }
+            else
+            {
+                gbCommutator.Enabled = false;
+                gbMensor.Enabled = false;
+                gbMultimetr.Enabled = false;
+                gbTermoCamera.Enabled = false;
+                gbBarometr.Enabled = false;
+
+                cbCHlevel.Enabled = false;
+                cbDiapazon1.Enabled = false;
+                cbVRlevel.Enabled = false;
+                cbVRDiapazon1.Enabled = false;
+
+                btnCHPressureSet1.Enabled = false;
+                btnCHTemperatureSet1.Enabled = false;
+                btnVRPressureSet1.Enabled = false;
+                btnVRTemperatureSet1.Enabled = false;
+
+                btnSensorSeach.Enabled = false;
+                btnSensorSeach.BackColor = Color.IndianRed;
+
+                btnCHStart.BackColor = Color.IndianRed;
+                btnCHStart.Enabled = false;
+                btnReadCAP.BackColor = Color.IndianRed;
+                btnReadCAP.Enabled = false;
+                btnCalibrateCurrent.BackColor = Color.IndianRed;
+                btnCalibrateCurrent.Enabled = false;
+                btnCalculateCoeff.BackColor = Color.IndianRed;
+                btnCalculateCoeff.Enabled = false;
+                cbChannalCharakterizator.Enabled = false;
+
+                btnVRParamRead.BackColor = Color.IndianRed;
+                btnVRParamRead.Enabled = false;
+                cbChannalVerification.Enabled = false;
+
+                btnVR_VPI_NPI.BackColor = Color.IndianRed;
+                btnVR_VPI_NPI.Enabled = false;
+
+                btnVR_SetZero.BackColor = Color.IndianRed;
+                btnVR_SetZero.Enabled = false;
+
+                btn_MET_NPI_VPI.BackColor = Color.IndianRed;
+                btn_MET_NPI_VPI.Enabled = false;
+                btn_MET_Start.BackColor = Color.IndianRed;
+                btn_MET_Start.Enabled = false;
+                btn_MET_DTime.BackColor = Color.IndianRed;
+                btn_MET_DTime.Enabled = false;
+                btn_MET_Unit.BackColor = Color.IndianRed;
+                btn_MET_Unit.Enabled = false;
+                btn_MET_SetZero.BackColor = Color.IndianRed;
+                btn_MET_SetZero.Enabled = false;
+
+                btnCalculateDeviation.BackColor = Color.IndianRed;
+                btnCalculateDeviation.Enabled = false;
+
+                SensorBusy = true;
+                ProcessStop = false;
+            }
             switch (state)
             {
-                case 0://исходное состояние
-                    btnSensorSeach.Enabled = true;
-                    btnSensorSeach.BackColor = Color.LightGreen;
-
-                    btnCHStart.BackColor = Color.LightGreen;
-                    btnCHStart.Enabled = true;
-                    btnReadCAP.BackColor = Color.LightGreen;
-                    btnReadCAP.Enabled = true;
-                    btnCalibrateCurrent.BackColor = Color.LightGreen;
-                    btnCalibrateCurrent.Enabled = true;
-                    btnCalculateCoeff.BackColor = Color.LightGreen;
-                    btnCalculateCoeff.Enabled = true;
-                    cbChannalCharakterizator.Enabled = true;
-
-                    btnVRParamRead.BackColor = Color.LightGreen;
-                    btnVRParamRead.Enabled = true;
-                    cbChannalVerification.Enabled = true;
-
-                    btnVR_VPI_NPI.BackColor = Color.LightGreen;
-                    btnVR_VPI_NPI.Enabled = true;
-
-                    btnVR_SetZero.BackColor = Color.LightGreen;
-                    btnVR_SetZero.Enabled = true;
-
-                    btn_MET_NPI_VPI.BackColor = Color.LightGreen;
-                    btn_MET_NPI_VPI.Enabled = true;
-                    btn_MET_Start.BackColor = Color.LightGreen;
-                    btn_MET_Start.Enabled = true;
-                    btn_MET_DTime.BackColor = Color.LightGreen;
-                    btn_MET_DTime.Enabled = true;
-
-                    SensorBusy = false;
-                    ProcessStop = true;
-
-                    pbVRProcess.Value = 0;
-                    pbCHProcess.Value = 0;
-
-                    break;
                 case 1://поиск датчиков
                     btnSensorSeach.Enabled = true;
                     btnSensorSeach.BackColor = Color.LightGreen;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 2://характеризация
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
+                    btnCHStart.BackColor = Color.LightGreen;
                     btnCHStart.Enabled = true;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 3://чтение ЦАП
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
+                    btnReadCAP.BackColor = Color.LightGreen;
                     btnReadCAP.Enabled = true;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 4://калибровка
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
+                    btnCalibrateCurrent.BackColor = Color.LightGreen;
                     btnCalibrateCurrent.Enabled = true;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 5://расчет коэффициентов
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
                     btnCalculateCoeff.BackColor = Color.LightGreen;
                     btnCalculateCoeff.Enabled = true;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 6://верификация
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
+                    btnVRParamRead.BackColor = Color.LightGreen;
                     btnVRParamRead.Enabled = true;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 7://ВПИ НПИ
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
                     btnVR_VPI_NPI.BackColor = Color.LightGreen;
                     btnVR_VPI_NPI.Enabled = true;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.LightGreen;
-                    btn_MET_NPI_VPI.Enabled = true;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 8://Установка нуля
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
+                    btnVR_SetZero.BackColor = Color.LightGreen;
                     btnVR_SetZero.Enabled = true;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 9://расчет коэффициентов
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
                     btnCalculateCoeff.BackColor = Color.LightGreen;
                     btnCalculateCoeff.Enabled =true;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 10://Сдача метрологу
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-
-                    btn_MET_Start.BackColor = Color.IndianRed;
+                    btn_MET_Start.BackColor = Color.LightGreen;
                     btn_MET_Start.Enabled = true;
-                    btn_MET_DTime.BackColor = Color.IndianRed;
-                    btn_MET_DTime.Enabled = false;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
                 case 11://Установка времени демпфирования
-                    btnSensorSeach.Enabled = false;
-                    btnSensorSeach.BackColor = Color.IndianRed;
-
-                    btnCHStart.BackColor = Color.IndianRed;
-                    btnCHStart.Enabled = false;
-                    btnReadCAP.BackColor = Color.IndianRed;
-                    btnReadCAP.Enabled = false;
-                    btnCalibrateCurrent.BackColor = Color.IndianRed;
-                    btnCalibrateCurrent.Enabled = false;
-                    btnCalculateCoeff.BackColor = Color.IndianRed;
-                    btnCalculateCoeff.Enabled = false;
-                    cbChannalCharakterizator.Enabled = false;
-
-                    btnVRParamRead.BackColor = Color.IndianRed;
-                    btnVRParamRead.Enabled = false;
-                    cbChannalVerification.Enabled = false;
-
-                    btnVR_VPI_NPI.BackColor = Color.IndianRed;
-                    btnVR_VPI_NPI.Enabled = false;
-
-                    btnVR_SetZero.BackColor = Color.IndianRed;
-                    btnVR_SetZero.Enabled = false;
-
-                    btn_MET_NPI_VPI.BackColor = Color.IndianRed;
-                    btn_MET_NPI_VPI.Enabled = false;
-
-                    btn_MET_Start.BackColor = Color.IndianRed;
-                    btn_MET_Start.Enabled = false;
-
                     btn_MET_DTime.BackColor = Color.LightGreen;
                     btn_MET_DTime.Enabled = true;
-
-                    SensorBusy = true;
-                    ProcessStop = false;
                     break;
-
-
+                case 12://Установка единиц измерения
+                    btn_MET_Unit.BackColor = Color.LightGreen;
+                    btn_MET_Unit.Enabled = true;
+                    break;
+                case 13://Установка нуля
+                    btn_MET_SetZero.BackColor = Color.LightGreen;
+                    btn_MET_SetZero.Enabled = true;
+                    break;
+                case 14://НПи ВПИ
+                    btn_MET_NPI_VPI.BackColor = Color.LightGreen;
+                    btn_MET_NPI_VPI.Enabled = true;
+                    break;
             }
         }
 
@@ -4598,7 +4369,7 @@ namespace Charaterizator
                 try
                 {
                     btn_MET_NPI_VPI.Text = "Отменить";
-                    UpdateItemState(7);
+                    UpdateItemState(14);
                     WriteSensor_MET_VPI_NPI();
                 }
                 finally
@@ -4731,8 +4502,8 @@ namespace Charaterizator
 
                 try
                 {
-                    btn_MET_SetZero.Text = "Отменить";
-                    UpdateItemState(8);
+                    btn_MET_SetZero.Text = "Остановить";
+                    UpdateItemState(13);
                     MET_SetZero();
                 }
                 finally
@@ -4743,7 +4514,7 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Отменить обнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
@@ -5405,13 +5176,13 @@ namespace Charaterizator
 
                 try
                 {
-                    //btn_MET_NPI_VPI.Text = "Отменить";
-                    UpdateItemState(7);
+                    btn_MET_Unit.Text = "Остановить";
+                    UpdateItemState(12);
                     WriteSensor_MET_MesUnit();
                 }
                 finally
                 {
-                    //btn_MET_NPI_VPI.Text = "Задать";
+                    btn_MET_Unit.Text = "Задать";
                     UpdateItemState(0);
                 }
             }
