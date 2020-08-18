@@ -1771,7 +1771,7 @@ namespace Charaterizator
                     }
                     if (i < MaxChannalCount)
                     {
-                        btnSensorSeach.Text = "Идет поиск датчиков... Остановить! ";
+                        btnSensorSeach.Text = "Идет поиск датчиков... Остановить? ";
                         
                         UpdateItemState(1);
                         SeachConnectedSensor();
@@ -1789,7 +1789,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить поиск нажмите 'Нет'", "Поиск поставлен на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+//                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить поиск нажмите 'Нет'", "Поиск поставлен на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("Поиск прекращен по команде пользователя", 0);
@@ -2937,7 +2939,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить характеризацию нажмите 'Нет'", "Характеризация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+//                    if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить характеризацию нажмите 'Нет'", "Характеризация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
@@ -3218,7 +3222,7 @@ namespace Charaterizator
                 {
                     try
                     {
-                        btnReadCAP.Text = "Выполняется процесс чтения ЦАП... Отменить?";
+                        btnReadCAP.Text = "Выполняется процесс чтения ЦАП... Остановить?";
                         UpdateItemState(3);
                         ReadSensorCurrent();
 
@@ -3236,7 +3240,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+//                    if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
@@ -3264,7 +3270,7 @@ namespace Charaterizator
                 }
                 try
                 {
-                    btnCalibrateCurrent.Text = "Выполняется калибровка... Отменить?";
+                    btnCalibrateCurrent.Text = "Выполняется калибровка... Остановить?";
                     UpdateItemState(4);
                     SensorCalibration();
                 }
@@ -3276,7 +3282,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+
+//                    if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
@@ -3770,10 +3779,9 @@ namespace Charaterizator
             }
             else
             {
-                //                if (MessageBox.Show("Отменить верификацию датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                //                {
-
-                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить верификацию нажмите 'Нет'", "Верификация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+//                    if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить верификацию нажмите 'Нет'", "Верификация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
@@ -4163,7 +4171,7 @@ namespace Charaterizator
                 //                {
                 try
                 {
-                    btnCalculateCoeff.Text = "Выполняется расчет и запись коэффициентов ... Отменить?";
+                    btnCalculateCoeff.Text = "Выполняется расчет и запись коэффициентов ... Остановить?";
                     UpdateItemState(9);
                     СaclSensorCoeff();
                 }
@@ -4184,7 +4192,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+
+//                    if (MessageBox.Show("Отменить текущую операцию?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("CH: Операция прекращена пользователем", 0);
@@ -4211,7 +4222,7 @@ namespace Charaterizator
 
                 try
                 {
-                    btnVR_VPI_NPI.Text = "Отменить";
+                    btnVR_VPI_NPI.Text = "Остановить";
                     UpdateItemState(7);
                     WriteSensorVPI_NPI();
                 }
@@ -4223,7 +4234,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить запись ВПИ НПИ датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+
+//                    if (MessageBox.Show("Отменить запись ВПИ НПИ датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
@@ -4250,19 +4264,21 @@ namespace Charaterizator
 
                 try
                 {
-                    btnVR_SetZero.Text = "Отменить";
+                    btnVR_SetZero.Text = "Остановить";
                     UpdateItemState(8);
                     SetZero();
                 }
                 finally
                 {
-                    btnVR_SetZero.Text = "Обнулить";
+                    btnVR_SetZero.Text = "Установка нуля";
                     UpdateItemState(0);
                 }
             }
             else
             {
-                if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+//                    if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
@@ -4368,7 +4384,7 @@ namespace Charaterizator
 
                 try
                 {
-                    btn_MET_NPI_VPI.Text = "Отменить";
+                    btn_MET_NPI_VPI.Text = "Остановить";
                     UpdateItemState(14);
                     WriteSensor_MET_VPI_NPI();
                 }
@@ -4380,7 +4396,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить запись ВПИ НПИ датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+//                    if (MessageBox.Show("Отменить запись ВПИ НПИ датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
@@ -4397,7 +4415,7 @@ namespace Charaterizator
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
             string unitstr = cb_MET_Unit.Text;
 
-            Program.txtlog.WriteLineLog("MET: Старт записи единиы измерения для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Старт записи единицы измерения для выбранных датчиков ... ", 2);
             pbMETProcess.Maximum = FinishNumber - StartNumber;
             pbMETProcess.Minimum = 0;
             pbMETProcess.Value = 0;
@@ -4514,7 +4532,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить обнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+
+                //                if (MessageBox.Show("Отменить обнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
@@ -4703,7 +4724,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Остановить установку времени демпфирования датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+
+                //                if (MessageBox.Show("Остановить установку времени демпфирования датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
@@ -4749,7 +4773,10 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить операцию нажмите 'Нет'", "Операция поставлена на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+
+                //if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить операцию нажмите 'Нет'", "Операция поставлена на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET: Операция прекращена пользователем", 0);
@@ -5188,7 +5215,9 @@ namespace Charaterizator
             }
             else
             {
-                if (MessageBox.Show("Отменить установку единицы измерения датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                FormPause formpause = new FormPause();
+                if (formpause.ShowDialog() != DialogResult.OK)
+                //if (MessageBox.Show("Отменить установку единицы измерения датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
