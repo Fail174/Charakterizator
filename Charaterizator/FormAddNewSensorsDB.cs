@@ -16,16 +16,19 @@ namespace Charaterizator
         public FormAddNewSensorsDB()
         {
             InitializeComponent();
-            string[] split = FormSensorsDB.SensNameList.Split('$');
-            for (int j = 0; j < split.Length - 1; j++)
+            if (FormSensorsDB.SensNameList !=  null)
             {
-                cbSetSensName.Items.Add(split[j]);
-            }
-            if (cbSetSensName.Items.Count > 0)
-            {
-                cbSetSensName.SelectedIndex = cbSetSensName.FindString(Charaterizator.MainForm.SensorsDB.selType);          
-            }
-
+                string[] split = FormSensorsDB.SensNameList.Split('$');
+                for (int j = 0; j < split.Length - 1; j++)
+                {
+                    cbSetSensName.Items.Add(split[j]);
+                }
+                if (cbSetSensName.Items.Count > 0)
+                {
+                    cbSetSensName.SelectedIndex = cbSetSensName.FindString(Charaterizator.MainForm.SensorsDB.selType);
+                }
+            } 
+            
         }
 
 
