@@ -39,7 +39,8 @@ namespace Charaterizator
         {
             get
             {
-                return StateCHPower1+(StateCHPower2 >> 32);
+                Int64 tmp = StateCHPower2;
+                return StateCHPower1+(tmp << 30);
   //              return StateCHPower1 ;
             }
             
@@ -51,13 +52,14 @@ namespace Charaterizator
 
         }
 
-        Int32 StateCH1 = 0;          // Измерительная цепь
-        Int32 StateCH2 = 0;          // Измерительная цепь
+        Int32 StateCH1 = 0;          // Измерительная цепь 0-29
+        Int32 StateCH2 = 0;          // Измерительная цепь 30-59
         public Int64 _StateCH
         {
             get
             {
-                return  StateCH1 + (StateCH2>>32);
+                Int64 tmp = StateCH2;
+                return  StateCH1 + (tmp<<30);
             }
             
             set
@@ -268,6 +270,8 @@ namespace Charaterizator
         // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
         public int SetPower(Int32 CH, int mode)
         {
+            if (!serialPort1.IsOpen) return -1;
+
             Int32 _CH;
             bool hi_addr=false;
             if (CH >= 30) {
@@ -279,17 +283,15 @@ namespace Charaterizator
                 hi_addr = false;
             }
 
-            if (!serialPort1.IsOpen) return -1;
-
             byte[] indata = new byte[10];
 
             if (mode == 0)
             {
-                
+
                 if (hi_addr)
                 {
                     _CH = (1 << CH) | StateCHPower2;
-                    serialPort1.Write(WriteHoldingRegister(0, _CH, hi_addr), 0, 9);
+                    serialPort1.Write(WriteHoldingRegister(0, _CH, true), 0, 9);
                     Thread.Sleep(READ_PAUSE);
 
                     serialPort1.Read(indata, 0, 10);
@@ -297,16 +299,16 @@ namespace Charaterizator
                 }
                 else
                 {
-                    StateCHPower2 = 0;
+                    //StateCHPower2 = 0;
+
+                    _CH = (1 << CH) | StateCHPower1;
+                    serialPort1.Write(WriteHoldingRegister(0, _CH, false), 0, 9);
+                    Thread.Sleep(READ_PAUSE);
+
+                    serialPort1.Read(indata, 0, 10);
+                    StateCHPower1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                    SetState(StateCHPower1, StateCH1);
                 }
-                _CH = (1 << CH) | StateCHPower1;
-                serialPort1.Write(WriteHoldingRegister(0, _CH, hi_addr), 0, 9);
-                Thread.Sleep(READ_PAUSE);
-
-                serialPort1.Read(indata, 0, 10);
-                StateCHPower1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                SetState(StateCHPower1, StateCH1);
-
             }
             else
             {
@@ -316,21 +318,22 @@ namespace Charaterizator
                 if (hi_addr)
                 {
                     _CH = StateCHPower2 & CH;
-                    serialPort1.Write(WriteHoldingRegister(0, _CH, hi_addr), 0, 9);
+                    serialPort1.Write(WriteHoldingRegister(0, _CH, true), 0, 9);
                     Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
                     StateCHPower2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                 }
                 else
                 {
-                    StateCHPower2 = 0;
+                    //StateCHPower2 = 0;
+
+                    _CH = StateCHPower1 & CH;
+                    serialPort1.Write(WriteHoldingRegister(0, _CH, false), 0, 9);
+                    Thread.Sleep(READ_PAUSE);
+                    serialPort1.Read(indata, 0, 10);
+                    StateCHPower1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                    SetState(StateCHPower1, StateCH1);
                 }
-                _CH = StateCHPower1 & CH;
-                serialPort1.Write(WriteHoldingRegister(0, _CH, hi_addr), 0, 9);
-                Thread.Sleep(READ_PAUSE);
-                serialPort1.Read(indata, 0, 10);
-                StateCHPower1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                SetState(StateCHPower1, StateCH1);
             }
 
 
@@ -419,13 +422,23 @@ namespace Charaterizator
             {
                 // если датчик не подключен, отключам все, подключаем текущий, отключаем все
                 case 0:
-                    serialPort1.Write(WriteHoldingRegister(1, 0, hi_addr), 0, 9);
+                    byte[] data = WriteHoldingRegister(1, 0, false);
+                    serialPort1.Write(data, 0, 9);
                     Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
                     Thread.Sleep(READ_PAUSE);
 
+                    data = WriteHoldingRegister(1, 0, true);
+                    serialPort1.Write(data, 0, 9);
+                    Thread.Sleep(READ_PAUSE);
+                    serialPort1.Read(indata, 0, 10);
+                    Thread.Sleep(READ_PAUSE);
+                    StateCH1 = 0;
+                    StateCH2 = 0;
+
                     _CH = (1 << CH);
-                    serialPort1.Write(WriteHoldingRegister(1, _CH, hi_addr), 0, 9);
+                    data = WriteHoldingRegister(1, _CH, hi_addr);
+                    serialPort1.Write(data, 0, 9);
                     Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
 
@@ -436,13 +449,11 @@ namespace Charaterizator
                     }
                     else
                     {
-                        StateCH2 = 0;
+                        StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState(StateCHPower1, StateCH1);
                     }
-                    StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                    SetState(StateCHPower1, StateCH1);
 
-                   
-                   
+                
                     break;
 
                 // если датчик уже подключен, то отключаем его и все остальные
@@ -456,10 +467,10 @@ namespace Charaterizator
                     }
                     else
                     {
-                        StateCH2 = 0;
+                        StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState(StateCHPower1, StateCH1);
                     }
-                    StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                    SetState(StateCHPower1, StateCH1);
+
                     break;
 
                 //режим подключения нескольких датчиков датчиков, подключаем заданный к измерительной петле
@@ -476,14 +487,13 @@ namespace Charaterizator
                         }
                         else
                         {
-                            StateCH2 = 0;
+                            _CH = (1 << CH) | StateCH1;
+                            serialPort1.Write(WriteHoldingRegister(1, _CH, hi_addr), 0, 9);
+                            Thread.Sleep(READ_PAUSE);
+                            serialPort1.Read(indata, 0, 10);
+                            StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                            SetState(StateCHPower1, StateCH1);
                         }
-                        _CH = (1 << CH) | StateCH1;
-                        serialPort1.Write(WriteHoldingRegister(1, _CH, hi_addr), 0, 9);
-                        Thread.Sleep(READ_PAUSE);
-                        serialPort1.Read(indata, 0, 10);
-                        StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                        SetState(StateCHPower1, StateCH1);
                     }
                   
                     break;
@@ -502,14 +512,14 @@ namespace Charaterizator
                     }
                     else
                     {
-                        StateCH2 = 0;
+                        _CH = StateCH1 & CH;
+                        serialPort1.Write(WriteHoldingRegister(1, _CH, hi_addr), 0, 9);
+                        Thread.Sleep(READ_PAUSE);
+                        serialPort1.Read(indata, 0, 10);
+                        StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState(StateCHPower1, StateCH1);
                     }
-                    _CH = StateCH1 & CH;
-                    serialPort1.Write(WriteHoldingRegister(1, _CH, hi_addr), 0, 9);
-                    Thread.Sleep(READ_PAUSE);
-                    serialPort1.Read(indata, 0, 10);
-                    StateCH1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
-                    SetState(StateCHPower1, StateCH1);
+
                     break;
 
                 default:

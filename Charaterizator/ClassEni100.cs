@@ -356,12 +356,21 @@ namespace Charaterizator
             if((port != null)&&(SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
-
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x00, 0x00, 0x82 };
+                int i;
+                sensor.pre = 7;
+                byte[] data = new byte[sensor.pre + 5];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x00;
+                data[i + 3] = 0x00;
+//  data[i + 4] = 0x82;
+                //byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x00, 0x00, 0x82 };
 
                 //поиск производим только по 0му адресу 30.10.2019
                 SelSensorChannal = ch;
-                data[data.Length - 1] = GetCRC(data, 5);
+                data[data.Length - 1] = GetCRC(data, sensor.pre);
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
@@ -380,9 +389,18 @@ namespace Charaterizator
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 5];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x0D;
+                data[i + 3] = 0x00;
 
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0D, 0x00, 0x8F };
-                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+               // byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0D, 0x00, 0x8F };
+
+               // data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
@@ -402,10 +420,15 @@ namespace Charaterizator
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
-
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0E, 0x00, 0x8C };
-                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
-                data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
+                int i;
+                byte[] data = new byte[sensor.pre + 5];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x0E;
+                data[i + 3] = 0x00;
+                data[i + 4] = GetCRC(data, sensor.pre);//CRC
 //                data[9] = (byte)(data[9] + sensor.Addr);
 
                 for (int j = 0; j < WRITE_COUNT; j++)
@@ -428,10 +451,15 @@ namespace Charaterizator
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
-
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x03, 0x00, 0x00 };
-                data[sensor.pre+1] = (byte)(0x80 | sensor.Addr);
-                data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
+                int i;
+                byte[] data = new byte[sensor.pre + 5];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x03;
+                data[i + 3] = 0x00;
+                data[i + 4] = GetCRC(data, sensor.pre);//CRC
                 for (j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
@@ -451,9 +479,14 @@ namespace Charaterizator
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
-
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0x0E, 0x00, 0x8C };
-                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+                int i;
+                byte[] data = new byte[sensor.pre + 5];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x0E;
+                data[i + 3] = 0x00;
                 data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
@@ -472,16 +505,29 @@ namespace Charaterizator
             if ((port != null) && (SensorConnect))
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 11];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0xF5;
+                data[i + 3] = 0x06;
+                data[i + 4] = 0x41;
+                data[i + 5] = 0x73;
+                data[i + 6] = 0x62;
+                data[i + 7] = 0x4D;
+                data[i + 8] = 0x6B;
+                data[i + 9] = 0x39;
+                //byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0xF5, 0x06, 0x41, 0x73, 0x62, 0x4D, 0x6B, 0x39, 0x00};
 
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0xF5, 0x06, 0x41, 0x73, 0x62, 0x4D, 0x6B, 0x39, 0x00};
-
-                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
-                data[data.Length-1] = GetCRC(data, sensor.pre);//CRC
+                //data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 10] = GetCRC(data, sensor.pre);//CRC
 
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
-                    port.Write(data, 0, 16);
+                    port.Write(data, 0, data.Length);
                     WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
@@ -497,32 +543,33 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
-                byte[] data = new byte[23];
-                for(i=0;i< sensor.pre; i++) data[i] = 0xFF;
+                byte[] data = new byte[sensor.pre + 18];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
                 data[i] = 0x02;
-                data[i+1] = (byte)(0x80 | sensor.Addr);
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i+2] = 0xF9;
                 data[i+3] = 0x0D;
 
-                data[9] = sensor.MesUnit;
+                data[i+4] = sensor.MesUnit;
                 UInt32 tmp;
                 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.UpLevel),0);
-                data[10] = (byte)((tmp >> 24)&0xFF);
-                data[11] = (byte)((tmp >> 16) & 0xFF);
-                data[12] = (byte)((tmp >> 8) & 0xFF);
-                data[13] = (byte)(tmp & 0xFF);
+                data[i + 5] = (byte)((tmp >> 24)&0xFF);
+                data[i + 6] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 7] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 8] = (byte)(tmp & 0xFF);
                 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.DownLevel), 0);
-                data[14] = (byte)((tmp >> 24) & 0xFF);
-                data[15] = (byte)((tmp >> 16) & 0xFF);
-                data[16] = (byte)((tmp >> 8) & 0xFF);
-                data[17] = (byte)(tmp & 0xFF);
+                data[i + 9] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 10] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 11] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 12] = (byte)(tmp & 0xFF);
                 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.MinLevel), 0);
-                data[18] = (byte)((tmp >> 24) & 0xFF);
-                data[19] = (byte)((tmp >> 16) & 0xFF);
-                data[20] = (byte)((tmp >> 8) & 0xFF);
-                data[21] = (byte)(tmp & 0xFF);
+                data[i + 13] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 14] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 15] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 16] = (byte)(tmp & 0xFF);
 
-                data[22] = GetCRC(data,sensor.pre);//CRC
+                data[i + 17] = GetCRC(data,sensor.pre);//CRC
 
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
@@ -828,7 +875,7 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
-                byte[] data = new byte[13];
+                byte[] data = new byte[sensor.pre+8];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
@@ -858,7 +905,7 @@ namespace Charaterizator
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 int i;
-                byte[] data = new byte[16];
+                byte[] data = new byte[sensor.pre+11];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
@@ -870,7 +917,7 @@ namespace Charaterizator
                     data[i + 5 + j] = Convert.ToByte(sensor.PressureModel[j]);
                 }
 
-                data[15] = GetCRC(data, sensor.pre);//CRC
+                data[data.Length-1] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
@@ -890,13 +937,13 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
-                byte[] data = new byte[10];
+                byte[] data = new byte[sensor.pre+5];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0x8C;
                 data[i + 3] = 0x00;
-                data[9] = GetCRC(data, sensor.pre);//CRC
+                data[i+4] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
@@ -994,7 +1041,11 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
-                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0xFB, 0x01, 0x00, 0x00 };
+//                byte[] data = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, 0x80, 0xFB, 0x01, 0x00, 0x00 };
+
+                byte[] data = new byte[sensor.pre + 6];
+                for (int i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[sensor.pre] = 0x02;
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
                 for (int i = 0; i <= 5; i++)
                 {
@@ -1049,7 +1100,7 @@ namespace Charaterizator
 
                 int i;
                 byte[] data = new byte[11];
-                for (i = 0; i < 5; i++) data[i] = 0xFF;
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0x81;
@@ -1085,8 +1136,8 @@ namespace Charaterizator
             while (readbuf.Count > 0)
             {
                 Application.DoEvents();
-                if (Program.mainwnd != null)
-                    if (Program.mainwnd.ProcessStop) return -10;
+                //if (Program.mainwnd != null)
+                //    if (Program.mainwnd.ProcessStop) return -10;
 
                 switch (ReadAvtState)//автомат
                 {
@@ -1114,8 +1165,8 @@ namespace Charaterizator
                             }
                             else
                             {
-                                if (Program.txtlog != null)
-                                    Program.txtlog.WriteLineLog("HART:Не обнаружены преамбула 0xFF. Cчитанные данные: " + indata[0], 1);
+                               /* if (Program.txtlog != null)
+                                    Program.txtlog.WriteLineLog("HART:Не обнаружены преамбула 0xFF. Cчитанные данные: " + indata[0], 1);*/
                             }
                         }
                         break;
@@ -1584,7 +1635,7 @@ namespace Charaterizator
 
                 id.devCode = indata[3];
                 id.devType = indata[4];
-                id.pre = indata[5];
+                id.pre = 7;// indata[5];
                 id.v1 = indata[6];
                 id.v2 = indata[7];
                 id.v3 = indata[8];

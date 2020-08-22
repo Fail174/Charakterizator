@@ -30,8 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("50");
             System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "0",
             "С"}, -1);
@@ -56,14 +64,6 @@
             "С"}, -1);
             System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("20");
             System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("50");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
-            "0",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
-            "10",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("20");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("50");
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -318,6 +318,7 @@
             this.btn_MET_DTime = new System.Windows.Forms.Button();
             this.nud_MET_DTime = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label34 = new System.Windows.Forms.Label();
             this.btn_MET_Unit = new System.Windows.Forms.Button();
             this.btn_MET_Down = new System.Windows.Forms.Button();
             this.btn_MET_Up = new System.Windows.Forms.Button();
@@ -350,7 +351,6 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.label34 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -707,14 +707,14 @@
             // tsMenuItemAbout
             // 
             this.tsMenuItemAbout.Name = "tsMenuItemAbout";
-            this.tsMenuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.tsMenuItemAbout.Size = new System.Drawing.Size(149, 22);
             this.tsMenuItemAbout.Text = "О программе";
             this.tsMenuItemAbout.Click += new System.EventHandler(this.tsMenuItemAbout_Click);
             // 
             // помощьToolStripMenuItem
             // 
             this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.помощьToolStripMenuItem.Text = "Помощь";
             // 
             // panel1
@@ -1835,8 +1835,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1878,10 +1878,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle10.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -2559,9 +2559,9 @@
             // 
             this.btnCHPressureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnCHPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHPressureSet1.Location = new System.Drawing.Point(130, 264);
+            this.btnCHPressureSet1.Location = new System.Drawing.Point(130, 258);
             this.btnCHPressureSet1.Name = "btnCHPressureSet1";
-            this.btnCHPressureSet1.Size = new System.Drawing.Size(102, 25);
+            this.btnCHPressureSet1.Size = new System.Drawing.Size(102, 31);
             this.btnCHPressureSet1.TabIndex = 7;
             this.btnCHPressureSet1.Tag = "1";
             this.btnCHPressureSet1.Text = "Установить";
@@ -2579,17 +2579,17 @@
             this.lvCHPressureSet.GridLines = true;
             this.lvCHPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCHPressureSet.HideSelection = false;
-            listViewItem5.Checked = true;
-            listViewItem5.StateImageIndex = 1;
-            listViewItem6.Checked = true;
-            listViewItem6.StateImageIndex = 1;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.StateImageIndex = 0;
+            listViewItem1.Checked = true;
+            listViewItem1.StateImageIndex = 1;
+            listViewItem2.Checked = true;
+            listViewItem2.StateImageIndex = 1;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
             this.lvCHPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.lvCHPressureSet.LabelEdit = true;
             this.lvCHPressureSet.Location = new System.Drawing.Point(130, 106);
             this.lvCHPressureSet.MultiSelect = false;
@@ -2644,19 +2644,19 @@
             this.lvCHTermoCamera.GridLines = true;
             this.lvCHTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCHTermoCamera.HideSelection = false;
-            listViewItem9.Checked = true;
-            listViewItem9.StateImageIndex = 1;
-            listViewItem10.Checked = true;
-            listViewItem10.StateImageIndex = 1;
-            listViewItem11.Checked = true;
-            listViewItem11.StateImageIndex = 1;
-            listViewItem12.Checked = true;
-            listViewItem12.StateImageIndex = 1;
+            listViewItem5.Checked = true;
+            listViewItem5.StateImageIndex = 1;
+            listViewItem6.Checked = true;
+            listViewItem6.StateImageIndex = 1;
+            listViewItem7.Checked = true;
+            listViewItem7.StateImageIndex = 1;
+            listViewItem8.Checked = true;
+            listViewItem8.StateImageIndex = 1;
             this.lvCHTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.lvCHTermoCamera.LabelEdit = true;
             this.lvCHTermoCamera.Location = new System.Drawing.Point(6, 106);
             this.lvCHTermoCamera.MultiSelect = false;
@@ -2703,9 +2703,9 @@
             // 
             this.btnCHTemperatureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnCHTemperatureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCHTemperatureSet1.Location = new System.Drawing.Point(6, 264);
+            this.btnCHTemperatureSet1.Location = new System.Drawing.Point(6, 258);
             this.btnCHTemperatureSet1.Name = "btnCHTemperatureSet1";
-            this.btnCHTemperatureSet1.Size = new System.Drawing.Size(104, 25);
+            this.btnCHTemperatureSet1.Size = new System.Drawing.Size(104, 31);
             this.btnCHTemperatureSet1.TabIndex = 5;
             this.btnCHTemperatureSet1.Tag = "1";
             this.btnCHTemperatureSet1.Text = "Установить";
@@ -2767,9 +2767,9 @@
             // 
             this.btnVRPressureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnVRPressureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRPressureSet1.Location = new System.Drawing.Point(130, 266);
+            this.btnVRPressureSet1.Location = new System.Drawing.Point(130, 258);
             this.btnVRPressureSet1.Name = "btnVRPressureSet1";
-            this.btnVRPressureSet1.Size = new System.Drawing.Size(104, 25);
+            this.btnVRPressureSet1.Size = new System.Drawing.Size(104, 33);
             this.btnVRPressureSet1.TabIndex = 7;
             this.btnVRPressureSet1.Tag = "1";
             this.btnVRPressureSet1.Text = "Установить";
@@ -2805,9 +2805,9 @@
             // 
             this.btnVRTemperatureSet1.BackColor = System.Drawing.Color.LightGreen;
             this.btnVRTemperatureSet1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnVRTemperatureSet1.Location = new System.Drawing.Point(6, 266);
+            this.btnVRTemperatureSet1.Location = new System.Drawing.Point(6, 258);
             this.btnVRTemperatureSet1.Name = "btnVRTemperatureSet1";
-            this.btnVRTemperatureSet1.Size = new System.Drawing.Size(104, 25);
+            this.btnVRTemperatureSet1.Size = new System.Drawing.Size(104, 33);
             this.btnVRTemperatureSet1.TabIndex = 5;
             this.btnVRTemperatureSet1.Tag = "1";
             this.btnVRTemperatureSet1.Text = "Установить";
@@ -2834,17 +2834,17 @@
             this.lvVRPressureSet.GridLines = true;
             this.lvVRPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvVRPressureSet.HideSelection = false;
-            listViewItem13.Checked = true;
-            listViewItem13.StateImageIndex = 1;
-            listViewItem14.Checked = true;
-            listViewItem14.StateImageIndex = 1;
-            listViewItem15.StateImageIndex = 0;
-            listViewItem16.StateImageIndex = 0;
+            listViewItem9.Checked = true;
+            listViewItem9.StateImageIndex = 1;
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 1;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
             this.lvVRPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.lvVRPressureSet.LabelEdit = true;
             this.lvVRPressureSet.Location = new System.Drawing.Point(130, 106);
             this.lvVRPressureSet.MultiSelect = false;
@@ -2899,19 +2899,19 @@
             this.lvVRTermoCamera.GridLines = true;
             this.lvVRTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvVRTermoCamera.HideSelection = false;
-            listViewItem17.Checked = true;
-            listViewItem17.StateImageIndex = 1;
-            listViewItem18.Checked = true;
-            listViewItem18.StateImageIndex = 1;
-            listViewItem19.Checked = true;
-            listViewItem19.StateImageIndex = 1;
-            listViewItem20.Checked = true;
-            listViewItem20.StateImageIndex = 1;
+            listViewItem13.Checked = true;
+            listViewItem13.StateImageIndex = 1;
+            listViewItem14.Checked = true;
+            listViewItem14.StateImageIndex = 1;
+            listViewItem15.Checked = true;
+            listViewItem15.StateImageIndex = 1;
+            listViewItem16.Checked = true;
+            listViewItem16.StateImageIndex = 1;
             this.lvVRTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20});
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16});
             this.lvVRTermoCamera.LabelEdit = true;
             this.lvVRTermoCamera.Location = new System.Drawing.Point(6, 106);
             this.lvVRTermoCamera.MultiSelect = false;
@@ -3232,6 +3232,15 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Установка ряда давлений";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(7, 62);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(91, 13);
+            this.label34.TabIndex = 8;
+            this.label34.Text = "Точки давления:";
             // 
             // btn_MET_Unit
             // 
@@ -3606,15 +3615,6 @@
             this.splitter2.Size = new System.Drawing.Size(1138, 3);
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(7, 62);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(91, 13);
-            this.label34.TabIndex = 8;
-            this.label34.Text = "Точки давления:";
             // 
             // MainForm
             // 

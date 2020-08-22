@@ -2914,8 +2914,11 @@ namespace Charaterizator
                         {
                             for (i = 0; i < lvCHPressureSet.Items.Count; i++)
                             {
+                                if (ProcessStop) break;//прекращаем 
                                 lvCHPressureSet.Items[i].Selected = true;
-                                btnCHPressureSet1.PerformClick();
+                                btnCHPressureSet1_Click(null,null);
+                                //btnCHPressureSet1.PerformClick();
+                                //Application.DoEvents();
                                 ReadSensorParametrs();
                             }
                             bMensorControl.PerformClick();
@@ -3513,6 +3516,7 @@ namespace Charaterizator
                     string SelectModel = new String(sensors.sensorList[0].PressureModel);
                     string SelectType = sensors.sensorList[0].GetdevType();
                     string field = "";
+                    string SensParam;
                     if (cbDiapazon1.SelectedIndex == 0)
                     {
                         field = "HarPressPoint1";
@@ -3524,11 +3528,11 @@ namespace Charaterizator
 
                     if (field != "")
                     {
-                        string SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, field); // функция запроса данных из БД по номеру модели и параметру
+                        SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, field); // функция запроса данных из БД по номеру модели и параметру
                         if (SensParam != null)
                         {
                             string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            for (int i = 0; i < SPcmbox.Length - 1; i++)
+                            for (int i = 0; i < SPcmbox.Length; i++)
                             {
                                 ListViewItem item = new ListViewItem(SPcmbox[i]);
                                 lvCHPressureSet.Items.Add(item);
@@ -3542,6 +3546,21 @@ namespace Charaterizator
                     else
                     {
                         Program.txtlog.WriteLineLog("CH: Не задан диапазон характеризации", 1);
+                    }
+
+                    SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, "HarTempPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                    if (SensParam != null)
+                    {
+                        string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        for (int i = 0; i < SPcmbox.Length; i++)
+                        {
+                            ListViewItem item = new ListViewItem(SPcmbox[i]);
+                            lvCHTermoCamera.Items.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("CH: Точки давления из базы данных не загружены!", 1);
                     }
                 }
                 else
@@ -3737,7 +3756,8 @@ namespace Charaterizator
                                 // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
                                 if ((!UseMensor) && (cbVRDiapazon1.Items.Count > 0))
                                 {
-                                    cbMensorTypeR.SelectedIndex = numPascaleModule;
+                                    if(cbMensorTypeR.Items.Count>= numPascaleModule)
+                                        cbMensorTypeR.SelectedIndex = numPascaleModule;
                                     //Pascal.rangeModule = numPascaleModule;
                                     Application.DoEvents();
                                 }
@@ -3750,8 +3770,10 @@ namespace Charaterizator
 
                             for (i = 0; i < lvVRPressureSet.Items.Count; i++)
                             {
+                                if (ProcessStop) break;//прекращаем 
                                 lvVRPressureSet.Items[i].Selected = true;
-                                btnVRPressureSet1.PerformClick();
+                                btnVRPressureSet1_Click(null,null);
+                                //btnVRPressureSet1.PerformClick();
                                 ReadSensorPressure();
                             }
                             bMensorControl.PerformClick();
@@ -3795,8 +3817,8 @@ namespace Charaterizator
         {
             if (SensorsDB._сonnection.State == System.Data.ConnectionState.Open)
             {
-                lvCHPressureSet.Items.Clear();
-                lvCHTermoCamera.Items.Clear();
+                lvVRPressureSet.Items.Clear();
+                lvVRTermoCamera.Items.Clear();
 
                 if (sensors.sensorList.Count > 0)
                 {
@@ -3825,7 +3847,7 @@ namespace Charaterizator
                         if (SensParam != null)
                         {
                             string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            for (int i = 0; i < SPcmbox.Length - 1; i++)
+                            for (int i = 0; i < SPcmbox.Length; i++)
                             {
                                 ListViewItem item = new ListViewItem(SPcmbox[i]);
                                 lvVRPressureSet.Items.Add(item);
@@ -3844,6 +3866,16 @@ namespace Charaterizator
                         else
                         {
                             Program.txtlog.WriteLineLog("VR: Точки давления из базы данных не загружены!", 1);
+                        }
+                        SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, "VerTempPoint1"); // функция запроса данных из БД по номеру модели и параметру
+                        if (SensParam != null)
+                        {
+                            string[] SPcmbox = SensParam.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            for (int i = 0; i < SPcmbox.Length; i++)
+                            {
+                                ListViewItem item = new ListViewItem(SPcmbox[i]);
+                                lvVRTermoCamera.Items.Add(item);
+                            }
                         }
                     }
                     else
