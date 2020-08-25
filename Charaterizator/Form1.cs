@@ -524,6 +524,11 @@ namespace Charaterizator
                     //cbMensorTypeR.Items.Clear();
                     cbMensorTypeR.DataSource = Mensor.ListMod;
                     bMensorMeas.Name = "Измерение";
+
+                    // Устанавливаем состояние барометра подключен 
+                    bBarometr.BackColor = Color.Green;
+                    bBarometr.Text = "Подключен";
+
                 }
                 else
                 {
@@ -533,6 +538,9 @@ namespace Charaterizator
                     //cbMensorTypeR.Items.Clear();
                     cbMensorTypeR.DataSource = Mensor.ListMod;
 
+                    // Устанавливаем состояние барометра Отключен 
+                    bBarometr.BackColor = Color.IndianRed;
+                    bBarometr.Text = "Не подключен";
                 }
 
             }
@@ -1769,6 +1777,7 @@ namespace Charaterizator
                         if (CheckChannalEnable(i)) //Есть выбранные каналы?
                             break;
                     }
+
                     if (i < MaxChannalCount)
                     {
                         btnSensorSeach.Text = "Идет поиск датчиков... Остановить? ";
@@ -2036,6 +2045,10 @@ namespace Charaterizator
 
                 // Получаем тек. значение уставки  и обновляем гл. форму
                 //numMensorPoint.Text = Mensor._point.ToString("f2");
+
+                // Получаем и выводим на форму давление встроенного барометра Менсора
+                numATMpress.Value = Convert.ToDecimal(Mensor._barometr);
+
 
                 // Получаем тип преобразователя (удерживаемый диапазон)
                 int typeR = Mensor._typeR;  // 0-Д1П1,  1-Д2П1,  2-AutoRange 
