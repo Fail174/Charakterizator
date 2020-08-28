@@ -296,9 +296,9 @@
             this.cmsVRTemperature = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmVRDelTemperItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmVRAddTemperItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnVR_SetZero = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnVR_VPI_NPI = new System.Windows.Forms.Button();
+            this.btnVR_SetZero = new System.Windows.Forms.Button();
             this.label57 = new System.Windows.Forms.Label();
             this.nud_VR_VPI = new System.Windows.Forms.NumericUpDown();
             this.label56 = new System.Windows.Forms.Label();
@@ -327,13 +327,13 @@
             this.lb_MET_PressValue = new System.Windows.Forms.ListBox();
             this.label62 = new System.Windows.Forms.Label();
             this.cb_MET_Unit = new System.Windows.Forms.ComboBox();
-            this.btn_MET_SetZero = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_MET_NPI_VPI = new System.Windows.Forms.Button();
             this.label59 = new System.Windows.Forms.Label();
             this.nud_MET_VPI = new System.Windows.Forms.NumericUpDown();
             this.label60 = new System.Windows.Forms.Label();
             this.nud_MET_NPI = new System.Windows.Forms.NumericUpDown();
+            this.btn_MET_SetZero = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.pUpStatusBar = new System.Windows.Forms.Panel();
@@ -1195,7 +1195,7 @@
             this.tbMultimetrData.Location = new System.Drawing.Point(140, 25);
             this.tbMultimetrData.Name = "tbMultimetrData";
             this.tbMultimetrData.ReadOnly = true;
-            this.tbMultimetrData.Size = new System.Drawing.Size(105, 40);
+            this.tbMultimetrData.Size = new System.Drawing.Size(111, 40);
             this.tbMultimetrData.TabIndex = 2;
             this.tbMultimetrData.Text = "0,0000";
             // 
@@ -1464,7 +1464,7 @@
             this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbConsole.Location = new System.Drawing.Point(3, 5);
+            this.rtbConsole.Location = new System.Drawing.Point(-1, 3);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
             this.rtbConsole.Size = new System.Drawing.Size(672, 209);
@@ -2515,9 +2515,9 @@
             this.cbCHlevel.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cbCHlevel.Location = new System.Drawing.Point(136, 24);
+            this.cbCHlevel.Location = new System.Drawing.Point(106, 24);
             this.cbCHlevel.Name = "cbCHlevel";
-            this.cbCHlevel.Size = new System.Drawing.Size(117, 24);
+            this.cbCHlevel.Size = new System.Drawing.Size(147, 24);
             this.cbCHlevel.TabIndex = 26;
             // 
             // label32
@@ -2540,9 +2540,9 @@
             this.cbDiapazon1.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cbDiapazon1.Location = new System.Drawing.Point(136, 61);
+            this.cbDiapazon1.Location = new System.Drawing.Point(106, 61);
             this.cbDiapazon1.Name = "cbDiapazon1";
-            this.cbDiapazon1.Size = new System.Drawing.Size(117, 24);
+            this.cbDiapazon1.Size = new System.Drawing.Size(147, 24);
             this.cbDiapazon1.TabIndex = 24;
             this.cbDiapazon1.SelectedIndexChanged += new System.EventHandler(this.cbDiapazon1_SelectedIndexChanged);
             // 
@@ -2717,7 +2717,6 @@
             this.tabPage3.AutoScroll = true;
             this.tabPage3.BackColor = System.Drawing.Color.Transparent;
             this.tabPage3.Controls.Add(this.groupBox6);
-            this.tabPage3.Controls.Add(this.btnVR_SetZero);
             this.tabPage3.Controls.Add(this.groupBox5);
             this.tabPage3.Controls.Add(this.btnVRParamRead);
             this.tabPage3.Controls.Add(this.groupBox11);
@@ -2757,9 +2756,9 @@
             this.cbVRDiapazon1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVRDiapazon1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbVRDiapazon1.FormattingEnabled = true;
-            this.cbVRDiapazon1.Location = new System.Drawing.Point(136, 61);
+            this.cbVRDiapazon1.Location = new System.Drawing.Point(108, 61);
             this.cbVRDiapazon1.Name = "cbVRDiapazon1";
-            this.cbVRDiapazon1.Size = new System.Drawing.Size(117, 24);
+            this.cbVRDiapazon1.Size = new System.Drawing.Size(145, 24);
             this.cbVRDiapazon1.TabIndex = 9;
             this.cbVRDiapazon1.SelectedIndexChanged += new System.EventHandler(this.cbVRDiapazon1_SelectedIndexChanged);
             // 
@@ -2787,9 +2786,9 @@
             this.cbVRlevel.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cbVRlevel.Location = new System.Drawing.Point(136, 24);
+            this.cbVRlevel.Location = new System.Drawing.Point(108, 24);
             this.cbVRlevel.Name = "cbVRlevel";
-            this.cbVRlevel.Size = new System.Drawing.Size(117, 24);
+            this.cbVRlevel.Size = new System.Drawing.Size(145, 24);
             this.cbVRlevel.TabIndex = 26;
             // 
             // label12
@@ -2954,28 +2953,17 @@
             this.tsmVRAddTemperItem.Text = "Добавить";
             this.tsmVRAddTemperItem.Click += new System.EventHandler(this.tsmVRAddTemperItem_Click);
             // 
-            // btnVR_SetZero
-            // 
-            this.btnVR_SetZero.BackColor = System.Drawing.Color.LightGreen;
-            this.btnVR_SetZero.Location = new System.Drawing.Point(8, 448);
-            this.btnVR_SetZero.Name = "btnVR_SetZero";
-            this.btnVR_SetZero.Size = new System.Drawing.Size(265, 48);
-            this.btnVR_SetZero.TabIndex = 16;
-            this.btnVR_SetZero.Tag = "4";
-            this.btnVR_SetZero.Text = "Установка нуля";
-            this.btnVR_SetZero.UseVisualStyleBackColor = false;
-            this.btnVR_SetZero.Click += new System.EventHandler(this.btnVR_SetZero_Click);
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.btnVR_VPI_NPI);
+            this.groupBox5.Controls.Add(this.btnVR_SetZero);
             this.groupBox5.Controls.Add(this.label57);
             this.groupBox5.Controls.Add(this.nud_VR_VPI);
             this.groupBox5.Controls.Add(this.label56);
             this.groupBox5.Controls.Add(this.nud_VR_NPI);
             this.groupBox5.Location = new System.Drawing.Point(8, 372);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(265, 70);
+            this.groupBox5.Size = new System.Drawing.Size(265, 109);
             this.groupBox5.TabIndex = 15;
             this.groupBox5.TabStop = false;
             // 
@@ -2984,30 +2972,44 @@
             this.btnVR_VPI_NPI.BackColor = System.Drawing.Color.LightGreen;
             this.btnVR_VPI_NPI.Location = new System.Drawing.Point(174, 14);
             this.btnVR_VPI_NPI.Name = "btnVR_VPI_NPI";
-            this.btnVR_VPI_NPI.Size = new System.Drawing.Size(85, 46);
+            this.btnVR_VPI_NPI.Size = new System.Drawing.Size(85, 38);
             this.btnVR_VPI_NPI.TabIndex = 4;
             this.btnVR_VPI_NPI.Text = "Задать";
             this.btnVR_VPI_NPI.UseVisualStyleBackColor = false;
             this.btnVR_VPI_NPI.Click += new System.EventHandler(this.btn_VR_VPI_NPI_Click);
             // 
+            // btnVR_SetZero
+            // 
+            this.btnVR_SetZero.BackColor = System.Drawing.Color.LightGreen;
+            this.btnVR_SetZero.Location = new System.Drawing.Point(174, 57);
+            this.btnVR_SetZero.Name = "btnVR_SetZero";
+            this.btnVR_SetZero.Size = new System.Drawing.Size(85, 39);
+            this.btnVR_SetZero.TabIndex = 16;
+            this.btnVR_SetZero.Tag = "4";
+            this.btnVR_SetZero.Text = "Установка нуля";
+            this.btnVR_SetZero.UseVisualStyleBackColor = false;
+            this.btnVR_SetZero.Click += new System.EventHandler(this.btnVR_SetZero_Click);
+            // 
             // label57
             // 
             this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(7, 17);
+            this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label57.Location = new System.Drawing.Point(7, 25);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(30, 13);
+            this.label57.Size = new System.Drawing.Size(43, 20);
             this.label57.TabIndex = 3;
             this.label57.Text = "ВПИ";
             // 
             // nud_VR_VPI
             // 
             this.nud_VR_VPI.DecimalPlaces = 1;
+            this.nud_VR_VPI.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nud_VR_VPI.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nud_VR_VPI.Location = new System.Drawing.Point(46, 14);
+            this.nud_VR_VPI.Location = new System.Drawing.Point(55, 19);
             this.nud_VR_VPI.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3019,27 +3021,29 @@
             0,
             -2147483648});
             this.nud_VR_VPI.Name = "nud_VR_VPI";
-            this.nud_VR_VPI.Size = new System.Drawing.Size(115, 20);
+            this.nud_VR_VPI.Size = new System.Drawing.Size(104, 31);
             this.nud_VR_VPI.TabIndex = 2;
             // 
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(7, 42);
+            this.label56.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label56.Location = new System.Drawing.Point(7, 67);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(31, 13);
+            this.label56.Size = new System.Drawing.Size(44, 20);
             this.label56.TabIndex = 1;
             this.label56.Text = "НПИ";
             // 
             // nud_VR_NPI
             // 
             this.nud_VR_NPI.DecimalPlaces = 1;
+            this.nud_VR_NPI.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nud_VR_NPI.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nud_VR_NPI.Location = new System.Drawing.Point(46, 40);
+            this.nud_VR_NPI.Location = new System.Drawing.Point(55, 61);
             this.nud_VR_NPI.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3051,13 +3055,13 @@
             0,
             -2147483648});
             this.nud_VR_NPI.Name = "nud_VR_NPI";
-            this.nud_VR_NPI.Size = new System.Drawing.Size(115, 20);
+            this.nud_VR_NPI.Size = new System.Drawing.Size(104, 31);
             this.nud_VR_NPI.TabIndex = 0;
             // 
             // btnVRParamRead
             // 
             this.btnVRParamRead.BackColor = System.Drawing.Color.LightGreen;
-            this.btnVRParamRead.Location = new System.Drawing.Point(8, 511);
+            this.btnVRParamRead.Location = new System.Drawing.Point(8, 487);
             this.btnVRParamRead.Name = "btnVRParamRead";
             this.btnVRParamRead.Size = new System.Drawing.Size(265, 46);
             this.btnVRParamRead.TabIndex = 13;
@@ -3099,7 +3103,7 @@
             // 
             // pbVRProcess
             // 
-            this.pbVRProcess.Location = new System.Drawing.Point(8, 575);
+            this.pbVRProcess.Location = new System.Drawing.Point(8, 541);
             this.pbVRProcess.Name = "pbVRProcess";
             this.pbVRProcess.Size = new System.Drawing.Size(265, 23);
             this.pbVRProcess.TabIndex = 4;
@@ -3112,7 +3116,6 @@
             this.tabPage4.Controls.Add(this.pbMETProcess);
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.groupBox2);
-            this.tabPage4.Controls.Add(this.btn_MET_SetZero);
             this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -3155,7 +3158,7 @@
             // btn_MET_Start
             // 
             this.btn_MET_Start.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_Start.Location = new System.Drawing.Point(6, 586);
+            this.btn_MET_Start.Location = new System.Drawing.Point(2, 558);
             this.btn_MET_Start.Name = "btn_MET_Start";
             this.btn_MET_Start.Size = new System.Drawing.Size(267, 46);
             this.btn_MET_Start.TabIndex = 22;
@@ -3165,7 +3168,7 @@
             // 
             // pbMETProcess
             // 
-            this.pbMETProcess.Location = new System.Drawing.Point(6, 638);
+            this.pbMETProcess.Location = new System.Drawing.Point(10, 610);
             this.pbMETProcess.Name = "pbMETProcess";
             this.pbMETProcess.Size = new System.Drawing.Size(267, 23);
             this.pbMETProcess.TabIndex = 21;
@@ -3174,7 +3177,7 @@
             // 
             this.groupBox3.Controls.Add(this.btn_MET_DTime);
             this.groupBox3.Controls.Add(this.nud_MET_DTime);
-            this.groupBox3.Location = new System.Drawing.Point(6, 455);
+            this.groupBox3.Location = new System.Drawing.Point(6, 481);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(267, 70);
             this.groupBox3.TabIndex = 20;
@@ -3195,12 +3198,13 @@
             // nud_MET_DTime
             // 
             this.nud_MET_DTime.DecimalPlaces = 1;
+            this.nud_MET_DTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nud_MET_DTime.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nud_MET_DTime.Location = new System.Drawing.Point(10, 29);
+            this.nud_MET_DTime.Location = new System.Drawing.Point(10, 20);
             this.nud_MET_DTime.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3212,7 +3216,7 @@
             0,
             -2147483648});
             this.nud_MET_DTime.Name = "nud_MET_DTime";
-            this.nud_MET_DTime.Size = new System.Drawing.Size(170, 20);
+            this.nud_MET_DTime.Size = new System.Drawing.Size(170, 31);
             this.nud_MET_DTime.TabIndex = 2;
             // 
             // groupBox2
@@ -3226,7 +3230,7 @@
             this.groupBox2.Controls.Add(this.lb_MET_PressValue);
             this.groupBox2.Controls.Add(this.label62);
             this.groupBox2.Controls.Add(this.cb_MET_Unit);
-            this.groupBox2.Location = new System.Drawing.Point(6, 158);
+            this.groupBox2.Location = new System.Drawing.Point(8, 184);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(267, 291);
             this.groupBox2.TabIndex = 19;
@@ -3345,18 +3349,6 @@
             this.cb_MET_Unit.Size = new System.Drawing.Size(82, 21);
             this.cb_MET_Unit.TabIndex = 0;
             // 
-            // btn_MET_SetZero
-            // 
-            this.btn_MET_SetZero.BackColor = System.Drawing.Color.LightGreen;
-            this.btn_MET_SetZero.Location = new System.Drawing.Point(6, 533);
-            this.btn_MET_SetZero.Name = "btn_MET_SetZero";
-            this.btn_MET_SetZero.Size = new System.Drawing.Size(267, 47);
-            this.btn_MET_SetZero.TabIndex = 18;
-            this.btn_MET_SetZero.Tag = "4";
-            this.btn_MET_SetZero.Text = "Установка нуля";
-            this.btn_MET_SetZero.UseVisualStyleBackColor = false;
-            this.btn_MET_SetZero.Click += new System.EventHandler(this.btn_MET_SetZero_Click);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btn_MET_NPI_VPI);
@@ -3364,9 +3356,10 @@
             this.groupBox1.Controls.Add(this.nud_MET_VPI);
             this.groupBox1.Controls.Add(this.label60);
             this.groupBox1.Controls.Add(this.nud_MET_NPI);
+            this.groupBox1.Controls.Add(this.btn_MET_SetZero);
             this.groupBox1.Location = new System.Drawing.Point(6, 71);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(267, 81);
+            this.groupBox1.Size = new System.Drawing.Size(267, 107);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Пределы измерения";
@@ -3376,7 +3369,7 @@
             this.btn_MET_NPI_VPI.BackColor = System.Drawing.Color.LightGreen;
             this.btn_MET_NPI_VPI.Location = new System.Drawing.Point(186, 19);
             this.btn_MET_NPI_VPI.Name = "btn_MET_NPI_VPI";
-            this.btn_MET_NPI_VPI.Size = new System.Drawing.Size(75, 46);
+            this.btn_MET_NPI_VPI.Size = new System.Drawing.Size(75, 39);
             this.btn_MET_NPI_VPI.TabIndex = 4;
             this.btn_MET_NPI_VPI.Text = "Задать";
             this.btn_MET_NPI_VPI.UseVisualStyleBackColor = false;
@@ -3385,21 +3378,23 @@
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(7, 21);
+            this.label59.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label59.Location = new System.Drawing.Point(6, 27);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(30, 13);
+            this.label59.Size = new System.Drawing.Size(43, 20);
             this.label59.TabIndex = 3;
             this.label59.Text = "ВПИ";
             // 
             // nud_MET_VPI
             // 
             this.nud_MET_VPI.DecimalPlaces = 1;
+            this.nud_MET_VPI.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nud_MET_VPI.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nud_MET_VPI.Location = new System.Drawing.Point(46, 19);
+            this.nud_MET_VPI.Location = new System.Drawing.Point(60, 21);
             this.nud_MET_VPI.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3411,27 +3406,29 @@
             0,
             -2147483648});
             this.nud_MET_VPI.Name = "nud_MET_VPI";
-            this.nud_MET_VPI.Size = new System.Drawing.Size(134, 20);
+            this.nud_MET_VPI.Size = new System.Drawing.Size(120, 31);
             this.nud_MET_VPI.TabIndex = 2;
             // 
             // label60
             // 
             this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(7, 45);
+            this.label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label60.Location = new System.Drawing.Point(6, 69);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(31, 13);
+            this.label60.Size = new System.Drawing.Size(44, 20);
             this.label60.TabIndex = 1;
             this.label60.Text = "НПИ";
             // 
             // nud_MET_NPI
             // 
             this.nud_MET_NPI.DecimalPlaces = 1;
+            this.nud_MET_NPI.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nud_MET_NPI.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nud_MET_NPI.Location = new System.Drawing.Point(46, 45);
+            this.nud_MET_NPI.Location = new System.Drawing.Point(58, 65);
             this.nud_MET_NPI.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3443,8 +3440,20 @@
             0,
             -2147483648});
             this.nud_MET_NPI.Name = "nud_MET_NPI";
-            this.nud_MET_NPI.Size = new System.Drawing.Size(134, 20);
+            this.nud_MET_NPI.Size = new System.Drawing.Size(122, 31);
             this.nud_MET_NPI.TabIndex = 0;
+            // 
+            // btn_MET_SetZero
+            // 
+            this.btn_MET_SetZero.BackColor = System.Drawing.Color.LightGreen;
+            this.btn_MET_SetZero.Location = new System.Drawing.Point(186, 64);
+            this.btn_MET_SetZero.Name = "btn_MET_SetZero";
+            this.btn_MET_SetZero.Size = new System.Drawing.Size(75, 36);
+            this.btn_MET_SetZero.TabIndex = 18;
+            this.btn_MET_SetZero.Tag = "4";
+            this.btn_MET_SetZero.Text = "Установка нуля";
+            this.btn_MET_SetZero.UseVisualStyleBackColor = false;
+            this.btn_MET_SetZero.Click += new System.EventHandler(this.btn_MET_SetZero_Click);
             // 
             // MainTimer
             // 

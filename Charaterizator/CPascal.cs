@@ -17,7 +17,7 @@ namespace Charaterizator
         public SerialPort Port;            // переменная для работы по COM-порту
         private Thread ReadThreadPascal;    // поток
         string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
-        public int READ_PAUSE = 400;            // задержка между приемом и передачей команд по COM порту, мс      
+        public int READ_PAUSE = 500;            // задержка между приемом и передачей команд по COM порту, мс      
         public double UserPoint = 0;
 
         public string strData;
@@ -92,12 +92,27 @@ namespace Charaterizator
 
                 if (InitDevice())   // идентифицируем подключенный прибор
                 {
+                    
                     // Запускаем поток
                     ReadThreadPascal = new Thread(PascalReadThread);
                     ReadThreadPascal.Priority = ThreadPriority.AboveNormal;
                     ReadThreadPascal.Start();
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                     Connected = true;
+                    SetPress(0);
+                    /*int i = 0;
+                    do
+                    {
+                        SetModeKeyStart();
+                        i++;
+                    } while ((modeStart)&&(i<5));
+                    i = 0;
+                    do
+                    {
+                        SetModeVent();
+                        i++;
+                    } while ((modeVent) && (i < 5));*/
+
                     return 0;
                 }
                 else
@@ -334,7 +349,7 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE))
+                    while ((ReadPascal) && (i < READ_PAUSE*2))
                     {
                         Thread.Sleep(1);
                         i++;
@@ -357,6 +372,7 @@ namespace Charaterizator
                         if (str == "START_REGULATION")
                         {
                             modeStart = true;
+                            modeVent = false;
                             break;
                         }
                         else
@@ -397,7 +413,7 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE))
+                    while ((ReadPascal) && (i < READ_PAUSE*2))
                     {
                         Thread.Sleep(1);
                         i++;
@@ -419,6 +435,7 @@ namespace Charaterizator
                         if (str == "VENT_ON")
                         {
                             modeVent = true;
+                            modeStart = false;
                             break;
                         }
                         else if (str == "VENT_OFF")
@@ -457,7 +474,7 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE))
+                    while ((ReadPascal) && (i < READ_PAUSE*2))
                     {
                         Thread.Sleep(1);
                         i++;
