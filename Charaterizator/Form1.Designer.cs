@@ -30,8 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("50");
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "0",
             "С"}, -1);
@@ -56,14 +64,6 @@
             "С"}, -1);
             System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("20");
             System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("50");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
-            "0",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
-            "10",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("20");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("50");
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -145,6 +145,7 @@
             this.btnClockTimer = new System.Windows.Forms.Button();
             this.tbDateTime = new System.Windows.Forms.TextBox();
             this.gbCommutator = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tbNumCH = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
@@ -351,6 +352,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -741,6 +743,7 @@
             // gbTermoCamera
             // 
             this.gbTermoCamera.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbTermoCamera.Controls.Add(this.button2);
             this.gbTermoCamera.Controls.Add(this.tbTemperature);
             this.gbTermoCamera.Controls.Add(this.bThermalCameraSet);
             this.gbTermoCamera.Controls.Add(this.label10);
@@ -1272,6 +1275,7 @@
             // gbCommutator
             // 
             this.gbCommutator.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbCommutator.Controls.Add(this.button1);
             this.gbCommutator.Controls.Add(this.tbNumCH);
             this.gbCommutator.Controls.Add(this.label1);
             this.gbCommutator.Controls.Add(this.btnFormCommutator);
@@ -1286,13 +1290,25 @@
             this.gbCommutator.TabStop = false;
             this.gbCommutator.Text = "Коммутатор";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(206, 69);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(91, 48);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Обнулить датчик";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // tbNumCH
             // 
+            this.tbNumCH.Enabled = false;
             this.tbNumCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbNumCH.Location = new System.Drawing.Point(231, 70);
+            this.tbNumCH.Location = new System.Drawing.Point(159, 71);
             this.tbNumCH.Name = "tbNumCH";
             this.tbNumCH.ReadOnly = true;
-            this.tbNumCH.Size = new System.Drawing.Size(65, 40);
+            this.tbNumCH.Size = new System.Drawing.Size(42, 40);
             this.tbNumCH.TabIndex = 3;
             this.tbNumCH.Text = "0";
             // 
@@ -1300,11 +1316,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(15, 78);
+            this.label1.Location = new System.Drawing.Point(16, 83);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(196, 20);
+            this.label1.Size = new System.Drawing.Size(126, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Номер текущего канала:";
+            this.label1.Text = "Текущий канал:";
             // 
             // btnFormCommutator
             // 
@@ -1835,8 +1851,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle3;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1878,10 +1894,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle2.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle4.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle4;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -2579,17 +2595,17 @@
             this.lvCHPressureSet.GridLines = true;
             this.lvCHPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCHPressureSet.HideSelection = false;
-            listViewItem1.Checked = true;
-            listViewItem1.StateImageIndex = 1;
-            listViewItem2.Checked = true;
-            listViewItem2.StateImageIndex = 1;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
+            listViewItem17.Checked = true;
+            listViewItem17.StateImageIndex = 1;
+            listViewItem18.Checked = true;
+            listViewItem18.StateImageIndex = 1;
+            listViewItem19.StateImageIndex = 0;
+            listViewItem20.StateImageIndex = 0;
             this.lvCHPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20});
             this.lvCHPressureSet.LabelEdit = true;
             this.lvCHPressureSet.Location = new System.Drawing.Point(130, 106);
             this.lvCHPressureSet.MultiSelect = false;
@@ -2644,19 +2660,19 @@
             this.lvCHTermoCamera.GridLines = true;
             this.lvCHTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCHTermoCamera.HideSelection = false;
-            listViewItem5.Checked = true;
-            listViewItem5.StateImageIndex = 1;
-            listViewItem6.Checked = true;
-            listViewItem6.StateImageIndex = 1;
-            listViewItem7.Checked = true;
-            listViewItem7.StateImageIndex = 1;
-            listViewItem8.Checked = true;
-            listViewItem8.StateImageIndex = 1;
+            listViewItem1.Checked = true;
+            listViewItem1.StateImageIndex = 1;
+            listViewItem2.Checked = true;
+            listViewItem2.StateImageIndex = 1;
+            listViewItem3.Checked = true;
+            listViewItem3.StateImageIndex = 1;
+            listViewItem4.Checked = true;
+            listViewItem4.StateImageIndex = 1;
             this.lvCHTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.lvCHTermoCamera.LabelEdit = true;
             this.lvCHTermoCamera.Location = new System.Drawing.Point(6, 106);
             this.lvCHTermoCamera.MultiSelect = false;
@@ -2833,17 +2849,17 @@
             this.lvVRPressureSet.GridLines = true;
             this.lvVRPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvVRPressureSet.HideSelection = false;
-            listViewItem9.Checked = true;
-            listViewItem9.StateImageIndex = 1;
-            listViewItem10.Checked = true;
-            listViewItem10.StateImageIndex = 1;
-            listViewItem11.StateImageIndex = 0;
-            listViewItem12.StateImageIndex = 0;
+            listViewItem5.Checked = true;
+            listViewItem5.StateImageIndex = 1;
+            listViewItem6.Checked = true;
+            listViewItem6.StateImageIndex = 1;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
             this.lvVRPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.lvVRPressureSet.LabelEdit = true;
             this.lvVRPressureSet.Location = new System.Drawing.Point(130, 106);
             this.lvVRPressureSet.MultiSelect = false;
@@ -2898,19 +2914,19 @@
             this.lvVRTermoCamera.GridLines = true;
             this.lvVRTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvVRTermoCamera.HideSelection = false;
-            listViewItem13.Checked = true;
-            listViewItem13.StateImageIndex = 1;
-            listViewItem14.Checked = true;
-            listViewItem14.StateImageIndex = 1;
-            listViewItem15.Checked = true;
-            listViewItem15.StateImageIndex = 1;
-            listViewItem16.Checked = true;
-            listViewItem16.StateImageIndex = 1;
+            listViewItem9.Checked = true;
+            listViewItem9.StateImageIndex = 1;
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 1;
+            listViewItem11.Checked = true;
+            listViewItem11.StateImageIndex = 1;
+            listViewItem12.Checked = true;
+            listViewItem12.StateImageIndex = 1;
             this.lvVRTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.lvVRTermoCamera.LabelEdit = true;
             this.lvVRTermoCamera.Location = new System.Drawing.Point(6, 106);
             this.lvVRTermoCamera.MultiSelect = false;
@@ -3625,6 +3641,16 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 69);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(122, 27);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Расчет";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4002,6 +4028,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmVRAddPressItem;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

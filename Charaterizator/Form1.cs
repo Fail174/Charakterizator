@@ -80,8 +80,12 @@ namespace Charaterizator
         public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
         private CCalculation CalculationMtx = new CCalculation();
+        private CCalcMNK CCalcMNK = new CCalcMNK();
         private CPascal Pascal = new CPascal();
         private CBarometr Barometr = new CBarometr();
+
+
+
 
 
         //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
@@ -185,7 +189,7 @@ namespace Charaterizator
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - МЕНСОР
                 Pascal.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - ПАСКАЛЬ
                 UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
-                gbBarometr.Visible = !UseMensor;
+                //gbBarometr.Visible = !UseMensor;
 
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000) / MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
                 SENSOR_PRESSUER_WAIT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000);
@@ -3520,7 +3524,7 @@ namespace Charaterizator
                     }
 
                 }
-                gbBarometr.Visible = !UseMensor;
+                //gbBarometr.Visible = !UseMensor;
 
             }
             catch
@@ -3790,6 +3794,21 @@ namespace Charaterizator
                         }
                         else
                         {
+
+                            // Раскачка давлением
+                            // Получаем Pmax датчика
+                            int si = sensors.FindSensorGroup(SelectedLevel);
+                            if (si >= 0)
+                            {
+                                string SelectModel = new String(sensors.sensorList[si].PressureModel);
+                                string SelectType = sensors.sensorList[si].GetdevType();
+                                double Pmax_sens = Convert.ToDouble(SensorsDB.GetDataSensors(SelectType, SelectModel, "Pmax"));
+                                // Запускаем раскачку
+                                PushPress(Pmax_sens);
+                            }
+
+
+
                             try
                             {
                                 MainTimer.Stop();
@@ -4359,13 +4378,14 @@ namespace Charaterizator
                 {
                     btnVR_SetZero.Text = "Установка нуля";
                     UpdateItemState(0);
+
                 }
             }
             else
             {
                 FormPause formpause = new FormPause();
                 if (formpause.ShowDialog() != DialogResult.OK)
-                //                    if (MessageBox.Show("Отменить зобнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                //                    if (MessageBox.Show("Отменить обнуление датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
@@ -4374,6 +4394,37 @@ namespace Charaterizator
 
 
         }
+
+
+        // Обнулить датчик на заданном канале коммутатора
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int i = Convert.ToInt16(tbNumCH.Text);
+
+            if (( i != 0) && (i < MaxChannalCount))
+            {
+                try
+                {
+                    if (sensors.С43SetZero())
+                    {
+                        Program.txtlog.WriteLineLog("Выполнена установка нуля датчика в канале " + tbNumCH.Text, 0);
+                    }
+                    else
+                    {
+                        Program.txtlog.WriteLineLog("Установка нуля датчика не выполнена!", 1);
+                    }
+                }
+                catch
+                {
+                    Program.txtlog.WriteLineLog("Установка нуля датчика не выполнена!", 1);
+                }
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("Установка нуля датчика не выполнена! Не выбран канал коммутатора!", 1);
+            }
+        }
+
 
         private void tsmCurrentDelete_Click(object sender, EventArgs e)
         {
@@ -5753,6 +5804,114 @@ namespace Charaterizator
             }
             Program.txtlog.WriteLineLog("CH:Раскачка завершена!", 0);
         }
+
+
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            //-----------------------------------------------------------------------------------
+            // ИСХОДНЫЕ ДАННЫЕ (должны передаваться в функцию при вызове) 
+
+            // маскимальный ВПИ (определяется по переменным датчика)
+            double Pmax = 2500;
+
+            // Матрица давлений
+            Matrix<double> Pmtx = DenseMatrix.OfArray(new double[,]{
+            {0,     0,     0,     0,     0   },
+            {250,   250,   250,   250,   250 },
+            {1000,  1000,  1000,  1000,  1000},
+            {1500,  1500,  1500,  1500,  1500},
+            {2000,  2000,  2000,  2000,  2000},
+            {2500,  2500,  2500,  2500,  2500},
+            {2500,  2500,  2500,  2500,  2500},
+            {2000,  2000,  2000,  2000,  2000},
+            {1500,  1500,  1500,  1500,  1500},
+            {1000,  1000,  1000,  1000,  1000},
+            {250,   250,   250,   250,   250 },
+            {0,     0,     0,     0,     0   }});
+
+            // Матрица напряжений
+            Matrix<double> Umtx = DenseMatrix.OfArray(new double[,]{
+            {-1.673,  -1.4948,  -1.354,   -1.2526,  -1.1462},
+            { 2.583,   2.6908,   2.8463,   3.0026,   3.1901},
+            {15.353,  15.2495,  15.4513,  15.7709,  16.2098},
+            {23.855,  23.6162,  23.8532,  24.2821,  24.8896},
+            {32.352,  31.9798,  32.2514,  32.7917,  33.5692},
+            {40.842,  40.3387,  40.6466,  41.3001,  42.249 },
+            {40.842,  40.339,   40.647,   41.300,   42.249 },
+            {32.352,  31.980,   32.251,   32.792,   33.569 },
+            {23.855,  23.616,   23.853,   24.282,   24.890 },
+            {15.353,  15.250,   15.451,   15.771,   16.210 },
+            {2.583,   2.691,    2.846,    3.003,    3.190  },
+            {-1.673, -1.495,   -1.354,   -1.253,   -1.146  }});
+
+            // Матрица Сопротивлений
+            Matrix<double> Rmtx = DenseMatrix.OfArray(new double[,]{
+            {3012.5,      3187.3,      3437.8,      3687,        3982.6001},
+            {3012.3999,   3187.6001,   3437.7,      3687.2,      3983     },
+            {3012.2,      3187.3,      3437.7,      3687,        3983     },
+            {3012.2,      3187.2,      3439.8,      3687,        3983.3   },
+            {3012.3999,   3187.5,      3439.7,      3687.2,      3983.7   },
+            {3012.6001,   3188,        3439.7,      3687.5,      3984.1001},
+            {3012.600,    3188.000,    3439.700,    3687.500,    3984.100 },
+            {3012.400,    3187.500,    3439.700,    3687.200,    3983.700 },
+            {3012.200,    3187.200,    3439.800,    3687.000,    3983.300 },
+            {3012.200,    3187.300,    3437.700,    3687.000,    3983.000 },
+            {3012.400,    3187.600,    3437.700,    3687.200,    3983.000 },
+            {3012.500,    3187.300,    3437.800,    3687.000,    3982.600 } });
+
+            // Массив температур, должен соответствовать столбцам матриц P, U, R
+            Matrix<double> Tmtx = DenseMatrix.OfArray(new double[,] { { -40, -10, 23, 50, 80 } });
+            //-----------------------------------------------------------------------------------
+
+            // Тип датчика для определения температурной погрешности
+            int sens = 1;  //1 - ; 2 - ; 3 - ;
+
+
+            // Вызов функции
+            Matrix<double> ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, sens);
+
+
+            // Анализ результатов
+            if ((ResulCoefmtx.RowCount == 1) & (ResulCoefmtx.ColumnCount == 1))
+            {
+                switch (ResulCoefmtx.At(0, 0))
+                {
+                    case -3:
+                        {
+                            Program.txtlog.WriteLineLog("MNK: Решение не найдено! В процессе решения возникла неустранимая ошибка!", 1);
+                            break;
+                        }
+                    case -2:
+                        {
+                            Program.txtlog.WriteLineLog("MNK: Решение не найдено! Обнаружено не соответствие входных данных!", 1);
+                            break;
+                        }
+                    case -1:
+                        {
+                            Program.txtlog.WriteLineLog("MNK: Решение не найдено! Алгоритму не удалось найти решение удовлетворяющее настройкам", 1);
+                            break;
+                        }
+                    case 0:
+                        {
+                            Program.txtlog.WriteLineLog("MNK: ОК", 1);
+                            break;
+                        }
+
+                }
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("MNK: Решение найдено!", 0);
+            }
+
+        }
+
+
+
+
     }
 }
 

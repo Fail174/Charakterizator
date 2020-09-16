@@ -13,7 +13,7 @@ namespace Charaterizator
 {
     class CCalculation
     {
-        public static bool flag_ObrHod;
+        public static bool flag_ObrHod;  // 
         public static bool flag_MeanR;   // true - усреднять матрицу сопротивлений false - не усреднять
 
 

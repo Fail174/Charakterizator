@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CBarometr.cs" />
+    <Compile Include="CCalcMNK.cs" />
     <Compile Include="CCalculation.cs" />
     <Compile Include="ClassEni100.cs" />
     <Compile Include="CMultimetr.cs" />

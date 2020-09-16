@@ -98,6 +98,15 @@ namespace Charaterizator
         {
             InitializeComponent();
             serialPort1 = new SerialPort();
+            if (Channal60)
+            {
+                pCommCH60.Enabled = true;
+            }
+            else
+            {
+                pCommCH60.Enabled = false;
+            }
+
         }
           
         
@@ -896,6 +905,7 @@ namespace Charaterizator
                     StateCH1 = data32;
 
                     SetState(StateCHPower1, StateCH1);
+                    StateCH2 = -1;
 
                     if (Channal60)
                     {
@@ -912,8 +922,13 @@ namespace Charaterizator
                         data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
                         StateCH2 = data32;
 
-                        //SetState(StateCHPower, StateCH);
+                        SetState60(StateCHPower2, StateCH2);
                     }
+
+                    ActivCH = CalcActCH(StateCH1, StateCH2);
+
+
+
                 }
                 catch
                 {
@@ -1031,19 +1046,51 @@ namespace Charaterizator
 
 
         // Определение номера активного канала 
-        public int CalcActCH (Int32 StateInputs)
+        public int CalcActCH (Int32 StateInputs1, Int32 StateInputs2)
         {
             int Num = 0;
-           
-            for (int i = 0; i < 30; i++)
-            {               
-                    if ((StateInputs & 0x01) == 1)
+
+
+            if (StateInputs2 == -1)
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    if ((StateInputs1 & 0x01) == 1)
                     {
-                        Num = i+1;
+                        Num = i + 1;
                         break;
                     }
 
-                StateInputs = StateInputs >> 1;
+                    StateInputs1 = StateInputs1 >> 1;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 60; i++)
+                {
+                    if (i < 30)
+                    {
+                        if ((StateInputs1 & 0x01) == 1)
+                        {
+                            Num = i + 1;
+                            break;
+                        }
+
+                        StateInputs1 = StateInputs1 >> 1;
+                    }
+                    else
+                    {
+                        if ((StateInputs2 & 0x01) == 1)
+                        {
+                            Num = i + 1;
+                            break;
+                        }
+
+                        StateInputs2 = StateInputs2 >> 1;
+                    }
+                   
+                }
+
             }
 
             return Num;
@@ -1124,13 +1171,84 @@ namespace Charaterizator
             //lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
 
             // Получаем номер активного канала
-            ActivCH = CalcActCH(StateCH);
+            //ActivCH = CalcActCH(StateCH, 1);
 
         }
 
 
 
+        public void SetState60(Int32 StateCHPower, Int32 StateCH)
+        {
+            Int32 data32;
 
+            data32 = StateCHPower;
+
+            // Обработка состояний 
+            bPower30.ImageIndex = (data32 & 0x1); bPower46.ImageIndex = (data32 & 0x10000) >> 16;
+            bPower31.ImageIndex = (data32 & 0x2) >> 1; bPower47.ImageIndex = (data32 & 0x20000) >> 17;
+            bPower32.ImageIndex = (data32 & 0x4) >> 2; bPower48.ImageIndex = (data32 & 0x40000) >> 18;
+            bPower33.ImageIndex = (data32 & 0x8) >> 3; bPower49.ImageIndex = (data32 & 0x80000) >> 19;
+            bPower34.ImageIndex = (data32 & 0x10) >> 4; bPower50.ImageIndex = (data32 & 0x100000) >> 20;
+            bPower35.ImageIndex = (data32 & 0x20) >> 5; bPower51.ImageIndex = (data32 & 0x200000) >> 21;
+            bPower36.ImageIndex = (data32 & 0x40) >> 6; bPower52.ImageIndex = (data32 & 0x400000) >> 22;
+            bPower37.ImageIndex = (data32 & 0x80) >> 7; bPower53.ImageIndex = (data32 & 0x800000) >> 23;
+            bPower38.ImageIndex = (data32 & 0x100) >> 8; bPower54.ImageIndex = (data32 & 0x1000000) >> 24;
+            bPower39.ImageIndex = (data32 & 0x200) >> 9; bPower55.ImageIndex = (data32 & 0x2000000) >> 25;
+            bPower40.ImageIndex = (data32 & 0x400) >> 10; bPower56.ImageIndex = (data32 & 0x4000000) >> 26;
+            bPower41.ImageIndex = (data32 & 0x800) >> 11; bPower57.ImageIndex = (data32 & 0x8000000) >> 27;
+            bPower42.ImageIndex = (data32 & 0x1000) >> 12; bPower58.ImageIndex = (data32 & 0x10000000) >> 28;
+            bPower43.ImageIndex = (data32 & 0x2000) >> 13; bPower59.ImageIndex = (data32 & 0x20000000) >> 29;
+            bPower44.ImageIndex = (data32 & 0x4000) >> 14;
+            bPower45.ImageIndex = (data32 & 0x8000) >> 15;
+
+
+
+            bInput30.Enabled = (data32 & 0x1) == 0x1; bInput45.Enabled = (data32 & 0x8000) == 0x8000;
+            bInput31.Enabled = (data32 & 0x2) == 0x2; bInput46.Enabled = (data32 & 0x10000) == 0x10000;
+            bInput32.Enabled = (data32 & 0x4) == 0x4; bInput47.Enabled = (data32 & 0x20000) == 0x20000;
+            bInput33.Enabled = (data32 & 0x8) == 0x8; bInput48.Enabled = (data32 & 0x40000) == 0x40000;
+            bInput34.Enabled = (data32 & 0x10) == 0x10; bInput49.Enabled = (data32 & 0x80000) == 0x80000;
+            bInput35.Enabled = (data32 & 0x20) == 0x20; bInput50.Enabled = (data32 & 0x100000) == 0x100000;
+            bInput36.Enabled = (data32 & 0x40) == 0x40; bInput51.Enabled = (data32 & 0x200000) == 0x200000;
+            bInput37.Enabled = (data32 & 0x80) == 0x80; bInput52.Enabled = (data32 & 0x400000) == 0x400000;
+            bInput38.Enabled = (data32 & 0x100) == 0x100; bInput53.Enabled = (data32 & 0x800000) == 0x800000;
+            bInput39.Enabled = (data32 & 0x200) == 0x200; bInput54.Enabled = (data32 & 0x1000000) == 0x1000000;
+            bInput40.Enabled = (data32 & 0x400) == 0x400; bInput55.Enabled = (data32 & 0x2000000) == 0x2000000;
+            bInput41.Enabled = (data32 & 0x800) == 0x800; bInput56.Enabled = (data32 & 0x4000000) == 0x4000000;
+            bInput42.Enabled = (data32 & 0x1000) == 0x1000; bInput57.Enabled = (data32 & 0x8000000) == 0x8000000;
+            bInput43.Enabled = (data32 & 0x2000) == 0x2000; bInput58.Enabled = (data32 & 0x10000000) == 0x10000000;
+            bInput44.Enabled = (data32 & 0x4000) == 0x4000; bInput59.Enabled = (data32 & 0x20000000) == 0x20000000;
+
+
+            data32 = StateCH;
+
+            bInput30.ImageIndex = (data32 & 0x1); bInput45.ImageIndex = (data32 & 0x8000) >> 15;
+            bInput31.ImageIndex = (data32 & 0x2) >> 1; bInput46.ImageIndex = (data32 & 0x10000) >> 16;
+            bInput32.ImageIndex = (data32 & 0x4) >> 2; bInput47.ImageIndex = (data32 & 0x20000) >> 17;
+            bInput33.ImageIndex = (data32 & 0x8) >> 3; bInput48.ImageIndex = (data32 & 0x40000) >> 18;
+            bInput34.ImageIndex = (data32 & 0x10) >> 4; bInput49.ImageIndex = (data32 & 0x80000) >> 19;
+            bInput35.ImageIndex = (data32 & 0x20) >> 5; bInput50.ImageIndex = (data32 & 0x100000) >> 20;
+            bInput36.ImageIndex = (data32 & 0x40) >> 6; bInput51.ImageIndex = (data32 & 0x200000) >> 21;
+            bInput37.ImageIndex = (data32 & 0x80) >> 7; bInput52.ImageIndex = (data32 & 0x400000) >> 22;
+            bInput38.ImageIndex = (data32 & 0x100) >> 8; bInput53.ImageIndex = (data32 & 0x800000) >> 23;
+            bInput39.ImageIndex = (data32 & 0x200) >> 9; bInput54.ImageIndex = (data32 & 0x1000000) >> 24;
+            bInput40.ImageIndex = (data32 & 0x400) >> 10; bInput55.ImageIndex = (data32 & 0x2000000) >> 25;
+            bInput41.ImageIndex = (data32 & 0x800) >> 11; bInput56.ImageIndex = (data32 & 0x4000000) >> 26;
+            bInput42.ImageIndex = (data32 & 0x1000) >> 12; bInput57.ImageIndex = (data32 & 0x8000000) >> 27;
+            bInput43.ImageIndex = (data32 & 0x2000) >> 13; bInput58.ImageIndex = (data32 & 0x10000000) >> 28;
+            bInput44.ImageIndex = (data32 & 0x4000) >> 14; bInput59.ImageIndex = (data32 & 0x20000000) >> 29;
+
+
+
+
+            // Проверяем количество подключенных выходов
+            //NumOfConnectInputs = CalcNumOfConnectInputs(StateCH);
+            //lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
+
+            // Получаем номер активного канала
+            //ActivCH = CalcActCH(StateCH, 2);
+
+        }
 
 
 
