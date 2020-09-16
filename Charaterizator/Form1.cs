@@ -123,6 +123,8 @@ namespace Charaterizator
         private ListViewItem heldDownItem = null;//элемент для перетаскивания мышью
         private Point heldDownPoint;
 
+        public bool AlgorithmMNK;
+
         //Инициализация переменных основной программы
         public MainForm()
         {
@@ -200,6 +202,18 @@ namespace Charaterizator
                 sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;     //таймаут ожидания ответа от датчика
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;       //период выдачи команд
+
+
+                CCalcMNK.Kf = Properties.Settings.Default.set_Math_Kf;
+                CCalcMNK.Kpmax_dop = Properties.Settings.Default.set_Math_Kmax_dop;
+                CCalcMNK.code = Properties.Settings.Default.set_Math_Code;
+                CCalcMNK.Amax = Properties.Settings.Default.set_Math_Amax;
+                CCalcMNK.Mmax = Properties.Settings.Default.set_Math_Mmax;
+                CCalcMNK.Tnku = Properties.Settings.Default.set_Math_Tnku;
+                CCalcMNK.KdM = Properties.Settings.Default.set_Math_KdM;
+                CCalcMNK.deltaFdop_min = Properties.Settings.Default.set_Math_DFdop_min;
+                CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
+                AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
 
 
                 string strFileNameDB = Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
@@ -3501,6 +3515,17 @@ namespace Charaterizator
                 sensors.WAIT_TIMEOUT = Properties.Settings.Default.set_SensWaitTimeout;     //таймаут ожидания ответа от датчика
                 sensors.WRITE_COUNT = Properties.Settings.Default.set_SensReadCount;        //число попыток записи команд в датчик
                 sensors.WRITE_PERIOD = Properties.Settings.Default.set_SensReadPause;       //период выдачи команд
+
+                CCalcMNK.Kf = Properties.Settings.Default.set_Math_Kf;
+                CCalcMNK.Kpmax_dop = Properties.Settings.Default.set_Math_Kmax_dop;
+                CCalcMNK.code = Properties.Settings.Default.set_Math_Code;
+                CCalcMNK.Amax = Properties.Settings.Default.set_Math_Amax;
+                CCalcMNK.Mmax = Properties.Settings.Default.set_Math_Mmax;
+                CCalcMNK.Tnku = Properties.Settings.Default.set_Math_Tnku;
+                CCalcMNK.KdM = Properties.Settings.Default.set_Math_KdM;
+                CCalcMNK.deltaFdop_min = Properties.Settings.Default.set_Math_DFdop_min;
+                CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
+                AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
 
                 //выбор задатчика
                 // проверяем был ли переопределен задатчик

@@ -1677,6 +1677,7 @@
             this.rbMNK.TabStop = true;
             this.rbMNK.Text = "Метод наименьших квадратов";
             this.rbMNK.UseVisualStyleBackColor = true;
+            this.rbMNK.CheckedChanged += new System.EventHandler(this.rbMNK_CheckedChanged);
             // 
             // rbLinear
             // 
@@ -1873,6 +1874,7 @@
             // 
             // tbMath_Tnku
             // 
+            this.tbMath_Tnku.DecimalPlaces = 1;
             this.tbMath_Tnku.Location = new System.Drawing.Point(595, 135);
             this.tbMath_Tnku.Maximum = new decimal(new int[] {
             150,

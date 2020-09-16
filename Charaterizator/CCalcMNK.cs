@@ -34,6 +34,7 @@ namespace Charaterizator
         public double deltaFdop_min = 0.0001;
         // Минимальная расчетная граница
         public double Fr_min = 0.01;
+
         //-----------------------------------------------------------------------------------
         public double deltaFkn_min = 100;
 

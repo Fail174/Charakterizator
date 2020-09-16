@@ -899,5 +899,125 @@ namespace Charaterizator.Properties {
                 this["COMbarometr_StopBits"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int set_Math_Kf {
+            get {
+                return ((int)(this["set_Math_Kf"]));
+            }
+            set {
+                this["set_Math_Kf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int set_Math_Kmax_dop {
+            get {
+                return ((int)(this["set_Math_Kmax_dop"]));
+            }
+            set {
+                this["set_Math_Kmax_dop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int set_Math_Code {
+            get {
+                return ((int)(this["set_Math_Code"]));
+            }
+            set {
+                this["set_Math_Code"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int set_Math_Amax {
+            get {
+                return ((int)(this["set_Math_Amax"]));
+            }
+            set {
+                this["set_Math_Amax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int set_Math_Mmax {
+            get {
+                return ((int)(this["set_Math_Mmax"]));
+            }
+            set {
+                this["set_Math_Mmax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("23")]
+        public double set_Math_Tnku {
+            get {
+                return ((double)(this["set_Math_Tnku"]));
+            }
+            set {
+                this["set_Math_Tnku"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.33")]
+        public double set_Math_KdM {
+            get {
+                return ((double)(this["set_Math_KdM"]));
+            }
+            set {
+                this["set_Math_KdM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0001")]
+        public double set_Math_DFdop_min {
+            get {
+                return ((double)(this["set_Math_DFdop_min"]));
+            }
+            set {
+                this["set_Math_DFdop_min"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        public double set_Math_Fr_min {
+            get {
+                return ((double)(this["set_Math_Fr_min"]));
+            }
+            set {
+                this["set_Math_Fr_min"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_Math_AlgorithmMNK {
+            get {
+                return ((bool)(this["set_Math_AlgorithmMNK"]));
+            }
+            set {
+                this["set_Math_AlgorithmMNK"] = value;
+            }
+        }
     }
 }
