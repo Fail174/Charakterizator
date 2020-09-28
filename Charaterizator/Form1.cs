@@ -2958,6 +2958,7 @@ namespace Charaterizator
                                 double Pmax_sens = Convert.ToDouble(SensorsDB.GetDataSensors(SelectType, SelectModel, "Pmax"));
                                 // Запускаем раскачку
                                 PushPress(Pmax_sens);
+                                button7_Click(null, null);
                             }
 
 
@@ -3830,33 +3831,43 @@ namespace Charaterizator
                                 double Pmax_sens = Convert.ToDouble(SensorsDB.GetDataSensors(SelectType, SelectModel, "Pmax"));
                                 // Запускаем раскачку
                                 PushPress(Pmax_sens);
+                                //button7_Click(null,null);//сброс
                             }
 
 
 
-                            try
-                            {
-                                MainTimer.Stop();
-                                MainTimer.Enabled = false;
-                                // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
-                                if ((!UseMensor) && (cbVRDiapazon1.Items.Count > 0))
-                                {
-                                    if (cbMensorTypeR.Items.Count >= numPascaleModule)
-                                        cbMensorTypeR.SelectedIndex = numPascaleModule;
-                                    //Pascal.rangeModule = numPascaleModule;
-                                    Application.DoEvents();
-                                }
-                            }
-                            finally
-                            {
-                                MainTimer.Enabled = true;
-                                MainTimer.Start();
-                            }
+
 
                             for (int j = 0; j < cbVRDiapazon1.Items.Count; j++)
                             {
+                                button7_Click(null, null);//сброс
                                 cbVRDiapazon1.SelectedIndex = j;
                                 Program.txtlog.WriteLineLog("VR: Устанавливаем диапазон " + cbVRDiapazon1.Text + "кПа", 0);
+                                // Задаем НПИ/ВПИ для трех диапазонов верификации
+                                string[] npivpi = cbVRDiapazon1.Text.Split('.');
+                                nud_VR_NPI.Value = Convert.ToDecimal(npivpi[0]);
+                                nud_VR_VPI.Value = Convert.ToDecimal(npivpi[2]);
+                                WriteSensorVPI_NPI();
+
+                                try
+                                {
+                                    MainTimer.Stop();
+                                    MainTimer.Enabled = false;
+                                    // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
+                                    if ((!UseMensor) && (cbVRDiapazon1.Items.Count > 0))
+                                    {
+                                        if (cbMensorTypeR.Items.Count >= numPascaleModule)
+                                            cbMensorTypeR.SelectedIndex = numPascaleModule;
+                                        //Pascal.rangeModule = numPascaleModule;
+                                        Application.DoEvents();
+                                    }
+                                }
+                                finally
+                                {
+                                    MainTimer.Enabled = true;
+                                    MainTimer.Start();
+                                }
+
                                 for (i = 0; i < lvVRPressureSet.Items.Count; i++)
                                 {
                                     if (ProcessStop) break;//прекращаем 
@@ -3940,6 +3951,10 @@ namespace Charaterizator
                         field = "VerPressPoint3";
                         fieldM = "VerModulePoint3";
                     }
+
+
+
+
                     if (field != "")
                     {
                         string SensParam = SensorsDB.GetDataSensors(SelectType, SelectModel, field); // функция запроса данных из БД по номеру модели и параметру
@@ -4308,7 +4323,7 @@ namespace Charaterizator
                 }
                 catch
                 {
-                    Program.txtlog.WriteLineLog("CH:Расчет коэффициентов не выполнен.", 1);
+                    Program.txtlog.WriteLineLog("CH: Критическая ошибка записи коэффициентов.", 1);
                 }
                 finally
                 {
@@ -4424,24 +4439,37 @@ namespace Charaterizator
         // Обнулить датчик на заданном канале коммутатора
         private void button1_Click(object sender, EventArgs e)
         {
-            int i = Convert.ToInt16(tbNumCH.Text);
+            
+            int i = Convert.ToInt16(tbNumCH.Text)-1;
 
             if (( i != 0) && (i < MaxChannalCount))
             {
                 try
                 {
-                    if (sensors.С43SetZero())
+                    ProcessStop = false;
+                    if (sensors.SelectSensor(i))//выбор датчика на канале i
                     {
-                        Program.txtlog.WriteLineLog("Выполнена установка нуля датчика в канале " + tbNumCH.Text, 0);
+                        if (sensors.С43SetZero())
+                        {
+                            Program.txtlog.WriteLineLog("Выполнена установка нуля датчика в канале " + tbNumCH.Text, 0);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Установка нуля датчика не выполнена!", 1);
+                        }
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("Установка нуля датчика не выполнена!", 1);
+                        Program.txtlog.WriteLineLog("Датчик не найден в канале " + (i + 1).ToString(), 1);
                     }
                 }
                 catch
                 {
                     Program.txtlog.WriteLineLog("Установка нуля датчика не выполнена!", 1);
+                }
+                finally
+                {
+                    ProcessStop = true;
                 }
             }
             else

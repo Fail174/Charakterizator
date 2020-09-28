@@ -874,7 +874,7 @@ namespace SensorProgrammer
                             {//датчик найден, обновляем таблицу
 
                                 labelCH.Text = "Запись данных в датчик в канале " + Convert.ToString(i + 1);
-                                BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
+                                //BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
                                 res = BurnSensors(Serial, sensParam.Pmin, sensParam.Pmax, sensParam.DeltaRange, sensParam.Model);
                                 switch (res)
                                 {

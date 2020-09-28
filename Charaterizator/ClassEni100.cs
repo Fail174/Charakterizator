@@ -679,7 +679,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     result = ParseReadBuffer(WAIT_TIMEOUT);
                     if (result >= 0)
                         return result;
@@ -972,7 +972,7 @@ namespace Charaterizator
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0xFA;//код команды
-                data[i + 3] = 0x17;//количество байт
+                data[i + 3] = 0x11;//количество байт
 
                 for (int ci = 0; ci < 6; ci++)
                 {
@@ -1072,13 +1072,14 @@ namespace Charaterizator
             {
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 int i;
-                byte[] data = new byte[10];
+                byte[] data = new byte[sensor.pre+5];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0xFC;
                 data[i + 3] = 0x00;
-                data[9] = GetCRC(data, sensor.pre);//CRC
+                data[i + 4] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
@@ -1099,14 +1100,14 @@ namespace Charaterizator
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
 
                 int i;
-                byte[] data = new byte[11];
+                byte[] data = new byte[sensor.pre + 6];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[i] = 0x02;
                 data[i + 1] = (byte)(0x80 | sensor.Addr);
                 data[i + 2] = 0x81;
                 data[i + 3] = 0x01;
                 data[i + 4] = (byte)((sensor.CurrentExit) & 0xFF);
-                data[10] = GetCRC(data, sensor.pre);//CRC
+                data[i + 5] = GetCRC(data, sensor.pre);//CRC
                 for (int j = 0; j < WRITE_COUNT; j++)
                 {
                     Thread.Sleep(WRITE_PERIOD);
