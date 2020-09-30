@@ -13,6 +13,56 @@ namespace Charaterizator
 {
     class CCalcMNK
     {
+        
+        // Для датчика ЭНИ-12
+        // Табличные значения
+        // Пределы допускаемой основной приведенной погрешности Коэффициенты а
+        public Matrix<double> gammaPa = DenseMatrix.OfArray(new double[,] {
+            {  0,   4,      10,    25  },
+            {  7,   0.075,  0.1,   0.14},
+            { 10,   0.1,    0.1,   0.2 },
+            { 15,   0.15,   0.2,   0.3 },
+            { 20,   0.2,    0.2,   0.4 },
+            { 25,   0.25,   0.3,   0.4 },
+            { 50,   0.5,    0.5,   0.8 }});
+
+
+        // Коэффициенты b
+        public Matrix<double> gammaPb = DenseMatrix.OfArray(new double[,] {
+            { 0,    4,   10,      25   },
+            { 7,    0,   0.014,   0.01 },
+            { 10,   0,   0.02,   0.01  },
+            { 15,   0,   0.03,    0.02 },
+            { 20,   0,   0.03,    0.02 },
+            { 25,   0,   0.04,    0.03 },
+            { 50,   0,   0.08,    0.05 }});
+
+        // Для датчика ЭНИ-12
+        // Табличные значения
+        // Дополнительная температурная погрешность
+        public Matrix<double> gammaTa = DenseMatrix.OfArray(new double[,] {
+            { 0,    1,       2},
+            { 7,    0.04,    0.05},
+            {10,    0.04,    0.05},
+            {15,    0.04,    0.05},
+            {20,    0.05,    0.07},
+            {25,    0.05,    0.07},
+            {50,    0.1,     0.1 }});
+
+
+        // Коэффициенты b
+        public Matrix<double> gammaTb = DenseMatrix.OfArray(new double[,] {
+            { 0,     1,       2  },
+            { 7,     0.03,    0.07},
+            { 10,    0.03,    0.07},
+            { 15,    0.03,    0.07},
+            { 20,    0.04,    0.08},
+            { 25,    0.04,    0.08},
+            { 50,    0.05,    0.1 }});
+
+
+
+
 
         //-----------------------------------------------------------------------------------
         // НАСТРОЙКИ РАСЧЕТА - вынести на форму       
@@ -49,11 +99,14 @@ namespace Charaterizator
         // ----------------------------------------------------------------------------------
         public Matrix<double> CalcCalibrCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, int sens)
         {
-
+           
             Matrix<double> resultBmtx;           // Возвращаемое значение - Матрица калибровочных коэффициентов 
-                                                 // -1 если решения нет
-                                                 // -2 если не верные входные данные
-                                                 // -3 если ошибка возникла в процессе решения
+                                                 // -1 если решения не найдено 
+                                                 // -2 если не верные входные данные (не согласованый матрицы)
+                                                 // -3 если ошибка возникла в процессе решения (исключение)
+                                                 // -4 если в массиве температур нет точки НКУ 23 градуса
+                                                 // -5 если отсутствует точка ноль по давлению, используемая для определения класса точности (обработка результатов) 
+                                                 // -6 если после расчетов не попали ни в какой код точности (БРАК)
 
             
             Matrix<double> Kp;      // Матрица коэффициентов пернастройки(стартовая)  
@@ -89,7 +142,7 @@ namespace Charaterizator
             int Res_count_max;      // Максимальное количество найденных решений
             bool Exit_dw;           // Критерий выхода из цикла do -while
 
-
+            int curCode;
 
 
             // ---------- ЭТАП-1 ------------------------------------------------------------
@@ -188,7 +241,7 @@ namespace Charaterizator
             
             // Рассчитываем матрицу допустимых отклонений Fdop(размерностью N, K)
             // Внутри функции должно быть определение какой тип датчика (ЭнИ - 100 или ЭнИ - 12, или может быть другой новый тип)                        
-            Fdop = CalcFdop(rowP, colP, Kf, Kp, code, sens, Tmtx, Tnku);
+            Fdop = CalcFdop(rowP, colP, Kf, Kp, code, sens, Tmtx, Tnku, gammaPa, gammaPb);
 
             // Проверка рассчитанной матрицы допустимых отклонений Fdop на отсутствие нулевых элементов
             // Если нулевые элементы есть, следовательно нет решения, выходим из функции (возвращаем -1)
@@ -234,7 +287,7 @@ namespace Charaterizator
             for (int Kf = 1; Kf < Kpmax_dop; Kf++)  // Изменил предельное значение "10" на "Kpmax_dop"
             {
                 // Рассчитываем матрицу допустимых отклонений Fdop для заданного Kf
-                Fdop = CalcFdop(rowP, colP, Kf, Kp, code, sens, Tmtx, Tnku);
+                Fdop = CalcFdop(rowP, colP, Kf, Kp, code, sens, Tmtx, Tnku, gammaPa, gammaPb);
 
                 // Формируем расчетную матрицу Fr(на старте она равна допускаемой Fdop)
                 Fr = Fdop;
@@ -490,14 +543,148 @@ namespace Charaterizator
             // --------------------------------------
 
             // Расчет коэффициентов B
-            resultBmtx = DenseMatrix.Create(24, 1, 0);
+            Matrix<double> BmtxRes = DenseMatrix.Create(24, 1, 0);
             // Расчет коэффициентов B
-            resultBmtx = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx);
+            BmtxRes = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx);
 
             // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
-            Fkn = CalcFkn(rowP, colP, resultBmtx, Rmtx, Umtx, Pn, Kp);
+            Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
+
+            // ФУНКЦИЯ ОБНУЛЕНИЯ ДАТЧИКА
+            //-------------------------------------------------------------------------
+            // В этой функции серьезные проблемы с универсальностью. Буду думать уже в
+            // отпуске. Не успел подумать. Точка по давлению 0 может отсутствовать! И
+            // как быть в этом случае. Обнулить ближайшую к нулю точку по давлению? Буду
+            // думать.А можно точку ноль аппроксимировать и потом обнулять ?
+            // Пока это работает для ДД, ДИ, ДВ.
+            //-------------------------------------------------------------------------
+
+            // Ищем координаты точки с нулевым давлением и на НКУ.
+            int col = -1;
+            for (int i = 0; i < Tmtx.ColumnCount; i++)
+            {
+                if (Tmtx.At(0, i) == 23)
+                {
+                    col = i+1;
+                    break;
+                }                 
+            }
+            if (col == -1)
+            {
+                resultBmtx = DenseMatrix.Create(1, 1, -4);
+                return resultBmtx;
+            }
 
 
+            int row = -1;
+            for (int i = 0; i < rowP; i++)
+            {
+                if (Pmtx.At(i, col) == 0)
+                {
+                    row = i+1;
+                    break;
+                }                    
+            }
+            if (row == -1)
+            {
+                resultBmtx = DenseMatrix.Create(1, 1, -5);
+                return resultBmtx;
+            }
+
+            // Ищем фактические отклонения, но с учетом знака(не по модулю как в CalcFkn)
+            Matrix<double> Fkn_sign = DenseMatrix.Create(rowP, colP, 0);
+
+            // цикл по N(строкам матриц M, P, R, U)
+            for (int N = 0; N < rowP; N++)
+            {
+                // цикл по K(столбцам матриц M, P, R, U)
+                for (int K = 0; K < colP; K++)
+                {
+                    double Fi = 0;
+                    int m = 0;
+                    // цикл по j
+                    for (int j = 0; j < 6; j++)
+                    {
+                        // цикл по i
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Fi = Fi + BmtxRes.At(m,0) * Math.Pow(Rmtx.At(N, K), i) * Math.Pow(Umtx.At(N, K), j); 
+                            m = m + 1;                           
+                        }
+                    }       
+                    Fkn_sign[N, K] = (Fi - Pn.At(N, K)) * 100 * Kp.At(N, K);
+                }
+            }
+
+
+            // Обнуляем фактические отклонения по значению на НКУ и в 0 точке
+            for (int N = 0; N < rowP; N++)
+                {
+                for (int K = 0; K < colP; K++)
+                {
+                    Fkn[N, K] = Math.Abs(Fkn_sign.At(N, K) / Kp.At(N, K) - Fkn_sign.At(row, col) / Kp.At(row, col)) * Kp.At(N, K);
+                }   
+            }
+
+            // Тип датчика
+
+            Vector<double> code_acc = DenseVector.Create(gammaTa.RowCount, 0);
+            code_acc = gammaTa.Column(0, 0, gammaTa.RowCount);
+                        
+            int code_opt = -1;
+
+            // окончательная допускаемая граница по которой определяем код точности с учетом коэф. запаса
+            Matrix<double> Fdop_res = DenseMatrix.Create(rowP, colP, 0);
+            Matrix<double> gamma_P = DenseMatrix.Create(1, 2, 0);
+            Matrix<double> gamma_T = DenseMatrix.Create(1, 2, 0);
+
+            for (int cc = 1; cc < code_acc.Count; cc++)
+            {
+                curCode = Convert.ToInt32(gammaPa.At(cc, 0));
+                for (int i = 0; i < rowP; i++)
+                {
+                    for (int j = 0; j < colP; j++)
+                    {
+                        if (Kp.At(i, j) < Kf)
+                        {
+                            // Получаем коэффициенты а и b осн.приведенной погрешности
+                            gamma_P = CalcGammaP(Kp.At(i, j), code, gammaPa, gammaPb);
+                            // Получаем коэффициенты а и b доп.температурной погрешности
+                            gamma_T = CalcGammaT(code, sens, gammaTa, gammaTb);
+                            // Расчет Fdop
+                            Fdop_res[i, j] = ((gamma_P.At(0, 0) + gamma_P.At(0, 1) * Kp.At(i, j)) + (gamma_T.At(0, 0) + gamma_T.At(0, 1) * Kp.At(i, j)) * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10))*(0.5 + 0.05 * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10)) * 0.9;
+                        }
+
+                        else
+                        {
+                            // Получаем коэффициенты а и b осн.приведенной погрешности
+                            gamma_P = CalcGammaP(Kf, code, gammaPa, gammaPb);
+                            // Получаем коэффициенты а и b доп.температурной погрешности
+                            gamma_T = CalcGammaT(code, sens, gammaTa, gammaTb);
+                            // Расчет Fdop
+                            Fdop_res[i, j] = ((gamma_P.At(0, 0) + gamma_P.At(0, 1) * Kf) + (gamma_T.At(0, 0) + gamma_T.At(0, 1) * Kf) * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10)) *(0.5 + 0.05 * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10)) * 0.9;
+                        }
+                    }
+                }
+
+                Ndop = CalcNdop(rowP, colP, Fkn, Fdop_res);
+
+
+                if (Ndop == Nmax)
+                {
+                    code_opt = curCode;
+                    break;
+                }
+            }
+
+            if (code_opt == -1)
+            {
+                resultBmtx = DenseMatrix.Create(1, 1, -1);  // возвращаем: -6 не попали ни в какой код точности
+                return resultBmtx;
+            }
+
+            resultBmtx = DenseMatrix.Create(24, 1, 0);            
+            resultBmtx = BmtxRes;            
             return resultBmtx;
 
         }
@@ -590,7 +777,7 @@ namespace Charaterizator
         // ----------------------------------------------------------------------------------
         // ФУНКЦИЯ для расчета допустимых отклонений(допускаемой погрешности)
         // ----------------------------------------------------------------------------------
-        public Matrix<double> CalcFdop(int rowP, int colP, int Kf, Matrix<double> Kp, int code, int sens, Matrix<double> Tmtx, double Tnku)
+        public Matrix<double> CalcFdop(int rowP, int colP, int Kf, Matrix<double> Kp, int code, int sens, Matrix<double> Tmtx, double Tnku, Matrix<double> gammaPa, Matrix<double> gammaPb)
         {
             // Создаем матрицу Fdop(размерностью N, K)
             Matrix<double> Fdop = DenseMatrix.Create(rowP, colP, 0);
@@ -605,19 +792,20 @@ namespace Charaterizator
                     if (Kp.At(i, j) < Kf)
                     {
                         // Получаем коэффициенты а и b осн.приведенной погрешности
-                        gamma_P = CalcGammaP(Kp.At(i, j), code);
+                        gamma_P = CalcGammaP(Kp.At(i, j), code, gammaPa, gammaPb);
                         // Получаем коэффициенты а и b доп.температурной погрешности
-                        gamma_T = CalcGammaT(code, sens);
+                        gamma_T = CalcGammaT(code, sens, gammaTa, gammaTb);
                         // Расчет Fdop
                         Fdop[i, j] = (gamma_P.At(0,0) + gamma_P.At(0, 1) * Kp.At(i, j)) + (gamma_T.At(0,0) + gamma_T.At(0, 1) * Kp.At(i, j)) * (Math.Abs(Tmtx.At(0,j) - Tnku)/10);
+           
                     }
 
                     else
                     {
                         // Получаем коэффициенты а и b осн.приведенной погрешности
-                        gamma_P = CalcGammaP(Kf, code);
+                        gamma_P = CalcGammaP(Kf, code, gammaPa, gammaPb);
                         // Получаем коэффициенты а и b доп.температурной погрешности
-                        gamma_T = CalcGammaT(code, sens);
+                        gamma_T = CalcGammaT(code, sens, gammaTa, gammaTb);
                         // Расчет Fdop
                         Fdop[i, j] = (gamma_P.At(0, 0) + gamma_P.At(0, 1) * Kf) + (gamma_T.At(0, 0) + gamma_T.At(0, 1) * Kf) * (Math.Abs(Tmtx.At(0,j) - Tnku)/10);
                     }
@@ -645,36 +833,13 @@ namespace Charaterizator
         // gamma_Pa - коэф.а
         // gamma_Pb - клэф.b
 
-        public Matrix<double> CalcGammaP(double Kp, int code)
+        public Matrix<double> CalcGammaP(double Kp, int code, Matrix<double> gammaPa, Matrix<double> gammaPb)
         {
 
             Matrix<double> gamma_P = DenseMatrix.Create(1, 2, -1);
             int ii = -1;
             int jj = -1;
-
-            // Для датчика ЭНИ-12
-            // Табличные значения
-            // Пределы допускаемой основной приведенной погрешности Коэффициенты а
-            Matrix<double> gammaPa = DenseMatrix.OfArray(new double[,] {
-            {  0,   4,      10,    25  },
-            {  7,   0.075,  0.1,   0.14},
-            { 10,   0.1,    0.1,   0.2 },
-            { 15,   0.15,   0.2,   0.3 },
-            { 20,   0.2,    0.2,   0.4 },
-            { 25,   0.25,   0.3,   0.4 },
-            { 50,   0.5,    0.5,   0.8 }});
-
-
-            // Коэффициенты b
-            Matrix<double> gammaPb = DenseMatrix.OfArray(new double[,] {
-            { 0,    4,   10,      25   },
-            { 7,    0,   0.014,   0.01 },
-            { 10,   0,   0.02,   0.01  },
-            { 15,   0,   0.03,    0.02 },
-            { 20,   0,   0.03,    0.02 },
-            { 25,   0,   0.04,    0.03 },
-            { 50,   0,   0.08,    0.05 }});
-
+                      
 
             int rowPa = gammaPa.RowCount;       // кол-во строк
             int colPa = gammaPa.ColumnCount;    // кол-во столбцов
@@ -728,34 +893,12 @@ namespace Charaterizator
         // gamma_Ta - коэф.а
         // gamma_Tb - клэф.b
 
-        public Matrix<double> CalcGammaT(int code, int sens)
+        public Matrix<double> CalcGammaT(int code, int sens, Matrix<double> gammaTa, Matrix<double> gammaTb)
         {
 
             Matrix<double> gamma_T = DenseMatrix.Create(1, 2, -1);
             int ii = -1;
            
-            // Для датчика ЭНИ-12
-            // Табличные значения
-            // Дополнительная температурная погрешность
-            Matrix<double> gammaTa = DenseMatrix.OfArray(new double[,] {
-            { 0,    1,       2},
-            { 7,    0.04,    0.05},
-            {10,    0.04,    0.05},
-            {15,    0.04,    0.05},
-            {20,    0.05,    0.07},
-            {25,    0.05,    0.07},
-            {50,    0.1,     0.1 }});
-
-
-            // Коэффициенты b
-            Matrix<double> gammaTb = DenseMatrix.OfArray(new double[,] {
-            { 0,     1,       2  },
-            { 7,     0.03,    0.07},
-            { 10,    0.03,    0.07},
-            { 15,    0.03,    0.07},
-            { 20,    0.04,    0.08},
-            { 25,    0.04,    0.08},
-            { 50,    0.05,    0.1 }});
 
             int rowTa = gammaTa.RowCount;       // кол-во строк
             int colTa = gammaTa.ColumnCount;    // кол-во столбцов
