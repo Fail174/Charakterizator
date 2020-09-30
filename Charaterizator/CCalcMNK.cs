@@ -61,7 +61,7 @@ namespace Charaterizator
             { 50,    0.05,    0.1 }});
 
 
-
+        int nm = 0;
 
 
         //-----------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ namespace Charaterizator
 
             if (flag == false)
             {
-                resultBmtx = DenseMatrix.Create(1, 1, -1);  // возвращаем: -2 не верные входные данные
+                resultBmtx = DenseMatrix.Create(1, 1, -2);  // возвращаем: -2 не верные входные данные
                 return resultBmtx;
             }
 
@@ -320,7 +320,8 @@ namespace Charaterizator
                                 if (Fr.At(N, K) != 0)
                                 {
                                     dM = KdM * (Fkn.At(N, K) - Fr.At(N, K)) * M.At(N, K) / Fr.At(N, K);
-                                    M[N, K] = M.At(N, K) + dM;                                    
+                                    M[N, K] = Math.Round(M.At(N, K) + dM, 4);                                    
+                                    //M[N, K] = M.At(N, K) + dM;
                                 }
                                 else
                                 {
@@ -389,11 +390,12 @@ namespace Charaterizator
 
 
 
-           // ---------- ЭТАП - 3 -----------------------------------------------------
-           //  ОСНОВНОЙ АЛГОРИТМ РАСЧЕТА
-           // ПОИСК ОПТИМАЛЬНОГО РЕШЕНИЯ
-           // -------------------------------------------------------------------------
+            // ---------- ЭТАП - 3 -----------------------------------------------------
+            //  ОСНОВНОЙ АЛГОРИТМ РАСЧЕТА
+            // ПОИСК ОПТИМАЛЬНОГО РЕШЕНИЯ
+            // -------------------------------------------------------------------------
 
+           
             //  Рассчет r_opt
             double r = 0;
             double r_opt;
@@ -461,7 +463,7 @@ namespace Charaterizator
                         {
                             for (int K = 0; K < colP; K++)
                             {
-                                r = r + Math.Abs(Fkn.At(N, K)/Fdop.At(N, K));
+                                r = Math.Round(r + Math.Abs(Fkn.At(N, K)/Fdop.At(N, K)), 4);
                             }
                         }
                         r = r / Nmax;
@@ -515,8 +517,9 @@ namespace Charaterizator
                             // нужна проверка для Fr(N, K) не равно нулю, если равно, то выходим из расчета
                             if (Fr.At(N, K) != 0)
                             {
-                                dM = KdM * (Fkn.At(N, K) - Fr.At(N, K)) * M.At(N, K) / Fr.At(N, K);
+                                dM = KdM * (Fkn.At(N, K) - Fr.At(N, K)) * M.At(N, K) / Fr.At(N, K);                              
                                 M[N, K] = M.At(N, K) + dM;
+                                nm++;
                             }
                             else
                             {
@@ -538,17 +541,46 @@ namespace Charaterizator
             } // для for Kmult = 1 : -0.1 : 0.1
 
 
-            // ----------ЭТАП - 4--------------------
-            // ОБРАБОТКА РЕЗУЛЬТАТОВ
-            // --------------------------------------
+        
 
+        // ----------ЭТАП - 4--------------------
+        // ОБРАБОТКА РЕЗУЛЬТАТОВ
+        // --------------------------------------
+        nm = nm + 0;
             // Расчет коэффициентов B
             Matrix<double> BmtxRes = DenseMatrix.Create(24, 1, 0);
             // Расчет коэффициентов B
             BmtxRes = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx);
+/*
+            BmtxRes[0,0] = 0.527342609543531;
+            BmtxRes[1, 0] = -3.865293182609505e-04;
+            BmtxRes[2, 0] = 1.026300362063800e-07;
+            BmtxRes[3, 0] = -9.333675118220151e-12;
+            BmtxRes[4, 0] = -0.123656171426227;
+            BmtxRes[5, 0] = 1.216973142593132e-04;
+            BmtxRes[6, 0] = -3.311124723859655e-08;
+            BmtxRes[7, 0] = 2.963912621442306e-12;
+            BmtxRes[8, 0] = -0.012695803795669;
+            BmtxRes[9, 0] = 1.127025347700269e-05;
+            BmtxRes[10, 0] = -3.319588952698123e-09;
+            BmtxRes[11, 0] = 3.244175414820060e-13;
+            BmtxRes[12, 0] = 0.001335065164757;
+            BmtxRes[13, 0] = -1.176518217828281e-06;
+            BmtxRes[14, 0] = 3.442472834860238e-10;
+            BmtxRes[15, 0] = -3.344181719312444e-14;
+            BmtxRes[16, 0] = -4.494610686899630e-05;
+            BmtxRes[17, 0] = 3.950749426694677e-08;
+            BmtxRes[18, 0] = -1.153243046044599e-11;
+            BmtxRes[19, 0] = 1.117859453310178e-15;
+            BmtxRes[20, 0] = 4.844398720691186e-07;
+            BmtxRes[21, 0] = -4.252267011775080e-10;
+            BmtxRes[22, 0] = 1.239627318210713e-13;
+            BmtxRes[23, 0] = -1.200112421064509e-17;
+          */
 
-            // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
-            Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
+
+             // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
+             Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
 
             // ФУНКЦИЯ ОБНУЛЕНИЯ ДАТЧИКА
             //-------------------------------------------------------------------------
@@ -648,9 +680,9 @@ namespace Charaterizator
                         if (Kp.At(i, j) < Kf)
                         {
                             // Получаем коэффициенты а и b осн.приведенной погрешности
-                            gamma_P = CalcGammaP(Kp.At(i, j), code, gammaPa, gammaPb);
+                            gamma_P = CalcGammaP(Kp.At(i, j), curCode, gammaPa, gammaPb);
                             // Получаем коэффициенты а и b доп.температурной погрешности
-                            gamma_T = CalcGammaT(code, sens, gammaTa, gammaTb);
+                            gamma_T = CalcGammaT(curCode, sens, gammaTa, gammaTb);
                             // Расчет Fdop
                             Fdop_res[i, j] = ((gamma_P.At(0, 0) + gamma_P.At(0, 1) * Kp.At(i, j)) + (gamma_T.At(0, 0) + gamma_T.At(0, 1) * Kp.At(i, j)) * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10))*(0.5 + 0.05 * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10)) * 0.9;
                         }
@@ -658,9 +690,9 @@ namespace Charaterizator
                         else
                         {
                             // Получаем коэффициенты а и b осн.приведенной погрешности
-                            gamma_P = CalcGammaP(Kf, code, gammaPa, gammaPb);
+                            gamma_P = CalcGammaP(Kf, curCode, gammaPa, gammaPb);
                             // Получаем коэффициенты а и b доп.температурной погрешности
-                            gamma_T = CalcGammaT(code, sens, gammaTa, gammaTb);
+                            gamma_T = CalcGammaT(curCode, sens, gammaTa, gammaTb);
                             // Расчет Fdop
                             Fdop_res[i, j] = ((gamma_P.At(0, 0) + gamma_P.At(0, 1) * Kf) + (gamma_T.At(0, 0) + gamma_T.At(0, 1) * Kf) * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10)) *(0.5 + 0.05 * (Math.Abs(Tmtx.At(0, j) - Tnku) / 10)) * 0.9;
                         }
@@ -769,11 +801,14 @@ namespace Charaterizator
             Bmtx = DenseMatrix.Create(24, 1, 0);
             Bmtx = Amtx.Solve(Cmtx);
 
+            // другой метод
+            //Bmtx = Cmtx.Multiply(Amtx.Inverse());
+
+
             return Bmtx;
         }
 
-
-
+      
         // ----------------------------------------------------------------------------------
         // ФУНКЦИЯ для расчета допустимых отклонений(допускаемой погрешности)
         // ----------------------------------------------------------------------------------
