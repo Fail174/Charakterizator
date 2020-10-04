@@ -1856,6 +1856,23 @@ namespace Charaterizator
         {
             TimerTickCount++;
 
+            // Опрос датчиков температуры
+            if (ThermalCamera.Connected)
+            {
+                tbTemperature.Text = Convert.ToString(ThermalCamera.ReadData());
+            }
+            else
+            {
+                if (btnThermalCamera.BackColor != Color.IndianRed)
+                {
+                    btnThermalCamera.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    btnThermalCamera.BackColor = Color.Transparent;
+                }
+            }
+
             // Опрос состояния коммутатора
             if (Commutator.Connected)
             {
@@ -5962,9 +5979,26 @@ namespace Charaterizator
 
         }
 
-
-
-
+        private void btnThermalCamera_Click_1(object sender, EventArgs e)
+        {
+            //MultimetrReadError = 0;
+            if (ThermalCamera.Connect(Properties.Settings.Default.COMColdCamera,
+                Properties.Settings.Default.COMColdCamera_Speed,
+                Properties.Settings.Default.COMColdCamera_DataBits,
+                Properties.Settings.Default.COMColdCamera_StopBits,
+                Properties.Settings.Default.COMColdCamera_Parity) >= 0)
+            {
+                btnThermalCamera.BackColor = Color.Green;
+                btnThermalCamera.Text = "Подключен";
+                Program.txtlog.WriteLineLog("Датчик температуры подключен", 0);
+            }
+            else
+            {
+                btnThermalCamera.BackColor = Color.IndianRed;
+                btnThermalCamera.Text = "Не подключен";
+                Program.txtlog.WriteLineLog("Датик температуры не подключен", 1);
+            }
+        }
     }
 }
 
