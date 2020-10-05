@@ -5864,8 +5864,12 @@ namespace Charaterizator
         private void button2_Click(object sender, EventArgs e)
         {
 
+
+
             //-----------------------------------------------------------------------------------
             // ИСХОДНЫЕ ДАННЫЕ (должны передаваться в функцию при вызове) 
+            //Тип дптчика
+            string Type = "ЭНИ12-2150.txt";
 
             // маскимальный ВПИ (определяется по переменным датчика)
             double Pmax = 2500;
@@ -5917,10 +5921,42 @@ namespace Charaterizator
 
             // Массив температур, должен соответствовать столбцам матриц P, U, R
             Matrix<double> Tmtx = DenseMatrix.OfArray(new double[,] { { -40, -10, 23, 50, 80 } });
-            //-----------------------------------------------------------------------------------
+         
 
             // Тип датчика для определения температурной погрешности
-            int sens = 1;  //1 - ; 2 - ; 
+            int sens = 1;  //1 - (ДД, ДИ, ДА, ДВ, ДИВ); 2 - (ДГ - 25хх) 
+
+            // Считанные из текстового файла данные для расчета коэффициентов с помощью МНК
+            // Пределы допускаемой основной приведенной погрешности коэффициенты а и b
+            // и дополнительной температурной погрешности коэффициенты a и b
+            string path = Properties.Settings.Default.FileNameDB;
+            string[] words = path.Split(new char[] { '\\' });
+            words[words.Length - 1] = Type;
+            path = "";
+            for (int i = 0; i < words.Length-1; i++)
+            {
+                path = path + words[i] + "\\";
+            }
+            path = path + words[words.Length - 1];
+
+            //int len = words.Length;
+            //string word = words[len - 1]; 
+
+            StreamReader sr = new StreamReader(path);
+            string line;
+            Matrix<double> koefA;
+            try
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    
+
+                }
+            }                      
+            catch
+            {
+            }
+
 
 
             // Вызов функции
@@ -5961,6 +5997,8 @@ namespace Charaterizator
             }
 
         }
+
+
 
 
 
