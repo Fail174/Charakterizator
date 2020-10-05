@@ -1856,6 +1856,23 @@ namespace Charaterizator
         {
             TimerTickCount++;
 
+            // Опрос датчиков температуры
+            if (ThermalCamera.Connected)
+            {
+                tbTemperature.Text = Convert.ToString(ThermalCamera.ReadData());
+            }
+            else
+            {
+                if (btnThermalCamera.BackColor != Color.IndianRed)
+                {
+                    btnThermalCamera.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    btnThermalCamera.BackColor = Color.Transparent;
+                }
+            }
+
             // Опрос состояния коммутатора
             if (Commutator.Connected)
             {
@@ -5864,12 +5881,8 @@ namespace Charaterizator
         private void button2_Click(object sender, EventArgs e)
         {
 
-
-
             //-----------------------------------------------------------------------------------
             // ИСХОДНЫЕ ДАННЫЕ (должны передаваться в функцию при вызове) 
-            //Тип дптчика
-            string Type = "ЭНИ12-2150.txt";
 
             // маскимальный ВПИ (определяется по переменным датчика)
             double Pmax = 2500;
@@ -5921,42 +5934,10 @@ namespace Charaterizator
 
             // Массив температур, должен соответствовать столбцам матриц P, U, R
             Matrix<double> Tmtx = DenseMatrix.OfArray(new double[,] { { -40, -10, 23, 50, 80 } });
-         
+            //-----------------------------------------------------------------------------------
 
             // Тип датчика для определения температурной погрешности
-            int sens = 1;  //1 - (ДД, ДИ, ДА, ДВ, ДИВ); 2 - (ДГ - 25хх) 
-
-            // Считанные из текстового файла данные для расчета коэффициентов с помощью МНК
-            // Пределы допускаемой основной приведенной погрешности коэффициенты а и b
-            // и дополнительной температурной погрешности коэффициенты a и b
-            string path = Properties.Settings.Default.FileNameDB;
-            string[] words = path.Split(new char[] { '\\' });
-            words[words.Length - 1] = Type;
-            path = "";
-            for (int i = 0; i < words.Length-1; i++)
-            {
-                path = path + words[i] + "\\";
-            }
-            path = path + words[words.Length - 1];
-
-            //int len = words.Length;
-            //string word = words[len - 1]; 
-
-            StreamReader sr = new StreamReader(path);
-            string line;
-            Matrix<double> koefA;
-            try
-            {
-                while ((line = sr.ReadLine()) != null)
-                {
-                    
-
-                }
-            }                      
-            catch
-            {
-            }
-
+            int sens = 1;  //1 - ; 2 - ; 
 
 
             // Вызов функции
@@ -5998,11 +5979,26 @@ namespace Charaterizator
 
         }
 
-
-
-
-
-
+        private void btnThermalCamera_Click_1(object sender, EventArgs e)
+        {
+            //MultimetrReadError = 0;
+            if (ThermalCamera.Connect(Properties.Settings.Default.COMColdCamera,
+                Properties.Settings.Default.COMColdCamera_Speed,
+                Properties.Settings.Default.COMColdCamera_DataBits,
+                Properties.Settings.Default.COMColdCamera_StopBits,
+                Properties.Settings.Default.COMColdCamera_Parity) >= 0)
+            {
+                btnThermalCamera.BackColor = Color.Green;
+                btnThermalCamera.Text = "Подключен";
+                Program.txtlog.WriteLineLog("Датчик температуры подключен", 0);
+            }
+            else
+            {
+                btnThermalCamera.BackColor = Color.IndianRed;
+                btnThermalCamera.Text = "Не подключен";
+                Program.txtlog.WriteLineLog("Датик температуры не подключен", 1);
+            }
+        }
     }
 }
 

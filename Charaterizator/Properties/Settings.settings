@@ -75,10 +75,10 @@
       <Value Profile="(Default)">COM4</Value>
     </Setting>
     <Setting Name="COMColdCamera_Speed" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9600</Value>
+      <Value Profile="(Default)">19200</Value>
     </Setting>
     <Setting Name="COMColdCamera_Parity" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="COMColdCamera_StopBits" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>

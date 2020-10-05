@@ -70,13 +70,42 @@ namespace Charaterizator
         public float ReadData()
         {
             float Data;
+            int[] buf = new int[32];
+            int i = 0;
             if (Connected)
             {
-                try
+
+                while ((Port.BytesToRead > 0) && (i < 32))
                 {
-                    Port.WriteLine("MEAS:VOLT:DC? 10, 0.001");
-                    string str = Port.ReadLine();
-                    Data = Convert.ToSingle(str);
+                    buf[i] = Port.ReadByte();
+                    i++;
+                }
+
+                try
+                {//Read Holding Registers (0x03)
+                    byte[] data = new byte[8];                    data[0] = 1;//адрес устройства
+                    data[1] = 3;//код функции
+
+                    data[2] = 0;//начальный адрес рег
+                    data[3] = 0;
+
+                    data[4] = 0;//количество регистров
+                    data[5] = 0xD;
+
+                    int c = CRC16(data, 6);
+                    data[6] = (byte)(c & 0xFF);
+                    data[7] = (byte)((c>>8) & 0xFF);
+
+                    Port.Write(data, 0, data.Length);
+
+                    i = 0;
+                    while (( Port.BytesToRead> 0)&&(i<32))
+                    {
+                        buf[i] = Port.ReadByte();
+                        i++;
+                    }
+                    int tmp = (buf[3] << 24) | (buf[4] << 16) | (buf[5] << 8) | buf[6];
+                    Data = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
                     return Data;
                 }
                 catch
@@ -92,6 +121,23 @@ namespace Charaterizator
         }
 
 
+        int CRC16(byte[] pdata, int length)
+        {
+            int flag, crc = 0xFFFF;
+            for (int i = 0; i < length; i++)
+            {
+                crc = crc ^ pdata[i];
+                for (int j = 1; j <= 8; j++)
+                {
+                    flag = crc & 0x0001;
+                    crc = crc >> 1;
+                    if (flag==0)
+                        crc = crc ^ 0xA001;
+                }
+            }
+            //Меняем байты результата местами: младшим вперед
+            return ((crc & 0x00FF) << 8) + ((crc & 0xFF00) >> 8);
+        }
         public void WriteData(double val)
         {
             point = val;//уставка
