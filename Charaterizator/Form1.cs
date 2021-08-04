@@ -696,14 +696,14 @@ namespace Charaterizator
                     tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
                     tbInfoHardVersion.Text = sensors.sensor.v4.ToString();
 
-                    DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
-                    dtpInfoDate.Value = dt;
-
                     tbInfoDeviceAdress.Text = sensors.sensor.Addr.ToString("D2");
                     tbInfoFactoryNumber.Text = sensors.sensor.uni.ToString();
                     tbInfoSoftVersion.Text = sensors.sensor.v3.ToString();
                     cbInfoPreambul.Text = sensors.sensor.pre.ToString();
                     tbInfoSensorType.Text = sensors.sensor.GetdevType();
+
+                    DateTime dt = new DateTime(1900 + (int)(sensors.sensor.data & 0xFF), (int)(sensors.sensor.data >> 8) & 0xFF, (int)((sensors.sensor.data >> 16) & 0xFF));
+                    dtpInfoDate.Value = dt;
                     /*            string SelectedSensor = sensors.sensor.Addr.ToString("D2") + " | " + sensors.sensor.GetdevType() + " | " + sensors.sensor.uni;
                                 tbCharact.Text = SelectedSensor;
                                 tbCoef.Text = SelectedSensor;*/
@@ -719,7 +719,7 @@ namespace Charaterizator
                 }
                 catch
                 {
-                    Program.txtlog.WriteLineLog(string.Format("Ошибка заполнения панели информации с датчикаи (Дата: {0}) ", sensors.sensor.data), 1);
+                    Program.txtlog.WriteLineLog(string.Format("Ошибка заполнения информационной панели датчика (Дата: {0}) ", sensors.sensor.data), 1);
                 }
             }
             else

@@ -1216,19 +1216,19 @@ namespace Charaterizator
                             }*/
 
                             sensor.state = (ushort)((indata[0] << 8) | indata[1]);//читаем состояние исполнения команды
-                            if ((sensor.state & 0x00FF) != 0) //команда не выполнена
+                            if ((sensor.state & 0x00FF) != 0) //первый байт статуса
                             {
                                 ReadAvtState = 1;
                                 if (Program.txtlog!= null)
-                                    Program.txtlog.WriteLineLog(string.Format("HART: Не корректный параметр команды {0}. Статус {1}", CommandCod, sensor.state), 1);
+                                    Program.txtlog.WriteLineLog(string.Format("HART: Ошибка выполнения команды {0}. Статус {1}", CommandCod, sensor.state), 1);
                                 return -7;
                             }
-                            if ((sensor.state & 0xFF00) != 0) //коммуникационная ошибка
+                            if ((sensor.state & 0xFF00) != 0) //второй байт статуса
                             {
                                 ReadAvtState = 1;
                                 if (Program.txtlog != null)
-                                    Program.txtlog.WriteLineLog(string.Format("HART: Коммуникационная ошибка. Команда {0} не выполнена. Статус {1}", CommandCod, sensor.state), 1);
-                                return -8;
+                                    Program.txtlog.WriteLineLog(string.Format("HART: Неисправность прибора. Команда {0}. Статус {1}", CommandCod, sensor.state), 1);
+                                //return -8;  04.08.2021 При не нулевом статусе продолжаем парсинг
                             }
                             switch (CommandCod)
                             {
