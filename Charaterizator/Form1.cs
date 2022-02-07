@@ -205,8 +205,7 @@ namespace Charaterizator
 
 
                 CCalcMNK.Kf = Properties.Settings.Default.set_Math_Kf;
-                CCalcMNK.Kpmax_dop = Properties.Settings.Default.set_Math_Kmax_dop;
-                CCalcMNK.code = Properties.Settings.Default.set_Math_Code;
+                CCalcMNK.Kpmax_dop = Properties.Settings.Default.set_Math_Kmax_dop;              
                 CCalcMNK.Amax = Properties.Settings.Default.set_Math_Amax;
                 CCalcMNK.Mmax = Properties.Settings.Default.set_Math_Mmax;
                 CCalcMNK.Tnku = Properties.Settings.Default.set_Math_Tnku;
@@ -214,7 +213,7 @@ namespace Charaterizator
                 CCalcMNK.deltaFdop_min = Properties.Settings.Default.set_Math_DFdop_min;
                 CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
                 AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
-
+                
 
                 string strFileNameDB = Properties.Settings.Default.FileNameDB;   // получаем путь и имя файла из Settings
                 SensorsDB.SetConnectionDB(strFileNameDB);                        // устанавливаем соединение с БД    
@@ -3536,7 +3535,7 @@ namespace Charaterizator
 
                 CCalcMNK.Kf = Properties.Settings.Default.set_Math_Kf;
                 CCalcMNK.Kpmax_dop = Properties.Settings.Default.set_Math_Kmax_dop;
-                CCalcMNK.code = Properties.Settings.Default.set_Math_Code;
+                //CCalcMNK.code = Properties.Settings.Default.set_Math_Code;
                 CCalcMNK.Amax = Properties.Settings.Default.set_Math_Amax;
                 CCalcMNK.Mmax = Properties.Settings.Default.set_Math_Mmax;
                 CCalcMNK.Tnku = Properties.Settings.Default.set_Math_Tnku;
@@ -5881,9 +5880,11 @@ namespace Charaterizator
         private void button2_Click(object sender, EventArgs e)
         {
 
+            /////////////////////////////////////////////////////////////////////////////////////
             //-----------------------------------------------------------------------------------
-            // ИСХОДНЫЕ ДАННЫЕ (должны передаваться в функцию при вызове) 
+            // ИСХОДНЫЕ ДАННЫЕ (должны передаваться в функцию при вызове)                       
 
+            // ТЕСТОВЫЕ ДАННЫЕ (Удалить!!!)           
             // маскимальный ВПИ (определяется по переменным датчика)
             double Pmax = 2500;
 
@@ -5894,90 +5895,251 @@ namespace Charaterizator
             {1000,  1000,  1000,  1000,  1000},
             {1500,  1500,  1500,  1500,  1500},
             {2000,  2000,  2000,  2000,  2000},
-            {2500,  2500,  2500,  2500,  2500},
-            {2500,  2500,  2500,  2500,  2500},
-            {2000,  2000,  2000,  2000,  2000},
-            {1500,  1500,  1500,  1500,  1500},
-            {1000,  1000,  1000,  1000,  1000},
-            {250,   250,   250,   250,   250 },
-            {0,     0,     0,     0,     0   }});
+            {2500,  2500,  2500,  2500,  2500 }});
 
             // Матрица напряжений
             Matrix<double> Umtx = DenseMatrix.OfArray(new double[,]{
-            {-1.673,  -1.4948,  -1.354,   -1.2526,  -1.1462},
-            { 2.583,   2.6908,   2.8463,   3.0026,   3.1901},
-            {15.353,  15.2495,  15.4513,  15.7709,  16.2098},
-            {23.855,  23.6162,  23.8532,  24.2821,  24.8896},
-            {32.352,  31.9798,  32.2514,  32.7917,  33.5692},
-            {40.842,  40.3387,  40.6466,  41.3001,  42.249 },
-            {40.842,  40.339,   40.647,   41.300,   42.249 },
-            {32.352,  31.980,   32.251,   32.792,   33.569 },
-            {23.855,  23.616,   23.853,   24.282,   24.890 },
-            {15.353,  15.250,   15.451,   15.771,   16.210 },
-            {2.583,   2.691,    2.846,    3.003,    3.190  },
-            {-1.673, -1.495,   -1.354,   -1.253,   -1.146  }});
+            { -6.9079, -6.6362, -6.4953, -6.4372, -6.3767 },
+            { 8.0484,   8.0487,  8.2438,  8.4995,  8.8586 },
+            { 52.8682,  52.0685, 52.4278, 53.2982, 54.5647},
+            { 82.7161,  81.3901, 81.8712, 83.1511, 85.0243},
+            { 112.5435, 110.6972, 111.3043, 113.0021, 115.4867 },
+            { 142.3511, 139.9968, 140.7329, 142.849,  145.9471 } });
+
 
             // Матрица Сопротивлений
             Matrix<double> Rmtx = DenseMatrix.OfArray(new double[,]{
-            {3012.5,      3187.3,      3437.8,      3687,        3982.6001},
-            {3012.3999,   3187.6001,   3437.7,      3687.2,      3983     },
-            {3012.2,      3187.3,      3437.7,      3687,        3983     },
-            {3012.2,      3187.2,      3439.8,      3687,        3983.3   },
-            {3012.3999,   3187.5,      3439.7,      3687.2,      3983.7   },
-            {3012.6001,   3188,        3439.7,      3687.5,      3984.1001},
-            {3012.600,    3188.000,    3439.700,    3687.500,    3984.100 },
-            {3012.400,    3187.500,    3439.700,    3687.200,    3983.700 },
-            {3012.200,    3187.200,    3439.800,    3687.000,    3983.300 },
-            {3012.200,    3187.300,    3437.700,    3687.000,    3983.000 },
-            {3012.400,    3187.600,    3437.700,    3687.200,    3983.000 },
-            {3012.500,    3187.300,    3437.800,    3687.000,    3982.600 } });
+            { 2828.8,   2999.5,   3236,   3482.8,  3769.8 },
+            { 2828.7,   2999.5,   3235.8999, 3482.7, 3769.7 },
+            { 2828.3999, 2999.3,  3235.6001, 3482.5, 3769.3999 },
+            { 2828.3999,  2999.3999, 3235.3999,  3482.3, 3769.2 },
+            { 2828.3999,  2999.3999, 3235.3999,  3482.2, 3769.1001 },
+            { 2828.3999,  2999.3999, 3235.3999,  3482.3,  3769.1001 } });
 
+                                 
             // Массив температур, должен соответствовать столбцам матриц P, U, R
             Matrix<double> Tmtx = DenseMatrix.OfArray(new double[,] { { -40, -10, 23, 50, 80 } });
+
             //-----------------------------------------------------------------------------------
-
-            // Тип датчика для определения температурной погрешности
-            int sens = 1;  //1 - ; 2 - ; 
+            //////////////////////////////////////////////////////////////////////////////////////
 
 
-            // Вызов функции
-            Matrix<double> ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, sens);
 
 
-            // Анализ результатов
-            if ((ResulCoefmtx.RowCount == 1) & (ResulCoefmtx.ColumnCount == 1))
+            /////////////////////////////////////////////////////////////////////////////////////
+            //-----------------------------------------------------------------------------------
+            // ТАБЛИЧНЫЕ ДАННЫЕ - берутся из текстового файла SensPressTempErrors
+
+            // ТЕСТОВЫЕ ДАННЫЕ (Удалить!!!)   
+            // Для датчика ЭНИ-12
+
+            // Табличные значения
+            // Пределы допускаемой основной приведенной погрешности Коэффициенты а
+            Matrix<double> gammaPa = DenseMatrix.OfArray(new double[,] {
+            {  0,   4,      10,     25  },
+            {  0,   0.075,  0.1,    0.14},
+            {  0,   0,      0.014,  0.01 }});
+
+
+           // Для датчика ЭНИ-12
+           // Табличные значения
+           // Дополнительная температурная погрешность
+           Matrix<double> gammaT = DenseMatrix.OfArray(new double[,] {
+            { 0.05,    0.07}});
+
+            //-----------------------------------------------------------------------------------
+            //////////////////////////////////////////////////////////////////////////////////////
+
+
+
+            // --- 1 ---
+            // Загрузка исходных данных:
+            // Название датчика
+            string SensName = "ЭНИ-12";
+            // Маскимальный ВПИ 
+            // Матрица давлений
+            // Матрица напряжений
+            // Матрица Сопротивлений
+            // Массив температур
+
+
+           
+
+            // Матрица с результатами
+            Matrix<double> ResulCoefmtx;
+
+            // Если выбран алгоритм МНК
+            if (AlgorithmMNK == true)
             {
-                switch (ResulCoefmtx.At(0, 0))
+                // Перед расчетом производится
+                // Загрузка данных о погрешностях gammaP и gammaТ из текстового файла SensPressTempErrors
+                
+                string path = Properties.Settings.Default.FileNameDB;
+                string[] rr = Properties.Settings.Default.FileNameDB.Split(new char[] { '\\' });
+                int fnum = rr.Length;
+                path = path.Replace(rr[fnum - 1], "SensPressTempErrors.txt");
+
+                StreamReader reader;
+                string line;
+                string[] wordsLine;
+                int len;
+                Matrix<double> gammaPaTest = DenseMatrix.Create(3, 30, -1); ;
+                Matrix<double> gammaTaTest = DenseMatrix.Create(1, 2, 1);
+                int fContinue = 0;
+
+                try
                 {
-                    case -3:
+                    reader = new StreamReader(path);
+                    while (((line = reader.ReadLine()) != null) & (fContinue == 0))
+                    {
+
+                        wordsLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        // Находим нужный датчик
+                        if (String.Compare(wordsLine[0], SensName) == 0)
                         {
-                            Program.txtlog.WriteLineLog("MNK: Решение не найдено! В процессе решения возникла неустранимая ошибка!", 1);
-                            break;
+                            line = reader.ReadLine();
+                            line = reader.ReadLine();
+                            wordsLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            len = wordsLine.Length;
+                            gammaPaTest = DenseMatrix.Create(3, len - 1, 0);
+                            for (int i = 1; i < len; i++)
+                            {
+                                gammaPaTest[0, i - 1] = double.Parse(wordsLine[i].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                            }
+
+                            line = reader.ReadLine();
+                            wordsLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            for (int i = 1; i < len; i++)
+                            {
+                                gammaPaTest[1, i - 1] = double.Parse(wordsLine[i].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                            }
+
+                            line = reader.ReadLine();
+                            wordsLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            for (int i = 1; i < len; i++)
+                            {
+                                gammaPaTest[2, i - 1] = double.Parse(wordsLine[i].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                            }
+
+                            line = reader.ReadLine();
+                            line = reader.ReadLine();
+                            wordsLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            gammaTaTest[0, 0] = double.Parse(wordsLine[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+
+                            line = reader.ReadLine();
+                            wordsLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            gammaTaTest[0, 1] = double.Parse(wordsLine[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+
+                            fContinue = 1;
+
                         }
-                    case -2:
+                    }
+                }
+
+                catch (Exception)
+                {
+                    fContinue = -1;
+                }
+
+
+                // Проверка  загружены ли данные из файла
+                switch (fContinue)
+                {
+                    case -1: // не загружены
                         {
-                            Program.txtlog.WriteLineLog("MNK: Решение не найдено! Обнаружено не соответствие входных данных!", 1);
-                            break;
-                        }
-                    case -1:
-                        {
-                            Program.txtlog.WriteLineLog("MNK: Решение не найдено! Алгоритму не удалось найти решение удовлетворяющее настройкам", 1);
-                            break;
-                        }
-                    case 0:
-                        {
-                            Program.txtlog.WriteLineLog("MNK: ОК", 1);
+                            Program.txtlog.WriteLineLog("Ошибка чтения данных из файла SensPressTempErrors.txt (либо файл не найден, либо не верно заполнен!)");
                             break;
                         }
 
+                    case 0: // не загружены
+                        {
+                            Program.txtlog.WriteLineLog("В файле SensPressTempErrors.txt не обнаружены данные о погрешностях для заданного датчика!");
+                            break;
+                        }
+
+                    case 1: // загружены
+                        {
+
+                            try
+                            {
+                                // Вызов функции расчета коэффициентов методом наименьших квадратов (МНК) 
+                                ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, gammaPaTest, gammaTaTest);
+
+                                // Анализ результатов
+                                if ((ResulCoefmtx.RowCount == 1) & (ResulCoefmtx.ColumnCount == 1))
+                                {
+                                    switch (ResulCoefmtx.At(0, 0))
+                                    {
+                                        case -4:
+                                            {
+                                                Program.txtlog.WriteLineLog("MNK: Решение не найдено! Рассчитанная матрица допустимых отклонений Fdop имеет нулевые значения", 1);
+                                                break;
+                                            }
+                                        case -3:
+                                            {
+                                                Program.txtlog.WriteLineLog("MNK: Решение не найдено! Маскимальный ВПИ! равен 0", 1);
+                                                break;
+                                            }
+                                        case -2:
+                                            {
+                                                Program.txtlog.WriteLineLog("MNK: Решение не найдено! Обнаружено не соответствие входных данных по размеру матриц (P, U, R, T)!", 1);
+                                                break;
+                                            }
+                                        case -1:
+                                            {
+                                                Program.txtlog.WriteLineLog("MNK: Решение не найдено! Считаны не верные данные о погрешностях из текстового файла", 1);
+                                                break;
+                                            }
+                                        case 0:
+                                            {
+                                                Program.txtlog.WriteLineLog("MNK: Решение не найдено! Не удалось решить матричное уравнение и найти коэффициенты B", 1);
+                                                break;
+                                            }
+                                    }
+                                }
+                                else
+                                {
+                                    Program.txtlog.WriteLineLog("MNK: Решение найдено!", 0);
+
+                                }
+                                break;
+                            }
+                            catch(Exception)
+                            {
+                                Program.txtlog.WriteLineLog("MNK: Решение не найдено! Возникла непредвиденная ошибка в алгоритме расчета коэффициентов!", 1);
+                                break;
+                            }
+                        }
                 }
+
+
             }
+
+
+            // Если выбран классический алгоритм
             else
             {
-                Program.txtlog.WriteLineLog("MNK: Решение найдено!", 0);
+                try
+                {
+                    // Вызов функции расчета коэффициентов классическим методом                
+                    ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx);
+                    Program.txtlog.WriteLineLog("Решение найдено!", 0);
+                }
+                catch
+                {
+                    Program.txtlog.WriteLineLog("Решение не найдено! Возникла непредвиденная ошибка в при расчете коэффициентов!", 1);
+                }
+                
+                
             }
 
+
         }
+
+
+
+
+
 
         private void btnThermalCamera_Click_1(object sender, EventArgs e)
         {

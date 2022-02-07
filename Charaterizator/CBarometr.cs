@@ -73,6 +73,7 @@ namespace Charaterizator
                     while (Port.BytesToRead > 0)
                     {
                         d = Port.ReadByte();
+                    }
                     // Запускаем поток
                     ReadThreadBar = new Thread(BarReadThread);
                     ReadThreadBar.Priority = ThreadPriority.Normal;
@@ -80,6 +81,7 @@ namespace Charaterizator
                     Thread.Sleep(1000);
                     Connected = true;
                     return 0;
+                    
                 }
                 else
                 {

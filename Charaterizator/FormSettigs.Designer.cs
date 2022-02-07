@@ -136,30 +136,26 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.tp_CalcParam = new System.Windows.Forms.TabPage();
+            this.tbMath_Fr_min = new System.Windows.Forms.NumericUpDown();
+            this.textBox43 = new System.Windows.Forms.TextBox();
+            this.tbMath_DFdop_min = new System.Windows.Forms.NumericUpDown();
+            this.textBox34 = new System.Windows.Forms.TextBox();
+            this.tbMath_KdM = new System.Windows.Forms.NumericUpDown();
+            this.textBox30 = new System.Windows.Forms.TextBox();
+            this.tbMath_Tnku = new System.Windows.Forms.NumericUpDown();
+            this.tbMath_Mmax = new System.Windows.Forms.NumericUpDown();
+            this.tbMath_Amax = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rbMNK = new System.Windows.Forms.RadioButton();
             this.rbLinear = new System.Windows.Forms.RadioButton();
             this.textBox29 = new System.Windows.Forms.TextBox();
-            this.tbMath_Code = new System.Windows.Forms.NumericUpDown();
-            this.textBox31 = new System.Windows.Forms.TextBox();
             this.textBox32 = new System.Windows.Forms.TextBox();
             this.tbMath_Kmax_dop = new System.Windows.Forms.NumericUpDown();
             this.tbMath_Kf = new System.Windows.Forms.NumericUpDown();
             this.textBox35 = new System.Windows.Forms.TextBox();
             this.textBox37 = new System.Windows.Forms.TextBox();
-            this.textBox39 = new System.Windows.Forms.TextBox();
-            this.textBox40 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.tbMath_Amax = new System.Windows.Forms.NumericUpDown();
-            this.tbMath_Mmax = new System.Windows.Forms.NumericUpDown();
-            this.tbMath_Tnku = new System.Windows.Forms.NumericUpDown();
-            this.tbMath_KdM = new System.Windows.Forms.NumericUpDown();
-            this.textBox30 = new System.Windows.Forms.TextBox();
-            this.tbMath_DFdop_min = new System.Windows.Forms.NumericUpDown();
-            this.textBox34 = new System.Windows.Forms.TextBox();
-            this.tbMath_Fr_min = new System.Windows.Forms.NumericUpDown();
-            this.textBox43 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -196,16 +192,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).BeginInit();
             this.tp_CalcParam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Fr_min)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_DFdop_min)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_KdM)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Tnku)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Mmax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Amax)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Code)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Amax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Mmax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Tnku)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_KdM)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_DFdop_min)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Fr_min)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -1637,15 +1632,11 @@
             this.tp_CalcParam.Controls.Add(this.tbMath_Amax);
             this.tp_CalcParam.Controls.Add(this.groupBox3);
             this.tp_CalcParam.Controls.Add(this.textBox29);
-            this.tp_CalcParam.Controls.Add(this.tbMath_Code);
-            this.tp_CalcParam.Controls.Add(this.textBox31);
             this.tp_CalcParam.Controls.Add(this.textBox32);
             this.tp_CalcParam.Controls.Add(this.tbMath_Kmax_dop);
             this.tp_CalcParam.Controls.Add(this.tbMath_Kf);
             this.tp_CalcParam.Controls.Add(this.textBox35);
             this.tp_CalcParam.Controls.Add(this.textBox37);
-            this.tp_CalcParam.Controls.Add(this.textBox39);
-            this.tp_CalcParam.Controls.Add(this.textBox40);
             this.tp_CalcParam.Controls.Add(this.textBox41);
             this.tp_CalcParam.Location = new System.Drawing.Point(4, 24);
             this.tp_CalcParam.Name = "tp_CalcParam";
@@ -1655,11 +1646,166 @@
             this.tp_CalcParam.Text = "Параметры расчета";
             this.tp_CalcParam.UseVisualStyleBackColor = true;
             // 
+            // tbMath_Fr_min
+            // 
+            this.tbMath_Fr_min.DecimalPlaces = 3;
+            this.tbMath_Fr_min.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.tbMath_Fr_min.Location = new System.Drawing.Point(595, 174);
+            this.tbMath_Fr_min.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbMath_Fr_min.Name = "tbMath_Fr_min";
+            this.tbMath_Fr_min.Size = new System.Drawing.Size(100, 21);
+            this.tbMath_Fr_min.TabIndex = 129;
+            this.tbMath_Fr_min.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            // 
+            // textBox43
+            // 
+            this.textBox43.Location = new System.Drawing.Point(52, 174);
+            this.textBox43.Name = "textBox43";
+            this.textBox43.Size = new System.Drawing.Size(544, 21);
+            this.textBox43.TabIndex = 128;
+            this.textBox43.Text = "Минимальная расчетная граница, Fr_min";
+            // 
+            // tbMath_DFdop_min
+            // 
+            this.tbMath_DFdop_min.DecimalPlaces = 4;
+            this.tbMath_DFdop_min.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.tbMath_DFdop_min.Location = new System.Drawing.Point(595, 155);
+            this.tbMath_DFdop_min.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbMath_DFdop_min.Name = "tbMath_DFdop_min";
+            this.tbMath_DFdop_min.Size = new System.Drawing.Size(100, 21);
+            this.tbMath_DFdop_min.TabIndex = 127;
+            this.tbMath_DFdop_min.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            // 
+            // textBox34
+            // 
+            this.textBox34.Location = new System.Drawing.Point(52, 155);
+            this.textBox34.Name = "textBox34";
+            this.textBox34.Size = new System.Drawing.Size(544, 21);
+            this.textBox34.TabIndex = 126;
+            this.textBox34.Text = "Допускаемый минимальный шаг расчетной границы,  deltaFdop_min";
+            // 
+            // tbMath_KdM
+            // 
+            this.tbMath_KdM.DecimalPlaces = 2;
+            this.tbMath_KdM.Location = new System.Drawing.Point(595, 135);
+            this.tbMath_KdM.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.tbMath_KdM.Name = "tbMath_KdM";
+            this.tbMath_KdM.Size = new System.Drawing.Size(100, 21);
+            this.tbMath_KdM.TabIndex = 125;
+            this.tbMath_KdM.Value = new decimal(new int[] {
+            33,
+            0,
+            0,
+            131072});
+            // 
+            // textBox30
+            // 
+            this.textBox30.Location = new System.Drawing.Point(52, 135);
+            this.textBox30.Name = "textBox30";
+            this.textBox30.Size = new System.Drawing.Size(544, 21);
+            this.textBox30.TabIndex = 124;
+            this.textBox30.Text = "Коэффициент регулировки при расчете шага веса, KdM ";
+            // 
+            // tbMath_Tnku
+            // 
+            this.tbMath_Tnku.DecimalPlaces = 1;
+            this.tbMath_Tnku.Location = new System.Drawing.Point(595, 115);
+            this.tbMath_Tnku.Maximum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+            this.tbMath_Tnku.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.tbMath_Tnku.Name = "tbMath_Tnku";
+            this.tbMath_Tnku.Size = new System.Drawing.Size(100, 21);
+            this.tbMath_Tnku.TabIndex = 123;
+            this.tbMath_Tnku.Value = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            // 
+            // tbMath_Mmax
+            // 
+            this.tbMath_Mmax.Location = new System.Drawing.Point(595, 95);
+            this.tbMath_Mmax.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.tbMath_Mmax.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbMath_Mmax.Name = "tbMath_Mmax";
+            this.tbMath_Mmax.Size = new System.Drawing.Size(100, 21);
+            this.tbMath_Mmax.TabIndex = 122;
+            this.tbMath_Mmax.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
+            // tbMath_Amax
+            // 
+            this.tbMath_Amax.Location = new System.Drawing.Point(595, 75);
+            this.tbMath_Amax.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.tbMath_Amax.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbMath_Amax.Name = "tbMath_Amax";
+            this.tbMath_Amax.Size = new System.Drawing.Size(100, 21);
+            this.tbMath_Amax.TabIndex = 121;
+            this.tbMath_Amax.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.rbMNK);
             this.groupBox3.Controls.Add(this.rbLinear);
-            this.groupBox3.Location = new System.Drawing.Point(52, 245);
+            this.groupBox3.Location = new System.Drawing.Point(52, 225);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(643, 82);
             this.groupBox3.TabIndex = 120;
@@ -1692,45 +1838,15 @@
             // 
             // textBox29
             // 
-            this.textBox29.Location = new System.Drawing.Point(52, 95);
+            this.textBox29.Location = new System.Drawing.Point(52, 75);
             this.textBox29.Name = "textBox29";
             this.textBox29.Size = new System.Drawing.Size(544, 21);
             this.textBox29.TabIndex = 118;
             this.textBox29.Text = "Максимальное количество циклов поиска, Amax";
             // 
-            // tbMath_Code
-            // 
-            this.tbMath_Code.Location = new System.Drawing.Point(595, 75);
-            this.tbMath_Code.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tbMath_Code.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbMath_Code.Name = "tbMath_Code";
-            this.tbMath_Code.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_Code.TabIndex = 117;
-            this.tbMath_Code.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            // 
-            // textBox31
-            // 
-            this.textBox31.Location = new System.Drawing.Point(52, 75);
-            this.textBox31.Name = "textBox31";
-            this.textBox31.Size = new System.Drawing.Size(544, 21);
-            this.textBox31.TabIndex = 116;
-            this.textBox31.Text = "Код погрешности, code";
-            // 
             // textBox32
             // 
-            this.textBox32.Location = new System.Drawing.Point(52, 135);
+            this.textBox32.Location = new System.Drawing.Point(52, 115);
             this.textBox32.Name = "textBox32";
             this.textBox32.Size = new System.Drawing.Size(544, 21);
             this.textBox32.TabIndex = 114;
@@ -1796,23 +1912,9 @@
             this.textBox37.TabIndex = 107;
             this.textBox37.Text = "Максимально допускаемое значение коэффициента перенастройки, Kpmax_dop";
             // 
-            // textBox39
-            // 
-            this.textBox39.Location = new System.Drawing.Point(52, 75);
-            this.textBox39.Name = "textBox39";
-            this.textBox39.Size = new System.Drawing.Size(544, 21);
-            this.textBox39.TabIndex = 108;
-            // 
-            // textBox40
-            // 
-            this.textBox40.Location = new System.Drawing.Point(595, 75);
-            this.textBox40.Name = "textBox40";
-            this.textBox40.Size = new System.Drawing.Size(100, 21);
-            this.textBox40.TabIndex = 109;
-            // 
             // textBox41
             // 
-            this.textBox41.Location = new System.Drawing.Point(52, 115);
+            this.textBox41.Location = new System.Drawing.Point(52, 95);
             this.textBox41.Name = "textBox41";
             this.textBox41.Size = new System.Drawing.Size(544, 21);
             this.textBox41.TabIndex = 110;
@@ -1827,161 +1929,6 @@
             this.bCancelSettings.TabIndex = 33;
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
-            // 
-            // tbMath_Amax
-            // 
-            this.tbMath_Amax.Location = new System.Drawing.Point(595, 95);
-            this.tbMath_Amax.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tbMath_Amax.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbMath_Amax.Name = "tbMath_Amax";
-            this.tbMath_Amax.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_Amax.TabIndex = 121;
-            this.tbMath_Amax.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            // 
-            // tbMath_Mmax
-            // 
-            this.tbMath_Mmax.Location = new System.Drawing.Point(595, 115);
-            this.tbMath_Mmax.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tbMath_Mmax.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbMath_Mmax.Name = "tbMath_Mmax";
-            this.tbMath_Mmax.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_Mmax.TabIndex = 122;
-            this.tbMath_Mmax.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            // 
-            // tbMath_Tnku
-            // 
-            this.tbMath_Tnku.DecimalPlaces = 1;
-            this.tbMath_Tnku.Location = new System.Drawing.Point(595, 135);
-            this.tbMath_Tnku.Maximum = new decimal(new int[] {
-            150,
-            0,
-            0,
-            0});
-            this.tbMath_Tnku.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.tbMath_Tnku.Name = "tbMath_Tnku";
-            this.tbMath_Tnku.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_Tnku.TabIndex = 123;
-            this.tbMath_Tnku.Value = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            // 
-            // tbMath_KdM
-            // 
-            this.tbMath_KdM.DecimalPlaces = 2;
-            this.tbMath_KdM.Location = new System.Drawing.Point(595, 155);
-            this.tbMath_KdM.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tbMath_KdM.Name = "tbMath_KdM";
-            this.tbMath_KdM.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_KdM.TabIndex = 125;
-            this.tbMath_KdM.Value = new decimal(new int[] {
-            33,
-            0,
-            0,
-            131072});
-            // 
-            // textBox30
-            // 
-            this.textBox30.Location = new System.Drawing.Point(52, 155);
-            this.textBox30.Name = "textBox30";
-            this.textBox30.Size = new System.Drawing.Size(544, 21);
-            this.textBox30.TabIndex = 124;
-            this.textBox30.Text = "Коэффициент регулировки при расчете шага веса, KdM ";
-            // 
-            // tbMath_DFdop_min
-            // 
-            this.tbMath_DFdop_min.DecimalPlaces = 4;
-            this.tbMath_DFdop_min.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            262144});
-            this.tbMath_DFdop_min.Location = new System.Drawing.Point(595, 175);
-            this.tbMath_DFdop_min.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbMath_DFdop_min.Name = "tbMath_DFdop_min";
-            this.tbMath_DFdop_min.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_DFdop_min.TabIndex = 127;
-            this.tbMath_DFdop_min.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            262144});
-            // 
-            // textBox34
-            // 
-            this.textBox34.Location = new System.Drawing.Point(52, 175);
-            this.textBox34.Name = "textBox34";
-            this.textBox34.Size = new System.Drawing.Size(544, 21);
-            this.textBox34.TabIndex = 126;
-            this.textBox34.Text = "Допускаемый минимальный шаг расчетной границы,  deltaFdop_min";
-            // 
-            // tbMath_Fr_min
-            // 
-            this.tbMath_Fr_min.DecimalPlaces = 3;
-            this.tbMath_Fr_min.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.tbMath_Fr_min.Location = new System.Drawing.Point(595, 194);
-            this.tbMath_Fr_min.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.tbMath_Fr_min.Name = "tbMath_Fr_min";
-            this.tbMath_Fr_min.Size = new System.Drawing.Size(100, 21);
-            this.tbMath_Fr_min.TabIndex = 129;
-            this.tbMath_Fr_min.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            // 
-            // textBox43
-            // 
-            this.textBox43.Location = new System.Drawing.Point(52, 194);
-            this.textBox43.Name = "textBox43";
-            this.textBox43.Size = new System.Drawing.Size(544, 21);
-            this.textBox43.TabIndex = 128;
-            this.textBox43.Text = "Минимальная расчетная граница, Fr_min";
             // 
             // FormSettings
             // 
@@ -2041,17 +1988,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSensReadCount)).EndInit();
             this.tp_CalcParam.ResumeLayout(false);
             this.tp_CalcParam.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Fr_min)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_DFdop_min)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_KdM)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Tnku)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Mmax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Amax)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Code)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Amax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Mmax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Tnku)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_KdM)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_DFdop_min)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMath_Fr_min)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2168,15 +2114,11 @@
         private System.Windows.Forms.CheckBox cb_AutoRegim;
         private System.Windows.Forms.TabPage tp_CalcParam;
         private System.Windows.Forms.TextBox textBox29;
-        private System.Windows.Forms.NumericUpDown tbMath_Code;
-        private System.Windows.Forms.TextBox textBox31;
         private System.Windows.Forms.TextBox textBox32;
         private System.Windows.Forms.NumericUpDown tbMath_Kmax_dop;
         private System.Windows.Forms.NumericUpDown tbMath_Kf;
         private System.Windows.Forms.TextBox textBox35;
         private System.Windows.Forms.TextBox textBox37;
-        private System.Windows.Forms.TextBox textBox39;
-        private System.Windows.Forms.TextBox textBox40;
         private System.Windows.Forms.TextBox textBox41;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton rbLinear;

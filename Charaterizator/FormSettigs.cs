@@ -103,8 +103,7 @@ namespace Charaterizator
 
                 //5 - математика - параметры рассчета
                 Properties.Settings.Default.set_Math_Kf = Convert.ToInt32(tbMath_Kf.Value);
-                Properties.Settings.Default.set_Math_Kmax_dop = Convert.ToInt32(tbMath_Kmax_dop.Value);
-                Properties.Settings.Default.set_Math_Code = Convert.ToInt32(tbMath_Code.Value);
+                Properties.Settings.Default.set_Math_Kmax_dop = Convert.ToInt32(tbMath_Kmax_dop.Value);               
                 Properties.Settings.Default.set_Math_Amax = Convert.ToInt32(tbMath_Amax.Value);
                 Properties.Settings.Default.set_Math_Mmax = Convert.ToInt32(tbMath_Mmax.Value);
                 Properties.Settings.Default.set_Math_Tnku = Convert.ToDouble(tbMath_Tnku.Value);
@@ -219,8 +218,7 @@ namespace Charaterizator
 
             //5 - математика - параметры рассчета
             tbMath_Kf.Value = Properties.Settings.Default.set_Math_Kf;
-            tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;
-            tbMath_Code.Value = Properties.Settings.Default.set_Math_Code;
+            tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;           
             tbMath_Amax.Value = Properties.Settings.Default.set_Math_Amax;
             tbMath_Mmax.Value = Properties.Settings.Default.set_Math_Mmax;
             tbMath_Tnku.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Tnku);
@@ -228,7 +226,7 @@ namespace Charaterizator
             tbMath_DFdop_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_DFdop_min);
             tbMath_Fr_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Fr_min);
             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
-
+            rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
             rbMNK_CheckedChanged(null, null);
 
         }
@@ -279,8 +277,7 @@ namespace Charaterizator
             if (rbMNK.Checked)
             {
                 tbMath_Kf.Enabled = true;
-                tbMath_Kmax_dop.Enabled = true;
-                tbMath_Code.Enabled = true;
+                tbMath_Kmax_dop.Enabled = true;                
                 tbMath_Amax.Enabled = true;
                 tbMath_Mmax.Enabled = true;
                 tbMath_Tnku.Enabled = true;
@@ -291,8 +288,7 @@ namespace Charaterizator
             else
             {
                 tbMath_Kf.Enabled = false;
-                tbMath_Kmax_dop.Enabled = false;
-                tbMath_Code.Enabled = false;
+                tbMath_Kmax_dop.Enabled = false;                
                 tbMath_Amax.Enabled = false;
                 tbMath_Mmax.Enabled = false;
                 tbMath_Tnku.Enabled = false;
