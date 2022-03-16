@@ -333,6 +333,20 @@ namespace Charaterizator
             return c < timeout;
         }
 
+        /// <summary>
+        /// Поиск повторений серийников
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckValidSN()
+        {
+            for (int i = 0; i < sensorList.Count; i++)
+            {
+                if (sensorList[i].uni == sensor.uni)
+                    return false;
+            }
+            return true;
+        }
+
         //поиск датчика в списке по номеру канала
         public bool SelectSensor(int index)
         {

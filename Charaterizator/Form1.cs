@@ -1745,6 +1745,9 @@ namespace Charaterizator
 
                                 Thread.Sleep(500);
                                 sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
+                                if(!sensors.CheckValidSN())
+                                    Program.txtlog.WriteLineLog("Обнаружено повторение серийного номера!", 1);
+
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                                 SensorFind = true;
                             }
