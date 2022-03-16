@@ -162,7 +162,7 @@ namespace Charaterizator
             B1 = CalcB(rowP, colP, M1, Pn, Umtx, Rmtx);
             if ((B1.RowCount == 1) && (B1.At(0, 0) == -1))
             {
-                resultBmtx = DenseMatrix.Create(1, 1, 0);  // возвращаем: -1 решения нет
+                resultBmtx = DenseMatrix.Create(1, 1, 0);  // возвращаем: 0 решения нет
                 return resultBmtx;
             }
 
@@ -208,7 +208,7 @@ namespace Charaterizator
             }
             
             // Рассчитываем матрицу допустимых отклонений Fdop(размерностью N, K)
-            // Внутри функции должно быть определение какой тип датчика (ЭнИ - 100 или ЭнИ - 12, или может быть другой новый тип)                        
+            //                        
             Fdop = CalcFdop(rowP, colP, Kf, Kp, Tmtx, Tnku, gammaP, gammaT);
 
             // Проверка рассчитанной матрицы допустимых отклонений Fdop на отсутствие нулевых элементов
@@ -289,8 +289,8 @@ namespace Charaterizator
                                 if (Fr.At(N, K) != 0)
                                 {
                                     dM = KdM * (Fkn.At(N, K) - Fr.At(N, K)) * M.At(N, K) / Fr.At(N, K);
-                                    M[N, K] = Math.Round(M.At(N, K) + dM, 4);                                    
-                                    //M[N, K] = M.At(N, K) + dM;
+                                    //M[N, K] = Math.Round(M.At(N, K) + dM, 4);     //лучше не округлять                               
+                                    M[N, K] = M.At(N, K) + dM;
                                 }
                                 else
                                 {
@@ -530,7 +530,7 @@ namespace Charaterizator
             BmtxRes = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx);
 
             // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
-            Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
+            //Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
 
             resultBmtx = DenseMatrix.Create(24, 1, 0);
             resultBmtx = BmtxRes;

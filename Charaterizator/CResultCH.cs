@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -60,6 +62,23 @@ namespace Charaterizator
             }
         }
 
+        public byte GetSensType(string senstype)
+        {
+            switch (senstype)
+            {
+                case "ЭНИ-100":
+                    return 0xCC;
+                case "ЭНИ-12":
+                    return 0xCD;
+                case "ЭНИ-100-ЖК2":
+                    return 0xCE;
+                case "ЭНИ-12М":
+                    return 0xCF;
+                default:
+                    return 0;
+            }
+        }
+
         public string GetSensorModel()
         {
 
@@ -101,6 +120,11 @@ namespace Charaterizator
                 fs.Flush();
                 FileStream.Add(fs);
             }
+        }
+
+        public СResultCH(string FileName)
+        {
+            LoadFromArchiv(FileName);
         }
 
         public void CloseAll()
@@ -278,7 +302,7 @@ namespace Charaterizator
                     writer.WriteLine("-----------------------------------------------------------------------------------------------");
                     writer.WriteLine("Коэффициенты датчика");
                     writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
-                    for (int c = 0; c < ch.CCount - 1; c++)
+                    for (int c = 0; c < ch.CCount; c++)
                     {
                         writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString());
                     }
@@ -399,6 +423,74 @@ namespace Charaterizator
             catch
             {
                 Program.txtlog.WriteLineLog("CH:Критическая ошибка записи в архив характеризации!", 1);
+            }
+        }
+
+        private void LoadFromArchiv(string FileName)
+        {
+            StreamReader reader;
+            SChanal ch = new SChanal(1, 0, 24, 0xCC, "ЭНИ-100");
+            //Channal.Add(ch);
+            ch.FileNameArchiv = FileName;
+
+            //SChanal ch = Channal[0];
+            if (!File.Exists(FileName))
+            {
+                return;
+            }
+            else
+            {
+                reader = new StreamReader(FileName);//открываем файл
+            }
+            if (reader != null)
+            {
+                string str = reader.ReadLine();
+                str = reader.ReadLine();
+                string[] tmp = str.Split(';');
+                string[] senstype = tmp[2].Split(':');
+                string[] model = tmp[3].Split(':');
+                ch.SensorType = ch.GetSensType(senstype[1]);
+                ch.PressureModel = model[1].ToCharArray();;
+                //model[1];
+                str = reader.ReadLine();
+                str = reader.ReadLine();
+                str = reader.ReadLine();
+                do
+                {
+                    str = reader.ReadLine();
+                    if (str == "-----------------------------------------------------------------------------------------------") break;//конец раздела
+
+                    string[] strarr = str.Split('|');
+                    SPoint point;
+                    if (strarr.Length > 5)
+                    {
+                        point.Datetime = Convert.ToDateTime(strarr[0]);
+                        point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        point.Diapazon = Convert.ToInt32(strarr[2]);
+                        point.Pressure = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        point.OutVoltage = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        if (strarr.Length > 6)
+                        {
+                            point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            point.Deviation = 0;
+                        }
+                        ch.Points.Add(point);
+                    }
+                } while (!reader.EndOfStream);
+                Program.txtlog.WriteLineLog("CH:Архив данных характеризации загружен из файла: " + ch.FileNameArchiv, 0);
+
+                Channal.Add(ch);
+                reader.Close();
+                reader = null;
+            }
+            else
+            {
+                Program.txtlog.WriteLineLog("CH:Ошибка доступа к архиву данных характеризации: " + ch.FileNameArchiv, 1);
+                return;
             }
         }
 
@@ -554,6 +646,119 @@ namespace Charaterizator
             return (V - Vr) * 100 / Vd;
 
 
+        }
+
+        public Matrix<double> GetTemperatureMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[1, 5]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int c = 0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, c] = Temp;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    c++;
+                    if (c >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[0, c] = Temp;
+                }
+            }
+
+            return mtx;
+        }
+
+        public Matrix<double> GetPressuerMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[6, 5]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int t = 0, p=0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, 0] = Channal[i].Points[0].Pressure;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    p = 0;
+                    t++;
+                    if (t >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[p, t] = Channal[i].Points[j].Pressure;
+                }
+                else
+                {
+                    p++;
+                    if (p >= 6) continue;
+
+                    mtx[p, t] = Channal[i].Points[j].Pressure;
+                }
+            }
+            return mtx;
+        }
+
+        public Matrix<double> GetVoltageMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[6, 5]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int t = 0, p = 0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, 0] = Channal[i].Points[0].OutVoltage;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    p = 0;
+                    t++;
+                    if (t >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[p, t] = Channal[i].Points[j].OutVoltage;
+                }
+                else
+                {
+                    p++;
+                    if (p >= 6) continue;
+
+                    mtx[p, t] = Channal[i].Points[j].OutVoltage;
+                }
+            }
+            return mtx;
+        }
+
+        public Matrix<double> GetRezistansMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[6, 5]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int t = 0, p = 0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, 0] = Channal[i].Points[0].Resistance;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    p = 0;
+                    t++;
+                    if (t >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[p, t] = Channal[i].Points[j].Resistance;
+                }
+                else
+                {
+                    p++;
+                    if (p >= 6) continue;
+
+                    mtx[p, t] = Channal[i].Points[j].Resistance;
+                }
+            }
+            return mtx;
         }
     }
 }

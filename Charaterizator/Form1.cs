@@ -1215,7 +1215,7 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    double Diapazon = sensors.sensor.UpLevel - sensors.sensor.DownLevel;
+                    double Diapazon = sensors.sensor.UpLevel; // - sensors.sensor.DownLevel; // Делим на максимум , а не на диапазон (16.03.2022) 
                     if ((Diapazon <= 0) || (Diapazon > 1000000))
                     {
                         Program.txtlog.WriteLineLog("CH: Не верные НПИ и ВПИ датчика в канале:" + (i + 1).ToString(), 1);
@@ -5879,6 +5879,13 @@ namespace Charaterizator
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //if (ResultCH == null) return;
+            if (openFileDialogArhiv.ShowDialog() != DialogResult.OK) return;
+            string FileName = openFileDialogArhiv.FileName;
+            СResultCH ResultCH = new СResultCH(FileName);
+            double Pmax = Convert.ToDouble(SensorsDB.GetDataSensors(ResultCH.Channal[0].GetSensorType(), new string(ResultCH.Channal[0].PressureModel), "Pmax"));
+            if (Pmax < 0) return;
+            //ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT, Type, Model);
 
             /////////////////////////////////////////////////////////////////////////////////////
             //-----------------------------------------------------------------------------------
@@ -5886,44 +5893,53 @@ namespace Charaterizator
 
             // ТЕСТОВЫЕ ДАННЫЕ (Удалить!!!)           
             // маскимальный ВПИ (определяется по переменным датчика)
-            double Pmax = 2500;
+            //double Pmax = 6000;// sensors.sensor.VPI;
+            int ch = 0;// sensors.sensor.Channal;
+            //double Pmax = 2500;
 
             // Матрица давлений
-            Matrix<double> Pmtx = DenseMatrix.OfArray(new double[,]{
-            {0,     0,     0,     0,     0   },
-            {250,   250,   250,   250,   250 },
-            {1000,  1000,  1000,  1000,  1000},
-            {1500,  1500,  1500,  1500,  1500},
-            {2000,  2000,  2000,  2000,  2000},
-            {2500,  2500,  2500,  2500,  2500 }});
+            /*            Matrix<double> Pmtx = DenseMatrix.OfArray(new double[,]{
+                        {0,     0,     0,     0,     0   },
+                        {250,   250,   250,   250,   250 },
+                        {1000,  1000,  1000,  1000,  1000},
+                        {1500,  1500,  1500,  1500,  1500},
+                        {2000,  2000,  2000,  2000,  2000},
+                        {2500,  2500,  2500,  2500,  2500 }});
 
-            // Матрица напряжений
-            Matrix<double> Umtx = DenseMatrix.OfArray(new double[,]{
-            { -6.9079, -6.6362, -6.4953, -6.4372, -6.3767 },
-            { 8.0484,   8.0487,  8.2438,  8.4995,  8.8586 },
-            { 52.8682,  52.0685, 52.4278, 53.2982, 54.5647},
-            { 82.7161,  81.3901, 81.8712, 83.1511, 85.0243},
-            { 112.5435, 110.6972, 111.3043, 113.0021, 115.4867 },
-            { 142.3511, 139.9968, 140.7329, 142.849,  145.9471 } });
+                        // Матрица напряжений
+                        Matrix<double> Umtx = DenseMatrix.OfArray(new double[,]{
+                        { -6.9079, -6.6362, -6.4953, -6.4372, -6.3767 },
+                        { 8.0484,   8.0487,  8.2438,  8.4995,  8.8586 },
+                        { 52.8682,  52.0685, 52.4278, 53.2982, 54.5647},
+                        { 82.7161,  81.3901, 81.8712, 83.1511, 85.0243},
+                        { 112.5435, 110.6972, 111.3043, 113.0021, 115.4867 },
+                        { 142.3511, 139.9968, 140.7329, 142.849,  145.9471 } });
 
 
-            // Матрица Сопротивлений
-            Matrix<double> Rmtx = DenseMatrix.OfArray(new double[,]{
-            { 2828.8,   2999.5,   3236,   3482.8,  3769.8 },
-            { 2828.7,   2999.5,   3235.8999, 3482.7, 3769.7 },
-            { 2828.3999, 2999.3,  3235.6001, 3482.5, 3769.3999 },
-            { 2828.3999,  2999.3999, 3235.3999,  3482.3, 3769.2 },
-            { 2828.3999,  2999.3999, 3235.3999,  3482.2, 3769.1001 },
-            { 2828.3999,  2999.3999, 3235.3999,  3482.3,  3769.1001 } });
+                        // Матрица Сопротивлений
+                        Matrix<double> Rmtx = DenseMatrix.OfArray(new double[,]{
+                        { 2828.8,   2999.5,   3236,   3482.8,  3769.8 },
+                        { 2828.7,   2999.5,   3235.8999, 3482.7, 3769.7 },
+                        { 2828.3999, 2999.3,  3235.6001, 3482.5, 3769.3999 },
+                        { 2828.3999,  2999.3999, 3235.3999,  3482.3, 3769.2 },
+                        { 2828.3999,  2999.3999, 3235.3999,  3482.2, 3769.1001 },
+                        { 2828.3999,  2999.3999, 3235.3999,  3482.3,  3769.1001 } });
 
-                                 
-            // Массив температур, должен соответствовать столбцам матриц P, U, R
-            Matrix<double> Tmtx = DenseMatrix.OfArray(new double[,] { { -40, -10, 23, 50, 80 } });
 
+                        // Массив температур, должен соответствовать столбцам матриц P, U, R
+                        Matrix<double> Tmtx = DenseMatrix.OfArray(new double[,] { { -40, -10, 23, 50, 80 } });
+                        */
             //-----------------------------------------------------------------------------------
             //////////////////////////////////////////////////////////////////////////////////////
 
-
+            // Матрица давлений
+            Matrix<double> Pmtx = ResultCH.GetPressuerMatrix(ch);
+            // Матрица напряжений
+            Matrix<double> Umtx = ResultCH.GetVoltageMatrix(ch);
+            // Матрица Сопротивлений
+            Matrix<double> Rmtx = ResultCH.GetRezistansMatrix(ch);
+            // Матрица температур
+            Matrix<double> Tmtx = ResultCH.GetTemperatureMatrix(ch);
 
 
             /////////////////////////////////////////////////////////////////////////////////////
@@ -5935,6 +5951,7 @@ namespace Charaterizator
 
             // Табличные значения
             // Пределы допускаемой основной приведенной погрешности Коэффициенты а
+            /*
             Matrix<double> gammaPa = DenseMatrix.OfArray(new double[,] {
             {  0,   4,      10,     25  },
             {  0,   0.075,  0.1,    0.14},
@@ -5946,7 +5963,7 @@ namespace Charaterizator
            // Дополнительная температурная погрешность
            Matrix<double> gammaT = DenseMatrix.OfArray(new double[,] {
             { 0.05,    0.07}});
-
+        */
             //-----------------------------------------------------------------------------------
             //////////////////////////////////////////////////////////////////////////////////////
 
@@ -5955,7 +5972,7 @@ namespace Charaterizator
             // --- 1 ---
             // Загрузка исходных данных:
             // Название датчика
-            string SensName = "ЭНИ-12";
+            string SensName = ResultCH.Channal[0].GetSensorType();//"ЭНИ-12";
             // Маскимальный ВПИ 
             // Матрица давлений
             // Матрица напряжений
@@ -6100,7 +6117,12 @@ namespace Charaterizator
                                 else
                                 {
                                     Program.txtlog.WriteLineLog("MNK: Решение найдено!", 0);
-
+                                    float[] tmp = new float[ResulCoefmtx.RowCount];
+                                    for (int i = 0; i < ResulCoefmtx.RowCount; i++)
+                                    {
+                                        tmp[i] = Convert.ToSingle(ResulCoefmtx[i, 0]);
+                                    }
+                                    ResultCH.AddCoeff(0, tmp);
                                 }
                                 break;
                             }
@@ -6124,6 +6146,12 @@ namespace Charaterizator
                     // Вызов функции расчета коэффициентов классическим методом                
                     ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx);
                     Program.txtlog.WriteLineLog("Решение найдено!", 0);
+                    float[] tmp = new float[ResulCoefmtx.RowCount];
+                    for (int i = 0; i < ResulCoefmtx.RowCount; i++)
+                    {
+                        tmp[i] = Convert.ToSingle(ResulCoefmtx[i,0]);
+                    }
+                    ResultCH.AddCoeff(0, tmp);
                 }
                 catch
                 {
