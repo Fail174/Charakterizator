@@ -741,11 +741,11 @@ namespace Charaterizator
                 Thread.Sleep(READ_PAUSE);
                 str = _serialPort_M.ReadLine();         // считываем                                                  
 
-                if ((str == "A") | (str == "0"))
+                if ((str == "A") || (str == "0"))
                 {
                     res = 0;
                 }
-                else if ((str == "B") | (str == "1"))
+                else if ((str == "B") || (str == "1"))
                 {
                     res = 1;
                 }
@@ -795,12 +795,12 @@ namespace Charaterizator
             try
             {
                 // Устанавливаем активным канал B
-                ChannelSet("B");
+              /*  ChannelSet("B");
                 Thread.Sleep(30);
 
                 // Задаем режим AutoRange
                 SetTypeRange(2);
-                Thread.Sleep(30);
+                Thread.Sleep(30);*/
                 
                 _serialPort_M.WriteLine("OUTP:CHAN?");  // запрашиваем номер активного канала
                 //_serialPort_M.WriteLine("*IDN?");
@@ -808,11 +808,11 @@ namespace Charaterizator
                 Thread.Sleep(READ_PAUSE);
                 str = _serialPort_M.ReadLine();         // считываем                                                  
 
-                if ((str == "A") | (str == "0"))
+                if ((str == "A") || (str == "0"))
                 {
                     res = 0;
                 }
-                else if ((str == "B") | (str == "1"))
+                else if ((str == "B") || (str == "1"))
                 {
                     res = 1;
                 }

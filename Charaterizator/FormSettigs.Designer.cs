@@ -1648,15 +1648,9 @@
             // 
             // tbMath_Fr_min
             // 
-            this.tbMath_Fr_min.DecimalPlaces = 3;
-            this.tbMath_Fr_min.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
             this.tbMath_Fr_min.Location = new System.Drawing.Point(595, 174);
             this.tbMath_Fr_min.Maximum = new decimal(new int[] {
-            10,
+            10000,
             0,
             0,
             0});
@@ -1664,10 +1658,10 @@
             this.tbMath_Fr_min.Size = new System.Drawing.Size(100, 21);
             this.tbMath_Fr_min.TabIndex = 129;
             this.tbMath_Fr_min.Value = new decimal(new int[] {
-            1,
+            200,
             0,
             0,
-            131072});
+            0});
             // 
             // textBox43
             // 
@@ -1675,7 +1669,7 @@
             this.textBox43.Name = "textBox43";
             this.textBox43.Size = new System.Drawing.Size(544, 21);
             this.textBox43.TabIndex = 128;
-            this.textBox43.Text = "Минимальная расчетная граница, Fr_min";
+            this.textBox43.Text = "Максимальное количество найденных решение Res_count_max";
             // 
             // tbMath_DFdop_min
             // 
@@ -1706,7 +1700,7 @@
             this.textBox34.Name = "textBox34";
             this.textBox34.Size = new System.Drawing.Size(544, 21);
             this.textBox34.TabIndex = 126;
-            this.textBox34.Text = "Допускаемый минимальный шаг расчетной границы,  deltaFdop_min";
+            this.textBox34.Text = "Минимальная допускаемая граница погрешности  deltaFdop_min";
             // 
             // tbMath_KdM
             // 

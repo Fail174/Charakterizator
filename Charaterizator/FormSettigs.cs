@@ -109,7 +109,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_Math_Tnku = Convert.ToDouble(tbMath_Tnku.Value);
                 Properties.Settings.Default.set_Math_KdM = Convert.ToDouble(tbMath_KdM.Value);
                 Properties.Settings.Default.set_Math_DFdop_min = Convert.ToDouble(tbMath_DFdop_min.Value);
-                Properties.Settings.Default.set_Math_Fr_min = Convert.ToDouble(tbMath_Fr_min.Value);
+                Properties.Settings.Default.set_Math_Res_count_max = Convert.ToInt32(tbMath_Fr_min.Value);
                 Properties.Settings.Default.set_Math_AlgorithmMNK = rbMNK.Checked;
 
                 Properties.Settings.Default.Save();  // Сохраняем переменные.*/
@@ -224,7 +224,7 @@ namespace Charaterizator
             tbMath_Tnku.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Tnku);
             tbMath_KdM.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_KdM);
             tbMath_DFdop_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_DFdop_min);
-            tbMath_Fr_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Fr_min);
+            tbMath_Fr_min.Value = Convert.ToInt32(Properties.Settings.Default.set_Math_Res_count_max);
             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
             rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
             rbMNK_CheckedChanged(null, null);

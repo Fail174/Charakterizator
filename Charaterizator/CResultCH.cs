@@ -304,7 +304,7 @@ namespace Charaterizator
                     writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
                     for (int c = 0; c < ch.CCount; c++)
                     {
-                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString());
+                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString("E9"));
                     }
                 }
                 writer.Close();

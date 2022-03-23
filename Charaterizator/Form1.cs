@@ -211,7 +211,7 @@ namespace Charaterizator
                 CCalcMNK.Tnku = Properties.Settings.Default.set_Math_Tnku;
                 CCalcMNK.KdM = Properties.Settings.Default.set_Math_KdM;
                 CCalcMNK.deltaFdop_min = Properties.Settings.Default.set_Math_DFdop_min;
-                CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
+                CCalcMNK.Res_count_max = Properties.Settings.Default.set_Math_Res_count_max;
                 AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
                 
 
@@ -1745,9 +1745,13 @@ namespace Charaterizator
 
                                 Thread.Sleep(500);
                                 sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
-                                if(!sensors.CheckValidSN())
+                                if (!sensors.CheckValidSN())
+                                {
                                     Program.txtlog.WriteLineLog("Обнаружено повторение серийного номера!", 1);
 
+                                    if(MessageBox.Show("Прервать операцию поиска?", "Обнаружено повторение серийного номера!", MessageBoxButtons.YesNo)==DialogResult.Yes)
+                                        return -2;
+                                }
                                 UpdateDataGrids(i);         //обновляем информацию по датчику в таблице
                                 SensorFind = true;
                             }
@@ -2036,7 +2040,6 @@ namespace Charaterizator
             int CH_mensor = Mensor._activCH;    // Получаем номер активного канала (0 значит А,   1 значит B,   -1 = не прочитали )                   
             if (CH_mensor != -1)
             {
-
 
                 if (SKO_PRESSURE > Math.Abs(Mensor._press - Mensor.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
                 {
@@ -3544,7 +3547,7 @@ namespace Charaterizator
                 CCalcMNK.Tnku = Properties.Settings.Default.set_Math_Tnku;
                 CCalcMNK.KdM = Properties.Settings.Default.set_Math_KdM;
                 CCalcMNK.deltaFdop_min = Properties.Settings.Default.set_Math_DFdop_min;
-                CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
+                //CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
                 AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
 
                 //выбор задатчика
@@ -5275,8 +5278,6 @@ namespace Charaterizator
 
             if (UseMensor)
             {
-
-
                 if (!Mensor._serialPort_M.IsOpen)
                 {
                     if (cbMensorTypeR.SelectedIndex != -1)
@@ -5299,7 +5300,6 @@ namespace Charaterizator
                     // Определяем тип канала соответствующего выбранному преобразователю
                     if ((ind >= 0) && (ind <= 2))  // активный канал А
                     {
-
                         Mensor.ChannelSet("A");   // устанвливаем активным канал A
                         Thread.Sleep(100);
                         Mensor.SetTypeRange(ind);     // Устанавливаем тип выбранного преобразователя
@@ -5504,8 +5504,8 @@ namespace Charaterizator
 
         private void cbMensorTypeR_DropDownClosed(object sender, EventArgs e)
         {
-            MainTimer.Enabled = true;
-            MainTimer.Start();
+            //MainTimer.Enabled = true;
+            //MainTimer.Start();
         }
 
         private void lvCHTermoCamera_MouseDown(object sender, MouseEventArgs e)

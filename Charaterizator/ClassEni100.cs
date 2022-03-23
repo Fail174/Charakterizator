@@ -341,8 +341,9 @@ namespace Charaterizator
         {
             for (int i = 0; i < sensorList.Count; i++)
             {
-                if (sensorList[i].uni == sensor.uni)
-                    return false;
+                if (sensorList[i].Channal != sensor.Channal)
+                    if (sensorList[i].uni == sensor.uni)
+                        return false;
             }
             return true;
         }
@@ -1229,7 +1230,7 @@ namespace Charaterizator
                                 return -6;
                             }*/
 
-                            sensor.state = (ushort)((indata[0] << 8) | indata[1]);//читаем состояние исполнения команды
+                            sensor.state = (ushort)((indata[1] << 8) | indata[0]);//читаем состояние исполнения команды
                             if ((sensor.state & 0x00FF) != 0) //первый байт статуса
                             {
                                 ReadAvtState = 1;
@@ -1240,8 +1241,8 @@ namespace Charaterizator
                             if ((sensor.state & 0xFF00) != 0) //второй байт статуса
                             {
                                 ReadAvtState = 1;
-                                if (Program.txtlog != null)
-                                    Program.txtlog.WriteLineLog(string.Format("HART: Неисправность прибора. Команда {0}. Статус {1}", CommandCod, sensor.state), 1);
+                                //if (Program.txtlog != null)
+                                //    Program.txtlog.WriteLineLog(string.Format("HART: Неисправность прибора. Команда {0}. Статус {1}", CommandCod, sensor.state), 1);
                                 //return -8;  04.08.2021 При не нулевом статусе продолжаем парсинг
                             }
                             switch (CommandCod)
@@ -1270,7 +1271,7 @@ namespace Charaterizator
                                         ReadAvtState = 1;
                                         return -5;//неверные данные в ответной команде
                                     }
-                                    sensor.state = (ushort)((indata[0] << 8) | indata[1]);//состояние по команде перехода в сервесный режим
+                                    sensor.state = (ushort)((indata[1] << 8) | indata[0]);//состояние по команде перехода в сервесный режим
                                     sensor.Addr = indata[2];
                                     break;
                                 case 0x0B://Считать уникальный идентификатор, связанный с тэгом(команда 11)
@@ -1439,7 +1440,7 @@ namespace Charaterizator
                                     }
                                     break;
                                 case 0xF5://Перевод датчика в сервисный режим ( команда 245)
-                                    sensor.state = (ushort)((indata[0] << 8) | indata[1]);//состояние по команде перехода в сервесный режим
+                                    sensor.state = (ushort)((indata[1] << 8) | indata[0]);//состояние по команде перехода в сервесный режим
                                     if (sensor.state != 0)
                                     {
                                         ReadAvtState = 1;
@@ -1645,7 +1646,7 @@ namespace Charaterizator
                 SensorID id = new SensorID(addr, COEFF_COUNT);
                 id.Channal = SelSensorChannal;
                 id.Group = 1;// (int)(SelSensorChannal / MaxSensorOnLevel) + 1;
-                id.state = (ushort)((indata[0] << 8) | indata[1]);
+                id.state = (ushort)((indata[1] << 8) | indata[0]);
                 //if (id.state != 0) return false;
 
                 id.devCode = indata[3];

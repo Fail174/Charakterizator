@@ -986,7 +986,7 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.001")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.005")]
         public double set_Math_DFdop_min {
             get {
                 return ((double)(this["set_Math_DFdop_min"]));
@@ -998,13 +998,13 @@ namespace Charaterizator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
-        public double set_Math_Fr_min {
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int set_Math_Res_count_max {
             get {
-                return ((double)(this["set_Math_Fr_min"]));
+                return ((int)(this["set_Math_Res_count_max"]));
             }
             set {
-                this["set_Math_Fr_min"] = value;
+                this["set_Math_Res_count_max"] = value;
             }
         }
         

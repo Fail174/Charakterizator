@@ -243,10 +243,10 @@
       <Value Profile="(Default)">0.33</Value>
     </Setting>
     <Setting Name="set_Math_DFdop_min" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.001</Value>
+      <Value Profile="(Default)">0.005</Value>
     </Setting>
-    <Setting Name="set_Math_Fr_min" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.01</Value>
+    <Setting Name="set_Math_Res_count_max" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="set_Math_AlgorithmMNK" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
