@@ -33,12 +33,14 @@ namespace Charaterizator
         public byte SensorType;
         public char[] PressureModel;
         public float[] Coefficient;//коэффициенты датчика
+        public double[] Coefficient_dbl;//коэффициенты датчика
         public SChanal(int ChNum, int FN, int CoefCount, byte Type, string Model)
         {
             CCount = CoefCount;
             SensorType = Type;
             PressureModel = Model.ToCharArray();
             Coefficient = new float[CoefCount];
+            Coefficient_dbl = new double[CoefCount];
             ChannalNummber = ChNum;
             FactoryNumber = FN;
             //            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
@@ -179,8 +181,19 @@ namespace Charaterizator
             {
                 Channal[ch].Coefficient[i] = Coeff[i];
             }
+            //SaveToArhiv(ch);
+        }
+
+        // 
+        public void AddCoeff(int ch, double[] Coeff)
+        {
+            for (int i = 0; i < Channal[ch].CCount; i++)
+            {
+                Channal[ch].Coefficient_dbl[i] = Coeff[i];
+            }
             SaveToArhiv(ch);
         }
+
 
         public void SetSensorInfo(int ch, char[] Model)
         {
@@ -297,14 +310,14 @@ namespace Charaterizator
                 {
                     writer.WriteLine(GetStringFromPoint(ch.Points[j]));
                 }
-                if (ch.Coefficient[0] != 0)//если коэффициенты подсчитаны
+                if (ch.Coefficient_dbl[0] != 0)//если коэффициенты подсчитаны
                 {
                     writer.WriteLine("-----------------------------------------------------------------------------------------------");
                     writer.WriteLine("Коэффициенты датчика");
                     writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
                     for (int c = 0; c < ch.CCount; c++)
                     {
-                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString("E9"));
+                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient_dbl[c].ToString("E19"));
                     }
                 }
                 writer.Close();
@@ -674,8 +687,10 @@ namespace Charaterizator
         public Matrix<double> GetPressuerMatrix(int i)
         {
             Matrix<double> mtx = DenseMatrix.OfArray(new double[6, 5]);// { { -40, -10, 23, 50, 80 } });
+           
             if (Channal[i].Points.Count <= 0) return mtx;
             int t = 0, p=0;
+            int rowCount = 1, colCount = 1; 
 
             double Temp = Channal[i].Points[0].Temperature;
             mtx[0, 0] = Channal[i].Points[0].Pressure;
@@ -686,7 +701,7 @@ namespace Charaterizator
                 {
                     p = 0;
                     t++;
-                    if (t >= 5) break;
+                    //if (t >= 5) break;
                     Temp = Channal[i].Points[j].Temperature;
                     mtx[p, t] = Channal[i].Points[j].Pressure;
                 }
@@ -694,10 +709,11 @@ namespace Charaterizator
                 {
                     p++;
                     if (p >= 6) continue;
-
                     mtx[p, t] = Channal[i].Points[j].Pressure;
                 }
             }
+            rowCount = p++;
+            colCount = t++;            
             return mtx;
         }
 

@@ -6121,11 +6121,14 @@ namespace Charaterizator
                                 {
                                     Program.txtlog.WriteLineLog("MNK: Решение найдено!", 0);
                                     float[] tmp = new float[ResulCoefmtx.RowCount];
+                                    double[] tmp_dbl = new double[ResulCoefmtx.RowCount];
                                     for (int i = 0; i < ResulCoefmtx.RowCount; i++)
                                     {
                                         tmp[i] = Convert.ToSingle(ResulCoefmtx[i, 0]);
+                                        tmp_dbl[i] = ResulCoefmtx[i, 0];
                                     }
                                     ResultCH.AddCoeff(0, tmp);
+                                    ResultCH.AddCoeff(0, tmp_dbl);
                                 }
                                 break;
                             }
