@@ -496,7 +496,14 @@ namespace Charaterizator
                         point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                         if (strarr.Length > 6)
                         {
-                            point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                            if (strarr[6] != "")
+                            {
+                                point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                            }
+                            else
+                            {
+                                point.Deviation = -1;
+                            }
                         }
                         else
                         {
@@ -672,6 +679,7 @@ namespace Charaterizator
 
         }
 
+        /*
         public Matrix<double> GetTemperatureMatrix(int i)
         {
             Matrix<double> mtx = DenseMatrix.OfArray(new double[1, 5]);// { { -40, -10, 23, 50, 80 } });
@@ -694,14 +702,16 @@ namespace Charaterizator
 
             return mtx;
         }
+        
+
 
         public Matrix<double> GetPressuerMatrix(int i)
         {
             Matrix<double> mtx = DenseMatrix.OfArray(new double[6, 5]);// { { -40, -10, 23, 50, 80 } });
-           
+
             if (Channal[i].Points.Count <= 0) return mtx;
-            int t = 0, p=0;
-            int rowCount = 1, colCount = 1; 
+            int t = 0, p = 0;
+            int rowCount = 1, colCount = 1;
 
             double Temp = Channal[i].Points[0].Temperature;
             mtx[0, 0] = Channal[i].Points[0].Pressure;
@@ -712,7 +722,7 @@ namespace Charaterizator
                 {
                     p = 0;
                     t++;
-                    //if (t >= 5) break;
+                    if (t >= 5) break;
                     Temp = Channal[i].Points[j].Temperature;
                     mtx[p, t] = Channal[i].Points[j].Pressure;
                 }
@@ -724,7 +734,7 @@ namespace Charaterizator
                 }
             }
             rowCount = p++;
-            colCount = t++;            
+            colCount = t++;
             return mtx;
         }
 
@@ -787,5 +797,162 @@ namespace Charaterizator
             }
             return mtx;
         }
+        */
+       
+        public Matrix<double> GetTemperatureMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[1, 20]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int c = 0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, c] = Temp;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    c++;
+                    //if (c >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[0, c] = Temp;
+                }
+            }
+
+            Matrix<double> mtx1 = DenseMatrix.OfArray(new double[1, c+1]);
+            for (int m = 0; m < c+1; m++)
+            {
+                mtx1[0, m] = mtx.At(0, m);              
+            }  
+            
+            return mtx1;
+        }
+
+
+        
+        public Matrix<double> GetPressuerMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[20, 20]);// { { -40, -10, 23, 50, 80 } });
+           
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int t = 0, p=0;
+            //int rowCount = 1, colCount = 1; 
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, 0] = Channal[i].Points[0].Pressure;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    p = 0;
+                    t++;
+                    //if (t >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[p, t] = Channal[i].Points[j].Pressure;
+                }
+                else
+                {
+                    p++;
+                    //if (p >= 6) continue;
+                    mtx[p, t] = Channal[i].Points[j].Pressure;
+                }
+            }
+            
+            //rowCount = p++;
+            //colCount = t++; 
+            Matrix<double> mtx1 = DenseMatrix.OfArray(new double[p+1, t+1]);
+            for (int col = 0; col < t+1; col++)
+            {
+                for (int row = 0; row < p+1; row++)
+                {
+
+                    mtx1[row, col] = mtx.At(row, col);
+                }
+            }
+            return mtx1;
+        }
+
+
+        public Matrix<double> GetVoltageMatrix(int i)
+        {
+            //Matrix<double> mtx = DenseMatrix.OfArray(new double[6, 5]);// { { -40, -10, 23, 50, 80 } });
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[20, 20]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int t = 0, p = 0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, 0] = Channal[i].Points[0].OutVoltage;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    p = 0;
+                    t++;
+                    //if (t >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[p, t] = Channal[i].Points[j].OutVoltage;
+                }
+                else
+                {
+                    p++;
+                    //if (p >= 6) continue;
+                    mtx[p, t] = Channal[i].Points[j].OutVoltage;
+                }
+            }
+            Matrix<double> mtx1 = DenseMatrix.OfArray(new double[p + 1, t + 1]);
+            for (int col = 0; col < t + 1; col++)
+            {
+                for (int row = 0; row < p + 1; row++)
+                {
+
+                    mtx1[row, col] = mtx.At(row, col);
+                }
+            }
+            return mtx1;
+        }
+
+
+        public Matrix<double> GetRezistansMatrix(int i)
+        {
+            Matrix<double> mtx = DenseMatrix.OfArray(new double[20, 20]);// { { -40, -10, 23, 50, 80 } });
+            if (Channal[i].Points.Count <= 0) return mtx;
+            int t = 0, p = 0;
+
+            double Temp = Channal[i].Points[0].Temperature;
+            mtx[0, 0] = Channal[i].Points[0].Resistance;
+
+            for (int j = 1; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
+            {
+                if (Math.Abs(Channal[i].Points[j].Temperature - Temp) > 1)//новая температура
+                {
+                    p = 0;
+                    t++;
+                    //if (t >= 5) break;
+                    Temp = Channal[i].Points[j].Temperature;
+                    mtx[p, t] = Channal[i].Points[j].Resistance;
+                }
+                else
+                {
+                    p++;
+                    //if (p >= 6) continue;
+                    mtx[p, t] = Channal[i].Points[j].Resistance;
+                }
+            }
+            
+            Matrix<double> mtx1 = DenseMatrix.OfArray(new double[p + 1, t + 1]);
+            for (int col = 0; col < t + 1; col++)
+            {
+                for (int row = 0; row < p + 1; row++)
+                {
+
+                    mtx1[row, col] = mtx.At(row, col);
+                }
+            }            
+            return mtx1;          
+
+        }
+        
     }
 }

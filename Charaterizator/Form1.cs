@@ -5887,7 +5887,7 @@ namespace Charaterizator
             string FileName = openFileDialogArhiv.FileName;
             СResultCH ResultCH = new СResultCH(FileName);
             double Pmax = Convert.ToDouble(SensorsDB.GetDataSensors(ResultCH.Channal[0].GetSensorType(), new string(ResultCH.Channal[0].PressureModel), "Pmax"));
-            if (Pmax < 0) return;
+            if (Pmax <= 0) return;
             //ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT, Type, Model);
 
             /////////////////////////////////////////////////////////////////////////////////////
