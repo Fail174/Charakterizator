@@ -541,20 +541,32 @@ namespace Charaterizator
             // ----------ЭТАП - 4--------------------
             // ОБРАБОТКА РЕЗУЛЬТАТОВ
             // --------------------------------------
-               
+
             // Расчет коэффициентов B
             Matrix<double> BmtxRes = DenseMatrix.Create(24, 1, 0);
+            Matrix<double> R2 = DenseMatrix.Create(1, 1, -1);
             // Расчет коэффициентов B
             BmtxRes = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx);
 
             // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
             //Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
 
-            resultBmtx = DenseMatrix.Create(24, 1, 0);
-            resultBmtx = BmtxRes;
+            resultBmtx = DenseMatrix.Create(25, 1, 0);
+
+            for (int i = 0; i < resultBmtx.RowCount - 1; i++)
+            {
+                resultBmtx[i, 0] = BmtxRes.At(i, 0);
+            }
+
+
+            // Расчет R^2
+            R2 = CalcR2(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
+            resultBmtx[24, 0] = R2.At(0, 0);
+
             return resultBmtx;
 
             // КОНЕЦ РАСЧЕТА //
+
 
 
 
@@ -950,6 +962,40 @@ namespace Charaterizator
                 }
             }            
             return Fkn;
+        }
+
+        //----------------------------------------------------------------------------------    
+        // ФУНКЦИЯ для R^2        
+
+        public Matrix<double> CalcR2(int rowP, int colP, Matrix<double> B, Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pn, Matrix<double> Kp)
+        {
+            Matrix<double> R2 = DenseMatrix.Create(1, 1, 0);
+            double Fi;
+            int m;
+
+            // цикл по N(строкам матриц M, P, R, U)
+            for (int N = 0; N < rowP; N++)
+            {
+                // цикл по K(столбцам матриц M, P, R, U)
+                for (int K = 0; K < colP; K++)
+                {
+                    Fi = 0;
+                    m = 0;
+                    // цикл по j
+                    for (int j = 0; j < 6; j++)
+                    {
+                        // цикл по i
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Fi = Fi + B.At(m, 0) * Math.Pow(Rmtx.At(N, K), i) * Math.Pow(Umtx.At(N, K), j);
+                            m = m + 1;
+                        }
+                    }
+                    //Fkn[N, K] = Math.Abs((Fi - Pn.At(N, K)) * 100 * Kp.At(N, K));
+                    R2 = R2 + ((Fi - Pn.At(N, K)) * (Fi - Pn.At(N, K)));
+                }
+            }
+            return R2;
         }
 
 

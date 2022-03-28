@@ -34,6 +34,7 @@ namespace Charaterizator
         public char[] PressureModel;
         public float[] Coefficient;//коэффициенты датчика
         public double[] Coefficient_dbl;//коэффициенты датчика
+        public double[] R2;//отклонение R2
         public SChanal(int ChNum, int FN, int CoefCount, byte Type, string Model)
         {
             CCount = CoefCount;
@@ -41,6 +42,7 @@ namespace Charaterizator
             PressureModel = Model.ToCharArray();
             Coefficient = new float[CoefCount];
             Coefficient_dbl = new double[CoefCount];
+            R2 = new double[1];
             ChannalNummber = ChNum;
             FactoryNumber = FN;
             //            FileNameArchiv = string.Format("Archiv/CH/CH_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
@@ -194,6 +196,12 @@ namespace Charaterizator
             SaveToArhiv(ch);
         }
 
+        // 
+        public void AddR2(int ch, double CoeffR2)
+        {
+            Channal[ch].R2[0] = CoeffR2;
+        }
+
 
         public void SetSensorInfo(int ch, char[] Model)
         {
@@ -313,6 +321,9 @@ namespace Charaterizator
                 if (ch.Coefficient_dbl[0] != 0)//если коэффициенты подсчитаны
                 {
                     writer.WriteLine("-----------------------------------------------------------------------------------------------");
+                    writer.WriteLine("Рассчитанное отклонение R^2");
+                    writer.WriteLine(ch.R2[0].ToString("E19"));
+                    writer.WriteLine("---------------------------");
                     writer.WriteLine("Коэффициенты датчика");
                     writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
                     for (int c = 0; c < ch.CCount; c++)
