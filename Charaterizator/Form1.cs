@@ -6154,12 +6154,17 @@ namespace Charaterizator
                     // Вызов функции расчета коэффициентов классическим методом                
                     ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx);
                     Program.txtlog.WriteLineLog("Решение найдено!", 0);
-                    float[] tmp = new float[ResulCoefmtx.RowCount];
-                    for (int i = 0; i < ResulCoefmtx.RowCount; i++)
+                    Program.txtlog.WriteLineLog("MNK: Рассчитанное отклонение (R^2) равно: " + Convert.ToString(ResulCoefmtx[ResulCoefmtx.RowCount - 1, 0]), 0);
+                    float[] tmp = new float[ResulCoefmtx.RowCount-1];
+                    double[] tmp_dbl = new double[ResulCoefmtx.RowCount-1];
+                    for (int i = 0; i < ResulCoefmtx.RowCount -1; i++)
                     {
                         tmp[i] = Convert.ToSingle(ResulCoefmtx[i,0]);
+                        tmp_dbl[i] = ResulCoefmtx[i, 0];
                     }
+                    ResultCH.AddR2(0, ResulCoefmtx[ResulCoefmtx.RowCount - 1, 0]);
                     ResultCH.AddCoeff(0, tmp);
+                    ResultCH.AddCoeff(0, tmp_dbl);
                 }
                 catch
                 {

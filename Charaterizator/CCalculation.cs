@@ -205,14 +205,28 @@ namespace Charaterizator
                 resultBmtx = DenseMatrix.Create(1, 1, -2);       // если решения нет возвращаем -2
                 return resultBmtx;
             }
-            
+
             // если определител не равен нулю
             // находим коэффиценты B
-            resultBmtx = DenseMatrix.Create(row * N, 1, 0);
-            resultBmtx = Amtx.Solve(Сmtx);                             
-                      
+            Matrix<double> Bmtx = DenseMatrix.Create(row * N, 1, 0);
+            Bmtx = Amtx.Solve(Сmtx);
+
+
+            resultBmtx = DenseMatrix.Create(Bmtx.RowCount + 1, 1, 0);
+
+            for (int i = 0; i < resultBmtx.RowCount - 1; i++)
+            {
+                resultBmtx[i, 0] = Bmtx.At(i, 0);
+            }
+
+
+            // Расчет R^2
+            Matrix<double> R2 = DenseMatrix.Create(1, 1, -1);
+            //R2 = CalcR2(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
+            resultBmtx[Bmtx.RowCount, 0] = R2.At(0, 0);
 
             return resultBmtx;
+            
         }
     }
 }
