@@ -228,7 +228,7 @@ namespace Charaterizator
             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
             rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
             rbMNK_CheckedChanged(null, null);
-
+            
         }
     
 
@@ -298,5 +298,57 @@ namespace Charaterizator
             }
 
         }
+
+        private void bRestoreParamMNK_Click(object sender, EventArgs e)
+        {
+            /*
+             // МНК - параметры рассчета по умолчанию              
+             // Kf - коэффициент для формирования расчетной границы
+             public int Kf = 3;    
+             //Kpmax_dop - максимально допускаемое значение коэффициента перенастройки
+             public int Kpmax_dop = 10;       
+             // Максимальное кол-во циклов поиска
+             public int Amax = 300;
+             // Максимальное значение веса
+             public int Mmax = 300;
+             // Температура НКУ
+             public double Tnku = 23;       
+             // Коэффициент регулировки при расчете шага веса 
+             public double KdM = 0.33;        
+             // Допускаемый минимальный шаг расчетной границы
+             public double deltaFdop_min = 0.001;
+             // Минимальная расчетная граница
+             public double Fr_min = 0.01;                   
+
+
+             Properties.Settings.Default.set_Math_Kf = Kf;
+             Properties.Settings.Default.set_Math_Kmax_dop = Kpmax_dop;
+             Properties.Settings.Default.set_Math_Amax = Amax;
+             Properties.Settings.Default.set_Math_Mmax = Mmax;
+             Properties.Settings.Default.set_Math_Tnku = Tnku;
+             Properties.Settings.Default.set_Math_KdM = KdM;
+             Properties.Settings.Default.set_Math_DFdop_min = deltaFdop_min;
+             Properties.Settings.Default.set_Math_Res_count_max = Fr_min = 0.01;
+             Properties.Settings.Default.set_Math_AlgorithmMNK = rbMNK.Checked;
+
+             Properties.Settings.Default.Save();  // Сохраняем переменные в settings.
+             Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
+
+             // Обновляем поле с настройками (читаем из dettings и записываем в поле)
+             tbMath_Kf.Value = Properties.Settings.Default.set_Math_Kf;
+             tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;           
+             tbMath_Amax.Value = Properties.Settings.Default.set_Math_Amax;
+             tbMath_Mmax.Value = Properties.Settings.Default.set_Math_Mmax;
+             tbMath_Tnku.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Tnku);
+             tbMath_KdM.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_KdM);
+             tbMath_DFdop_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_DFdop_min);
+             tbMath_Fr_min.Value = Convert.ToInt32(Properties.Settings.Default.set_Math_Res_count_max);
+             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
+             rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
+             rbMNK_CheckedChanged(null, null);
+             */
+
+        }
+
     }
 }

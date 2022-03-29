@@ -156,6 +156,7 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.bRestoreParamMNK = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -1621,6 +1622,7 @@
             // 
             // tp_CalcParam
             // 
+            this.tp_CalcParam.Controls.Add(this.bRestoreParamMNK);
             this.tp_CalcParam.Controls.Add(this.tbMath_Fr_min);
             this.tp_CalcParam.Controls.Add(this.textBox43);
             this.tp_CalcParam.Controls.Add(this.tbMath_DFdop_min);
@@ -1799,7 +1801,7 @@
             // 
             this.groupBox3.Controls.Add(this.rbMNK);
             this.groupBox3.Controls.Add(this.rbLinear);
-            this.groupBox3.Location = new System.Drawing.Point(52, 225);
+            this.groupBox3.Location = new System.Drawing.Point(52, 242);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(643, 82);
             this.groupBox3.TabIndex = 120;
@@ -1923,6 +1925,16 @@
             this.bCancelSettings.TabIndex = 33;
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
+            // 
+            // bRestoreParamMNK
+            // 
+            this.bRestoreParamMNK.Location = new System.Drawing.Point(52, 201);
+            this.bRestoreParamMNK.Name = "bRestoreParamMNK";
+            this.bRestoreParamMNK.Size = new System.Drawing.Size(643, 35);
+            this.bRestoreParamMNK.TabIndex = 130;
+            this.bRestoreParamMNK.Text = "Восстановить исходные значения параметров расчета для МНК";
+            this.bRestoreParamMNK.UseVisualStyleBackColor = true;
+            this.bRestoreParamMNK.Click += new System.EventHandler(this.bRestoreParamMNK_Click);
             // 
             // FormSettings
             // 
@@ -2126,5 +2138,6 @@
         private System.Windows.Forms.TextBox textBox34;
         private System.Windows.Forms.TextBox textBox43;
         public System.Windows.Forms.NumericUpDown tbMath_Fr_min;
+        private System.Windows.Forms.Button bRestoreParamMNK;
     }
 }
