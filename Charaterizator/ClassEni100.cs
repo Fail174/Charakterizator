@@ -790,6 +790,43 @@ namespace Charaterizator
             }
             return false;
         }
+
+        /// <summary>
+        /// Коррекция нуля путем ввода значения атмосферного давления (команда 143)
+        /// </summary>
+        /// <returns></returns>
+        public bool С143SetZero(float value)
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                int i;
+                byte[] data = new byte[sensor.pre + 9];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x8F;
+                data[i + 3] = 0x04;
+                UInt32 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+                data[i + 4] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 5] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 6] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 7] = (byte)(tmp & 0xFF);
+                data[i + 8] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                    Thread.Sleep(WRITE_PERIOD);
+                    port.Write(data, 0, data.Length);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+
         //Установить единицу измерения первичной переменной
         public bool С44WriteMesUnit(string unit)
         {
@@ -1421,6 +1458,11 @@ namespace Charaterizator
                                 case 0x8E://Чтение данных о языке вывода названий меню – только для исполнения ЖК-2 (команда 142)
                                     break;
                                 case 0x8F://Коррекция нуля путем ввода значения атмосферного давления(команда 143)
+                                    if (!ReadCommand143(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 case 0x90://Запись данных о вкл/выкл условных единицах – только для исполнения ЖК-2 (команда 144)
                                     break;
@@ -1914,6 +1956,26 @@ namespace Charaterizator
                 return false;
             }
         }
+
+
+        /// <summary>
+        /// Коррекция нуля путем ввода значения атмосферного давления (команда 143)
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="indata"></param>
+        /// <returns></returns>
+        private bool ReadCommand143(int addr, byte[] indata)
+        {
+            try
+            {
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         //Коррекция нуля ЦАП (команда 45)
         private bool ReadCommand45(int addr, byte[] indata)

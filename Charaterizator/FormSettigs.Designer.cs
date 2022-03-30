@@ -136,6 +136,7 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.tp_CalcParam = new System.Windows.Forms.TabPage();
+            this.bRestoreParamMNK = new System.Windows.Forms.Button();
             this.tbMath_Fr_min = new System.Windows.Forms.NumericUpDown();
             this.textBox43 = new System.Windows.Forms.TextBox();
             this.tbMath_DFdop_min = new System.Windows.Forms.NumericUpDown();
@@ -156,7 +157,6 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.bRestoreParamMNK = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -821,6 +821,11 @@
             // tbCommReadCH
             // 
             this.tbCommReadCH.Location = new System.Drawing.Point(595, 35);
+            this.tbCommReadCH.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             this.tbCommReadCH.Minimum = new decimal(new int[] {
             1,
             0,
@@ -1648,6 +1653,16 @@
             this.tp_CalcParam.Text = "Параметры расчета";
             this.tp_CalcParam.UseVisualStyleBackColor = true;
             // 
+            // bRestoreParamMNK
+            // 
+            this.bRestoreParamMNK.Location = new System.Drawing.Point(52, 201);
+            this.bRestoreParamMNK.Name = "bRestoreParamMNK";
+            this.bRestoreParamMNK.Size = new System.Drawing.Size(643, 35);
+            this.bRestoreParamMNK.TabIndex = 130;
+            this.bRestoreParamMNK.Text = "Восстановить исходные значения параметров расчета для МНК";
+            this.bRestoreParamMNK.UseVisualStyleBackColor = true;
+            this.bRestoreParamMNK.Click += new System.EventHandler(this.bRestoreParamMNK_Click);
+            // 
             // tbMath_Fr_min
             // 
             this.tbMath_Fr_min.Location = new System.Drawing.Point(595, 174);
@@ -1925,16 +1940,6 @@
             this.bCancelSettings.TabIndex = 33;
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
-            // 
-            // bRestoreParamMNK
-            // 
-            this.bRestoreParamMNK.Location = new System.Drawing.Point(52, 201);
-            this.bRestoreParamMNK.Name = "bRestoreParamMNK";
-            this.bRestoreParamMNK.Size = new System.Drawing.Size(643, 35);
-            this.bRestoreParamMNK.TabIndex = 130;
-            this.bRestoreParamMNK.Text = "Восстановить исходные значения параметров расчета для МНК";
-            this.bRestoreParamMNK.UseVisualStyleBackColor = true;
-            this.bRestoreParamMNK.Click += new System.EventHandler(this.bRestoreParamMNK_Click);
             // 
             // FormSettings
             // 

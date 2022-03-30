@@ -104,7 +104,6 @@
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbTermoCamera = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.tbTemperature = new System.Windows.Forms.TextBox();
             this.bThermalCameraSet = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -114,6 +113,7 @@
             this.btnThermalCamera = new System.Windows.Forms.Button();
             this.splitter6 = new System.Windows.Forms.Splitter();
             this.gbBarometr = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.bBarometr = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -760,16 +760,6 @@
             this.gbTermoCamera.TabStop = false;
             this.gbTermoCamera.Text = "Термокамера";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(164, 33);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 35);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Расчет";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // tbTemperature
             // 
             this.tbTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -886,6 +876,16 @@
             this.gbBarometr.TabIndex = 20;
             this.gbBarometr.TabStop = false;
             this.gbBarometr.Text = "Барометр";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(164, 33);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(122, 35);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Расчет";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label11
             // 
@@ -1953,7 +1953,7 @@
             this.tabPage1.Controls.Add(this.btnSensorSeach);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(279, 560);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск";
@@ -2410,8 +2410,8 @@
             this.tabPage2.Controls.Add(this.gbCHLevel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(279, 566);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(279, 560);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Характеризация";
             // 
@@ -2751,7 +2751,7 @@
             this.tabPage3.Controls.Add(this.pbVRProcess);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(279, 566);
+            this.tabPage3.Size = new System.Drawing.Size(279, 560);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Верификация";
             // 
@@ -3147,8 +3147,8 @@
             this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(279, 566);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(279, 560);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Метролог";
             // 
@@ -3679,6 +3679,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);

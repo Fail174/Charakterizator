@@ -135,7 +135,7 @@
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="set_CommReadCH" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">32</Value>
+      <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="set_CommMaxSetCH" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>

@@ -185,6 +185,7 @@ namespace Charaterizator
                 {
                     Commutator.Channal60 = false;
                 }
+
                 MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
 
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
@@ -508,6 +509,9 @@ namespace Charaterizator
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Подключен";
                 Program.txtlog.WriteLineLog("Коммутатор подключен", 0);
+
+                
+
             }
             else
             {
@@ -517,6 +521,22 @@ namespace Charaterizator
             }
         }
 
+        /// <summary>
+        /// Включение питания каналов коммутатора
+        /// </summary>
+        /// <param name="mode"></param>
+        private void SetCommutatorChanalPower(int mode)
+        {
+            if (Commutator != null)
+            {
+                Program.txtlog.WriteLineLog("Подключаем питание на линии коммутатора", 0);
+                for (int i = 0; i < MaxChannalCount; i++)
+                {
+                    Commutator.SetPower(i, mode);     // команда подключить питание датчика
+                    Application.DoEvents();
+                }
+            }
+        }
 
 
         // Подключение задатчика МЕНСОРА или ПАСКАЛЯ
@@ -1215,8 +1235,8 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    double Diapazon = sensors.sensor.UpLevel; // - sensors.sensor.DownLevel; // Делим на максимум , а не на диапазон (16.03.2022) 
-                    if ((Diapazon <= 0) || (Diapazon > 1000000))
+                    double Pmax = sensors.sensor.UpLevel; // - sensors.sensor.DownLevel; // Делим на максимум , а не на диапазон (16.03.2022) 
+                    if ((Pmax <= 0) || (Pmax > 1000000))
                     {
                         Program.txtlog.WriteLineLog("CH: Не верные НПИ и ВПИ датчика в канале:" + (i + 1).ToString(), 1);
                         continue;
@@ -1230,6 +1250,7 @@ namespace Charaterizator
                     double val = -1000;
                     int c_row = 0;
                     int c_cols = 0;
+                    bool sensor_DV = ResultCH.Channal[i].PressureModel[1] == '2';//Датчик ДВ
 
                     for (int j = 0; j < ResultCH.Channal[i].Points.Count; j++)
                     {
@@ -1238,8 +1259,9 @@ namespace Charaterizator
                             c_cols = c_cols + 1;
                             c_row = 0;
                         }
+
                         val = ResultCH.Channal[i].Points[j].Temperature;
-                        mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure / Diapazon;
+                        mtxP[c_row, c_cols] = ResultCH.Channal[i].Points[j].Pressure;
                         mtxR[c_row, c_cols] = ResultCH.Channal[i].Points[j].Resistance;
                         mtxU[c_row, c_cols] = ResultCH.Channal[i].Points[j].OutVoltage;
                         //mtxP[c_cols, c_row] = ResultCH.Channal[i].Points[j].Pressure / Diapazon;
@@ -1269,7 +1291,7 @@ namespace Charaterizator
 
                     //try
                     //{
-                    Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Unew, Pnew);
+                    Matrix<double> ResulCoefmtx = CalculationMtx.CalculationCoef(Rnew, Unew, Pnew, Pmax, sensor_DV);
                     if (ResulCoefmtx.RowCount != 24)
                     {
                         Program.txtlog.WriteLineLog("CH: Количество точек при характеризация не равно 24.", 1);
@@ -1526,14 +1548,28 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
-                    if (sensors.С43SetZero())
+                    if (SensorAbsPressuer)
                     {
-
-                        Program.txtlog.WriteLineLog("VR: Выполнена установка нуля датчика в канале " + (i + 1).ToString(), 0);
+                        float pressure =Convert.ToSingle(numATMpress.Value);
+                        if (sensors.С143SetZero(pressure))
+                        {
+                            Program.txtlog.WriteLineLog("VR: Выполнена установка нуля датчика ДА в канале " + (i + 1).ToString(), 0);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("VR: Установка нуля датчика ДА не выполнена!", 1);
+                        }
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Установка нуля датчика не выполнена!", 1);
+                        if (sensors.С43SetZero())
+                        {
+                            Program.txtlog.WriteLineLog("VR: Выполнена установка нуля датчика в канале " + (i + 1).ToString(), 0);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("VR: Установка нуля датчика не выполнена!", 1);
+                        }
                     }
                 }
                 else
@@ -3519,6 +3555,8 @@ namespace Charaterizator
                 if (MaxChannalCount > 32)
                 {
                     Commutator.Channal60 = true;
+                    Commutator._StateCHPower = 0;
+                    Commutator._StateCH = 0;
                 }
                 else
                 {
@@ -5887,6 +5925,8 @@ namespace Charaterizator
             string FileName = openFileDialogArhiv.FileName;
             СResultCH ResultCH = new СResultCH(FileName);
             double Pmax = Convert.ToDouble(SensorsDB.GetDataSensors(ResultCH.Channal[0].GetSensorType(), new string(ResultCH.Channal[0].PressureModel), "Pmax"));
+            bool sensor_DV = ResultCH.Channal[0].PressureModel[1] == '2';
+                        
             if (Pmax <= 0) return;
             //ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT, Type, Model);
 
@@ -5943,6 +5983,8 @@ namespace Charaterizator
             Matrix<double> Rmtx = ResultCH.GetRezistansMatrix(ch);
             // Матрица температур
             Matrix<double> Tmtx = ResultCH.GetTemperatureMatrix(ch);
+
+
 
 
             /////////////////////////////////////////////////////////////////////////////////////
@@ -6083,7 +6125,7 @@ namespace Charaterizator
                             try
                             {
                                 // Вызов функции расчета коэффициентов методом наименьших квадратов (МНК) 
-                                ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, gammaPaTest, gammaTaTest);
+                                ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, gammaPaTest, gammaTaTest, sensor_DV);
 
                                 // Анализ результатов
                                 if ((ResulCoefmtx.RowCount == 1) & (ResulCoefmtx.ColumnCount == 1))
@@ -6152,7 +6194,7 @@ namespace Charaterizator
                 try
                 {
                     // Вызов функции расчета коэффициентов классическим методом                
-                    ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx);
+                    ResulCoefmtx = CalculationMtx.CalculationCoef(Rmtx, Umtx, Pmtx, Pmax, sensor_DV);
                     Program.txtlog.WriteLineLog("Решение найдено!", 0);
                     Program.txtlog.WriteLineLog("MNK: Рассчитанное отклонение (R^2) равно: " + Convert.ToString(ResulCoefmtx[ResulCoefmtx.RowCount - 1, 0]), 0);
                     float[] tmp = new float[ResulCoefmtx.RowCount-1];
@@ -6201,6 +6243,11 @@ namespace Charaterizator
                 btnThermalCamera.Text = "Не подключен";
                 Program.txtlog.WriteLineLog("Датик температуры не подключен", 1);
             }
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            SetCommutatorChanalPower(0);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Charaterizator
         public static bool flag_MeanR;   // true - усреднять матрицу сопротивлений false - не усреднять
 
 
-        public Matrix<double> CalculationCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx)
+        public Matrix<double> CalculationCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, double Pmax, bool sensor_DV)
         {
             //-----------------------------------------------------------------------------------------------
             Matrix<double> resultBmtx;              // Возвращаемое значение           
@@ -122,7 +122,29 @@ namespace Charaterizator
             }
 
 
-
+            // Нормируем матрицу P    
+            //Это можно перенести пораньше, сразу после формирования матрицы P и определения Pmax
+            //Matrix<double> Pn = DenseMatrix.Create(rowP, colP, 0);
+            if (sensor_DV)
+            {
+                for (int i = 0; i < MeanPmtx.RowCount; i++)
+                {
+                    for (int j = 0; j < MeanPmtx.ColumnCount; j++)
+                    {
+                        MeanPmtx[i, j] = Math.Abs(MeanPmtx.At(i, j) / Pmax);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < MeanPmtx.RowCount; i++)
+                {
+                    for (int j = 0; j < MeanPmtx.ColumnCount; j++)
+                    {
+                        MeanPmtx[i, j] = MeanPmtx.At(i, j) / Pmax;
+                    }
+                }
+            }
 
 
             //-----------------------------------------------------------------------------------------------
@@ -221,12 +243,48 @@ namespace Charaterizator
 
 
             // Расчет R^2
-            Matrix<double> R2 = DenseMatrix.Create(1, 1, -1);
-            //R2 = CalcR2(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
+            //Matrix<double> R2 = DenseMatrix.Create(1, 1, -1);
+            Matrix<double> R2 = CalcR2(row, cols, Bmtx, Rmtx, Umtx, MeanPmtx);
             resultBmtx[Bmtx.RowCount, 0] = R2.At(0, 0);
 
             return resultBmtx;
             
         }
+
+        // ФУНКЦИЯ для R^2        
+
+        public Matrix<double> CalcR2(int rowP, int colP, Matrix<double> B, Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pn)
+        {
+            Matrix<double> R2 = DenseMatrix.Create(1, 1, 0);
+            double Fi;
+            int m;
+
+            // цикл по N(строкам матриц M, P, R, U)
+            for (int N = 0; N < rowP; N++)
+            {
+                // цикл по K(столбцам матриц M, P, R, U)
+                for (int K = 0; K < colP; K++)
+                {
+                    Fi = 0;
+                    m = 0;
+                    // цикл по j
+                    for (int j = 0; j < 6; j++)
+                    {
+                        // цикл по i
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Fi = Fi + B.At(m, 0) * Math.Pow(Rmtx.At(N, K), i) * Math.Pow(Umtx.At(N, K), j);
+                            m = m + 1;
+                        }
+                    }
+                    //Fkn[N, K] = Math.Abs((Fi - Pn.At(N, K)) * 100 * Kp.At(N, K));
+                    R2 = R2 + ((Fi - Pn.At(N, K)) * (Fi - Pn.At(N, K)));
+                }
+            }
+            return R2;
+        }
+
+
+
     }
 }

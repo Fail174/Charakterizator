@@ -60,7 +60,7 @@ namespace Charaterizator
         // -------- ОСНОВНАЯ ФУНКЦИЯ РАСЧЕТА ------------------------------------------------                                      
         // весовых коэффициентов калибровки датчика с помощью МНК
         // ----------------------------------------------------------------------------------
-        public Matrix<double> CalcCalibrCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, Matrix<double> gammaP, Matrix<double> gammaT)
+        public Matrix<double> CalcCalibrCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, Matrix<double> gammaP, Matrix<double> gammaT, bool sensor_DV)
         {
            
             Matrix<double> resultBmtx;           // Возвращаемое значение - Матрица калибровочных коэффициентов 
@@ -145,12 +145,24 @@ namespace Charaterizator
             // Нормируем матрицу P    
             //Это можно перенести пораньше, сразу после формирования матрицы P и определения Pmax
             Matrix<double> Pn = DenseMatrix.Create(rowP, colP, 0);
-
-            for (int i = 0; i < rowP; i++)
+            if (sensor_DV)
             {
-                for (int j = 0; j < colP; j++)
+                for (int i = 0; i < rowP; i++)
                 {
-                    Pn[i, j] = Pmtx.At(i, j) / Pmax;
+                    for (int j = 0; j < colP; j++)
+                    {
+                        Pn[i, j] = Math.Abs(Pmtx.At(i, j) / Pmax);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < rowP; i++)
+                {
+                    for (int j = 0; j < colP; j++)
+                    {
+                        Pn[i, j] = Pmtx.At(i, j) / Pmax;
+                    }
                 }
             }
 

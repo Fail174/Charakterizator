@@ -11,11 +11,11 @@ using System.Windows.Forms;
 namespace Charaterizator
 {
     public partial class FormSettings : Form
-    {       
+    {
 
-    public FormSettings()
+        public FormSettings()
         {
-            InitializeComponent();           
+            InitializeComponent();
             tab_FormSettings.SelectedIndex = MainForm.SettingsSelIndex;
             // Properties.Settings.Default.Reload();
             try
@@ -29,39 +29,39 @@ namespace Charaterizator
             }
         }
 
-        
+
         // Сохранение данных из формы в settings
         private void bSetSettings_Click(object sender, EventArgs e)
-        {           
+        {
             try
             {
                 // считываем данные из формы и сохраняем их в Settings               
-                
+
                 // 0 - Общие настройки программы
                 Properties.Settings.Default.set_HoldTimeTemp = Convert.ToInt32(tbHoldTimeTemp.Value);               //
                 Properties.Settings.Default.set_DeltaTemp = Convert.ToDouble(tbDeltaTemp.Value);                    //
                 Properties.Settings.Default.set_MainTimer = Convert.ToInt32(tbMainTimer.Value);                     //
                 Properties.Settings.Default.FileNameDB = tbPathFile.Text;                                           //
-                // Проводить характ/вериф при отсутствии подключения к задатчику или мультиметру
-                // пока не используется
-                /*
-                if (cbHandlePress.SelectedIndex == 1)
-                {
-                    Properties.Settings.Default.set_HandleContrPress = true;
-                }
-                else
-                {
-                    Properties.Settings.Default.set_HandleContrPress = false;
-                }
-                if (cbHandleMultimetr.SelectedIndex == 1)
-                {
-                    Properties.Settings.Default.set_HandleContrMultimetr = true;
-                }
-                else
-                {
-                    Properties.Settings.Default.set_HandleContrMultimetr = false;
-                }*/
-                    
+                                                                                                                    // Проводить характ/вериф при отсутствии подключения к задатчику или мультиметру
+                                                                                                                    // пока не используется
+                                                                                                                    /*
+                                                                                                                    if (cbHandlePress.SelectedIndex == 1)
+                                                                                                                    {
+                                                                                                                        Properties.Settings.Default.set_HandleContrPress = true;
+                                                                                                                    }
+                                                                                                                    else
+                                                                                                                    {
+                                                                                                                        Properties.Settings.Default.set_HandleContrPress = false;
+                                                                                                                    }
+                                                                                                                    if (cbHandleMultimetr.SelectedIndex == 1)
+                                                                                                                    {
+                                                                                                                        Properties.Settings.Default.set_HandleContrMultimetr = true;
+                                                                                                                    }
+                                                                                                                    else
+                                                                                                                    {
+                                                                                                                        Properties.Settings.Default.set_HandleContrMultimetr = false;
+                                                                                                                    }*/
+
                 Properties.Settings.Default.set_MaxErrorCount = Convert.ToInt32(tbMaxErrorCount.Value);
                 Properties.Settings.Default.set_MinSensorCurrent = Convert.ToDouble(tbMinSensorCurrent.Value);
                 Properties.Settings.Default.set_MaxCountCAPRead = Convert.ToInt32(tbMaxCountCAPRead.Value);
@@ -93,7 +93,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_UseMensor = rb_useMensor.Checked;
 
 
-               //4 - ТЕРМОКАМЕРА
+                //4 - ТЕРМОКАМЕРА
                 Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToInt32(tbTCameraReadPeriod.Value);         //
 
                 //5 - Датчики
@@ -103,7 +103,7 @@ namespace Charaterizator
 
                 //5 - математика - параметры рассчета
                 Properties.Settings.Default.set_Math_Kf = Convert.ToInt32(tbMath_Kf.Value);
-                Properties.Settings.Default.set_Math_Kmax_dop = Convert.ToInt32(tbMath_Kmax_dop.Value);               
+                Properties.Settings.Default.set_Math_Kmax_dop = Convert.ToInt32(tbMath_Kmax_dop.Value);
                 Properties.Settings.Default.set_Math_Amax = Convert.ToInt32(tbMath_Amax.Value);
                 Properties.Settings.Default.set_Math_Mmax = Convert.ToInt32(tbMath_Mmax.Value);
                 Properties.Settings.Default.set_Math_Tnku = Convert.ToDouble(tbMath_Tnku.Value);
@@ -123,7 +123,7 @@ namespace Charaterizator
             {
             }
         }
-      
+
 
 
 
@@ -138,11 +138,11 @@ namespace Charaterizator
         // Обновление данных выбранной вкладки с настройками
         private void ReadSettings()
         {
-         
-                   
+
+
             // считываем данные из Settings и выводим на форму с настройками
-            tbHoldTimeTemp.Value = Properties.Settings.Default.set_HoldTimeTemp;                     
-            tbDeltaTemp.Value = Convert.ToDecimal(Properties.Settings.Default.set_DeltaTemp);      
+            tbHoldTimeTemp.Value = Properties.Settings.Default.set_HoldTimeTemp;
+            tbDeltaTemp.Value = Convert.ToDecimal(Properties.Settings.Default.set_DeltaTemp);
             tbMainTimer.Value = Properties.Settings.Default.set_MainTimer;
             tbPathFile.Text = Properties.Settings.Default.FileNameDB;
 
@@ -183,17 +183,17 @@ namespace Charaterizator
             tbCommReadPause.Value = Properties.Settings.Default.set_CommReadPause;
             tbCommMaxLevelCount.Value = Properties.Settings.Default.set_CommMaxLevelCount;
 
-             //2 - Мультиметр
-             tbMultimReadCount.Value = Properties.Settings.Default.set_MultimReadCount;
-             tbMultimReadPeriod.Value = Properties.Settings.Default.set_MultimReadPeriod;
-             tbMultimReadTimeOut.Value = Properties.Settings.Default.set_MultimReadTimeout;
-             tbMultimWaitReady.Value = Properties.Settings.Default.set_MultimDataReady;
-                   
-              //3 - Менсор                   
-             tbMensorReadPeriod.Value = Properties.Settings.Default.set_MensorReadPeriod;
-             tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
-             tbMensorSKOPressure.Value = Convert.ToDecimal(Properties.Settings.Default.set_MensorSKOPressure);
-             tbMensorMaxCountPoint.Value = Properties.Settings.Default.set_MensorMaxCountPoint;
+            //2 - Мультиметр
+            tbMultimReadCount.Value = Properties.Settings.Default.set_MultimReadCount;
+            tbMultimReadPeriod.Value = Properties.Settings.Default.set_MultimReadPeriod;
+            tbMultimReadTimeOut.Value = Properties.Settings.Default.set_MultimReadTimeout;
+            tbMultimWaitReady.Value = Properties.Settings.Default.set_MultimDataReady;
+
+            //3 - Менсор                   
+            tbMensorReadPeriod.Value = Properties.Settings.Default.set_MensorReadPeriod;
+            tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
+            tbMensorSKOPressure.Value = Convert.ToDecimal(Properties.Settings.Default.set_MensorSKOPressure);
+            tbMensorMaxCountPoint.Value = Properties.Settings.Default.set_MensorMaxCountPoint;
 
             if (Properties.Settings.Default.set_UseMensor)
             {
@@ -205,20 +205,20 @@ namespace Charaterizator
                 rb_useMensor.Checked = false;
                 rb_usePascal.Checked = true;
             }
-            
 
-             // 4 - Термокамера
-            tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;                     
-       
-                   
-             // 5 - Датчики                   
-             tbSensReadCount.Value = Properties.Settings.Default.set_SensReadCount;
-             tbSensReadPause.Value = Properties.Settings.Default.set_SensReadPause;
-             tbSensWaitPause.Value = Properties.Settings.Default.set_SensWaitTimeout;
+
+            // 4 - Термокамера
+            tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;
+
+
+            // 5 - Датчики                   
+            tbSensReadCount.Value = Properties.Settings.Default.set_SensReadCount;
+            tbSensReadPause.Value = Properties.Settings.Default.set_SensReadPause;
+            tbSensWaitPause.Value = Properties.Settings.Default.set_SensWaitTimeout;
 
             //5 - математика - параметры рассчета
             tbMath_Kf.Value = Properties.Settings.Default.set_Math_Kf;
-            tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;           
+            tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;
             tbMath_Amax.Value = Properties.Settings.Default.set_Math_Amax;
             tbMath_Mmax.Value = Properties.Settings.Default.set_Math_Mmax;
             tbMath_Tnku.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Tnku);
@@ -228,9 +228,9 @@ namespace Charaterizator
             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
             rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
             rbMNK_CheckedChanged(null, null);
-            
+
         }
-    
+
 
 
         // Обработчик открыть файл с БД
@@ -277,7 +277,7 @@ namespace Charaterizator
             if (rbMNK.Checked)
             {
                 tbMath_Kf.Enabled = true;
-                tbMath_Kmax_dop.Enabled = true;                
+                tbMath_Kmax_dop.Enabled = true;
                 tbMath_Amax.Enabled = true;
                 tbMath_Mmax.Enabled = true;
                 tbMath_Tnku.Enabled = true;
@@ -288,7 +288,7 @@ namespace Charaterizator
             else
             {
                 tbMath_Kf.Enabled = false;
-                tbMath_Kmax_dop.Enabled = false;                
+                tbMath_Kmax_dop.Enabled = false;
                 tbMath_Amax.Enabled = false;
                 tbMath_Mmax.Enabled = false;
                 tbMath_Tnku.Enabled = false;
@@ -301,54 +301,49 @@ namespace Charaterizator
 
         private void bRestoreParamMNK_Click(object sender, EventArgs e)
         {
-            /*
-             // МНК - параметры рассчета по умолчанию              
-             // Kf - коэффициент для формирования расчетной границы
-             public int Kf = 3;    
-             //Kpmax_dop - максимально допускаемое значение коэффициента перенастройки
-             public int Kpmax_dop = 10;       
-             // Максимальное кол-во циклов поиска
-             public int Amax = 300;
-             // Максимальное значение веса
-             public int Mmax = 300;
-             // Температура НКУ
-             public double Tnku = 23;       
-             // Коэффициент регулировки при расчете шага веса 
-             public double KdM = 0.33;        
-             // Допускаемый минимальный шаг расчетной границы
-             public double deltaFdop_min = 0.001;
-             // Минимальная расчетная граница
-             public double Fr_min = 0.01;                   
+            // МНК - параметры рассчета по умолчанию              
+            // Kf - коэффициент для формирования расчетной границы
+            int Kf = 3;
+            //Kpmax_dop - максимально допускаемое значение коэффициента перенастройки
+            int Kpmax_dop = 10;
+            // Максимальное кол-во циклов поиска
+            int Amax = 300;
+            // Максимальное значение веса
+            int Mmax = 300;
+            // Температура НКУ
+            double Tnku = 23;
+            // Коэффициент регулировки при расчете шага веса 
+            double KdM = 0.33;
+            // Допускаемый минимальный шаг расчетной границы
+            double deltaFdop_min = 0.001;
+            // Минимальная расчетная граница
+            double Fr_min = 0.01;
 
+            Properties.Settings.Default.set_Math_Kf = Kf;
+            Properties.Settings.Default.set_Math_Kmax_dop = Kpmax_dop;
+            Properties.Settings.Default.set_Math_Amax = Amax;
+            Properties.Settings.Default.set_Math_Mmax = Mmax;
+            Properties.Settings.Default.set_Math_Tnku = Tnku;
+            Properties.Settings.Default.set_Math_KdM = KdM;
+            Properties.Settings.Default.set_Math_DFdop_min = deltaFdop_min;
+            Properties.Settings.Default.set_Math_Res_count_max = 200;
+            Properties.Settings.Default.set_Math_AlgorithmMNK = rbMNK.Checked;
 
-             Properties.Settings.Default.set_Math_Kf = Kf;
-             Properties.Settings.Default.set_Math_Kmax_dop = Kpmax_dop;
-             Properties.Settings.Default.set_Math_Amax = Amax;
-             Properties.Settings.Default.set_Math_Mmax = Mmax;
-             Properties.Settings.Default.set_Math_Tnku = Tnku;
-             Properties.Settings.Default.set_Math_KdM = KdM;
-             Properties.Settings.Default.set_Math_DFdop_min = deltaFdop_min;
-             Properties.Settings.Default.set_Math_Res_count_max = Fr_min = 0.01;
-             Properties.Settings.Default.set_Math_AlgorithmMNK = rbMNK.Checked;
+            Properties.Settings.Default.Save();  // Сохраняем переменные в settings.
+            Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
 
-             Properties.Settings.Default.Save();  // Сохраняем переменные в settings.
-             Program.txtlog.WriteLineLog("Настройки программы успешно сохранены!", 0);
-
-             // Обновляем поле с настройками (читаем из dettings и записываем в поле)
-             tbMath_Kf.Value = Properties.Settings.Default.set_Math_Kf;
-             tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;           
-             tbMath_Amax.Value = Properties.Settings.Default.set_Math_Amax;
-             tbMath_Mmax.Value = Properties.Settings.Default.set_Math_Mmax;
-             tbMath_Tnku.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Tnku);
-             tbMath_KdM.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_KdM);
-             tbMath_DFdop_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_DFdop_min);
-             tbMath_Fr_min.Value = Convert.ToInt32(Properties.Settings.Default.set_Math_Res_count_max);
-             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
-             rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
-             rbMNK_CheckedChanged(null, null);
-             */
-
+            // Обновляем поле с настройками (читаем из dettings и записываем в поле)
+            tbMath_Kf.Value = Properties.Settings.Default.set_Math_Kf;
+            tbMath_Kmax_dop.Value = Properties.Settings.Default.set_Math_Kmax_dop;
+            tbMath_Amax.Value = Properties.Settings.Default.set_Math_Amax;
+            tbMath_Mmax.Value = Properties.Settings.Default.set_Math_Mmax;
+            tbMath_Tnku.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_Tnku);
+            tbMath_KdM.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_KdM);
+            tbMath_DFdop_min.Value = Convert.ToDecimal(Properties.Settings.Default.set_Math_DFdop_min);
+            tbMath_Fr_min.Value = Convert.ToInt32(Properties.Settings.Default.set_Math_Res_count_max);
+            rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
+            rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
+            rbMNK_CheckedChanged(null, null);
         }
-
     }
 }
