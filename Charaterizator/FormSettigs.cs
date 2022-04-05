@@ -303,21 +303,21 @@ namespace Charaterizator
         {
             // МНК - параметры рассчета по умолчанию              
             // Kf - коэффициент для формирования расчетной границы
-            int Kf = 3;
+            int Kf = 1;
             //Kpmax_dop - максимально допускаемое значение коэффициента перенастройки
             int Kpmax_dop = 10;
             // Максимальное кол-во циклов поиска
-            int Amax = 300;
+            int Amax = 250;
             // Максимальное значение веса
-            int Mmax = 300;
+            int Mmax = 1000;
             // Температура НКУ
             double Tnku = 23;
             // Коэффициент регулировки при расчете шага веса 
-            double KdM = 0.33;
+            double KdM = 0.01;
             // Допускаемый минимальный шаг расчетной границы
-            double deltaFdop_min = 0.001;
+            double deltaFdop_min = 0.005;
             // Минимальная расчетная граница
-            double Fr_min = 0.01;
+            int ResCount_max = 200;
 
             Properties.Settings.Default.set_Math_Kf = Kf;
             Properties.Settings.Default.set_Math_Kmax_dop = Kpmax_dop;
@@ -326,7 +326,7 @@ namespace Charaterizator
             Properties.Settings.Default.set_Math_Tnku = Tnku;
             Properties.Settings.Default.set_Math_KdM = KdM;
             Properties.Settings.Default.set_Math_DFdop_min = deltaFdop_min;
-            Properties.Settings.Default.set_Math_Res_count_max = 200;
+            Properties.Settings.Default.set_Math_Res_count_max = ResCount_max;
             Properties.Settings.Default.set_Math_AlgorithmMNK = rbMNK.Checked;
 
             Properties.Settings.Default.Save();  // Сохраняем переменные в settings.

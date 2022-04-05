@@ -17,24 +17,24 @@ namespace Charaterizator
     public partial class FormSwitch : Form
     {
 
-
         // Занесены в настройки
         public int MAX_SETCH = 14;        // максимально разрешенное коичество подключаемых к изм. линии датчиков начиная с нулевого
         public int READ_PERIOD = 1000;    // Время опроса и обновление информации, мс
-        public int READ_PAUSE = 100;       //время выдержки после переключения коммутатора (переходные процессы), мс
+        public int READ_PAUSE = 100;      //время выдержки после переключения коммутатора (переходные процессы), мс
         public int WaitTime = 100;        //время выдержки после переключения коммутатора (переходные процессы), мс
 
         //не занесена в настройки
-        int MAXBUSY = 2000;             //Максимальное количество циклов ожидания (по 1 мс)
+        int MAXBUSY = 2000;               //Максимальное количество циклов ожидания (по 1 мс)
 
-        bool CommutatorBusy = false;//признак доступности коммутатора для приема команд
-        public bool Connected = false;      // true  - соединение установлено, 
+        bool CommutatorBusy = false;     //признак доступности коммутатора для приема команд
+        public bool Connected = false;   // true  - соединение установлено, 
         public bool Channal60 = false;
         private SerialPort serialPort1;
 
         // Состяние выходов коммутатора
         Int32 StateCHPower1 = 0;     // Питание 0-29
         Int32 StateCHPower2 = 0;     // Питание 30-59
+
         public Int64 _StateCHPower
         {
             get
@@ -305,6 +305,7 @@ namespace Charaterizator
 
                     serialPort1.Read(indata, 0, 10);
                     StateCHPower2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                    SetState60(StateCHPower2, StateCH2);
                 }
                 else
                 {
@@ -317,6 +318,7 @@ namespace Charaterizator
                     serialPort1.Read(indata, 0, 10);
                     StateCHPower1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
                     SetState(StateCHPower1, StateCH1);
+
                 }
             }
             else
@@ -331,6 +333,7 @@ namespace Charaterizator
                     Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
                     StateCHPower2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                    SetState60(StateCHPower2, StateCH2);
                 }
                 else
                 {
@@ -455,6 +458,7 @@ namespace Charaterizator
                     if (hi_addr)
                     {
                         StateCH2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState60(StateCHPower2, StateCH2);
                     }
                     else
                     {
@@ -473,6 +477,7 @@ namespace Charaterizator
                     if (hi_addr)
                     {
                         StateCH2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState60(StateCHPower2, StateCH2);
                     }
                     else
                     {
@@ -493,6 +498,7 @@ namespace Charaterizator
                             Thread.Sleep(READ_PAUSE);
                             serialPort1.Read(indata, 0, 10);
                             StateCH2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                            SetState60(StateCHPower2, StateCH2);
                         }
                         else
                         {
@@ -518,6 +524,8 @@ namespace Charaterizator
                         Thread.Sleep(READ_PAUSE);
                         serialPort1.Read(indata, 0, 10);
                         StateCH2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+                        SetState60(StateCHPower2, StateCH2);
+
                     }
                     else
                     {
@@ -1237,9 +1245,7 @@ namespace Charaterizator
             bInput42.ImageIndex = (data32 & 0x1000) >> 12; bInput57.ImageIndex = (data32 & 0x8000000) >> 27;
             bInput43.ImageIndex = (data32 & 0x2000) >> 13; bInput58.ImageIndex = (data32 & 0x10000000) >> 28;
             bInput44.ImageIndex = (data32 & 0x4000) >> 14; bInput59.ImageIndex = (data32 & 0x20000000) >> 29;
-
-
-
+                        
 
             // Проверяем количество подключенных выходов
             //NumOfConnectInputs = CalcNumOfConnectInputs(StateCH);
