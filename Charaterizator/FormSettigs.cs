@@ -12,7 +12,8 @@ namespace Charaterizator
 {
     public partial class FormSettings : Form
     {
-
+        public delegate void DelegatCalcMNK();
+        static public DelegatCalcMNK EventCalcMNK;
         public FormSettings()
         {
             InitializeComponent();
@@ -284,6 +285,7 @@ namespace Charaterizator
                 tbMath_KdM.Enabled = true;
                 tbMath_DFdop_min.Enabled = true;
                 tbMath_Fr_min.Enabled = true;
+                btnCalcMNK.Enabled = true;
             }
             else
             {
@@ -295,6 +297,7 @@ namespace Charaterizator
                 tbMath_KdM.Enabled = false;
                 tbMath_DFdop_min.Enabled = false;
                 tbMath_Fr_min.Enabled = false;
+                btnCalcMNK.Enabled = false;
             }
 
         }
@@ -344,6 +347,11 @@ namespace Charaterizator
             rbMNK.Checked = Properties.Settings.Default.set_Math_AlgorithmMNK;
             rbLinear.Checked = !(Properties.Settings.Default.set_Math_AlgorithmMNK);
             rbMNK_CheckedChanged(null, null);
+        }
+
+        private void btnCalcMNK_Click(object sender, EventArgs e)
+        {
+            EventCalcMNK();
         }
     }
 }

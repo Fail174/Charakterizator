@@ -3016,7 +3016,6 @@
             this.bInput31.AutoEllipsis = true;
             this.bInput31.BackColor = System.Drawing.Color.Transparent;
             this.bInput31.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.bInput31.Enabled = false;
             this.bInput31.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput31.ImageIndex = 0;
             this.bInput31.ImageList = this.imageList_Inputs;
@@ -3049,7 +3048,6 @@
             this.bInput30.AutoEllipsis = true;
             this.bInput30.BackColor = System.Drawing.Color.Transparent;
             this.bInput30.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.bInput30.Enabled = false;
             this.bInput30.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bInput30.ImageIndex = 0;
             this.bInput30.ImageList = this.imageList_Inputs;

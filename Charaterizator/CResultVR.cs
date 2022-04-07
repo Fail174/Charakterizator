@@ -30,14 +30,42 @@ namespace Charaterizator
         public int FactoryNumber;//заводской номер датчика
         public string FileNameArchiv;
         public List<SPointVR> Points;
-        public SChanalVR(int ChNum, int FN)
+        public byte SensorType;
+        public char[] PressureModel;
+
+        public SChanalVR(int ChNum, int FN, byte Type, string Model)
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
-//            FileNameArchiv = string.Format("Archiv/VR/VR_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
+            SensorType = Type;
+            PressureModel = Model.ToCharArray();
+            //            FileNameArchiv = string.Format("Archiv/VR/VR_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
             FileNameArchiv = string.Format("Archiv/VR/VR_FN_{0}.txt", FactoryNumber);
 
             Points = new List<SPointVR>();
+        }
+        public string GetSensorType()
+        {
+            switch (SensorType)
+            {
+                case 0xCC:
+                    return "ЭНИ-100";
+                case 0xCD:
+                    return "ЭНИ-12";
+                case 0xCE:
+                    return "ЭНИ-100-ЖК2";
+                case 0xCF:
+                    return "ЭНИ-12М";
+                default:
+                    return "не определено";
+            }
+        }
+
+        public string GetSensorModel()
+        {
+
+            string str = new string(PressureModel);
+            return str;
         }
     }
 
@@ -59,12 +87,12 @@ namespace Charaterizator
 
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
-        public CResultVR(int ChannalCount, int[] FN)
+        public CResultVR(int ChannalCount, int[] FN, byte[] Type, string[] Model)
         {
             StreamWriter fs;
             for (int i = 0; i < ChannalCount; i++)
             {
-                SChanalVR ch = new SChanalVR(i + 1, FN[i]);
+                SChanalVR ch = new SChanalVR(i + 1, FN[i], Type[i], Model[i]);
                 Channal.Add(ch);
                 Directory.CreateDirectory("VR");
                 Directory.CreateDirectory("Archiv/VR");
@@ -152,7 +180,8 @@ namespace Charaterizator
             if (writer != null)
             {
                 writer.WriteLine(string.Format("Архив данных верификации датчика"));
-                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+//                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.GetSensorModel()));
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");
                 writer.WriteLine(HeaderString);
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");

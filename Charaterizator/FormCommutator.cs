@@ -40,10 +40,10 @@ namespace Charaterizator
             get
             {
                 Int64 tmp = StateCHPower2;
-                return StateCHPower1+(tmp << 30);
-  //              return StateCHPower1 ;
+                return StateCHPower1 + (tmp << 30);
+                //              return StateCHPower1 ;
             }
-            
+
             set
             {
                 StateCHPower1 = 0;
@@ -59,9 +59,9 @@ namespace Charaterizator
             get
             {
                 Int64 tmp = StateCH2;
-                return  StateCH1 + (tmp<<30);
+                return StateCH1 + (tmp << 30);
             }
-            
+
             set
             {
                 StateCH1 = 0;
@@ -76,7 +76,7 @@ namespace Charaterizator
         {
             get
             {
-                return  NumOfConnectInputs;
+                return NumOfConnectInputs;
             }
 
             set
@@ -88,7 +88,7 @@ namespace Charaterizator
 
 
         public Int32 ActivCH;   // Номер активного канала
-       
+
 
 
 
@@ -98,6 +98,20 @@ namespace Charaterizator
         {
             InitializeComponent();
             serialPort1 = new SerialPort();
+            /*if (Channal60)
+            {
+                pCommCH60.Enabled = true;
+            }
+            else
+            {
+                pCommCH60.Enabled = false;
+            }*/
+
+        }
+
+        public void SetMaxChannal(int maxch)
+        {
+            Channal60 = maxch > 30;
             if (Channal60)
             {
                 pCommCH60.Enabled = true;
@@ -106,10 +120,11 @@ namespace Charaterizator
             {
                 pCommCH60.Enabled = false;
             }
-
+            _StateCHPower = 0;
+            _StateCH = 0;
         }
-          
-        
+
+
 
         public int DisConnect()
         {
@@ -1209,7 +1224,7 @@ namespace Charaterizator
             bPower44.ImageIndex = (data32 & 0x4000) >> 14;
             bPower45.ImageIndex = (data32 & 0x8000) >> 15;
 
-
+            
 
             bInput30.Enabled = (data32 & 0x1) == 0x1; bInput45.Enabled = (data32 & 0x8000) == 0x8000;
             bInput31.Enabled = (data32 & 0x2) == 0x2; bInput46.Enabled = (data32 & 0x10000) == 0x10000;
@@ -1226,7 +1241,7 @@ namespace Charaterizator
             bInput42.Enabled = (data32 & 0x1000) == 0x1000; bInput57.Enabled = (data32 & 0x8000000) == 0x8000000;
             bInput43.Enabled = (data32 & 0x2000) == 0x2000; bInput58.Enabled = (data32 & 0x10000000) == 0x10000000;
             bInput44.Enabled = (data32 & 0x4000) == 0x4000; bInput59.Enabled = (data32 & 0x20000000) == 0x20000000;
-
+            
 
             data32 = StateCH;
 

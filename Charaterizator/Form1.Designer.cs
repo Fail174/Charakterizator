@@ -113,7 +113,6 @@
             this.btnThermalCamera = new System.Windows.Forms.Button();
             this.splitter6 = new System.Windows.Forms.Splitter();
             this.gbBarometr = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.bBarometr = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -422,7 +421,7 @@
             this.инфоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1440, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1440, 28);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -435,36 +434,36 @@
             this.toolStripMenuItem1,
             this.открытьБДДатчиковToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // новыйПроектToolStripMenuItem
             // 
             this.новыйПроектToolStripMenuItem.Name = "новыйПроектToolStripMenuItem";
-            this.новыйПроектToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.новыйПроектToolStripMenuItem.Size = new System.Drawing.Size(226, 24);
             this.новыйПроектToolStripMenuItem.Text = "Новый проект";
             // 
             // открытьToolStripMenuItem
             // 
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(226, 24);
             this.открытьToolStripMenuItem.Text = "Открыть";
             // 
             // сохранитьToolStripMenuItem
             // 
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(226, 24);
             this.сохранитьToolStripMenuItem.Text = "Сохранить";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(189, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(223, 6);
             // 
             // открытьБДДатчиковToolStripMenuItem
             // 
             this.открытьБДДатчиковToolStripMenuItem.Name = "открытьБДДатчиковToolStripMenuItem";
-            this.открытьБДДатчиковToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.открытьБДДатчиковToolStripMenuItem.Size = new System.Drawing.Size(226, 24);
             this.открытьБДДатчиковToolStripMenuItem.Text = "Открыть БД датчиков";
             this.открытьБДДатчиковToolStripMenuItem.Click += new System.EventHandler(this.открытьБДДатчиковToolStripMenuItem_Click);
             // 
@@ -480,7 +479,7 @@
             this.toolStripMenuItem2,
             this.MenuItemMainSettings});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // мультиметрToolStripMenuItem
@@ -489,20 +488,20 @@
             this.MI_MultimetrSetings,
             this.параметрыToolStripMenuItem});
             this.мультиметрToolStripMenuItem.Name = "мультиметрToolStripMenuItem";
-            this.мультиметрToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.мультиметрToolStripMenuItem.Size = new System.Drawing.Size(233, 24);
             this.мультиметрToolStripMenuItem.Text = "Мультиметр";
             // 
             // MI_MultimetrSetings
             // 
             this.MI_MultimetrSetings.Name = "MI_MultimetrSetings";
-            this.MI_MultimetrSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_MultimetrSetings.Size = new System.Drawing.Size(252, 24);
             this.MI_MultimetrSetings.Text = "Настройки подключения";
             this.MI_MultimetrSetings.Click += new System.EventHandler(this.ToolStripMenuItem_MultimetrSetings_Click);
             // 
             // параметрыToolStripMenuItem
             // 
             this.параметрыToolStripMenuItem.Name = "параметрыToolStripMenuItem";
-            this.параметрыToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.параметрыToolStripMenuItem.Size = new System.Drawing.Size(252, 24);
             this.параметрыToolStripMenuItem.Text = "Параметры";
             this.параметрыToolStripMenuItem.Click += new System.EventHandler(this.параметрыToolStripMenuItem_Click);
             // 
@@ -512,20 +511,20 @@
             this.MI_MensorSetings,
             this.параметрыToolStripMenuItem1});
             this.задатчикДавленияToolStripMenuItem.Name = "задатчикДавленияToolStripMenuItem";
-            this.задатчикДавленияToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.задатчикДавленияToolStripMenuItem.Size = new System.Drawing.Size(233, 24);
             this.задатчикДавленияToolStripMenuItem.Text = "Задатчик давления";
             // 
             // MI_MensorSetings
             // 
             this.MI_MensorSetings.Name = "MI_MensorSetings";
-            this.MI_MensorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_MensorSetings.Size = new System.Drawing.Size(252, 24);
             this.MI_MensorSetings.Text = "Настройки подключения";
             this.MI_MensorSetings.Click += new System.EventHandler(this.MI_MensorSetings_Click);
             // 
             // параметрыToolStripMenuItem1
             // 
             this.параметрыToolStripMenuItem1.Name = "параметрыToolStripMenuItem1";
-            this.параметрыToolStripMenuItem1.Size = new System.Drawing.Size(213, 22);
+            this.параметрыToolStripMenuItem1.Size = new System.Drawing.Size(252, 24);
             this.параметрыToolStripMenuItem1.Text = "Параметры";
             this.параметрыToolStripMenuItem1.Click += new System.EventHandler(this.параметрыToolStripMenuItem1_Click);
             // 
@@ -535,20 +534,20 @@
             this.MI_CommutatorSetings,
             this.параметрыToolStripMenuItem2});
             this.коммутаторToolStripMenuItem.Name = "коммутаторToolStripMenuItem";
-            this.коммутаторToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.коммутаторToolStripMenuItem.Size = new System.Drawing.Size(233, 24);
             this.коммутаторToolStripMenuItem.Text = "Коммутатор";
             // 
             // MI_CommutatorSetings
             // 
             this.MI_CommutatorSetings.Name = "MI_CommutatorSetings";
-            this.MI_CommutatorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_CommutatorSetings.Size = new System.Drawing.Size(252, 24);
             this.MI_CommutatorSetings.Text = "Настройки подключения";
             this.MI_CommutatorSetings.Click += new System.EventHandler(this.MI_CommutatorSetings_Click);
             // 
             // параметрыToolStripMenuItem2
             // 
             this.параметрыToolStripMenuItem2.Name = "параметрыToolStripMenuItem2";
-            this.параметрыToolStripMenuItem2.Size = new System.Drawing.Size(213, 22);
+            this.параметрыToolStripMenuItem2.Size = new System.Drawing.Size(252, 24);
             this.параметрыToolStripMenuItem2.Text = "Параметры";
             this.параметрыToolStripMenuItem2.Click += new System.EventHandler(this.параметрыToolStripMenuItem2_Click);
             // 
@@ -558,20 +557,20 @@
             this.MI_ColdCameraSetings,
             this.параметрыToolStripMenuItem3});
             this.холодильнаяКамераToolStripMenuItem.Name = "холодильнаяКамераToolStripMenuItem";
-            this.холодильнаяКамераToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.холодильнаяКамераToolStripMenuItem.Size = new System.Drawing.Size(233, 24);
             this.холодильнаяКамераToolStripMenuItem.Text = "Термокамера";
             // 
             // MI_ColdCameraSetings
             // 
             this.MI_ColdCameraSetings.Name = "MI_ColdCameraSetings";
-            this.MI_ColdCameraSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_ColdCameraSetings.Size = new System.Drawing.Size(252, 24);
             this.MI_ColdCameraSetings.Text = "Настройки подключения";
             this.MI_ColdCameraSetings.Click += new System.EventHandler(this.MI_ColdCameraSetings_Click);
             // 
             // параметрыToolStripMenuItem3
             // 
             this.параметрыToolStripMenuItem3.Name = "параметрыToolStripMenuItem3";
-            this.параметрыToolStripMenuItem3.Size = new System.Drawing.Size(213, 22);
+            this.параметрыToolStripMenuItem3.Size = new System.Drawing.Size(252, 24);
             this.параметрыToolStripMenuItem3.Text = "Параметры";
             this.параметрыToolStripMenuItem3.Click += new System.EventHandler(this.параметрыToolStripMenuItem3_Click);
             // 
@@ -581,20 +580,20 @@
             this.MI_SensorSetings,
             this.параметрыToolStripMenuItem4});
             this.датчикиToolStripMenuItem.Name = "датчикиToolStripMenuItem";
-            this.датчикиToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.датчикиToolStripMenuItem.Size = new System.Drawing.Size(233, 24);
             this.датчикиToolStripMenuItem.Text = "Датчики";
             // 
             // MI_SensorSetings
             // 
             this.MI_SensorSetings.Name = "MI_SensorSetings";
-            this.MI_SensorSetings.Size = new System.Drawing.Size(213, 22);
+            this.MI_SensorSetings.Size = new System.Drawing.Size(252, 24);
             this.MI_SensorSetings.Text = "Настройки подключения";
             this.MI_SensorSetings.Click += new System.EventHandler(this.MI_SensorSetings_Click);
             // 
             // параметрыToolStripMenuItem4
             // 
             this.параметрыToolStripMenuItem4.Name = "параметрыToolStripMenuItem4";
-            this.параметрыToolStripMenuItem4.Size = new System.Drawing.Size(213, 22);
+            this.параметрыToolStripMenuItem4.Size = new System.Drawing.Size(252, 24);
             this.параметрыToolStripMenuItem4.Text = "Параметры";
             this.параметрыToolStripMenuItem4.Click += new System.EventHandler(this.параметрыToolStripMenuItem4_Click);
             // 
@@ -603,26 +602,26 @@
             this.mi_Barometr.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setComBarometr});
             this.mi_Barometr.Name = "mi_Barometr";
-            this.mi_Barometr.Size = new System.Drawing.Size(196, 22);
+            this.mi_Barometr.Size = new System.Drawing.Size(233, 24);
             this.mi_Barometr.Text = "Барометр";
             this.mi_Barometr.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // setComBarometr
             // 
             this.setComBarometr.Name = "setComBarometr";
-            this.setComBarometr.Size = new System.Drawing.Size(154, 23);
+            this.setComBarometr.Size = new System.Drawing.Size(154, 27);
             this.setComBarometr.Text = "Настройки подключения";
             this.setComBarometr.Click += new System.EventHandler(this.setComBarometr_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(193, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(230, 6);
             // 
             // MenuItemMainSettings
             // 
             this.MenuItemMainSettings.Name = "MenuItemMainSettings";
-            this.MenuItemMainSettings.Size = new System.Drawing.Size(196, 22);
+            this.MenuItemMainSettings.Size = new System.Drawing.Size(233, 24);
             this.MenuItemMainSettings.Text = "Основные параметры";
             this.MenuItemMainSettings.Click += new System.EventHandler(this.MenuItemMainSettings_Click);
             // 
@@ -636,7 +635,7 @@
             this.toolStripMenuItem3,
             this.tsmiPanelLog});
             this.окнаToolStripMenuItem.Name = "окнаToolStripMenuItem";
-            this.окнаToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.окнаToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
             this.окнаToolStripMenuItem.Text = "Окна";
             // 
             // tsmiPanelCommutator
@@ -645,7 +644,7 @@
             this.tsmiPanelCommutator.CheckOnClick = true;
             this.tsmiPanelCommutator.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPanelCommutator.Name = "tsmiPanelCommutator";
-            this.tsmiPanelCommutator.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelCommutator.Size = new System.Drawing.Size(273, 24);
             this.tsmiPanelCommutator.Tag = "0";
             this.tsmiPanelCommutator.Text = "Панель коммутатора";
             this.tsmiPanelCommutator.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
@@ -656,7 +655,7 @@
             this.tsmiPanelMultimetr.CheckOnClick = true;
             this.tsmiPanelMultimetr.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPanelMultimetr.Name = "tsmiPanelMultimetr";
-            this.tsmiPanelMultimetr.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelMultimetr.Size = new System.Drawing.Size(273, 24);
             this.tsmiPanelMultimetr.Tag = "1";
             this.tsmiPanelMultimetr.Text = "Панель мультиметра";
             this.tsmiPanelMultimetr.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
@@ -667,7 +666,7 @@
             this.tsmiPanelMensor.CheckOnClick = true;
             this.tsmiPanelMensor.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPanelMensor.Name = "tsmiPanelMensor";
-            this.tsmiPanelMensor.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelMensor.Size = new System.Drawing.Size(273, 24);
             this.tsmiPanelMensor.Tag = "2";
             this.tsmiPanelMensor.Text = "Панель задатчика давления";
             this.tsmiPanelMensor.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
@@ -678,7 +677,7 @@
             this.tsmiPanelTermocamera.CheckOnClick = true;
             this.tsmiPanelTermocamera.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPanelTermocamera.Name = "tsmiPanelTermocamera";
-            this.tsmiPanelTermocamera.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelTermocamera.Size = new System.Drawing.Size(273, 24);
             this.tsmiPanelTermocamera.Tag = "3";
             this.tsmiPanelTermocamera.Text = "Панель термокамеры";
             this.tsmiPanelTermocamera.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
@@ -686,7 +685,7 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(223, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(270, 6);
             // 
             // tsmiPanelLog
             // 
@@ -694,7 +693,7 @@
             this.tsmiPanelLog.CheckOnClick = true;
             this.tsmiPanelLog.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPanelLog.Name = "tsmiPanelLog";
-            this.tsmiPanelLog.Size = new System.Drawing.Size(226, 22);
+            this.tsmiPanelLog.Size = new System.Drawing.Size(273, 24);
             this.tsmiPanelLog.Text = "Панель журнала действий";
             this.tsmiPanelLog.Click += new System.EventHandler(this.tsmiPanelVisible_Click);
             // 
@@ -704,20 +703,20 @@
             this.tsMenuItemAbout,
             this.помощьToolStripMenuItem});
             this.инфоToolStripMenuItem.Name = "инфоToolStripMenuItem";
-            this.инфоToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.инфоToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.инфоToolStripMenuItem.Text = "Инфо";
             // 
             // tsMenuItemAbout
             // 
             this.tsMenuItemAbout.Name = "tsMenuItemAbout";
-            this.tsMenuItemAbout.Size = new System.Drawing.Size(149, 22);
+            this.tsMenuItemAbout.Size = new System.Drawing.Size(173, 24);
             this.tsMenuItemAbout.Text = "О программе";
             this.tsMenuItemAbout.Click += new System.EventHandler(this.tsMenuItemAbout_Click);
             // 
             // помощьToolStripMenuItem
             // 
             this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
             this.помощьToolStripMenuItem.Text = "Помощь";
             // 
             // panel1
@@ -736,9 +735,9 @@
             this.panel1.Controls.Add(this.tbDateTime);
             this.panel1.Controls.Add(this.gbCommutator);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1131, 24);
+            this.panel1.Location = new System.Drawing.Point(1131, 28);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 808);
+            this.panel1.Size = new System.Drawing.Size(309, 804);
             this.panel1.TabIndex = 6;
             // 
             // gbTermoCamera
@@ -863,7 +862,6 @@
             // gbBarometr
             // 
             this.gbBarometr.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.gbBarometr.Controls.Add(this.button2);
             this.gbBarometr.Controls.Add(this.label11);
             this.gbBarometr.Controls.Add(this.bBarometr);
             this.gbBarometr.Controls.Add(this.label2);
@@ -876,16 +874,6 @@
             this.gbBarometr.TabIndex = 20;
             this.gbBarometr.TabStop = false;
             this.gbBarometr.Text = "Барометр";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(164, 33);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 35);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Расчет";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label11
             // 
@@ -1251,7 +1239,7 @@
             this.dtpClockTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dtpClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dtpClockTimer.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpClockTimer.Location = new System.Drawing.Point(5, 707);
+            this.dtpClockTimer.Location = new System.Drawing.Point(5, 703);
             this.dtpClockTimer.Name = "dtpClockTimer";
             this.dtpClockTimer.ShowUpDown = true;
             this.dtpClockTimer.Size = new System.Drawing.Size(160, 44);
@@ -1264,7 +1252,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClockTimer.BackColor = System.Drawing.Color.Green;
             this.btnClockTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnClockTimer.Location = new System.Drawing.Point(178, 705);
+            this.btnClockTimer.Location = new System.Drawing.Point(178, 701);
             this.btnClockTimer.Name = "btnClockTimer";
             this.btnClockTimer.Size = new System.Drawing.Size(120, 49);
             this.btnClockTimer.TabIndex = 15;
@@ -1277,7 +1265,7 @@
             this.tbDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbDateTime.Location = new System.Drawing.Point(5, 759);
+            this.tbDateTime.Location = new System.Drawing.Point(5, 755);
             this.tbDateTime.Name = "tbDateTime";
             this.tbDateTime.ReadOnly = true;
             this.tbDateTime.Size = new System.Drawing.Size(299, 40);
@@ -1379,7 +1367,7 @@
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(844, 400);
+            this.dataGridView2.Size = new System.Drawing.Size(844, 396);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.Visible = false;
             this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
@@ -1453,12 +1441,12 @@
             this.cmsCharacterizationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuDeleteResult});
             this.cmsCharacterizationTable.Name = "contextMenuStripCharacterizationTable";
-            this.cmsCharacterizationTable.Size = new System.Drawing.Size(168, 26);
+            this.cmsCharacterizationTable.Size = new System.Drawing.Size(197, 28);
             // 
             // ToolStripMenuDeleteResult
             // 
             this.ToolStripMenuDeleteResult.Name = "ToolStripMenuDeleteResult";
-            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(167, 22);
+            this.ToolStripMenuDeleteResult.Size = new System.Drawing.Size(196, 24);
             this.ToolStripMenuDeleteResult.Text = "Удаление строки";
             this.ToolStripMenuDeleteResult.Click += new System.EventHandler(this.ToolStripMenuDeleteResult_Click);
             // 
@@ -1509,9 +1497,9 @@
             this.panel3.Controls.Add(this.dataGridView1);
             this.panel3.Controls.Add(this.panel4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 24);
+            this.panel3.Location = new System.Drawing.Point(0, 28);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1131, 586);
+            this.panel3.Size = new System.Drawing.Size(1131, 582);
             this.panel3.TabIndex = 8;
             // 
             // dataGridView5
@@ -1537,7 +1525,7 @@
             this.dataGridView5.ReadOnly = true;
             this.dataGridView5.RowHeadersVisible = false;
             this.dataGridView5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView5.Size = new System.Drawing.Size(844, 400);
+            this.dataGridView5.Size = new System.Drawing.Size(844, 396);
             this.dataGridView5.TabIndex = 10;
             this.dataGridView5.Visible = false;
             // 
@@ -1618,12 +1606,12 @@
             this.cmsVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMenuVerificationDelete});
             this.cmsVerificationTable.Name = "contextMenuStripVerificationTable";
-            this.cmsVerificationTable.Size = new System.Drawing.Size(168, 26);
+            this.cmsVerificationTable.Size = new System.Drawing.Size(197, 28);
             // 
             // tsMenuVerificationDelete
             // 
             this.tsMenuVerificationDelete.Name = "tsMenuVerificationDelete";
-            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(167, 22);
+            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(196, 24);
             this.tsMenuVerificationDelete.Text = "Удаление строки";
             this.tsMenuVerificationDelete.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
             // 
@@ -1632,7 +1620,7 @@
             this.splitter1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.splitter1.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter1.Location = new System.Drawing.Point(287, 400);
+            this.splitter1.Location = new System.Drawing.Point(287, 396);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(844, 3);
             this.splitter1.TabIndex = 8;
@@ -1653,7 +1641,7 @@
             this.cICurrent20mA});
             this.dataGridView4.ContextMenuStrip = this.cmsCurentTable;
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView4.Location = new System.Drawing.Point(287, 403);
+            this.dataGridView4.Location = new System.Drawing.Point(287, 399);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersVisible = false;
@@ -1709,12 +1697,12 @@
             this.cmsCurentTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmCurrentDelete});
             this.cmsCurentTable.Name = "contextMenuStripVerificationTable";
-            this.cmsCurentTable.Size = new System.Drawing.Size(168, 26);
+            this.cmsCurentTable.Size = new System.Drawing.Size(197, 28);
             // 
             // tsmCurrentDelete
             // 
             this.tsmCurrentDelete.Name = "tsmCurrentDelete";
-            this.tsmCurrentDelete.Size = new System.Drawing.Size(167, 22);
+            this.tsmCurrentDelete.Size = new System.Drawing.Size(196, 24);
             this.tsmCurrentDelete.Text = "Удаление строки";
             this.tsmCurrentDelete.Click += new System.EventHandler(this.tsmCurrentDelete_Click);
             // 
@@ -1743,7 +1731,7 @@
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView3.Size = new System.Drawing.Size(844, 586);
+            this.dataGridView3.Size = new System.Drawing.Size(844, 582);
             this.dataGridView3.TabIndex = 6;
             this.dataGridView3.Visible = false;
             this.dataGridView3.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView3_RowsRemoved);
@@ -1854,7 +1842,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(844, 586);
+            this.dataGridView1.Size = new System.Drawing.Size(844, 582);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -1924,7 +1912,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(287, 586);
+            this.panel4.Size = new System.Drawing.Size(287, 582);
             this.panel4.TabIndex = 0;
             // 
             // tabControl1
@@ -1939,7 +1927,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(287, 586);
+            this.tabControl1.Size = new System.Drawing.Size(287, 582);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1954,7 +1942,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(279, 560);
+            this.tabPage1.Size = new System.Drawing.Size(279, 556);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Поиск";
             // 
@@ -2644,19 +2632,19 @@
             this.tsmCHDeletePressItem,
             this.tsmCHAddPressItem});
             this.cmsCHPressuer.Name = "contextMenuStripCharacterizationTable";
-            this.cmsCHPressuer.Size = new System.Drawing.Size(127, 48);
+            this.cmsCHPressuer.Size = new System.Drawing.Size(146, 52);
             // 
             // tsmCHDeletePressItem
             // 
             this.tsmCHDeletePressItem.Name = "tsmCHDeletePressItem";
-            this.tsmCHDeletePressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmCHDeletePressItem.Size = new System.Drawing.Size(145, 24);
             this.tsmCHDeletePressItem.Text = "Удалить";
             this.tsmCHDeletePressItem.Click += new System.EventHandler(this.tsmCHDeletePressItem_Click);
             // 
             // tsmCHAddPressItem
             // 
             this.tsmCHAddPressItem.Name = "tsmCHAddPressItem";
-            this.tsmCHAddPressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmCHAddPressItem.Size = new System.Drawing.Size(145, 24);
             this.tsmCHAddPressItem.Text = "Добавить";
             this.tsmCHAddPressItem.Click += new System.EventHandler(this.tsmCHAddPressItem_Click);
             // 
@@ -2711,19 +2699,19 @@
             this.tsmCHDeleteTemperItem,
             this.tsmAddCHTemperItem});
             this.cmsCHTemperature.Name = "contextMenuStripCharacterizationTable";
-            this.cmsCHTemperature.Size = new System.Drawing.Size(127, 48);
+            this.cmsCHTemperature.Size = new System.Drawing.Size(146, 52);
             // 
             // tsmCHDeleteTemperItem
             // 
             this.tsmCHDeleteTemperItem.Name = "tsmCHDeleteTemperItem";
-            this.tsmCHDeleteTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmCHDeleteTemperItem.Size = new System.Drawing.Size(145, 24);
             this.tsmCHDeleteTemperItem.Text = "Удалить";
             this.tsmCHDeleteTemperItem.Click += new System.EventHandler(this.tsmCHDeleteTemperItem_Click);
             // 
             // tsmAddCHTemperItem
             // 
             this.tsmAddCHTemperItem.Name = "tsmAddCHTemperItem";
-            this.tsmAddCHTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmAddCHTemperItem.Size = new System.Drawing.Size(145, 24);
             this.tsmAddCHTemperItem.Text = "Добавить";
             this.tsmAddCHTemperItem.Click += new System.EventHandler(this.tsmAddCHTemperItem_Click);
             // 
@@ -2898,19 +2886,19 @@
             this.tsmVRDelPressItem,
             this.tsmVRAddPressItem});
             this.cmsVRPressuer.Name = "contextMenuStripCharacterizationTable";
-            this.cmsVRPressuer.Size = new System.Drawing.Size(127, 48);
+            this.cmsVRPressuer.Size = new System.Drawing.Size(146, 52);
             // 
             // tsmVRDelPressItem
             // 
             this.tsmVRDelPressItem.Name = "tsmVRDelPressItem";
-            this.tsmVRDelPressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRDelPressItem.Size = new System.Drawing.Size(145, 24);
             this.tsmVRDelPressItem.Text = "Удалить";
             this.tsmVRDelPressItem.Click += new System.EventHandler(this.tsmVRDelPressItem_Click);
             // 
             // tsmVRAddPressItem
             // 
             this.tsmVRAddPressItem.Name = "tsmVRAddPressItem";
-            this.tsmVRAddPressItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRAddPressItem.Size = new System.Drawing.Size(145, 24);
             this.tsmVRAddPressItem.Text = "Добавить";
             this.tsmVRAddPressItem.Click += new System.EventHandler(this.tsmVRAddPressItem_Click);
             // 
@@ -2965,19 +2953,19 @@
             this.tsmVRDelTemperItem,
             this.tsmVRAddTemperItem});
             this.cmsVRTemperature.Name = "contextMenuStripCharacterizationTable";
-            this.cmsVRTemperature.Size = new System.Drawing.Size(127, 48);
+            this.cmsVRTemperature.Size = new System.Drawing.Size(146, 52);
             // 
             // tsmVRDelTemperItem
             // 
             this.tsmVRDelTemperItem.Name = "tsmVRDelTemperItem";
-            this.tsmVRDelTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRDelTemperItem.Size = new System.Drawing.Size(145, 24);
             this.tsmVRDelTemperItem.Text = "Удалить";
             this.tsmVRDelTemperItem.Click += new System.EventHandler(this.tsmVRDelTemperItem_Click);
             // 
             // tsmVRAddTemperItem
             // 
             this.tsmVRAddTemperItem.Name = "tsmVRAddTemperItem";
-            this.tsmVRAddTemperItem.Size = new System.Drawing.Size(126, 22);
+            this.tsmVRAddTemperItem.Size = new System.Drawing.Size(145, 24);
             this.tsmVRAddTemperItem.Text = "Добавить";
             this.tsmVRAddTemperItem.Click += new System.EventHandler(this.tsmVRAddTemperItem_Click);
             // 
@@ -4037,7 +4025,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.OpenFileDialog openFileDialogArhiv;
     }
 }

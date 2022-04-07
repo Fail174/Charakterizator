@@ -32,16 +32,16 @@ namespace Charaterizator
         public Int32 CCount;
         public byte SensorType;
         public char[] PressureModel;
-        public float[] Coefficient;//коэффициенты датчика
-        public double[] Coefficient_dbl;//коэффициенты датчика
+        public double[] Coefficient;//коэффициенты датчика
+        //public double[] Coefficient_dbl;//коэффициенты датчика
         public double[] R2;//отклонение R2
         public SChanal(int ChNum, int FN, int CoefCount, byte Type, string Model)
         {
             CCount = CoefCount;
             SensorType = Type;
             PressureModel = Model.ToCharArray();
-            Coefficient = new float[CoefCount];
-            Coefficient_dbl = new double[CoefCount];
+            Coefficient = new double[CoefCount];
+            //Coefficient_dbl = new double[CoefCount];
             R2 = new double[1];
             ChannalNummber = ChNum;
             FactoryNumber = FN;
@@ -177,24 +177,24 @@ namespace Charaterizator
             }
         }
 
-        public void AddCoeff(int ch, float [] Coeff)
+        public void AddCoeff(int ch, double [] Coeff)
         {
             for (int i = 0; i < Channal[ch].CCount; i++)
             {
                 Channal[ch].Coefficient[i] = Coeff[i];
             }
-            //SaveToArhiv(ch);
+            SaveToArhiv(ch);
         }
 
         // 
-        public void AddCoeff(int ch, double[] Coeff)
+       /* public void AddCoeff(int ch, double[] Coeff)
         {
             for (int i = 0; i < Channal[ch].CCount; i++)
             {
                 Channal[ch].Coefficient_dbl[i] = Coeff[i];
             }
             SaveToArhiv(ch);
-        }
+        }*/
 
         // 
         public void AddR2(int ch, double CoeffR2)
@@ -318,7 +318,7 @@ namespace Charaterizator
                 {
                     writer.WriteLine(GetStringFromPoint(ch.Points[j]));
                 }
-                if (ch.Coefficient_dbl[0] != 0)//если коэффициенты подсчитаны
+                if (ch.Coefficient[0] != 0)//если коэффициенты подсчитаны
                 {
                     writer.WriteLine("-----------------------------------------------------------------------------------------------");
                     writer.WriteLine("Рассчитанное отклонение R^2");
@@ -328,7 +328,7 @@ namespace Charaterizator
                     writer.WriteLine("Количество коэффициентов: " + ch.CCount.ToString());
                     for (int c = 0; c < ch.CCount; c++)
                     {
-                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient_dbl[c].ToString("E19"));
+                        writer.WriteLine(c.ToString("D2") + ": " + ch.Coefficient[c].ToString("E19"));
                     }
                 }
                 writer.Close();
@@ -502,7 +502,7 @@ namespace Charaterizator
                             }
                             else
                             {
-                                point.Deviation = -1;
+                                point.Deviation = 0;
                             }
                         }
                         else
@@ -565,8 +565,15 @@ namespace Charaterizator
                                 point.OutVoltage = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 if (strarr.Length > 6)
-                                { 
-                                    point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                {
+                                    if (strarr[6] != "")
+                                    {
+                                        point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                    }
+                                    else
+                                    {
+                                        point.Deviation = 0;
+                                    }
                                 }
                                 else
                                 {

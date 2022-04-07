@@ -157,6 +157,7 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.btnCalcMNK = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -1627,6 +1628,7 @@
             // 
             // tp_CalcParam
             // 
+            this.tp_CalcParam.Controls.Add(this.btnCalcMNK);
             this.tp_CalcParam.Controls.Add(this.bRestoreParamMNK);
             this.tp_CalcParam.Controls.Add(this.tbMath_Fr_min);
             this.tp_CalcParam.Controls.Add(this.textBox43);
@@ -1941,6 +1943,16 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
+            // btnCalcMNK
+            // 
+            this.btnCalcMNK.Location = new System.Drawing.Point(52, 330);
+            this.btnCalcMNK.Name = "btnCalcMNK";
+            this.btnCalcMNK.Size = new System.Drawing.Size(164, 36);
+            this.btnCalcMNK.TabIndex = 2;
+            this.btnCalcMNK.Text = "Расчет коэффициентов";
+            this.btnCalcMNK.UseVisualStyleBackColor = true;
+            this.btnCalcMNK.Click += new System.EventHandler(this.btnCalcMNK_Click);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2144,5 +2156,6 @@
         private System.Windows.Forms.TextBox textBox43;
         public System.Windows.Forms.NumericUpDown tbMath_Fr_min;
         private System.Windows.Forms.Button bRestoreParamMNK;
+        private System.Windows.Forms.Button btnCalcMNK;
     }
 }

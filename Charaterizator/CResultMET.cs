@@ -28,14 +28,43 @@ namespace Charaterizator
         public int FactoryNumber;//заводской номер датчика
         public string FileNameArchiv;
         public List<SPointMET> Points;
-        public SChanalMET(int ChNum, int FN)
+        public byte SensorType;
+        public char[] PressureModel;
+
+        public SChanalMET(int ChNum, int FN, byte Type, string Model)
         {
             ChannalNummber = ChNum;
             FactoryNumber = FN;
+            SensorType = Type;
+            PressureModel = Model.ToCharArray();
             //            FileNameArchiv = string.Format("Archiv/MET/MET_Ch{0}_F{1}.txt", ChannalNummber, FactoryNumber);
             FileNameArchiv = string.Format("Archiv/MET/MET_FN_{0}.txt", FactoryNumber);
 
             Points = new List<SPointMET>();
+        }
+
+        public string GetSensorType()
+        {
+            switch (SensorType)
+            {
+                case 0xCC:
+                    return "ЭНИ-100";
+                case 0xCD:
+                    return "ЭНИ-12";
+                case 0xCE:
+                    return "ЭНИ-100-ЖК2";
+                case 0xCF:
+                    return "ЭНИ-12М";
+                default:
+                    return "не определено";
+            }
+        }
+
+        public string GetSensorModel()
+        {
+
+            string str = new string(PressureModel);
+            return str;
         }
     }
 
@@ -55,12 +84,12 @@ namespace Charaterizator
 
         //конструктор класса
         //вход: число каналов и заводской номер датчика в каждом канале
-        public CResultMET(int ChannalCount, int[] FN)
+        public CResultMET(int ChannalCount, int[] FN, byte[] Type, string[] Model)
         {
             StreamWriter fs;
             for (int i = 0; i < ChannalCount; i++)
             {
-                SChanalMET ch = new SChanalMET(i + 1, FN[i]);
+                SChanalMET ch = new SChanalMET(i + 1, FN[i], Type[i], Model[i]);
                 Channal.Add(ch);
                 Directory.CreateDirectory("MET");
                 Directory.CreateDirectory("Archiv/MET");
@@ -143,8 +172,9 @@ namespace Charaterizator
             writer = File.CreateText(ch.FileNameArchiv);//создаем файл БД
             if (writer != null)
             {
-                writer.WriteLine(string.Format("Архив данных датчика"));
-                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
+                writer.WriteLine(string.Format("Архив данных датчика (Метрология)"));
+                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}; Тип:{2}; Модель:{3}", ch.ChannalNummber, ch.FactoryNumber, ch.GetSensorType(), ch.GetSensorModel()));
+//                writer.WriteLine(string.Format("Канал:{0}; Заводской номер:{1}", ch.ChannalNummber, ch.FactoryNumber));
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");
                 writer.WriteLine(HeaderString);
                 writer.WriteLine("-----------------------------------------------------------------------------------------------");
