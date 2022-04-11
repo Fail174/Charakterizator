@@ -72,6 +72,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_flagObrHod = cb_FlagObrHod.Checked;
                 Properties.Settings.Default.set_MeanR = cb_meanR.Checked;
                 Properties.Settings.Default.set_AutoRegim = cb_AutoRegim.Checked;
+                Properties.Settings.Default.set_Deviation = Convert.ToDouble(tb_Deviation.Value);
 
                 // 1 - Коммутатор
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
@@ -176,6 +177,7 @@ namespace Charaterizator
             cb_FlagObrHod.Checked = Properties.Settings.Default.set_flagObrHod;
             cb_meanR.Checked = Properties.Settings.Default.set_MeanR;
             cb_AutoRegim.Checked = Properties.Settings.Default.set_AutoRegim;
+            tb_Deviation.Value = Convert.ToDecimal(Properties.Settings.Default.set_Deviation);
 
             // 1 - Коммутатор                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;

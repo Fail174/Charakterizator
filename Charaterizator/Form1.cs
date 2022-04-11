@@ -50,6 +50,7 @@ namespace Charaterizator
 
         private int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
         private double SKO_PRESSURE = 0.2;  //(СКО) допуск по давлению, кПа
+        private double TrhDeviation = 0.001;  // порог по отклонению R^2
 
         private bool UseMensor;     // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
 
@@ -155,6 +156,7 @@ namespace Charaterizator
                 CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;      // Не учитывать обратный ход по давлени
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
                 AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
+                TrhDeviation = Properties.Settings.Default.set_Deviation;
 
                 tsmiPanelCommutator.Checked = Properties.Settings.Default.set_CommutatorVisible;
                 tsmiPanelMultimetr.Checked = Properties.Settings.Default.set_MultimetrVisible;
@@ -1319,45 +1321,64 @@ namespace Charaterizator
                         }
                     }
 
-                    Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
-                    if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика
+
+                    // доработка 11.04. Сравнение допустимого отклонения с заданным пороговым значкением перед записью коэффициентов в датчик 
+                    if (ResulCoefmtx[24, 0] > TrhDeviation)
                     {
-                        Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog(string.Format("CH: Внимание! Рассчитанное допустимое отклонение датчика в канале{0} выше порогового значения!", i + 1), 1);
+                        Program.txtlog.WriteLineLog(string.Format("CH: Коэффициенты хараткеризации не будут записсына в датчик в канале{0}...", i + 1), 1);
                     }
                     else
                     {
-                        for (int j = 0; j < 24; j++)
+
+
+                        Program.txtlog.WriteLineLog(string.Format("CH: Рассчитанное допустимое отклонение датчика в канале{0} находится в допустимых пределах", i + 1), 2);
+                        Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
+                        if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика
                         {
-                            float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
-                            if (div != 0)
+                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                        }
+                        else
+                        {
+                            for (int j = 0; j < 24; j++)
                             {
-                                Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась!", j + 1), 2);
-                                Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
+                                float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
+                                if (div != 0)
+                                {
+                                    Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась!", j + 1), 2);
+                                    Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
+                                }
                             }
                         }
-                    }
-                    if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
-                    {
-                        Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
-                    }
-                    else
-                    {
-                        Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
-                        ResultCH.AddCoeff(i, db);
-                    }
-                    if (!sensors.С42SensorReset())//перезагрузка датчика
-                    {
-                        Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
+                        if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
+                        {
+                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
+                            ResultCH.AddCoeff(i, db);
+                        }
+                        if (!sensors.С42SensorReset())//перезагрузка датчика
+                        {
+                            Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
+                        }
+
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                        }
+                        //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
+                        seli++;
+
                     }
                 }
-                else
-                {
-                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
-                }
-                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
-                seli++;
+
+
             }
             Program.txtlog.WriteLineLog("CH: Операция вычисления и записи коэффициентов завершена!", 2);
+
+
         }
 
 
@@ -3547,6 +3568,8 @@ namespace Charaterizator
                 CCalculation.flag_ObrHod = Properties.Settings.Default.set_flagObrHod;
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
                 AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
+                TrhDeviation = Properties.Settings.Default.set_Deviation;                   // порог по отклонению R^2
+
 
                 Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
                 Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout; //таймаут ожидания ответа от мультиметра, мсек

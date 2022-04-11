@@ -251,5 +251,8 @@
     <Setting Name="set_Math_AlgorithmMNK" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="set_Deviation" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.001</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

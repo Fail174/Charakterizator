@@ -136,6 +136,7 @@
             this.textBox127 = new System.Windows.Forms.TextBox();
             this.textBox129 = new System.Windows.Forms.TextBox();
             this.tp_CalcParam = new System.Windows.Forms.TabPage();
+            this.btnCalcMNK = new System.Windows.Forms.Button();
             this.bRestoreParamMNK = new System.Windows.Forms.Button();
             this.tbMath_Fr_min = new System.Windows.Forms.NumericUpDown();
             this.textBox43 = new System.Windows.Forms.TextBox();
@@ -157,7 +158,8 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.btnCalcMNK = new System.Windows.Forms.Button();
+            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.tb_Deviation = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -203,6 +205,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Deviation)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -210,7 +213,7 @@
             this.groupBox1.Controls.Add(this.btnOpenFile);
             this.groupBox1.Controls.Add(this.tbPathFile);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(23, 302);
+            this.groupBox1.Location = new System.Drawing.Point(23, 315);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(703, 78);
             this.groupBox1.TabIndex = 3;
@@ -279,6 +282,8 @@
             // 
             // tp_ProgramSettings
             // 
+            this.tp_ProgramSettings.Controls.Add(this.tb_Deviation);
+            this.tp_ProgramSettings.Controls.Add(this.textBox31);
             this.tp_ProgramSettings.Controls.Add(this.cb_AutoRegim);
             this.tp_ProgramSettings.Controls.Add(this.cb_meanR);
             this.tp_ProgramSettings.Controls.Add(this.cb_FlagObrHod);
@@ -317,7 +322,7 @@
             // cb_AutoRegim
             // 
             this.cb_AutoRegim.AutoSize = true;
-            this.cb_AutoRegim.Location = new System.Drawing.Point(52, 268);
+            this.cb_AutoRegim.Location = new System.Drawing.Point(52, 288);
             this.cb_AutoRegim.Name = "cb_AutoRegim";
             this.cb_AutoRegim.Size = new System.Drawing.Size(165, 19);
             this.cb_AutoRegim.TabIndex = 100;
@@ -327,7 +332,7 @@
             // cb_meanR
             // 
             this.cb_meanR.AutoSize = true;
-            this.cb_meanR.Location = new System.Drawing.Point(52, 247);
+            this.cb_meanR.Location = new System.Drawing.Point(52, 267);
             this.cb_meanR.Name = "cb_meanR";
             this.cb_meanR.Size = new System.Drawing.Size(432, 19);
             this.cb_meanR.TabIndex = 99;
@@ -337,7 +342,7 @@
             // cb_FlagObrHod
             // 
             this.cb_FlagObrHod.AutoSize = true;
-            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 225);
+            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 246);
             this.cb_FlagObrHod.Name = "cb_FlagObrHod";
             this.cb_FlagObrHod.Size = new System.Drawing.Size(446, 19);
             this.cb_FlagObrHod.TabIndex = 98;
@@ -647,7 +652,7 @@
             this.cbHandleMultimetr.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandleMultimetr.Location = new System.Drawing.Point(594, 286);
+            this.cbHandleMultimetr.Location = new System.Drawing.Point(565, 401);
             this.cbHandleMultimetr.Name = "cbHandleMultimetr";
             this.cbHandleMultimetr.Size = new System.Drawing.Size(101, 21);
             this.cbHandleMultimetr.TabIndex = 78;
@@ -662,7 +667,7 @@
             this.cbHandlePress.Items.AddRange(new object[] {
             "Нет",
             "Да"});
-            this.cbHandlePress.Location = new System.Drawing.Point(594, 266);
+            this.cbHandlePress.Location = new System.Drawing.Point(565, 381);
             this.cbHandlePress.Name = "cbHandlePress";
             this.cbHandlePress.Size = new System.Drawing.Size(101, 21);
             this.cbHandlePress.TabIndex = 77;
@@ -679,7 +684,7 @@
             // 
             // textBox36
             // 
-            this.textBox36.Location = new System.Drawing.Point(52, 286);
+            this.textBox36.Location = new System.Drawing.Point(23, 401);
             this.textBox36.Name = "textBox36";
             this.textBox36.Size = new System.Drawing.Size(544, 21);
             this.textBox36.TabIndex = 71;
@@ -688,7 +693,7 @@
             // 
             // textBox38
             // 
-            this.textBox38.Location = new System.Drawing.Point(52, 266);
+            this.textBox38.Location = new System.Drawing.Point(23, 381);
             this.textBox38.Name = "textBox38";
             this.textBox38.Size = new System.Drawing.Size(544, 21);
             this.textBox38.TabIndex = 70;
@@ -1655,6 +1660,16 @@
             this.tp_CalcParam.Text = "Параметры расчета";
             this.tp_CalcParam.UseVisualStyleBackColor = true;
             // 
+            // btnCalcMNK
+            // 
+            this.btnCalcMNK.Location = new System.Drawing.Point(52, 330);
+            this.btnCalcMNK.Name = "btnCalcMNK";
+            this.btnCalcMNK.Size = new System.Drawing.Size(164, 36);
+            this.btnCalcMNK.TabIndex = 2;
+            this.btnCalcMNK.Text = "Расчет коэффициентов";
+            this.btnCalcMNK.UseVisualStyleBackColor = true;
+            this.btnCalcMNK.Click += new System.EventHandler(this.btnCalcMNK_Click);
+            // 
             // bRestoreParamMNK
             // 
             this.bRestoreParamMNK.Location = new System.Drawing.Point(52, 201);
@@ -1943,15 +1958,41 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // btnCalcMNK
+            // textBox31
             // 
-            this.btnCalcMNK.Location = new System.Drawing.Point(52, 330);
-            this.btnCalcMNK.Name = "btnCalcMNK";
-            this.btnCalcMNK.Size = new System.Drawing.Size(164, 36);
-            this.btnCalcMNK.TabIndex = 2;
-            this.btnCalcMNK.Text = "Расчет коэффициентов";
-            this.btnCalcMNK.UseVisualStyleBackColor = true;
-            this.btnCalcMNK.Click += new System.EventHandler(this.btnCalcMNK_Click);
+            this.textBox31.Location = new System.Drawing.Point(52, 215);
+            this.textBox31.Name = "textBox31";
+            this.textBox31.Size = new System.Drawing.Size(544, 21);
+            this.textBox31.TabIndex = 101;
+            this.textBox31.Text = "Порог отклонения R^2";
+            // 
+            // tb_Deviation
+            // 
+            this.tb_Deviation.DecimalPlaces = 5;
+            this.tb_Deviation.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.tb_Deviation.Location = new System.Drawing.Point(594, 215);
+            this.tb_Deviation.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tb_Deviation.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            327680});
+            this.tb_Deviation.Name = "tb_Deviation";
+            this.tb_Deviation.Size = new System.Drawing.Size(101, 21);
+            this.tb_Deviation.TabIndex = 102;
+            this.tb_Deviation.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
             // 
             // FormSettings
             // 
@@ -2021,6 +2062,7 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Deviation)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2157,5 +2199,7 @@
         public System.Windows.Forms.NumericUpDown tbMath_Fr_min;
         private System.Windows.Forms.Button bRestoreParamMNK;
         private System.Windows.Forms.Button btnCalcMNK;
+        private System.Windows.Forms.NumericUpDown tb_Deviation;
+        private System.Windows.Forms.TextBox textBox31;
     }
 }
