@@ -6156,6 +6156,48 @@ namespace Charaterizator
         {
             SetCommutatorChanalPower(0);
         }
+
+        private void tsMenuMetrologDelete_Click(object sender, EventArgs e)
+        {
+            if (ResultMET != null)
+            {
+                if (cbChannalMetrolog.Text == "") return;
+                string str = cbChannalMetrolog.Text.Remove(0, 6);
+                int ii = Convert.ToInt32(str) - 1;
+
+                DataGridViewSelectedRowCollection s = dataGridView5.SelectedRows;
+                if (s.Count <= 0) return;
+
+                DialogResult result = MessageBox.Show(
+                        "Выбранные записи будут удалены из таблицы и архива данных метролога. Продолжить?",
+                        "Подтверждение операции",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information,
+                        MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes)
+                {
+                    dataGridView5.Sort(dataGridView5.Columns[0], ListSortDirection.Ascending);
+
+                    for (int i = ResultMET.Channal[ii].Points.Count - 1; i >= 0; i--)
+                    {
+                        for (int j = 0; j < s.Count; j++)
+                        {
+                            if (i == s[j].Index)
+                            {
+                                ResultMET.DeletePoint(ii, i);
+                                break;
+                            }
+                        }
+                    }
+                    /*for (int i = 0; i < s.Count; i++)
+                    {
+                        ResultMET.DeletePoint(ii, s[i].Index);
+                    }*/
+                    UpDateMetrologGrid(ii);
+                    ResultMET.SaveToArhiv(ii);
+                }
+            }
+        }
     }
 }
 
