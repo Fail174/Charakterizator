@@ -36,6 +36,8 @@
             this.ofdDataBase = new System.Windows.Forms.OpenFileDialog();
             this.tab_FormSettings = new System.Windows.Forms.TabControl();
             this.tp_ProgramSettings = new System.Windows.Forms.TabPage();
+            this.tb_Deviation = new System.Windows.Forms.NumericUpDown();
+            this.textBox31 = new System.Windows.Forms.TextBox();
             this.cb_AutoRegim = new System.Windows.Forms.CheckBox();
             this.cb_meanR = new System.Windows.Forms.CheckBox();
             this.cb_FlagObrHod = new System.Windows.Forms.CheckBox();
@@ -158,11 +160,11 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.textBox31 = new System.Windows.Forms.TextBox();
-            this.tb_Deviation = new System.Windows.Forms.NumericUpDown();
+            this.cb_PushPress = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Deviation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbRezistor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tb_SKOCalibrationCurrent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSKOCurrent)).BeginInit();
@@ -205,7 +207,6 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tb_Deviation)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -213,9 +214,9 @@
             this.groupBox1.Controls.Add(this.btnOpenFile);
             this.groupBox1.Controls.Add(this.tbPathFile);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(23, 315);
+            this.groupBox1.Location = new System.Drawing.Point(23, 327);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(703, 78);
+            this.groupBox1.Size = new System.Drawing.Size(703, 73);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "База данных датчиков";
@@ -282,6 +283,7 @@
             // 
             // tp_ProgramSettings
             // 
+            this.tp_ProgramSettings.Controls.Add(this.cb_PushPress);
             this.tp_ProgramSettings.Controls.Add(this.tb_Deviation);
             this.tp_ProgramSettings.Controls.Add(this.textBox31);
             this.tp_ProgramSettings.Controls.Add(this.cb_AutoRegim);
@@ -319,10 +321,46 @@
             this.tp_ProgramSettings.Text = "Настройки программы";
             this.tp_ProgramSettings.UseVisualStyleBackColor = true;
             // 
+            // tb_Deviation
+            // 
+            this.tb_Deviation.DecimalPlaces = 5;
+            this.tb_Deviation.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.tb_Deviation.Location = new System.Drawing.Point(594, 215);
+            this.tb_Deviation.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tb_Deviation.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            327680});
+            this.tb_Deviation.Name = "tb_Deviation";
+            this.tb_Deviation.Size = new System.Drawing.Size(101, 21);
+            this.tb_Deviation.TabIndex = 102;
+            this.tb_Deviation.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            // 
+            // textBox31
+            // 
+            this.textBox31.Location = new System.Drawing.Point(52, 215);
+            this.textBox31.Name = "textBox31";
+            this.textBox31.Size = new System.Drawing.Size(544, 21);
+            this.textBox31.TabIndex = 101;
+            this.textBox31.Text = "Порог отклонения R^2";
+            // 
             // cb_AutoRegim
             // 
             this.cb_AutoRegim.AutoSize = true;
-            this.cb_AutoRegim.Location = new System.Drawing.Point(52, 288);
+            this.cb_AutoRegim.Location = new System.Drawing.Point(52, 302);
             this.cb_AutoRegim.Name = "cb_AutoRegim";
             this.cb_AutoRegim.Size = new System.Drawing.Size(165, 19);
             this.cb_AutoRegim.TabIndex = 100;
@@ -332,7 +370,7 @@
             // cb_meanR
             // 
             this.cb_meanR.AutoSize = true;
-            this.cb_meanR.Location = new System.Drawing.Point(52, 267);
+            this.cb_meanR.Location = new System.Drawing.Point(52, 277);
             this.cb_meanR.Name = "cb_meanR";
             this.cb_meanR.Size = new System.Drawing.Size(432, 19);
             this.cb_meanR.TabIndex = 99;
@@ -342,7 +380,7 @@
             // cb_FlagObrHod
             // 
             this.cb_FlagObrHod.AutoSize = true;
-            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 246);
+            this.cb_FlagObrHod.Location = new System.Drawing.Point(52, 252);
             this.cb_FlagObrHod.Name = "cb_FlagObrHod";
             this.cb_FlagObrHod.Size = new System.Drawing.Size(446, 19);
             this.cb_FlagObrHod.TabIndex = 98;
@@ -1958,41 +1996,15 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // textBox31
+            // cb_PushPress
             // 
-            this.textBox31.Location = new System.Drawing.Point(52, 215);
-            this.textBox31.Name = "textBox31";
-            this.textBox31.Size = new System.Drawing.Size(544, 21);
-            this.textBox31.TabIndex = 101;
-            this.textBox31.Text = "Порог отклонения R^2";
-            // 
-            // tb_Deviation
-            // 
-            this.tb_Deviation.DecimalPlaces = 5;
-            this.tb_Deviation.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            262144});
-            this.tb_Deviation.Location = new System.Drawing.Point(594, 215);
-            this.tb_Deviation.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tb_Deviation.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            327680});
-            this.tb_Deviation.Name = "tb_Deviation";
-            this.tb_Deviation.Size = new System.Drawing.Size(101, 21);
-            this.tb_Deviation.TabIndex = 102;
-            this.tb_Deviation.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
+            this.cb_PushPress.AutoSize = true;
+            this.cb_PushPress.Location = new System.Drawing.Point(292, 302);
+            this.cb_PushPress.Name = "cb_PushPress";
+            this.cb_PushPress.Size = new System.Drawing.Size(203, 19);
+            this.cb_PushPress.TabIndex = 103;
+            this.cb_PushPress.Text = "Проводить раскачку давления";
+            this.cb_PushPress.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
@@ -2012,6 +2024,7 @@
             this.tab_FormSettings.ResumeLayout(false);
             this.tp_ProgramSettings.ResumeLayout(false);
             this.tp_ProgramSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Deviation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbRezistor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tb_SKOCalibrationCurrent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSKOCurrent)).EndInit();
@@ -2062,7 +2075,6 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tb_Deviation)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2201,5 +2213,6 @@
         private System.Windows.Forms.Button btnCalcMNK;
         private System.Windows.Forms.NumericUpDown tb_Deviation;
         private System.Windows.Forms.TextBox textBox31;
+        private System.Windows.Forms.CheckBox cb_PushPress;
     }
 }

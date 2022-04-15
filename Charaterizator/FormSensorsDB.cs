@@ -564,7 +564,7 @@ namespace Charaterizator
 
         public string GetDataSensors(string strType, string strModel, int iField)
         {
-            string strValue = "-1";
+            string strValue = "";
 
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
@@ -593,7 +593,7 @@ namespace Charaterizator
                     reader.Close();
                 }        
             }
-            if (strValue == "") strValue = "-1";
+            //if (strValue == "") strValue = "-1";
             return strValue;
         }
 
@@ -601,7 +601,7 @@ namespace Charaterizator
         // при ее вызове необходимо кроме номера модели датчика и названия запрашиваемого параметра, передавать тип датчика
         public string GetDataSensors(string strType, string strModel, string strField)
         {
-            string strValue = "-2";
+            string strValue = "";
 
             if (_сonnection.State == System.Data.ConnectionState.Open)
             {
@@ -631,7 +631,7 @@ namespace Charaterizator
                         reader.Close();
                 }
             }
-            if (strValue == "") strValue = "-3";
+            //if (strValue == "") strValue = "-3";
             return strValue;
         }
 

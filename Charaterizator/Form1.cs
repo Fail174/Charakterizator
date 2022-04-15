@@ -125,6 +125,7 @@ namespace Charaterizator
         private Point heldDownPoint;
 
         public bool AlgorithmMNK;
+        public bool fPushPress=false;//расскачка
 
         //Инициализация переменных основной программы
         public MainForm()
@@ -157,6 +158,7 @@ namespace Charaterizator
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
                 AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
                 TrhDeviation = Properties.Settings.Default.set_Deviation;
+                fPushPress = Properties.Settings.Default.set_PushPress;
 
                 tsmiPanelCommutator.Checked = Properties.Settings.Default.set_CommutatorVisible;
                 tsmiPanelMultimetr.Checked = Properties.Settings.Default.set_MultimetrVisible;
@@ -523,14 +525,10 @@ namespace Charaterizator
         /// <param name="mode"></param>
         private void SetCommutatorChanalPower(int mode)
         {
-            if (Commutator != null)
+            if ((Commutator != null)&&(Commutator.Connected))
             {
                 Program.txtlog.WriteLineLog("Подключаем питание на линии коммутатора", 0);
-                for (int i = 0; i < MaxChannalCount; i++)
-                {
-                    Commutator.SetPower(i, mode);     // команда подключить питание датчика
-                    Application.DoEvents();
-                }
+                Commutator.SetAllPower();
             }
         }
 
@@ -886,6 +884,7 @@ namespace Charaterizator
         private void SensorCalibration()
         {
             int seli = 0;
+            List<int> ErrorList = new List<int>();
             pbCHProcess.Maximum = MaxChannalCount;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
@@ -934,7 +933,7 @@ namespace Charaterizator
 
                         if (Math.Abs(I4 - 4.0) > SKO_CURRENT)
                         {
-                            DialogResult result = MessageBox.Show(
+                            /*DialogResult result = MessageBox.Show(
                                     "Выполнить калибровку?",
                                     "Превышено максимальное отклонение тока ЦАП (4мА)!",
                                     MessageBoxButtons.YesNo,
@@ -944,7 +943,10 @@ namespace Charaterizator
                             {
                                 cc++;
                                 continue;
-                            }
+                            }*/
+                            Program.txtlog.WriteLineLog("CL: Превышено максимальное отклонение тока ЦАП (4мА)", 1);
+                            ErrorList.Add(i);
+                            continue;
                         }
                         sensors.С45WriteCurrent4mA(I4);//Калибруем...
                         Program.txtlog.WriteLineLog("CL:Выполняем калибровку ЦАП 4мА...", 0);
@@ -961,7 +963,7 @@ namespace Charaterizator
 
                         if (Math.Abs(I20 - 20.0) > SKO_CURRENT)
                         {
-                            DialogResult result = MessageBox.Show(
+                            /*DialogResult result = MessageBox.Show(
                                     "Выполнить калибровку?",
                                     "Превышено максимальное отклонение тока ЦАП (20мА)!",
                                     MessageBoxButtons.YesNo,
@@ -971,7 +973,10 @@ namespace Charaterizator
                             {
                                 cc++;
                                 continue;
-                            }
+                            }*/
+                            Program.txtlog.WriteLineLog("CL: Превышено максимальное отклонение тока ЦАП (20мА)", 1);
+                            ErrorList.Add(i);
+                            continue;
                         }
 
                         sensors.С46WriteCurrent20mA(I20);//Калибруем...
@@ -1004,6 +1009,7 @@ namespace Charaterizator
                     if ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT))
                     {
                         Program.txtlog.WriteLineLog("CL: Значение тока ЦАП вне допуска. Калибровка не выполнена!", 1);
+                        ErrorList.Add(i);
                     }
                     else
                     {
@@ -1014,11 +1020,16 @@ namespace Charaterizator
                 else
                 {
                     Program.txtlog.WriteLineLog(string.Format("CL: Датчик не обнаружен в канале {0}", i + 1), 1);
+                    ErrorList.Add(i);
                 }
                 //Commutator.SetConnectors(i, 1);
                 seli++;
             }
             Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 2);
+            for (int ei = 0; ei < ErrorList.Count; ei++)
+            {
+                Program.txtlog.WriteLineLog("CL: Не выполнена калибровка датчика в канале: " + (ei + 1).ToString(), 1);
+            }
         }
 
 
@@ -1209,9 +1220,10 @@ namespace Charaterizator
         //расчет коэффициентов и запись в датчики
         private void СaclSensorCoeff()
         {
-            int seli = 0;
+            //int seli = 0;
             int StartNumber = 0;    //начальный канал
             int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            List<int> ErrorList = new List<int>(); 
 
             Program.txtlog.WriteLineLog("CH: Старт расчета коэффициентов для выбранных датчиков ... ", 2);
 
@@ -1235,6 +1247,7 @@ namespace Charaterizator
                     if ((Pmax <= 0) || (Pmax > 1000000))
                     {
                         Program.txtlog.WriteLineLog("CH: Не верные НПИ и ВПИ датчика в канале:" + (i + 1).ToString(), 1);
+                        ErrorList.Add(i);
                         continue;
                     }
                     bool sensor_DV = ResultCH.Channal[i].PressureModel[1] == '2';//Датчик ДВ
@@ -1308,6 +1321,7 @@ namespace Charaterizator
                     if (ResulCoefmtx.RowCount < 24)
                     {
                         Program.txtlog.WriteLineLog("CH: Недостаточное количество точек при характеризация: " + ResulCoefmtx.RowCount.ToString(), 1);
+                        ErrorList.Add(i);
                         continue;
                     }
                     Program.txtlog.WriteLineLog("CH: Расчитанные коэффициенты для датчика в канале " + (i + 1).ToString(), 0);
@@ -1326,17 +1340,19 @@ namespace Charaterizator
                     if (ResulCoefmtx[24, 0] > TrhDeviation)
                     {
                         Program.txtlog.WriteLineLog(string.Format("CH: Внимание! Рассчитанное допустимое отклонение датчика в канале{0} выше порогового значения!", i + 1), 1);
-                        Program.txtlog.WriteLineLog(string.Format("CH: Коэффициенты хараткеризации не будут записсына в датчик в канале{0}...", i + 1), 1);
+                        //Program.txtlog.WriteLineLog(string.Format("CH: Коэффициенты хараткеризации не будут записсына в датчик в канале{0}...", i + 1), 1);
+                        ErrorList.Add(i);
+                        continue;
                     }
                     else
                     {
-
-
                         Program.txtlog.WriteLineLog(string.Format("CH: Рассчитанное допустимое отклонение датчика в канале{0} находится в допустимых пределах", i + 1), 2);
                         Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
                         if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика
                         {
                             Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                            ErrorList.Add(i);
+                            continue;
                         }
                         else
                         {
@@ -1353,6 +1369,8 @@ namespace Charaterizator
                         if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
                         {
                             Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
+                            ErrorList.Add(i);
+                            continue;
                         }
                         else
                         {
@@ -1362,23 +1380,22 @@ namespace Charaterizator
                         if (!sensors.С42SensorReset())//перезагрузка датчика
                         {
                             Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
+                            ErrorList.Add(i);
                         }
-
-                        else
-                        {
-                            Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
-                        }
-                        //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
-                        seli++;
-
                     }
+                } else {
+                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    ErrorList.Add(i);
                 }
-
-
+                //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
+                //seli++;
             }
             Program.txtlog.WriteLineLog("CH: Операция вычисления и записи коэффициентов завершена!", 2);
 
-
+            for (int ei = 0; ei < ErrorList.Count; ei++)
+            {
+                Program.txtlog.WriteLineLog("CH: Не выполнена запись коэффициентов датчика в канале: " + (ei + 1).ToString(), 1);
+            }
         }
 
 
@@ -3035,7 +3052,7 @@ namespace Charaterizator
                             // Раскачка давлением
                             // Получаем Pmax датчика
                             int si = sensors.FindSensorGroup(SelectedLevel);
-                            if (si >= 0)
+                            if ((si >= 0)&&(fPushPress))
                             {
                                 string SelectModel = new String(sensors.sensorList[si].PressureModel);
                                 string SelectType = sensors.sensorList[si].GetdevType();
@@ -3569,6 +3586,7 @@ namespace Charaterizator
                 CCalculation.flag_MeanR = Properties.Settings.Default.set_MeanR;            // усреднять или нет матрицу сопротивлений
                 AutoRegim = Properties.Settings.Default.set_AutoRegim;                      // автоматический режим
                 TrhDeviation = Properties.Settings.Default.set_Deviation;                   // порог по отклонению R^2
+                fPushPress = Properties.Settings.Default.set_PushPress;
 
 
                 Multimetr.WAIT_READY = Properties.Settings.Default.set_MultimDataReady;     //время ожидания стабилизации тока, мсек
@@ -3580,7 +3598,7 @@ namespace Charaterizator
                 Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
                 Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
                 MaxChannalCount = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
-                Commutator.SetMaxChannal(MaxChannalCount);
+
                 MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
 
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
@@ -3605,6 +3623,8 @@ namespace Charaterizator
                 //CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
                 AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
 
+                
+
                 //выбор задатчика
                 // проверяем был ли переопределен задатчик
                 if (UseMensor != Properties.Settings.Default.set_UseMensor)
@@ -3628,7 +3648,11 @@ namespace Charaterizator
 
                 }
                 //gbBarometr.Visible = !UseMensor;
-
+                if (MaxChannalCount != Commutator.MaxChannal)
+                {
+                    Commutator.SetMaxChannal(MaxChannalCount);
+                    UpdateItems();//обновляем списки визуальных элементов
+                }
             }
             catch
             {
@@ -3901,7 +3925,7 @@ namespace Charaterizator
                             // Раскачка давлением
                             // Получаем Pmax датчика
                             int si = sensors.FindSensorGroup(SelectedLevel);
-                            if (si >= 0)
+                            if ((si >= 0)&&(fPushPress))
                             {
                                 string SelectModel = new String(sensors.sensorList[si].PressureModel);
                                 string SelectType = sensors.sensorList[si].GetdevType();

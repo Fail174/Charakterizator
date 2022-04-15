@@ -25,7 +25,7 @@ namespace Charaterizator
 
         //не занесена в настройки
         int MAXBUSY = 2000;               //Максимальное количество циклов ожидания (по 1 мс)
-
+        public int MaxChannal=30;
         bool CommutatorBusy = false;     //признак доступности коммутатора для приема команд
         public bool Connected = false;   // true  - соединение установлено, 
         public bool Channal60 = false;
@@ -111,6 +111,7 @@ namespace Charaterizator
 
         public void SetMaxChannal(int maxch)
         {
+            MaxChannal = maxch;
             Channal60 = maxch > 30;
             if (Channal60)
             {
@@ -120,8 +121,8 @@ namespace Charaterizator
             {
                 pCommCH60.Enabled = false;
             }
-            _StateCHPower = 0;
-            _StateCH = 0;
+            //_StateCHPower = 0;
+            //_StateCH = 0;
         }
 
 
@@ -718,7 +719,22 @@ namespace Charaterizator
 
         }
 
+        public void SetAllPower()
+        {
+            byte[] indata = new byte[10];
+            serialPort1.Write(WriteHoldingRegister(0, 0x3FFFFFFF, false), 0, 9);
+            Thread.Sleep(READ_PAUSE);
+            serialPort1.Read(indata, 0, 10);
+            StateCHPower1 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+            SetState(StateCHPower1, StateCH1);
 
+            serialPort1.Write(WriteHoldingRegister(0, 0x3FFFFFFF, true), 0, 9);
+            Thread.Sleep(READ_PAUSE);
+            serialPort1.Read(indata, 0, 10);
+            StateCHPower2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
+            SetState60(StateCHPower2, StateCH2);
+
+        }
 
 
         // Функция сеняет цвет подключенного канала

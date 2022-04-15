@@ -73,6 +73,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_MeanR = cb_meanR.Checked;
                 Properties.Settings.Default.set_AutoRegim = cb_AutoRegim.Checked;
                 Properties.Settings.Default.set_Deviation = Convert.ToDouble(tb_Deviation.Value);
+                Properties.Settings.Default.set_PushPress = cb_PushPress.Checked;
 
                 // 1 - Коммутатор
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
@@ -178,6 +179,9 @@ namespace Charaterizator
             cb_meanR.Checked = Properties.Settings.Default.set_MeanR;
             cb_AutoRegim.Checked = Properties.Settings.Default.set_AutoRegim;
             tb_Deviation.Value = Convert.ToDecimal(Properties.Settings.Default.set_Deviation);
+            cb_PushPress.Checked = Properties.Settings.Default.set_PushPress;
+
+
 
             // 1 - Коммутатор                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
