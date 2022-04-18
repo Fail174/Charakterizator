@@ -448,7 +448,7 @@ namespace Charaterizator
 
             switch (mode)
             {
-                // если датчик не подключен, отключам все, подключаем текущий, отключаем все
+                // если датчик не подключен, подключаем его, отключаем все остальные
                 case 0:
                     byte[] data = WriteHoldingRegister(1, 0, false);
                     serialPort1.Write(data, 0, 9);

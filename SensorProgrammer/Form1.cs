@@ -234,7 +234,7 @@ namespace SensorProgrammer
 
         //**************************** РАБОТА С КОММУТАТОРОМ ****************************************
 
-        // Обработчик нажать на кнопку подулючить коммутатор    
+        // Обработчик нажать на кнопку подключить коммутатор    
         private void bCommutator_Click(object sender, EventArgs e)
         {
             FormPortSettings newForm = new FormPortSettings();
