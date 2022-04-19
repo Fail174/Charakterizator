@@ -973,7 +973,7 @@ namespace SensorProgrammer
                                 {
                                     case 1:
 
-                                        dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.Green;
+                                        dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.Green;
 
                                         if (sensors.C14SensorRead())       //чтение данных с датчика
                                         {
@@ -982,7 +982,7 @@ namespace SensorProgrammer
                                                 resBurn = false;
                                                 label2.Text = "Не удалось записать серийный номер датчика в канале: " + (i + 1);
                                                 tbResult.Text = "Канал: " + (i + 1) + " - Не удалось записать серийный номер";
-                                                dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;                                             
+                                                dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;                                             
                                             }
                                         }
                                         if (!sensors.C140ReadPressureModel())
@@ -990,7 +990,7 @@ namespace SensorProgrammer
                                          //MessageBox.Show("Модель ПД датчика не считана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                             label2.Text = "Не удалось считать модель датчика в канале: " + (i + 1);
                                             tbResult.Text = "Канал: " + (i + 1) + " - Модель ПД датчика не считана";
-                                            dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                                            dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;
                                         }
                                         else
                                         {
@@ -1000,14 +1000,14 @@ namespace SensorProgrammer
                                                 {
                                                     label2.Text = "Не удалось записать модель датчика в канале: " + (i + 1);
                                                     tbResult.Text = "Канал: " + (i + 1) + " - Не удалось записать модель датчика";
-                                                    dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                                                    dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;
                                                     //MessageBox.Show("Модель ПД датчика не записана", "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                                     //break;
                                                 }
 
                                             }
                                         }
-                                        if (dgwMainWindow.Rows[i].DefaultCellStyle.BackColor == Color.Green)
+                                        if (dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor == Color.Green)
                                         {
                                             label2.Text = "Параметры успешно записаны в датчик в канале: " + (i + 1);
                                             tbResult.Text = "Канал: " + (i + 1) + " - Данные успешно записаны в датчик";
@@ -1017,7 +1017,7 @@ namespace SensorProgrammer
                                     case 0:
                                         label2.Text = "Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1);
                                         tbResult.Text = "Канал: " + (i + 1) + " - Нет подключения к датчику";
-                                        dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                                        dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;
                                         //MessageBox.Show("Не удалось записать параметры. Нет подключения к датчику в канале " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         resBurn = false;
                                         break;
@@ -1027,7 +1027,7 @@ namespace SensorProgrammer
                                     case -4:
                                         label2.Text = "Команды записи в датчик не выполнены: " + res;
                                         tbResult.Text = "Канал: " + (i + 1) + " - Команды записи в датчик не выполнены";
-                                        dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                                        dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;
                                         //MessageBox.Show("Команды записи в датчик не выполнены в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         resBurn = false;
                                         break;
@@ -1038,7 +1038,7 @@ namespace SensorProgrammer
                         {
                             label2.Text = "Датчик не обнаружен в канале: " + (i + 1);
                             tbResult.Text = "Канал: " + (i + 1) + " - Датчик не обнаружен";
-                            dgwMainWindow.Rows[i].DefaultCellStyle.BackColor = Color.IndianRed;
+                            dgwMainWindow2.Rows[i-30].DefaultCellStyle.BackColor = Color.IndianRed;
                             //MessageBox.Show("Датчик не обнаружен в канале: " + (i + 1), "Сообщение об ошибке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             resBurn = false;
                         }
