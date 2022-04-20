@@ -64,6 +64,8 @@ namespace Charaterizator
         public char[] PressureModel;
 
         public float[] Coefficient;
+
+        public byte SetOfCoef;//набор коэффикиентов 0 - первый, 1 - второй
         public SensorID(byte a, int CoeffCount)
         {
             message = new byte[24];
@@ -112,6 +114,7 @@ namespace Charaterizator
             VPI = 0;
             NPI = 0;
             DempfTime = 0;
+            SetOfCoef = 0;
     }
     public string GetdevType()
         {
@@ -1099,10 +1102,12 @@ namespace Charaterizator
                 for (int i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 data[sensor.pre] = 0x02;
                 data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+                data[sensor.pre + 2] = 0xFB;
+                data[sensor.pre + 3] = 0x1;
                 for (int i = 0; i <= 5; i++)
                 {
-                    data[data.Length - 2] = (byte)i;
-                    data[data.Length - 1] = GetCRC(data, sensor.pre);//CRC
+                    data[sensor.pre + 4] = (byte)i;
+                    data[sensor.pre + 5] = GetCRC(data, sensor.pre);//CRC
                     for (int j = 0; j < WRITE_COUNT; j++)
                     {
                         Thread.Sleep(WRITE_PERIOD);
@@ -1139,6 +1144,34 @@ namespace Charaterizator
                     WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Переключение набора калибровочных коэффициентов для записи в EEPROM (команда 253)
+        /// </summary>
+        public bool C253SensorCoefficientNumber()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                byte[] data = new byte[sensor.pre + 6];
+                for (int i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[sensor.pre] = 0x02;
+                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+                data[sensor.pre + 2] = 0xFD;
+                data[sensor.pre + 3] = 0x1;
+                data[sensor.pre + 4] = sensor.SetOfCoef;
+                data[sensor.pre + 5] = GetCRC(data, sensor.pre);//CRC
+                for (int j = 0; j < WRITE_COUNT; j++)
+                {
+                        Thread.Sleep(WRITE_PERIOD);
+                        port.Write(data, 0, data.Length);
+                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                            return true;
                 }
             }
             return false;
@@ -1524,6 +1557,11 @@ namespace Charaterizator
                                     }
                                     break;
                                 case 0xFD://Переключение набора калибровочных коэффициентов для записи в EEPROM ( команда 253)
+                                    if (!ReadCommand253(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверные данные в ответной команде
+                                    }
                                     break;
                                 default:
                                     ReadAvtState = 1;
@@ -2219,6 +2257,24 @@ namespace Charaterizator
             try
             {
                 return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        private bool ReadCommand253(int addr, byte[] indata)
+        {
+            try
+            {
+                if (sensor.SetOfCoef == indata[2])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {

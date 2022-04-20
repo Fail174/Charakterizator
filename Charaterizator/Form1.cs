@@ -1243,6 +1243,11 @@ namespace Charaterizator
 
                 if (sensors.SelectSensor(i))//выбор датчика на канале i
                 {
+                    if (!sensors.C253SensorCoefficientNumber())//установка номера набора коэффициентов
+                    {
+                        Program.txtlog.WriteLineLog("CH: Номер набора коэффициентов не установлен в датчике канала " + (i + 1).ToString(), 1);
+                    }
+
                     double Pmax = sensors.sensor.UpLevel; // - sensors.sensor.DownLevel; // Делим на максимум , а не на диапазон (16.03.2022) 
                     if ((Pmax <= 0) || (Pmax > 1000000))
                     {
@@ -1366,6 +1371,8 @@ namespace Charaterizator
                                 }
                             }
                         }
+                        
+
                         if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
                         {
                             Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
