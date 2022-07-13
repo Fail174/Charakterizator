@@ -39,9 +39,15 @@ namespace Charaterizator
         {
             get
             {
-                Int64 tmp = StateCHPower2;
-                return StateCHPower1 + (tmp << 30);
-                //              return StateCHPower1 ;
+                if (Channal60)
+                {
+                    Int64 tmp = StateCHPower2;
+                    return StateCHPower1 + (tmp << 30);
+                }
+                else
+                {
+                    return StateCHPower1;
+                }                           
             }
 
             set
