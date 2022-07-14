@@ -35,7 +35,7 @@ namespace Charaterizator
         public List<string> ListMod = new List<string>();       // список подключенных модулей внутренныих и внешних
         public int M1num;                                       // количество внутренних модулей
         public int M2num;                                       // количество внешних модулей
-        private bool ReadPascal = false;
+        private bool ReadElemer = false;
 
 
         public CElemer()
@@ -83,14 +83,13 @@ namespace Charaterizator
 
                 if (InitDevice())   // идентифицируем подключенный прибор
                 {
-
                     // Запускаем поток
-                    ReadThreadElmer = new Thread(ElmerReadThread);
+                    ReadThreadElmer = new Thread(ElemerReadThread);
                     ReadThreadElmer.Priority = ThreadPriority.AboveNormal;
                     ReadThreadElmer.Start();
                     Thread.Sleep(1000);
                     Connected = true;
-                    SetPress(0);
+                    Port.WriteLine(CreateCommand(1, 8, 1));//перевод под управление ПК
                     return 0;
                 }
                 else
@@ -130,19 +129,31 @@ namespace Charaterizator
         }
 
         /// <summary>
-        /// Расчет контрольной суммы LRC8
+        /// Расчет контрольной суммы CRC16 Modbus RTU
         /// </summary>
-        /// <param name="buf"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        private int CalculateCRC(byte[] buf)
+        private UInt16 CalculateCRC16(byte[] data)
         {
-            int crc = 0;
-            for(int i=0; i<buf.Length;i++)
+            UInt16 crc = 0xFFFF;
+
+            for (int pos = 0; pos < data.Length; pos++)
             {
-                crc = crc + buf[i];
+                crc ^= (UInt16)data[pos];
+
+                for (int i = 8; i != 0; i--)
+                {
+                    if ((crc & 0x0001) != 0)
+                    {
+                        crc >>= 1;
+                        crc ^= 0xA001;
+                    }
+                    else
+                        crc >>= 1;
+                }
             }
-            
-            return (0xFF - (crc & 0xFF)) &  0xFF + 1;
+
+            return crc;
         }
 
         // Тестирование прибора
@@ -152,25 +163,19 @@ namespace Charaterizator
         {
             int i;
             bool res = false;
-            char[] buf = new char[6];
-            buf[0] = ':';
-            buf[1] = '1';
-            buf[2] = ';';
-            buf[3] = '0';
-            buf[4] = ';';
+            string command = CreateCommand(1,0);
             try
             {
-                Port.Write(buf,0,4);
+                Port.WriteLine(command);
                 Thread.Sleep(READ_PAUSE);
                 i = 0;
-                while (Port.BytesToRead > 5)
+                while (Port.BytesToRead > 0)
                 {
                     i++;
-                    Port.Read(buf,0,5);
+                    command = Port.ReadLine();
                 }
-                if ((buf[2] == 105) || (buf[2] == 106))
+                if (command.Length>0)
                 {
-
                     res = true;
                 }
             }
@@ -185,6 +190,41 @@ namespace Charaterizator
         }
 
 
+        /// <summary>
+        /// Формирует команду для отправки на Элемер
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="func"></param>
+        /// <returns> chars - строка команды </returns>
+        private string CreateCommand(byte addr, byte func)
+        {
+            string chars;
+            chars = addr.ToString() + ";" + func.ToString() + ";";
+            byte[] command = Encoding.Unicode.GetBytes(chars);
+            UInt16 crc = CalculateCRC16(command);
+            chars = ":" + chars + crc.ToString(); 
+            return chars;
+        }
+
+        private string CreateCommand(byte addr, byte func, int data)
+        {
+            string chars;
+            chars = addr.ToString() + ";" + func.ToString() + ";" + data.ToString() + ";" ;
+            byte[] command = Encoding.Unicode.GetBytes(chars);
+            UInt16 crc = CalculateCRC16(command);
+            chars = ":" + chars + crc.ToString();
+            return chars;
+        }
+
+        private string CreateCommand(byte addr, byte func, int data1, int data2)
+        {
+            string chars;
+            chars = addr.ToString() + ";" + func.ToString() + ";" + data1.ToString() + ";" + data2.ToString() + ";";
+            byte[] command = Encoding.Unicode.GetBytes(chars);
+            UInt16 crc = CalculateCRC16(command);
+            chars = ":" + chars + crc.ToString();
+            return chars;
+        }
 
         // Устанавливает текущий модуль
         // входныет данные (n, m)
@@ -197,12 +237,12 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE))
+                    while ((ReadElemer) && (i < READ_PAUSE))
                     {
                         Thread.Sleep(1);
                         i++;
                     }
-                    ReadPascal = true;
+                    ReadElemer = true;
 
                     while (Port.BytesToRead > 0)
                     {
@@ -229,7 +269,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    ReadPascal = false;
+                    ReadElemer = false;
                 }
 
             }
@@ -249,12 +289,12 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE))
+                    while ((ReadElemer) && (i < READ_PAUSE))
                     {
                         Thread.Sleep(1);
                         i++;
                     }
-                    ReadPascal = true;
+                    ReadElemer = true;
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadLine();
@@ -289,7 +329,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    ReadPascal = false;
+                    ReadElemer = false;
                 }
 
             }
@@ -307,12 +347,12 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE * 2))
+                    while ((ReadElemer) && (i < READ_PAUSE * 2))
                     {
                         Thread.Sleep(1);
                         i++;
                     }
-                    ReadPascal = true;
+                    ReadElemer = true;
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadLine();
@@ -355,7 +395,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    ReadPascal = false;
+                    ReadElemer = false;
                 }
             }
         }
@@ -371,12 +411,12 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE * 2))
+                    while ((ReadElemer) && (i < READ_PAUSE * 2))
                     {
                         Thread.Sleep(1);
                         i++;
                     }
-                    ReadPascal = true;
+                    ReadElemer = true;
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadLine();
@@ -416,7 +456,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    ReadPascal = false;
+                    ReadElemer = false;
                 }
 
             }
@@ -432,12 +472,12 @@ namespace Charaterizator
                 try
                 {
                     int i = 0;
-                    while ((ReadPascal) && (i < READ_PAUSE * 2))
+                    while ((ReadElemer) && (i < READ_PAUSE * 2))
                     {
                         Thread.Sleep(1);
                         i++;
                     }
-                    ReadPascal = true;
+                    ReadElemer = true;
 
                     while (Port.BytesToRead > 0)
                     {
@@ -464,7 +504,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    ReadPascal = false;
+                    ReadElemer = false;
                 }
 
             }
@@ -477,21 +517,21 @@ namespace Charaterizator
         //-----------------------------------------------------------------------------------------------
 
         // Функция периодического чтения параметров прибора в потоке
-        void ElmerReadThread()
+        void ElemerReadThread()
         {
             int i;
 
             while (Port.IsOpen)
             {
                 i = 0;
-                while ((ReadPascal) && (i < READ_PAUSE))
+                while ((ReadElemer) && (i < READ_PAUSE))
                 {
                     Thread.Sleep(1);
                     i++;
                 }
                 try
                 {
-                    ReadPascal = true;
+                    ReadElemer = true;
 
                     while (Port.BytesToRead > 0)
                     {
@@ -502,7 +542,7 @@ namespace Charaterizator
                     i = 0;
                     // считываем текущее давление
                     //Thread.Sleep(READ_PAUSE);
-                    Port.WriteLine("PRES?");
+                    Port.WriteLine(ReadPressuerCommand());
                     while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
                     {
                         i++;
@@ -511,7 +551,8 @@ namespace Charaterizator
                     if (Port.BytesToRead > 0)
                     {
                         strData = Port.ReadLine();
-                        press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        
+                        //press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                     }
                     else
                     {
@@ -547,7 +588,7 @@ namespace Charaterizator
                 }
                 finally
                 {
-                    ReadPascal = false;
+                    ReadElemer = false;
                     Thread.Sleep(500);
                 }
             }
