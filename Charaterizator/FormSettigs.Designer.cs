@@ -36,6 +36,7 @@
             this.ofdDataBase = new System.Windows.Forms.OpenFileDialog();
             this.tab_FormSettings = new System.Windows.Forms.TabControl();
             this.tp_ProgramSettings = new System.Windows.Forms.TabPage();
+            this.cb_PushPress = new System.Windows.Forms.CheckBox();
             this.tb_Deviation = new System.Windows.Forms.NumericUpDown();
             this.textBox31 = new System.Windows.Forms.TextBox();
             this.cb_AutoRegim = new System.Windows.Forms.CheckBox();
@@ -160,7 +161,7 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.cb_PushPress = new System.Windows.Forms.CheckBox();
+            this.rb_useElemer = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -320,6 +321,16 @@
             this.tp_ProgramSettings.TabIndex = 0;
             this.tp_ProgramSettings.Text = "Настройки программы";
             this.tp_ProgramSettings.UseVisualStyleBackColor = true;
+            // 
+            // cb_PushPress
+            // 
+            this.cb_PushPress.AutoSize = true;
+            this.cb_PushPress.Location = new System.Drawing.Point(292, 302);
+            this.cb_PushPress.Name = "cb_PushPress";
+            this.cb_PushPress.Size = new System.Drawing.Size(203, 19);
+            this.cb_PushPress.TabIndex = 103;
+            this.cb_PushPress.Text = "Проводить раскачку давления";
+            this.cb_PushPress.UseVisualStyleBackColor = true;
             // 
             // tb_Deviation
             // 
@@ -1176,11 +1187,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.rb_useElemer);
             this.groupBox2.Controls.Add(this.rb_usePascal);
             this.groupBox2.Controls.Add(this.rb_useMensor);
             this.groupBox2.Location = new System.Drawing.Point(52, 177);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(643, 64);
+            this.groupBox2.Size = new System.Drawing.Size(643, 97);
             this.groupBox2.TabIndex = 104;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Выбор типа используемого задатчика давления: ";
@@ -1188,18 +1200,18 @@
             // rb_usePascal
             // 
             this.rb_usePascal.AutoSize = true;
-            this.rb_usePascal.Location = new System.Drawing.Point(8, 38);
+            this.rb_usePascal.Location = new System.Drawing.Point(8, 43);
             this.rb_usePascal.Name = "rb_usePascal";
-            this.rb_usePascal.Size = new System.Drawing.Size(137, 19);
+            this.rb_usePascal.Size = new System.Drawing.Size(74, 19);
             this.rb_usePascal.TabIndex = 1;
             this.rb_usePascal.TabStop = true;
-            this.rb_usePascal.Text = "Паскаль (Элметро)";
+            this.rb_usePascal.Text = "Паскаль";
             this.rb_usePascal.UseVisualStyleBackColor = true;
             // 
             // rb_useMensor
             // 
             this.rb_useMensor.AutoSize = true;
-            this.rb_useMensor.Location = new System.Drawing.Point(8, 17);
+            this.rb_useMensor.Location = new System.Drawing.Point(8, 19);
             this.rb_useMensor.Name = "rb_useMensor";
             this.rb_useMensor.Size = new System.Drawing.Size(70, 19);
             this.rb_useMensor.TabIndex = 0;
@@ -1996,15 +2008,16 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // cb_PushPress
+            // rb_useElemer
             // 
-            this.cb_PushPress.AutoSize = true;
-            this.cb_PushPress.Location = new System.Drawing.Point(292, 302);
-            this.cb_PushPress.Name = "cb_PushPress";
-            this.cb_PushPress.Size = new System.Drawing.Size(203, 19);
-            this.cb_PushPress.TabIndex = 103;
-            this.cb_PushPress.Text = "Проводить раскачку давления";
-            this.cb_PushPress.UseVisualStyleBackColor = true;
+            this.rb_useElemer.AutoSize = true;
+            this.rb_useElemer.Location = new System.Drawing.Point(8, 66);
+            this.rb_useElemer.Name = "rb_useElemer";
+            this.rb_useElemer.Size = new System.Drawing.Size(131, 19);
+            this.rb_useElemer.TabIndex = 2;
+            this.rb_useElemer.TabStop = true;
+            this.rb_useElemer.Text = "Элемер (АКД-12К)";
+            this.rb_useElemer.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
@@ -2214,5 +2227,6 @@
         private System.Windows.Forms.NumericUpDown tb_Deviation;
         private System.Windows.Forms.TextBox textBox31;
         private System.Windows.Forms.CheckBox cb_PushPress;
+        private System.Windows.Forms.RadioButton rb_useElemer;
     }
 }

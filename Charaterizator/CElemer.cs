@@ -32,7 +32,7 @@ namespace Charaterizator
         public bool modeClearP { get; set; }// Обнулении показаний давления УСПЕШНО(true)/НЕ УСПЕШНО(false) 
         public bool SetModuleOK { get; set; }// Установлен заданный модуль или нет
 
-        public List<string> ListMod = new List<string>();       // список подключенных модулей внутренныих и внешних
+        public List<string> ListMod = new List<string>() { "Диапазон 1" };       // список подключенных модулей внутренныих и внешних
         public int M1num;                                       // количество внутренних модулей
         public int M2num;                                       // количество внешних модулей
         private bool ReadElemer = false;
@@ -89,7 +89,7 @@ namespace Charaterizator
                     ReadThreadElmer.Start();
                     Thread.Sleep(1000);
                     Connected = true;
-                    Port.WriteLine(CreateCommand(1, 8, 1));//перевод под управление ПК
+                    Port.WriteLine(CreateCommand(1, 8, 1)); //перевод под управление ПК
                     return 0;
                 }
                 else
@@ -542,7 +542,10 @@ namespace Charaterizator
                     i = 0;
                     // считываем текущее давление
                     //Thread.Sleep(READ_PAUSE);
-                    Port.WriteLine(ReadPressuerCommand());
+
+
+                    // закомментировано 16.07.2022
+                    //Port.WriteLine(ReadPressuerCommand());
                     while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
                     {
                         i++;

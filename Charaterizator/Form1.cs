@@ -52,8 +52,9 @@ namespace Charaterizator
         private double SKO_PRESSURE = 0.2;  //(СКО) допуск по давлению, кПа
         private double TrhDeviation = 0.001;  // порог по отклонению R^2
 
-        private bool UseMensor;     // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
-
+        //private bool UseMensor;
+        private int selectedPressurer = 0; // указывает какой задатчик давления использовать: 0) Mensor 1) Паскаль 2) Элемер 
+        
         //Не занесены в настройку
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП        
         private int MENSOR_PRESSUER_WAIT = 60000;//время установления давления в менсоре, мсек
@@ -84,7 +85,7 @@ namespace Charaterizator
         private CCalcMNK CCalcMNK = new CCalcMNK();
         private CPascal Pascal = new CPascal();
         private CBarometr Barometr = new CBarometr();
-
+        private CElemer Elemer = new CElemer();
 
 
 
@@ -188,7 +189,11 @@ namespace Charaterizator
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - МЕНСОР
                 Pascal.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - ПАСКАЛЬ
-                UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
+
+
+                selectedPressurer = Properties.Settings.Default.set_selectPressurer;    // указывает какой задатчик давления использовать: 0) Mensor 1) Паскаль 2) Элемер 
+
+                // UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
                 //gbBarometr.Visible = !UseMensor;
 
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000) / MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
@@ -537,75 +542,113 @@ namespace Charaterizator
         private void btnMensor_Click(object sender, EventArgs e)
         {
             MensorReadError = 0;
-            //cbMensorTypeR.Enabled = false;
-            if (UseMensor)
+            
+            switch (selectedPressurer)
             {
-                //Mensor.ListMod.Clear();
-                //Mensor.ListMod.AddRange(new string[] { "[канал А] ДП-1", "[канал А] ДП-2", "[канал А] AutoRange", "[канал B] ДП-1", "[канал B] ДП-2", "[канал B] AutoRange", });        // список подключенных модулей
 
-                if (Mensor.Connect(Properties.Settings.Default.COMMensor,
-                    Properties.Settings.Default.COMMensor_Speed,
-                    Properties.Settings.Default.COMMensor_DataBits,
-                    Properties.Settings.Default.COMMensor_StopBits,
-                    Properties.Settings.Default.COMMensor_Parity) >= 0)
-                {
-                    btnMensor.BackColor = Color.Green;
-                    btnMensor.Text = "Подключен";
-                    Program.txtlog.WriteLineLog("Задатчик давления Mensor подключен", 0);
-                    //cbMensorTypeR.Items.Clear();
-                    cbMensorTypeR.DataSource = Mensor.ListMod;
-                    bMensorMeas.Name = "Измерение";
+                case 0: // подключение Менсора
+                    {
+                        //Mensor.ListMod.Clear();
+                        //Mensor.ListMod.AddRange(new string[] { "[канал А] ДП-1", "[канал А] ДП-2", "[канал А] AutoRange", "[канал B] ДП-1", "[канал B] ДП-2", "[канал B] AutoRange", });        // список подключенных модулей
 
-                    // Устанавливаем состояние барометра подключен 
-                    bBarometr.BackColor = Color.Green;
-                    bBarometr.Text = "Подключен";
+                        if (Mensor.Connect(Properties.Settings.Default.COMMensor,
+                            Properties.Settings.Default.COMMensor_Speed,
+                            Properties.Settings.Default.COMMensor_DataBits,
+                            Properties.Settings.Default.COMMensor_StopBits,
+                            Properties.Settings.Default.COMMensor_Parity) >= 0)
+                        {
+                            btnMensor.BackColor = Color.Green;
+                            btnMensor.Text = "Подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления Mensor подключен", 0);
+                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.DataSource = Mensor.ListMod;
+                            bMensorMeas.Name = "Измерение";
 
-                }
-                else
-                {
-                    btnMensor.BackColor = Color.IndianRed;
-                    btnMensor.Text = "Не подключен";
-                    Program.txtlog.WriteLineLog("Задатчик давления  Mensor не подключен", 1);
-                    //cbMensorTypeR.Items.Clear();
-                    cbMensorTypeR.DataSource = Mensor.ListMod;
+                            // Устанавливаем состояние барометра подключен 
+                            bBarometr.BackColor = Color.Green;
+                            bBarometr.Text = "Подключен";
 
-                    // Устанавливаем состояние барометра Отключен 
-                    bBarometr.BackColor = Color.IndianRed;
-                    bBarometr.Text = "Не подключен";
-                }
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                            btnMensor.Text = "Не подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления  Mensor не подключен", 1);
+                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.DataSource = Mensor.ListMod;
+
+                            // Устанавливаем состояние барометра Отключен 
+                            bBarometr.BackColor = Color.IndianRed;
+                            bBarometr.Text = "Не подключен";
+                        }
+                        break;
+                    }
+
+                case 1: // подключение Паскаля
+                    {
+                        //Pascal.ListMod.Clear();
+                        //Pascal.ListMod.AddRange(new string[] { "[внутр] 1", "[внутр] 2", "[внутр] 3", "[внеш] 1", "[внеш] 2", });        // список подключенных модулей
+
+                        if (Pascal.Connect(Properties.Settings.Default.COMMensor,
+                            Properties.Settings.Default.COMMensor_Speed,
+                            Properties.Settings.Default.COMMensor_DataBits,
+                            Properties.Settings.Default.COMMensor_StopBits,
+                            Properties.Settings.Default.COMMensor_Parity) >= 0)
+                        {
+                            btnMensor.BackColor = Color.Green;
+                            btnMensor.Text = "Подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления Паскаль подключен", 0);
+
+                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.DataSource = Pascal.ListMod;
+                            bMensorMeas.Name = "Обнуление";
+
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                            btnMensor.Text = "Не подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления Паскаль не подключен", 1);
+                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.DataSource = Pascal.ListMod;
+
+                        }
+                        break;
+                    }
+
+                case 2: // подключение Элемера (АКД-12К)
+                    {
+                        
+
+                        if (Elemer.Connect(Properties.Settings.Default.COMMensor,
+                            Properties.Settings.Default.COMMensor_Speed,
+                            Properties.Settings.Default.COMMensor_DataBits,
+                            Properties.Settings.Default.COMMensor_StopBits,
+                            Properties.Settings.Default.COMMensor_Parity) >= 0)
+                        {
+                            btnMensor.BackColor = Color.Green;
+                            btnMensor.Text = "Подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К подключен", 0);
+
+                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.DataSource = Elemer.ListMod; 
+                            bMensorMeas.Name = "Обнуление";
+
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                            btnMensor.Text = "Не подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К не подключен", 1);
+                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.DataSource = Elemer.ListMod;
+
+                        }
+                        break;
+                    }
 
             }
-            else
-            {
-                //Pascal.ListMod.Clear();
-                //Pascal.ListMod.AddRange(new string[] { "[внутр] 1", "[внутр] 2", "[внутр] 3", "[внеш] 1", "[внеш] 2", });        // список подключенных модулей
-
-                if (Pascal.Connect(Properties.Settings.Default.COMMensor,
-                    Properties.Settings.Default.COMMensor_Speed,
-                    Properties.Settings.Default.COMMensor_DataBits,
-                    Properties.Settings.Default.COMMensor_StopBits,
-                    Properties.Settings.Default.COMMensor_Parity) >= 0)
-                {
-                    btnMensor.BackColor = Color.Green;
-                    btnMensor.Text = "Подключен";
-                    Program.txtlog.WriteLineLog("Задатчик давления Паскаль подключен", 0);
-
-                    //cbMensorTypeR.Items.Clear();
-                    cbMensorTypeR.DataSource = Pascal.ListMod;
-                    bMensorMeas.Name = "Обнуление";
-
-                }
-                else
-                {
-                    btnMensor.BackColor = Color.IndianRed;
-                    btnMensor.Text = "Не подключен";
-                    Program.txtlog.WriteLineLog("Задатчик давления Паскаль не подключен", 1);
-                    //cbMensorTypeR.Items.Clear();
-                    cbMensorTypeR.DataSource = Pascal.ListMod;
-
-                }
-            }
-            //cbMensorTypeR.Enabled = true;
+            
 
         }
 
@@ -655,7 +698,7 @@ namespace Charaterizator
         // Открываем окно с интерфейсом МЕНСОРА
         private void btnFormMensor_Click(object sender, EventArgs e)
         {
-            if ((Mensor != null) && (UseMensor))
+            if ((Mensor != null) && (selectedPressurer == 0))
             {
 
                 Mensor.MenStartTimer();
@@ -2027,43 +2070,68 @@ namespace Charaterizator
             {
                 // Чтение показаний задатчика давления
                 // Определяем какой из задатчиков используется
-                if (UseMensor) // используется Менсор
+                switch (selectedPressurer)
                 {
-                    if (Mensor.Connected)
-                    {
-                        ReadMensor(); //обновляем данные с Менсора
-                    }
-                    else
-                    {
-                        if (btnMensor.BackColor != Color.IndianRed)
+                    case 0: // менсор
                         {
-                            btnMensor.BackColor = Color.IndianRed;
+                            if (Mensor.Connected)
+                            {
+                                ReadMensor(); //обновляем данные с Менсора
+                            }
+                            else
+                            {
+                                if (btnMensor.BackColor != Color.IndianRed)
+                                {
+                                    btnMensor.BackColor = Color.IndianRed;
+                                }
+                                else
+                                {
+                                    btnMensor.BackColor = Color.Transparent;
+                                }
+                            }
+                            break;
                         }
-                        else
-                        {
-                            btnMensor.BackColor = Color.Transparent;
-                        }
-                    }
-                }
-                else  // используется Паскаль
-                {
-                    if (Pascal.Connected)
-                    {
-                        ReadPascal(); //обновляем данные с Паскаля
-                    }
-                    else
-                    {
-                        if (btnMensor.BackColor != Color.IndianRed)
-                        {
-                            btnMensor.BackColor = Color.IndianRed;
-                        }
-                        else
-                        {
-                            btnMensor.BackColor = Color.Transparent;
-                        }
-                    }
-                }
 
+                    case 1:
+                        {
+                            if (Pascal.Connected) // паскаль
+                            {
+                                ReadPascal(); //обновляем данные с Паскаля
+                            }
+                            else
+                            {
+                                if (btnMensor.BackColor != Color.IndianRed)
+                                {
+                                    btnMensor.BackColor = Color.IndianRed;
+                                }
+                                else
+                                {
+                                    btnMensor.BackColor = Color.Transparent;
+                                }
+                            }
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            if (Elemer.Connected)
+                            {
+                                ReadElemer(); //обновляем данные с Паскаля
+                            }
+                            else
+                            {
+                                if (btnMensor.BackColor != Color.IndianRed)
+                                {
+                                    btnMensor.BackColor = Color.IndianRed;
+                                }
+                                else
+                                {
+                                    btnMensor.BackColor = Color.Transparent;
+                                }
+                            }
+                            break;
+                        }
+                }
             }
 
 
@@ -2345,8 +2413,17 @@ namespace Charaterizator
 
 
 
-        //чтение данных с мультиметра
-        private void ReadMultimetr()
+        //чтение данных с Паскаля
+        private void ReadElemer()
+        {
+
+        }
+
+
+
+
+            //чтение данных с мультиметра
+            private void ReadMultimetr()
         {
             bool res = Multimetr.Error;
             if (!res)
@@ -2750,105 +2827,172 @@ namespace Charaterizator
         // Отработка нажатия на гл. форме МЕНСОР - ЗАДАЧА
         private void bMensorControl_Click(object sender, EventArgs e)
         {
-            if (UseMensor)
+
+            switch (selectedPressurer)
             {
-                if (Mensor._serialPort_M.IsOpen)
-                {
-                    // если уставка равна нулю сбрсываем давление, если нет то выполняем команду задача
-                    //if (numMensorPoint.Value == 0)
-                    //{
-                    //    Mensor.SetMode(2);
-                    //    bMensorControl.BackColor = Color.LightGreen;
-                    //}
-                    //else
-                    //{
+                case 0: // менсор
+                    {
+                        if (Mensor._serialPort_M.IsOpen)
+                        {
+                            // если уставка равна нулю сбрсываем давление, если нет то выполняем команду задача
+                            //if (numMensorPoint.Value == 0)
+                            //{
+                            //    Mensor.SetMode(2);
+                            //    bMensorControl.BackColor = Color.LightGreen;
+                            //}
+                            //else
+                            //{
+                            Mensor.SetMode(1);
+                            bMensorControl.BackColor = Color.LightGreen;
+                            //}
 
-                    Mensor.SetMode(1);
-                    bMensorControl.BackColor = Color.LightGreen;
-                    //}
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
 
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                }
+                case 1: // паскаль
+                    {
+                        if (Pascal.Port.IsOpen)
+                        {
+
+                            Pascal.SetModeKeyStart();
+                            bMensorControl.BackColor = Color.LightGreen;
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
+                case 2: // элемер
+                    {
+                        if (Elemer.Port.IsOpen)
+                        {
+
+                            //Elemer.SetModeKeyStart();
+                            bMensorControl.BackColor = Color.LightGreen;
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
             }
-            else
-            {
-                if (Pascal.Port.IsOpen)
-                {
 
-                    Pascal.SetModeKeyStart();
-                    bMensorControl.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                }
-            }
         }
 
 
         // Отработка нажатия на гл. форме МЕНСОР - СБРОС
         private void button7_Click(object sender, EventArgs e)
         {
-            if (UseMensor)
-            {
-                if (Mensor._serialPort_M.IsOpen)
-                {
-                    bMensorVent.BackColor = Color.LightGreen;
-                    Mensor.SetMode(2);
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                }
-            }
-            else
-            {
-                if (Pascal.Port.IsOpen)
-                {
-                    bMensorVent.BackColor = Color.LightGreen;
-                    Pascal.SetModeVent();
 
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                }
-            }
+            switch (selectedPressurer)
+            {
+                case 0: // менсор
+                    {
+                        if (Mensor._serialPort_M.IsOpen)
+                        {
+                            bMensorVent.BackColor = Color.LightGreen;
+                            Mensor.SetMode(2);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
 
+                case 1: // паскаль
+                    {
+                        if (Pascal.Port.IsOpen)
+                        {
+                            bMensorVent.BackColor = Color.LightGreen;
+                            Pascal.SetModeVent();
+
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
+                case 2: // элемер
+                    {
+                        if (Elemer.Port.IsOpen)
+                        {
+                            bMensorVent.BackColor = Color.LightGreen;
+                            //Elemer.SetModeVent();
+
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
+            }
+            
         }
 
 
         // Отработка нажатия на гл. форме МЕНСОР - ИЗМЕРЕНИЕ/ОБНУЛЕНИЕ
         private void bMensorMeas_Click(object sender, EventArgs e)
         {
-            if (UseMensor)
+            switch (selectedPressurer)
             {
-                if (Mensor._serialPort_M.IsOpen)
-                {
-                    bMensorMeas.BackColor = Color.LightGreen;
-                    Mensor.SetMode(0);
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                }
-            }
-            else
-            {
-                if (Pascal.Port.IsOpen)
-                {
-                    bMensorMeas.BackColor = Color.LightGreen;
-                    Pascal.SetClearP();
-                }
-                else
-                {
-                    Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                }
-            }
+                case 0: // менсор
+                    {
+                        if (Mensor._serialPort_M.IsOpen)
+                        {
+                            bMensorMeas.BackColor = Color.LightGreen;
+                            Mensor.SetMode(0);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
 
+                case 1: // паскаль
+                    {
+                        if (Pascal.Port.IsOpen)
+                        {
+                            bMensorMeas.BackColor = Color.LightGreen;
+                            Pascal.SetClearP();
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
+                case 2: // элемер
+                    {
+                        if (Elemer.Port.IsOpen)
+                        {
+                            bMensorMeas.BackColor = Color.LightGreen;
+                            //Elemer.SetClearP();
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
+            }
+           
         }
 
 
@@ -2965,46 +3109,72 @@ namespace Charaterizator
             else
             {
 
-
-                if (UseMensor)
+                switch (selectedPressurer)
                 {
-                    if (!Mensor._serialPort_M.IsOpen)
-                    {
-                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                        return;
-                    }
+                    case 0: // менсор
+                        {
+                            if (!Mensor._serialPort_M.IsOpen)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                return;
+                            }
 
-                    double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
-                    Mensor.SetPoint(Point);
+                            double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+                            Mensor.SetPoint(Point);
 
-                    // если включена задача и уставка равна 0, то включаем режим вентиляции
-                    //if ((Point == 0) && (Mensor._mode == 1))
-                    //{
-                    //    Mensor.SetMode(2);
-                    //    bMensorControl.BackColor = Color.LightGreen;
-                    //}
+                            // если включена задача и уставка равна 0, то включаем режим вентиляции
+                            //if ((Point == 0) && (Mensor._mode == 1))
+                            //{
+                            //    Mensor.SetMode(2);
+                            //    bMensorControl.BackColor = Color.LightGreen;
+                            //}
+                            break;
+                        }
+
+                    case 1: // паскаль
+                        {
+                            if (!Pascal.Port.IsOpen)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                return;
+                            }
+
+                            double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+
+                            // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                            // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                            if (rbPressABS.Checked)
+                            {
+                                Point = Point - Convert.ToDouble(numATMpress.Value);
+                            }
+
+                            Pascal.SetPress(Point);
+                            break;
+                        }
+
+                    case 2: // элемер
+                        {
+                            if (!Elemer.Port.IsOpen)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                return;
+                            }
+
+                            double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+
+                            // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                            // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                            if (rbPressABS.Checked)
+                            {
+                                Point = Point - Convert.ToDouble(numATMpress.Value);
+                            }
+
+                            //Elemer.SetPress(Point);
+                            break;
+                        }
 
                 }
-                else
-                {
-                    if (!Pascal.Port.IsOpen)
-                    {
-                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                        return;
-                    }
-
-                    double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
-
-                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
-                    // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                    if (rbPressABS.Checked)
-                    {
-                        Point = Point - Convert.ToDouble(numATMpress.Value);
-                    }
-
-                    Pascal.SetPress(Point);
-
-                }
+                
             }
 
         }
@@ -3287,7 +3457,7 @@ namespace Charaterizator
 
                     // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                    if ((!UseMensor) && (rbPressABS.Checked))
+                    if ((selectedPressurer == 1) && (rbPressABS.Checked))
                     {
                         Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
@@ -3311,7 +3481,8 @@ namespace Charaterizator
                         // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
                         // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
 
-                        if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                        //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                        if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
                         {
                             bMensorControl_Click(null, null);  //запускаем задачу
                         }
@@ -3630,30 +3801,23 @@ namespace Charaterizator
                 //CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
                 AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
 
-                
-
-                //выбор задатчика
-                // проверяем был ли переопределен задатчик
-                if (UseMensor != Properties.Settings.Default.set_UseMensor)
+                //если изменился задатчик давления после изменения настроек
+                if (Properties.Settings.Default.set_selectPressurer != selectedPressurer)
                 {
-                    // если да
-                    UseMensor = Properties.Settings.Default.set_UseMensor;
-
-                    if (UseMensor) // если выбран Менсор
-                    {
-                        // отключаем от Паскаль
-                        Pascal.DisConnect();
-                        btnMensor_Click(null, null);
-
-                    }
-                    else      // если выбран Паскаль
-                    {
-                        // отключаем Менсор
+                    selectedPressurer = Properties.Settings.Default.set_selectPressurer;
+                    // отключаем подключенный задатчик
+                    if (Mensor.Connected)
                         Mensor.DisConnect();
-                        btnMensor_Click(null, null);
-                    }
+                    if (Pascal.Connected)
+                        Pascal.DisConnect();
+                    if (Elemer.Connected)
+                        Elemer.DisConnect();
 
-                }
+                    // подключаем новый задатчик 
+                    btnMensor_Click(null, null);
+                }   
+               
+
                 //gbBarometr.Visible = !UseMensor;
                 if (MaxChannalCount != Commutator.MaxChannal)
                 {
@@ -3818,7 +3982,7 @@ namespace Charaterizator
 
                     // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                    if ((!UseMensor) && (rbPressABS.Checked))
+                    if ((selectedPressurer == 1) && (rbPressABS.Checked))
                     {
                         Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
@@ -3839,7 +4003,9 @@ namespace Charaterizator
                         // UseMensor = false - используем Паскаль
                         // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
                         // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
-                        if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+
+                        //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                        if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
                         {
                             bMensorControl_Click(null, null);  //запускаем задачу
                         }
@@ -3962,7 +4128,7 @@ namespace Charaterizator
                                     MainTimer.Stop();
                                     MainTimer.Enabled = false;
                                     // если используется Паскаль, то перед задачей выставляем модуль заданный в БД
-                                    if ((!UseMensor) && (cbVRDiapazon1.Items.Count > 0))
+                                    if ((selectedPressurer == 1) && (cbVRDiapazon1.Items.Count > 0))
                                     {
                                         if (cbMensorTypeR.Items.Count >= numPascaleModule)
                                             cbMensorTypeR.SelectedIndex = numPascaleModule;
@@ -5202,7 +5368,7 @@ namespace Charaterizator
 
                 // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
                 // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                if ((!UseMensor) && (rbPressABS.Checked))
+                if ((selectedPressurer == 1) && (rbPressABS.Checked))
                 {
                     Point = Point - Convert.ToDouble(numATMpress.Value);
                 }
@@ -5224,7 +5390,8 @@ namespace Charaterizator
                     // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
                     // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
 
-                    if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                    //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                    if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
                     {
                         bMensorControl_Click(null, null);  //запускаем задачу
                     }
@@ -5362,108 +5529,173 @@ namespace Charaterizator
             if (cb_ManualMode.Checked)
                 return;
 
-            if (UseMensor)
+
+            switch (selectedPressurer)
             {
-                if (!Mensor._serialPort_M.IsOpen)
-                {
-                    if (cbMensorTypeR.SelectedIndex != -1)
+                case 0: // менсор
                     {
-                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                        cbMensorTypeR.SelectedIndex = -1;
+
+                        if (!Mensor._serialPort_M.IsOpen)
+                        {
+                            if (cbMensorTypeR.SelectedIndex != -1)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                cbMensorTypeR.SelectedIndex = -1;
+                            }
+                            MainTimer.Enabled = true;
+                            MainTimer.Start();
+                            return;
+                        }
+                        try
+                        {
+                            MainTimer.Stop();
+                            MainTimer.Enabled = false;
+
+                            // Получаем индекс выбранного преобразователя
+                            int ind = cbMensorTypeR.SelectedIndex;
+
+                            // Определяем тип канала соответствующего выбранному преобразователю
+                            if ((ind >= 0) && (ind <= 2))  // активный канал А
+                            {
+                                Mensor.ChannelSet("A");   // устанвливаем активным канал A
+                                Thread.Sleep(100);
+                                Mensor.SetTypeRange(ind);     // Устанавливаем тип выбранного преобразователя
+                            }
+                            else if ((ind >= 3) && (ind <= 5)) // активный канал B
+                            {
+                                Mensor.ChannelSet("B");   // устанвливаем активным канал B
+                                Thread.Sleep(100);
+                                Mensor.SetTypeRange(ind - 3);     // Устанавливаем тип выбранного преобразователя
+                            }
+
+                        }
+                        finally
+                        {
+                            MainTimer.Enabled = true;
+                            MainTimer.Start();
+                        }
+                        break;
                     }
-                    MainTimer.Enabled = true;
-                    MainTimer.Start();
-                    return;
-                }
-                try
-                {
-                    MainTimer.Stop();
-                    MainTimer.Enabled = false;
 
-                    // Получаем индекс выбранного преобразователя
-                    int ind = cbMensorTypeR.SelectedIndex;
-
-                    // Определяем тип канала соответствующего выбранному преобразователю
-                    if ((ind >= 0) && (ind <= 2))  // активный канал А
+                case 1: // паскаль
                     {
-                        Mensor.ChannelSet("A");   // устанвливаем активным канал A
-                        Thread.Sleep(100);
-                        Mensor.SetTypeRange(ind);     // Устанавливаем тип выбранного преобразователя
-                    }
-                    else if ((ind >= 3) && (ind <= 5)) // активный канал B
-                    {
-                        Mensor.ChannelSet("B");   // устанвливаем активным канал B
-                        Thread.Sleep(100);
-                        Mensor.SetTypeRange(ind - 3);     // Устанавливаем тип выбранного преобразователя
+                        if (!Pascal.Port.IsOpen)
+                        {
+                            if (cbMensorTypeR.SelectedIndex != -1)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                cbMensorTypeR.SelectedIndex = -1;
+                            }
+                            MainTimer.Enabled = true;
+                            MainTimer.Start();
+                            return;
+                        }
+                        try
+                        {
+                            MainTimer.Stop();
+                            MainTimer.Enabled = false;
+
+                            // сброс давления ВКЛ
+                            if (!Pascal.modeVent)
+                                Pascal.SetModeVent();
+
+                            while (Pascal.press > 1)
+                            {
+                                if (ProcessStop) return;//прекращаем
+                                Thread.Sleep(500);
+                            }
+                            // сброс давления ВЫКЛ
+
+                            // сброс давления ВКЛ
+                            if (Pascal.modeVent)
+                                Pascal.SetModeVent();
+
+                            Thread.Sleep(50);
+
+                            // Получаем индекс выбранного преобразователя
+                            int ind = cbMensorTypeR.SelectedIndex + 1;
+
+                            // Определяем тип канала соответствующего выбранному преобразователю
+                            if ((ind > 0) && (ind <= Pascal.M1num))  // 
+                            {
+                                Pascal.SetModule(1, ind);
+                            }
+                            else if ((ind > Pascal.M1num) && (ind <= Pascal.M1num + Pascal.M2num)) // 
+                            {
+                                Pascal.SetModule(2, ind - Pascal.M1num);
+                            }
+
+                        }
+                        finally
+                        {
+                            MainTimer.Enabled = true;
+                            MainTimer.Start();
+                        }
+                        break;
                     }
 
-                }
-                finally
-                {
-                    MainTimer.Enabled = true;
-                    MainTimer.Start();
-                }
+                case 2: // элемер
+                    {
+                        if (!Elemer.Port.IsOpen)
+                        {
+                            if (cbMensorTypeR.SelectedIndex != -1)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                cbMensorTypeR.SelectedIndex = -1;
+                            }
+                            MainTimer.Enabled = true;
+                            MainTimer.Start();
+                            return;
+                        }
+                        /*
+                        try
+                        {
+                            MainTimer.Stop();
+                            MainTimer.Enabled = false;
+
+                            // сброс давления ВКЛ
+                            if (!Pascal.modeVent)
+                                Pascal.SetModeVent();
+
+                            while (Pascal.press > 1)
+                            {
+                                if (ProcessStop) return;//прекращаем
+                                Thread.Sleep(500);
+                            }
+                            // сброс давления ВЫКЛ
+
+                            // сброс давления ВКЛ
+                            if (Pascal.modeVent)
+                                Pascal.SetModeVent();
+
+                            Thread.Sleep(50);
+
+                            // Получаем индекс выбранного преобразователя
+                            int ind = cbMensorTypeR.SelectedIndex + 1;
+
+                            // Определяем тип канала соответствующего выбранному преобразователю
+                            if ((ind > 0) && (ind <= Pascal.M1num))  // 
+                            {
+                                Pascal.SetModule(1, ind);
+                            }
+                            else if ((ind > Pascal.M1num) && (ind <= Pascal.M1num + Pascal.M2num)) // 
+                            {
+                                Pascal.SetModule(2, ind - Pascal.M1num);
+                            }
+
+                        }
+                        finally
+                        {
+                            MainTimer.Enabled = true;
+                            MainTimer.Start();
+                        }
+                        */
+                        break;
+                    }
 
             }
 
-            else
-            {
 
-
-                if (!Pascal.Port.IsOpen)
-                {
-                    if (cbMensorTypeR.SelectedIndex != -1)
-                    {
-                        Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                        cbMensorTypeR.SelectedIndex = -1;
-                    }
-                    MainTimer.Enabled = true;
-                    MainTimer.Start();
-                    return;
-                }
-                try
-                {
-                    MainTimer.Stop();
-                    MainTimer.Enabled = false;
-
-                    // сброс давления ВКЛ
-                    if (!Pascal.modeVent)
-                        Pascal.SetModeVent();
-
-                    while (Pascal.press > 1)
-                    {
-                        if (ProcessStop) return;//прекращаем
-                        Thread.Sleep(500);
-                    }
-                    // сброс давления ВЫКЛ
-
-                    // сброс давления ВКЛ
-                    if (Pascal.modeVent)
-                        Pascal.SetModeVent();
-
-                    Thread.Sleep(50);
-
-                    // Получаем индекс выбранного преобразователя
-                    int ind = cbMensorTypeR.SelectedIndex + 1;
-
-                    // Определяем тип канала соответствующего выбранному преобразователю
-                    if ((ind > 0) && (ind <= Pascal.M1num))  // 
-                    {
-                        Pascal.SetModule(1, ind);
-                    }
-                    else if ((ind > Pascal.M1num) && (ind <= Pascal.M1num + Pascal.M2num)) // 
-                    {
-                        Pascal.SetModule(2, ind - Pascal.M1num);
-                    }
-
-                }
-                finally
-                {
-                    MainTimer.Enabled = true;
-                    MainTimer.Start();
-                }
-
-            }
 
         }
 
@@ -5552,7 +5784,55 @@ namespace Charaterizator
         {
             if (!cb_ManualMode.Checked) // если НЕ выбран ручной режим
             {
+
                 // Определяем какой из задатчиков используется
+
+                switch (selectedPressurer)
+                {
+                    case 0: // менсор
+                        {
+                            if (Mensor.Connected)
+                            {
+                                if (rbPressIZB.Checked)  //выбрано ИЗБЫТОЧНОЕ давление
+                                {
+                                    // отправляем команду уcтановить тип давления ИЗБЫТОЧНОЕ
+                                    Mensor.SetTypePress(1);
+                                }
+
+                                else
+                                {
+                                    // отправляем команду уcтановить тип давления АБСОЛЮТНОЕ
+                                    Mensor.SetTypePress(0);
+                                }
+                            }
+                            else
+                            {
+                                if (btnMensor.BackColor != Color.IndianRed)
+                                {
+                                    btnMensor.BackColor = Color.IndianRed;
+                                }
+                                else
+                                {
+                                    btnMensor.BackColor = Color.Transparent;
+                                }
+                            }
+                            break;
+                        }
+
+                    case 1: // паскаль
+                        {
+                            break;
+                        }
+
+                    case 2: // элемер
+                        {
+                            break;
+                        }
+
+                }
+
+
+                /*
                 if (UseMensor) // используется Менсор
                 {
                     if (Mensor.Connected)
@@ -5585,6 +5865,7 @@ namespace Charaterizator
                 {
 
                 }
+                */
             }
         }
 
@@ -5864,102 +6145,118 @@ namespace Charaterizator
         {
             Program.txtlog.WriteLineLog("CH:Выполняем раскачу датчиков давлением", 0);
             // Определяем какой из задатчиков используется
-            if (UseMensor) // используется Менсор
+
+            switch (selectedPressurer)
             {
-                if (Mensor.Connected)
-                {
-
-                    numMensorPoint.Value = Convert.ToDecimal(Pmax);
-                    Mensor.SetPoint(Pmax);
-
-                    //Thread.Sleep(20);
-                    // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
-                    // если задача давления включена, то повторно ее не включаем 
-                    // UseMensor = true - используем Менсор
-                    // UseMensor = false - используем Паскаль
-                    // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
-                    // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
-                    if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                case 0: // менсор
                     {
-                        bMensorControl_Click(null, null);  //запускаем задачу
+                        if (Mensor.Connected)
+                        {
+
+                            numMensorPoint.Value = Convert.ToDecimal(Pmax);
+                            Mensor.SetPoint(Pmax);
+
+                            //Thread.Sleep(20);
+                            // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
+                            // если задача давления включена, то повторно ее не включаем 
+                            // UseMensor = true - используем Менсор
+                            // UseMensor = false - используем Паскаль
+                            // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
+                            // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
+
+                            //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                            if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                            {
+                                bMensorControl_Click(null, null);  //запускаем задачу
+                            }
+
+                            double shift;
+                            TimerTickCount = 0;
+                            do//ожидаем установления давления
+                            {
+                                if (ProcessStop) return;//прекращаем
+                                Application.DoEvents();
+                                Thread.Sleep(100);
+                                shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Pmax);
+                            } while ((shift > Pmax * 0.05) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
+                            if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
+                            {//давление не установлено
+                                Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
+                            }
+                            else
+                            {
+                                // ждем 3 сек
+                                Thread.Sleep(3000);
+                            }
+
+                            // Сброс давления
+                            Mensor.SetMode(2);
+                            Thread.Sleep(500);
+                        }
+                        break;
                     }
 
-                    double shift;
-                    TimerTickCount = 0;
-                    do//ожидаем установления давления
+                case 1: // паскаль
                     {
-                        if (ProcessStop) return;//прекращаем
-                        Application.DoEvents();
-                        Thread.Sleep(100);
-                        shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Pmax);
-                    } while ((shift > Pmax * 0.05) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
-                    if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
-                    {//давление не установлено
-                        Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
-                    }
-                    else
-                    {
-                        // ждем 3 сек
-                        Thread.Sleep(3000);
+                        numMensorPoint.Value = Convert.ToDecimal(Pmax);
+                        if (Pascal.Connected)
+                        {
+                            //double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+
+                            // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                            // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                            if (rbPressABS.Checked)
+                            {
+                                Pmax = Pmax - Convert.ToDouble(numATMpress.Value);
+                            }
+
+                            Pascal.SetPress(Pmax);
+
+                            Thread.Sleep(2000);
+                            // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
+                            // если задача давления включена, то повторно ее не включаем 
+                            // UseMensor = true - используем Менсор
+                            // UseMensor = false - используем Паскаль
+                            // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
+                            // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
+
+                            //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
+                            if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                            {
+                                bMensorControl_Click(null, null);  //запускаем задачу
+                            }
+
+                            double shift;
+                            TimerTickCount = 0;
+                            do//ожидаем установления давления
+                            {
+                                if (ProcessStop) return;//прекращаем
+                                Application.DoEvents();
+                                Thread.Sleep(100);
+                                shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Pmax);
+                            } while ((shift > Pmax * 0.05) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
+                            if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
+                            {//давление не установлено
+                                Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
+                            }
+                            else
+                            {
+                                // ждем 3 сек
+                                Thread.Sleep(3000);
+                            }
+                            // Сброс давления
+                            Pascal.SetModeVent();
+                        }
+                        break;
                     }
 
-                    // Сброс давления
-                    Mensor.SetMode(2);
-                    Thread.Sleep(500);
-                }
+                case 2: // элемер
+                    {
+                        break;
+                    }
 
             }
-            else  // используется Паскаль
-            {
-                numMensorPoint.Value = Convert.ToDecimal(Pmax);
-                if (Pascal.Connected)
-                {
-                    //double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
 
-                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
-                    // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                    if (rbPressABS.Checked)
-                    {
-                        Pmax = Pmax - Convert.ToDouble(numATMpress.Value);
-                    }
-
-                    Pascal.SetPress(Pmax);
-
-                    Thread.Sleep(2000);
-                    // доработка 09.08.2020 / на зам. №4 от 06.08.2020 
-                    // если задача давления включена, то повторно ее не включаем 
-                    // UseMensor = true - используем Менсор
-                    // UseMensor = false - используем Паскаль
-                    // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
-                    // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
-                    if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
-                    {
-                        bMensorControl_Click(null, null);  //запускаем задачу
-                    }
-
-                    double shift;
-                    TimerTickCount = 0;
-                    do//ожидаем установления давления
-                    {
-                        if (ProcessStop) return;//прекращаем
-                        Application.DoEvents();
-                        Thread.Sleep(100);
-                        shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Pmax);
-                    } while ((shift > Pmax * 0.05) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
-                    if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
-                    {//давление не установлено
-                        Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
-                    }
-                    else
-                    {
-                        // ждем 3 сек
-                        Thread.Sleep(3000);
-                    }
-                    // Сброс давления
-                    Pascal.SetModeVent();
-                }
-
-            }
             Program.txtlog.WriteLineLog("CH:Раскачка завершена!", 0);
         }
         /// <summary>
@@ -6232,3 +6529,23 @@ namespace Charaterizator
     }
 }
 
+/*
+  switch (selectedPressurer)
+            {
+                case 0: // менсор
+                    {
+                        break;
+                    }
+
+                case 1: // паскаль
+                    {
+                        break;
+                    }
+
+                case 2: // элемер
+                    {
+                        break;
+                    }
+
+            }
+            */

@@ -93,9 +93,13 @@ namespace Charaterizator
                 Properties.Settings.Default.set_MensorReadPause = Convert.ToInt32(tbMensorReadPause.Value);             //
                 Properties.Settings.Default.set_MensorSKOPressure = Convert.ToDouble(tbMensorSKOPressure.Value);        // допуск по давлению
                 Properties.Settings.Default.set_MensorMaxCountPoint = Convert.ToInt32(tbMensorMaxCountPoint.Value);     // время стабилизации давления
-                Properties.Settings.Default.set_UseMensor = rb_useMensor.Checked;
-
-
+                if (rb_useMensor.Checked)
+                    Properties.Settings.Default.set_selectPressurer = 0;
+                else if (rb_usePascal.Checked)
+                    Properties.Settings.Default.set_selectPressurer = 1;
+                else if (rb_useElemer.Checked)
+                    Properties.Settings.Default.set_selectPressurer = 2;
+                
                 //4 - ТЕРМОКАМЕРА
                 Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToInt32(tbTCameraReadPeriod.Value);         //
 
@@ -201,18 +205,27 @@ namespace Charaterizator
             tbMensorReadPause.Value = Properties.Settings.Default.set_MensorReadPause;
             tbMensorSKOPressure.Value = Convert.ToDecimal(Properties.Settings.Default.set_MensorSKOPressure);
             tbMensorMaxCountPoint.Value = Properties.Settings.Default.set_MensorMaxCountPoint;
-
-            if (Properties.Settings.Default.set_UseMensor)
+            switch (Properties.Settings.Default.set_selectPressurer)
             {
-                rb_useMensor.Checked = true;
-                rb_usePascal.Checked = false;
-            }
-            else
-            {
-                rb_useMensor.Checked = false;
-                rb_usePascal.Checked = true;
-            }
+                case 0:
+                    rb_useMensor.Checked = true;
+                    rb_usePascal.Checked = false;
+                    rb_useElemer.Checked = false;
+                    break;
 
+                case 1:
+                    rb_useMensor.Checked = false;
+                    rb_usePascal.Checked = true;
+                    rb_useElemer.Checked = false;
+                    break;
+
+                case 2:
+                    rb_useMensor.Checked = false;
+                    rb_usePascal.Checked = false;
+                    rb_useElemer.Checked = true;
+                    break;
+            }
+            
 
             // 4 - Термокамера
             tbTCameraReadPeriod.Value = Properties.Settings.Default.set_TCameraReadPeriod;

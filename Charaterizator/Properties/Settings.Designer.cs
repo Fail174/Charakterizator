@@ -1043,5 +1043,17 @@ namespace Charaterizator.Properties {
                 this["set_PushPress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int set_selectPressurer {
+            get {
+                return ((int)(this["set_selectPressurer"]));
+            }
+            set {
+                this["set_selectPressurer"] = value;
+            }
+        }
     }
 }
