@@ -36,6 +36,7 @@ namespace Charaterizator
         public int M1num;                                       // количество внутренних модулей
         public int M2num;                                       // количество внешних модулей
         private bool ReadElemer = false;
+        private int CommandType = 0;        //номер текущей отправляемой команды
 
 
         public CElemer()
@@ -202,6 +203,7 @@ namespace Charaterizator
         private string CreateCommand(byte addr, byte func)
         {
             string chars;
+            CommandType = func;
             chars = addr.ToString() + ";" + func.ToString() + ";";
             byte[] command = Encoding.ASCII.GetBytes(chars);
             UInt16 crc = CalculateCRC16(command);
@@ -212,6 +214,7 @@ namespace Charaterizator
         private string CreateCommand(byte addr, byte func, int data)
         {
             string chars;
+            CommandType = func;
             chars = addr.ToString() + ";" + func.ToString() + ";" + data.ToString() + ";" ;
             byte[] command = Encoding.ASCII.GetBytes(chars);
             UInt16 crc = CalculateCRC16(command);
@@ -222,6 +225,7 @@ namespace Charaterizator
         private string CreateCommand(byte addr, byte func, int data1, int data2)
         {
             string chars;
+            CommandType = func;
             chars = addr.ToString() + ";" + func.ToString() + ";" + data1.ToString() + ";" + data2.ToString() + ";";
             byte[] command = Encoding.ASCII.GetBytes(chars);
             UInt16 crc = CalculateCRC16(command);
@@ -514,7 +518,51 @@ namespace Charaterizator
         }
 
 
-
+        int ParseAnswer(string command)
+        {
+            if (command.Length > 0)
+            {
+                int pos = command.IndexOf("!1;");
+                string com = command.Substring(pos+1);
+                string [] str = com.Split(';');
+                if(Convert.ToInt32(str[0]) == 1)//если адрес прибора 1
+                {
+                    switch(CommandType)
+                    {
+                        case 0://проверка связи
+                            break;
+                        case 1://чтение давления
+                            press = Convert.ToInt32(str[1], 16);
+                            //return press;
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7:
+                            break;
+                        case 8:
+                            break;
+                    }
+                    
+                    return CommandType;
+                }
+                else
+                {
+                    return -2;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
 
 
         //-----------------------------------------------------------------------------------------------
@@ -539,16 +587,11 @@ namespace Charaterizator
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadByte();
-                        //Port.ReadLine();
                     }
 
                     i = 0;
-                    // считываем текущее давление
-                    //Thread.Sleep(READ_PAUSE);
 
-
-                    // закомментировано 16.07.2022
-                    //Port.WriteLine(ReadPressuerCommand());
+                    Port.WriteLine(CreateCommand(1, 1)); // команда на чтение давления
                     while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
                     {
                         i++;
@@ -557,8 +600,7 @@ namespace Charaterizator
                     if (Port.BytesToRead > 0)
                     {
                         strData = Port.ReadLine();
-                        
-                        //press = float.Parse(strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                        ParseAnswer(strData);
                     }
                     else
                     {
