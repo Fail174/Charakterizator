@@ -14,7 +14,7 @@ namespace Charaterizator
         public bool Connected;              // флаг соединения с прибором по COM (true - есть соединение / false - нет)
         public SerialPort Port;            // переменная для работы по COM-порту
         private Thread ReadThreadElmer;    // поток
-        string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
+        //string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
         public int READ_PAUSE = 500;            // задержка между приемом и передачей команд по COM порту, мс      
         public double UserPoint = 0;
 
@@ -113,12 +113,14 @@ namespace Charaterizator
         public int DisConnect()
         {
             Connected = false;
-            ListMod.Clear();
+            //ListMod.Clear();
             if (ReadThreadElmer != null)
                 ReadThreadElmer.Abort(0);
 
             if (Port.IsOpen)
             {
+                Port.WriteLine(CreateCommand(1, 8, 0)); //перевод под управление ПК
+                Thread.Sleep(1000);
                 Port.Close();
                 return 0;
             }
@@ -169,6 +171,7 @@ namespace Charaterizator
                 Port.WriteLine(command);
                 Thread.Sleep(READ_PAUSE);
                 i = 0;
+                command = "";
                 while (Port.BytesToRead > 0)
                 {
                     i++;
@@ -200,7 +203,7 @@ namespace Charaterizator
         {
             string chars;
             chars = addr.ToString() + ";" + func.ToString() + ";";
-            byte[] command = Encoding.Unicode.GetBytes(chars);
+            byte[] command = Encoding.ASCII.GetBytes(chars);
             UInt16 crc = CalculateCRC16(command);
             chars = ":" + chars + crc.ToString(); 
             return chars;
@@ -210,7 +213,7 @@ namespace Charaterizator
         {
             string chars;
             chars = addr.ToString() + ";" + func.ToString() + ";" + data.ToString() + ";" ;
-            byte[] command = Encoding.Unicode.GetBytes(chars);
+            byte[] command = Encoding.ASCII.GetBytes(chars);
             UInt16 crc = CalculateCRC16(command);
             chars = ":" + chars + crc.ToString();
             return chars;
@@ -220,7 +223,7 @@ namespace Charaterizator
         {
             string chars;
             chars = addr.ToString() + ";" + func.ToString() + ";" + data1.ToString() + ";" + data2.ToString() + ";";
-            byte[] command = Encoding.Unicode.GetBytes(chars);
+            byte[] command = Encoding.ASCII.GetBytes(chars);
             UInt16 crc = CalculateCRC16(command);
             chars = ":" + chars + crc.ToString();
             return chars;
@@ -562,23 +565,6 @@ namespace Charaterizator
                         continue;
                     }
 
-                    // считываем текущий используемый модуль
-                    //Thread.Sleep(READ_PAUSE);
-                    Port.WriteLine("RANGE?");
-                    //Thread.Sleep(READ_PAUSE);
-                    i = 0;
-                    while ((Port.BytesToRead <= 0) && (i < READ_PAUSE))
-                    {
-                        i++;
-                        Thread.Sleep(1);
-                    }
-                    if (Port.BytesToRead > 0)
-                    {
-                        strData = Port.ReadLine();
-                        Data = strData.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        rangeModule[0] = Convert.ToInt16(Data[1]);
-                        rangeModule[1] = Convert.ToInt16(Data[3]);
-                    }
                 }
                 catch
                 {
@@ -586,7 +572,7 @@ namespace Charaterizator
                     rangeModule[1] = -1;
                     press = -1;*/
                     //Port.Close();
-                    Program.txtlog.WriteLineLog("Pascal: Ошибка чтения в потоке", 1);
+                    Program.txtlog.WriteLineLog("Elemer: Ошибка чтения в потоке", 1);
                     Error = true;
                 }
                 finally

@@ -1972,6 +1972,7 @@ namespace Charaterizator
             sensors.DisConnect();
             Mensor.DisConnect();
             Pascal.DisConnect();
+            Elemer.DisConnect();
             Multimetr.DisConnect();
             Commutator.DisConnect();
             Barometr.DisConnect();
@@ -2116,7 +2117,7 @@ namespace Charaterizator
                         {
                             if (Elemer.Connected)
                             {
-                                ReadElemer(); //обновляем данные с Паскаля
+                                ReadElemer(); //обновляем данные с Элемера
                             }
                             else
                             {
@@ -2413,7 +2414,7 @@ namespace Charaterizator
 
 
 
-        //чтение данных с Паскаля
+        //чтение данных с 
         private void ReadElemer()
         {
 
