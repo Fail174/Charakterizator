@@ -11,10 +11,11 @@ namespace Charaterizator
 {
     class CElemer
     {
-        public bool Connected;              // флаг соединения с прибором по COM (true - есть соединение / false - нет)
-        public SerialPort Port;            // переменная для работы по COM-порту
-        private Thread ReadThreadElmer;    // поток
-        //string diagnostic = "EEPROM:1 ALU:1 M0:1 M1:1 M2:0";  // ответ прибора на команду провести диагностику используется для идентификации прибора         
+        public bool Connected;                  // флаг соединения с прибором по COM (true - есть соединение / false - нет)
+        public SerialPort Port;                 // переменная для работы по COM-порту
+        private Thread ReadThreadElmer;         // поток
+       
+        
         public int READ_PAUSE = 500;            // задержка между приемом и передачей команд по COM порту, мс      
         public double UserPoint = 0;
 

@@ -2417,6 +2417,88 @@ namespace Charaterizator
         //чтение данных с 
         private void ReadElemer()
         {
+            if (SKO_PRESSURE > Math.Abs(Elemer.press - Elemer.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
+            {
+                
+                MensorCountPoint++;
+                if (MensorCountPoint >= MAX_COUNT_POINT)
+                {
+                    tbMensorData.BackColor = Color.MediumSeaGreen;
+                }
+                else
+                {
+                    tbMensorData.BackColor = Color.Yellow;
+                }
+            }
+            else
+            {
+                if (MensorCountPoint != 0)
+                {
+                    Console.Beep();
+                    Console.Beep();
+                    Console.Beep();
+                }
+                tbMensorData.BackColor = Color.White;
+                MensorCountPoint = 0;
+            }
+
+
+            // Получаем текущее значение давления и обновляем гл. форму 
+            tbMensorData.Text = Elemer.press.ToString("f3");
+
+            /*
+            if (cbMensorTypeR.Items.Count > 0)
+            {
+                // Получаем тип преобразователя (удерживаемый диапазон)
+                int typeR = Pascal.rangeModule[1] - 1;  //  
+                                                        // Обновляем тип преобзарователя
+                if (Pascal.rangeModule[0] == 1)
+                {
+                    cbMensorTypeR.SelectedIndex = typeR; //  по списку
+                }
+                else if (Pascal.rangeModule[0] == 2)
+                {
+                    cbMensorTypeR.SelectedIndex = typeR + Pascal.M1num;
+                }
+            }
+            */
+
+            // Задача
+            if (Pascal.modeStart)
+            {
+                bMensorControl.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                bMensorControl.BackColor = Color.Transparent;
+            }
+
+            // Обнуление
+            if (Pascal.modeClearP)
+            {
+                bMensorMeas.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                bMensorMeas.BackColor = Color.Transparent;
+            }
+
+            // Вентиляция сброс давления
+            if (Pascal.modeVent)
+            {
+                bMensorVent.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                bMensorVent.BackColor = Color.Transparent;
+            }
+
+
+            //MensorReadError = 0;
+
+
+
+
 
         }
 
