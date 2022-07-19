@@ -25,7 +25,7 @@ namespace Charaterizator
         public bool Error = false;
 
         public double press { get; set; }    // текущее давление
-        public int[] rangeModule { get; set; }    // текущий используемый модуль (n, m) n-внутр 1, внеш 2, m - номер модуля с единицы
+//        public int[] rangeModule { get; set; }    // текущий используемый модуль (n, m) n-внутр 1, внеш 2, m - номер модуля с единицы
 
         public bool target { get; set; }        // уставка задана true /не задана false
         public bool modeStart { get; set; } // текущий режим установки и регулирования давление СТАРТ(true)/СТОП(false)
@@ -38,13 +38,11 @@ namespace Charaterizator
         public int M2num;                                       // количество внешних модулей
         private bool ReadElemer = false;
         private int CommandType = 0;        //номер текущей отправляемой команды
+        private int DevType=0;              //тип прибора (=105 - MCE-040, =106 - MCE-040И )
 
 
         public CElemer()
         {
-            rangeModule = new int[2];
-            rangeModule[0] = 1;
-            rangeModule[1] = 1;
             press = 0;
             modeStart = false;
             modeVent = false;
@@ -234,19 +232,6 @@ namespace Charaterizator
             return chars;
         }
 
-        private string CreateCommand(byte addr, byte func, string data1)
-        {
-            string chars;
-            CommandType = func;
-            chars = addr.ToString() + ";" + func.ToString() + ";" + data1 + ";";
-            byte[] command = Encoding.ASCII.GetBytes(chars);
-            UInt16 crc = CalculateCRC16(command);
-            chars = ":" + chars + crc.ToString();
-            return chars;
-        }
-
-
-        /*
         // Устанавливает текущий модуль
         // входныет данные (n, m)
         // n - 1 внутр, 2 - внешний модуль
@@ -297,7 +282,7 @@ namespace Charaterizator
 
         }
 
-*/
+
 
 
 
@@ -305,12 +290,10 @@ namespace Charaterizator
         // возвращаемые значения:   нет          
         public void SetPress(double Val)
         {
-            int ErrorCode = 1;
             if (Port.IsOpen)
             {
                 try
                 {
-                    string ValHex = Convert.ToInt16(Val).ToString("X4");
                     int i = 0;
                     while ((ReadElemer) && (i < READ_PAUSE))
                     {
@@ -322,18 +305,18 @@ namespace Charaterizator
                     {
                         Port.ReadLine();
                     }
-                    UserPoint = Val;                    
+                    UserPoint = Val;
+                    string str;
                     i = 0;
                     do
                     {
-                        
-                        // запись уставки
-                        Port.WriteLine(CreateCommand(1, 2, ValHex));
+                        // устанавливаем значение давления
+                        Port.WriteLine("TARGET " + Convert.ToString(Val).Replace(",", "."));// Val.ToString());
+                                                                                            //Port.WriteLine("TARGET 7.25");
+                                                                                            //Thread.Sleep(READ_PAUSE);  
+                        str = Port.ReadLine();
 
-                        strData = Port.ReadLine();
-                        ErrorCode = ParseAnswer(strData);
-
-                        if (ErrorCode >= 0)
+                        if (str == "OK")
                         {
                             target = true;
                             break;
@@ -343,7 +326,6 @@ namespace Charaterizator
                             target = false;
                         }
                         i++;
-
                     } while (i < 3);
 
                 }
@@ -537,6 +519,7 @@ namespace Charaterizator
 
         int ParseAnswer(string command)
         {
+            int res=0;
             if (command.Length > 0)
             {
                 int pos = command.IndexOf("!1;");
@@ -547,28 +530,42 @@ namespace Charaterizator
                     switch(CommandType)
                     {
                         case 0://проверка связи
+                            DevType = Convert.ToInt32(str[1], 16);
                             break;
                         case 1://чтение давления
-                            press = Convert.ToInt32(str[1], 16);                           
+                            press = Convert.ToInt32(str[1], 16);
                             //return press;
                             break;
-                        case 2:
-                            CommandType = Convert.ToInt32(str[1].Substring(1), 16);
+                        case 2://Уставка
+                            res = Convert.ToInt32(str[1], 16);
+                            if (res == 1)
+                                return -3;//ошибка
                             break;
-                        case 3:
+                        case 3:// режим работы
+                            int enter = Convert.ToInt32(str[1], 16);
+                            int vent = Convert.ToInt32(str[2], 16);
                             break;
-                        case 4:
+                        case 4:// Подстроить «0»
+                            res = Convert.ToInt32(str[1], 16);
+                            if (res == 1)
+                                return -3;//ошибка
                             break;
                         case 5:
                             break;
-                        case 6:
+                        case 6:// Выбор сенсора
+                            res = Convert.ToInt32(str[1], 16);
+                            if (res == 1)
+                                return -3;//ошибка
                             break;
                         case 7:
                             break;
-                        case 8:
+                        case 8:// Вкл/выкл режима ПК
+                            res = Convert.ToInt32(str[1], 16);
+                            if (res == 1)
+                                return -3;//ошибка
                             break;
                     }
-                    
+                    CommandType = 0;
                     return CommandType;
                 }
                 else
