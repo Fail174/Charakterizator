@@ -2417,7 +2417,7 @@ namespace Charaterizator
         //чтение данных с 
         private void ReadElemer()
         {
-            if (SKO_PRESSURE > Math.Abs(Elemer.press - Elemer.UserPoint))//Convert.ToDouble(numMensorPoint.Value)))
+            if (SKO_PRESSURE > Math.Abs(Elemer.press - Elemer.UserPoint)) 
             {
                 
                 MensorCountPoint++;
@@ -2463,6 +2463,7 @@ namespace Charaterizator
             }
             */
 
+            /*
             // Задача
             if (Pascal.modeStart)
             {
@@ -2497,7 +2498,7 @@ namespace Charaterizator
             //MensorReadError = 0;
 
 
-
+            */
 
 
         }
@@ -2957,7 +2958,7 @@ namespace Charaterizator
                         if (Elemer.Port.IsOpen)
                         {
 
-                            //Elemer.SetModeKeyStart();
+                            Elemer.SetModeKeyStart();
                             bMensorControl.BackColor = Color.LightGreen;
                         }
                         else
@@ -3245,14 +3246,20 @@ namespace Charaterizator
 
                             double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
 
+                            /*
                             // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
                             // которое задано в ГПа для перевода его в кПА нужно разделить на 10
                             if (rbPressABS.Checked)
                             {
                                 Point = Point - Convert.ToDouble(numATMpress.Value);
                             }
+                            */
+                           
+                            //Elemer.SetPress(Convert.ToInt16(Point).ToString("X"), Point);
+                            Elemer.SetPress(Point);
+                            if(!Elemer.target)                             
+                                Program.txtlog.WriteLineLog("Элемер: уставка в прибор не записана", 1);
 
-                            //Elemer.SetPress(Point);
                             break;
                         }
 
