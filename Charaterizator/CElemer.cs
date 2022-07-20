@@ -554,7 +554,16 @@ namespace Charaterizator
                             DevType = Convert.ToInt32(str[1], 16);
                             break;
                         case 1://чтение давления
-                            press = Convert.ToInt32(str[1], 16);                           
+
+                            string str_rev = str[1].Substring(6) + str[1].Substring(4,5);// + str[1].Substring(2,4) + str[1].Substring(0,2);
+
+                            UInt32 press_int32 = Convert.ToUInt32(str_rev, 16);
+                           
+
+                            byte[] data = BitConverter.GetBytes(Convert.ToSingle(press_int32));
+                            Array.Reverse(data);
+                            press = BitConverter.ToSingle(data, 0);
+
                             //return press;
                             break;
                         case 2://Уставка
