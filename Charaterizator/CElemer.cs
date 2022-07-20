@@ -232,6 +232,19 @@ namespace Charaterizator
             return chars;
         }
 
+        private string CreateCommand(byte addr, byte func, string data1)
+        {
+            string chars;
+            CommandType = func;
+            chars = addr.ToString() + ";" + func.ToString() + ";" + data1 + ";";
+            byte[] command = Encoding.ASCII.GetBytes(chars);
+            UInt16 crc = CalculateCRC16(command);
+            chars = ":" + chars + crc.ToString();
+            return chars;
+        }
+
+
+        /*
         // Устанавливает текущий модуль
         // входныет данные (n, m)
         // n - 1 внутр, 2 - внешний модуль
@@ -282,7 +295,7 @@ namespace Charaterizator
 
         }
 
-
+*/
 
 
 
@@ -290,10 +303,17 @@ namespace Charaterizator
         // возвращаемые значения:   нет          
         public void SetPress(double Val)
         {
+            int ErrorCode = 1;
             if (Port.IsOpen)
             {
                 try
-                {
+                {                    
+                    byte [] data = BitConverter.GetBytes(Convert.ToSingle(Val));
+                    Array.Reverse(data);
+                    UInt32 tmp = BitConverter.ToUInt32(data, 0);
+
+                    //string ValHex = Convert.ToInt32(Val).ToString("X8");
+                    string ValHex = tmp.ToString("X8");
                     int i = 0;
                     while ((ReadElemer) && (i < READ_PAUSE))
                     {
@@ -305,18 +325,18 @@ namespace Charaterizator
                     {
                         Port.ReadLine();
                     }
-                    UserPoint = Val;
-                    string str;
+                    UserPoint = Val;                    
                     i = 0;
                     do
                     {
-                        // устанавливаем значение давления
-                        Port.WriteLine("TARGET " + Convert.ToString(Val).Replace(",", "."));// Val.ToString());
-                                                                                            //Port.WriteLine("TARGET 7.25");
-                                                                                            //Thread.Sleep(READ_PAUSE);  
-                        str = Port.ReadLine();
+                        
+                        // запись уставки
+                        Port.WriteLine(CreateCommand(1, 2, ValHex));
 
-                        if (str == "OK")
+                        strData = Port.ReadLine();
+                        ErrorCode = ParseAnswer(strData);
+
+                        if (ErrorCode >= 0)
                         {
                             target = true;
                             break;
@@ -326,6 +346,7 @@ namespace Charaterizator
                             target = false;
                         }
                         i++;
+
                     } while (i < 3);
 
                 }
@@ -533,11 +554,11 @@ namespace Charaterizator
                             DevType = Convert.ToInt32(str[1], 16);
                             break;
                         case 1://чтение давления
-                            press = Convert.ToInt32(str[1], 16);
+                            press = Convert.ToInt32(str[1], 16);                           
                             //return press;
                             break;
                         case 2://Уставка
-                            res = Convert.ToInt32(str[1], 16);
+                            res = Convert.ToInt32(str[1].Substring(1), 16);
                             if (res == 1)
                                 return -3;//ошибка
                             break;
@@ -546,21 +567,21 @@ namespace Charaterizator
                             int vent = Convert.ToInt32(str[2], 16);
                             break;
                         case 4:// Подстроить «0»
-                            res = Convert.ToInt32(str[1], 16);
+                            res = Convert.ToInt32(str[1].Substring(1), 16);
                             if (res == 1)
                                 return -3;//ошибка
                             break;
                         case 5:
                             break;
                         case 6:// Выбор сенсора
-                            res = Convert.ToInt32(str[1], 16);
+                            res = Convert.ToInt32(str[1].Substring(1), 16);
                             if (res == 1)
                                 return -3;//ошибка
                             break;
                         case 7:
                             break;
                         case 8:// Вкл/выкл режима ПК
-                            res = Convert.ToInt32(str[1], 16);
+                            res = Convert.ToInt32(str[1].Substring(1), 16);
                             if (res == 1)
                                 return -3;//ошибка
                             break;
