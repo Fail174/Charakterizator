@@ -555,13 +555,10 @@ namespace Charaterizator
                             break;
                         case 1://чтение давления
 
-                            string str_rev = str[1].Substring(6) + str[1].Substring(4,5);// + str[1].Substring(2,4) + str[1].Substring(0,2);
-
+                            string str_rev = str[1].Substring(6,2) + str[1].Substring(4,2) + str[1].Substring(2,2) + str[1].Substring(0,2);
                             UInt32 press_int32 = Convert.ToUInt32(str_rev, 16);
-                           
-
                             byte[] data = BitConverter.GetBytes(Convert.ToSingle(press_int32));
-                            Array.Reverse(data);
+                            //Array.Reverse(data);
                             press = BitConverter.ToSingle(data, 0);
 
                             //return press;
