@@ -3533,7 +3533,7 @@ namespace Charaterizator
                 return;
             }
 
-            if ((Mensor.Connected) || (Pascal.Connected))
+            if ((Mensor.Connected) || (Pascal.Connected) || (Elemer.Connected))
             {
                 double Point = 0;
                 double shift = 0;
@@ -3547,7 +3547,7 @@ namespace Charaterizator
 
                     // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                    if ((selectedPressurer == 1) && (rbPressABS.Checked))
+                    if ((selectedPressurer >= 1) && (rbPressABS.Checked))
                     {
                         Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
