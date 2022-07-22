@@ -556,11 +556,16 @@ namespace Charaterizator
                         case 1://чтение давления
 
                             string str_rev = str[1].Substring(6,2) + str[1].Substring(4,2) + str[1].Substring(2,2) + str[1].Substring(0,2);
-                            UInt32 press_int32 = Convert.ToUInt32(str_rev, 16);
-                            byte[] data = BitConverter.GetBytes(Convert.ToSingle(press_int32));
+                            //UInt32 press_int32 = Convert.ToUInt32(str_rev, 16);
+                            //byte[] data = BitConverter.GetBytes(Convert.ToSingle(press_int32));
                             //Array.Reverse(data);
+                            byte[] data = new byte[4];
+                            data[3] = Convert.ToByte(str[1].Substring(6, 2) , 16);
+                            data[2] = Convert.ToByte(str[1].Substring(4, 2) , 16);
+                            data[1] = Convert.ToByte(str[1].Substring(2, 2) , 16);
+                            data[0] = Convert.ToByte(str[1].Substring(0, 2) , 16);
                             press = BitConverter.ToSingle(data, 0);
-
+                            //press = BitConverter.ToSingle(data, 0);
                             //return press;
                             break;
                         case 2://Уставка
