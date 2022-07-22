@@ -2463,9 +2463,9 @@ namespace Charaterizator
             }
             */
 
-            /*
+            
             // Задача
-            if (Pascal.modeStart)
+            if (Elemer.modeStartReg)
             {
                 bMensorControl.BackColor = Color.LightGreen;
             }
@@ -2474,8 +2474,9 @@ namespace Charaterizator
                 bMensorControl.BackColor = Color.Transparent;
             }
 
+            
             // Обнуление
-            if (Pascal.modeClearP)
+            if (Elemer.modeStopReg)
             {
                 bMensorMeas.BackColor = Color.LightGreen;
             }
@@ -2483,9 +2484,9 @@ namespace Charaterizator
             {
                 bMensorMeas.BackColor = Color.Transparent;
             }
-
+            
             // Вентиляция сброс давления
-            if (Pascal.modeVent)
+            if (Elemer.modeClearP)
             {
                 bMensorVent.BackColor = Color.LightGreen;
             }
@@ -2498,7 +2499,7 @@ namespace Charaterizator
             //MensorReadError = 0;
 
 
-            */
+            
 
 
         }
@@ -2959,7 +2960,15 @@ namespace Charaterizator
                         {
 
                             Elemer.SetModeKeyStart();
-                            bMensorControl.BackColor = Color.LightGreen;
+                            if (Elemer.modeStartReg)
+                            {
+                                bMensorControl.BackColor = Color.LightGreen;
+                            }
+                            else
+                            {
+                                Program.txtlog.WriteLineLog("Элемер: не удалось включить регулирование давления", 1);
+                            }
+                            
                         }
                         else
                         {
@@ -3012,8 +3021,16 @@ namespace Charaterizator
                     {
                         if (Elemer.Port.IsOpen)
                         {
-                            bMensorVent.BackColor = Color.LightGreen;
-                            //Elemer.SetModeVent();
+
+                            Elemer.SetClearP();                            
+                            if (Elemer.modeClearP)
+                            {
+                                bMensorVent.BackColor = Color.LightGreen;
+                            }
+                            else
+                            {
+                                Program.txtlog.WriteLineLog("Элемер: не удалось включить Сброс", 1);
+                            }
 
                         }
                         else
@@ -3062,11 +3079,22 @@ namespace Charaterizator
                     }
 
                 case 2: // элемер
-                    {
+                    {                        
+
                         if (Elemer.Port.IsOpen)
                         {
-                            bMensorMeas.BackColor = Color.LightGreen;
-                            //Elemer.SetClearP();
+
+                           
+                            Elemer.SetModeKeyStop();
+                            if (Elemer.modeClearP)
+                            {
+                                bMensorVent.BackColor = Color.LightGreen;
+                            }
+                            else
+                            {
+                                Program.txtlog.WriteLineLog("Элемер: не удалось отключить регулирование давления", 1);
+                            }
+
                         }
                         else
                         {

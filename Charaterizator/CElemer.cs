@@ -25,11 +25,12 @@ namespace Charaterizator
         public bool Error = false;
 
         public double press { get; set; }    // текущее давление
-//        public int[] rangeModule { get; set; }    // текущий используемый модуль (n, m) n-внутр 1, внеш 2, m - номер модуля с единицы
+        public int[] rangeModule { get; set; }    // текущий используемый модуль (n, m) n-внутр 1, внеш 2, m - номер модуля с единицы
 
-        public bool target { get; set; }        // уставка задана true /не задана false
-        public bool modeStart { get; set; } // текущий режим установки и регулирования давление СТАРТ(true)/СТОП(false)
-        public bool modeVent { get; set; }  //  ВКЛ(true)/ОТКЛ(false) вентиляции
+        public bool target { get; set; }        // уставка задана true(задана) / false (не задана) 
+        public bool modeStartReg { get; set; } // текущий режим регулирования давления true(задан) / false (не задан) 
+        public bool modeStopReg { get; set; }  // текущий режим сброса давления true(задан) / false (не задан) 
+
         public bool modeClearP { get; set; }// Обнулении показаний давления УСПЕШНО(true)/НЕ УСПЕШНО(false) 
         public bool SetModuleOK { get; set; }// Установлен заданный модуль или нет
 
@@ -44,12 +45,12 @@ namespace Charaterizator
         public CElemer()
         {
             press = 0;
-            modeStart = false;
-            modeVent = false;
+            modeStartReg = false;
+            //modeVent = false;
             modeClearP = false;
+            modeStopReg = true;
             target = false;
             SetModuleOK = false;
-
             Port = new SerialPort();
         }
 
@@ -90,6 +91,9 @@ namespace Charaterizator
                     Thread.Sleep(1000);
                     Connected = true;
                     Port.WriteLine(CreateCommand(1, 8, 1)); //перевод под управление ПК
+                    
+                    //Thread.Sleep(500);
+                    //SetModeKeyStop();
                     return 0;
                 }
                 else
@@ -369,12 +373,70 @@ namespace Charaterizator
         // записывает в переменную modeStart установленный режим 1 - Пуск / 0 - стоп          
         public void SetModeKeyStart()
         {
+            int ErrorCode = 1;
+            if (Port.IsOpen)
+            {
+                try
+                {                   
+                    int i = 0;
+                    while ((ReadElemer) && (i < READ_PAUSE))
+                    {
+                        Thread.Sleep(1);
+                        i++;
+                    }
+                    ReadElemer = true;
+                    while (Port.BytesToRead > 0)
+                    {
+                        Port.ReadLine();
+                    }                    
+                    i = 0;
+                    do
+                    {
+
+                        // запись уставки
+                        Port.WriteLine(CreateCommand(1, 3, 1));
+
+                        strData = Port.ReadLine();
+                        ErrorCode = ParseAnswer(strData);
+
+                        if (ErrorCode >= 0)
+                        {
+                            modeStartReg = true;
+                            modeStopReg = false;
+                            modeClearP = false;
+                            break;
+                        }
+                        else
+                        {
+                            modeStartReg = false;
+                        }
+                        i++;
+
+                    } while (i < 3);
+
+                }
+                catch
+                {
+                    modeStartReg = false;
+                }
+                finally
+                {
+                    ReadElemer = false;
+                }
+
+            }
+        }
+
+
+        public void SetModeKeyStop()
+        {
+            int ErrorCode = 1;
             if (Port.IsOpen)
             {
                 try
                 {
                     int i = 0;
-                    while ((ReadElemer) && (i < READ_PAUSE * 2))
+                    while ((ReadElemer) && (i < READ_PAUSE))
                     {
                         Thread.Sleep(1);
                         i++;
@@ -384,51 +446,45 @@ namespace Charaterizator
                     {
                         Port.ReadLine();
                     }
-
-                    string str;
                     i = 0;
                     do
                     {
-                        // запускаем установку и поддержания давления прибором                    
-                        Port.WriteLine("ON_KEY_START");
-                        //Thread.Sleep(READ_PAUSE);
-                        str = Port.ReadLine();
 
-                        if (str == "START_REGULATION")
+                        // запись уставки
+                        Port.WriteLine(CreateCommand(1, 3, 0));
+
+                        strData = Port.ReadLine();
+                        ErrorCode = ParseAnswer(strData);
+
+                        if (ErrorCode >= 0)
                         {
-                            modeStart = true;
-                            modeVent = false;
+                            modeStopReg = true;
+                            modeStartReg = false;
+                            modeClearP = false;
                             break;
                         }
                         else
                         {
-                            if (str == "STOP_REGULATION")
-                            {
-                                modeStart = false;
-                                break;
-                            }
-                            else
-                            {
-                                modeStart = false;
-                            }
+                            modeStopReg = false;
                         }
                         i++;
+
                     } while (i < 3);
 
                 }
                 catch
                 {
-                    modeStart = false;
+                    modeStopReg = false;
                 }
                 finally
                 {
                     ReadElemer = false;
                 }
+
             }
         }
 
-
-
+        /*
         // Задает режим ВЕНТИЛЯЦИИ: ВКЛ / ВЫКЛ 
         // записывает в переменную modeVent установленный режим 1 - ВКЛ / 0 - ВЫКЛ          
         public void SetModeVent()
@@ -488,41 +544,52 @@ namespace Charaterizator
 
             }
         }
-
+        */
 
 
         // Обнуление показаний давления в текущем модуле/диапазоне              
         public void SetClearP()
         {
+            int ErrorCode = 1;
             if (Port.IsOpen)
             {
                 try
                 {
                     int i = 0;
-                    while ((ReadElemer) && (i < READ_PAUSE * 2))
+                    while ((ReadElemer) && (i < READ_PAUSE))
                     {
                         Thread.Sleep(1);
                         i++;
                     }
                     ReadElemer = true;
-
                     while (Port.BytesToRead > 0)
                     {
                         Port.ReadLine();
                     }
-                    // запускаем вентиляцию прибора
-                    Port.WriteLine("CLEAR_P");
-                    //Thread.Sleep(READ_PAUSE);
-                    string str = Port.ReadLine();
+                    i = 0;
+                    do
+                    {
 
-                    if (str == "OK")
-                    {
-                        modeClearP = true;
-                    }
-                    else
-                    {
-                        modeClearP = false;
-                    }
+                        // запись уставки
+                        Port.WriteLine(CreateCommand(1, 3, 2));
+
+                        strData = Port.ReadLine();
+                        ErrorCode = ParseAnswer(strData);
+
+                        if (ErrorCode >= 0)
+                        {
+                            modeStopReg = false;
+                            modeStartReg = false;
+                            modeClearP = true;
+                            break;
+                        }
+                        else
+                        {
+                            modeClearP = false;
+                        }
+                        i++;
+
+                    } while (i < 3);
 
                 }
                 catch
@@ -536,7 +603,7 @@ namespace Charaterizator
 
             }
         }
-
+        
 
         int ParseAnswer(string command)
         {
@@ -574,8 +641,8 @@ namespace Charaterizator
                                 return -3;//ошибка
                             break;
                         case 3:// режим работы
-                            int enter = Convert.ToInt32(str[1], 16);
-                            int vent = Convert.ToInt32(str[2], 16);
+                            int enter = Convert.ToInt32(str[1].Substring(1), 16);
+                            //int vent = Convert.ToInt32(str[2], 16);
                             break;
                         case 4:// Подстроить «0»
                             res = Convert.ToInt32(str[1].Substring(1), 16);
