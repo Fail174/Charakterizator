@@ -631,18 +631,14 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К подключен", 0);
 
                             //cbMensorTypeR.Items.Clear();
-                            cbMensorTypeR.DataSource = Elemer.ListMod; 
-                            bMensorMeas.Name = "Обнуление";
-
+                            cbMensorTypeR.DataSource = Elemer.ListMod;                         
                         }
                         else
                         {
                             btnMensor.BackColor = Color.IndianRed;
                             btnMensor.Text = "Не подключен";
-                            Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К не подключен", 1);
-                            //cbMensorTypeR.Items.Clear();
+                            Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К не подключен", 1);                           
                             cbMensorTypeR.DataSource = Elemer.ListMod;
-
                         }
                         break;
                     }
@@ -2414,7 +2410,7 @@ namespace Charaterizator
 
 
 
-        //чтение данных с 
+        //чтение данных с Элемера
         private void ReadElemer()
         {
             if (SKO_PRESSURE > Math.Abs(Elemer.press - Elemer.UserPoint)) 
@@ -2446,24 +2442,7 @@ namespace Charaterizator
             // Получаем текущее значение давления и обновляем гл. форму 
             tbMensorData.Text = Elemer.press.ToString("f3");
 
-            /*
-            if (cbMensorTypeR.Items.Count > 0)
-            {
-                // Получаем тип преобразователя (удерживаемый диапазон)
-                int typeR = Pascal.rangeModule[1] - 1;  //  
-                                                        // Обновляем тип преобзарователя
-                if (Pascal.rangeModule[0] == 1)
-                {
-                    cbMensorTypeR.SelectedIndex = typeR; //  по списку
-                }
-                else if (Pascal.rangeModule[0] == 2)
-                {
-                    cbMensorTypeR.SelectedIndex = typeR + Pascal.M1num;
-                }
-            }
-            */
-
-            
+            // Обновление цвета кнопок в зав-ти от режима            
             // Задача
             if (Elemer.modeStartReg)
             {
@@ -2475,7 +2454,7 @@ namespace Charaterizator
             }
 
             
-            // Обнуление
+            // Измерение
             if (Elemer.modeStopReg)
             {
                 bMensorMeas.BackColor = Color.LightGreen;
@@ -2494,17 +2473,8 @@ namespace Charaterizator
             {
                 bMensorVent.BackColor = Color.Transparent;
             }
-
-
-            //MensorReadError = 0;
-
-
             
-
-
         }
-
-
 
 
             //чтение данных с мультиметра
@@ -2967,6 +2937,7 @@ namespace Charaterizator
                             else
                             {
                                 Program.txtlog.WriteLineLog("Элемер: не удалось включить регулирование давления", 1);
+                                bMensorControl.BackColor = Color.Transparent;
                             }
                             
                         }
@@ -3030,6 +3001,7 @@ namespace Charaterizator
                             else
                             {
                                 Program.txtlog.WriteLineLog("Элемер: не удалось включить Сброс", 1);
+                                bMensorVent.BackColor = Color.Transparent;
                             }
 
                         }
@@ -3082,9 +3054,7 @@ namespace Charaterizator
                     {                        
 
                         if (Elemer.Port.IsOpen)
-                        {
-
-                           
+                        {                                                       
                             Elemer.SetModeKeyStop();
                             if (Elemer.modeClearP)
                             {
@@ -3093,6 +3063,7 @@ namespace Charaterizator
                             else
                             {
                                 Program.txtlog.WriteLineLog("Элемер: не удалось отключить регулирование давления", 1);
+                                bMensorVent.BackColor = Color.Transparent;
                             }
 
                         }
@@ -3102,9 +3073,7 @@ namespace Charaterizator
                         }
                         break;
                     }
-
-            }
-           
+            }           
         }
 
 
@@ -3203,11 +3172,7 @@ namespace Charaterizator
                 }
 
             }*/
-
-
-
-
-
+            
         }
 
         // Отработка нажания по заданию уставки OK
@@ -3287,7 +3252,6 @@ namespace Charaterizator
                             Elemer.SetPress(Point);
                             if(!Elemer.target)                             
                                 Program.txtlog.WriteLineLog("Элемер: уставка в прибор не записана", 1);
-
                             break;
                         }
 
@@ -3573,16 +3537,13 @@ namespace Charaterizator
                     Program.txtlog.WriteLineLog("CH: Устанавливаем давление в датчиках " + Point.ToString() + "кПа", 0);
                     numMensorPoint.Text = strValue;
 
-                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля и Элемера, от уставки отнимаем атмосферное давление
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
                     if ((selectedPressurer >= 1) && (rbPressABS.Checked))
                     {
                         Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
-
-
-
-
+                     
 
                     if ((Point == 0) && !SensorAbsPressuer)
                     {
@@ -3598,14 +3559,13 @@ namespace Charaterizator
                         // UseMensor = false - используем Паскаль
                         // Pascal.modeStart = true/false - задача ВКЛЮЧЕНА/ВЫКЛЮЧЕНА (ПАСКАЛЬ)
                         // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
+                        //
 
                         //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
-                        if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                        if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1) || ((selectedPressurer == 2) && !Elemer.modeStartReg))
                         {
                             bMensorControl_Click(null, null);  //запускаем задачу
                         }
-
-
                     }
 
                     TimerTickCount = 0;
@@ -3932,7 +3892,7 @@ namespace Charaterizator
                         Elemer.DisConnect();
 
                     // подключаем новый задатчик 
-                    btnMensor_Click(null, null);
+                    //btnMensor_Click(null, null);
                 }   
                
 
@@ -4085,7 +4045,7 @@ namespace Charaterizator
                 MessageBox.Show("Введите значение давления в кПа", "Не задано давление в задатчике");
                 return;
             }
-            if ((Mensor.Connected) || (Pascal.Connected))
+            if ((Mensor.Connected) || (Pascal.Connected) || (Elemer.Connected))
             {
                 double Point;
                 double shift;
@@ -4098,9 +4058,9 @@ namespace Charaterizator
                     //Point = Convert.ToDouble(strValue);// получаем заданное значение уставки
                     numMensorPoint.Text = strValue;
 
-                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                    // если установлено АБСОЛЮТНОЕ давление, то для Паскаля и Элемера, от уставки отнимаем атмосферное давление
                     // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                    if ((selectedPressurer == 1) && (rbPressABS.Checked))
+                    if ((selectedPressurer >= 1) && (rbPressABS.Checked))
                     {
                         Point = Point - Convert.ToDouble(numATMpress.Value);
                     }
@@ -4123,7 +4083,7 @@ namespace Charaterizator
                         // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
 
                         //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
-                        if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                        if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1) || ((selectedPressurer == 2) && !Elemer.modeStartReg))
                         {
                             bMensorControl_Click(null, null);  //запускаем задачу
                         }
@@ -5472,7 +5432,7 @@ namespace Charaterizator
                 Program.txtlog.WriteLineLog("Не задано значение давления", 1);
                 return -1;
             }
-            if ((Mensor.Connected) || (Pascal.Connected))
+            if ((Mensor.Connected) || (Pascal.Connected) || (Elemer.Connected))
             {
                 double Point = 0;
                 double shift = 0;
@@ -5484,9 +5444,9 @@ namespace Charaterizator
                 Point = double.Parse(strValue.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                 numMensorPoint.Text = strValue;
 
-                // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                // если установлено АБСОЛЮТНОЕ давление, то для Паскаля и Элемера, от уставки отнимаем атмосферное давление
                 // которое задано в ГПа для перевода его в кПА нужно разделить на 10
-                if ((selectedPressurer == 1) && (rbPressABS.Checked))
+                if ((selectedPressurer >= 1) && (rbPressABS.Checked))
                 {
                     Point = Point - Convert.ToDouble(numATMpress.Value);
                 }
@@ -5509,7 +5469,7 @@ namespace Charaterizator
                     // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
 
                     //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
-                    if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                    if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1) || ((selectedPressurer == 2) && !Elemer.modeStartReg))
                     {
                         bMensorControl_Click(null, null);  //запускаем задачу
                     }
@@ -5754,16 +5714,13 @@ namespace Charaterizator
 
                 case 2: // элемер
                     {
-                        if (!Elemer.Port.IsOpen)
+                        if ((!Elemer.Port.IsOpen)||(cbMensorTypeR.SelectedIndex != -1))
                         {
-                            if (cbMensorTypeR.SelectedIndex != -1)
-                            {
+                            
                                 Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
-                                cbMensorTypeR.SelectedIndex = -1;
-                            }
-                            MainTimer.Enabled = true;
-                            MainTimer.Start();
-                            return;
+                                //cbMensorTypeR.SelectedIndex = -1;
+                            
+                            
                         }
                         /*
                         try
@@ -5810,11 +5767,7 @@ namespace Charaterizator
                         */
                         break;
                     }
-
             }
-
-
-
         }
 
 
@@ -5939,6 +5892,7 @@ namespace Charaterizator
 
                     case 1: // паскаль
                         {
+                            
                             break;
                         }
 
@@ -6270,7 +6224,6 @@ namespace Charaterizator
                     {
                         if (Mensor.Connected)
                         {
-
                             numMensorPoint.Value = Convert.ToDecimal(Pmax);
                             Mensor.SetPoint(Pmax);
 
@@ -6283,7 +6236,8 @@ namespace Charaterizator
                             // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
 
                             //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
-                            if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                            //if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1) || ((selectedPressurer == 2) && !Elemer.modeStartReg))
+                            if (Mensor._mode != 1)
                             {
                                 bMensorControl_Click(null, null);  //запускаем задачу
                             }
@@ -6339,7 +6293,7 @@ namespace Charaterizator
                             // Mensor._mode = 0 / 1 / 2 - режимы ИЗМ. / ЗАДАЧА / СБОРС 
 
                             //if ((!UseMensor && !Pascal.modeStart) || (UseMensor && Mensor._mode != 1))
-                            if (((selectedPressurer == 1) && !Pascal.modeStart) || ((selectedPressurer == 0) && Mensor._mode != 1))
+                            if (!Pascal.modeStart)
                             {
                                 bMensorControl_Click(null, null);  //запускаем задачу
                             }
@@ -6370,6 +6324,46 @@ namespace Charaterizator
 
                 case 2: // элемер
                     {
+                        numMensorPoint.Value = Convert.ToDecimal(Pmax);
+                        if (Pascal.Connected)
+                        {
+                            // если установлено АБСОЛЮТНОЕ давление, то для Паскаля, от уставки отнимаем атмосферное давление
+                            // которое задано в ГПа для перевода его в кПА нужно разделить на 10
+                            if (rbPressABS.Checked)
+                            {
+                                Pmax = Pmax - Convert.ToDouble(numATMpress.Value);
+                            }
+
+                            Elemer.SetPress(Pmax);
+
+                            Thread.Sleep(2000);
+                        }
+
+                        if (!Elemer.modeStartReg)
+                        {
+                            bMensorControl_Click(null, null);  //запускаем задачу
+                        }
+
+                        double shift;
+                        TimerTickCount = 0;
+                        do//ожидаем установления давления
+                        {
+                            if (ProcessStop) return; //прекращаем
+                            Application.DoEvents();
+                            Thread.Sleep(100);
+                            shift = Math.Abs(Convert.ToDouble(tbMensorData.Text) - Pmax);
+                        } while ((shift > Pmax * 0.05) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
+                        if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
+                        {//давление не установлено
+                            Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
+                        }
+                        else
+                        {
+                            // ждем 3 сек
+                            Thread.Sleep(3000);
+                        }
+                        // Сброс давления
+                        Elemer.SetClearP();
                         break;
                     }
 
