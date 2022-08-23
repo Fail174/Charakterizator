@@ -883,7 +883,7 @@ namespace Charaterizator
                         if (sensors.С40WriteFixCurrent(4))
                         {
                             Thread.Sleep(Multimetr.WAIT_READY);
-                            I4 = Multimetr.Current;
+                            I4 = GetCurrent();
                             Program.txtlog.WriteLineLog("CAP: Выполнено чтение тока 4мА с мультиметра в канале " + (i + 1).ToString(), 0);
                         }
                         else
@@ -902,7 +902,7 @@ namespace Charaterizator
                         if (sensors.С40WriteFixCurrent(20))
                         {
                             Thread.Sleep(Multimetr.WAIT_READY);
-                            I20 = Multimetr.Current;
+                            I20 = GetCurrent();
                             Program.txtlog.WriteLineLog("CAP:Выполнено чтение тока 20мА с мультиметра в канале " + (i + 1).ToString(), 0);
                         }
                         else
@@ -991,7 +991,7 @@ namespace Charaterizator
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
                             Thread.Sleep(Multimetr.WAIT_READY);
-                            I4 = Multimetr.Current;
+                            I4 = GetCurrent();
                             ci++;
                         } while ((Math.Abs(I4 - 4.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
                         Application.DoEvents();
@@ -1021,7 +1021,7 @@ namespace Charaterizator
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
                         {
                             Thread.Sleep(Multimetr.WAIT_READY);
-                            I20 = Multimetr.Current;
+                            I20 = GetCurrent();
                             ci++;
                         } while ((Math.Abs(I20 - 20.0) > SKO_CURRENT) && (ci < MAX_COUNT_CAP_READ));
                         Application.DoEvents();
@@ -1052,7 +1052,7 @@ namespace Charaterizator
                         {
                             sensors.С40WriteFixCurrent(4);
                             Thread.Sleep(Multimetr.WAIT_READY);
-                            I4 = Multimetr.Current;
+                            I4 = GetCurrent();
                             ci++;
                         } while ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_COUNT_CAP_READ));
                         Application.DoEvents();
@@ -1062,7 +1062,7 @@ namespace Charaterizator
                         {
                             sensors.С40WriteFixCurrent(20);
                             Thread.Sleep(Multimetr.WAIT_READY);
-                            I20 = Multimetr.Current;
+                            I20 = GetCurrent();
                             ci++;
                         } while ((Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT) && (ci < MAX_COUNT_CAP_READ));
 
@@ -1543,7 +1543,7 @@ namespace Charaterizator
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
 
                         float Ir = 4 + (16 / (sensors.sensor.VPI - sensors.sensor.NPI)) * ((float)numMensorPoint.Value - sensors.sensor.NPI);//расчетный ток
-                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current, Ir, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
+                        ResultVR.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, GetCurrent(), Ir, sensors.sensor.OutVoltage, sensors.sensor.Resistance);
 
                         if (!cbChannalFixVR.Checked)
                         {//если стоит фиксация канал не меняем
@@ -1863,7 +1863,7 @@ namespace Charaterizator
                             //Multimetr.ReadData();
                             Thread.Sleep(Multimetr.WAIT_TIMEOUT);
 
-                            double Current = Multimetr.Current;//чтение тока мультиметра 
+                            double Current = GetCurrent();//чтение тока мультиметра 
                             if (Current < MIN_SENSOR_CURRENT)
                             {
                                 //нет тока мультиметра, => датчик отсутсвует
@@ -2502,14 +2502,18 @@ namespace Charaterizator
             
         }
 
+        private float GetCurrent()
+        {
+            return Multimetr.Current;
+        }
 
             //чтение данных с мультиметра
-            private void ReadMultimetr()
+        private void ReadMultimetr()
         {
             bool res = Multimetr.Error;
             if (!res)
             {
-                tbMultimetrData.Text = Multimetr.Current.ToString("f3");
+                tbMultimetrData.Text = GetCurrent().ToString("f3");
                 MultimetrReadError = 0;
             }
             else
@@ -5419,7 +5423,7 @@ namespace Charaterizator
                         Thread.Sleep(Multimetr.WAIT_READY);//ждем измерения мультиметром
 
                         float Ir = 4 + (16 / (sensors.sensor.VPI - sensors.sensor.NPI)) * ((float)numMensorPoint.Value - sensors.sensor.NPI);//расчетный ток
-                        ResultMET.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, Multimetr.Current, Ir);
+                        ResultMET.AddPoint(i, (double)numTermoCameraPoint.Value, sensors.sensor.NPI, sensors.sensor.VPI, (double)numMensorPoint.Value, sensors.sensor.Pressure, GetCurrent(), Ir);
 
                         if (!cbChannalFixMET.Checked)
                         {//если стоит фиксация канал не меняем
