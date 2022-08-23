@@ -103,6 +103,7 @@
     <Compile Include="CCalculation.cs" />
     <Compile Include="CElemer.cs" />
     <Compile Include="ClassEni100.cs" />
+    <Compile Include="ClassEni201.cs" />
     <Compile Include="CMultimetr.cs" />
     <Compile Include="CPascal.cs" />
     <Compile Include="CResultCH.cs" />

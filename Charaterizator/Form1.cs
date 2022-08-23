@@ -3528,6 +3528,11 @@ namespace Charaterizator
             if ((Mensor.Connected) || (Pascal.Connected) || (Elemer.Connected))
             {
                 double Point = 0;
+
+
+
+
+
                 double shift = 0;
                 try
                 {
