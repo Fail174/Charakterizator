@@ -30,24 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
-            "0",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
-            "10",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("20");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("50");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
-            "0",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
-            "10",
-            "С"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("20");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "0",
             "С"}, -1);
@@ -64,6 +48,22 @@
             "С"}, -1);
             System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("20");
             System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("50");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+            "0",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+            "10",
+            "С"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("20");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("50");
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,7 +147,6 @@
             this.gbCommutator = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.tbNumCH = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnFormCommutator = new System.Windows.Forms.Button();
             this.btnCommutator = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
@@ -175,8 +174,8 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmsVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsMenuVerificationDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.csmMetrologTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuMetrologDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.сCIRecordNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -198,6 +197,8 @@
             this.сCurrentF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cVoltageF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cResistanceF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsVerificationTable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuVerificationDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.сChannalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.сSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -353,8 +354,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.openFileDialogArhiv = new System.Windows.Forms.OpenFileDialog();
-            this.csmMetrologTable = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsMenuMetrologDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCommutator2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbTermoCamera.SuspendLayout();
@@ -370,10 +370,11 @@
             this.panelLog.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
-            this.cmsVerificationTable.SuspendLayout();
+            this.csmMetrologTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.cmsCurentTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.cmsVerificationTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -402,7 +403,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_VPI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).BeginInit();
             this.pUpStatusBar.SuspendLayout();
-            this.csmMetrologTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -1278,9 +1278,9 @@
             // gbCommutator
             // 
             this.gbCommutator.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gbCommutator.Controls.Add(this.btnCommutator2);
             this.gbCommutator.Controls.Add(this.button1);
             this.gbCommutator.Controls.Add(this.tbNumCH);
-            this.gbCommutator.Controls.Add(this.label1);
             this.gbCommutator.Controls.Add(this.btnFormCommutator);
             this.gbCommutator.Controls.Add(this.btnCommutator);
             this.gbCommutator.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1314,16 +1314,6 @@
             this.tbNumCH.Size = new System.Drawing.Size(42, 40);
             this.tbNumCH.TabIndex = 3;
             this.tbNumCH.Text = "0";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(16, 83);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Текущий канал:";
             // 
             // btnFormCommutator
             // 
@@ -1603,20 +1593,20 @@
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
             this.dataGridViewTextBoxColumn9.Width = 150;
             // 
-            // cmsVerificationTable
+            // csmMetrologTable
             // 
-            this.cmsVerificationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsMenuVerificationDelete});
-            this.cmsVerificationTable.Name = "contextMenuStripVerificationTable";
-            this.cmsVerificationTable.Size = new System.Drawing.Size(197, 28);
+            this.csmMetrologTable.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.csmMetrologTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuMetrologDelete});
+            this.csmMetrologTable.Name = "contextMenuStripVerificationTable";
+            this.csmMetrologTable.Size = new System.Drawing.Size(197, 28);
             // 
-            // tsMenuVerificationDelete
+            // tsMenuMetrologDelete
             // 
-            this.tsMenuVerificationDelete.Name = "tsMenuVerificationDelete";
-            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(196, 24);
-            this.tsMenuVerificationDelete.Text = "Удаление строки";
-            this.tsMenuVerificationDelete.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
+            this.tsMenuMetrologDelete.Name = "tsMenuMetrologDelete";
+            this.tsMenuMetrologDelete.Size = new System.Drawing.Size(196, 24);
+            this.tsMenuMetrologDelete.Text = "Удаление строки";
+            this.tsMenuMetrologDelete.Click += new System.EventHandler(this.tsMenuMetrologDelete_Click);
             // 
             // splitter1
             // 
@@ -1824,6 +1814,21 @@
             this.cResistanceF.Name = "cResistanceF";
             this.cResistanceF.ReadOnly = true;
             // 
+            // cmsVerificationTable
+            // 
+            this.cmsVerificationTable.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsVerificationTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuVerificationDelete});
+            this.cmsVerificationTable.Name = "contextMenuStripVerificationTable";
+            this.cmsVerificationTable.Size = new System.Drawing.Size(197, 28);
+            // 
+            // tsMenuVerificationDelete
+            // 
+            this.tsMenuVerificationDelete.Name = "tsMenuVerificationDelete";
+            this.tsMenuVerificationDelete.Size = new System.Drawing.Size(196, 24);
+            this.tsMenuVerificationDelete.Text = "Удаление строки";
+            this.tsMenuVerificationDelete.Click += new System.EventHandler(this.tsMenuVerificationDetele_Click);
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -1854,8 +1859,8 @@
             // 
             // сChannalNum
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.сChannalNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.сChannalNum.Frozen = true;
             this.сChannalNum.HeaderText = "№";
             this.сChannalNum.MinimumWidth = 25;
@@ -1897,10 +1902,10 @@
             // 
             // сWork
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle6.NullValue = false;
-            this.сWork.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.NullValue = false;
+            this.сWork.DefaultCellStyle = dataGridViewCellStyle2;
             this.сWork.FalseValue = "false";
             this.сWork.HeaderText = "Исправность";
             this.сWork.IndeterminateValue = "null";
@@ -2598,17 +2603,17 @@
             this.lvCHPressureSet.GridLines = true;
             this.lvCHPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCHPressureSet.HideSelection = false;
-            listViewItem13.Checked = true;
-            listViewItem13.StateImageIndex = 1;
-            listViewItem14.Checked = true;
-            listViewItem14.StateImageIndex = 1;
-            listViewItem15.StateImageIndex = 0;
-            listViewItem16.StateImageIndex = 0;
+            listViewItem1.Checked = true;
+            listViewItem1.StateImageIndex = 1;
+            listViewItem2.Checked = true;
+            listViewItem2.StateImageIndex = 1;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
             this.lvCHPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.lvCHPressureSet.LabelEdit = true;
             this.lvCHPressureSet.Location = new System.Drawing.Point(130, 106);
             this.lvCHPressureSet.MultiSelect = false;
@@ -2663,19 +2668,19 @@
             this.lvCHTermoCamera.GridLines = true;
             this.lvCHTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCHTermoCamera.HideSelection = false;
-            listViewItem17.Checked = true;
-            listViewItem17.StateImageIndex = 1;
-            listViewItem18.Checked = true;
-            listViewItem18.StateImageIndex = 1;
-            listViewItem19.Checked = true;
-            listViewItem19.StateImageIndex = 1;
-            listViewItem20.Checked = true;
-            listViewItem20.StateImageIndex = 1;
+            listViewItem5.Checked = true;
+            listViewItem5.StateImageIndex = 1;
+            listViewItem6.Checked = true;
+            listViewItem6.StateImageIndex = 1;
+            listViewItem7.Checked = true;
+            listViewItem7.StateImageIndex = 1;
+            listViewItem8.Checked = true;
+            listViewItem8.StateImageIndex = 1;
             this.lvCHTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.lvCHTermoCamera.LabelEdit = true;
             this.lvCHTermoCamera.Location = new System.Drawing.Point(6, 106);
             this.lvCHTermoCamera.MultiSelect = false;
@@ -2852,17 +2857,17 @@
             this.lvVRPressureSet.GridLines = true;
             this.lvVRPressureSet.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvVRPressureSet.HideSelection = false;
-            listViewItem1.Checked = true;
-            listViewItem1.StateImageIndex = 1;
-            listViewItem2.Checked = true;
-            listViewItem2.StateImageIndex = 1;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
+            listViewItem9.Checked = true;
+            listViewItem9.StateImageIndex = 1;
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 1;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
             this.lvVRPressureSet.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.lvVRPressureSet.LabelEdit = true;
             this.lvVRPressureSet.Location = new System.Drawing.Point(130, 106);
             this.lvVRPressureSet.MultiSelect = false;
@@ -2917,19 +2922,19 @@
             this.lvVRTermoCamera.GridLines = true;
             this.lvVRTermoCamera.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvVRTermoCamera.HideSelection = false;
-            listViewItem5.Checked = true;
-            listViewItem5.StateImageIndex = 1;
-            listViewItem6.Checked = true;
-            listViewItem6.StateImageIndex = 1;
-            listViewItem7.Checked = true;
-            listViewItem7.StateImageIndex = 1;
-            listViewItem8.Checked = true;
-            listViewItem8.StateImageIndex = 1;
+            listViewItem13.Checked = true;
+            listViewItem13.StateImageIndex = 1;
+            listViewItem14.Checked = true;
+            listViewItem14.StateImageIndex = 1;
+            listViewItem15.Checked = true;
+            listViewItem15.StateImageIndex = 1;
+            listViewItem16.Checked = true;
+            listViewItem16.StateImageIndex = 1;
             this.lvVRTermoCamera.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16});
             this.lvVRTermoCamera.LabelEdit = true;
             this.lvVRTermoCamera.Location = new System.Drawing.Point(6, 106);
             this.lvVRTermoCamera.MultiSelect = false;
@@ -3649,20 +3654,16 @@
             this.openFileDialogArhiv.DefaultExt = "txt";
             this.openFileDialogArhiv.FileName = "archiv.txt";
             // 
-            // csmMetrologTable
+            // btnCommutator2
             // 
-            this.csmMetrologTable.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.csmMetrologTable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsMenuMetrologDelete});
-            this.csmMetrologTable.Name = "contextMenuStripVerificationTable";
-            this.csmMetrologTable.Size = new System.Drawing.Size(197, 28);
-            // 
-            // tsMenuMetrologDelete
-            // 
-            this.tsMenuMetrologDelete.Name = "tsMenuMetrologDelete";
-            this.tsMenuMetrologDelete.Size = new System.Drawing.Size(196, 24);
-            this.tsMenuMetrologDelete.Text = "Удаление строки";
-            this.tsMenuMetrologDelete.Click += new System.EventHandler(this.tsMenuMetrologDelete_Click);
+            this.btnCommutator2.BackColor = System.Drawing.Color.Green;
+            this.btnCommutator2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCommutator2.Location = new System.Drawing.Point(11, 69);
+            this.btnCommutator2.Name = "btnCommutator2";
+            this.btnCommutator2.Size = new System.Drawing.Size(123, 40);
+            this.btnCommutator2.TabIndex = 5;
+            this.btnCommutator2.Text = "Подключен";
+            this.btnCommutator2.UseVisualStyleBackColor = false;
             // 
             // MainForm
             // 
@@ -3708,10 +3709,11 @@
             this.panelLog.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
-            this.cmsVerificationTable.ResumeLayout(false);
+            this.csmMetrologTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.cmsCurentTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.cmsVerificationTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -3749,7 +3751,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_MET_NPI)).EndInit();
             this.pUpStatusBar.ResumeLayout(false);
             this.pUpStatusBar.PerformLayout();
-            this.csmMetrologTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3812,7 +3813,6 @@
         private System.Windows.Forms.Timer MainTimer;
         private System.Windows.Forms.RichTextBox rtbConsole;
         public System.Windows.Forms.TextBox tbNumCH;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.GroupBox gbCHLevel1;
@@ -4047,6 +4047,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialogArhiv;
         private System.Windows.Forms.ContextMenuStrip csmMetrologTable;
         private System.Windows.Forms.ToolStripMenuItem tsMenuMetrologDelete;
+        private System.Windows.Forms.Button btnCommutator2;
     }
 }
 

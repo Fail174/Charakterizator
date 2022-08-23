@@ -45,7 +45,7 @@ namespace Charaterizator
         private double SKO_CURRENT = 0.5;//допуск по току ЦАП датчика до калибровки, мА
         private double SKO_CALIBRATION_CURRENT = 0.003;//допуск по току ЦАП после калибровки, мА
 
-        private static int MaxChannalCount = 60;//максимальное количество каналов коммутаторы
+        //private static int Commutator.MaxChannal = 60;//максимальное количество каналов коммутаторы
         private static int MaxLevelCount = 4;//максимальное количество уровней датчиков (идентичных групп)
 
         private int MAX_COUNT_POINT = 5;//ожидание стабилизации давления в датчике, в циклах таймера
@@ -76,8 +76,10 @@ namespace Charaterizator
 
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
-        private ClassEni100 sensors = new ClassEni100(MaxChannalCount / MaxLevelCount);
-        private FormSwitch Commutator = new FormSwitch();
+        private ClassEni100 sensors = new ClassEni100(60 / MaxLevelCount);
+        private FormSwitch Commutator;// = new FormSwitch();
+        private FormSwitch Commutator1 = new FormSwitch();
+        private FormSwitch Commutator2 = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
         public static FormSensorsDB SensorsDB = new FormSensorsDB();
         private CThermalCamera ThermalCamera = new CThermalCamera();
@@ -90,10 +92,10 @@ namespace Charaterizator
 
 
 
-        //        private int MaxChannalCount = 30;//максимальное количество каналов коммутатора
+        //        private int Commutator.MaxChannal = 30;//максимальное количество каналов коммутатора
 
-        //        private СResultCH ResultCH = new СResultCH(MaxChannalCount);//результаты характеризации датчиков
-        //        private CResultCI ResultCI = new CResultCI(MaxChannalCount);//результаты характеризации датчиков
+        //        private СResultCH ResultCH = new СResultCH(Commutator.MaxChannal);//результаты характеризации датчиков
+        //        private CResultCI ResultCI = new CResultCI(Commutator.MaxChannal);//результаты характеризации датчиков
         private СResultCH ResultCH = null;//результаты характеризации датчиков
         private CResultCI ResultCI = null;//результаты калибровки тока датчиков
         private CResultVR ResultVR = null;//результаты верификации датчиков
@@ -133,6 +135,9 @@ namespace Charaterizator
         {
             //            FormLoad fm = new FormLoad();
             InitializeComponent();
+
+            //Commutator = Commutator1;
+
             Thread t = new Thread(new ThreadStart(LoadScreen));
             t.Start();
             //            Focus();
@@ -178,12 +183,19 @@ namespace Charaterizator
                 Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;   //количество отчетов измерения мультиметром, раз
                 Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
 
-                Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
-                Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
-                Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
-                MaxChannalCount = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
-                Commutator.SetMaxChannal(MaxChannalCount);
+                Commutator1.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator1.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
+                Commutator1.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                int maxch = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                Commutator1.SetMaxChannal(maxch);
 
+                Commutator2.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator2.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
+                Commutator2.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                maxch = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                Commutator2.SetMaxChannal(maxch);
+
+                //Commutator.MaxChannal;
                 MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
 
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
@@ -243,11 +255,13 @@ namespace Charaterizator
             numATMpress.Font = DrawingFont;
             //**********************************************************
 
-            UpdateItems();//обновляем списки визуальных элементов
+            
             btmMultimetr_Click(null, null);
             btnCommutator_Click(null, null);
             btnMensor_Click(null, null);
             btnThermalCamera_Click(null, null);
+
+            UpdateItems();//обновляем списки визуальных элементов
 
 
 
@@ -282,7 +296,7 @@ namespace Charaterizator
         private void UpdateItems()
         {
             dataGridView1.Rows.Clear();
-            for (int i = 0; i < MaxChannalCount; i++)
+            for (int i = 0; i < Commutator.MaxChannal; i++)
             {
                 dataGridView1.Rows.Add(i + 1, false, "Нет данных", "Нет данных", false, false);
                 dataGridView1[pow, i].Style.BackColor = Color.IndianRed;
@@ -295,7 +309,7 @@ namespace Charaterizator
             cbChannalCharakterizator.Items.Clear();
             cbChannalVerification.Items.Clear();
             cbChannalMetrolog.Items.Clear();
-            for (int i = 0; i < MaxChannalCount; i++)
+            for (int i = 0; i < Commutator.MaxChannal; i++)
             {
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем 
                 cbChannalCharakterizator.Items.Add(string.Format("Канал {0}", i + 1));
@@ -503,6 +517,17 @@ namespace Charaterizator
         private void btnCommutator_Click(object sender, EventArgs e)
         {
             CommutatorReadError = 0;
+/*            if(Commutator == Commutator1)
+            {
+                return;
+            }
+            Commutator.DisConnect();
+            btnCommutator2.BackColor = Color.IndianRed;
+            btnCommutator2.Text = "Не подключен";
+            Program.txtlog.WriteLineLog("Коммутатор2 отключен", 1);
+*/
+            Commutator = Commutator1;
+            //
             if (Commutator.Connect(Properties.Settings.Default.COMComutator,
                Properties.Settings.Default.COMComutator_Speed,
                Properties.Settings.Default.COMComutator_DataBits,
@@ -512,9 +537,6 @@ namespace Charaterizator
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Подключен";
                 Program.txtlog.WriteLineLog("Коммутатор подключен", 0);
-
-                
-
             }
             else
             {
@@ -522,6 +544,10 @@ namespace Charaterizator
                 btnCommutator.Text = "Не подключен";
                 Program.txtlog.WriteLineLog("Коммутатор не подключен", 1);
             }
+
+            Commutator2.DisConnect();
+            btnCommutator2.BackColor = Color.IndianRed;
+            btnCommutator2.Text = "Не подключен";
         }
 
         /// <summary>
@@ -827,7 +853,7 @@ namespace Charaterizator
         {
             int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
 
             Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 2);
 
@@ -924,7 +950,7 @@ namespace Charaterizator
         {
             int seli = 0;
             List<int> ErrorList = new List<int>();
-            pbCHProcess.Maximum = MaxChannalCount;
+            pbCHProcess.Maximum = Commutator.MaxChannal;
             pbCHProcess.Minimum = 0;
             pbCHProcess.Value = 0;
             int ci = 0;
@@ -933,7 +959,7 @@ namespace Charaterizator
             float I20 = 0;
 
             Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 2);
-            for (int i = 0; i < MaxChannalCount; i++)
+            for (int i = 0; i < Commutator.MaxChannal; i++)
             {
                 if (ProcessStop) return;//прекращаем поиск 
                 pbCHProcess.Value = i + 1;
@@ -1150,7 +1176,7 @@ namespace Charaterizator
         {
             int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             int Diapazon;
             if (cbDiapazon1.Text != "")
             {
@@ -1164,7 +1190,7 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("CH: Старт операции характеризации для заданного давления ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
-            /*            int step = MaxChannalCount / MaxLevelCount;
+            /*            int step = Commutator.MaxChannal / MaxLevelCount;
                         switch (SelectedLevel)
                         {
                             case 1:
@@ -1261,7 +1287,7 @@ namespace Charaterizator
         {
             //int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             List<int> ErrorList = new List<int>(); 
 
             Program.txtlog.WriteLineLog("CH: Старт расчета коэффициентов для выбранных датчиков ... ", 2);
@@ -1451,7 +1477,7 @@ namespace Charaterizator
         {
             int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             float VPI, NPI;
             VPI = Convert.ToSingle(nud_VR_VPI.Value);
             NPI = Convert.ToSingle(nud_VR_NPI.Value);
@@ -1459,7 +1485,7 @@ namespace Charaterizator
             Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранного давления ... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
-            /*           int step = MaxChannalCount / MaxLevelCount;
+            /*           int step = Commutator.MaxChannal / MaxLevelCount;
                        switch (SelectedLevel)
                        {
                            case 1:
@@ -1555,7 +1581,7 @@ namespace Charaterizator
         private void WriteSensorVPI_NPI()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             float VPI, NPI;
             VPI = Convert.ToSingle(nud_VR_VPI.Value);
             NPI = Convert.ToSingle(nud_VR_NPI.Value);
@@ -1617,7 +1643,7 @@ namespace Charaterizator
                 }
             }
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
 
             Program.txtlog.WriteLineLog("VR: Установка нуля для выбранных датчиков ... ", 2);
             pbVRProcess.Maximum = FinishNumber - StartNumber;
@@ -1796,7 +1822,7 @@ namespace Charaterizator
             try
             {
                 Program.txtlog.WriteLineLog("Старт поиска датчиков...", 2);
-                pbSensorSeach.Maximum = MaxChannalCount;
+                pbSensorSeach.Maximum = Commutator.MaxChannal;
                 pbSensorSeach.Minimum = 0;
                 pbSensorSeach.Value = 0;
 
@@ -1807,7 +1833,7 @@ namespace Charaterizator
                     Properties.Settings.Default.COMSensor_StopBits,
                     Properties.Settings.Default.COMSensor_Parity) >= 0)
                 {
-                    for (int i = 0; i < MaxChannalCount; i++)
+                    for (int i = 0; i < Commutator.MaxChannal; i++)
                     {
 
                         if (ProcessStop) break;//прекращаем поиск 
@@ -1924,13 +1950,13 @@ namespace Charaterizator
                 try
                 {
                     int i;
-                    for (i = 0; i < MaxChannalCount; i++)
+                    for (i = 0; i < Commutator.MaxChannal; i++)
                     {
                         if (CheckChannalEnable(i)) //Есть выбранные каналы?
                             break;
                     }
 
-                    if (i < MaxChannalCount)
+                    if (i < Commutator.MaxChannal)
                     {
                         btnSensorSeach.Text = "Идет поиск датчиков... Остановить? ";
 
@@ -2506,7 +2532,7 @@ namespace Charaterizator
         private void StateComutators(Int32 data32)
         {
 
-            /* for (int i = 0; i < MaxChannalCount; i++)
+            /* for (int i = 0; i < Commutator.MaxChannal; i++)
              {
                  if (((data32 >> i) & 01) == 1)
                  {
@@ -2530,7 +2556,7 @@ namespace Charaterizator
         {
             if (data32 >= 0)
             {
-                for (int i = 0; i < MaxChannalCount; i++)
+                for (int i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (((data32 >> i) & 01) == 1)
                     {
@@ -2835,10 +2861,10 @@ namespace Charaterizator
                 ResultMET.CloseAll();
 
             //Подготавливаем заводские номера по каналам
-            int[] FN = new int[MaxChannalCount];
-            byte[] Type = new byte[MaxChannalCount];
-            string[] Model = new string[MaxChannalCount];
-            for (int i = 0; i < MaxChannalCount; i++)
+            int[] FN = new int[Commutator.MaxChannal];
+            byte[] Type = new byte[Commutator.MaxChannal];
+            string[] Model = new string[Commutator.MaxChannal];
+            for (int i = 0; i < Commutator.MaxChannal; i++)
             {
                 if (sensors.SelectSensor(i))
                 {
@@ -2855,21 +2881,21 @@ namespace Charaterizator
             }
 
             //***************** создаем файлы результатов характеризации *******************************
-            ResultCH = new СResultCH(MaxChannalCount, FN, sensors.COEFF_COUNT, Type, Model);//результаты характеризации датчиков
+            ResultCH = new СResultCH(Commutator.MaxChannal, FN, sensors.COEFF_COUNT, Type, Model);//результаты характеризации датчиков
                                                                                             // ResultCH.SetSensorInfo();
             ResultCH.LoadFromFile();
 
             //***************** создаем файлы результатов калибровки ***********************************
-            ResultCI = new CResultCI(MaxChannalCount, FN);//результаты калибровки датчиков
+            ResultCI = new CResultCI(Commutator.MaxChannal, FN);//результаты калибровки датчиков
             ResultCI.LoadFromFile();
 
             //***************** создаем файлы результатов верификации ***********************************
-            ResultVR = new CResultVR(MaxChannalCount, FN, Type, Model);
+            ResultVR = new CResultVR(Commutator.MaxChannal, FN, Type, Model);
             ResultVR.LoadFromFile();
             //*******************************************************************************************
 
             //***************** создаем файлы результатов сдачи метрологу ***********************************
-            ResultMET = new CResultMET(MaxChannalCount, FN, Type, Model);
+            ResultMET = new CResultMET(Commutator.MaxChannal, FN, Type, Model);
             ResultMET.LoadFromFile();
             //*******************************************************************************************
 
@@ -3280,12 +3306,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("Не выбраны каналы для характеризации датчиков. Операция прервана.", 0);
                     return;
@@ -3858,7 +3884,7 @@ namespace Charaterizator
                 Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
                 Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
                 Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
-                MaxChannalCount = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                Commutator.MaxChannal = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
 
                 MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
 
@@ -3902,9 +3928,9 @@ namespace Charaterizator
                
 
                 //gbBarometr.Visible = !UseMensor;
-                if (MaxChannalCount != Commutator.MaxChannal)
+                if (Commutator.MaxChannal != Commutator.MaxChannal)
                 {
-                    Commutator.SetMaxChannal(MaxChannalCount);
+                    Commutator.SetMaxChannal(Commutator.MaxChannal);
                     UpdateItems();//обновляем списки визуальных элементов
                 }
             }
@@ -4145,12 +4171,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("Не выбраны каналы для верификации датчиков. Операция прервана.", 0);
                     return;
@@ -4659,12 +4685,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("CH: Не выбраны датчики для расчета коэффициентов. Операция прервана.", 0);
                     return;
@@ -4712,12 +4738,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("Не выбраны каналы для записи ВПИ НПИ датчиков. Операция прервана.", 0);
                     return;
@@ -4754,12 +4780,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
                     return;
@@ -4799,7 +4825,7 @@ namespace Charaterizator
             
             int i = Convert.ToInt16(tbNumCH.Text)-1;
 
-            if (( i != 0) && (i < MaxChannalCount))
+            if (( i != 0) && (i < Commutator.MaxChannal))
             {
                 try
                 {
@@ -4919,12 +4945,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("MET: Не выбраны каналы для записи ВПИ НПИ датчиков. Операция прервана.", 0);
                     return;
@@ -4960,7 +4986,7 @@ namespace Charaterizator
         private void WriteSensor_MET_MesUnit()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             string unitstr = cb_MET_Unit.Text;
 
             Program.txtlog.WriteLineLog("MET: Старт записи единицы измерения для выбранных датчиков ... ", 2);
@@ -5003,7 +5029,7 @@ namespace Charaterizator
         private void WriteSensor_MET_VPI_NPI()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             float VPI, NPI;
             VPI = Convert.ToSingle(nud_MET_VPI.Value);
             NPI = Convert.ToSingle(nud_MET_NPI.Value);
@@ -5055,12 +5081,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("MET:Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
                     return;
@@ -5102,7 +5128,7 @@ namespace Charaterizator
                 }
             }
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
 
             Program.txtlog.WriteLineLog("MET: Установка нуля для выбранных датчиков ... ", 2);
             pbMETProcess.Maximum = FinishNumber - StartNumber;
@@ -5146,7 +5172,7 @@ namespace Charaterizator
         private void MET_SetDTime()
         {
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             float DTime = Convert.ToSingle(nud_MET_DTime.Value);
 
             Program.txtlog.WriteLineLog("MET: Установка времени демпфирования для выбранных датчиков ... ", 2);
@@ -5247,12 +5273,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("MET:Не выбраны каналы для установки времени демпфирования. Операция прервана.", 0);
                     return;
@@ -5288,12 +5314,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("MET: Не выбраны каналы с датчиками. Операция прервана.", 0);
                     return;
@@ -5354,7 +5380,7 @@ namespace Charaterizator
         {
             int seli = 0;
             int StartNumber = 0;    //начальный канал
-            int FinishNumber = MaxChannalCount - 1;   //конечный канал
+            int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             float VPI, NPI;
             VPI = Convert.ToSingle(nud_MET_VPI.Value);
             NPI = Convert.ToSingle(nud_MET_NPI.Value);
@@ -5816,12 +5842,12 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
-                for (i = 0; i < MaxChannalCount; i++)
+                for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
                         break;
                 }
-                if (i >= MaxChannalCount)
+                if (i >= Commutator.MaxChannal)
                 {
                     Program.txtlog.WriteLineLog("MET: Не выбраны каналы для установки ед измерения датчиков. Операция прервана.", 0);
                     return;
