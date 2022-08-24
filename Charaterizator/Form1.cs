@@ -189,10 +189,10 @@ namespace Charaterizator
                 int maxch = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
                 Commutator1.SetMaxChannal(maxch);
 
-                Commutator2.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
-                Commutator2.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
-                Commutator2.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
-                maxch = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                Commutator2.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH2;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator2.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod2;    // Время опроса и обновление информации, мс
+                Commutator2.READ_PAUSE = Properties.Settings.Default.set_CommReadPause2;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                maxch = Properties.Settings.Default.set_CommReadCH2;               // максимальное количество каналов коммутаторы
                 Commutator2.SetMaxChannal(maxch);
 
                 //Commutator.MaxChannal;
@@ -403,6 +403,27 @@ namespace Charaterizator
             }
         }
 
+
+        private void MI_CommutatorSetings_Click_2(object sender, EventArgs e)
+        {
+            FormPortSettings newForm = new FormPortSettings();
+            newForm.InitPortsettings(Properties.Settings.Default.COMComutator2,
+                Properties.Settings.Default.COMComutator_Speed2,
+                Properties.Settings.Default.COMComutator_DataBits2,
+                Properties.Settings.Default.COMComutator_StopBits2,
+                Properties.Settings.Default.COMComutator_Parity2);
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.COMComutator2 = newForm.GetPortName();
+                Properties.Settings.Default.COMComutator_Speed2 = newForm.GetPortSpeed();
+                Properties.Settings.Default.COMComutator_DataBits2 = newForm.GetPortDataBits();
+                Properties.Settings.Default.COMComutator_StopBits2 = newForm.GetPortStopBits();
+                Properties.Settings.Default.COMComutator_Parity2 = newForm.GetPortParity();
+                Properties.Settings.Default.Save();  // Сохраняем переменные.
+            }
+        }
+
+
         private void MI_ColdCameraSetings_Click(object sender, EventArgs e)
         {
             FormPortSettings newForm = new FormPortSettings();
@@ -517,15 +538,7 @@ namespace Charaterizator
         private void btnCommutator_Click(object sender, EventArgs e)
         {
             CommutatorReadError = 0;
-/*            if(Commutator == Commutator1)
-            {
-                return;
-            }
-            Commutator.DisConnect();
-            btnCommutator2.BackColor = Color.IndianRed;
-            btnCommutator2.Text = "Не подключен";
-            Program.txtlog.WriteLineLog("Коммутатор2 отключен", 1);
-*/
+
             Commutator = Commutator1;
             //
             if (Commutator.Connect(Properties.Settings.Default.COMComutator,
@@ -535,19 +548,48 @@ namespace Charaterizator
                Properties.Settings.Default.COMComutator_Parity) >= 0)
             {
                 btnCommutator.BackColor = Color.Green;
-                btnCommutator.Text = "Подключен";
-                Program.txtlog.WriteLineLog("Коммутатор подключен", 0);
+                btnCommutator.Text = "Коммутатор-1 подключен";
+                Program.txtlog.WriteLineLog("Коммутатор-1 подключен", 0);
             }
             else
             {
                 btnCommutator.BackColor = Color.IndianRed;
-                btnCommutator.Text = "Не подключен";
-                Program.txtlog.WriteLineLog("Коммутатор не подключен", 1);
+                btnCommutator.Text = "Коммутатор-1 не подключен";
+                Program.txtlog.WriteLineLog("Коммутатор-1 не подключен", 1);
             }
 
             Commutator2.DisConnect();
             btnCommutator2.BackColor = Color.IndianRed;
-            btnCommutator2.Text = "Не подключен";
+            btnCommutator2.Text = "Коммутатор-2 не подключен";
+        }
+
+
+        private void btnCommutator2_Click(object sender, EventArgs e)
+        {
+            CommutatorReadError = 0;
+
+            Commutator = Commutator2;
+            //
+            if (Commutator.Connect(Properties.Settings.Default.COMComutator2,
+               Properties.Settings.Default.COMComutator_Speed2,
+               Properties.Settings.Default.COMComutator_DataBits2,
+               Properties.Settings.Default.COMComutator_StopBits2,
+               Properties.Settings.Default.COMComutator_Parity2) >= 0)
+            {
+                btnCommutator.BackColor = Color.Green;
+                btnCommutator.Text = "Коммутатор-2 подключен";
+                Program.txtlog.WriteLineLog("Коммутатор-2 подключен", 0);
+            }
+            else
+            {
+                btnCommutator.BackColor = Color.IndianRed;
+                btnCommutator.Text = "Коммутатор-2 не подключен";
+                Program.txtlog.WriteLineLog("Коммутатор-2 не подключен", 1);
+            }
+
+            Commutator1.DisConnect();
+            btnCommutator2.BackColor = Color.IndianRed;
+            btnCommutator2.Text = "Коммутатор-1 не подключен";
         }
 
         /// <summary>
@@ -3885,11 +3927,19 @@ namespace Charaterizator
                 Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;   //количество отчетов измерения мультиметром, раз
                 Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
 
-                Commutator.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
-                Commutator.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
-                Commutator.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
-                Commutator.MaxChannal = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                Commutator1.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator1.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
+                Commutator1.READ_PAUSE = Properties.Settings.Default.set_CommReadPause;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                int maxch = Properties.Settings.Default.set_CommReadCH;               // максимальное количество каналов коммутаторы
+                Commutator1.SetMaxChannal(maxch);
 
+                Commutator2.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH2;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
+                Commutator2.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod2;    // Время опроса и обновление информации, мс
+                Commutator2.READ_PAUSE = Properties.Settings.Default.set_CommReadPause2;      // время выдержки после переключения коммутатора (переходные процессы), мс
+                maxch = Properties.Settings.Default.set_CommReadCH2;               // максимальное количество каналов коммутаторы
+                Commutator2.SetMaxChannal(maxch);
+
+                
                 MaxLevelCount = Properties.Settings.Default.set_CommMaxLevelCount;          // максимальное количество уровней датчиков (идентичных групп)
 
                 Mensor.READ_PERIOD = Properties.Settings.Default.set_MensorReadPeriod;      // Время опроса состояния менсора при работе с формой
@@ -6673,6 +6723,7 @@ namespace Charaterizator
                 }
             }
         }
+      
     }
 }
 

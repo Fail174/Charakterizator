@@ -75,12 +75,20 @@ namespace Charaterizator
                 Properties.Settings.Default.set_Deviation = Convert.ToDouble(tb_Deviation.Value);
                 Properties.Settings.Default.set_PushPress = cb_PushPress.Checked;
 
-                // 1 - Коммутатор
+                // 1 - Коммутатор-1
                 Properties.Settings.Default.set_CommReadCH = Convert.ToInt32(tbCommReadCH.Value);                       //
                 Properties.Settings.Default.set_CommMaxSetCH = Convert.ToInt32(tbCommMaxSetCH.Value);                   //
                 Properties.Settings.Default.set_CommReadPeriod = Convert.ToInt32(tbCommReadPeriod.Value);               //
                 Properties.Settings.Default.set_CommReadPause = Convert.ToInt32(tbCommReadPause.Value);                 //
                 Properties.Settings.Default.set_CommMaxLevelCount = Convert.ToInt32(tbCommMaxLevelCount.Value);
+
+                // 1 - Коммутатор-2
+                Properties.Settings.Default.set_CommReadCH2 = Convert.ToInt32(tbCommReadCH2.Value);                       //
+                Properties.Settings.Default.set_CommMaxSetCH2 = Convert.ToInt32(tbCommMaxSetCH2.Value);                   //
+                Properties.Settings.Default.set_CommReadPeriod2 = Convert.ToInt32(tbCommReadPeriod2.Value);               //
+                Properties.Settings.Default.set_CommReadPause2 = Convert.ToInt32(tbCommReadPause2.Value);                 //
+                Properties.Settings.Default.set_CommMaxLevelCount2 = Convert.ToInt32(tbCommMaxLevelCount2.Value);
+
 
                 //2 - Мультиметр
                 Properties.Settings.Default.set_MultimReadCount = Convert.ToInt32(tbMultimReadCount.Value);             //
@@ -187,12 +195,19 @@ namespace Charaterizator
 
 
 
-            // 1 - Коммутатор                 
+            // 1 - Коммутатор-1                 
             tbCommReadCH.Value = Properties.Settings.Default.set_CommReadCH;
             tbCommMaxSetCH.Value = Properties.Settings.Default.set_CommMaxSetCH;
             tbCommReadPeriod.Value = Properties.Settings.Default.set_CommReadPeriod;
             tbCommReadPause.Value = Properties.Settings.Default.set_CommReadPause;
             tbCommMaxLevelCount.Value = Properties.Settings.Default.set_CommMaxLevelCount;
+
+            // 1 - Коммутатор-2                 
+            tbCommReadCH2.Value = Properties.Settings.Default.set_CommReadCH2;
+            tbCommMaxSetCH2.Value = Properties.Settings.Default.set_CommMaxSetCH2;
+            tbCommReadPeriod2.Value = Properties.Settings.Default.set_CommReadPeriod2;
+            tbCommReadPause2.Value = Properties.Settings.Default.set_CommReadPause2;
+            tbCommMaxLevelCount2.Value = Properties.Settings.Default.set_CommMaxLevelCount2;
 
             //2 - Мультиметр
             tbMultimReadCount.Value = Properties.Settings.Default.set_MultimReadCount;

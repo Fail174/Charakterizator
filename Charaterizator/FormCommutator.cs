@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,23 +17,23 @@ namespace Charaterizator
     public partial class FormSwitch : Form
     {
 
-        // Р—Р°РЅРµСЃРµРЅС‹ РІ РЅР°СЃС‚СЂРѕР№РєРё
-        public int MAX_SETCH = 14;        // РјР°РєСЃРёРјР°Р»СЊРЅРѕ СЂР°Р·СЂРµС€РµРЅРЅРѕРµ РєРѕРёС‡РµСЃС‚РІРѕ РїРѕРґРєР»СЋС‡Р°РµРјС‹С… Рє РёР·Рј. Р»РёРЅРёРё РґР°С‚С‡РёРєРѕРІ РЅР°С‡РёРЅР°СЏ СЃ РЅСѓР»РµРІРѕРіРѕ
-        public int READ_PERIOD = 1000;    // Р’СЂРµРјСЏ РѕРїСЂРѕСЃР° Рё РѕР±РЅРѕРІР»РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё, РјСЃ
-        public int READ_PAUSE = 100;      //РІСЂРµРјСЏ РІС‹РґРµСЂР¶РєРё РїРѕСЃР»Рµ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ РєРѕРјРјСѓС‚Р°С‚РѕСЂР° (РїРµСЂРµС…РѕРґРЅС‹Рµ РїСЂРѕС†РµСЃСЃС‹), РјСЃ
-        public int WaitTime = 100;        //РІСЂРµРјСЏ РІС‹РґРµСЂР¶РєРё РїРѕСЃР»Рµ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ РєРѕРјРјСѓС‚Р°С‚РѕСЂР° (РїРµСЂРµС…РѕРґРЅС‹Рµ РїСЂРѕС†РµСЃСЃС‹), РјСЃ
+        // Занесены в настройки
+        public int MAX_SETCH = 14;        // максимально разрешенное коичество подключаемых к изм. линии датчиков начиная с нулевого
+        public int READ_PERIOD = 1000;    // Время опроса и обновление информации, мс
+        public int READ_PAUSE = 100;      //время выдержки после переключения коммутатора (переходные процессы), мс
+        public int WaitTime = 100;        //время выдержки после переключения коммутатора (переходные процессы), мс
 
-        //РЅРµ Р·Р°РЅРµСЃРµРЅР° РІ РЅР°СЃС‚СЂРѕР№РєРё
-        int MAXBUSY = 2000;               //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С†РёРєР»РѕРІ РѕР¶РёРґР°РЅРёСЏ (РїРѕ 1 РјСЃ)
+        //не занесена в настройки
+        int MAXBUSY = 2000;               //Максимальное количество циклов ожидания (по 1 мс)
         public int MaxChannal=30;
-        bool CommutatorBusy = false;     //РїСЂРёР·РЅР°Рє РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё РєРѕРјРјСѓС‚Р°С‚РѕСЂР° РґР»СЏ РїСЂРёРµРјР° РєРѕРјР°РЅРґ
-        public bool Connected = false;   // true  - СЃРѕРµРґРёРЅРµРЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ, 
+        bool CommutatorBusy = false;     //признак доступности коммутатора для приема команд
+        public bool Connected = false;   // true  - соединение установлено, 
         public bool Channal60 = false;
         private SerialPort serialPort1;
 
-        // РЎРѕСЃС‚СЏРЅРёРµ РІС‹С…РѕРґРѕРІ РєРѕРјРјСѓС‚Р°С‚РѕСЂР°
-        Int32 StateCHPower1 = 0;     // РџРёС‚Р°РЅРёРµ 0-29
-        Int32 StateCHPower2 = 0;     // РџРёС‚Р°РЅРёРµ 30-59
+        // Состяние выходов коммутатора
+        Int32 StateCHPower1 = 0;     // Питание 0-29
+        Int32 StateCHPower2 = 0;     // Питание 30-59
 
         public Int64 _StateCHPower
         {
@@ -58,8 +58,8 @@ namespace Charaterizator
 
         }
 
-        Int32 StateCH1 = 0;          // РР·РјРµСЂРёС‚РµР»СЊРЅР°СЏ С†РµРїСЊ 0-29
-        Int32 StateCH2 = 0;          // РР·РјРµСЂРёС‚РµР»СЊРЅР°СЏ С†РµРїСЊ 30-59
+        Int32 StateCH1 = 0;          // Измерительная цепь 0-29
+        Int32 StateCH2 = 0;          // Измерительная цепь 30-59
         public Int64 _StateCH
         {
             get
@@ -77,7 +77,7 @@ namespace Charaterizator
         }
 
 
-        int NumOfConnectInputs = 0; // РљРѕР»РёС‡РµСЃС‚РІРѕ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РєР°РЅР°Р»РѕРІ
+        int NumOfConnectInputs = 0; // Количество одновременно подключенных каналов
         public int _NumOfConnectInputs
         {
             get
@@ -93,7 +93,7 @@ namespace Charaterizator
         }
 
 
-        public Int32 ActivCH;   // РќРѕРјРµСЂ Р°РєС‚РёРІРЅРѕРіРѕ РєР°РЅР°Р»Р°
+        public Int32 ActivCH;   // Номер активного канала
 
 
 
@@ -137,7 +137,7 @@ namespace Charaterizator
         {
             if (Connected)
             {
-                // РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚Р°Р№РјРµСЂ                
+                // останавливаем таймер                
                 timer1.Stop();
                 timer1.Enabled = false;
 
@@ -152,7 +152,7 @@ namespace Charaterizator
         }
 
 
-        // Р¤СѓРЅРєС†РёСЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ РєРѕРјРјСѓС‚Р°С‚РѕСЂР° РїРѕ COM РїРѕСЂС‚Сѓ
+        // Функция подключения коммутатора по COM порту
         public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity)
         {
           
@@ -182,7 +182,7 @@ namespace Charaterizator
                 
                 if (ReadCommutatorID())
                 {
-                    // Р—Р°РїСѓСЃРєР°РµРј С‚Р°Р№РјРµСЂ
+                    // Запускаем таймер
                     timer1.Interval = READ_PERIOD;
                     timer1.Enabled = true;
                     timer1.Start();
@@ -211,7 +211,7 @@ namespace Charaterizator
 
 
 
-        // Р¤СѓРЅРєС†РёСЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ РєРѕРјРјСѓС‚Р°С‚РѕСЂР° РїРѕ COM РїРѕСЂС‚Сѓ - РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРѕРµРєС‚РѕРј SensorProgrammer
+        // Функция подключения коммутатора по COM порту - используется проектом SensorProgrammer
         public int Connect(string PortName, int BaudRate, int DataBits, int StopBits, int Parity, int st)
         {
             /*if (Connected)
@@ -262,11 +262,11 @@ namespace Charaterizator
         public void CommStartTimer()
 
         {
-            // РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚Р°Р№РјРµСЂ                
+            // останавливаем таймер                
             timer1.Stop();
             timer1.Enabled = false;
 
-            // Р—Р°РїСѓСЃРєР°РµРј С‚Р°Р№РјРµСЂ
+            // Запускаем таймер
             timer1.Interval = READ_PERIOD;
             timer1.Enabled = true;
             timer1.Start();
@@ -276,7 +276,7 @@ namespace Charaterizator
 
 
         //-----------------------------------------------------------------------------
-        // Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё РЅР°Р¶Р°С‚РёСЏ РЅР° РєРЅРѕРїРєРё: Р’РљР› / Р’Р«РљР› РїРёС‚Р°РЅРёСЏ РІС‹С…РѕРґРѕРІ РєРѕРјРјСѓС‚Р°С‚РѕСЂР°
+        // Функция обработки нажатия на кнопки: ВКЛ / ВЫКЛ питания выходов коммутатора
         private void bPower_Click(object sender, EventArgs e)
         {            
             Button b = (Button)sender;
@@ -289,7 +289,7 @@ namespace Charaterizator
 
             CommutatorBusy = true;
 
-            // РІС‹Р·РѕРІ С„СѓРЅРєС†РёРё РѕС‚РїСЂР°РІРєРё РљРћРњРђРќР” РїРѕ COM РїРѕСЂС‚Сѓ РґР»СЏ Р’РљР› / Р’Р«РљР› РїРёС‚Р°РЅРёСЏ РІС‹С…РѕРґРѕРІ РєРѕРјРјСѓС‚Р°С‚РѕСЂР°
+            // вызов функции отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
             SetPower(Convert.ToInt32(b.Tag), b.ImageIndex);
 
             CommutatorBusy = false;
@@ -298,7 +298,7 @@ namespace Charaterizator
         }
 
 
-        // Р¤СѓРЅРєС†РёСЏ РѕС‚РїСЂР°РІРєРё РљРћРњРђРќР” РїРѕ COM РїРѕСЂС‚Сѓ РґР»СЏ Р’РљР› / Р’Р«РљР› РїРёС‚Р°РЅРёСЏ РІС‹С…РѕРґРѕРІ РєРѕРјРјСѓС‚Р°С‚РѕСЂР°
+        // Функция отправки КОМАНД по COM порту для ВКЛ / ВЫКЛ питания выходов коммутатора
         public int SetPower(Int32 CH, int mode)
         {
             if (!serialPort1.IsOpen) return -1;
@@ -379,7 +379,7 @@ namespace Charaterizator
 
 
         //-----------------------------------------------------------------------------
-        // Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё РЅР°Р¶Р°РЅРёСЏ РЅР° РєРЅРѕРїРєРё РџРћР”РљР› / РћРўРљР› РґР°С‚С‡РёРєРѕРІ Рє РёР·РјРµСЂРёС‚РµР»СЊРЅРѕР№ РїРµС‚Р»Рµ
+        // Функция обработки нажания на кнопки ПОДКЛ / ОТКЛ датчиков к измерительной петле
         private void bInput_MouseDown(object sender, MouseEventArgs e)
         {
             Button b = (Button)sender;
@@ -397,27 +397,27 @@ namespace Charaterizator
             CommutatorBusy = true;
 
 
-            // РІС‹Р·РѕРІ С„СѓРЅРєС†РёРё....
-            // Р»РµРІР°СЏ РєРЅРѕРїРєР° РјС‹С€Рё - СЂРµР¶РёРј РїРѕРґРєР»СЋС‡РµРЅРёСЏ С‚РѕР»СЊРєРѕ РћР”РќРћР“Рћ РґР°С‚С‡РёРєР° (РѕСЃС‚Р°Р»СЊРЅС‹Рµ РѕС‚РєР»СЋС‡Р°СЋС‚СЃСЏ)
+            // вызов функции....
+            // левая кнопка мыши - режим подключения только ОДНОГО датчика (остальные отключаются)
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                if (b.ImageIndex == 0)  // РµСЃР»Рё РґР°С‚С‡РёРє РЅРµ РїРѕРґРєР»СЋС‡РµРЅ, РѕС‚РєР»СЋС‡Р°Рј РІСЃРµ, РїРѕРґРєР»СЋС‡Р°РµРј С‚РµРєСѓС‰РёР№
+                if (b.ImageIndex == 0)  // если датчик не подключен, отключам все, подключаем текущий
                 {
                     mode = 0;              
                 }
-                else // РµСЃР»Рё РґР°С‚С‡РёРє СѓР¶Рµ РїРѕРґРєР»СЋС‡РµРЅ , С‚Рѕ РѕС‚РєР»СЋС‡Р°РµРј РµРіРѕ Рё РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ
+                else // если датчик уже подключен , то отключаем его и все остальные
                 {
                     mode = 1;                  
                 }
             }
-            // РїСЂР°РІР°СЏ РєРЅРѕРїРєР° РјС‹С€Рё - СЂРµР¶РёРј РїРѕРґРєР»СЋС‡РµРЅРёСЏ РЅРµСЃРєРѕР»СЊРєРёС… РґР°С‚С‡РёРєРѕРІ РґР°С‚С‡РёРєРѕРІ
+            // правая кнопка мыши - режим подключения нескольких датчиков датчиков
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                if (b.ImageIndex == 0)  // РµСЃР»Рё РґР°С‚С‡РёРє РЅРµ РїРѕРґРєР»СЋС‡РµРЅ, РїРѕРґРєР»СЋС‡Р°РµРј РµРіРѕ
+                if (b.ImageIndex == 0)  // если датчик не подключен, подключаем его
                 {
                     mode = 2;                   
                 }
-                else // РµСЃР»Рё РґР°С‚С‡РёРє СѓР¶Рµ РїРѕРґРєР»СЋС‡РµРЅ, РѕС‚РєР»СЋС‡Р°РµРј РµРіРѕ
+                else // если датчик уже подключен, отключаем его
                 {
                     mode = 3;
                 }
@@ -432,7 +432,7 @@ namespace Charaterizator
 
 
 
-        // Р¤СѓРЅРєС†РёСЏ РѕС‚РїСЂР°РІРєРё РљРћРњРђРќР” РїРѕ COM РїРѕСЂС‚Сѓ РґР»СЏ РџРћР”РљР› / РћРўРљР› РґР°С‚С‡РёРєРѕРІ Рє РёР·РјРµСЂРёС‚РµР»СЊРЅРѕР№ РїРµС‚Р»Рµ        
+        // Функция отправки КОМАНД по COM порту для ПОДКЛ / ОТКЛ датчиков к измерительной петле        
         public void SetConnectors(Int32 CH, int mode)
         {
             if (!serialPort1.IsOpen) return;
@@ -454,7 +454,7 @@ namespace Charaterizator
 
             switch (mode)
             {
-                // РµСЃР»Рё РґР°С‚С‡РёРє РЅРµ РїРѕРґРєР»СЋС‡РµРЅ, РїРѕРґРєР»СЋС‡Р°РµРј РµРіРѕ, РѕС‚РєР»СЋС‡Р°РµРј РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ
+                // если датчик не подключен, подключаем его, отключаем все остальные
                 case 0:
                     byte[] data = WriteHoldingRegister(1, 0, false);
                     serialPort1.Write(data, 0, 9);
@@ -476,7 +476,7 @@ namespace Charaterizator
                     Thread.Sleep(READ_PAUSE);
                     serialPort1.Read(indata, 0, 10);
 
-                    // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ
+                    // Сохраняем состояния подключенных датчиков
                     if (hi_addr)
                     {
                         StateCH2 = Convert.ToInt32((indata[4] << 24) + (indata[5] << 16) + (indata[6] << 8) + indata[7]);
@@ -491,7 +491,7 @@ namespace Charaterizator
                 
                     break;
 
-                // РµСЃР»Рё РґР°С‚С‡РёРє СѓР¶Рµ РїРѕРґРєР»СЋС‡РµРЅ, С‚Рѕ РѕС‚РєР»СЋС‡Р°РµРј РµРіРѕ Рё РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ
+                // если датчик уже подключен, то отключаем его и все остальные
                 case 1:
                     serialPort1.Write(WriteHoldingRegister(1, 0, hi_addr), 0, 9);
                     Thread.Sleep(READ_PAUSE);
@@ -509,7 +509,7 @@ namespace Charaterizator
 
                     break;
 
-                //СЂРµР¶РёРј РїРѕРґРєР»СЋС‡РµРЅРёСЏ РЅРµСЃРєРѕР»СЊРєРёС… РґР°С‚С‡РёРєРѕРІ РґР°С‚С‡РёРєРѕРІ, РїРѕРґРєР»СЋС‡Р°РµРј Р·Р°РґР°РЅРЅС‹Р№ Рє РёР·РјРµСЂРёС‚РµР»СЊРЅРѕР№ РїРµС‚Р»Рµ
+                //режим подключения нескольких датчиков датчиков, подключаем заданный к измерительной петле
                 case 2:
                     if (NumOfConnectInputs <= MAX_SETCH - 1)
                     {
@@ -535,7 +535,7 @@ namespace Charaterizator
                   
                     break;
 
-                //СЂРµР¶РёРј РїРѕРґРєР»СЋС‡РµРЅРёСЏ РЅРµСЃРєРѕР»СЊРєРёС… РґР°С‚С‡РёРєРѕРІ РґР°С‚С‡РёРєРѕРІ, РѕС‚РєР»СЋС‡Р°РµРј Р·Р°РґР°РЅРЅС‹Р№ РѕС‚ Р·РјРµСЂРёС‚РµР»СЊРЅРѕР№ РїРµС‚Р»Рё
+                //режим подключения нескольких датчиков датчиков, отключаем заданный от змерительной петли
                 case 3:
                     CH = (1 << CH);
                     CH = ~CH;
@@ -565,7 +565,7 @@ namespace Charaterizator
                     break;
 
             }
-            Thread.Sleep(READ_PAUSE);//Р¶РґРµРј СѓСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ
+            Thread.Sleep(READ_PAUSE);//ждем установления подключения
         }
 
 
@@ -579,7 +579,7 @@ namespace Charaterizator
 
 
         //--------------------------------------------------------------------------------
-        // Р¤РЈРќРљР¦РРЇ РѕС‚РєР»СЋС‡РёС‚СЊ РІСЃРµ РґР°С‚С‡РёРєРё
+        // ФУНКЦИЯ отключить все датчики
 
 
         public void DisconnectAll()
@@ -624,15 +624,15 @@ namespace Charaterizator
       
 
 
-        // РџРѕРґРєР»СЋС‡РёС‚СЊ РѕС‚РєР»СЋС‡РёС‚СЊ РїРёС‚Р°РЅРёРµ РІСЃРµС… РІС‹С…РѕРґРѕРІ
+        // Подключить отключить питание всех выходов
         private void bAllPower_Click(object sender, EventArgs e)
         {
             byte[] indata = new byte[10];
-            //if (bAllPower.ImageIndex == 0) // Р•СЃР»Рё РїРёС‚Р°РЅРёРµ РѕС‚РєР»СЋС‡РµРЅРѕ - С‚Рѕ РІРєР»СЋС‡Р°РµРј РµРіРѕ
-            if (bAllPower.Text == "Р’РєР»СЋС‡РёС‚СЊ РїРёС‚Р°РЅРёРµ РІСЃРµС… РґР°С‚С‡РёРєРѕРІ")
+            //if (bAllPower.ImageIndex == 0) // Если питание отключено - то включаем его
+            if (bAllPower.Text == "Включить питание всех датчиков")
             {
                 //bAllPower.ImageIndex = 1;
-                bAllPower.Text = "РћС‚РєР»СЋС‡РёС‚СЊ РїРёС‚Р°РЅРёРµ РІСЃРµС… РґР°С‚С‡РёРєРѕРІ";
+                bAllPower.Text = "Отключить питание всех датчиков";
 
                 /* ///             bPower0.ImageIndex = 1; bInput0.Enabled = true;
                                 bPower1.ImageIndex = 1; bInput1.Enabled = true;
@@ -677,7 +677,7 @@ namespace Charaterizator
             }
             else
             {
-                bAllPower.Text = "Р’РєР»СЋС‡РёС‚СЊ РїРёС‚Р°РЅРёРµ РІСЃРµС… РґР°С‚С‡РёРєРѕРІ";
+                bAllPower.Text = "Включить питание всех датчиков";
 
                 /*  ////             bPower0.ImageIndex = 0; bInput0.ImageIndex = 0; bInput0.Enabled = false;
                                bPower1.ImageIndex = 0; bInput1.ImageIndex = 0; bInput1.Enabled = false;
@@ -743,18 +743,18 @@ namespace Charaterizator
         }
 
 
-        // Р¤СѓРЅРєС†РёСЏ СЃРµРЅСЏРµС‚ С†РІРµС‚ РїРѕРґРєР»СЋС‡РµРЅРЅРѕРіРѕ РєР°РЅР°Р»Р°
+        // Функция сеняет цвет подключенного канала
         public void SetCHColor(int mode)
         {
-            // mode: 0 - СЃРµСЂС‹Р№
-            // mode: 1 - СЃРµСЂС‹Р№   
-            // mode: 2 - СЃРµСЂС‹Р№ 
+            // mode: 0 - серый
+            // mode: 1 - серый   
+            // mode: 2 - серый 
 
 
         }
 
 
-        // Р¤СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° РєРЅРѕРїРєСѓ РїРѕ РЅРѕРјРµСЂСѓ
+        // Функция возвращает ссылку на кнопку по номеру
         public Button RefButton(int num)
         {
             Button btn = bInput0;
@@ -882,14 +882,14 @@ namespace Charaterizator
             byte[] data = new byte[4];
             Thread.Sleep(100);
             byte High, Low;
-            data[0] = 0x1;                       //РќРѕРјРµСЂ РїСЂРёР±РѕСЂР°
+            data[0] = 0x1;                       //Номер прибора
             if (hi_addr)
             {
-                data[1] = 0x48;                        //Р¤СѓРЅРєС†РёСЏ 
+                data[1] = 0x48;                        //Функция 
             }
             else
             {
-                data[1] = 0x45;                        //Р¤СѓРЅРєС†РёСЏ 
+                data[1] = 0x45;                        //Функция 
             }
             myCRC(data, 2, out High, out Low);
             data[2] = Low;
@@ -903,16 +903,16 @@ namespace Charaterizator
             byte[] data = new byte[9];
             Thread.Sleep(100);
             byte High, Low;
-            data[0] = 0x01;                  //РќРѕРјРµСЂ РїСЂРёР±РѕСЂР°
+            data[0] = 0x01;                  //Номер прибора
             if (hi_addr)
             {
-                data[1] = 0x49;                        //Р¤СѓРЅРєС†РёСЏ 
+                data[1] = 0x49;                        //Функция 
             }
             else
             {
-                data[1] = 0x46;                        //Р¤СѓРЅРєС†РёСЏ 
+                data[1] = 0x46;                        //Функция 
             }
-            data[2] = startAddress;          //в„– РїРµСЂРІРѕРіРѕ СЂРµРіРёСЃС‚СЂР°
+            data[2] = startAddress;          //№ первого регистра
 
 
             data[3] = (byte)((indata >> 24) & 0xFF);
@@ -941,11 +941,11 @@ namespace Charaterizator
                     serialPort1.Read(indata, 0, 13);
                     Thread.Sleep(READ_PAUSE);
 
-                    // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ РїРёС‚Р°РЅРёСЏ РєР°РЅР°Р»РѕРІ
+                    // Сохраняем состояния элементов питания каналов
                     data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
                     StateCHPower1 = data32;
 
-                    // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ
+                    // Сохраняем состояния подключенных датчиков
                     data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
                     StateCH1 = data32;
 
@@ -959,11 +959,11 @@ namespace Charaterizator
                         serialPort1.Read(indata, 0, 13);
                         Thread.Sleep(READ_PAUSE);
 
-                        // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ РїРёС‚Р°РЅРёСЏ РєР°РЅР°Р»РѕРІ
+                        // Сохраняем состояния элементов питания каналов
                         data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
                         StateCHPower2 = data32;
 
-                        // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ
+                        // Сохраняем состояния подключенных датчиков
                         data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
                         StateCH2 = data32;
 
@@ -1007,17 +1007,17 @@ namespace Charaterizator
                 serialPort1.Read(indata, 0, 13);
                 Thread.Sleep(READ_PAUSE);
 
-                // РїСЂРѕРІРµСЂРєР° Р·Р°РіРѕР»РѕРІРєР° РѕС‚РІРµС‚РЅРѕРіРѕ СЃР»РѕРІР° РєРѕРјРјСѓС‚Р°С‚РѕСЂР°
+                // проверка заголовка ответного слова коммутатора
                 if((indata[0] == 01)&&(indata[1]==69)&&(indata[2]==08))
                     {
                     CommID = true;
                     }
                                
-                // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ РїРёС‚Р°РЅРёСЏ РєР°РЅР°Р»РѕРІ
+                // Сохраняем состояния элементов питания каналов
                 data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
                 StateCHPower1 = data32;
 
-                // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ
+                // Сохраняем состояния подключенных датчиков
                 data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
                 StateCH1 = data32;
 
@@ -1030,17 +1030,17 @@ namespace Charaterizator
                     serialPort1.Read(indata, 0, 13);
                     Thread.Sleep(READ_PAUSE);
 
-                    // РїСЂРѕРІРµСЂРєР° Р·Р°РіРѕР»РѕРІРєР° РѕС‚РІРµС‚РЅРѕРіРѕ СЃР»РѕРІР° РєРѕРјРјСѓС‚Р°С‚РѕСЂР°
+                    // проверка заголовка ответного слова коммутатора
                     if ((indata[0] == 01) && (indata[1] == 69) && (indata[2] == 08))
                     {
                         CommID = true;
                     }
 
-                    // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ РїРёС‚Р°РЅРёСЏ РєР°РЅР°Р»РѕРІ
+                    // Сохраняем состояния элементов питания каналов
                     data32 = Convert.ToInt32((indata[3] << 24) + (indata[4] << 16) + (indata[5] << 8) + indata[6]);
                     StateCHPower2 = data32;
 
-                    // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ
+                    // Сохраняем состояния подключенных датчиков
                     data32 = Convert.ToInt32((indata[7] << 24) + (indata[8] << 16) + (indata[9] << 8) + indata[10]);
                     StateCH2 = data32;
                 }*/
@@ -1071,7 +1071,7 @@ namespace Charaterizator
         }
 
 
-        // РћРїСЂРµРґРµР»РµРЅРёРµ С‡РёСЃР»Р° РѕС‚РєСЂС‹С‚С‹С… РєР°РЅР°Р»РѕРІ
+        // Определение числа открытых каналов
         public int CalcNumOfConnectInputs(Int32 StateInputs)
         {
             int Num = 0;
@@ -1090,7 +1090,7 @@ namespace Charaterizator
 
 
 
-        // РћРїСЂРµРґРµР»РµРЅРёРµ РЅРѕРјРµСЂР° Р°РєС‚РёРІРЅРѕРіРѕ РєР°РЅР°Р»Р° 
+        // Определение номера активного канала 
         public int CalcActCH (Int32 StateInputs1, Int32 StateInputs2)
         {
             int Num = 0;
@@ -1153,7 +1153,7 @@ namespace Charaterizator
 
             data32 = StateCHPower;
 
-            // РћР±СЂР°Р±РѕС‚РєР° СЃРѕСЃС‚РѕСЏРЅРёР№ 
+            // Обработка состояний 
             bPower0.ImageIndex = (data32 & 0x1); bPower16.ImageIndex = (data32 & 0x10000) >> 16;
             bPower1.ImageIndex = (data32 & 0x2) >> 1; bPower17.ImageIndex = (data32 & 0x20000) >> 17;
             bPower2.ImageIndex = (data32 & 0x4) >> 2; bPower18.ImageIndex = (data32 & 0x40000) >> 18;
@@ -1211,11 +1211,11 @@ namespace Charaterizator
 
 
 
-            // РџСЂРѕРІРµСЂСЏРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РІС‹С…РѕРґРѕРІ
+            // Проверяем количество подключенных выходов
             NumOfConnectInputs = CalcNumOfConnectInputs(StateCH);
-            //lNumConnectors.Text = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ: " + Convert.ToString(NumOfConnectInputs);
+            //lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
 
-            // РџРѕР»СѓС‡Р°РµРј РЅРѕРјРµСЂ Р°РєС‚РёРІРЅРѕРіРѕ РєР°РЅР°Р»Р°
+            // Получаем номер активного канала
             //ActivCH = CalcActCH(StateCH, 1);
 
         }
@@ -1228,7 +1228,7 @@ namespace Charaterizator
 
             data32 = StateCHPower;
 
-            // РћР±СЂР°Р±РѕС‚РєР° СЃРѕСЃС‚РѕСЏРЅРёР№ 
+            // Обработка состояний 
             bPower30.ImageIndex = (data32 & 0x1); bPower46.ImageIndex = (data32 & 0x10000) >> 16;
             bPower31.ImageIndex = (data32 & 0x2) >> 1; bPower47.ImageIndex = (data32 & 0x20000) >> 17;
             bPower32.ImageIndex = (data32 & 0x4) >> 2; bPower48.ImageIndex = (data32 & 0x40000) >> 18;
@@ -1284,11 +1284,11 @@ namespace Charaterizator
             bInput44.ImageIndex = (data32 & 0x4000) >> 14; bInput59.ImageIndex = (data32 & 0x20000000) >> 29;
                         
 
-            // РџСЂРѕРІРµСЂСЏРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РІС‹С…РѕРґРѕРІ
+            // Проверяем количество подключенных выходов
             //NumOfConnectInputs = CalcNumOfConnectInputs(StateCH);
-            //lNumConnectors.Text = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РґР°С‚С‡РёРєРѕРІ: " + Convert.ToString(NumOfConnectInputs);
+            //lNumConnectors.Text = "Количество подключенных датчиков: " + Convert.ToString(NumOfConnectInputs);
 
-            // РџРѕР»СѓС‡Р°РµРј РЅРѕРјРµСЂ Р°РєС‚РёРІРЅРѕРіРѕ РєР°РЅР°Р»Р°
+            // Получаем номер активного канала
             //ActivCH = CalcActCH(StateCH, 2);
 
         }

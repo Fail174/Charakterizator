@@ -1055,5 +1055,125 @@ namespace Charaterizator.Properties {
                 this["set_selectPressurer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int set_CommReadCH2 {
+            get {
+                return ((int)(this["set_CommReadCH2"]));
+            }
+            set {
+                this["set_CommReadCH2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int set_CommMaxSetCH2 {
+            get {
+                return ((int)(this["set_CommMaxSetCH2"]));
+            }
+            set {
+                this["set_CommMaxSetCH2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int set_CommReadPeriod2 {
+            get {
+                return ((int)(this["set_CommReadPeriod2"]));
+            }
+            set {
+                this["set_CommReadPeriod2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int set_CommReadPause2 {
+            get {
+                return ((int)(this["set_CommReadPause2"]));
+            }
+            set {
+                this["set_CommReadPause2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int set_CommMaxLevelCount2 {
+            get {
+                return ((int)(this["set_CommMaxLevelCount2"]));
+            }
+            set {
+                this["set_CommMaxLevelCount2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM22")]
+        public string COMComutator2 {
+            get {
+                return ((string)(this["COMComutator2"]));
+            }
+            set {
+                this["COMComutator2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19200")]
+        public int COMComutator_Speed2 {
+            get {
+                return ((int)(this["COMComutator_Speed2"]));
+            }
+            set {
+                this["COMComutator_Speed2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int COMComutator_Parity2 {
+            get {
+                return ((int)(this["COMComutator_Parity2"]));
+            }
+            set {
+                this["COMComutator_Parity2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int COMComutator_StopBits2 {
+            get {
+                return ((int)(this["COMComutator_StopBits2"]));
+            }
+            set {
+                this["COMComutator_StopBits2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int COMComutator_DataBits2 {
+            get {
+                return ((int)(this["COMComutator_DataBits2"]));
+            }
+            set {
+                this["COMComutator_DataBits2"] = value;
+            }
+        }
     }
 }
