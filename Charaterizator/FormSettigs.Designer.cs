@@ -65,6 +65,18 @@
             this.textBox38 = new System.Windows.Forms.TextBox();
             this.textBox42 = new System.Windows.Forms.TextBox();
             this.tp_CommutatorSettings = new System.Windows.Forms.TabPage();
+            this.tbCommMaxLevelCount2 = new System.Windows.Forms.NumericUpDown();
+            this.tbCommReadPause2 = new System.Windows.Forms.NumericUpDown();
+            this.tbCommReadPeriod2 = new System.Windows.Forms.NumericUpDown();
+            this.tbCommMaxSetCH2 = new System.Windows.Forms.NumericUpDown();
+            this.tbCommReadCH2 = new System.Windows.Forms.NumericUpDown();
+            this.textBox39 = new System.Windows.Forms.TextBox();
+            this.textBox40 = new System.Windows.Forms.TextBox();
+            this.textBox44 = new System.Windows.Forms.TextBox();
+            this.textBox45 = new System.Windows.Forms.TextBox();
+            this.textBox46 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tbCommMaxLevelCount = new System.Windows.Forms.NumericUpDown();
             this.tbCommReadPause = new System.Windows.Forms.NumericUpDown();
             this.tbCommReadPeriod = new System.Windows.Forms.NumericUpDown();
@@ -76,6 +88,9 @@
             this.textBox57 = new System.Windows.Forms.TextBox();
             this.textBox61 = new System.Windows.Forms.TextBox();
             this.tp_MultimetrSettings = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rb_useMultimEni201 = new System.Windows.Forms.RadioButton();
+            this.rb_useMultimAgilent = new System.Windows.Forms.RadioButton();
             this.tbMultimWaitReady = new System.Windows.Forms.NumericUpDown();
             this.textBox18 = new System.Windows.Forms.TextBox();
             this.tbMultimReadTimeOut = new System.Windows.Forms.NumericUpDown();
@@ -160,18 +175,6 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbCommMaxLevelCount2 = new System.Windows.Forms.NumericUpDown();
-            this.tbCommReadPause2 = new System.Windows.Forms.NumericUpDown();
-            this.tbCommReadPeriod2 = new System.Windows.Forms.NumericUpDown();
-            this.tbCommMaxSetCH2 = new System.Windows.Forms.NumericUpDown();
-            this.tbCommReadCH2 = new System.Windows.Forms.NumericUpDown();
-            this.textBox39 = new System.Windows.Forms.TextBox();
-            this.textBox40 = new System.Windows.Forms.TextBox();
-            this.textBox44 = new System.Windows.Forms.TextBox();
-            this.textBox45 = new System.Windows.Forms.TextBox();
-            this.textBox46 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -186,12 +189,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbDeltaTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeTemp)).BeginInit();
             this.tp_CommutatorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH)).BeginInit();
             this.tp_MultimetrSettings.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimWaitReady)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadTimeOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadPeriod)).BeginInit();
@@ -218,11 +227,6 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH2)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -805,6 +809,182 @@
             this.tp_CommutatorSettings.Text = "Коммутатор";
             this.tp_CommutatorSettings.UseVisualStyleBackColor = true;
             // 
+            // tbCommMaxLevelCount2
+            // 
+            this.tbCommMaxLevelCount2.Location = new System.Drawing.Point(595, 258);
+            this.tbCommMaxLevelCount2.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.tbCommMaxLevelCount2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbCommMaxLevelCount2.Name = "tbCommMaxLevelCount2";
+            this.tbCommMaxLevelCount2.Size = new System.Drawing.Size(100, 21);
+            this.tbCommMaxLevelCount2.TabIndex = 106;
+            this.tbCommMaxLevelCount2.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // tbCommReadPause2
+            // 
+            this.tbCommReadPause2.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.tbCommReadPause2.Location = new System.Drawing.Point(595, 238);
+            this.tbCommReadPause2.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.tbCommReadPause2.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.tbCommReadPause2.Name = "tbCommReadPause2";
+            this.tbCommReadPause2.Size = new System.Drawing.Size(100, 21);
+            this.tbCommReadPause2.TabIndex = 102;
+            this.tbCommReadPause2.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // tbCommReadPeriod2
+            // 
+            this.tbCommReadPeriod2.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tbCommReadPeriod2.Location = new System.Drawing.Point(595, 219);
+            this.tbCommReadPeriod2.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.tbCommReadPeriod2.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tbCommReadPeriod2.Name = "tbCommReadPeriod2";
+            this.tbCommReadPeriod2.Size = new System.Drawing.Size(100, 21);
+            this.tbCommReadPeriod2.TabIndex = 103;
+            this.tbCommReadPeriod2.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // tbCommMaxSetCH2
+            // 
+            this.tbCommMaxSetCH2.Location = new System.Drawing.Point(595, 199);
+            this.tbCommMaxSetCH2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbCommMaxSetCH2.Name = "tbCommMaxSetCH2";
+            this.tbCommMaxSetCH2.Size = new System.Drawing.Size(100, 21);
+            this.tbCommMaxSetCH2.TabIndex = 104;
+            this.tbCommMaxSetCH2.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // tbCommReadCH2
+            // 
+            this.tbCommReadCH2.Location = new System.Drawing.Point(595, 179);
+            this.tbCommReadCH2.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.tbCommReadCH2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbCommReadCH2.Name = "tbCommReadCH2";
+            this.tbCommReadCH2.Size = new System.Drawing.Size(100, 21);
+            this.tbCommReadCH2.TabIndex = 105;
+            this.tbCommReadCH2.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            // 
+            // textBox39
+            // 
+            this.textBox39.Location = new System.Drawing.Point(52, 179);
+            this.textBox39.Name = "textBox39";
+            this.textBox39.Size = new System.Drawing.Size(544, 21);
+            this.textBox39.TabIndex = 97;
+            this.textBox39.Text = "Максимальное количество каналов коммутатора,  [шт] ";
+            // 
+            // textBox40
+            // 
+            this.textBox40.Location = new System.Drawing.Point(52, 199);
+            this.textBox40.Name = "textBox40";
+            this.textBox40.Size = new System.Drawing.Size(544, 21);
+            this.textBox40.TabIndex = 98;
+            this.textBox40.Text = "Максимально разрешенное кол-во датчиков, подключенных к измерительной цепи,  [шт." +
+    "]";
+            // 
+            // textBox44
+            // 
+            this.textBox44.Location = new System.Drawing.Point(52, 218);
+            this.textBox44.Name = "textBox44";
+            this.textBox44.Size = new System.Drawing.Size(544, 21);
+            this.textBox44.TabIndex = 99;
+            this.textBox44.Text = "Интервал опроса состояния коммутатора (при работе с формой),  [мс] ";
+            // 
+            // textBox45
+            // 
+            this.textBox45.Location = new System.Drawing.Point(52, 238);
+            this.textBox45.Name = "textBox45";
+            this.textBox45.Size = new System.Drawing.Size(544, 21);
+            this.textBox45.TabIndex = 100;
+            this.textBox45.Text = "Время ожидания ответа от коммутатора,  [мс]";
+            // 
+            // textBox46
+            // 
+            this.textBox46.Location = new System.Drawing.Point(52, 258);
+            this.textBox46.Name = "textBox46";
+            this.textBox46.Size = new System.Drawing.Size(544, 21);
+            this.textBox46.TabIndex = 101;
+            this.textBox46.Text = "Максимальное количество уровней, [шт.] ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(49, 157);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 15);
+            this.label3.TabIndex = 96;
+            this.label3.Text = "Коммутатор 2";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(49, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(102, 15);
+            this.label2.TabIndex = 95;
+            this.label2.Text = "Коммутатор 1";
+            // 
             // tbCommMaxLevelCount
             // 
             this.tbCommMaxLevelCount.Location = new System.Drawing.Point(595, 114);
@@ -963,6 +1143,7 @@
             // 
             // tp_MultimetrSettings
             // 
+            this.tp_MultimetrSettings.Controls.Add(this.groupBox4);
             this.tp_MultimetrSettings.Controls.Add(this.tbMultimWaitReady);
             this.tp_MultimetrSettings.Controls.Add(this.textBox18);
             this.tp_MultimetrSettings.Controls.Add(this.tbMultimReadTimeOut);
@@ -986,6 +1167,39 @@
             this.tp_MultimetrSettings.TabIndex = 2;
             this.tp_MultimetrSettings.Text = "Мультиметр";
             this.tp_MultimetrSettings.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.rb_useMultimEni201);
+            this.groupBox4.Controls.Add(this.rb_useMultimAgilent);
+            this.groupBox4.Location = new System.Drawing.Point(52, 185);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(643, 79);
+            this.groupBox4.TabIndex = 104;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Выбор типа используемого мультиметра";
+            // 
+            // rb_useMultimEni201
+            // 
+            this.rb_useMultimEni201.AutoSize = true;
+            this.rb_useMultimEni201.Location = new System.Drawing.Point(13, 48);
+            this.rb_useMultimEni201.Name = "rb_useMultimEni201";
+            this.rb_useMultimEni201.Size = new System.Drawing.Size(76, 19);
+            this.rb_useMultimEni201.TabIndex = 1;
+            this.rb_useMultimEni201.TabStop = true;
+            this.rb_useMultimEni201.Text = "ЭНИ-201";
+            this.rb_useMultimEni201.UseVisualStyleBackColor = true;
+            // 
+            // rb_useMultimAgilent
+            // 
+            this.rb_useMultimAgilent.AutoSize = true;
+            this.rb_useMultimAgilent.Location = new System.Drawing.Point(13, 23);
+            this.rb_useMultimAgilent.Name = "rb_useMultimAgilent";
+            this.rb_useMultimAgilent.Size = new System.Drawing.Size(62, 19);
+            this.rb_useMultimAgilent.TabIndex = 0;
+            this.rb_useMultimAgilent.TabStop = true;
+            this.rb_useMultimAgilent.Text = "Agilent";
+            this.rb_useMultimAgilent.UseVisualStyleBackColor = true;
             // 
             // tbMultimWaitReady
             // 
@@ -2030,182 +2244,6 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(49, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 15);
-            this.label2.TabIndex = 95;
-            this.label2.Text = "Коммутатор 1";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(49, 157);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 15);
-            this.label3.TabIndex = 96;
-            this.label3.Text = "Коммутатор 2";
-            // 
-            // tbCommMaxLevelCount2
-            // 
-            this.tbCommMaxLevelCount2.Location = new System.Drawing.Point(595, 258);
-            this.tbCommMaxLevelCount2.Maximum = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.tbCommMaxLevelCount2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbCommMaxLevelCount2.Name = "tbCommMaxLevelCount2";
-            this.tbCommMaxLevelCount2.Size = new System.Drawing.Size(100, 21);
-            this.tbCommMaxLevelCount2.TabIndex = 106;
-            this.tbCommMaxLevelCount2.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            // 
-            // tbCommReadPause2
-            // 
-            this.tbCommReadPause2.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.tbCommReadPause2.Location = new System.Drawing.Point(595, 238);
-            this.tbCommReadPause2.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.tbCommReadPause2.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.tbCommReadPause2.Name = "tbCommReadPause2";
-            this.tbCommReadPause2.Size = new System.Drawing.Size(100, 21);
-            this.tbCommReadPause2.TabIndex = 102;
-            this.tbCommReadPause2.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // tbCommReadPeriod2
-            // 
-            this.tbCommReadPeriod2.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.tbCommReadPeriod2.Location = new System.Drawing.Point(595, 219);
-            this.tbCommReadPeriod2.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.tbCommReadPeriod2.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.tbCommReadPeriod2.Name = "tbCommReadPeriod2";
-            this.tbCommReadPeriod2.Size = new System.Drawing.Size(100, 21);
-            this.tbCommReadPeriod2.TabIndex = 103;
-            this.tbCommReadPeriod2.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            // 
-            // tbCommMaxSetCH2
-            // 
-            this.tbCommMaxSetCH2.Location = new System.Drawing.Point(595, 199);
-            this.tbCommMaxSetCH2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbCommMaxSetCH2.Name = "tbCommMaxSetCH2";
-            this.tbCommMaxSetCH2.Size = new System.Drawing.Size(100, 21);
-            this.tbCommMaxSetCH2.TabIndex = 104;
-            this.tbCommMaxSetCH2.Value = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            // 
-            // tbCommReadCH2
-            // 
-            this.tbCommReadCH2.Location = new System.Drawing.Point(595, 179);
-            this.tbCommReadCH2.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.tbCommReadCH2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbCommReadCH2.Name = "tbCommReadCH2";
-            this.tbCommReadCH2.Size = new System.Drawing.Size(100, 21);
-            this.tbCommReadCH2.TabIndex = 105;
-            this.tbCommReadCH2.Value = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
-            // 
-            // textBox39
-            // 
-            this.textBox39.Location = new System.Drawing.Point(52, 179);
-            this.textBox39.Name = "textBox39";
-            this.textBox39.Size = new System.Drawing.Size(544, 21);
-            this.textBox39.TabIndex = 97;
-            this.textBox39.Text = "Максимальное количество каналов коммутатора,  [шт] ";
-            // 
-            // textBox40
-            // 
-            this.textBox40.Location = new System.Drawing.Point(52, 199);
-            this.textBox40.Name = "textBox40";
-            this.textBox40.Size = new System.Drawing.Size(544, 21);
-            this.textBox40.TabIndex = 98;
-            this.textBox40.Text = "Максимально разрешенное кол-во датчиков, подключенных к измерительной цепи,  [шт." +
-    "]";
-            // 
-            // textBox44
-            // 
-            this.textBox44.Location = new System.Drawing.Point(52, 218);
-            this.textBox44.Name = "textBox44";
-            this.textBox44.Size = new System.Drawing.Size(544, 21);
-            this.textBox44.TabIndex = 99;
-            this.textBox44.Text = "Интервал опроса состояния коммутатора (при работе с формой),  [мс] ";
-            // 
-            // textBox45
-            // 
-            this.textBox45.Location = new System.Drawing.Point(52, 238);
-            this.textBox45.Name = "textBox45";
-            this.textBox45.Size = new System.Drawing.Size(544, 21);
-            this.textBox45.TabIndex = 100;
-            this.textBox45.Text = "Время ожидания ответа от коммутатора,  [мс]";
-            // 
-            // textBox46
-            // 
-            this.textBox46.Location = new System.Drawing.Point(52, 258);
-            this.textBox46.Name = "textBox46";
-            this.textBox46.Size = new System.Drawing.Size(544, 21);
-            this.textBox46.TabIndex = 101;
-            this.textBox46.Text = "Максимальное количество уровней, [шт.] ";
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2236,6 +2274,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbHoldTimeTemp)).EndInit();
             this.tp_CommutatorSettings.ResumeLayout(false);
             this.tp_CommutatorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod)).EndInit();
@@ -2243,6 +2286,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH)).EndInit();
             this.tp_MultimetrSettings.ResumeLayout(false);
             this.tp_MultimetrSettings.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimWaitReady)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadTimeOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMultimReadPeriod)).EndInit();
@@ -2275,11 +2320,6 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kmax_dop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMath_Kf)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxLevelCount2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPause2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadPeriod2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommMaxSetCH2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCommReadCH2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2430,5 +2470,8 @@
         private System.Windows.Forms.TextBox textBox46;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RadioButton rb_useMultimAgilent;
+        private System.Windows.Forms.RadioButton rb_useMultimEni201;
     }
 }

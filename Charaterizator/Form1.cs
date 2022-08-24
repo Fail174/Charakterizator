@@ -88,7 +88,7 @@ namespace Charaterizator
         private CPascal Pascal = new CPascal();
         private CBarometr Barometr = new CBarometr();
         private CElemer Elemer = new CElemer();
-
+        private ClassEni201 MultimetrEni201 = new ClassEni201();
 
 
 
@@ -126,6 +126,8 @@ namespace Charaterizator
 
         private ListViewItem heldDownItem = null;//элемент для перетаскивания мышью
         private Point heldDownPoint;
+
+        private bool useMultimetrAgilent;
 
         public bool AlgorithmMNK;
         public bool fPushPress=false;//расскачка
@@ -182,6 +184,7 @@ namespace Charaterizator
                 Multimetr.WAIT_TIMEOUT = Properties.Settings.Default.set_MultimReadTimeout; //таймаут ожидания ответа от мультиметра, мсек
                 Multimetr.SAMPLE_COUNT = Properties.Settings.Default.set_MultimReadCount;   //количество отчетов измерения мультиметром, раз
                 Multimetr.READ_PERIOD = Properties.Settings.Default.set_MultimReadPeriod;   //период опроса мультиметра, мсек
+                useMultimetrAgilent = Properties.Settings.Default.set_UseMultimAgilent;
 
                 Commutator1.MAX_SETCH = Properties.Settings.Default.set_CommMaxSetCH;        // максимально разрешенное коичество подключаемых к изм. линии датчиков 15
                 Commutator1.READ_PERIOD = Properties.Settings.Default.set_CommReadPeriod;    // Время опроса и обновление информации, мс
@@ -512,24 +515,49 @@ namespace Charaterizator
 
         //подключение мультиметра
         private void btmMultimetr_Click(object sender, EventArgs e)
-        {
+        {            
             MultimetrReadError = 0;
-            if (Multimetr.Connect(Properties.Settings.Default.COMMultimetr,
-                Properties.Settings.Default.COMMultimetr_Speed,
-                Properties.Settings.Default.COMMultimetr_DatabBits,
-                Properties.Settings.Default.COMMultimetr_StopBits,
-                Properties.Settings.Default.COMMultimetr_Parity) >= 0)
+
+            if(useMultimetrAgilent)
             {
-                btnMultimetr.BackColor = Color.Green;
-                btnMultimetr.Text = "Подключен";
-                Program.txtlog.WriteLineLog("Мультиметр подключен", 0);
+                if (Multimetr.Connect(Properties.Settings.Default.COMMultimetr,
+               Properties.Settings.Default.COMMultimetr_Speed,
+               Properties.Settings.Default.COMMultimetr_DatabBits,
+               Properties.Settings.Default.COMMultimetr_StopBits,
+               Properties.Settings.Default.COMMultimetr_Parity) >= 0)
+                {
+                    btnMultimetr.BackColor = Color.Green;
+                    btnMultimetr.Text = "Подключен";
+                    Program.txtlog.WriteLineLog("Мультиметр подключен", 0);
+                }
+                else
+                {
+                    btnMultimetr.BackColor = Color.IndianRed;
+                    btnMultimetr.Text = "Не подключен";
+                    Program.txtlog.WriteLineLog("Мультиметр не подключен", 1);
+                }
             }
             else
             {
-                btnMultimetr.BackColor = Color.IndianRed;
-                btnMultimetr.Text = "Не подключен";
-                Program.txtlog.WriteLineLog("Мультиметр не подключен", 1);
+                if (MultimetrEni201.Connect(Properties.Settings.Default.COMMultimetr,
+               Properties.Settings.Default.COMMultimetr_Speed,
+               Properties.Settings.Default.COMMultimetr_DatabBits,
+               Properties.Settings.Default.COMMultimetr_StopBits,
+               Properties.Settings.Default.COMMultimetr_Parity) >= 0)
+                {
+                    btnMultimetr.BackColor = Color.Green;
+                    btnMultimetr.Text = "Подключен";
+                    Program.txtlog.WriteLineLog("Мультиметр подключен", 0);
+                }
+                else
+                {
+                    btnMultimetr.BackColor = Color.IndianRed;
+                    btnMultimetr.Text = "Не подключен";
+                    Program.txtlog.WriteLineLog("Мультиметр не подключен", 1);
+                }
             }
+
+           
         }
 
 
@@ -2546,7 +2574,16 @@ namespace Charaterizator
 
         private float GetCurrent()
         {
-            return Multimetr.Current;
+            if (useMultimetrAgilent)
+            {
+                return Multimetr.Current;
+            }
+            else
+            {
+                return Multimetr.Current;
+                //return MultimetrEni201.Current;
+            }
+            
         }
 
             //чтение данных с мультиметра
@@ -3963,6 +4000,23 @@ namespace Charaterizator
                 CCalcMNK.deltaFdop_min = Properties.Settings.Default.set_Math_DFdop_min;
                 //CCalcMNK.Fr_min = Properties.Settings.Default.set_Math_Fr_min;
                 AlgorithmMNK = Properties.Settings.Default.set_Math_AlgorithmMNK;
+
+
+
+                if (Properties.Settings.Default.set_UseMultimAgilent != useMultimetrAgilent)
+                {                   
+                    if (useMultimetrAgilent)
+                    {
+                        MultimetrEni201.DisConnect();
+                    }
+                    else
+                    {
+                        Multimetr.DisConnect();
+                    }                   
+                    useMultimetrAgilent = Properties.Settings.Default.set_UseMultimAgilent;
+                    btmMultimetr_Click(null, null);
+                }
+
 
                 //если изменился задатчик давления после изменения настроек
                 if (Properties.Settings.Default.set_selectPressurer != selectedPressurer)

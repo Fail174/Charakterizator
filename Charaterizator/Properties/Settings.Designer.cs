@@ -1175,5 +1175,17 @@ namespace Charaterizator.Properties {
                 this["COMComutator_DataBits2"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool set_UseMultimAgilent {
+            get {
+                return ((bool)(this["set_UseMultimAgilent"]));
+            }
+            set {
+                this["set_UseMultimAgilent"] = value;
+            }
+        }
     }
 }

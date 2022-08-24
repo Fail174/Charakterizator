@@ -95,6 +95,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_MultimReadPeriod = Convert.ToInt32(tbMultimReadPeriod.Value);           //
                 Properties.Settings.Default.set_MultimReadTimeout = Convert.ToInt32(tbMultimReadTimeOut.Value);         //  
                 Properties.Settings.Default.set_MultimDataReady = Convert.ToInt32(tbMultimWaitReady.Value);             //
+                Properties.Settings.Default.set_UseMultimAgilent = rb_useMultimAgilent.Checked;
 
                 //3 - МЕНСОР
                 Properties.Settings.Default.set_MensorReadPeriod = Convert.ToInt32(tbMensorReadPeriod.Value);           //
@@ -214,6 +215,8 @@ namespace Charaterizator
             tbMultimReadPeriod.Value = Properties.Settings.Default.set_MultimReadPeriod;
             tbMultimReadTimeOut.Value = Properties.Settings.Default.set_MultimReadTimeout;
             tbMultimWaitReady.Value = Properties.Settings.Default.set_MultimDataReady;
+            rb_useMultimAgilent.Checked = Properties.Settings.Default.set_UseMultimAgilent;
+            rb_useMultimEni201.Checked = !(Properties.Settings.Default.set_UseMultimAgilent);
 
             //3 - Менсор                   
             tbMensorReadPeriod.Value = Properties.Settings.Default.set_MensorReadPeriod;
