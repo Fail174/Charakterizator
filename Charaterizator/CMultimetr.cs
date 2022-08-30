@@ -14,8 +14,8 @@ namespace Charaterizator
         public int REZISTOR = 500;      //Сопротивление нагрузочного резистора, Ом
         public int WAIT_READY = 300;    //время ожидания стабилизации тока, мсек
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от мультиметра, мсек
-//        public int READ_COUNT = 20;      //количество опросов мультиметра, раз
-        public int READ_PERIOD = 1000;   //период опроса мультиметра, мсек
+//        public int READ_COUNT = 20;   //количество опросов мультиметра, раз
+        public int READ_PERIOD = 1000;  //период опроса мультиметра, мсек
         public int SAMPLE_COUNT = 30;   //количество отчетов при усреднении
 
         public bool Connected;

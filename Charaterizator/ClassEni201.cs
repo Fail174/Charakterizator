@@ -46,7 +46,6 @@ namespace Charaterizator
 
             if (Port.IsOpen)
             {
-                Port.WriteLine("*RST");
                 Port.Close();
                 return 0;
             }
@@ -75,12 +74,12 @@ namespace Charaterizator
                 Port.RtsEnable = true;
                 Port.Open();
                 Connected = true;
-                InitDevice();
-                if (ConnectionTest())
+                if(InitDevice()==0)
+                //if (ConnectionTest())
                 {
                     // Запускаем поток
                     Error = false;
-                    ReadThread = new Thread(MultimetrReadThread);
+                    ReadThread = new Thread(Eni201ReadThread);
                     ReadThread.Priority = ThreadPriority.AboveNormal;
                     ReadThread.Start();
                     return 0;
@@ -134,7 +133,7 @@ namespace Charaterizator
         }
 
 
-        void MultimetrReadThread()
+        void Eni201ReadThread()
         {
             while (Port.IsOpen)
             {
@@ -158,54 +157,10 @@ namespace Charaterizator
                 catch
                 {
                     //Console.WriteLine("Multimetr: Ошибка чтения данных");
-                    Program.txtlog.WriteLineLog("Agilent: Ошибка выполнения потока", 1);
+                    Program.txtlog.WriteLineLog("Eni201: Ошибка выполнения потока", 1);
                     Error = true;
                 }
             }
-        }
-
-        public bool ConnectionTest()
-        {
-            if (Connected)
-            {
-                try
-                {
-                    Thread.Sleep(WAIT_TIMEOUT);
-                    Port.WriteLine("MEAS:VOLT:DC? 10, 0.00001");
-                    int i = 0;
-                    while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
-                    {
-                        i++;
-                        Thread.Sleep(1);
-                    }
-                    if (Port.BytesToRead > 0)
-                    {
-                        string str = Port.ReadLine();
-                    }
-                    else
-                    {
-                        Program.txtlog.WriteLineLog("Agilent: Отсутсвуют данные для чтения.", 1);
-                        return false;
-                    }
-                    return true;
-                }
-                catch
-                {
-                    //запись в лог
-                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных.", 1);
-                    Port.Close();
-                    Thread.Sleep(1);
-                    Port.Open();
-                    Value = 0;
-                    return false;
-                }
-            }
-            else
-            {
-                Value = 0;
-                return false;
-            }
-
         }
 
         //Читает напряжение в мВ
@@ -220,7 +175,15 @@ namespace Charaterizator
                     float Min = 100000, Max = -100000;
                     for (int c = 0; c < SAMPLE_COUNT; c++)
                     {
-                        Port.WriteLine("MEAS:VOLT:DC? 10, 0.00001");
+                        byte[] data = new byte[12];
+                        data[0] = 0xCA;
+                        data[1] = 0x35;
+                        data[9] = 0x20;
+                        //data[10] = 0x13; //команда чтения FLASH памяти(0x13)
+                        data[10] = 0x09; //чтение значения ЦАП генератора напряжения(0x09)
+                        data[11] = GetCRC(data, 0);//CRC
+                        Port.Write(data, 0, data.Length);//
+
                         int i = 0;
                         while ((Port.BytesToRead <= 0) && (i < WAIT_TIMEOUT))
                         {
@@ -229,7 +192,12 @@ namespace Charaterizator
                         }
                         if (Port.BytesToRead > 0)
                         {
-                            string str = Port.ReadLine();
+                            byte[] input = new byte[12];
+                            int count = Port.Read(input, 0, 12);
+                            if ((count == 12) && (input[0] == 0xCA) && (input[1] == 0x53))
+                            {
+                                Value = BitConverter.ToSingle(input, 4);
+                            }
 
                             Mean = Value + Mean;
                             if (Max < Value) Max = Value;
@@ -238,7 +206,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog("Agilent: Отсутсвуют данные для чтения.", 1);
+                            Program.txtlog.WriteLineLog("Eni201: Отсутсвуют данные для чтения.", 1);
                             return false;
                         }
                     }
@@ -255,7 +223,7 @@ namespace Charaterizator
                 catch
                 {
                     //запись в лог
-                    Program.txtlog.WriteLineLog("Agilent: Ошибка чтения данных.", 1);
+                    Program.txtlog.WriteLineLog("Eni201: Ошибка чтения данных.", 1);
                     Port.Close();
                     Thread.Sleep(1);
                     Port.Open();
