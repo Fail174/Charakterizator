@@ -57,8 +57,8 @@ namespace Charaterizator
         
         //Не занесены в настройку
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП        
+        private int SENSOR_PRESSUER_WAIT = 5000;//ожидание стабилизации давления в датчике, мсек  
         private int MENSOR_PRESSUER_WAIT = 60000;//время установления давления в менсоре, мсек
-        private int SENSOR_PRESSUER_WAIT = 5000;//ожидание стабилизации давления в датчике, мсек        
         const double DEFAULT_TEMPERATURE = 23.0;//стандартная температура для чтения ЦАП
 
         // Номера столбцов в dataGrid1 - начальное окно с выбором датчиков
@@ -213,7 +213,7 @@ namespace Charaterizator
 
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000) / MAIN_TIMER + 1;      //ожидание стабилизации давления в датчике, в циклах таймера
                 SENSOR_PRESSUER_WAIT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000);
-
+                MENSOR_PRESSUER_WAIT = SENSOR_PRESSUER_WAIT * 3;
 
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
 
@@ -1501,7 +1501,7 @@ namespace Charaterizator
                                 float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
                                 if (div != 0)
                                 {
-                                    Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась!", j + 1), 2);
+                                    Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась в канале {1}!", j + 1, i+1), 1);
                                     Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
                                 }
                             }
@@ -1519,6 +1519,7 @@ namespace Charaterizator
                             Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициентов в датчик в канале{0} завершена!", i + 1), 2);
                             ResultCH.AddCoeff(i, db);
                         }
+                        Thread.Sleep(100);
                         if (!sensors.С42SensorReset())//перезагрузка датчика
                         {
                             Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
@@ -3693,6 +3694,7 @@ namespace Charaterizator
                     if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                     {//давление не установлено
                         Program.txtlog.WriteLineLog("CH: Истекло время установки давления в датчиках", 1);
+                        ProcessStop = true;
                     }
                     else
                     {//давление установлено
@@ -3983,6 +3985,7 @@ namespace Charaterizator
                 Mensor.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс     
                 MAX_COUNT_POINT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000) / MAIN_TIMER + 1;        //ожидание стабилизации давления в датчике, в циклах таймера
                 SENSOR_PRESSUER_WAIT = (Properties.Settings.Default.set_MensorMaxCountPoint * 1000);
+                MENSOR_PRESSUER_WAIT = SENSOR_PRESSUER_WAIT * 3;
                 SKO_PRESSURE = Properties.Settings.Default.set_MensorSKOPressure;           //(СКО) допуск по давлению, кПа
 
 
@@ -4240,6 +4243,7 @@ namespace Charaterizator
                     if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                     {//давление не установлено
                         Program.txtlog.WriteLineLog("VR:Истекло время установки давления в датчиках", 1);
+                        ProcessStop = true;
                     }
                     else
                     {//давление установлено
@@ -5628,6 +5632,7 @@ namespace Charaterizator
                 if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                 {//давление не установлено
                     Program.txtlog.WriteLineLog("Истекло время установки давления в датчиках", 1);
+                    ProcessStop = true;
                     return -2;
                 }
                 else
@@ -6393,6 +6398,7 @@ namespace Charaterizator
                             if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                             {//давление не установлено
                                 Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
+                                ProcessStop = true;
                             }
                             else
                             {
@@ -6449,6 +6455,7 @@ namespace Charaterizator
                             if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                             {//давление не установлено
                                 Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
+                                ProcessStop = true;
                             }
                             else
                             {
@@ -6495,6 +6502,7 @@ namespace Charaterizator
                         if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                         {//давление не установлено
                             Program.txtlog.WriteLineLog("CH:Истекло время установки давления в датчиках", 1);
+                            ProcessStop = true;
                         }
                         else
                         {
