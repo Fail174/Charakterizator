@@ -808,6 +808,8 @@ namespace Charaterizator
 
             }
         }
+    
+       
     }
 
 }
