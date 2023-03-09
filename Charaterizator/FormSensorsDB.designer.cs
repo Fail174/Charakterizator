@@ -59,6 +59,11 @@
             this.rbRange2 = new System.Windows.Forms.RadioButton();
             this.rbRange1 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.TempPowPolinom2 = new System.Windows.Forms.NumericUpDown();
+            this.PressPowPolinom2 = new System.Windows.Forms.NumericUpDown();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.TempPowPolinom1 = new System.Windows.Forms.NumericUpDown();
             this.PressPowPolinom1 = new System.Windows.Forms.NumericUpDown();
             this.textBox20 = new System.Windows.Forms.TextBox();
@@ -100,11 +105,6 @@
             this.lvwType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bCopyLines = new System.Windows.Forms.Button();
-            this.TempPowPolinom2 = new System.Windows.Forms.NumericUpDown();
-            this.PressPowPolinom2 = new System.Windows.Forms.NumericUpDown();
-            this.textBox25 = new System.Windows.Forms.TextBox();
-            this.textBox26 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).BeginInit();
@@ -118,12 +118,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.Serial)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom1)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom2)).BeginInit();
             this.SuspendLayout();
             // 
             // bOpenFile
@@ -208,9 +208,9 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(264, 18);
+            this.groupBox1.Location = new System.Drawing.Point(264, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(600, 236);
+            this.groupBox1.Size = new System.Drawing.Size(600, 248);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Индивидуальные параметры";
@@ -555,12 +555,78 @@
             this.groupBox2.Controls.Add(this.HarTempPoint1);
             this.groupBox2.Controls.Add(this.textBox11);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(264, 266);
+            this.groupBox2.Location = new System.Drawing.Point(264, 271);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(600, 157);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры характеризации (данные вводить через пробел или точку с запятой)";
+            // 
+            // TempPowPolinom2
+            // 
+            this.TempPowPolinom2.DecimalPlaces = 1;
+            this.TempPowPolinom2.Location = new System.Drawing.Point(487, 125);
+            this.TempPowPolinom2.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.TempPowPolinom2.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.TempPowPolinom2.Name = "TempPowPolinom2";
+            this.TempPowPolinom2.Size = new System.Drawing.Size(93, 21);
+            this.TempPowPolinom2.TabIndex = 42;
+            this.TempPowPolinom2.Tag = "32";
+            // 
+            // PressPowPolinom2
+            // 
+            this.PressPowPolinom2.DecimalPlaces = 1;
+            this.PressPowPolinom2.Location = new System.Drawing.Point(487, 106);
+            this.PressPowPolinom2.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.PressPowPolinom2.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.PressPowPolinom2.Name = "PressPowPolinom2";
+            this.PressPowPolinom2.Size = new System.Drawing.Size(93, 21);
+            this.PressPowPolinom2.TabIndex = 41;
+            this.PressPowPolinom2.Tag = "31";
+            // 
+            // textBox25
+            // 
+            this.textBox25.Location = new System.Drawing.Point(312, 125);
+            this.textBox25.Name = "textBox25";
+            this.textBox25.ReadOnly = true;
+            this.textBox25.Size = new System.Drawing.Size(176, 21);
+            this.textBox25.TabIndex = 40;
+            this.textBox25.Text = "Степень по температуре";
+            // 
+            // textBox26
+            // 
+            this.textBox26.Location = new System.Drawing.Point(312, 105);
+            this.textBox26.Name = "textBox26";
+            this.textBox26.ReadOnly = true;
+            this.textBox26.Size = new System.Drawing.Size(176, 21);
+            this.textBox26.TabIndex = 39;
+            this.textBox26.Text = "Степень по давлению";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(311, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 15);
+            this.label3.TabIndex = 38;
+            this.label3.Text = "2-ой полином";
             // 
             // TempPowPolinom1
             // 
@@ -708,7 +774,7 @@
             this.groupBox3.Controls.Add(this.textBox10);
             this.groupBox3.Controls.Add(this.textBox21);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(264, 429);
+            this.groupBox3.Location = new System.Drawing.Point(264, 432);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(600, 169);
             this.groupBox3.TabIndex = 8;
@@ -979,72 +1045,6 @@
             this.bCopyLines.UseVisualStyleBackColor = true;
             this.bCopyLines.Click += new System.EventHandler(this.bCopyLines_Click);
             // 
-            // TempPowPolinom2
-            // 
-            this.TempPowPolinom2.DecimalPlaces = 1;
-            this.TempPowPolinom2.Location = new System.Drawing.Point(487, 125);
-            this.TempPowPolinom2.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.TempPowPolinom2.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.TempPowPolinom2.Name = "TempPowPolinom2";
-            this.TempPowPolinom2.Size = new System.Drawing.Size(93, 21);
-            this.TempPowPolinom2.TabIndex = 42;
-            this.TempPowPolinom2.Tag = "32";
-            // 
-            // PressPowPolinom2
-            // 
-            this.PressPowPolinom2.DecimalPlaces = 1;
-            this.PressPowPolinom2.Location = new System.Drawing.Point(487, 106);
-            this.PressPowPolinom2.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.PressPowPolinom2.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.PressPowPolinom2.Name = "PressPowPolinom2";
-            this.PressPowPolinom2.Size = new System.Drawing.Size(93, 21);
-            this.PressPowPolinom2.TabIndex = 41;
-            this.PressPowPolinom2.Tag = "31";
-            // 
-            // textBox25
-            // 
-            this.textBox25.Location = new System.Drawing.Point(312, 125);
-            this.textBox25.Name = "textBox25";
-            this.textBox25.ReadOnly = true;
-            this.textBox25.Size = new System.Drawing.Size(176, 21);
-            this.textBox25.TabIndex = 40;
-            this.textBox25.Text = "Степень по температуре";
-            // 
-            // textBox26
-            // 
-            this.textBox26.Location = new System.Drawing.Point(312, 105);
-            this.textBox26.Name = "textBox26";
-            this.textBox26.ReadOnly = true;
-            this.textBox26.Size = new System.Drawing.Size(176, 21);
-            this.textBox26.TabIndex = 39;
-            this.textBox26.Text = "Степень по давлению";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(311, 88);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 15);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "2-ой полином";
-            // 
             // FormSensorsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1083,14 +1083,14 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

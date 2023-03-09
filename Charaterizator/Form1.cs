@@ -6703,6 +6703,8 @@ namespace Charaterizator
                 for (int i = 0; i < ResulCoefmtx.RowCount - 1; i++)
                 {
                     tmp[i] = Convert.ToSingle(ResulCoefmtx[i, 0]);
+                    Program.txtlog.WriteLineLog("значение: " + tmp[i].ToString(), 0);
+
                 }
                 ResultCH.AddR2(0, ResulCoefmtx[ResulCoefmtx.RowCount - 1, 0]);
                 ResultCH.AddCoeff(0, tmp);

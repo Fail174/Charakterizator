@@ -333,7 +333,7 @@ namespace Charaterizator
                 }
                 writer.Close();
                 writer = null;
-                Program.txtlog.WriteLineLog("CH: Данные характеризации успешно перезаписаны.", 0);
+                //Program.txtlog.WriteLineLog("CH: Данные характеризации успешно перезаписаны.", 0);
             }
             else
             {
