@@ -419,6 +419,7 @@
             // 
             // tbRezistor
             // 
+            this.tbRezistor.DecimalPlaces = 2;
             this.tbRezistor.Increment = new decimal(new int[] {
             10,
             0,

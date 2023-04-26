@@ -176,7 +176,7 @@
     <Setting Name="set_SKOCalibrationCurrent" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.003</Value>
     </Setting>
-    <Setting Name="set_Rezistor" Type="System.Int32" Scope="User">
+    <Setting Name="set_Rezistor" Type="System.Double" Scope="User">
       <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="set_flagObrHod" Type="System.Boolean" Scope="User">

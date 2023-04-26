@@ -723,9 +723,9 @@ namespace Charaterizator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public int set_Rezistor {
+        public double set_Rezistor {
             get {
-                return ((int)(this["set_Rezistor"]));
+                return ((double)(this["set_Rezistor"]));
             }
             set {
                 this["set_Rezistor"] = value;

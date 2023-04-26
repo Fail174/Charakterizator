@@ -11,7 +11,7 @@ namespace Charaterizator
 {
     class CMultimetr
     {
-        public int REZISTOR = 500;      //Сопротивление нагрузочного резистора, Ом
+        public double REZISTOR = 500;      //Сопротивление нагрузочного резистора, Ом
         public int WAIT_READY = 300;    //время ожидания стабилизации тока, мсек
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от мультиметра, мсек
 //        public int READ_COUNT = 20;   //количество опросов мультиметра, раз
@@ -22,7 +22,7 @@ namespace Charaterizator
         private float Value;//Напряжение в мВ
         public float Current//ток в мА
         {
-            get { return Value*1000/REZISTOR; }
+            get { return Convert.ToSingle(Value*1000/REZISTOR); }
             set { }
         }
 

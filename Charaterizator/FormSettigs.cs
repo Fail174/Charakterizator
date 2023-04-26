@@ -68,7 +68,7 @@ namespace Charaterizator
                 Properties.Settings.Default.set_MaxCountCAPRead = Convert.ToInt32(tbMaxCountCAPRead.Value);
                 Properties.Settings.Default.set_SKOCurrent = Convert.ToDouble(tbSKOCurrent.Value);
                 Properties.Settings.Default.set_SKOCalibrationCurrent = Convert.ToDouble(tb_SKOCalibrationCurrent.Value);
-                Properties.Settings.Default.set_Rezistor = Convert.ToInt32(tbRezistor.Value);
+                Properties.Settings.Default.set_Rezistor = Convert.ToDouble(tbRezistor.Value);
                 Properties.Settings.Default.set_flagObrHod = cb_FlagObrHod.Checked;
                 Properties.Settings.Default.set_MeanR = cb_meanR.Checked;
                 Properties.Settings.Default.set_AutoRegim = cb_AutoRegim.Checked;
@@ -187,7 +187,7 @@ namespace Charaterizator
             tbMaxCountCAPRead.Value = Properties.Settings.Default.set_MaxCountCAPRead;
             tbSKOCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCurrent);
             tb_SKOCalibrationCurrent.Value = Convert.ToDecimal(Properties.Settings.Default.set_SKOCalibrationCurrent);
-            tbRezistor.Value = Properties.Settings.Default.set_Rezistor;
+            tbRezistor.Value = Convert.ToDecimal(Properties.Settings.Default.set_Rezistor);
             cb_FlagObrHod.Checked = Properties.Settings.Default.set_flagObrHod;
             cb_meanR.Checked = Properties.Settings.Default.set_MeanR;
             cb_AutoRegim.Checked = Properties.Settings.Default.set_AutoRegim;
