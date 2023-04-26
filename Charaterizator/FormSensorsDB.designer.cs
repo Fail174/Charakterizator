@@ -59,6 +59,16 @@
             this.rbRange2 = new System.Windows.Forms.RadioButton();
             this.rbRange1 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.TempPowPolinom2 = new System.Windows.Forms.NumericUpDown();
+            this.PressPowPolinom2 = new System.Windows.Forms.NumericUpDown();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TempPowPolinom1 = new System.Windows.Forms.NumericUpDown();
+            this.PressPowPolinom1 = new System.Windows.Forms.NumericUpDown();
+            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.HarPressPoint2 = new System.Windows.Forms.TextBox();
             this.textBox17 = new System.Windows.Forms.TextBox();
             this.HarPressPoint1 = new System.Windows.Forms.TextBox();
@@ -66,35 +76,35 @@
             this.HarTempPoint1 = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.VerPressPoint2 = new System.Windows.Forms.TextBox();
-            this.VerPressPoint1 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.VerModulePoint3 = new System.Windows.Forms.ComboBox();
+            this.VerModulePoint2 = new System.Windows.Forms.ComboBox();
+            this.VerModulePoint1 = new System.Windows.Forms.ComboBox();
+            this.VerPressPoint3 = new System.Windows.Forms.TextBox();
+            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.VerVPIPoint3 = new System.Windows.Forms.TextBox();
+            this.VerNPIPoint3 = new System.Windows.Forms.TextBox();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.VerVPIPoint2 = new System.Windows.Forms.TextBox();
+            this.VerNPIPoint2 = new System.Windows.Forms.TextBox();
+            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.VerTempPoint1 = new System.Windows.Forms.TextBox();
+            this.VerPressPoint1 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
+            this.VerVPIPoint1 = new System.Windows.Forms.TextBox();
+            this.VerNPIPoint1 = new System.Windows.Forms.TextBox();
+            this.VerPressPoint2 = new System.Windows.Forms.TextBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox21 = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lvwModels = new System.Windows.Forms.ListView();
             this.lvwType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bCopyLines = new System.Windows.Forms.Button();
-            this.VerNPIPoint1 = new System.Windows.Forms.TextBox();
-            this.VerVPIPoint1 = new System.Windows.Forms.TextBox();
-            this.textBox21 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox22 = new System.Windows.Forms.TextBox();
-            this.textBox23 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox24 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.VerVPIPoint2 = new System.Windows.Forms.TextBox();
-            this.VerNPIPoint2 = new System.Windows.Forms.TextBox();
-            this.textBox27 = new System.Windows.Forms.TextBox();
-            this.VerVPIPoint3 = new System.Windows.Forms.TextBox();
-            this.VerNPIPoint3 = new System.Windows.Forms.TextBox();
-            this.VerPressPoint3 = new System.Windows.Forms.TextBox();
-            this.VerModulePoint1 = new System.Windows.Forms.ComboBox();
-            this.VerModulePoint2 = new System.Windows.Forms.ComboBox();
-            this.VerModulePoint3 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Range2_Pmin)).BeginInit();
@@ -108,6 +118,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Serial)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom1)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -126,7 +140,7 @@
             // bAddLines
             // 
             this.bAddLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bAddLines.Location = new System.Drawing.Point(28, 368);
+            this.bAddLines.Location = new System.Drawing.Point(28, 431);
             this.bAddLines.Name = "bAddLines";
             this.bAddLines.Size = new System.Drawing.Size(210, 28);
             this.bAddLines.TabIndex = 1;
@@ -138,7 +152,7 @@
             // 
             this.bFlashSensor.BackColor = System.Drawing.Color.RosyBrown;
             this.bFlashSensor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bFlashSensor.Location = new System.Drawing.Point(28, 473);
+            this.bFlashSensor.Location = new System.Drawing.Point(28, 536);
             this.bFlashSensor.Name = "bFlashSensor";
             this.bFlashSensor.Size = new System.Drawing.Size(210, 26);
             this.bFlashSensor.TabIndex = 2;
@@ -150,7 +164,7 @@
             // bDeleteLines
             // 
             this.bDeleteLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bDeleteLines.Location = new System.Drawing.Point(28, 505);
+            this.bDeleteLines.Location = new System.Drawing.Point(28, 568);
             this.bDeleteLines.Name = "bDeleteLines";
             this.bDeleteLines.Size = new System.Drawing.Size(210, 28);
             this.bDeleteLines.TabIndex = 4;
@@ -161,7 +175,7 @@
             // bSaveLines
             // 
             this.bSaveLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bSaveLines.Location = new System.Drawing.Point(28, 442);
+            this.bSaveLines.Location = new System.Drawing.Point(28, 505);
             this.bSaveLines.Name = "bSaveLines";
             this.bSaveLines.Size = new System.Drawing.Size(210, 28);
             this.bSaveLines.TabIndex = 3;
@@ -194,9 +208,9 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(264, 18);
+            this.groupBox1.Location = new System.Drawing.Point(264, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(600, 236);
+            this.groupBox1.Size = new System.Drawing.Size(600, 248);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Индивидуальные параметры";
@@ -524,6 +538,16 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.TempPowPolinom2);
+            this.groupBox2.Controls.Add(this.PressPowPolinom2);
+            this.groupBox2.Controls.Add(this.textBox25);
+            this.groupBox2.Controls.Add(this.textBox26);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.TempPowPolinom1);
+            this.groupBox2.Controls.Add(this.PressPowPolinom1);
+            this.groupBox2.Controls.Add(this.textBox20);
+            this.groupBox2.Controls.Add(this.textBox15);
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.HarPressPoint2);
             this.groupBox2.Controls.Add(this.textBox17);
             this.groupBox2.Controls.Add(this.HarPressPoint1);
@@ -531,12 +555,144 @@
             this.groupBox2.Controls.Add(this.HarTempPoint1);
             this.groupBox2.Controls.Add(this.textBox11);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(264, 266);
+            this.groupBox2.Location = new System.Drawing.Point(264, 271);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(600, 94);
+            this.groupBox2.Size = new System.Drawing.Size(600, 157);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры характеризации (данные вводить через пробел или точку с запятой)";
+            // 
+            // TempPowPolinom2
+            // 
+            this.TempPowPolinom2.DecimalPlaces = 1;
+            this.TempPowPolinom2.Location = new System.Drawing.Point(487, 125);
+            this.TempPowPolinom2.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.TempPowPolinom2.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.TempPowPolinom2.Name = "TempPowPolinom2";
+            this.TempPowPolinom2.Size = new System.Drawing.Size(93, 21);
+            this.TempPowPolinom2.TabIndex = 42;
+            this.TempPowPolinom2.Tag = "32";
+            // 
+            // PressPowPolinom2
+            // 
+            this.PressPowPolinom2.DecimalPlaces = 1;
+            this.PressPowPolinom2.Location = new System.Drawing.Point(487, 106);
+            this.PressPowPolinom2.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.PressPowPolinom2.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.PressPowPolinom2.Name = "PressPowPolinom2";
+            this.PressPowPolinom2.Size = new System.Drawing.Size(93, 21);
+            this.PressPowPolinom2.TabIndex = 41;
+            this.PressPowPolinom2.Tag = "31";
+            // 
+            // textBox25
+            // 
+            this.textBox25.Location = new System.Drawing.Point(312, 125);
+            this.textBox25.Name = "textBox25";
+            this.textBox25.ReadOnly = true;
+            this.textBox25.Size = new System.Drawing.Size(176, 21);
+            this.textBox25.TabIndex = 40;
+            this.textBox25.Text = "Степень по температуре";
+            // 
+            // textBox26
+            // 
+            this.textBox26.Location = new System.Drawing.Point(312, 105);
+            this.textBox26.Name = "textBox26";
+            this.textBox26.ReadOnly = true;
+            this.textBox26.Size = new System.Drawing.Size(176, 21);
+            this.textBox26.TabIndex = 39;
+            this.textBox26.Text = "Степень по давлению";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(311, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 15);
+            this.label3.TabIndex = 38;
+            this.label3.Text = "2-ой полином";
+            // 
+            // TempPowPolinom1
+            // 
+            this.TempPowPolinom1.DecimalPlaces = 1;
+            this.TempPowPolinom1.Location = new System.Drawing.Point(196, 125);
+            this.TempPowPolinom1.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.TempPowPolinom1.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.TempPowPolinom1.Name = "TempPowPolinom1";
+            this.TempPowPolinom1.Size = new System.Drawing.Size(93, 21);
+            this.TempPowPolinom1.TabIndex = 37;
+            this.TempPowPolinom1.Tag = "30";
+            // 
+            // PressPowPolinom1
+            // 
+            this.PressPowPolinom1.DecimalPlaces = 1;
+            this.PressPowPolinom1.Location = new System.Drawing.Point(196, 106);
+            this.PressPowPolinom1.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.PressPowPolinom1.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.PressPowPolinom1.Name = "PressPowPolinom1";
+            this.PressPowPolinom1.Size = new System.Drawing.Size(93, 21);
+            this.PressPowPolinom1.TabIndex = 36;
+            this.PressPowPolinom1.Tag = "29";
+            // 
+            // textBox20
+            // 
+            this.textBox20.Location = new System.Drawing.Point(21, 125);
+            this.textBox20.Name = "textBox20";
+            this.textBox20.ReadOnly = true;
+            this.textBox20.Size = new System.Drawing.Size(176, 21);
+            this.textBox20.TabIndex = 35;
+            this.textBox20.Text = "Степень по температуре";
+            // 
+            // textBox15
+            // 
+            this.textBox15.Location = new System.Drawing.Point(21, 105);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.ReadOnly = true;
+            this.textBox15.Size = new System.Drawing.Size(176, 21);
+            this.textBox15.TabIndex = 34;
+            this.textBox15.Text = "Степень по давлению";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(18, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 15);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "1-ый полином";
             // 
             // HarPressPoint2
             // 
@@ -618,213 +774,48 @@
             this.groupBox3.Controls.Add(this.textBox10);
             this.groupBox3.Controls.Add(this.textBox21);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(264, 370);
+            this.groupBox3.Location = new System.Drawing.Point(264, 432);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(600, 169);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Параметры верификации (данные вводить через пробел или точку с запятой)";
             // 
-            // VerPressPoint2
+            // VerModulePoint3
             // 
-            this.VerPressPoint2.Location = new System.Drawing.Point(218, 115);
-            this.VerPressPoint2.Name = "VerPressPoint2";
-            this.VerPressPoint2.Size = new System.Drawing.Size(148, 21);
-            this.VerPressPoint2.TabIndex = 25;
-            this.VerPressPoint2.Tag = "18";
-            this.VerPressPoint2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            this.VerModulePoint3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VerModulePoint3.FormattingEnabled = true;
+            this.VerModulePoint3.Location = new System.Drawing.Point(365, 135);
+            this.VerModulePoint3.Name = "VerModulePoint3";
+            this.VerModulePoint3.Size = new System.Drawing.Size(216, 21);
+            this.VerModulePoint3.TabIndex = 31;
             // 
-            // VerPressPoint1
+            // VerModulePoint2
             // 
-            this.VerPressPoint1.Location = new System.Drawing.Point(218, 95);
-            this.VerPressPoint1.Name = "VerPressPoint1";
-            this.VerPressPoint1.Size = new System.Drawing.Size(148, 21);
-            this.VerPressPoint1.TabIndex = 22;
-            this.VerPressPoint1.Tag = "17";
-            this.VerPressPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            this.VerModulePoint2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VerModulePoint2.FormattingEnabled = true;
+            this.VerModulePoint2.Location = new System.Drawing.Point(365, 115);
+            this.VerModulePoint2.Name = "VerModulePoint2";
+            this.VerModulePoint2.Size = new System.Drawing.Size(216, 21);
+            this.VerModulePoint2.TabIndex = 30;
             // 
-            // textBox10
+            // VerModulePoint1
             // 
-            this.textBox10.Location = new System.Drawing.Point(100, 75);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.ReadOnly = true;
-            this.textBox10.Size = new System.Drawing.Size(60, 21);
-            this.textBox10.TabIndex = 34;
-            this.textBox10.Text = "НПИ";
-            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.VerModulePoint1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VerModulePoint1.FormattingEnabled = true;
+            this.VerModulePoint1.Location = new System.Drawing.Point(365, 95);
+            this.VerModulePoint1.Name = "VerModulePoint1";
+            this.VerModulePoint1.Size = new System.Drawing.Size(216, 21);
+            this.VerModulePoint1.TabIndex = 29;
             // 
-            // VerTempPoint1
+            // VerPressPoint3
             // 
-            this.VerTempPoint1.Location = new System.Drawing.Point(364, 25);
-            this.VerTempPoint1.Name = "VerTempPoint1";
-            this.VerTempPoint1.Size = new System.Drawing.Size(217, 21);
-            this.VerTempPoint1.TabIndex = 19;
-            this.VerTempPoint1.Tag = "16";
-            this.VerTempPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(20, 25);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.ReadOnly = true;
-            this.textBox13.Size = new System.Drawing.Size(347, 21);
-            this.textBox13.TabIndex = 33;
-            this.textBox13.Text = "Значения точек по температуре";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(895, 22);
-            this.statusStrip1.TabIndex = 9;
-            this.statusStrip1.Text = "три кита";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
-            // 
-            // lvwModels
-            // 
-            this.lvwModels.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lvwType,
-            this.lvwModel});
-            this.lvwModels.FullRowSelect = true;
-            this.lvwModels.GridLines = true;
-            this.lvwModels.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvwModels.HideSelection = false;
-            this.lvwModels.Location = new System.Drawing.Point(28, 64);
-            this.lvwModels.MultiSelect = false;
-            this.lvwModels.Name = "lvwModels";
-            this.lvwModels.Size = new System.Drawing.Size(210, 282);
-            this.lvwModels.TabIndex = 25;
-            this.lvwModels.UseCompatibleStateImageBehavior = false;
-            this.lvwModels.View = System.Windows.Forms.View.Details;
-            this.lvwModels.SelectedIndexChanged += new System.EventHandler(this.lvwModels_SelectedIndexChanged);
-            // 
-            // lvwType
-            // 
-            this.lvwType.Text = "Название";
-            this.lvwType.Width = 115;
-            // 
-            // lvwModel
-            // 
-            this.lvwModel.Text = "Модель";
-            this.lvwModel.Width = 90;
-            // 
-            // bCopyLines
-            // 
-            this.bCopyLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bCopyLines.Location = new System.Drawing.Point(28, 406);
-            this.bCopyLines.Name = "bCopyLines";
-            this.bCopyLines.Size = new System.Drawing.Size(210, 28);
-            this.bCopyLines.TabIndex = 2;
-            this.bCopyLines.Text = "Скопировать запись";
-            this.bCopyLines.UseVisualStyleBackColor = true;
-            this.bCopyLines.Click += new System.EventHandler(this.bCopyLines_Click);
-            // 
-            // VerNPIPoint1
-            // 
-            this.VerNPIPoint1.Location = new System.Drawing.Point(100, 95);
-            this.VerNPIPoint1.Name = "VerNPIPoint1";
-            this.VerNPIPoint1.Size = new System.Drawing.Size(60, 21);
-            this.VerNPIPoint1.TabIndex = 20;
-            this.VerNPIPoint1.Tag = "20";
-            this.VerNPIPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
-            // 
-            // VerVPIPoint1
-            // 
-            this.VerVPIPoint1.Location = new System.Drawing.Point(159, 95);
-            this.VerVPIPoint1.Name = "VerVPIPoint1";
-            this.VerVPIPoint1.Size = new System.Drawing.Size(60, 21);
-            this.VerVPIPoint1.TabIndex = 21;
-            this.VerVPIPoint1.Tag = "21";
-            this.VerVPIPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
-            // 
-            // textBox21
-            // 
-            this.textBox21.Location = new System.Drawing.Point(218, 75);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.ReadOnly = true;
-            this.textBox21.Size = new System.Drawing.Size(148, 21);
-            this.textBox21.TabIndex = 39;
-            this.textBox21.Text = "Точки по давлению, кПа";
-            this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 55);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(306, 15);
-            this.label1.TabIndex = 40;
-            this.label1.Text = "Значения точек по давлению, для трех диапазонов";
-            // 
-            // textBox22
-            // 
-            this.textBox22.Location = new System.Drawing.Point(20, 75);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.ReadOnly = true;
-            this.textBox22.Size = new System.Drawing.Size(81, 21);
-            this.textBox22.TabIndex = 41;
-            // 
-            // textBox23
-            // 
-            this.textBox23.Location = new System.Drawing.Point(20, 95);
-            this.textBox23.Name = "textBox23";
-            this.textBox23.ReadOnly = true;
-            this.textBox23.Size = new System.Drawing.Size(81, 21);
-            this.textBox23.TabIndex = 42;
-            this.textBox23.Text = "Диапазон 1";
-            // 
-            // textBox19
-            // 
-            this.textBox19.Location = new System.Drawing.Point(159, 75);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.ReadOnly = true;
-            this.textBox19.Size = new System.Drawing.Size(60, 21);
-            this.textBox19.TabIndex = 43;
-            this.textBox19.Text = "ВПИ";
-            this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox24
-            // 
-            this.textBox24.Location = new System.Drawing.Point(365, 75);
-            this.textBox24.Name = "textBox24";
-            this.textBox24.ReadOnly = true;
-            this.textBox24.Size = new System.Drawing.Size(216, 21);
-            this.textBox24.TabIndex = 44;
-            this.textBox24.Text = "Тип модуля задатчика \"Паскаль\"";
-            this.textBox24.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox18
-            // 
-            this.textBox18.Location = new System.Drawing.Point(20, 115);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.ReadOnly = true;
-            this.textBox18.Size = new System.Drawing.Size(81, 21);
-            this.textBox18.TabIndex = 47;
-            this.textBox18.Text = "Диапазон 2";
-            // 
-            // VerVPIPoint2
-            // 
-            this.VerVPIPoint2.Location = new System.Drawing.Point(159, 115);
-            this.VerVPIPoint2.Name = "VerVPIPoint2";
-            this.VerVPIPoint2.Size = new System.Drawing.Size(60, 21);
-            this.VerVPIPoint2.TabIndex = 24;
-            this.VerVPIPoint2.Tag = "23";
-            this.VerVPIPoint2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
-            // 
-            // VerNPIPoint2
-            // 
-            this.VerNPIPoint2.Location = new System.Drawing.Point(100, 115);
-            this.VerNPIPoint2.Name = "VerNPIPoint2";
-            this.VerNPIPoint2.Size = new System.Drawing.Size(60, 21);
-            this.VerNPIPoint2.TabIndex = 23;
-            this.VerNPIPoint2.Tag = "22";
-            this.VerNPIPoint2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            this.VerPressPoint3.Location = new System.Drawing.Point(218, 135);
+            this.VerPressPoint3.Name = "VerPressPoint3";
+            this.VerPressPoint3.Size = new System.Drawing.Size(148, 21);
+            this.VerPressPoint3.TabIndex = 28;
+            this.VerPressPoint3.Tag = "19";
+            this.VerPressPoint3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
             // 
             // textBox27
             // 
@@ -853,47 +844,212 @@
             this.VerNPIPoint3.Tag = "24";
             this.VerNPIPoint3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
             // 
-            // VerPressPoint3
+            // textBox18
             // 
-            this.VerPressPoint3.Location = new System.Drawing.Point(218, 135);
-            this.VerPressPoint3.Name = "VerPressPoint3";
-            this.VerPressPoint3.Size = new System.Drawing.Size(148, 21);
-            this.VerPressPoint3.TabIndex = 28;
-            this.VerPressPoint3.Tag = "19";
-            this.VerPressPoint3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            this.textBox18.Location = new System.Drawing.Point(20, 115);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.ReadOnly = true;
+            this.textBox18.Size = new System.Drawing.Size(81, 21);
+            this.textBox18.TabIndex = 47;
+            this.textBox18.Text = "Диапазон 2";
             // 
-            // VerModulePoint1
+            // VerVPIPoint2
             // 
-            this.VerModulePoint1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VerModulePoint1.FormattingEnabled = true;
-            this.VerModulePoint1.Location = new System.Drawing.Point(365, 95);
-            this.VerModulePoint1.Name = "VerModulePoint1";
-            this.VerModulePoint1.Size = new System.Drawing.Size(216, 21);
-            this.VerModulePoint1.TabIndex = 29;
+            this.VerVPIPoint2.Location = new System.Drawing.Point(159, 115);
+            this.VerVPIPoint2.Name = "VerVPIPoint2";
+            this.VerVPIPoint2.Size = new System.Drawing.Size(60, 21);
+            this.VerVPIPoint2.TabIndex = 24;
+            this.VerVPIPoint2.Tag = "23";
+            this.VerVPIPoint2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
             // 
-            // VerModulePoint2
+            // VerNPIPoint2
             // 
-            this.VerModulePoint2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VerModulePoint2.FormattingEnabled = true;
-            this.VerModulePoint2.Location = new System.Drawing.Point(365, 115);
-            this.VerModulePoint2.Name = "VerModulePoint2";
-            this.VerModulePoint2.Size = new System.Drawing.Size(216, 21);
-            this.VerModulePoint2.TabIndex = 30;
+            this.VerNPIPoint2.Location = new System.Drawing.Point(100, 115);
+            this.VerNPIPoint2.Name = "VerNPIPoint2";
+            this.VerNPIPoint2.Size = new System.Drawing.Size(60, 21);
+            this.VerNPIPoint2.TabIndex = 23;
+            this.VerNPIPoint2.Tag = "22";
+            this.VerNPIPoint2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
             // 
-            // VerModulePoint3
+            // textBox24
             // 
-            this.VerModulePoint3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VerModulePoint3.FormattingEnabled = true;
-            this.VerModulePoint3.Location = new System.Drawing.Point(365, 135);
-            this.VerModulePoint3.Name = "VerModulePoint3";
-            this.VerModulePoint3.Size = new System.Drawing.Size(216, 21);
-            this.VerModulePoint3.TabIndex = 31;
+            this.textBox24.Location = new System.Drawing.Point(365, 75);
+            this.textBox24.Name = "textBox24";
+            this.textBox24.ReadOnly = true;
+            this.textBox24.Size = new System.Drawing.Size(216, 21);
+            this.textBox24.TabIndex = 44;
+            this.textBox24.Text = "Тип модуля задатчика \"Паскаль\"";
+            this.textBox24.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox19
+            // 
+            this.textBox19.Location = new System.Drawing.Point(159, 75);
+            this.textBox19.Name = "textBox19";
+            this.textBox19.ReadOnly = true;
+            this.textBox19.Size = new System.Drawing.Size(60, 21);
+            this.textBox19.TabIndex = 43;
+            this.textBox19.Text = "ВПИ";
+            this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox23
+            // 
+            this.textBox23.Location = new System.Drawing.Point(20, 95);
+            this.textBox23.Name = "textBox23";
+            this.textBox23.ReadOnly = true;
+            this.textBox23.Size = new System.Drawing.Size(81, 21);
+            this.textBox23.TabIndex = 42;
+            this.textBox23.Text = "Диапазон 1";
+            // 
+            // textBox22
+            // 
+            this.textBox22.Location = new System.Drawing.Point(20, 75);
+            this.textBox22.Name = "textBox22";
+            this.textBox22.ReadOnly = true;
+            this.textBox22.Size = new System.Drawing.Size(81, 21);
+            this.textBox22.TabIndex = 41;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 55);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(306, 15);
+            this.label1.TabIndex = 40;
+            this.label1.Text = "Значения точек по давлению, для трех диапазонов";
+            // 
+            // VerTempPoint1
+            // 
+            this.VerTempPoint1.Location = new System.Drawing.Point(364, 25);
+            this.VerTempPoint1.Name = "VerTempPoint1";
+            this.VerTempPoint1.Size = new System.Drawing.Size(217, 21);
+            this.VerTempPoint1.TabIndex = 19;
+            this.VerTempPoint1.Tag = "16";
+            this.VerTempPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            // 
+            // VerPressPoint1
+            // 
+            this.VerPressPoint1.Location = new System.Drawing.Point(218, 95);
+            this.VerPressPoint1.Name = "VerPressPoint1";
+            this.VerPressPoint1.Size = new System.Drawing.Size(148, 21);
+            this.VerPressPoint1.TabIndex = 22;
+            this.VerPressPoint1.Tag = "17";
+            this.VerPressPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(20, 25);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.ReadOnly = true;
+            this.textBox13.Size = new System.Drawing.Size(347, 21);
+            this.textBox13.TabIndex = 33;
+            this.textBox13.Text = "Значения точек по температуре";
+            // 
+            // VerVPIPoint1
+            // 
+            this.VerVPIPoint1.Location = new System.Drawing.Point(159, 95);
+            this.VerVPIPoint1.Name = "VerVPIPoint1";
+            this.VerVPIPoint1.Size = new System.Drawing.Size(60, 21);
+            this.VerVPIPoint1.TabIndex = 21;
+            this.VerVPIPoint1.Tag = "21";
+            this.VerVPIPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            // 
+            // VerNPIPoint1
+            // 
+            this.VerNPIPoint1.Location = new System.Drawing.Point(100, 95);
+            this.VerNPIPoint1.Name = "VerNPIPoint1";
+            this.VerNPIPoint1.Size = new System.Drawing.Size(60, 21);
+            this.VerNPIPoint1.TabIndex = 20;
+            this.VerNPIPoint1.Tag = "20";
+            this.VerNPIPoint1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            // 
+            // VerPressPoint2
+            // 
+            this.VerPressPoint2.Location = new System.Drawing.Point(218, 115);
+            this.VerPressPoint2.Name = "VerPressPoint2";
+            this.VerPressPoint2.Size = new System.Drawing.Size(148, 21);
+            this.VerPressPoint2.TabIndex = 25;
+            this.VerPressPoint2.Tag = "18";
+            this.VerPressPoint2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarTempPoint1_KeyPress);
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(100, 75);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.ReadOnly = true;
+            this.textBox10.Size = new System.Drawing.Size(60, 21);
+            this.textBox10.TabIndex = 34;
+            this.textBox10.Text = "НПИ";
+            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox21
+            // 
+            this.textBox21.Location = new System.Drawing.Point(218, 75);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.ReadOnly = true;
+            this.textBox21.Size = new System.Drawing.Size(148, 21);
+            this.textBox21.TabIndex = 39;
+            this.textBox21.Text = "Точки по давлению, кПа";
+            this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 608);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(895, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "три кита";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lvwModels
+            // 
+            this.lvwModels.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvwType,
+            this.lvwModel});
+            this.lvwModels.FullRowSelect = true;
+            this.lvwModels.GridLines = true;
+            this.lvwModels.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvwModels.HideSelection = false;
+            this.lvwModels.Location = new System.Drawing.Point(28, 64);
+            this.lvwModels.MultiSelect = false;
+            this.lvwModels.Name = "lvwModels";
+            this.lvwModels.Size = new System.Drawing.Size(210, 348);
+            this.lvwModels.TabIndex = 25;
+            this.lvwModels.UseCompatibleStateImageBehavior = false;
+            this.lvwModels.View = System.Windows.Forms.View.Details;
+            this.lvwModels.SelectedIndexChanged += new System.EventHandler(this.lvwModels_SelectedIndexChanged);
+            // 
+            // lvwType
+            // 
+            this.lvwType.Text = "Название";
+            this.lvwType.Width = 115;
+            // 
+            // lvwModel
+            // 
+            this.lvwModel.Text = "Модель";
+            this.lvwModel.Width = 90;
+            // 
+            // bCopyLines
+            // 
+            this.bCopyLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bCopyLines.Location = new System.Drawing.Point(28, 469);
+            this.bCopyLines.Name = "bCopyLines";
+            this.bCopyLines.Size = new System.Drawing.Size(210, 28);
+            this.bCopyLines.TabIndex = 2;
+            this.bCopyLines.Text = "Скопировать запись";
+            this.bCopyLines.UseVisualStyleBackColor = true;
+            this.bCopyLines.Click += new System.EventHandler(this.bCopyLines_Click);
             // 
             // FormSensorsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 578);
+            this.ClientSize = new System.Drawing.Size(895, 630);
             this.Controls.Add(this.bCopyLines);
             this.Controls.Add(this.bSaveLines);
             this.Controls.Add(this.bDeleteLines);
@@ -927,6 +1083,10 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TempPowPolinom1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PressPowPolinom1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -1005,6 +1165,16 @@
         private System.Windows.Forms.ComboBox VerModulePoint3;
         private System.Windows.Forms.ComboBox VerModulePoint2;
         private System.Windows.Forms.ComboBox VerModulePoint1;
+        private System.Windows.Forms.NumericUpDown TempPowPolinom1;
+        private System.Windows.Forms.NumericUpDown PressPowPolinom1;
+        private System.Windows.Forms.TextBox textBox20;
+        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown TempPowPolinom2;
+        private System.Windows.Forms.NumericUpDown PressPowPolinom2;
+        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.TextBox textBox26;
+        private System.Windows.Forms.Label label3;
     }
 }
 

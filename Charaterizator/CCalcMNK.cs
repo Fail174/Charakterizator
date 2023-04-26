@@ -115,6 +115,8 @@ namespace Charaterizator
 
             int colT = Tmtx.ColumnCount;        // Количество столбцов матрицы Rmtx
 
+            int q_max = 5;
+            int p_max = 4;
 
             // Проверяем на соответствие размерности матриц
             if ((rowP != rowU) || (rowU != rowR) || (colP != colU) || (colU != colR) || (colR != colT))
@@ -141,6 +143,15 @@ namespace Charaterizator
             // Если размерности входных данных согласованы
             // Определяем общее количество точек (число элементов в матрице)
             Nmax = rowP * colP;
+
+
+            // Проверка
+            if (Nmax<((q_max+1)*(p_max+1)))
+            {
+                resultBmtx = DenseMatrix.Create(1, 1, -2);  // возвращаем: -2 не верные входные данные
+                return resultBmtx;
+            }
+
 
             // Нормируем матрицу P    
             //Это можно перенести пораньше, сразу после формирования матрицы P и определения Pmax
@@ -171,7 +182,7 @@ namespace Charaterizator
             M_opt = M1;
 
             // Рассчитываем матрицу коэффициентов B1(при единичной матрице весов М)
-            B1 = CalcB(rowP, colP, M1, Pn, Umtx, Rmtx);
+            B1 = CalcB(rowP, colP, M1, Pn, Umtx, Rmtx, q_max, p_max);
             if ((B1.RowCount == 1) && (B1.At(0, 0) == -1))
             {
                 resultBmtx = DenseMatrix.Create(1, 1, 0);  // возвращаем: 0 решения нет
@@ -248,7 +259,7 @@ namespace Charaterizator
             }
 
             //Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
-            Fkn1 = CalcFkn(rowP, colP, B1, Rmtx, Umtx, Pn, Kp);
+            Fkn1 = CalcFkn(rowP, colP, B1, Rmtx, Umtx, Pn, Kp, q_max, p_max);
 
 
             // Проверка на идеальное решение
@@ -330,10 +341,10 @@ namespace Charaterizator
                             }
 
                             // Перерассчитываем коэф.полинома В для новой матрицы весом М
-                            B = CalcB(rowP, colP, M, Pn, Umtx, Rmtx);
+                            B = CalcB(rowP, colP, M, Pn, Umtx, Rmtx, q_max, p_max);
 
                             // Перерассчитываем фактические отклонения Fkn для новых коэф В
-                            Fkn = CalcFkn(rowP, colP, B, Rmtx, Umtx, Pn, Kp);
+                            Fkn = CalcFkn(rowP, colP, B, Rmtx, Umtx, Pn, Kp, q_max, p_max);
 
                             // Определяем кол - во точек в допуске
                             Ndop = CalcNdop(rowP, colP, Fkn, Fr);
@@ -440,10 +451,10 @@ namespace Charaterizator
                         //Tdw_out_res_sum = Tdw_out_res_sum + 1;     // Считаем количество всех циклов do -while в сумме без решения, независимо от того было ли найдено решение или нет
 
                         // Расчет коэффициентов B
-                        B = CalcB(rowP, colP, M, Pn, Umtx, Rmtx);
+                        B = CalcB(rowP, colP, M, Pn, Umtx, Rmtx, q_max, p_max);
 
                         // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
-                        Fkn = CalcFkn(rowP, colP, B, Rmtx, Umtx, Pn, Kp);
+                        Fkn = CalcFkn(rowP, colP, B, Rmtx, Umtx, Pn, Kp, q_max, p_max);
 
 
                         // Определяем кол - во точек в допуске
@@ -555,15 +566,15 @@ namespace Charaterizator
             // --------------------------------------
 
             // Расчет коэффициентов B
-            Matrix<double> BmtxRes = DenseMatrix.Create(24, 1, 0);
+            Matrix<double> BmtxRes = DenseMatrix.Create((q_max+1)*(p_max+1), 1, 0);
             Matrix<double> R2 = DenseMatrix.Create(1, 1, -1);
             // Расчет коэффициентов B
-            BmtxRes = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx);
+            BmtxRes = CalcB(rowP, colP, M_opt, Pn, Umtx, Rmtx, q_max, p_max);
 
             // Рассчитываем фактические отклонения Fkn(формула 5, стр. 10)
             //Fkn = CalcFkn(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
 
-            resultBmtx = DenseMatrix.Create(25, 1, 0);
+            resultBmtx = DenseMatrix.Create(((q_max + 1) * (p_max + 1))+1, 1, 0);
 
             for (int i = 0; i < resultBmtx.RowCount - 1; i++)
             {
@@ -572,8 +583,8 @@ namespace Charaterizator
 
 
             // Расчет R^2
-            R2 = CalcR2(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp);
-            resultBmtx[24, 0] = R2.At(0, 0);
+            R2 = CalcR2(rowP, colP, BmtxRes, Rmtx, Umtx, Pn, Kp, q_max, p_max);
+            resultBmtx[(q_max + 1) * (p_max + 1), 0] = R2.At(0, 0);
 
             return resultBmtx;
 
@@ -813,7 +824,86 @@ namespace Charaterizator
             return Bmtx;
         }
 
-      
+
+        // Новая
+
+        // ----------------------------------------------------------------------------------
+        // ФУНКЦИЯ для расчета весовых коэффициентов B - полинома
+        // ----------------------------------------------------------------------------------
+        public Matrix<double> CalcB(int rowP, int colP, Matrix<double> M, Matrix<double> Pn, Matrix<double> Umtx, Matrix<double> Rmtx, int q_max, int p_max)
+        {
+            Matrix<double> Bmtx;  // Формируем матрицу - столбец Bmtx размером 24 строки
+            Matrix<double> Cmtx = DenseMatrix.Create((q_max+1)*(p_max+1), 1, 0);     // Формируем матрицу - столбец С размером 24 строки
+            Matrix<double> Amtx = DenseMatrix.Create((q_max + 1) * (p_max + 1), (q_max + 1) * (p_max + 1), 0);    // Формируем матрицу - столбец Bmtx размером 24 строки
+
+            for (int q = 0; q < q_max + 1; q++)
+            {
+                for (int p = 0; p < p_max + 1; p++)
+                {
+                    double Cn = 0;
+                    // цикл по K (столбцам матриц M, P, R, U)
+                    for (int K = 0; K < colP; K++)
+                    {
+                        // цикл по N (строкам матриц M, P, R, U)
+                        for (int N = 0; N < rowP; N++)
+                        {
+                            //результат: сумма по строкам                          
+                            Cn = Cn + M.At(N, K) * Pn.At(N, K) * Math.Pow(Rmtx.At(N, K), p) * Math.Pow(Umtx.At(N, K), q);
+                        } // для N
+                    } // для K
+                    Cmtx[p + (p_max+1) * q, 0] = Cn;
+                } // для p
+            } // для q
+
+
+            // Формируем матрицу - Amtx размером 24x24            
+            for (int q = 0; q < q_max + 1; q++)
+            {
+                for (int p = 0; p < p_max + 1; p++)
+                {
+                    // цикл по j
+                    for (int j = 0; j < q_max + 1; j++)
+                    {
+                        // цикл по i
+                        for (int i = 0; i < p_max + 1; i++)
+                        {
+                            double An = 0;
+                            // цикл по K(столбцам матриц M, P, R, U)
+                            for (int K = 0; K < colP; K++)
+                            {
+                                // цикл по N(строкам матриц M, P, R, U)
+                                for (int N = 0; N < rowP; N++)
+                                {
+                                    // результат: сумма по строкам
+                                    An = An + M.At(N, K) * Math.Pow(Rmtx.At(N, K), i) * Math.Pow(Umtx.At(N, K), j) * Math.Pow(Rmtx.At(N, K), p) * Math.Pow(Umtx.At(N, K), q);
+                                } // для N
+                            } // для K
+                            Amtx[p + (p_max + 1) * q, i+(p_max + 1)*j] = An;
+                        } // по i
+                    } // для j
+                } // по p
+            } // по q
+
+
+            // РЕШЕНИЕ
+            // Проверяем, если определитель матрицы Amtx равен нулю - то нет решения,
+            if (Amtx.Determinant() == 0)
+            {
+                Bmtx = DenseMatrix.Create(1, 1, -1);       // если решения нет возвращаем -2
+                return Bmtx;
+            }
+
+            // если определитель не равен нулю находим коэффиценты B
+            Bmtx = DenseMatrix.Create((q_max+1)*(p_max+1), 1, 0);
+            Bmtx = Amtx.Solve(Cmtx);
+
+            // другой метод
+            //Bmtx = Cmtx.Multiply(Amtx.Inverse());
+
+
+            return Bmtx;
+        }
+
         // ----------------------------------------------------------------------------------
         // ФУНКЦИЯ для расчета допустимых отклонений(допускаемой погрешности)
         // ----------------------------------------------------------------------------------
@@ -976,6 +1066,37 @@ namespace Charaterizator
             return Fkn;
         }
 
+        // перегрузка
+        public Matrix<double> CalcFkn(int rowP, int colP, Matrix<double> B, Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pn, Matrix<double> Kp, int q_max, int p_max)
+        {
+            Matrix<double> Fkn = DenseMatrix.Create(rowP, colP, -1);
+            double Fi;
+            int m;
+
+            // цикл по N(строкам матриц M, P, R, U)
+            for (int N = 0; N < rowP; N++)
+            {
+                // цикл по K(столбцам матриц M, P, R, U)
+                for (int K = 0; K < colP; K++)
+                {
+                    Fi = 0;
+                    m = 0;
+                    // цикл по j
+                    for (int j = 0; j < q_max+1; j++)
+                    {
+                        // цикл по i
+                        for (int i = 0; i < p_max+1; i++)
+                        {
+                            Fi = Fi + B.At(m, 0) * Math.Pow(Rmtx.At(N, K), i) * Math.Pow(Umtx.At(N, K), j);
+                            m = m + 1;
+                        }
+                    }
+                    Fkn[N, K] = Math.Abs((Fi - Pn.At(N, K)) * 100 * Kp.At(N, K));
+                }
+            }
+            return Fkn;
+        }
+
         //----------------------------------------------------------------------------------    
         // ФУНКЦИЯ для R^2        
 
@@ -1010,6 +1131,37 @@ namespace Charaterizator
             return R2;
         }
 
+        //перегрузка
+        public Matrix<double> CalcR2(int rowP, int colP, Matrix<double> B, Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pn, Matrix<double> Kp, int q_max, int p_max)
+        {
+            Matrix<double> R2 = DenseMatrix.Create(1, 1, 0);
+            double Fi;
+            int m;
+
+            // цикл по N(строкам матриц M, P, R, U)
+            for (int N = 0; N < rowP; N++)
+            {
+                // цикл по K(столбцам матриц M, P, R, U)
+                for (int K = 0; K < colP; K++)
+                {
+                    Fi = 0;
+                    m = 0;
+                    // цикл по j
+                    for (int j = 0; j < q_max+1; j++)
+                    {
+                        // цикл по i
+                        for (int i = 0; i < p_max+1; i++)
+                        {
+                            Fi = Fi + B.At(m, 0) * Math.Pow(Rmtx.At(N, K), i) * Math.Pow(Umtx.At(N, K), j);
+                            m = m + 1;
+                        }
+                    }
+                    //Fkn[N, K] = Math.Abs((Fi - Pn.At(N, K)) * 100 * Kp.At(N, K));
+                    R2 = R2 + ((Fi - Pn.At(N, K)) * (Fi - Pn.At(N, K)));
+                }
+            }
+            return R2;
+        }
 
         //----------------------------------------------------------------------------------    
         // ФУНКЦИЯ для расчета фактических отклонений        
