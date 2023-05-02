@@ -564,7 +564,6 @@
             // 
             // TempPowPolinom2
             // 
-            this.TempPowPolinom2.DecimalPlaces = 1;
             this.TempPowPolinom2.Location = new System.Drawing.Point(487, 125);
             this.TempPowPolinom2.Maximum = new decimal(new int[] {
             100000,
@@ -583,7 +582,6 @@
             // 
             // PressPowPolinom2
             // 
-            this.PressPowPolinom2.DecimalPlaces = 1;
             this.PressPowPolinom2.Location = new System.Drawing.Point(487, 106);
             this.PressPowPolinom2.Maximum = new decimal(new int[] {
             100000,
@@ -630,7 +628,6 @@
             // 
             // TempPowPolinom1
             // 
-            this.TempPowPolinom1.DecimalPlaces = 1;
             this.TempPowPolinom1.Location = new System.Drawing.Point(196, 125);
             this.TempPowPolinom1.Maximum = new decimal(new int[] {
             100000,
@@ -649,7 +646,6 @@
             // 
             // PressPowPolinom1
             // 
-            this.PressPowPolinom1.DecimalPlaces = 1;
             this.PressPowPolinom1.Location = new System.Drawing.Point(196, 106);
             this.PressPowPolinom1.Maximum = new decimal(new int[] {
             100000,

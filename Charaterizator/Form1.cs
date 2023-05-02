@@ -1404,8 +1404,14 @@ namespace Charaterizator
                         Matrix<double> Tmtx = ResultCH.GetTemperatureMatrix(i);
                         // Название датчика
                         string SensName = ResultCH.Channal[i].GetSensorType();//"ЭНИ-12";
+                        string ModelName = new string(ResultCH.Channal[i].PressureModel);//"ЭНИ-12";
+                        //максимальная степень по давлению
+                        int q_max = Convert.ToInt32(SensorsDB.GetDataSensors(SensName, ModelName, "PressPowPolinom1"));
+                        //максимальная степень по температуре
+                        int p_max = Convert.ToInt32(SensorsDB.GetDataSensors(SensName, ModelName, "TempPowPolinom1"));
+
                         // Матрица с результатами
-                        ResulCoefmtx = CalculationMNK(Rmtx, Umtx, Pmtx, Tmtx, Pmax, sensor_DV, SensName); ;
+                        ResulCoefmtx = CalculationMNK(Rmtx, Umtx, Pmtx, Tmtx, Pmax, p_max, q_max, sensor_DV, SensName); ;
 
                     }
                     else
@@ -6529,7 +6535,7 @@ namespace Charaterizator
         /// <param name="sensor_DV"></param>
         /// <param name="SensName"></param>
         /// <returns></returns>
-        private Matrix<double> CalculationMNK(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, bool sensor_DV, string SensName)
+        private Matrix<double> CalculationMNK(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, int p_max, int q_max, bool sensor_DV, string SensName)
         {
             // Матрица с результатами
             Matrix<double> ResulCoefmtx = DenseMatrix.Create(1, 1, -1);       // если размерности не совпадают возвращаем -1
@@ -6624,8 +6630,8 @@ namespace Charaterizator
                     {
                         try
                         {
-                            // Вызов функции расчета коэффициентов методом наименьших квадратов (МНК) 
-                            ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, gammaPaTest, gammaTaTest, sensor_DV);
+                         // Вызов функции расчета коэффициентов методом наименьших квадратов (МНК) 
+                            ResulCoefmtx = CCalcMNK.CalcCalibrCoef(Rmtx, Umtx, Pmtx, Tmtx, Pmax, gammaPaTest, gammaTaTest, p_max, q_max, sensor_DV);
 
                             break;
                         }
@@ -6641,7 +6647,7 @@ namespace Charaterizator
 
 
         /// <summary>
-        /// Чтение из файла и расчет коэффициентов
+        /// Чтение из файла и расчет коэффициентов (тест по кнопке)
         /// </summary>
         private void CalcMNK()
         {
@@ -6667,9 +6673,16 @@ namespace Charaterizator
 
             // Название датчика
             string SensName = ResultCH.Channal[0].GetSensorType();//"ЭНИ-12";
+            string ModelName = new string(ResultCH.Channal[0].PressureModel);//"ЭНИ-12";
+
+            //максимальная степень по давлению
+            int q_max = Convert.ToInt32(SensorsDB.GetDataSensors(SensName, ModelName, "PressPowPolinom1"));
+            //максимальная степень по температуре
+            int p_max = Convert.ToInt32(SensorsDB.GetDataSensors(SensName, ModelName, "TempPowPolinom1"));
+
 
             // Матрица с результатами
-            Matrix<double> ResulCoefmtx = CalculationMNK(Rmtx, Umtx, Pmtx, Tmtx, Pmax, sensor_DV, SensName);
+            Matrix<double> ResulCoefmtx = CalculationMNK(Rmtx, Umtx, Pmtx, Tmtx, Pmax, p_max, q_max, sensor_DV, SensName);
             // Анализ результатов
             if ((ResulCoefmtx.RowCount == 1) & (ResulCoefmtx.ColumnCount == 1))
             {

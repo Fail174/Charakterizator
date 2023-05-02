@@ -60,7 +60,7 @@ namespace Charaterizator
         // -------- ОСНОВНАЯ ФУНКЦИЯ РАСЧЕТА ------------------------------------------------                                      
         // весовых коэффициентов калибровки датчика с помощью МНК
         // ----------------------------------------------------------------------------------
-        public Matrix<double> CalcCalibrCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, Matrix<double> gammaP, Matrix<double> gammaT, bool sensor_DV)
+        public Matrix<double> CalcCalibrCoef(Matrix<double> Rmtx, Matrix<double> Umtx, Matrix<double> Pmtx, Matrix<double> Tmtx, double Pmax, Matrix<double> gammaP, Matrix<double> gammaT, int p_max, int q_max, bool sensor_DV)
         {
            
             Matrix<double> resultBmtx;           // Возвращаемое значение - Матрица калибровочных коэффициентов 
@@ -115,8 +115,8 @@ namespace Charaterizator
 
             int colT = Tmtx.ColumnCount;        // Количество столбцов матрицы Rmtx
 
-            int q_max = 5;
-            int p_max = 4;
+            //int q_max = 5;
+            //int p_max = 4;
 
             // Проверяем на соответствие размерности матриц
             if ((rowP != rowU) || (rowU != rowR) || (colP != colU) || (colU != colR) || (colR != colT))
