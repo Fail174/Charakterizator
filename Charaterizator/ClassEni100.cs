@@ -65,6 +65,23 @@ namespace Charaterizator
 
         public float[] Coefficient;
 
+        public byte qrc;  //колличество наборов коэф
+        public byte UGain1;
+        public byte UGain2;
+        public byte UPower1;
+        public byte UPower2;
+        public byte ExtTemp;
+        public byte TPower1;
+        public byte TPower2;
+        public float TranspPoint;
+        public byte Param0;
+        public byte Param1;
+        public byte Param2;
+        public byte Param3;
+
+        public double[] DCoefficient;
+
+
         public byte SetOfCoef;//набор коэффикиентов 0 - первый, 1 - второй
         public SensorID(byte a, int CoeffCount)
         {
@@ -72,6 +89,7 @@ namespace Charaterizator
             desc = new byte[12];
             teg = new byte[6];
             Coefficient = new float[CoeffCount];
+            DCoefficient = new double[CoeffCount];
             PressureModel = new char[5];
 
             Addr = a;
@@ -115,6 +133,20 @@ namespace Charaterizator
             NPI = 0;
             DempfTime = 0;
             SetOfCoef = 0;
+
+            qrc = 1;
+            UGain1 = 16;
+            UGain2 = 16;
+            UPower1 = 5;
+            UPower2 = 5;
+            ExtTemp = 0;
+            TPower1 = 3;
+            TPower2 = 3;
+            TranspPoint = 0;
+            Param0 = 0;
+            Param1 = 0;
+            Param2 = 0;
+            Param3 = 0;
     }
     public string GetdevType()
         {
@@ -1011,7 +1043,85 @@ namespace Charaterizator
             return false;
         }
 
+        /// <summary>
+        /// Запись калибровочных коэффициентов для датчика давления double (команда 200)
+        /// </summary>
+        public bool C200SensorCoefficientWrite()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                UInt64 tmp;
+                int i;
+                byte[] data = new byte[sensor.pre + 38];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0xC8;//код команды
+                data[i + 3] = 0x21;//количество байт
 
+                for (int ci = 0; ci < 6; ci++)
+                {
+                    int c = i + 5;
+                    data[i + 4] = (byte)ci;
+                    for (int n = 0; n < 4; n++)
+                    {
+                        tmp = BitConverter.ToUInt64(BitConverter.GetBytes(sensor.DCoefficient[4 * ci+n]), 0);
+                        for (int j = 7; j >= 0; j--)
+                        {
+                            data[c + j] = (byte)(tmp & 0xFF);
+                            tmp = tmp >> 8;
+                        }
+                        c = c + 8;
+                        sensor.DCoefficient[4 * ci+n] = 0;
+                    }
+
+                    data[c] = GetCRC(data, sensor.pre);//CRC
+
+                    for (int j = 0; j < WRITE_COUNT; j++)
+                    {
+                        Thread.Sleep(WRITE_PERIOD);
+                        port.Write(data, 0, data.Length);
+                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                            break;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+        //Чтение калибровочных коэффициентов double (команда 201)
+        public bool C201SensorCoefficientRead()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+
+                byte[] data = new byte[sensor.pre + 6];
+                for (int i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[sensor.pre] = 0x02;
+                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+                data[sensor.pre + 2] = 0xC9;
+                data[sensor.pre + 3] = 0x1;
+                for (int i = 0; i < 6; i++)
+                {
+                    data[sensor.pre + 4] = (byte)i;
+                    data[sensor.pre + 5] = GetCRC(data, sensor.pre);//CRC
+                    for (int j = 0; j < WRITE_COUNT; j++)
+                    {
+                        Thread.Sleep(WRITE_PERIOD);
+                        port.Write(data, 0, data.Length);
+                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                            break;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
 
         //Запись калибровочных коэффициентов для датчика давления (команда 250)
         public bool C250SensorCoefficientWrite()
@@ -1060,18 +1170,6 @@ namespace Charaterizator
                     data[i + 18] = (byte)((tmp >> 16) & 0xFF);
                     data[i + 19] = (byte)((tmp >> 8) & 0xFF);
                     data[i + 20] = (byte)(tmp & 0xFF);
-
- /*                   tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 4]), 0);
-                    data[i + 21] = (byte)((tmp >> 24) & 0xFF);
-                    data[i + 22] = (byte)((tmp >> 16) & 0xFF);
-                    data[i + 23] = (byte)((tmp >> 8) & 0xFF);
-                    data[i + 24] = (byte)(tmp & 0xFF);
-
-                    tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.Coefficient[6 * ci + 5]), 0);
-                    data[i + 25] = (byte)((tmp >> 24) & 0xFF);
-                    data[i + 26] = (byte)((tmp >> 16) & 0xFF);
-                    data[i + 27] = (byte)((tmp >> 8) & 0xFF);
-                    data[i + 28] = (byte)(tmp & 0xFF);*/
 
                     data[i + 21] = GetCRC(data, sensor.pre);//CRC
 
@@ -1122,7 +1220,87 @@ namespace Charaterizator
             return false;
         }
 
-        //Запись коэффициентов в EEPROM (команда 152).
+        /// <summary>
+        /// Запись дополнительных параметров датчика (команда 151)
+        /// </summary>
+        public bool C151SensorCoefficientWrite()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+                UInt32 tmp;
+                int i;
+                byte[] data = new byte[sensor.pre + 18];
+                for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                i = sensor.pre;
+                data[i] = 0x02;
+                data[i + 1] = (byte)(0x80 | sensor.Addr);
+                data[i + 2] = 0x97; //код команды
+                data[i + 3] = 0x10; //количество байт
+                data[i + 4] = sensor.qrc;  //колличество наборов коэф
+                data[i + 5] = sensor.UGain1;
+                data[i + 6] = sensor.UPower1;
+                data[i + 7] = sensor.UGain2;
+                data[i + 8] = sensor.UPower2;
+                data[i + 9] = sensor.ExtTemp;
+                data[i + 10] = sensor.Param0;
+                data[i + 10] = sensor.Param1;
+                data[i + 10] = sensor.Param2;
+                data[i + 10] = sensor.Param3;
+                data[i + 11] = sensor.TPower1;
+                data[i + 12] = sensor.TPower2;
+                tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.TranspPoint), 0);
+                data[i + 13] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 14] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 15] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 16] = (byte)(tmp & 0xFF);
+
+                data[i + 17] = GetCRC(data, sensor.pre);//CRC
+
+                    for (int j = 0; j < WRITE_COUNT; j++)
+                    {
+                        Thread.Sleep(WRITE_PERIOD);
+                        port.Write(data, 0, data.Length);
+                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                            break;
+                    }
+
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Чтение дополнительных параметров датчика (команда 152)
+        /// </summary>
+        public bool C152SensorCoefficientRead()
+        {
+            if ((port != null) && (SensorConnect))
+            {
+                ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
+
+                byte[] data = new byte[sensor.pre + 5];
+                for (int i = 0; i < sensor.pre; i++) data[i] = 0xFF;
+                data[sensor.pre] = 0x02;
+                data[sensor.pre + 1] = (byte)(0x80 | sensor.Addr);
+                data[sensor.pre + 2] = 0x98;
+                data[sensor.pre + 3] = 0x0;
+                data[sensor.pre + 4] = GetCRC(data, sensor.pre);//CRC
+                    for (int j = 0; j < WRITE_COUNT; j++)
+                    {
+                        Thread.Sleep(WRITE_PERIOD);
+                        port.Write(data, 0, data.Length);
+                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                            break;
+                    }
+                return true;
+            }
+            return false;
+        }
+
+        //Запись коэффициентов в EEPROM (команда 252).
         public bool C252EEPROMCoefficientWrite()
         {
             if ((port != null) && (SensorConnect))
@@ -1506,6 +1684,35 @@ namespace Charaterizator
                                 case 0x93://Чтение ВПИ, НПИ, названия условных единиц – только для исполнения ЖК-2(команда 147)
                                     break;
                                 case 0x94://Сохранение текущей конфигурации прибора(команда 148)
+                                    break;
+
+                                case 0x97://Запись дополнительных параметров датчика(команда 151)
+                                    if (!ReadCommand151(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
+                                    break;
+                                case 0x98://Чтение дополнительных параметров датчика(команда 152)
+                                    if (!ReadCommand152(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
+                                    break;
+                                case 0xC8://Запись калибровочных коэффициентов для датчика давления double (команда 200)
+                                    if (!ReadCommand200(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
+                                    break;
+                                case 0xC9://Чтение калибровочных коэффициентов для датчика давления double (команда 201)
+                                    if (!ReadCommand201(Adress, indata))
+                                    {
+                                        ReadAvtState = 1;
+                                        return -5;//неверная структура данных в ответной команде
+                                    }
                                     break;
                                 case 0xF1://Запись данных о модели приемника давления, тип давления (команда 241)
                                     if (!ReadCommand241(Adress, indata))
@@ -2174,6 +2381,173 @@ namespace Charaterizator
                 return false;
             }
 
+        }
+
+        /// <summary>
+        /// Запись дополнительных параметров датчика (команда 151)
+        /// </summary>
+        private bool ReadCommand151(int addr, byte[] indata)
+        {
+            try
+            {
+                sensor.CurrentExit = indata[2];
+
+                sensor.qrc = indata[2];  //колличество наборов коэф
+                sensor.UGain1 = indata[3];
+                sensor.UPower1 = indata[4];
+                sensor.UGain2 = indata[5];
+                sensor.UPower2 = indata[6];
+                sensor.ExtTemp = indata[7];
+                sensor.Param0 = indata[8];
+                sensor.Param1 = indata[9];
+                sensor.Param2 = indata[10];
+                sensor.Param3 = indata[11];
+                sensor.TPower1 = indata[12];
+                sensor.TPower2 = indata[13];
+                Int32 tmp = (indata[14] << 24) | (indata[15] << 16) | (indata[16] << 8) | indata[17];
+                sensor.TranspPoint = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Чтение дополнительных параметров датчика (команда 152)
+        /// </summary>
+        private bool ReadCommand152(int addr, byte[] indata)
+        {
+            try
+            {
+                sensor.CurrentExit = indata[2];
+
+                sensor.qrc = indata[2];  //колличество наборов коэф
+                sensor.UGain1 = indata[3];
+                sensor.UPower1 = indata[4];
+                sensor.UGain2 = indata[5];
+                sensor.UPower2 = indata[6];
+                sensor.ExtTemp = indata[7];
+                sensor.Param0 = indata[8];
+                sensor.Param1 = indata[9];
+                sensor.Param2 = indata[10];
+                sensor.Param3 = indata[11];
+                sensor.TPower1 = indata[12];
+                sensor.TPower2 = indata[13];
+                Int32 tmp = (indata[14] << 24) | (indata[15] << 16) | (indata[16] << 8) | indata[17];
+                sensor.TranspPoint = BitConverter.ToSingle(BitConverter.GetBytes(tmp), 0);
+                sensorList[SelSensorIndex] = sensor;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Запись калибровочных коэффициентов double(команда 200).
+        /// </summary>
+        private bool ReadCommand200(int addr, byte[] indata)
+        {
+            try
+            {
+                byte[] tmp = new byte[8];
+                int Number = indata[2];
+                int c = 3;
+                if ((Number >= 0) && (Number <= 5))
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7 - i] = indata[c + i];
+                    }
+                    c = c + 8;
+                    sensor.DCoefficient[4 * Number] = BitConverter.ToDouble(tmp, 0);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7 - i] = indata[c + i];
+                    }
+                    c = c + 8;
+                    sensor.DCoefficient[4 * Number + 1] = BitConverter.ToDouble(tmp, 0);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7 - i] = indata[c + i];
+                    }
+                    c = c + 8;
+                    sensor.DCoefficient[4 * Number + 2] = BitConverter.ToDouble(tmp, 0);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7 - i] = indata[c + i];
+                    }
+                    sensor.DCoefficient[4 * Number + 3] = BitConverter.ToDouble(tmp, 0);
+
+                    sensorList[SelSensorIndex] = sensor;
+
+                    return true;
+                }
+                else
+                {
+                    //ошибка (Неверные данные)
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Чтение калибровочных коэффициентов double(команда 201).
+        /// </summary>
+        private bool ReadCommand201(int addr, byte[] indata)
+        {
+            try
+            {
+                byte[] tmp = new byte[8];
+                int Number = indata[2];
+                int c = 3;
+                if ((Number >= 0) && (Number <= 5))
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7-i] = indata[c + i];
+                    }
+                    c = c + 8;
+                    sensor.DCoefficient[4 * Number] = BitConverter.ToDouble(tmp, 0);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7-i] = indata[c + i];
+                    }
+                    c = c + 8;
+                    sensor.DCoefficient[4 * Number+1] = BitConverter.ToDouble(tmp, 0);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7-i] = indata[c + i];
+                    }
+                    c = c + 8;
+                    sensor.DCoefficient[4 * Number+2] = BitConverter.ToDouble(tmp, 0);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        tmp[7-i] = indata[c + i];
+                    }
+                    sensor.DCoefficient[4 * Number+3] = BitConverter.ToDouble(tmp, 0);
+
+                    sensorList[SelSensorIndex] = sensor;
+
+                    return true;
+                }
+                else
+                {
+                    //ошибка (Неверные данные)
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Запись калибровочных коэффициентов для датчика давления (команда 250)
