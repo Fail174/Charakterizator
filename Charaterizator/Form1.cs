@@ -1466,7 +1466,7 @@ namespace Charaterizator
 
                     int NCoef = ResulCoefmtx.RowCount - 1;
 
-                    if (NCoef < 24)
+                    if (NCoef < (q_max+1)*(p_max+1))
                     {
                         Program.txtlog.WriteLineLog("CH: Недостаточное количество точек при характеризация: " + ResulCoefmtx.RowCount.ToString(), 1);
                         ErrorList.Add(i);
@@ -1523,6 +1523,7 @@ namespace Charaterizator
                     }
                     else
                     {
+                        bool d_f = true;
                         Program.txtlog.WriteLineLog(string.Format("CH: Рассчитанное допустимое отклонение датчика в канале{0} находится в допустимых пределах", i + 1), 2);
                         Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
 
@@ -1534,30 +1535,15 @@ namespace Charaterizator
                                 ErrorList.Add(i);
                                 continue;
                             }
-                            else
-                            {
-                                /*for (int j = 0; j < NCoef; j++)
-                                {
-                                    float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
-                                    if (div > 0.001)
-                                    {
-                                        Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} выполнена с ошибкой в канале {1}!", j + 1, i + 1), 1);
-                                        Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
-                                    }
-                                }*/
-                            }
+                            else d_f = false;
                         }
-                        else
+                        else d_f = true;
+
+                        if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
                         {
-                            /*for (int j = 0; j < NCoef; j++)
-                            {
-                                double div = Math.Abs(sensors.sensor.DCoefficient[j] - Convert.ToDouble(ResulCoefmtx.At(j, 0)));
-                                if (div != 0)
-                                {
-                                    Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась в канале {1}!", j + 1, i + 1), 1);
-                                    Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.DCoefficient[j], 0);
-                                }
-                            }*/
+                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
+                            ErrorList.Add(i);
+                            continue;
                         }
 
                         //if (NCoef > 24)
@@ -1582,8 +1568,16 @@ namespace Charaterizator
                                     sensors.sensor.DCoefficient[j - 24] = 0;
                                 }
                             }
-
-                            if (!sensors.C200SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика double
+                            if (d_f)
+                            {
+                                if (!sensors.C200SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика float
+                                {
+                                    Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                                    ErrorList.Add(i);
+                                    continue;
+                                }
+                            }
+                            else
                             {
                                 if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика float
                                 {
@@ -1591,31 +1585,16 @@ namespace Charaterizator
                                     ErrorList.Add(i);
                                     continue;
                                 }
-                                else
-                                {
-                                    /*for (int j = 0; j < NCoef; j++)
-                                    {
-                                        float div = Math.Abs(sensors.sensor.Coefficient[j] - Convert.ToSingle(ResulCoefmtx.At(j, 0)));
-                                        if (div > 0.001)
-                                        {
-                                            Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась в канале {1}!", j + 1, i + 1), 1);
-                                            Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.Coefficient[j], 0);
-                                        }
-                                    }*/
-                                }
                             }
-                            else
+                            /*if (!sensors.C200SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика double
                             {
-                                /*for (int j = 0; j < NCoef; j++)
+                                if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика float
                                 {
-                                    double div = Math.Abs(sensors.sensor.DCoefficient[j] - Convert.ToDouble(ResulCoefmtx.At(j, 0)));
-                                    if (div > 0.001)
-                                    {
-                                        Program.txtlog.WriteLineLog(string.Format("CH: Запись коэффициента {0} не удалась в канале {1}!", j + 1, i + 1), 1);
-                                        Program.txtlog.WriteLineLog("Считано " + (j + 1).ToString() + ": " + sensors.sensor.DCoefficient[j], 0);
-                                    }
-                                }*/
-                            }
+                                    Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                                    ErrorList.Add(i);
+                                    continue;
+                                }
+                            }*/
                             //}
                         }
 
@@ -1638,6 +1617,10 @@ namespace Charaterizator
                         {
                             Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
                             ErrorList.Add(i);
+                        }
+                        else
+                        {
+                            sensors.EnterServis();
                         }
                     }
                 } else {
@@ -6832,7 +6815,8 @@ namespace Charaterizator
             {
                 Program.txtlog.WriteLineLog("MNK: Решение найдено!", 0);
                 Program.txtlog.WriteLineLog("MNK: Рассчитанное отклонение (R^2) равно: " + Convert.ToString(ResulCoefmtx[ResulCoefmtx.RowCount - 1, 0]), 0);
-                double[] tmp = new double[ResulCoefmtx.RowCount - 1];
+                //double[] tmp = new double[ResulCoefmtx.RowCount - 1];
+                double[] tmp = new double[48];
                 //double[] tmp_dbl = new double[ResulCoefmtx.RowCount - 1];
                 for (int i = 0; i < ResulCoefmtx.RowCount - 1; i++)
                 {

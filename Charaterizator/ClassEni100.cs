@@ -276,7 +276,7 @@ namespace Charaterizator
  
     public class ClassEni100
     {
-        public int COEFF_COUNT = 24;//число коэффициентов
+        public int COEFF_COUNT = 48;//число коэффициентов
 
         public int WRITE_PERIOD = 300;  //период выдачи команд
         public int WRITE_COUNT = 1;     //число попыток записи команд в датчик
@@ -425,7 +425,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(20, WAIT_TIMEOUT);
+                    WaitSensorAnswer(10, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -456,7 +456,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -485,7 +485,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -542,7 +542,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -578,7 +578,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -625,7 +625,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -729,7 +729,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     result = ParseReadBuffer(WAIT_TIMEOUT);
                     if (result >= 0)
                         return result;
@@ -764,7 +764,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -791,7 +791,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -818,7 +818,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -853,7 +853,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -883,7 +883,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -914,7 +914,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -947,7 +947,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -976,7 +976,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -1009,7 +1009,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -1035,7 +1035,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -1083,7 +1083,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(20, WAIT_TIMEOUT);
                         int res = ParseReadBuffer(WAIT_TIMEOUT);
                         if (res >= 0)
                             break;
@@ -1116,7 +1116,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(20, WAIT_TIMEOUT);
                         if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                             break;
                     }
@@ -1180,7 +1180,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(20, WAIT_TIMEOUT);
                         int res = ParseReadBuffer(WAIT_TIMEOUT);
                         if (res >= 0)
                             break;
@@ -1216,7 +1216,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(20, WAIT_TIMEOUT);
                         if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                             break;
                     }
@@ -1267,7 +1267,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(15, WAIT_TIMEOUT);
                         if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                             break;
                     }
@@ -1297,7 +1297,7 @@ namespace Charaterizator
                     {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(15, WAIT_TIMEOUT);
                         if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                             break;
                     }
@@ -1325,7 +1325,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -1353,7 +1353,7 @@ namespace Charaterizator
                 {
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
-                        WaitSensorAnswer(10, WAIT_TIMEOUT);
+                        WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                         if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                             return true;
                 }
@@ -1381,7 +1381,7 @@ namespace Charaterizator
                 {
                     Thread.Sleep(WRITE_PERIOD);
                     port.Write(data, 0, data.Length);
-                    WaitSensorAnswer(10, WAIT_TIMEOUT);
+                    WaitSensorAnswer(sensor.pre, WAIT_TIMEOUT);
                     if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
                         return true;
                 }
@@ -1406,6 +1406,7 @@ namespace Charaterizator
             while (readbuf.Count > 0)
             {
                 Application.DoEvents();
+                Thread.Sleep(1);
                 //if (Program.mainwnd != null)
                 //    if (Program.mainwnd.ProcessStop) return -10;
 
