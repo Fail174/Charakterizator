@@ -1084,8 +1084,11 @@ namespace Charaterizator
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
                         WaitSensorAnswer(10, WAIT_TIMEOUT);
-                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        int res = ParseReadBuffer(WAIT_TIMEOUT);
+                        if (res >= 0)
                             break;
+                        if (res == -8)
+                            return false;
                     }
                 }
                 return true;
@@ -1178,8 +1181,11 @@ namespace Charaterizator
                         Thread.Sleep(WRITE_PERIOD);
                         port.Write(data, 0, data.Length);
                         WaitSensorAnswer(10, WAIT_TIMEOUT);
-                        if (ParseReadBuffer(WAIT_TIMEOUT) >= 0)
+                        int res = ParseReadBuffer(WAIT_TIMEOUT);
+                        if (res >= 0)
                             break;
+                        if (res == -8)
+                            return false;
                     }
                 }
                 return true;
@@ -1230,7 +1236,7 @@ namespace Charaterizator
                 ParseReadBuffer(WAIT_TIMEOUT);//отчищаем буфер входных данных, если они есть
                 UInt32 tmp;
                 int i;
-                byte[] data = new byte[sensor.pre + 18];
+                byte[] data = new byte[sensor.pre + 21];
                 for (i = 0; i < sensor.pre; i++) data[i] = 0xFF;
                 i = sensor.pre;
                 data[i] = 0x02;
@@ -1244,18 +1250,18 @@ namespace Charaterizator
                 data[i + 8] = sensor.UPower2;
                 data[i + 9] = sensor.ExtTemp;
                 data[i + 10] = sensor.Param0;
-                data[i + 10] = sensor.Param1;
-                data[i + 10] = sensor.Param2;
-                data[i + 10] = sensor.Param3;
-                data[i + 11] = sensor.TPower1;
-                data[i + 12] = sensor.TPower2;
+                data[i + 11] = sensor.Param1;
+                data[i + 12] = sensor.Param2;
+                data[i + 13] = sensor.Param3;
+                data[i + 14] = sensor.TPower1;
+                data[i + 15] = sensor.TPower2;
                 tmp = BitConverter.ToUInt32(BitConverter.GetBytes(sensor.TranspPoint), 0);
-                data[i + 13] = (byte)((tmp >> 24) & 0xFF);
-                data[i + 14] = (byte)((tmp >> 16) & 0xFF);
-                data[i + 15] = (byte)((tmp >> 8) & 0xFF);
-                data[i + 16] = (byte)(tmp & 0xFF);
+                data[i + 16] = (byte)((tmp >> 24) & 0xFF);
+                data[i + 17] = (byte)((tmp >> 16) & 0xFF);
+                data[i + 18] = (byte)((tmp >> 8) & 0xFF);
+                data[i + 19] = (byte)(tmp & 0xFF);
 
-                data[i + 17] = GetCRC(data, sensor.pre);//CRC
+                data[i + 20] = GetCRC(data, sensor.pre);//CRC
 
                     for (int j = 0; j < WRITE_COUNT; j++)
                     {
@@ -1482,6 +1488,11 @@ namespace Charaterizator
                             if ((sensor.state & 0x00FF) != 0) //первый байт статуса
                             {
                                 ReadAvtState = 1;
+                                if ((sensor.state & 0x00FF) == 0x40)
+                                {
+                                    return -8;//команда  не найдена
+                                }
+
                                 if (Program.txtlog!= null)
                                     Program.txtlog.WriteLineLog(string.Format("HART: Ошибка выполнения команды {0}. Статус {1}", CommandCod, sensor.state), 1);
                                 return -7;
