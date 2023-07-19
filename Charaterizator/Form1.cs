@@ -579,6 +579,7 @@ namespace Charaterizator
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Коммутатор-1 подключен";
                 Program.txtlog.WriteLineLog("Коммутатор-1 подключен", 0);
+                //dataGridView1.
             }
             else
             {
@@ -4371,7 +4372,8 @@ namespace Charaterizator
             else
             {
                 Program.txtlog.WriteLineLog("VR: Нет cвязи c задатчиком давления.", 1);
-                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с задатчиком давления", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (MessageBox.Show("Хотите установить давление " + strValue + "кПа в ручную?", "Нет соединения с задатчиком давления", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+//                if (MessageBox.Show("Хотите установить давление в ручную?", "Нет соединения с задатчиком давления", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     numMensorPoint.Text = strValue;
                     PressureReady = true;

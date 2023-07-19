@@ -603,7 +603,7 @@ namespace Charaterizator
         //Расчет отклонения
         public void CalcDeviation(int i, bool SensorAbsPressuer)
         {
-            double P, Pmax = 0, V, Vmax = 0, V0 = 0, Temp = -10000;
+            double P, Pmax = 0, V, Vmax = 0, V0 = 0, P0 = 0, Temp = -10000;
             for (int j = 0; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
             {
                 if (Math.Abs(Channal[i].Points[j].Temperature - Temp)>1)//новая температура
@@ -638,6 +638,7 @@ namespace Charaterizator
                     Pmax = 0;
                     Vmax = 0;
                     V0 = 0;
+                    P0 = 0;
                 }
 
                 P = Channal[i].Points[j].Pressure;
@@ -649,15 +650,13 @@ namespace Charaterizator
                 }
                 if (P <= 0.1)
                 {
-                    if (SensorAbsPressuer)
-                    {
-                        V0 = CalcPressDeviationAbs(P, Vmax, V, Pmax);
-                    }
-                    else
-                    {
-                        V0 = V;
-                    }
+                    V0 = V;
+                    P0 = P;
                 }
+            }
+            if (SensorAbsPressuer)
+            {
+                V0 = CalcPressDeviationAbs(P0, Pmax, V0, Vmax);
             }
 
 
@@ -696,22 +695,22 @@ namespace Charaterizator
         }
 
         /// <summary>
-        /// U0 = V0 — (Vmax — V0)*Press/(Pmax-Press);
+        /// V0abs = V1 — (Vmax — V1)*P1/(Pmax-P1);
         /// </summary>
-        /// <param name="Press"></param>
+        /// <param name="P1"></param>
         /// <param name="V"></param>
         /// <param name="Vmax"></param>
         /// <param name="V0"></param>
         /// <param name="Pmax"></param>
         /// <returns></returns>
-        private double CalcPressDeviationAbs(double Press,  double Vmax, double V0, double Pmax)
+        private double CalcPressDeviationAbs(double P1, double Pmax, double V1, double Vmax)
         {
-            double Vd = Vmax - V0;
-            if ((Pmax == 0) || (Vd == 0)) return 0;
+            double Vd = Vmax - V1;
+            if (Pmax == P1) return 0;
 
-            double Vr = V0 + Vd * Press / (Pmax- Press);
+            double V0abs = V1 - Vd * P1 / (Pmax- P1);
 
-            return Vr;
+            return V0abs;
         }
 
         /*
