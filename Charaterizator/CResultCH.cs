@@ -601,7 +601,7 @@ namespace Charaterizator
         }
 
         //Расчет отклонения
-        public void CalcDeviation(int i)
+        public void CalcDeviation(int i, bool SensorAbsPressuer)
         {
             double P, Pmax = 0, V, Vmax = 0, V0 = 0, Temp = -10000;
             for (int j = 0; j < Channal[i].Points.Count; j++)//Ищем максимальные точки
@@ -647,8 +647,19 @@ namespace Charaterizator
                     Pmax = P;
                     Vmax = V;
                 }
-                if (P <= 0.1) V0 = V;
+                if (P <= 0.1)
+                {
+                    if (SensorAbsPressuer)
+                    {
+                        V0 = CalcPressDeviationAbs(P, Vmax, V, Pmax);
+                    }
+                    else
+                    {
+                        V0 = V;
+                    }
+                }
             }
+
 
             for (int jj = Channal[i].Points.Count - 1; jj >= 0; jj--)//расчитываем отклонения для всех точек с данной температурой
             {
@@ -682,8 +693,25 @@ namespace Charaterizator
             double Vr = V0 + Vd * Press / Pmax;
 
             return (V - Vr) * 100 / Vd;
+        }
 
+        /// <summary>
+        /// U0 = V0 — (Vmax — V0)*Press/(Pmax-Press);
+        /// </summary>
+        /// <param name="Press"></param>
+        /// <param name="V"></param>
+        /// <param name="Vmax"></param>
+        /// <param name="V0"></param>
+        /// <param name="Pmax"></param>
+        /// <returns></returns>
+        private double CalcPressDeviationAbs(double Press,  double Vmax, double V0, double Pmax)
+        {
+            double Vd = Vmax - V0;
+            if ((Pmax == 0) || (Vd == 0)) return 0;
 
+            double Vr = V0 + Vd * Press / (Pmax- Press);
+
+            return Vr;
         }
 
         /*
@@ -805,7 +833,7 @@ namespace Charaterizator
             return mtx;
         }
         */
-       
+
         public Matrix<double> GetTemperatureMatrix(int i)
         {
             Matrix<double> mtx = DenseMatrix.OfArray(new double[1, 20]);// { { -40, -10, 23, 50, 80 } });

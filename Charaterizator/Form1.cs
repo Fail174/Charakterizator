@@ -605,20 +605,20 @@ namespace Charaterizator
                Properties.Settings.Default.COMComutator_StopBits2,
                Properties.Settings.Default.COMComutator_Parity2) >= 0)
             {
-                btnCommutator.BackColor = Color.Green;
-                btnCommutator.Text = "Коммутатор-2 подключен";
+                btnCommutator2.BackColor = Color.Green;
+                btnCommutator2.Text = "Коммутатор-2 подключен";
                 Program.txtlog.WriteLineLog("Коммутатор-2 подключен", 0);
             }
             else
             {
-                btnCommutator.BackColor = Color.IndianRed;
-                btnCommutator.Text = "Коммутатор-2 не подключен";
+                btnCommutator2.BackColor = Color.IndianRed;
+                btnCommutator2.Text = "Коммутатор-2 не подключен";
                 Program.txtlog.WriteLineLog("Коммутатор-2 не подключен", 1);
             }
 
             Commutator1.DisConnect();
-            btnCommutator2.BackColor = Color.IndianRed;
-            btnCommutator2.Text = "Коммутатор-1 не подключен";
+            btnCommutator.BackColor = Color.IndianRed;
+            btnCommutator.Text = "Коммутатор-1 не подключен";
         }
 
         /// <summary>
@@ -5788,6 +5788,8 @@ namespace Charaterizator
 
             for (int i = 0; i < ResultCH.Channal.Count; i++)//
             {
+                string SelectModel = new String(sensors.sensorList[i].PressureModel);
+                SensorAbsPressuer = (SelectModel[1] == '0');
                 if (ResultCH.Channal[i].Points.Count <= 0)
                 {
                     //Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
@@ -5796,7 +5798,7 @@ namespace Charaterizator
                 }
                 else
                 {
-                    ResultCH.CalcDeviation(i);
+                    ResultCH.CalcDeviation(i, SensorAbsPressuer);
                     ResultCH.SaveToArhiv(i);
                     UpDateCharakterizatorGrid(i);
                 }
