@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Printing;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6897,7 +6898,25 @@ namespace Charaterizator
                 }
             }
         }
-      
+
+        private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintDocument printDoc = new PrintDocument();
+            printDoc.DefaultPageSettings.Landscape = true;
+            printDoc.PrintPage += PrintPageHandler;
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = printDoc;
+            
+            if (printDialog.ShowDialog() == DialogResult.OK)
+                printDialog.Document.Print();
+        }
+        void PrintPageHandler(object sender, PrintPageEventArgs e)
+        {
+            Bitmap bmp = new Bitmap(dataGridView1.Width, dataGridView1.Height);
+            Rectangle targetBounds = new Rectangle(0,0, dataGridView1.Width, dataGridView1.Height);
+            dataGridView1.DrawToBitmap(bmp,targetBounds);
+            e.Graphics.DrawImage(bmp, e.PageBounds);
+        }
     }
 }
 

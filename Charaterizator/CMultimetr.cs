@@ -15,7 +15,7 @@ namespace Charaterizator
         public int WAIT_READY = 300;    //время ожидания стабилизации тока, мсек
         public int WAIT_TIMEOUT = 300;  //таймаут ожидания ответа от мультиметра, мсек
 //        public int READ_COUNT = 20;   //количество опросов мультиметра, раз
-        public int READ_PERIOD = 1000;  //период опроса мультиметра, мсек
+        public int READ_PERIOD = 100;  //период опроса мультиметра, мсек
         public int SAMPLE_COUNT = 30;   //количество отчетов при усреднении
 
         public bool Connected;
@@ -264,7 +264,7 @@ namespace Charaterizator
                             Mean = Value + Mean;
                             if (Max < Value) Max = Value;
                             if (Min > Value) Min = Value;
-                            Thread.Sleep(READ_PERIOD);
+                            //Thread.Sleep(READ_PERIOD);
                         }
                         else
                         {
