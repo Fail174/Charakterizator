@@ -78,6 +78,7 @@ namespace Charaterizator
         private readonly Font DrawingFont = new Font(new FontFamily("DS-Digital"), 28.0F);
         private CMultimetr Multimetr = new CMultimetr();
         private ClassEni100 sensors = new ClassEni100(60 / MaxLevelCount);
+        private List<SensorID> sensorArhiv = new List<SensorID>();//предыдущий список обнаруженных датчиков
         private FormSwitch Commutator;// = new FormSwitch();
         private FormSwitch Commutator1 = new FormSwitch();
         private FormSwitch Commutator2 = new FormSwitch();
@@ -579,6 +580,7 @@ namespace Charaterizator
                 btnCommutator.BackColor = Color.Green;
                 btnCommutator.Text = "Коммутатор-1 подключен";
                 Program.txtlog.WriteLineLog("Коммутатор-1 подключен", 0);
+                SensorListCopy();
                 //dataGridView1.
             }
             else
@@ -609,6 +611,7 @@ namespace Charaterizator
                 btnCommutator2.BackColor = Color.Green;
                 btnCommutator2.Text = "Коммутатор-2 подключен";
                 Program.txtlog.WriteLineLog("Коммутатор-2 подключен", 0);
+                SensorListCopy();
             }
             else
             {
@@ -806,12 +809,17 @@ namespace Charaterizator
             //}
         }
 
+
+        /// <summary>
+        /// Обновление грида списка обнаруженных датчиков i-ой записью
+        /// </summary>
+        /// <param name="i"> номер канала с датчиком</param>
         private void UpdateDataGrids(int i)
         {
             dataGridView1.Rows[i].Cells[sen].Value = sensors.sensor.GetdevType() + " : " + new String(sensors.sensor.PressureModel);     //тип датчика
             dataGridView1.Rows[i].Cells[zn].Value = sensors.sensor.uni.ToString();   //заводской номер
             dataGridView1.Rows[i].Cells[sel].Value = true;   //Добавлен в список
-                                                             //            dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.Green;
+            //            dataGridView1.Rows[i].Cells[3].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[ok].Style.BackColor = Color.Green;
             dataGridView1.Rows[i].Cells[ok].Value = true;                            //исправность датчика                            
         }
@@ -2110,7 +2118,7 @@ namespace Charaterizator
             }
             if (SensorFind)
             {
-                CreatSessionFiles();//создаем временные файла результатов
+                CreatSessionFiles();//создаем временные файла результатов (читаем созданные ранее)
                 return 0;
             }
             else
@@ -5790,8 +5798,13 @@ namespace Charaterizator
 
             for (int i = 0; i < ResultCH.Channal.Count; i++)//
             {
-                string SelectModel = new String(sensors.sensorList[i].PressureModel);
-                SensorAbsPressuer = (SelectModel[1] == '0');
+                string SelectModel = new String(ResultCH.Channal[i].PressureModel);
+                if (SelectModel.Length > 1)
+                { 
+                    SensorAbsPressuer = (SelectModel[1] == '0');
+                }else{
+                    SensorAbsPressuer = false;
+                }
                 if (ResultCH.Channal[i].Points.Count <= 0)
                 {
                     //Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
@@ -6920,6 +6933,27 @@ namespace Charaterizator
             Rectangle targetBounds = new Rectangle(0,0, dataGridView1.Width, dataGridView1.Height);
             dataGridView1.DrawToBitmap(bmp,targetBounds);
             e.Graphics.DrawImage(bmp, e.PageBounds);
+        }
+
+        /// <summary>
+        /// Меняем местам текущий список датчикови архивный
+        /// восстанавливаем грид
+        /// </summary>
+        void SensorListCopy()
+        {
+            //sensorArhiv.Clear();
+            List<SensorID> tmp = sensorArhiv;
+            sensorArhiv = sensors.sensorList.ToList();
+            sensors.sensorList = tmp.ToList();
+            UpdateItems();
+            for (int i = 0; i < Commutator.MaxChannal; i++)
+            {
+                if (sensors.SelectSensor(i))
+                {
+                    UpdateDataGrids(i);
+                }
+            }
+            CreatSessionFiles();
         }
     }
 }

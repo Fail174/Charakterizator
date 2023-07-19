@@ -384,14 +384,14 @@ namespace Charaterizator
         }
 
         //поиск датчика в списке по номеру канала
-        public bool SelectSensor(int index)
+        public bool SelectSensor(int ch)
         {
             for (int i = 0; i < sensorList.Count; i++)
             {
-                if (sensorList[i].Channal == index)
+                if (sensorList[i].Channal == ch)
                 {//датчик в канале найден
                     sensor = sensorList[i];
-                    SelSensorChannal = index;
+                    SelSensorChannal = ch;
                     SelSensorIndex = i;
                     return true;
                 }
