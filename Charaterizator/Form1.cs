@@ -79,7 +79,7 @@ namespace Charaterizator
         private CMultimetr Multimetr = new CMultimetr();
         private ClassEni100 sensors = new ClassEni100(60 / MaxLevelCount);
         private List<SensorID> sensorArhiv = new List<SensorID>();//предыдущий список обнаруженных датчиков
-        private FormSwitch Commutator;// = new FormSwitch();
+        private FormSwitch Commutator = null;// = new FormSwitch();
         private FormSwitch Commutator1 = new FormSwitch();
         private FormSwitch Commutator2 = new FormSwitch();
         private FormMensor Mensor = new FormMensor();
@@ -567,6 +567,8 @@ namespace Charaterizator
         // Подключение КОММУТАТОРА
         private void btnCommutator_Click(object sender, EventArgs e)
         {
+            if (Commutator == Commutator1) return;
+
             CommutatorReadError = 0;
 
             Commutator = Commutator1;
@@ -598,6 +600,8 @@ namespace Charaterizator
 
         private void btnCommutator2_Click(object sender, EventArgs e)
         {
+            if (Commutator == Commutator2) return;
+
             CommutatorReadError = 0;
 
             Commutator = Commutator2;
@@ -6919,7 +6923,7 @@ namespace Charaterizator
         private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PrintDocument printDoc = new PrintDocument();
-            printDoc.DefaultPageSettings.Landscape = true;
+            //printDoc.DefaultPageSettings.Landscape = true;
             printDoc.PrintPage += PrintPageHandler;
             PrintDialog printDialog = new PrintDialog();
             printDialog.Document = printDoc;
@@ -6929,10 +6933,36 @@ namespace Charaterizator
         }
         void PrintPageHandler(object sender, PrintPageEventArgs e)
         {
-            Bitmap bmp = new Bitmap(dataGridView1.Width, dataGridView1.Height);
+            /*Bitmap bmp = new Bitmap(dataGridView1.Width, dataGridView1.Height);
             Rectangle targetBounds = new Rectangle(0,0, dataGridView1.Width, dataGridView1.Height);
             dataGridView1.DrawToBitmap(bmp,targetBounds);
-            e.Graphics.DrawImage(bmp, e.PageBounds);
+            e.Graphics.DrawImage(bmp, e.PageBounds);*/
+            string str;
+            if (Commutator == Commutator1) { str = "\tКоммутатор 1 \n"; }
+            else { str = "\tКоммутатор 2 \n"; }
+            str = str +"№" + "\t" + "Вкл." + "\t" +"Датчик" + "\t\t" + "Зав.номер" + "\t" + "Пит."+ "\t" + "Испр." + "\n";
+            for (int i = 0; i <= (dataGridView1.RowCount - 1); i++)
+            {
+                
+                for (int j = 0; j < dataGridView1.Rows[i].Cells.Count; j++)
+                {
+                    if (dataGridView1.Rows[i].Cells[j].Value is bool)
+                    {
+                        if ((bool)dataGridView1.Rows[i].Cells[j].Value)
+                        {
+                            str = str + "V" + "\t";
+                        }else{
+                            str = str + "-" + "\t";
+                        }
+                    }
+                    else
+                    {
+                        str = str + dataGridView1.Rows[i].Cells[j].Value.ToString() + "\t";
+                    }
+                }
+                str = str + "\n";
+            }
+            e.Graphics.DrawString(str, new Font("Arial", 11), Brushes.Black, 0, 0);
         }
 
         /// <summary>

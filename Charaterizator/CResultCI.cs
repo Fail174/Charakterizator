@@ -101,7 +101,7 @@ namespace Charaterizator
         private string GetStringFromPoint(SPointCI point)
         {
             return point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("       +000.0;       -000.0;          0.0") + " |" +
+                point.Temperature.ToString("      +000.00;      -000.00;          0.0") + " |" +
                 point.I4.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
                 point.I20.ToString("   +0000.0000;   -0000.0000;          0.0") + " |";
         }
@@ -222,14 +222,12 @@ namespace Charaterizator
                             if (strarr.Length > 3)
                             {
                                 point.Datetime = Convert.ToDateTime(strarr[0]);
-                                point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.I4 = double.Parse(strarr[2].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.I20 = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                /*
-                                point.Temperature = Convert.ToDouble(strarr[1]);
-                                point.I4 = Convert.ToDouble(strarr[2]);
-                                point.I20 = Convert.ToDouble(strarr[3]);
-                                */
+                                double.TryParse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.Temperature);
+                                double.TryParse(strarr[2].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.I4);
+                                double.TryParse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.I20);
+                                //point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                //point.I4 = double.Parse(strarr[2].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                //point.I20 = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 ch.Points.Add(point);
                             }
                         } while (!reader.EndOfStream);

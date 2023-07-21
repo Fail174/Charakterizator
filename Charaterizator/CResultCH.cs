@@ -239,12 +239,13 @@ namespace Charaterizator
         private string GetStringFromPoint(SPoint point)
         {
             return  point.Datetime.ToString() + "|" +
-                point.Temperature.ToString("       +000.0;       -000.0;          0.0") + " |" +
-                point.Diapazon.ToString("           00") + " |" +
-                point.Pressure.ToString("    +00000.00;    -00000.00;          0.0") + " |" +
-                point.OutVoltage.ToString("   +0000.0000;   -0000.0000;          0.0") + " |" +
-                point.Resistance.ToString("   00000.0000") + " |"+
-                point.Deviation.ToString("   +0000.0000;   -0000.0000;          0.0") + " |";
+                point.Temperature.ToString("      +000.00;      -000.00;          0.0") + " |" +
+                point.Diapazon.ToString   ("           00") + " |" +
+                point.Pressure.ToString   ("   +00000.000;   -00000.000;          0.0") + " |" +
+                point.OutVoltage.ToString ("   +0000.0000;   -0000.0000;          0.0") + " |" +
+                point.Resistance.ToString ("   00000.0000;  -00000.0000;          0.0") + " |" +
+                //point.Resistance.ToString("   +00000.0000") + " |"+
+                point.Deviation.ToString  ("   +0000.0000;   -0000.0000;          0.0") + " |";
         }
 
         //создаем файл  архива на диске
@@ -559,16 +560,22 @@ namespace Charaterizator
                             if (strarr.Length > 5)
                             {
                                 point.Datetime = Convert.ToDateTime(strarr[0]);
-                                point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.Diapazon = Convert.ToInt32(strarr[2]);
-                                point.Pressure = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.OutVoltage = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                                point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                double.TryParse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator),NumberStyles.Float, CultureInfo.InvariantCulture, out point.Temperature);
+                                int.TryParse(strarr[2], out point.Diapazon);
+                                double.TryParse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.Pressure);
+                                double.TryParse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.OutVoltage);
+                                double.TryParse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.Resistance);
+                                //point.Temperature = double.Parse(strarr[1].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                //point.Diapazon = Convert.ToInt32(strarr[2]);
+                                //point.Pressure = double.Parse(strarr[3].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                //point.OutVoltage = double.Parse(strarr[4].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                //point.Resistance = double.Parse(strarr[5].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                 if (strarr.Length > 6)
                                 {
                                     if (strarr[6] != "")
                                     {
-                                        point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                                        double.TryParse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), NumberStyles.Float, CultureInfo.InvariantCulture, out point.Deviation);
+                                        //point.Deviation = double.Parse(strarr[6].Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
                                     }
                                     else
                                     {
