@@ -1201,12 +1201,21 @@ namespace Charaterizator
         //Чтение параметров выбранного датчика
         private void ReadSensor()
         {
-            if (cbChannalCharakterizator.Text == "") return;
+            string ch_str="";
+            if (tabControl1.SelectedIndex == 1)
+            {
+                ch_str = cbChannalCharakterizator.Text;
+            }
+            if (tabControl1.SelectedIndex == 2)
+            {
+                ch_str = cbChannalVerification.Text;
+            }
+            if (ch_str == "") return; 
             try
             {
                 isSensorRead = true;
 
-                string str = cbChannalCharakterizator.Text.Remove(0, 6);
+                string str = ch_str.Remove(0, 6);
                 int i = Convert.ToInt32(str) - 1;
 
                 //                int i = cbChannalCharakterizator.SelectedIndex;
