@@ -939,7 +939,7 @@ namespace Charaterizator
             int StartNumber = 0;    //начальный канал
             int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
 
-            Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 2);
+            Program.txtlog.WriteLineLog("CAP: Старт операции чтения ЦАП ... ", 2, true);
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
@@ -973,7 +973,7 @@ namespace Charaterizator
                         else
                         {
                             I4 = 0;
-                            Program.txtlog.WriteLineLog("CAP:Ток 4мА не установлен!", 1);
+                            Program.txtlog.WriteLineLog("CAP:Ток 4мА не установлен! в канале " + (i + 1).ToString(), 1, true);
                         }
                         ci++;
                         Application.DoEvents();
@@ -992,7 +992,7 @@ namespace Charaterizator
                         else
                         {
                             I20 = 0;
-                            Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен!", 1);
+                            Program.txtlog.WriteLineLog("CAP:Ток 20мА не установлен! в канале " + (i + 1).ToString(), 1, true);
                         }
                         ci++;
                         Application.DoEvents();
@@ -1019,13 +1019,13 @@ namespace Charaterizator
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("CAP: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("CAP: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 sensors.С40WriteFixCurrent(0);
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i           
                 seli++;
             }
-            Program.txtlog.WriteLineLog("Чтение ЦАП завершено!", 2);
+            Program.txtlog.WriteLineLog("Чтение ЦАП завершено!", 2, true);
 
         }
 
@@ -1042,7 +1042,7 @@ namespace Charaterizator
             float I4 = 0;
             float I20 = 0;
 
-            Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 2);
+            Program.txtlog.WriteLineLog("CL: Старт калибровки тока датчиков. Температура: " + numTermoCameraPoint.Text, 2, true);
             for (int i = 0; i < Commutator.MaxChannal; i++)
             {
                 if (ProcessStop) return;//прекращаем поиск 
@@ -1093,7 +1093,7 @@ namespace Charaterizator
                                 cc++;
                                 continue;
                             }*/
-                            Program.txtlog.WriteLineLog("CL: Превышено максимальное отклонение тока ЦАП (4мА)", 1);
+                            Program.txtlog.WriteLineLog(string.Format("CL: Превышено максимальное отклонение тока ЦАП (4мА), в канале {0}", i + 1), 1, true);
                             ErrorList.Add(i);
                             continue;
                         }
@@ -1123,7 +1123,7 @@ namespace Charaterizator
                                 cc++;
                                 continue;
                             }*/
-                            Program.txtlog.WriteLineLog("CL: Превышено максимальное отклонение тока ЦАП (20мА)", 1);
+                            Program.txtlog.WriteLineLog(string.Format("CL: Превышено максимальное отклонение тока ЦАП (20мА), в канале {0}", i + 1), 1, true);
                             ErrorList.Add(i);
                             continue;
                         }
@@ -1157,7 +1157,7 @@ namespace Charaterizator
 
                     if ((Math.Abs(I4 - 4.0) > SKO_CALIBRATION_CURRENT) && (Math.Abs(I20 - 20.0) > SKO_CALIBRATION_CURRENT))
                     {
-                        Program.txtlog.WriteLineLog("CL: Значение тока ЦАП вне допуска. Калибровка не выполнена!", 1);
+                        Program.txtlog.WriteLineLog(string.Format("CL: Значение тока ЦАП вне допуска. Калибровка не выполнена!, в канале {0}", i + 1), 1, true);                       
                         ErrorList.Add(i);
                     }
                     else
@@ -1168,16 +1168,16 @@ namespace Charaterizator
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog(string.Format("CL: Датчик не обнаружен в канале {0}", i + 1), 1);
+                    Program.txtlog.WriteLineLog(string.Format("CL: Датчик не обнаружен! в канале {0}", i + 1), 1, true);
                     ErrorList.Add(i);
                 }
                 //Commutator.SetConnectors(i, 1);
                 seli++;
             }
-            Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 2);
+            Program.txtlog.WriteLineLog("CL: Калибровка ЦАП завершена!", 2, true);
             for (int ei = 0; ei < ErrorList.Count; ei++)
             {
-                Program.txtlog.WriteLineLog("CL: Не выполнена калибровка датчика в канале: " + (ei + 1).ToString(), 1);
+                Program.txtlog.WriteLineLog("CL: Не выполнена калибровка датчика в канале " + (ei + 1).ToString(), 1, true);
             }
         }
 
@@ -1280,7 +1280,7 @@ namespace Charaterizator
                 Diapazon = 1;
             }
 
-            Program.txtlog.WriteLineLog("CH: Старт операции характеризации для заданного давления ... ", 2);
+            Program.txtlog.WriteLineLog("CH: Старт операции характеризации для заданного давления... ", 2);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             /*            int step = Commutator.MaxChannal / MaxLevelCount;
@@ -1338,7 +1338,7 @@ namespace Charaterizator
                     {
                         if (!sensors.ValidateSensorParam())
                         {
-                            Program.txtlog.WriteLineLog("CH: Считаны недопустимые параметры датчика в канале " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Считаны недопустимые параметры датчика в канале " + (i + 1).ToString(), 1, true);
                         }
                         else
                         {
@@ -1362,12 +1362,12 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("CH: Параметры датчика не прочитаны!", 1);
+                        Program.txtlog.WriteLineLog("CH: Параметры датчика не прочитаны в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 seli++;
@@ -1383,7 +1383,7 @@ namespace Charaterizator
             int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             List<int> ErrorList = new List<int>(); 
 
-            Program.txtlog.WriteLineLog("CH: Старт расчета коэффициентов для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("CH: Старт расчета коэффициентов для выбранных датчиков... ", 2, true);
 
             pbCHProcess.Maximum = FinishNumber - StartNumber;
             pbCHProcess.Minimum = 0;
@@ -1404,13 +1404,13 @@ namespace Charaterizator
                     sensors.sensor.SetOfCoef = 0;//1й набор
                     if (!sensors.C253SensorCoefficientNumber())//установка номера набора коэффициентов
                     {
-                        Program.txtlog.WriteLineLog("CH: Номер набора коэффициентов не установлен в датчике канала " + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog("CH: Номер набора коэффициентов не установлен в датчике канала " + (i + 1).ToString(), 1, true);
                     }
 
                     double Pmax = sensors.sensor.UpLevel; // - sensors.sensor.DownLevel; // Делим на максимум , а не на диапазон (16.03.2022) 
                     if ((Pmax <= 0) || (Pmax > 1000000))
                     {
-                        Program.txtlog.WriteLineLog("CH: Не верные НПИ и ВПИ датчика в канале:" + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog("CH: Не верные НПИ и ВПИ датчика в канале " + (i + 1).ToString(), 1, true);
                         ErrorList.Add(i);
                         continue;
                     }
@@ -1491,7 +1491,7 @@ namespace Charaterizator
 
                     if (NCoef < (q_max+1)*(p_max+1))
                     {
-                        Program.txtlog.WriteLineLog("CH: Недостаточное количество точек при характеризация: " + ResulCoefmtx.RowCount.ToString(), 1);
+                        Program.txtlog.WriteLineLog("CH: Недостаточное количество точек при характеризация: " + ResulCoefmtx.RowCount.ToString(), 1, true);
                         ErrorList.Add(i);
                         continue;
                     }
@@ -1500,7 +1500,7 @@ namespace Charaterizator
                     //********************************************************************************
                     if (!sensors.C152SensorCoefficientRead())//чтение доп параметров датчика
                     {
-                        Program.txtlog.WriteLineLog("CH: Ошибка чтения дополнительных параметров датчика в канале " + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog("CH: Ошибка чтения дополнительных параметров датчика в канале " + (i + 1).ToString(), 1, true);
                         ErrorList.Add(i);
                         continue;
                     } else {
@@ -1510,7 +1510,7 @@ namespace Charaterizator
                             sensors.sensor.TPower1 = p_max;
                             if (!sensors.C151SensorCoefficientWrite())//запись доп параметров датчика
                             {
-                                Program.txtlog.WriteLineLog("CH: Ошибка записи дополнительных параметров датчика в канале " + (i + 1).ToString(), 1);
+                                Program.txtlog.WriteLineLog("CH: Ошибка записи дополнительных параметров датчика в канале " + (i + 1).ToString(), 1, true);
                                 ErrorList.Add(i);
                                 continue;
                             }
@@ -1539,7 +1539,7 @@ namespace Charaterizator
                     // доработка 11.04. Сравнение допустимого отклонения с заданным пороговым значкением перед записью коэффициентов в датчик 
                     if (ResulCoefmtx[NCoef, 0] > TrhDeviation)
                     {
-                        Program.txtlog.WriteLineLog(string.Format("CH: Внимание! Рассчитанное допустимое отклонение датчика в канале{0} выше порогового значения!", i + 1), 1);
+                        Program.txtlog.WriteLineLog(string.Format("CH: Рассчитанное допустимое отклонение датчика в канале {0} выше порогового значения!", i + 1), 1, true);
                         //Program.txtlog.WriteLineLog(string.Format("CH: Коэффициенты хараткеризации не будут записсына в датчик в канале{0}...", i + 1), 1);
                         ErrorList.Add(i);
                         continue;
@@ -1547,14 +1547,14 @@ namespace Charaterizator
                     else
                     {
                         bool d_f = true;
-                        Program.txtlog.WriteLineLog(string.Format("CH: Рассчитанное допустимое отклонение датчика в канале{0} находится в допустимых пределах", i + 1), 2);
+                        Program.txtlog.WriteLineLog(string.Format("CH: Рассчитанное допустимое отклонение датчика в канале {0} находится в допустимых пределах", i + 1), 2);
                         Program.txtlog.WriteLineLog(string.Format("CH: Старт записи коэффициентов в датчик в канале{0}...", i + 1), 2);
 
                         if (!sensors.C200SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика double
                         {
                             if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика float
                             {
-                                Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                                Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1, true);
                                 ErrorList.Add(i);
                                 continue;
                             }
@@ -1564,7 +1564,7 @@ namespace Charaterizator
 
                         if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
                         {
-                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1, true);
                             ErrorList.Add(i);
                             continue;
                         }
@@ -1574,7 +1574,7 @@ namespace Charaterizator
                         sensors.sensor.SetOfCoef = 1;//2ой набор
                         if (!sensors.C253SensorCoefficientNumber())//установка номера набора коэффициентов
                         {
-                            Program.txtlog.WriteLineLog("CH: Номер набора коэффициентов не установлен в датчике канала " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Номер набора коэффициентов не установлен в датчике канала " + (i + 1).ToString(), 1, true);
                         }
                         else
                         {
@@ -1595,7 +1595,7 @@ namespace Charaterizator
                             {
                                 if (!sensors.C200SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика float
                                 {
-                                    Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                                    Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1, true);
                                     ErrorList.Add(i);
                                     continue;
                                 }
@@ -1604,7 +1604,7 @@ namespace Charaterizator
                             {
                                 if (!sensors.C250SensorCoefficientWrite())//запись коэффициентов в ОЗУ датчика float
                                 {
-                                    Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1);
+                                    Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в датчик в канале " + (i + 1).ToString(), 1, true);
                                     ErrorList.Add(i);
                                     continue;
                                 }
@@ -1625,7 +1625,7 @@ namespace Charaterizator
 
                         if (!sensors.C252EEPROMCoefficientWrite())//запись в коэффициентов EEPROM
                         {
-                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Ошибка записи коэффициентов в EEPROM датчика в канале " + (i + 1).ToString(), 1, true);
                             ErrorList.Add(i);
                             continue;
                         }
@@ -1638,7 +1638,7 @@ namespace Charaterizator
                         Thread.Sleep(100);
                         if (!sensors.С42SensorReset())//перезагрузка датчика
                         {
-                            Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! " + (i + 1).ToString(), 1);
+                            Program.txtlog.WriteLineLog("CH: Сброс датчика не выполнен! в канале " + (i + 1).ToString(), 1, true);
                             ErrorList.Add(i);
                         }
                         else
@@ -1647,17 +1647,17 @@ namespace Charaterizator
                         }
                     }
                 } else {
-                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("CH: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                     ErrorList.Add(i);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i   
                 //seli++;
             }
-            Program.txtlog.WriteLineLog("CH: Операция вычисления и записи коэффициентов завершена!", 2);
+            Program.txtlog.WriteLineLog("CH: Операция вычисления и записи коэффициентов завершена!", 2, true);
 
             for (int ei = 0; ei < ErrorList.Count; ei++)
             {
-                Program.txtlog.WriteLineLog("CH: Не выполнена запись коэффициентов датчика в канале: " + (ei + 1).ToString(), 1);
+                Program.txtlog.WriteLineLog("CH: Не выполнена запись коэффициентов датчика в канале " + (ei + 1).ToString(), 1, true);
             }
         }
 
@@ -1678,7 +1678,7 @@ namespace Charaterizator
             VPI = Convert.ToSingle(nud_VR_VPI.Value);
             NPI = Convert.ToSingle(nud_VR_NPI.Value);
 
-            Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранного давления ... ", 2);
+            Program.txtlog.WriteLineLog("VR: Старт операции верификации для выбранного давления... ", 2, true);
 
             //******** расчитываем номера каналов текущего выбранного уровня ********************************
             /*           int step = Commutator.MaxChannal / MaxLevelCount;
@@ -1730,7 +1730,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog("VR: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1, true);
                     }
 
 
@@ -1760,17 +1760,17 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("VR: Параметры датчика не прочитаны!", 1);
+                        Program.txtlog.WriteLineLog("VR: Параметры датчика не прочитаны! в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                 seli++;
             }
-            Program.txtlog.WriteLineLog("VR: Операция верификации для выбранного давления завершена ", 2);
+            Program.txtlog.WriteLineLog("VR: Операция верификации для выбранного давления завершена ", 2, true);
         }
 
         //Запись НПИ и ВПИ в выбранные датчики
@@ -1782,7 +1782,7 @@ namespace Charaterizator
             VPI = Convert.ToSingle(nud_VR_VPI.Value);
             NPI = Convert.ToSingle(nud_VR_NPI.Value);
 
-            Program.txtlog.WriteLineLog("VR: Старт записи НПИ ВПИ для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("VR: Старт записи НПИ ВПИ для выбранных датчиков... ", 2, true);
             pbVRProcess.Maximum = FinishNumber - StartNumber;
             pbVRProcess.Minimum = 0;
             pbVRProcess.Value = 0;
@@ -1808,22 +1808,22 @@ namespace Charaterizator
                     {
                         if (res == -6)
                         {
-                            Program.txtlog.WriteLineLog("VR: Неверные знаения НПИ ВПИ датчика. Команда не выполнена!", 1);
+                            Program.txtlog.WriteLineLog("VR: Неверные знаения НПИ ВПИ датчика. Команда не выполнена! в канале " + (i + 1).ToString(), 1, true);
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog("VR: Запись НПИ ВПИ датчика не выполнена!", 1);
+                            Program.txtlog.WriteLineLog("VR: Запись НПИ ВПИ датчика не выполнена! в канале " + (i + 1).ToString(), 1, true);
                         }
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("VR: Операция записи НПИ ВПИ завершена", 2);
+            Program.txtlog.WriteLineLog("VR: Операция записи НПИ ВПИ завершена", 2, true);
 
         }
 
@@ -1841,7 +1841,7 @@ namespace Charaterizator
             int StartNumber = 0;    //начальный канал
             int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
 
-            Program.txtlog.WriteLineLog("VR: Установка нуля для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("VR: Установка нуля для выбранных датчиков... ", 2, true);
             pbVRProcess.Maximum = FinishNumber - StartNumber;
             pbVRProcess.Minimum = 0;
             pbVRProcess.Value = 0;
@@ -1868,7 +1868,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog("VR: Установка нуля датчика ДА не выполнена!", 1);
+                            Program.txtlog.WriteLineLog("VR: Установка нуля датчика ДА не выполнена! в канале " + (i + 1).ToString(), 1, true);
                         }
                     }
                     else
@@ -1879,18 +1879,18 @@ namespace Charaterizator
                         }
                         else
                         {
-                            Program.txtlog.WriteLineLog("VR: Установка нуля датчика не выполнена!", 1);
+                            Program.txtlog.WriteLineLog("VR: Установка нуля датчика не выполнена! в канале " + (i + 1).ToString(), 1, true);
                         }
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("VR: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("VR: Операция установки нуля завершена", 2);
+            Program.txtlog.WriteLineLog("VR: Операция установки нуля завершена", 2, true);
         }
 
 
@@ -1900,7 +1900,7 @@ namespace Charaterizator
             dataGridView2.Rows.Clear();
             if ((ResultCH == null) || (ResultCH.Channal.Count <= i) || (i < 0) || (ResultCH.Channal[i].Points.Count <= 0))
             {
-                Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1);
+                Program.txtlog.WriteLineLog("Result CH: Результаты характеризации не сформированы!", 1, true);
                 return;
             }
 
@@ -1932,7 +1932,7 @@ namespace Charaterizator
 
             if ((ResultVR == null) || (ResultVR.Channal.Count <= i) || (i < 0) || (ResultVR.Channal[i].Points.Count <= 0))
             {
-                Program.txtlog.WriteLineLog("Result VR: Результаты верификации не сформированы!", 1);
+                Program.txtlog.WriteLineLog("Result VR: Результаты верификации не сформированы!", 1, true);
                 return;
             }
 
@@ -1963,7 +1963,7 @@ namespace Charaterizator
 
             if ((ResultMET == null) || (ResultMET.Channal.Count <= i) || (i < 0) || (ResultMET.Channal[i].Points.Count <= 0))
             {
-                Program.txtlog.WriteLineLog("Result MET: Результаты не сформированы!", 1);
+                Program.txtlog.WriteLineLog("Result MET: Результаты не сформированы!", 1, true);
                 return;
             }
 
@@ -2017,7 +2017,7 @@ namespace Charaterizator
             bool SensorFind = false;
             try
             {
-                Program.txtlog.WriteLineLog("Старт поиска датчиков...", 2);
+                Program.txtlog.WriteLineLog("Старт поиска датчиков...", 2, true);
                 pbSensorSeach.Maximum = Commutator.MaxChannal;
                 pbSensorSeach.Minimum = 0;
                 pbSensorSeach.Value = 0;
@@ -2065,7 +2065,7 @@ namespace Charaterizator
                                 //нет тока мультиметра, => датчик отсутсвует
                                 //                                Program.txtlog.WriteLineLog("Датчик не обнаружен! Ток потребления: " + Current.ToString(), 1);
                                 dataGridView1.Rows[i].Cells[sel].Value = false;
-                                Program.txtlog.WriteLineLog("Датчик не обнаружен! Ток потребления менее 1.5мА!", 1);
+                                Program.txtlog.WriteLineLog(string.Format("Датчик не обнаружен! На линии {0}. Ток потребления менее 1.5мА!", i + 1), 1, true);
 
                                 continue;
                             }
@@ -2085,10 +2085,10 @@ namespace Charaterizator
                                 sensors.EnterServis();
                                 sensors.TegRead();          //читаем информацию о датчике
                                 if (!sensors.C14SensorRead())       //чтение данных с датчика
-                                    Program.txtlog.WriteLineLog(string.Format("Параметры ПД датчика на линии {0} не прочитаны!", i + 1), 1);
+                                    Program.txtlog.WriteLineLog(string.Format("Параметры ПД датчика на линии {0} не прочитаны!", i + 1), 1, true);
                                 // Program.txtlog.WriteLineLog(string.Format("ВПИ ПД датчика {0}", sensors.sensor.UpLevel), 0);
                                 if (!sensors.C140ReadPressureModel())//читаем модель ПД
-                                    Program.txtlog.WriteLineLog(string.Format("Модель ПД датчика на линии {0} не прочитана!", i + 1), 1);
+                                    Program.txtlog.WriteLineLog(string.Format("Модель ПД датчика на линии {0} не прочитана!", i + 1), 1, true);
 
                                 Thread.Sleep(500);
                                 sensors.ParseReadBuffer(500);//ждем завершения операций по датчику в потоке
@@ -2104,25 +2104,25 @@ namespace Charaterizator
                             }
                             else
                             {
-                                Program.txtlog.WriteLineLog(string.Format("Датчик на линии {0} обнаружен. Ошибка подключения к датчику!", i + 1), 1);
+                                Program.txtlog.WriteLineLog(string.Format("Датчик на линии {0} обнаружен. Ошибка подключения к датчику!", i + 1), 1, true);
                             }
                         }
                         else
                         {
                             //                            Program.txtlog.WriteLineLog(string.Format("Нет подключения! Поиск датчиков на линии {0} не выполнен!",i+1), 1);
-                            Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1);
+                            Program.txtlog.WriteLineLog(string.Format("Датчики на линии {0} не обнаружены!", i + 1), 1, true);
                             dataGridView1.Rows[i].Cells[sel].Value = false;
                         }
 
                         //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                         pbSensorSeach.Value = i;
                     }
-                    Program.txtlog.WriteLineLog("Поиск датчиков завершен!", 2);
+                    Program.txtlog.WriteLineLog("Поиск датчиков завершен!", 2, true);
 
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1);
+                    Program.txtlog.WriteLineLog("Нет соединения с датчиками. Проверте подключение коммутатора.", 1, true);
                 }
             }
             finally
@@ -2146,6 +2146,9 @@ namespace Charaterizator
                 try
                 {
                     int i;
+                    // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+                    Program.txtlog.clear_rtbConsoleErrors();
+
                     for (i = 0; i < Commutator.MaxChannal; i++)
                     {
                         if (CheckChannalEnable(i)) //Есть выбранные каналы?
@@ -3515,6 +3518,9 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
+                // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+                Program.txtlog.clear_rtbConsoleErrors();
+
                 for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
@@ -3530,13 +3536,13 @@ namespace Charaterizator
                 {
 
                     btnCHStart.Text = "Выполняется процесс характеризации ... Остановить?";
-                    Program.txtlog.WriteLineLog("CH: Старт характеризации!", 2);
+                    Program.txtlog.WriteLineLog("CH: Старт характеризации!", 2, true);
                     UpdateItemState(2);
                     if (AutoRegim)
                     {
                         if (lvCHPressureSet.Items.Count <= 0)
                         {
-                            if (MessageBox.Show("Отсутсвуют точки давления. Продолжить характеризацию в ручную??", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            if (MessageBox.Show("Отсутсвуют точки давления. Продолжить характеризацию в ручную?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
                                 ReadSensorParametrs();
                             }
@@ -3583,7 +3589,7 @@ namespace Charaterizator
                         ReadSensorParametrs();
                     }
 
-                    Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2);
+                    Program.txtlog.WriteLineLog("CH: Операция характеризации завершена!", 2, true);
 
                 }
 
@@ -3618,7 +3624,7 @@ namespace Charaterizator
             }
             if ((e.ColumnIndex == sen) && (dataGridView1.RowCount > 0))//выбор датчиков
             {
-                if (MessageBox.Show("Отчистить список обнаруженных датчиков?", "Подтверждение операции", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (MessageBox.Show("Очистить список обнаруженных датчиков?", "Подтверждение операции", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     UpdateItems();
 
             }
@@ -3721,14 +3727,14 @@ namespace Charaterizator
             }*/
             if (strValue == "")
             {
-                MessageBox.Show("Выбирите значение температуры", "Не задана температура в термокамере");
+                MessageBox.Show("Выберите значение температуры", "Не задана температура в термокамере");
                 return;
             }
 
             if (ThermalCamera.Connected)
             {
                 numTermoCameraPoint.Text = strValue;
-                Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний.", 0);
+                Program.txtlog.WriteLineLog("Температура задана. Ожидаем завершение стабилизации показаний", 0);
                 TemperatureReady = true;
                 MessageBox.Show("Температура установлена.", "Успешное завершение операции");
             }
@@ -3818,7 +3824,8 @@ namespace Charaterizator
                     } while ((shift > SKO_PRESSURE) && (TimerTickCount < MENSOR_PRESSUER_WAIT / MainTimer.Interval));
                     if (TimerTickCount >= MENSOR_PRESSUER_WAIT / MainTimer.Interval)
                     {//давление не установлено
-                        Program.txtlog.WriteLineLog("CH: Истекло время установки давления в датчиках", 1);
+                        Program.txtlog.WriteLineLog("CH: Истекло время установки давления в датчиках!", 1, true);
+                        Program.txtlog.WriteLineLog("CH: Заданное давление в датчиках не установлено!", 1, true);
                         ProcessStop = true;
                     }
                     else
@@ -3842,7 +3849,7 @@ namespace Charaterizator
             else
             {
 
-                Program.txtlog.WriteLineLog("CH: Нет cвязи c задатчиком давления.", 1);
+                Program.txtlog.WriteLineLog("CH: Нет cвязи c задатчиком давления", 1);
                 if (MessageBox.Show("Хотите установить давление " + strValue + "кПа в ручную?", "Нет соединения с задатчиком давления", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     numMensorPoint.Text = strValue;
@@ -3872,6 +3879,9 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
+                // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+                Program.txtlog.clear_rtbConsoleErrors();
+
                 if (!Multimetr.Connected)
                 {
                     Program.txtlog.WriteLineLog("CI: Нет подключения к мультиметру, чтение ЦАП не выполнено!", 0);
@@ -3895,7 +3905,7 @@ namespace Charaterizator
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("Не заданны температура 23град для чтения ЦАП.", 1);
+                    Program.txtlog.WriteLineLog("Не заданны температура 23 град для чтения ЦАП.", 1);
                 }
             }
             else
@@ -3915,6 +3925,9 @@ namespace Charaterizator
         {
             if (!SensorBusy)
             {
+                // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+                Program.txtlog.clear_rtbConsoleErrors();
+
                 if (!Multimetr.Connected)
                 {
                     Program.txtlog.WriteLineLog("CL: Нет подключения к мультиметру, калибровка не выполнена!", 0);
@@ -4406,6 +4419,9 @@ namespace Charaterizator
 
         private void btnVRParamRead_Click(object sender, EventArgs e)
         {
+            // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+            Program.txtlog.clear_rtbConsoleErrors();
+
             if (!SensorBusy)
             {
                 int i;
@@ -4416,7 +4432,7 @@ namespace Charaterizator
                 }
                 if (i >= Commutator.MaxChannal)
                 {
-                    Program.txtlog.WriteLineLog("Не выбраны каналы для верификации датчиков. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("Не выбраны каналы для верификации датчиков. Операция прервана", 1);
                     return;
                 }
 
@@ -4426,7 +4442,7 @@ namespace Charaterizator
                 {
 
                     btnVRParamRead.Text = "Выполняется процесс верификации ... Остановить?";
-                    Program.txtlog.WriteLineLog("VR: Старт верификации!", 2);
+                    Program.txtlog.WriteLineLog("VR: Старт верификации!", 2, true);
                     UpdateItemState(6);
                     //ReadSensorPressure();
 
@@ -4515,7 +4531,7 @@ namespace Charaterizator
                         } while (TimerTickCount < SENSOR_PRESSUER_WAIT / MainTimer.Interval);
                         ReadSensorPressure();
                     }
-                    Program.txtlog.WriteLineLog("VR:Операция верификации завершена", 2);
+                    Program.txtlog.WriteLineLog("VR:Операция верификации завершена", 2, true);
 
                 }
 
@@ -4923,6 +4939,9 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
+                // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+                Program.txtlog.clear_rtbConsoleErrors();
+
                 for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
@@ -4944,7 +4963,7 @@ namespace Charaterizator
                 }
                 catch
                 {
-                    Program.txtlog.WriteLineLog("CH: Критическая ошибка записи коэффициентов.", 1);
+                    Program.txtlog.WriteLineLog("CH: Критическая ошибка записи коэффициентов.", 1, true);
                 }
                 finally
                 {
@@ -5227,7 +5246,7 @@ namespace Charaterizator
             int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             string unitstr = cb_MET_Unit.Text;
 
-            Program.txtlog.WriteLineLog("MET: Старт записи единицы измерения для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Старт записи единицы измерения для выбранных датчиков ... ", 2, true);
             pbMETProcess.Maximum = FinishNumber - StartNumber;
             pbMETProcess.Minimum = 0;
             pbMETProcess.Value = 0;
@@ -5250,17 +5269,17 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена!", 1);
+                        Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена! в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("MET: Операция записи единицы измерения завершена", 2);
+            Program.txtlog.WriteLineLog("MET: Операция записи единицы измерения завершена", 2, true);
         }
 
         //Запись НПИ и ВПИ в выбранные датчики (метролог)
@@ -5272,7 +5291,7 @@ namespace Charaterizator
             VPI = Convert.ToSingle(nud_MET_VPI.Value);
             NPI = Convert.ToSingle(nud_MET_NPI.Value);
 
-            Program.txtlog.WriteLineLog("MET: Старт записи НПИ ВПИ для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Старт записи НПИ ВПИ для выбранных датчиков ... ", 2, true);
             pbMETProcess.Maximum = FinishNumber - StartNumber;
             pbMETProcess.Minimum = 0;
             pbMETProcess.Value = 0;
@@ -5298,19 +5317,19 @@ namespace Charaterizator
                     {
                         if (res == -6)
                         {
-                            Program.txtlog.WriteLineLog("MET: Неверные знаения НПИ ВПИ датчика. Команда не выполнена!", 1);
+                            Program.txtlog.WriteLineLog("MET: Неверные знаения НПИ ВПИ датчика. Команда не выполнена!", 1, true);
                         }
-                        Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена!", 1);
+                        Program.txtlog.WriteLineLog("MET: Запись НПИ ВПИ датчика не выполнена! в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("MET: Операция записи НПИ ВПИ завершена", 2);
+            Program.txtlog.WriteLineLog("MET: Операция записи НПИ ВПИ завершена", 2, true);
 
         }
 
@@ -5326,7 +5345,7 @@ namespace Charaterizator
                 }
                 if (i >= Commutator.MaxChannal)
                 {
-                    Program.txtlog.WriteLineLog("MET:Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("MET: Не выбраны каналы для обнуления датчиков. Операция прервана.", 0);
                     return;
                 }
 
@@ -5368,7 +5387,7 @@ namespace Charaterizator
             int StartNumber = 0;    //начальный канал
             int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
 
-            Program.txtlog.WriteLineLog("MET: Установка нуля для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Установка нуля для выбранных датчиков ... ", 2, true);
             pbMETProcess.Maximum = FinishNumber - StartNumber;
             pbMETProcess.Minimum = 0;
             pbMETProcess.Value = 0;
@@ -5392,17 +5411,17 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("MET: Установка нуля датчика не выполнена!", 1);
+                        Program.txtlog.WriteLineLog("MET: Установка нуля датчика не выполнена! в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("MET: Операция установки нуля завершена", 2);
+            Program.txtlog.WriteLineLog("MET: Операция установки нуля завершена", 2, true);
         }
 
 
@@ -5413,7 +5432,7 @@ namespace Charaterizator
             int FinishNumber = Commutator.MaxChannal - 1;   //конечный канал
             float DTime = Convert.ToSingle(nud_MET_DTime.Value);
 
-            Program.txtlog.WriteLineLog("MET: Установка времени демпфирования для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Установка времени демпфирования для выбранных датчиков ... ", 2, true);
             pbMETProcess.Maximum = FinishNumber - StartNumber;
             pbMETProcess.Minimum = 0;
             pbMETProcess.Value = 0;
@@ -5437,17 +5456,17 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("MET: Установка времени демпфирования датчика не выполнена!", 1);
+                        Program.txtlog.WriteLineLog("MET: Установка времени демпфирования датчика не выполнена! в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
 
             }
-            Program.txtlog.WriteLineLog("MET: Операция установки времени демпфирования завершена", 2);
+            Program.txtlog.WriteLineLog("MET: Операция установки времени демпфирования завершена", 2, true);
         }
         private void btn_MET_Add_Click(object sender, EventArgs e)
         {
@@ -5552,6 +5571,10 @@ namespace Charaterizator
             if (!SensorBusy)
             {
                 int i;
+
+                // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+                Program.txtlog.clear_rtbConsoleErrors();
+
                 for (i = 0; i < Commutator.MaxChannal; i++)
                 {
                     if (CheckChannalEnable(i)) //Есть выбранные каналы?
@@ -5623,7 +5646,7 @@ namespace Charaterizator
             VPI = Convert.ToSingle(nud_MET_VPI.Value);
             NPI = Convert.ToSingle(nud_MET_NPI.Value);
 
-            Program.txtlog.WriteLineLog("MET: Старт операции для выбранных датчиков ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Старт операции для выбранных датчиков... ", 2, true);
 
             pbMETProcess.Maximum = FinishNumber - StartNumber;
             pbMETProcess.Minimum = 0;
@@ -5648,7 +5671,7 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("MET: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1);
+                        Program.txtlog.WriteLineLog("MET: Ошибка чтения НПИ ВПИ датчика в канале " + (i + 1).ToString(), 1, true);
                     }
 
 
@@ -5678,17 +5701,17 @@ namespace Charaterizator
                     }
                     else
                     {
-                        Program.txtlog.WriteLineLog("MET: Параметры датчика не прочитаны!", 1);
+                        Program.txtlog.WriteLineLog("MET: Параметры датчика не прочитаны! в канале " + (i + 1).ToString(), 1, true);
                     }
                 }
                 else
                 {
-                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1);
+                    Program.txtlog.WriteLineLog("MET: Датчик не найден в канале " + (i + 1).ToString(), 1, true);
                 }
                 //Commutator.SetConnectors(i, 1); // команда отключить датчик с индексом i                    
                 seli++;
             }
-            Program.txtlog.WriteLineLog("MET: Операция завершена ... ", 2);
+            Program.txtlog.WriteLineLog("MET: Операция завершена ... ", 2, true);
         }
 
 
@@ -5802,13 +5825,15 @@ namespace Charaterizator
         //Расчет отклонений по давлению при характеризации датчиков
         private void btnCalculateDeviation_Click(object sender, EventArgs e)
         {
+            // очищаем консоль для вывода сообщений об ошибках /12.07.2024
+            Program.txtlog.clear_rtbConsoleErrors();
+
             if (ResultCH == null)
             {
-                Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0);
+                Program.txtlog.WriteLineLog("CH: Результаты характеризации не сформированы!", 0, true);
                 return;
             }
-
-
+                        
             for (int i = 0; i < ResultCH.Channal.Count; i++)//
             {
                 string SelectModel = new String(ResultCH.Channal[i].PressureModel);
@@ -6095,7 +6120,7 @@ namespace Charaterizator
                 }
                 if (i >= Commutator.MaxChannal)
                 {
-                    Program.txtlog.WriteLineLog("MET: Не выбраны каналы для установки ед измерения датчиков. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("MET: Не выбраны каналы для установки ед. измерения датчиков. Операция прервана.", 0);
                     return;
                 }
 
@@ -6118,7 +6143,7 @@ namespace Charaterizator
                 //if (MessageBox.Show("Отменить установку единицы измерения датчиков?", "Подтверждение команды", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     ProcessStop = true;
-                    Program.txtlog.WriteLineLog("MET:Операция прекращена пользователем", 0);
+                    Program.txtlog.WriteLineLog("MET: Операция прекращена пользователем", 0);
                 }
             }
         }
@@ -6492,7 +6517,7 @@ namespace Charaterizator
         // Раскачка датчика далением
         private void PushPress(double Pmax)
         {
-            Program.txtlog.WriteLineLog("CH:Выполняем раскачу датчиков давлением", 0);
+            Program.txtlog.WriteLineLog("CH: Выполняем раскачу датчиков давлением", 0);
             // Определяем какой из задатчиков используется
 
             switch (selectedPressurer)
@@ -6993,7 +7018,7 @@ namespace Charaterizator
                 }
             }
             CreatSessionFiles();
-        }
+        }       
     }
 }
 
