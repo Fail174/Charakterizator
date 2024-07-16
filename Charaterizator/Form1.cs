@@ -109,6 +109,7 @@ namespace Charaterizator
         private int MensorReadError = 0;//число ошибко чтения данных с менсора
         private bool SensorBusy = false;//Признак обмена данными с датчиками
         public bool ProcessStop = false;//Флаг остановки операции
+        private bool ProcessPause = false;//Флаг ожидания(паузы) для операции
 
         private bool TemperatureReady = false;//готовность термокамеры , температура датчиков стабилизирована
         private bool PressureReady = false;//готовность менсора , давление в датчиках стабилизировано
@@ -948,6 +949,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем поиск 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbCHProcess.Value = i - StartNumber;
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
@@ -1046,6 +1048,7 @@ namespace Charaterizator
             for (int i = 0; i < Commutator.MaxChannal; i++)
             {
                 if (ProcessStop) return;//прекращаем поиск 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
                 pbCHProcess.Value = i + 1;
 
                 if (!CheckChannalEnable(i)) continue;//Если канал не выбран пропускаем обработку
@@ -1070,6 +1073,7 @@ namespace Charaterizator
                     do//цикл калибровки (MAX_CALIBRATION_COUNT попыток)
                     {
                         if (ProcessStop) return;//прекращаем
+                        while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); };
                         ci = 0;
                         sensors.С40WriteFixCurrent(4);
                         do//цикл чтения тока (MAX_COUNT_CAP_READ попыток)
@@ -1316,6 +1320,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем поиск 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -1392,6 +1397,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем поиск 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbCHProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -1713,6 +1719,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbVRProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -1789,6 +1796,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbVRProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -1849,6 +1857,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbVRProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -2033,6 +2042,7 @@ namespace Charaterizator
                     {
 
                         if (ProcessStop) break;//прекращаем поиск 
+                        while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                         dataGridView1.Rows[i].Cells[sen].Value = "Нет данных";      //тип датчика
                         dataGridView1.Rows[i].Cells[zn].Value = "Нет данных";       //заводской номер
@@ -2172,12 +2182,23 @@ namespace Charaterizator
             }
             else
             {
+                if (ProcessPause) {
+                    ProcessPause = false;
+                    btnSensorSeach.Text = "Идет поиск датчиков... Остановить? ";
+                    return;
+                }
                 FormPause formpause = new FormPause();
-                if (formpause.ShowDialog() != DialogResult.OK)
-                //                if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить поиск нажмите 'Нет'", "Поиск поставлен на паузу", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                DialogResult res = formpause.ShowDialog();
+                if (res == DialogResult.Cancel)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("Поиск прекращен по команде пользователя", 0);
+                }
+                if (res != DialogResult.Retry)
+                {
+                    ProcessPause = true;
+                    Program.txtlog.WriteLineLog("Поиск приостановлен по команде пользователя", 0);
+                    btnSensorSeach.Text = "Поиск датчиков остановлен. Продолжить?";
                 }
             }
         }
@@ -2185,6 +2206,8 @@ namespace Charaterizator
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             //Properties.Settings.Default.Save();
+            ProcessPause = false;
+            ProcessStop = true;
             MainTimer.Stop();
             MainTimer.Enabled = false;
             sensors.DisConnect();
@@ -3522,7 +3545,7 @@ namespace Charaterizator
                 }
                 if (i >= Commutator.MaxChannal)
                 {
-                    Program.txtlog.WriteLineLog("Не выбраны каналы для характеризации датчиков. Операция прервана.", 0);
+                    Program.txtlog.WriteLineLog("CH: Не выбраны каналы для характеризации датчиков. Операция прервана.", 0);
                     return;
                 }
 
@@ -3560,6 +3583,7 @@ namespace Charaterizator
                             for (i = 0; i < lvCHPressureSet.Items.Count; i++)
                             {
                                 if (ProcessStop) break;//прекращаем 
+                                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
                                 lvCHPressureSet.Items[i].Selected = true;
                                 btnCHPressureSet1_Click(null, null);
                                 //btnCHPressureSet1.PerformClick();
@@ -3595,12 +3619,24 @@ namespace Charaterizator
             }
             else
             {
+                if (ProcessPause)
+                {
+                    ProcessPause = false;
+                    btnCHStart.Text = "Выполняется процесс характеризации ... Остановить?";
+                    return;
+                }
                 FormPause formpause = new FormPause();
-                if (formpause.ShowDialog() != DialogResult.OK)
-                //                    if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить характеризацию нажмите 'Нет'", "Характеризация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+                DialogResult res = formpause.ShowDialog();
+                if (res == DialogResult.Cancel)
                 {
                     ProcessStop = true;
-                    Program.txtlog.WriteLineLog("Операция прекращена пользователем", 0);
+                    Program.txtlog.WriteLineLog("CH: Операция прекращена пользователем", 0);
+                }
+                if (res == DialogResult.Retry)
+                {
+                    ProcessPause = true;
+                    Program.txtlog.WriteLineLog("CH: Операция приостановлена пользователем", 0);
+                    btnCHStart.Text = "Процесс характеризации остановлен. Продолжить?";
                 }
             }
         }
@@ -4492,6 +4528,7 @@ namespace Charaterizator
                                 for (i = 0; i < lvVRPressureSet.Items.Count; i++)
                                 {
                                     if (ProcessStop) break;//прекращаем 
+                                    while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
                                     lvVRPressureSet.Items[i].Selected = true;
                                     btnVRPressureSet1_Click(null, null);
                                     //btnVRPressureSet1.PerformClick();
@@ -4532,12 +4569,24 @@ namespace Charaterizator
             }
             else
             {
+                if (ProcessPause)
+                {
+                    ProcessPause = false;
+                    btnVRParamRead.Text = "Выполняется процесс верификации ... Остановить?";
+                    return;
+                }
                 FormPause formpause = new FormPause();
-                if (formpause.ShowDialog() != DialogResult.OK)
-                //                    if (MessageBox.Show("Для продолжения нажмите 'Да'. Чтобы остановить верификацию нажмите 'Нет'", "Верификация поставлена на паузу", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+                DialogResult res = formpause.ShowDialog();
+                if (res == DialogResult.Cancel)
                 {
                     ProcessStop = true;
                     Program.txtlog.WriteLineLog("VR:Операция прекращена пользователем", 0);
+                }
+                if (res == DialogResult.Retry)
+                {
+                    ProcessPause = true;
+                    Program.txtlog.WriteLineLog("VR:Операция приостановлена пользователем", 0);
+                    btnVRParamRead.Text = "Процесс верификации остановлен. Продолжить?";
                 }
             }
         }
@@ -4793,6 +4842,7 @@ namespace Charaterizator
 
                 SensorBusy = false;
                 ProcessStop = true;
+                ProcessPause = false;
 
                 pbVRProcess.Value = 0;
                 pbCHProcess.Value = 0;
@@ -4854,6 +4904,7 @@ namespace Charaterizator
 
                 SensorBusy = true;
                 ProcessStop = false;
+                ProcessPause = false;
             }
             switch (state)
             {
@@ -5234,6 +5285,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем  
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbMETProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -5279,6 +5331,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbMETProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -5375,6 +5428,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbMETProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -5420,6 +5474,7 @@ namespace Charaterizator
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
                 if (ProcessStop) return;//прекращаем верификацию 
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbMETProcess.Value = i - StartNumber;
                 Application.DoEvents();
@@ -5573,6 +5628,7 @@ namespace Charaterizator
                         for (int l = 0; l < lb_MET_PressValue.Items.Count; l++)
                         {
                             if (ProcessStop) break;
+                            while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
                             if (MensorSetPressuer(lb_MET_PressValue.Items[l].ToString(), l == 0) == 0)
                                 MET_ReadSensorParametrs();
                         }
@@ -5630,7 +5686,8 @@ namespace Charaterizator
             pbMETProcess.Value = 0;
             for (int i = StartNumber; i <= FinishNumber; i++)//перебор каналов
             {
-                if (ProcessStop) return;//прекращаем верификацию 
+                if (ProcessStop) return;//прекращаем верификацию
+                while (ProcessPause) { Application.DoEvents(); Thread.Sleep(1); }
 
                 pbMETProcess.Value = i - StartNumber;
                 Application.DoEvents();
