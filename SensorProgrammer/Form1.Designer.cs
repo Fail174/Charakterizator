@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bCommutator = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgwMainWindow = new System.Windows.Forms.DataGridView();
@@ -88,9 +88,10 @@
             // 
             this.bCommutator.BackColor = System.Drawing.Color.ForestGreen;
             this.bCommutator.ForeColor = System.Drawing.SystemColors.Window;
-            this.bCommutator.Location = new System.Drawing.Point(130, 23);
+            this.bCommutator.Location = new System.Drawing.Point(173, 28);
+            this.bCommutator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bCommutator.Name = "bCommutator";
-            this.bCommutator.Size = new System.Drawing.Size(118, 43);
+            this.bCommutator.Size = new System.Drawing.Size(157, 53);
             this.bCommutator.TabIndex = 0;
             this.bCommutator.Text = "Коммутатор: ПОДКЛЮЧЕН";
             this.bCommutator.UseVisualStyleBackColor = false;
@@ -99,9 +100,10 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.dgwMainWindow);
-            this.panel1.Location = new System.Drawing.Point(12, 69);
+            this.panel1.Location = new System.Drawing.Point(16, 85);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(332, 696);
+            this.panel1.Size = new System.Drawing.Size(443, 857);
             this.panel1.TabIndex = 1;
             // 
             // dgwMainWindow
@@ -120,13 +122,14 @@
             this.dgwMainWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwMainWindow.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgwMainWindow.Location = new System.Drawing.Point(0, 0);
+            this.dgwMainWindow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgwMainWindow.MultiSelect = false;
             this.dgwMainWindow.Name = "dgwMainWindow";
             this.dgwMainWindow.RowHeadersVisible = false;
             this.dgwMainWindow.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgwMainWindow.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgwMainWindow.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgwMainWindow.Size = new System.Drawing.Size(332, 696);
+            this.dgwMainWindow.Size = new System.Drawing.Size(443, 857);
             this.dgwMainWindow.TabIndex = 0;
             this.dgwMainWindow.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellContentClick);
             this.dgwMainWindow.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow_CellContentClick);
@@ -136,8 +139,8 @@
             // 
             // dgwChannal
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgwChannal.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgwChannal.HeaderText = "Канал";
             this.dgwChannal.Name = "dgwChannal";
             this.dgwChannal.ReadOnly = true;
@@ -170,9 +173,9 @@
             // 
             // dgwSerial
             // 
-            dataGridViewCellStyle2.Format = "0000000";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dgwSerial.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Format = "0000000";
+            dataGridViewCellStyle8.NullValue = null;
+            this.dgwSerial.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgwSerial.HeaderText = "Серийный номер";
             this.dgwSerial.Name = "dgwSerial";
             this.dgwSerial.ReadOnly = true;
@@ -185,9 +188,10 @@
             this.cbModel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbModel.FormattingEnabled = true;
-            this.cbModel.Location = new System.Drawing.Point(304, 20);
+            this.cbModel.Location = new System.Drawing.Point(405, 25);
+            this.cbModel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbModel.Name = "cbModel";
-            this.cbModel.Size = new System.Drawing.Size(138, 21);
+            this.cbModel.Size = new System.Drawing.Size(183, 25);
             this.cbModel.TabIndex = 2;
             this.cbModel.SelectedIndexChanged += new System.EventHandler(this.cbModel_SelectedIndexChanged);
             // 
@@ -197,9 +201,10 @@
             this.cbType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbType.FormattingEnabled = true;
-            this.cbType.Location = new System.Drawing.Point(87, 20);
+            this.cbType.Location = new System.Drawing.Point(116, 25);
+            this.cbType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbType.Name = "cbType";
-            this.cbType.Size = new System.Drawing.Size(150, 21);
+            this.cbType.Size = new System.Drawing.Size(199, 25);
             this.cbType.TabIndex = 1;
             this.cbType.SelectedIndexChanged += new System.EventHandler(this.cbType_SelectedIndexChanged);
             // 
@@ -207,9 +212,10 @@
             // 
             this.bDataBase.BackColor = System.Drawing.Color.ForestGreen;
             this.bDataBase.ForeColor = System.Drawing.SystemColors.Window;
-            this.bDataBase.Location = new System.Drawing.Point(9, 23);
+            this.bDataBase.Location = new System.Drawing.Point(12, 28);
+            this.bDataBase.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bDataBase.Name = "bDataBase";
-            this.bDataBase.Size = new System.Drawing.Size(118, 43);
+            this.bDataBase.Size = new System.Drawing.Size(157, 53);
             this.bDataBase.TabIndex = 2;
             this.bDataBase.Text = "База Данных: ПОДКЛЮЧЕНА";
             this.bDataBase.UseVisualStyleBackColor = false;
@@ -219,9 +225,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 77);
+            this.label1.Location = new System.Drawing.Point(16, 95);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(72, 17);
             this.label1.TabIndex = 6;
             this.label1.Text = "Путь к БД: ";
             // 
@@ -231,9 +238,11 @@
             this.groupBox1.Controls.Add(this.bDataBase);
             this.groupBox1.Controls.Add(this.bCommutator);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(698, 10);
+            this.groupBox1.Location = new System.Drawing.Point(931, 12);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(380, 103);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(507, 127);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Управление подключением ";
@@ -242,9 +251,10 @@
             // 
             this.bSensors.BackColor = System.Drawing.Color.ForestGreen;
             this.bSensors.ForeColor = System.Drawing.SystemColors.Window;
-            this.bSensors.Location = new System.Drawing.Point(254, 23);
+            this.bSensors.Location = new System.Drawing.Point(339, 28);
+            this.bSensors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bSensors.Name = "bSensors";
-            this.bSensors.Size = new System.Drawing.Size(118, 43);
+            this.bSensors.Size = new System.Drawing.Size(157, 53);
             this.bSensors.TabIndex = 7;
             this.bSensors.Text = "Датчики: ПОДКЛЮЧЕНЫ";
             this.bSensors.UseVisualStyleBackColor = false;
@@ -254,10 +264,11 @@
             // 
             this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbConsole.Location = new System.Drawing.Point(178, 769);
+            this.rtbConsole.Location = new System.Drawing.Point(237, 946);
+            this.rtbConsole.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rtbConsole.Name = "rtbConsole";
             this.rtbConsole.ReadOnly = true;
-            this.rtbConsole.Size = new System.Drawing.Size(110, 17);
+            this.rtbConsole.Size = new System.Drawing.Size(145, 20);
             this.rtbConsole.TabIndex = 13;
             this.rtbConsole.Text = "";
             this.rtbConsole.Visible = false;
@@ -265,18 +276,20 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 25);
+            this.label3.Location = new System.Drawing.Point(8, 31);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.Size = new System.Drawing.Size(95, 17);
             this.label3.TabIndex = 14;
             this.label3.Text = "Тип датчика:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(250, 25);
+            this.label4.Location = new System.Drawing.Point(333, 31);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 13);
+            this.label4.Size = new System.Drawing.Size(62, 17);
             this.label4.TabIndex = 15;
             this.label4.Text = "Модель:";
             // 
@@ -285,9 +298,10 @@
             this.cbAutoNumSerial.AutoSize = true;
             this.cbAutoNumSerial.Checked = true;
             this.cbAutoNumSerial.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbAutoNumSerial.Location = new System.Drawing.Point(13, 769);
+            this.cbAutoNumSerial.Location = new System.Drawing.Point(17, 946);
+            this.cbAutoNumSerial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbAutoNumSerial.Name = "cbAutoNumSerial";
-            this.cbAutoNumSerial.Size = new System.Drawing.Size(161, 17);
+            this.cbAutoNumSerial.Size = new System.Drawing.Size(206, 21);
             this.cbAutoNumSerial.TabIndex = 16;
             this.cbAutoNumSerial.Text = "Включить автонумерацию ";
             this.cbAutoNumSerial.UseVisualStyleBackColor = true;
@@ -300,18 +314,21 @@
             this.groupBox3.Controls.Add(this.cbModel);
             this.groupBox3.Controls.Add(this.cbType);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Location = new System.Drawing.Point(12, 10);
+            this.groupBox3.Location = new System.Drawing.Point(16, 12);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(663, 51);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Size = new System.Drawing.Size(884, 63);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Тип и модель датчика";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(462, 17);
+            this.button1.Location = new System.Drawing.Point(616, 21);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(183, 26);
+            this.button1.Size = new System.Drawing.Size(244, 32);
             this.button1.TabIndex = 20;
             this.button1.Text = "Очистить";
             this.button1.UseVisualStyleBackColor = true;
@@ -320,9 +337,10 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.dgwMainWindow2);
-            this.panel2.Location = new System.Drawing.Point(343, 69);
+            this.panel2.Location = new System.Drawing.Point(457, 85);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(332, 696);
+            this.panel2.Size = new System.Drawing.Size(443, 857);
             this.panel2.TabIndex = 18;
             // 
             // dgwMainWindow2
@@ -341,13 +359,14 @@
             this.dgwMainWindow2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgwMainWindow2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgwMainWindow2.Location = new System.Drawing.Point(0, 0);
+            this.dgwMainWindow2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgwMainWindow2.MultiSelect = false;
             this.dgwMainWindow2.Name = "dgwMainWindow2";
             this.dgwMainWindow2.RowHeadersVisible = false;
             this.dgwMainWindow2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgwMainWindow2.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgwMainWindow2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgwMainWindow2.Size = new System.Drawing.Size(332, 696);
+            this.dgwMainWindow2.Size = new System.Drawing.Size(443, 857);
             this.dgwMainWindow2.TabIndex = 1;
             this.dgwMainWindow2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow2_CellContentClick);
             this.dgwMainWindow2.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwMainWindow2_CellContentClick);
@@ -355,8 +374,8 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn1.HeaderText = "Канал";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
@@ -389,9 +408,9 @@
             // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewCellStyle4.Format = "0000000";
-            dataGridViewCellStyle4.NullValue = null;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Format = "0000000";
+            dataGridViewCellStyle10.NullValue = null;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn4.HeaderText = "Серийный номер";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
@@ -401,16 +420,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 78);
+            this.label2.Location = new System.Drawing.Point(19, 96);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 13);
+            this.label2.Size = new System.Drawing.Size(0, 17);
             this.label2.TabIndex = 12;
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(9, 104);
+            this.progressBar.Location = new System.Drawing.Point(12, 128);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(362, 23);
+            this.progressBar.Size = new System.Drawing.Size(483, 28);
             this.progressBar.TabIndex = 11;
             // 
             // bBurn
@@ -418,9 +439,10 @@
             this.bBurn.BackColor = System.Drawing.Color.LightCoral;
             this.bBurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bBurn.ForeColor = System.Drawing.SystemColors.Window;
-            this.bBurn.Location = new System.Drawing.Point(16, 25);
+            this.bBurn.Location = new System.Drawing.Point(21, 31);
+            this.bBurn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bBurn.Name = "bBurn";
-            this.bBurn.Size = new System.Drawing.Size(348, 40);
+            this.bBurn.Size = new System.Drawing.Size(464, 49);
             this.bBurn.TabIndex = 5;
             this.bBurn.Text = "Записать индивидуальные параметры";
             this.bBurn.UseVisualStyleBackColor = false;
@@ -430,9 +452,10 @@
             // 
             this.labelCH.AutoSize = true;
             this.labelCH.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelCH.Location = new System.Drawing.Point(19, 141);
+            this.labelCH.Location = new System.Drawing.Point(25, 174);
+            this.labelCH.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCH.Name = "labelCH";
-            this.labelCH.Size = new System.Drawing.Size(0, 13);
+            this.labelCH.Size = new System.Drawing.Size(0, 17);
             this.labelCH.TabIndex = 13;
             // 
             // groupBox4
@@ -442,9 +465,11 @@
             this.groupBox4.Controls.Add(this.bBurn);
             this.groupBox4.Controls.Add(this.progressBar);
             this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Location = new System.Drawing.Point(698, 472);
+            this.groupBox4.Location = new System.Drawing.Point(931, 572);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(380, 165);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Size = new System.Drawing.Size(507, 203);
             this.groupBox4.TabIndex = 19;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Запись индивидуальных параметров в датчик";
@@ -457,20 +482,21 @@
             this.dgwSensParam.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sensParamName,
             this.sensParamValue});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgwSensParam.DefaultCellStyle = dataGridViewCellStyle12;
             this.dgwSensParam.Enabled = false;
-            this.dgwSensParam.Location = new System.Drawing.Point(9, 25);
+            this.dgwSensParam.Location = new System.Drawing.Point(12, 31);
+            this.dgwSensParam.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgwSensParam.Name = "dgwSensParam";
             this.dgwSensParam.ReadOnly = true;
             this.dgwSensParam.RowHeadersVisible = false;
-            this.dgwSensParam.Size = new System.Drawing.Size(362, 243);
+            this.dgwSensParam.Size = new System.Drawing.Size(483, 299);
             this.dgwSensParam.TabIndex = 7;
             // 
             // sensParamName
@@ -484,8 +510,8 @@
             // 
             // sensParamValue
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.sensParamValue.DefaultCellStyle = dataGridViewCellStyle11;
             this.sensParamValue.HeaderText = "Значение";
             this.sensParamValue.Name = "sensParamValue";
             this.sensParamValue.ReadOnly = true;
@@ -498,9 +524,10 @@
             this.bRead.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.bRead.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bRead.ForeColor = System.Drawing.SystemColors.Window;
-            this.bRead.Location = new System.Drawing.Point(16, 280);
+            this.bRead.Location = new System.Drawing.Point(21, 345);
+            this.bRead.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bRead.Name = "bRead";
-            this.bRead.Size = new System.Drawing.Size(348, 40);
+            this.bRead.Size = new System.Drawing.Size(464, 49);
             this.bRead.TabIndex = 8;
             this.bRead.Text = "Поиск датчиков в выделенных каналах";
             this.bRead.UseVisualStyleBackColor = false;
@@ -510,36 +537,40 @@
             // 
             this.groupBox2.Controls.Add(this.bRead);
             this.groupBox2.Controls.Add(this.dgwSensParam);
-            this.groupBox2.Location = new System.Drawing.Point(698, 123);
+            this.groupBox2.Location = new System.Drawing.Point(931, 147);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(380, 336);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(507, 414);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Индивидуальные параметры датчика ";
             // 
             // tbResult
             // 
-            this.tbResult.Location = new System.Drawing.Point(698, 681);
+            this.tbResult.Location = new System.Drawing.Point(931, 813);
+            this.tbResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbResult.Multiline = true;
             this.tbResult.Name = "tbResult";
             this.tbResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbResult.Size = new System.Drawing.Size(380, 83);
+            this.tbResult.Size = new System.Drawing.Size(505, 126);
             this.tbResult.TabIndex = 20;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(704, 661);
+            this.label5.Location = new System.Drawing.Point(939, 792);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(257, 13);
+            this.label5.Size = new System.Drawing.Size(332, 17);
             this.label5.TabIndex = 21;
             this.label5.Text = "Результаты записи индивидуальных параметров";
             // 
             // FormSensorProgrammer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1091, 786);
+            this.ClientSize = new System.Drawing.Size(1455, 967);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbResult);
             this.Controls.Add(this.groupBox4);
@@ -551,6 +582,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormSensorProgrammer";
             this.Text = "Программа для записи индивидуальных параметров датчиков";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSensorProgrammer_FormClosed);
