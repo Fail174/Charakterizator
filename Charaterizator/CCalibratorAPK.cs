@@ -10,14 +10,14 @@ using System.Globalization;
 
 namespace Charaterizator
 {
-    class CCalibratorAGK
+    class CCalibratorAPK
     {
         // Переменные
         public bool Connected;          // флаг соединения с прибором по COM (true - есть соединение / false - нет)
         public SerialPort Port;         // переменная для работы по COM-порту
 
-        private Thread ReadThreadAGK;   // поток для периодического чтения данных с калибратора
-        private volatile bool readAGK;  // true - чтение данных, прибор занят
+        private Thread ReadThreadAPK;   // поток для периодического чтения данных с калибратора
+        private volatile bool readAPK;  // true - чтение данных, прибор занят
 
         public int READ_PAUSE = 500;    // количество циклов (по 1мс) ожидания ответа прибора на отправленнную команду по COM порту   
         public string strData;          // переменная буфер для хранения ответа прибора по COM
@@ -36,17 +36,17 @@ namespace Charaterizator
         //---------------------------------------------------------------------------------------------------
         // Конструктор класса
         //---------------------------------------------------------------------------------------------------
-        public CCalibratorAGK()
+        public CCalibratorAPK()
         {
-            UserPoint = 0;       
+            UserPoint = 0;
             press = 0;
             typePress = 0;
             mode = 0;
             errors = true;
-            readAGK = false;
+            readAPK = false;
             Connected = false;
             ListMod.Clear();
-            Port = new SerialPort();            
+            Port = new SerialPort();
         }
 
 
@@ -72,15 +72,15 @@ namespace Charaterizator
                 Port.DtrEnable = true;
                 Port.RtsEnable = true;
                 Port.NewLine = "\r\n";
-                Port.Open();        
+                Port.Open();
 
                 if (InitDevice())   // идентифицируем подключенный прибор
                 {
                     // Запускаем поток
-                    ReadThreadAGK = new Thread(ReadDataThreadAGK);
-                    ReadThreadAGK.Priority = ThreadPriority.AboveNormal;
-                    ReadThreadAGK.Start();
-                    Thread.Sleep(2000);                   
+                    ReadThreadAPK = new Thread(ReadDataThreadAPK);
+                    ReadThreadAPK.Priority = ThreadPriority.AboveNormal;
+                    ReadThreadAPK.Start();
+                    Thread.Sleep(2000);
                     Connected = true;
                     return 0;
                 }
@@ -97,17 +97,17 @@ namespace Charaterizator
                 return -1;
             }
         }
-        
+
 
         // Отключение прибора от COM порта
         public int DisConnect()
         {
-            Connected = false;           
-            if (ReadThreadAGK != null)
-                ReadThreadAGK.Abort(0);
+            Connected = false;
+            if (ReadThreadAPK != null)
+                ReadThreadAPK.Abort(0);
 
             if (Port.IsOpen)
-            {               
+            {
                 Port.Close();
                 return 0;
             }
@@ -121,7 +121,7 @@ namespace Charaterizator
         // Тестирование прибора        
         // возвращает: true - при успешном завершении теста / false - в обратном случае
         private bool InitDevice()
-        {         
+        {           
             bool result = false;
             bool waitAnswer;
 
@@ -130,7 +130,7 @@ namespace Charaterizator
             waitAnswer = false;
             sendCommand("CMDSET 1", waitAnswer);     //  CMDSET C (C=0 — команды Alfapascal C = 1 — команды Mensor)
             Thread.Sleep(50);
-                                               
+
             // Запрашиваем ID калибратора 
             waitAnswer = true;
             strData = sendCommand("ID?", waitAnswer);
@@ -143,12 +143,12 @@ namespace Charaterizator
                 result = false;
                 return result;
             }
-            
+
             // устанавливаем единицы измерения KPA — кПа
             Thread.Sleep(50);
             waitAnswer = false;
             strData = sendCommand("UNITS KPA", waitAnswer);
-                       
+
 
             // запрашиваем список модулей калибратора
             Thread.Sleep(50);
@@ -248,14 +248,14 @@ namespace Charaterizator
 
             // отправка команды
             try
-            {                
-                while ((readAGK) && (i < READ_PAUSE))
+            {
+                while ((readAPK) && (i < READ_PAUSE))
                 {
                     Thread.Sleep(1);
                     i++;
                 }
-                readAGK = true;
-                
+                readAPK = true;
+
                 // очистка буфера
                 while (Port.BytesToRead > 0)
                 {
@@ -264,7 +264,7 @@ namespace Charaterizator
 
                 // отправляем команду
                 Port.WriteLine(command);
-                               
+
                 if (waitAnswer)
                 {
                     i = 0;
@@ -282,16 +282,16 @@ namespace Charaterizator
                 }
             }
             catch
-            {               
-                Console.WriteLine("Ошибка при обмене данных с калибратором АГК");
+            {
+                Console.WriteLine("Ошибка при обмене данных с калибратором АПК");
             }
             finally
             {
-                readAGK = false;
+                readAPK = false;
                 Console.WriteLine("команда: " + command + "  ответ: " + answer);
             }
-            
-            return answer;   
+
+            return answer;
         }
         //--------------------------------------------------------------------------------------------------------
 
@@ -303,27 +303,28 @@ namespace Charaterizator
         //---------------------------------------------------------------------------------------------------
 
         // Функция периодического чтения параметров прибора в потоке
-        void ReadDataThreadAGK()
+        void ReadDataThreadAPK()
         {
             bool waitAnswer;
-            errors = false;           
+            errors = false;
+            //int i;
 
             while (Port.IsOpen)
-            {              
+            {
                 try
-                {                                         
+                {
                     // считываем текущее давление  
                     waitAnswer = true;
                     strData = sendCommand("A?", waitAnswer);
 
                     if (string.IsNullOrEmpty(strData))
                     {
-                        press = -1;                       
+                        press = -1;
                         errors = true;
                         return;
                     }
                     else
-                    {                     
+                    {
                         // Заменяем запятую на разделитель десятичной части InvariantCulture (точка)
                         strData = strData.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
                         if (double.TryParse(strData, out press))   //TryParse(strData, NumberStyles.Float, CultureInfo.InvariantCulture, out press))
@@ -332,7 +333,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            press = -1;                          
+                            press = -1;
                             errors = true;
                             return;
                         }
@@ -343,7 +344,7 @@ namespace Charaterizator
 
                     if (string.IsNullOrEmpty(strData))
                     {
-                        mode = -1;                       
+                        mode = -1;
                         errors = true;
                         return;
                     }
@@ -367,7 +368,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            mode = -1;                           
+                            mode = -1;
                             errors = true;
                             return;
                         }
@@ -395,7 +396,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            typePress = -1;                           
+                            typePress = -1;
                             errors = true;
                             return;
                         }
@@ -406,7 +407,7 @@ namespace Charaterizator
 
                     if (string.IsNullOrEmpty(strData))
                     {
-                        UserPoint = 0;                     
+                        UserPoint = 0;
                         errors = true;
                         return;
                     }
@@ -419,7 +420,7 @@ namespace Charaterizator
                         }
                         else
                         {
-                            UserPoint = 0;                      
+                            UserPoint = 0;
                             errors = true;
                             return;
                         }
@@ -427,12 +428,12 @@ namespace Charaterizator
 
                 }
                 catch
-                {                   
-                    Program.txtlog.WriteLineLog("Калибратор АГК: Ошибка чтения в потоке", 1);
+                {
+                    Program.txtlog.WriteLineLog("Калибратор АПК: Ошибка чтения в потоке", 1);
                     errors = true;
                 }
                 finally
-                {                  
+                {
                     Thread.Sleep(500);
                 }
             }

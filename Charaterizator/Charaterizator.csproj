@@ -102,6 +102,7 @@
     <Compile Include="CCalcMNK.cs" />
     <Compile Include="CCalculation.cs" />
     <Compile Include="CCalibratorAGK.cs" />
+    <Compile Include="CCalibratorAPK.cs" />
     <Compile Include="CElemer.cs" />
     <Compile Include="ClassEni100.cs" />
     <Compile Include="ClassEni201.cs" />
