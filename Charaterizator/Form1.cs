@@ -54,7 +54,7 @@ namespace Charaterizator
         private double TrhDeviation = 0.001;  // порог по отклонению R^2
 
         //private bool UseMensor;
-        private int selectedPressurer = 0; // указывает какой задатчик давления использовать: 0) Mensor 1) Паскаль 2) Элемер 
+        private int selectedPressurer = 0; // указывает какой задатчик давления использовать: 0) Mensor 1) Паскаль 2) Элемер 3) АГК 4) АПК
         
         //Не занесены в настройку
         const int MAX_CALIBRATION_COUNT = 3;//максимальное количество циклов калибровки тока ЦАП        
@@ -88,6 +88,7 @@ namespace Charaterizator
         private CCalculation CalculationMtx = new CCalculation();
         private CCalcMNK CCalcMNK = new CCalcMNK();
         private CPascal Pascal = new CPascal();
+        private CCalibratorAGK CalibratorAGK = new CCalibratorAGK();
         private CBarometr Barometr = new CBarometr();
         private CElemer Elemer = new CElemer();
         private ClassEni201 MultimetrEni201 = new ClassEni201();
@@ -209,7 +210,7 @@ namespace Charaterizator
                 Pascal.READ_PAUSE = Properties.Settings.Default.set_MensorReadPause;        // задержка между приемом и передачей команд по COM порту, мс   - ПАСКАЛЬ
 
 
-                selectedPressurer = Properties.Settings.Default.set_selectPressurer;    // указывает какой задатчик давления использовать: 0) Mensor 1) Паскаль 2) Элемер 
+                selectedPressurer = Properties.Settings.Default.set_selectPressurer;    // указывает какой задатчик давления использовать: 0) Mensor 1) Паскаль 2) Элемер 3) АГК 4) АПК
 
                 // UseMensor = Properties.Settings.Default.set_UseMensor;                      // указывает какой задатчик давления использовать: 1) Mensor значение true  / 2) Паскаль - значение false 
                 //gbBarometr.Visible = !UseMensor;
@@ -666,7 +667,8 @@ namespace Charaterizator
                             btnMensor.BackColor = Color.Green;
                             btnMensor.Text = "Подключен";
                             Program.txtlog.WriteLineLog("Задатчик давления Mensor подключен", 0);
-                            //cbMensorTypeR.Items.Clear();
+                                                    
+                            cbMensorTypeR.Items.Clear();
                             cbMensorTypeR.DataSource = Mensor.ListMod;
                             bMensorMeas.Name = "Измерение";
 
@@ -680,7 +682,8 @@ namespace Charaterizator
                             btnMensor.BackColor = Color.IndianRed;
                             btnMensor.Text = "Не подключен";
                             Program.txtlog.WriteLineLog("Задатчик давления  Mensor не подключен", 1);
-                            //cbMensorTypeR.Items.Clear();
+                           
+                            cbMensorTypeR.Items.Clear();
                             cbMensorTypeR.DataSource = Mensor.ListMod;
 
                             // Устанавливаем состояние барометра Отключен 
@@ -704,8 +707,8 @@ namespace Charaterizator
                             btnMensor.BackColor = Color.Green;
                             btnMensor.Text = "Подключен";
                             Program.txtlog.WriteLineLog("Задатчик давления Паскаль подключен", 0);
-
-                            //cbMensorTypeR.Items.Clear();
+                                                       
+                            cbMensorTypeR.Items.Clear();
                             cbMensorTypeR.DataSource = Pascal.ListMod;
                             bMensorMeas.Name = "Обнуление";
 
@@ -715,7 +718,8 @@ namespace Charaterizator
                             btnMensor.BackColor = Color.IndianRed;
                             btnMensor.Text = "Не подключен";
                             Program.txtlog.WriteLineLog("Задатчик давления Паскаль не подключен", 1);
-                            //cbMensorTypeR.Items.Clear();
+                           
+                            cbMensorTypeR.Items.Clear();
                             cbMensorTypeR.DataSource = Pascal.ListMod;
 
                         }
@@ -736,19 +740,47 @@ namespace Charaterizator
                             btnMensor.Text = "Подключен";
                             Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К подключен", 0);
 
-                            //cbMensorTypeR.Items.Clear();
+                            cbMensorTypeR.Items.Clear();
                             cbMensorTypeR.DataSource = Elemer.ListMod;                         
                         }
                         else
                         {
                             btnMensor.BackColor = Color.IndianRed;
                             btnMensor.Text = "Не подключен";
-                            Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К не подключен", 1);                           
+                            Program.txtlog.WriteLineLog("Задатчик давления Элемер АКД-12К не подключен", 1);
+                            
+                            cbMensorTypeR.Items.Clear();
                             cbMensorTypeR.DataSource = Elemer.ListMod;
                         }
                         break;
                     }
+                    
+                case 3: // подключение калибратора АГК
+                    {
+                       
+                        if (CalibratorAGK.Connect(Properties.Settings.Default.COMMensor,
+                            Properties.Settings.Default.COMMensor_Speed,
+                            Properties.Settings.Default.COMMensor_DataBits,
+                            Properties.Settings.Default.COMMensor_StopBits,
+                            Properties.Settings.Default.COMMensor_Parity) >= 0)
+                        {
+                            btnMensor.BackColor = Color.Green;
+                            btnMensor.Text = "Подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления АГК подключен", 0);
+                            cbMensorTypeR.DataSource = CalibratorAGK.ListMod;
+                            //bMensorMeas.Name = "Обнуление";
 
+                        }
+                        else
+                        {
+                            btnMensor.BackColor = Color.IndianRed;
+                            btnMensor.Text = "Не подключен";
+                            Program.txtlog.WriteLineLog("Задатчик давления АГК не подключен", 1);                           
+                            cbMensorTypeR.DataSource = CalibratorAGK.ListMod;
+                        }
+                        break;
+                    }
+                    
             }
             
 
@@ -2217,6 +2249,7 @@ namespace Charaterizator
             Mensor.DisConnect();
             Pascal.DisConnect();
             Elemer.DisConnect();
+            CalibratorAGK.DisConnect();
             Multimetr.DisConnect();
             Commutator.DisConnect();
             Barometr.DisConnect();
@@ -2362,6 +2395,25 @@ namespace Charaterizator
                             if (Elemer.Connected)
                             {
                                 ReadElemer(); //обновляем данные с Элемера
+                            }
+                            else
+                            {
+                                if (btnMensor.BackColor != Color.IndianRed)
+                                {
+                                    btnMensor.BackColor = Color.IndianRed;
+                                }
+                                else
+                                {
+                                    btnMensor.BackColor = Color.Transparent;
+                                }
+                            }
+                            break;
+                        }
+                    case 3:
+                        {
+                            if (CalibratorAGK.Connected)
+                            {
+                                ReadCalibratorAGK(); //обновляем данные с Элемера
                             }
                             else
                             {
@@ -2554,7 +2606,6 @@ namespace Charaterizator
         //чтение данных с Паскаля
         private void ReadPascal()
         {
-
             if (Pascal.rangeModule[0] != -1)
             {
 
@@ -2724,6 +2775,106 @@ namespace Charaterizator
             
         }
 
+
+
+        //чтение данных с АГК
+        private void ReadCalibratorAGK()
+        {
+            if (!CalibratorAGK.errors)
+            {
+
+                if (SKO_PRESSURE > Math.Abs(CalibratorAGK.press - CalibratorAGK.UserPoint))  //Convert.ToDouble(numMensorPoint.Value)))
+                {
+                    MensorCountPoint++;
+                    if (MensorCountPoint >= MAX_COUNT_POINT)
+                    {
+                        tbMensorData.BackColor = Color.MediumSeaGreen;
+                    }
+                    else
+                    {
+                        tbMensorData.BackColor = Color.Yellow;
+                    }
+                }
+                else
+                {
+                    if (MensorCountPoint != 0)
+                    {
+                        Console.Beep();
+                        Console.Beep();
+                        Console.Beep();
+                    }
+                    tbMensorData.BackColor = Color.White;
+                    MensorCountPoint = 0;
+                }
+
+                // Получаем текущее значение давления и обновляем гл. форму 
+                tbMensorData.Text = CalibratorAGK.press.ToString("f3");
+
+                // Получаем уставку
+                numMensorPoint.Value = Convert.ToDecimal(CalibratorAGK.UserPoint);
+
+                // Получаем тип давления | 0 - АБС, 1 - ИЗБ
+                if (CalibratorAGK.typePress == 0)
+                {
+                    rbPressABS.Checked = true;
+                    rbPressIZB.Checked = false;
+                }
+                else if (CalibratorAGK.typePress == 1)
+                {
+                    rbPressABS.Checked = false;
+                    rbPressIZB.Checked = true;
+                }
+                else if (CalibratorAGK.typePress == -1)
+                {
+                    rbPressABS.Checked = false;
+                    rbPressIZB.Checked = false;
+                }
+
+                // Обновление цвета кнопок в зав-ти от режима        
+                switch (CalibratorAGK.mode)
+                {
+                    case 0:
+                        bMensorMeas.BackColor = Color.LightGreen;
+                        bMensorControl.BackColor = Color.Transparent;
+                        bMensorVent.BackColor = Color.Transparent;
+                        break;
+                    case 1:
+                        bMensorMeas.BackColor = Color.Transparent;
+                        bMensorControl.BackColor = Color.LightGreen;
+                        bMensorVent.BackColor = Color.Transparent;
+                        break;
+                    case 2:
+                        bMensorMeas.BackColor = Color.Transparent;
+                        bMensorControl.BackColor = Color.Transparent;
+                        bMensorVent.BackColor = Color.LightGreen;
+                        break;
+                    case -1:
+                        bMensorMeas.BackColor = Color.Transparent;
+                        bMensorControl.BackColor = Color.Transparent;
+                        bMensorVent.BackColor = Color.Transparent;
+                        break;
+                }
+                MensorReadError = 0;
+            }
+            else
+            {
+                MensorReadError++;
+                Program.txtlog.WriteLineLog("Ошибка чтения данных с Паскаля. Количество ошибок: " + MensorReadError.ToString(), 1);
+            }
+
+            
+            if (MensorReadError >= MAX_ERROR_COUNT)
+            {
+                CalibratorAGK.DisConnect();
+                btnMensor.BackColor = Color.IndianRed;
+                btnMensor.Text = "Не подключен";
+                Program.txtlog.WriteLineLog("Нет данных с задатчика давления. Устройство отключено.", 1);             
+                btnMensor_Click(null, null);
+            }
+        }
+
+
+
         private float GetCurrent()
         {
             if (useMultimetrAgilent)
@@ -2762,6 +2913,8 @@ namespace Charaterizator
         }
 
 
+
+       
 
         // Обновление на главной форме состояния каналов коммутатора (checkbox)
         private void StateComutators(Int32 data32)
@@ -3208,6 +3361,20 @@ namespace Charaterizator
                         }
                         break;
                     }
+                case 3: // АГК
+                    {
+
+                        if (CalibratorAGK.Port.IsOpen)
+                        {
+                            CalibratorAGK.SetMode(1);
+                            bMensorMeas.BackColor = Color.LightGreen;                           
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
 
             }
 
@@ -3265,6 +3432,20 @@ namespace Charaterizator
                                 bMensorVent.BackColor = Color.Transparent;
                             }
 
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+                case 3: // АГК
+                    {
+
+                        if (CalibratorAGK.Port.IsOpen)
+                        {
+                            bMensorMeas.BackColor = Color.LightGreen;
+                            CalibratorAGK.SetMode(2);
                         }
                         else
                         {
@@ -3334,6 +3515,21 @@ namespace Charaterizator
                         }
                         break;
                     }
+                case 3: // АГК
+                    {
+
+                        if (CalibratorAGK.Port.IsOpen)
+                        {
+                            bMensorMeas.BackColor = Color.LightGreen;
+                            CalibratorAGK.SetMode(0);
+                        }
+                        else
+                        {
+                            Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                        }
+                        break;
+                    }
+
             }           
         }
 
@@ -3515,6 +3711,29 @@ namespace Charaterizator
                                 Program.txtlog.WriteLineLog("Элемер: уставка в прибор не записана", 1);
                             break;
                         }
+                    case 3: // АГК
+                        {
+                            if (!CalibratorAGK.Port.IsOpen)
+                            {
+                                Program.txtlog.WriteLineLog("Нет Связи. Задатчик давления не подключен", 1);
+                                return;
+                            }
+
+                            double Point = (double)numMensorPoint.Value;  // получаем заданное значение уставки
+                            CalibratorAGK.SetPoint(Point);
+
+
+
+
+
+                            break;
+                        }
+                    case 4: // АПК
+                        {
+
+                            break;
+                        }
+
 
                 }
                 
@@ -6250,12 +6469,41 @@ namespace Charaterizator
                         }
 
                     case 1: // паскаль
-                        {
-                            
+                        {                            
                             break;
                         }
 
                     case 2: // элемер
+                        {
+                            break;
+                        }
+                    case 3: // АГК
+                        {
+                            if (CalibratorAGK.Connected)
+                            {
+                                if (rbPressIZB.Checked)  //выбрано ИЗБЫТОЧНОЕ давление
+                                {
+                                    CalibratorAGK.SetTypePress(1);   // отправляем команду уcтановить тип давления ИЗБЫТОЧНОЕ                                   
+                                }
+                                else
+                                {
+                                    CalibratorAGK.SetTypePress(0);    // отправляем команду уcтановить тип давления АБСОЛЮТНОЕ                                 
+                                }
+                            }
+                            else
+                            {
+                                if (btnMensor.BackColor != Color.IndianRed)
+                                {
+                                    btnMensor.BackColor = Color.IndianRed;
+                                }
+                                else
+                                {
+                                    btnMensor.BackColor = Color.Transparent;
+                                }
+                            }
+                            break;
+                        }
+                    case 4: // АПК
                         {
                             break;
                         }
@@ -7075,7 +7323,8 @@ namespace Charaterizator
                 }
             }
             CreatSessionFiles();
-        }       
+        }
+
     }
 }
 

@@ -108,7 +108,11 @@ namespace Charaterizator
                     Properties.Settings.Default.set_selectPressurer = 1;
                 else if (rb_useElemer.Checked)
                     Properties.Settings.Default.set_selectPressurer = 2;
-                
+                else if (rb_useAGK.Checked)
+                    Properties.Settings.Default.set_selectPressurer = 3;
+                else if (rb_useAPK.Checked)
+                    Properties.Settings.Default.set_selectPressurer = 4;
+
                 //4 - ТЕРМОКАМЕРА
                 Properties.Settings.Default.set_TCameraReadPeriod = Convert.ToInt32(tbTCameraReadPeriod.Value);         //
 
@@ -229,19 +233,40 @@ namespace Charaterizator
                     rb_useMensor.Checked = true;
                     rb_usePascal.Checked = false;
                     rb_useElemer.Checked = false;
+                    rb_useAGK.Checked = false;
+                    rb_useAPK.Checked = false;
                     break;
 
                 case 1:
                     rb_useMensor.Checked = false;
                     rb_usePascal.Checked = true;
                     rb_useElemer.Checked = false;
+                    rb_useAGK.Checked = false;
+                    rb_useAPK.Checked = false;
                     break;
 
                 case 2:
                     rb_useMensor.Checked = false;
                     rb_usePascal.Checked = false;
                     rb_useElemer.Checked = true;
+                    rb_useAGK.Checked = false;
+                    rb_useAPK.Checked = false;
                     break;
+                case 3:
+                    rb_useMensor.Checked = false;
+                    rb_usePascal.Checked = false;
+                    rb_useElemer.Checked = false;
+                    rb_useAGK.Checked = true;
+                    rb_useAPK.Checked = false;
+                    break;
+                case 4:
+                    rb_useMensor.Checked = false;
+                    rb_usePascal.Checked = false;
+                    rb_useElemer.Checked = false;
+                    rb_useAGK.Checked = false;
+                    rb_useAPK.Checked = true;
+                    break;
+
             }
             
 

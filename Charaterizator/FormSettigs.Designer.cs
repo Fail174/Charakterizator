@@ -175,6 +175,8 @@
             this.textBox37 = new System.Windows.Forms.TextBox();
             this.textBox41 = new System.Windows.Forms.TextBox();
             this.bCancelSettings = new System.Windows.Forms.Button();
+            this.rb_useAGK = new System.Windows.Forms.RadioButton();
+            this.rb_useAPK = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.tab_FormSettings.SuspendLayout();
             this.tp_ProgramSettings.SuspendLayout();
@@ -1413,12 +1415,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.rb_useAPK);
+            this.groupBox2.Controls.Add(this.rb_useAGK);
             this.groupBox2.Controls.Add(this.rb_useElemer);
             this.groupBox2.Controls.Add(this.rb_usePascal);
             this.groupBox2.Controls.Add(this.rb_useMensor);
             this.groupBox2.Location = new System.Drawing.Point(52, 177);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(643, 97);
+            this.groupBox2.Size = new System.Drawing.Size(643, 145);
             this.groupBox2.TabIndex = 104;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Выбор типа используемого задатчика давления: ";
@@ -2245,6 +2249,28 @@
             this.bCancelSettings.Text = "Отменить";
             this.bCancelSettings.UseVisualStyleBackColor = true;
             // 
+            // rb_useAGK
+            // 
+            this.rb_useAGK.AutoSize = true;
+            this.rb_useAGK.Location = new System.Drawing.Point(8, 90);
+            this.rb_useAGK.Name = "rb_useAGK";
+            this.rb_useAGK.Size = new System.Drawing.Size(121, 19);
+            this.rb_useAGK.TabIndex = 3;
+            this.rb_useAGK.TabStop = true;
+            this.rb_useAGK.Text = "Калибратор АГК";
+            this.rb_useAGK.UseVisualStyleBackColor = true;
+            // 
+            // rb_useAPK
+            // 
+            this.rb_useAPK.AutoSize = true;
+            this.rb_useAPK.Location = new System.Drawing.Point(8, 115);
+            this.rb_useAPK.Name = "rb_useAPK";
+            this.rb_useAPK.Size = new System.Drawing.Size(123, 19);
+            this.rb_useAPK.TabIndex = 4;
+            this.rb_useAPK.TabStop = true;
+            this.rb_useAPK.Text = "Калибратор АПК";
+            this.rb_useAPK.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2474,5 +2500,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.RadioButton rb_useMultimAgilent;
         private System.Windows.Forms.RadioButton rb_useMultimEni201;
+        private System.Windows.Forms.RadioButton rb_useAPK;
+        private System.Windows.Forms.RadioButton rb_useAGK;
     }
 }

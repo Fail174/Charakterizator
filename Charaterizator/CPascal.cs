@@ -51,8 +51,8 @@ namespace Charaterizator
             modeClearP = false;
             target = false;
             SetModuleOK = false;
-
-           Port = new SerialPort();
+            Connected = false;
+            Port = new SerialPort();
         }
 
 
@@ -594,10 +594,6 @@ namespace Charaterizator
                 }
             }
         }
-
-
-
-
 
 
 
